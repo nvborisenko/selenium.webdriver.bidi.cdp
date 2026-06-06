@@ -1,5 +1,6 @@
 namespace Selenium.WebDriver.BiDi.Cdp.Tests;
 
+#pragma warning disable CS0612
 public class ConsoleTests : CdpTestFixture
 {
     [Test]
@@ -18,3 +19,4 @@ public class ConsoleTests : CdpTestFixture
         await Assert.That(messageAdded.Message.Text).IsEqualTo(consoleMessage);
     }
 }
+#pragma warning restore CS0612

@@ -1,5 +1,6 @@
 namespace Selenium.WebDriver.BiDi.Cdp.Tests;
 
+#pragma warning disable CS0612
 public class PerformanceTests : CdpTestFixture
 {
     private const string SimpleTestPage = "https://www.selenium.dev";
@@ -62,3 +63,4 @@ public class PerformanceTests : CdpTestFixture
         await Assert.That(response.Metrics.Count).IsGreaterThan(0);
     }
 }
+#pragma warning restore CS0612

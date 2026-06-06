@@ -33,7 +33,7 @@ public abstract class Domain(CdpModule cdp)
     /// <summary>
     /// Creates an event source for subscribing to a specific CDP event.
     /// </summary>
-    /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
+    /// <typeparam name="TParams">The type of event arguments.</typeparam>
     /// <param name="descriptor">The event descriptor defining the CDP event.</param>
     /// <returns>An event source that can be used to subscribe to the event.</returns>
     private protected IEventSource<TParams> CreateCdpEventSource<TParams>(EventDescriptor<CdpEventArgs<TParams>> descriptor)
