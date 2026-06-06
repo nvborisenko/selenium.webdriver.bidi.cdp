@@ -1,0 +1,50 @@
+using BenchmarkDotNet.Attributes;
+using OpenQA.Selenium.BiDi;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools;
+using OpenQA.Selenium.DevTools.V148.Page;
+using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V148.DevToolsSessionDomains;
+
+namespace Selenium.WebDriver.BiDi.Cdp.Benchmark;
+
+[MemoryDiagnoser]
+public class CaptureScreenshotBenchmark
+{
+    private ChromeDriver _driver = null!;
+    private IBiDi _bidi = null!;
+    private CdpModule _cdp = null!;
+    private DevToolsSession _devToolsSession = null!;
+
+    [GlobalSetup]
+    public async Task Setup()
+    {
+        _driver = new ChromeDriver(new ChromeOptions { UseWebSocketUrl = true });
+        _bidi = await _driver.AsBiDiAsync();
+        var context = (await _bidi.BrowsingContext.GetTreeAsync()).Contexts[0].Context;
+        _cdp = await context.AsCdpAsync();
+
+        _devToolsSession = _driver.GetDevToolsSession();
+    }
+
+    [Benchmark(Baseline = true)]
+    public async Task CaptureScreenshotSeleniumDevTools()
+    {
+        var domains = _devToolsSession.GetVersionSpecificDomains<DevToolsSessionDomains>();
+
+        await domains.Page.CaptureScreenshot(new CaptureScreenshotCommandSettings());
+    }
+
+    [Benchmark]
+    public async Task CaptureScreenshotBiDiCdp()
+    {
+        await _cdp.Page.CaptureScreenshotAsync();
+    }
+
+    [GlobalCleanup]
+    public async Task Cleanup()
+    {
+        _devToolsSession?.Dispose();
+        await _bidi.DisposeAsync();
+        await _driver.DisposeAsync();
+    }
+}

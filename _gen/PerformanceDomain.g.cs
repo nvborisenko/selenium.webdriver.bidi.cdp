@@ -1,0 +1,232 @@
+#nullable enable
+#pragma warning disable CS0612
+using global::System.Text.Json.Serialization;
+using global::OpenQA.Selenium.BiDi;
+
+namespace Selenium.WebDriver.BiDi.Cdp.Performance;
+
+/// <summary>
+/// </summary>
+public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+{
+    private static PerformanceJsonSerializerContext JsonContext = PerformanceJsonSerializerContext.Default;
+
+    /// <summary>
+    /// Disable collecting and reporting metrics.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
+    /// </returns>
+    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Performance.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    /// <summary>
+    /// Enable collecting and reporting metrics.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>TimeDomain</b> - Time domain to use for collecting and reporting duration metrics.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
+    /// </returns>
+    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(TimeDomain: options?.TimeDomain);
+        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Performance.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    /// <summary>
+    /// Sets time domain to use for collecting and reporting duration metrics.
+    /// Note that this must be called before enabling metrics collection. Calling
+    /// this method while metrics collection is enabled returns an error.
+    /// </summary>
+    /// <param name="timeDomain">
+    /// Time domain
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetTimeDomainCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetTimeDomainResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, SetTimeDomainCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
+        return await ExecuteCommandAsync(SetTimeDomainCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetTimeDomainCommandParameters, SetTimeDomainResult> SetTimeDomainCommand = new("Performance.setTimeDomain", JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult);
+
+    /// <summary>
+    /// Retrieve current values of run-time metrics.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetMetricsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetMetricsResult"/>.
+    /// </returns>
+    public async Task<GetMetricsResult> GetMetricsAsync(GetMetricsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetMetricsCommandParameters();
+        return await ExecuteCommandAsync(GetMetricsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetMetricsCommandParameters, GetMetricsResult> GetMetricsCommand = new("Performance.getMetrics", JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult);
+
+    /// <summary>
+    /// Current values of the metrics.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="MetricsEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Metrics</b> - Current values of the metrics.</description></item>
+    /// <item><description><b>Title</b> - Timestamp title.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<MetricsEventArgs> Metrics => CreateCdpEventSource(PerformanceDomainEvent.Metrics);
+}
+
+internal sealed record DisableCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="PerformanceDomain.DisableAsync"/>.
+/// </summary>
+public sealed record DisableCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record DisableResult() : EmptyResult;
+
+
+internal sealed record EnableCommandParameters(string? TimeDomain) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="PerformanceDomain.EnableAsync"/>.
+/// </summary>
+public sealed record EnableCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Time domain to use for collecting and reporting duration metrics.
+    /// </summary>
+    public string? TimeDomain { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record EnableResult() : EmptyResult;
+
+
+internal sealed record SetTimeDomainCommandParameters(string TimeDomain) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="PerformanceDomain.SetTimeDomainAsync"/>.
+/// </summary>
+public sealed record SetTimeDomainCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetTimeDomainResult() : EmptyResult;
+
+
+internal sealed record GetMetricsCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="PerformanceDomain.GetMetricsAsync"/>.
+/// </summary>
+public sealed record GetMetricsCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Metrics">
+/// Current values for run-time metrics.
+/// </param>
+public sealed record GetMetricsResult(IReadOnlyList<Metric> Metrics) : EmptyResult;
+
+
+/// <summary>
+/// Current values of the metrics.
+/// </summary>
+/// <param name="Metrics">
+/// Current values of the metrics.
+/// </param>
+/// <param name="Title">
+/// Timestamp title.
+/// </param>
+public sealed record MetricsEventArgs(IEnumerable<Metric> Metrics, string Title) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Run-time execution metric.
+/// </summary>
+/// <param name="Name">
+/// Metric name.
+/// </param>
+/// <param name="Value">
+/// Metric value.
+/// </param>
+public sealed record Metric(string Name, double Value)
+{
+}
+
+[JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]
+[JsonSerializable(typeof(DisableResult), TypeInfoPropertyName = "DisableResult")]
+[JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]
+[JsonSerializable(typeof(EnableResult), TypeInfoPropertyName = "EnableResult")]
+[JsonSerializable(typeof(SetTimeDomainCommandParameters), TypeInfoPropertyName = "SetTimeDomainCommandParameters")]
+[JsonSerializable(typeof(SetTimeDomainResult), TypeInfoPropertyName = "SetTimeDomainResult")]
+[JsonSerializable(typeof(GetMetricsCommandParameters), TypeInfoPropertyName = "GetMetricsCommandParameters")]
+[JsonSerializable(typeof(GetMetricsResult), TypeInfoPropertyName = "GetMetricsResult")]
+[JsonSerializable(typeof(CdpEventArgs<MetricsEventArgs>), TypeInfoPropertyName = "MetricsCdpEventArgs")]
+[JsonSerializable(typeof(Metric), TypeInfoPropertyName = "PerformanceMetric")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Metric>), TypeInfoPropertyName = "IReadOnlyListPerformanceMetric")]
+[JsonSourceGenerationOptions(
+PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+partial class PerformanceJsonSerializerContext : JsonSerializerContext;
+
+/// <summary>
+/// Provides static event descriptors for the <see cref="PerformanceDomain"/>.
+/// </summary>
+public static class PerformanceDomainEvent
+{
+    /// <summary>
+    /// Current values of the metrics.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<MetricsEventArgs>> Metrics { get; } =
+        EventDescriptor<CdpEventArgs<MetricsEventArgs>>.Create(
+            "goog:cdp.Performance.metrics",
+            PerformanceJsonSerializerContext.Default.MetricsCdpEventArgs);
+
+}

@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <LangVersion>Latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">true</IsAotCompatible>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>Logo.png</PackageIcon>
+    <PackageReadme>README.md</PackageReadme>
+    <PackageDescription>Provides support for the Chrome DevTools Protocol (CDP) over Selenium WebDriver BiDi (Chromium BiDi+).</PackageDescription>
+    <PackageReleaseNotes>This release adds support for $(ProtocolVersion) of the Chrome DevTools Protocol (CDP).</PackageReleaseNotes>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\Public.snk</AssemblyOriginatorKeyFile>
+    <PublicSign>true</PublicSign>
+    <AssemblyVersion>$(MajorVersion).0.0.0</AssemblyVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- <PackageReference Include="Selenium.WebDriver" Version="4.44.0" /> -->
+    <ProjectReference Include="..\..\..\selenium\dotnet\src\webdriver\Selenium.WebDriver.csproj" />
+    <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <_GenDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../../_gen/'))</_GenDir>
+    <_RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../../'))</_RepoRoot>
+    <_GeneratorProject>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../cdp.generator/Selenium.WebDriver.BiDi.Cdp.Generator.csproj'))</_GeneratorProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_ProtocolInput Include="$(_RepoRoot)/spec/*.json" />
+  </ItemGroup>
+
+  <Target Name="GenerateProtocol"
+          BeforeTargets="DispatchToInnerBuilds;BeforeBuild"
+          Inputs="@(_ProtocolInput)"
+          Outputs="$(_GenDir)CdpModule.cs"
+          Condition="'$(ForceGenerate)' == 'true' Or !Exists('$(_GenDir)CdpModule.cs') Or '@(_ProtocolInput)' != ''">
+    <Message Importance="high" Text="Building protocol code generator..." />
+    <MSBuild Projects="$(_GeneratorProject)" Targets="Build" Properties="TargetFramework=net10.0">
+      <Output TaskParameter="TargetOutputs" ItemName="_GeneratorAssembly" />
+    </MSBuild>
+    <Message Importance="high" Text="Running protocol code generator..." />
+    <Exec Command="dotnet exec &quot;@(_GeneratorAssembly)&quot;" WorkingDirectory="$(_RepoRoot)" />
+  </Target>
+
+  <ItemGroup>
+    <Compile Include="..\..\_gen\**\*.cs" LinkBase="_gen" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Logo.png" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

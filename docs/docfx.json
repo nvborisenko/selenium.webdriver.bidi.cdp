@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../src",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "dest": "api",
+      "namespaceLayout": "nested"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "CDP over WebDriver BiDi",
+      "_appTitle": "CDP over WebDriver BiDi",
+      "_appLogoPath": "images/logo.svg",
+      "_appFaviconPath": "images/logo.png",
+      "_enableSearch": true,
+      "pdf": false,
+      "_gitContribute": {
+        "repo": "https://github.com/nvborisenko/Selenium.webdriver.bidi.cdp",
+        "branch": "main"
+      }
+    }
+  }
+}

@@ -1,0 +1,3595 @@
+#nullable enable
+#pragma warning disable CS0612
+using global::System.Text.Json.Serialization;
+using global::OpenQA.Selenium.BiDi;
+
+namespace Selenium.WebDriver.BiDi.Cdp.DOM;
+
+/// <summary>
+/// This domain exposes DOM read/write operations. Each DOM Node is represented with its mirror object
+/// that has an <b>id</b>. This <b>id</b> can be used to get additional information on the Node, resolve it into
+/// the JavaScript object wrapper, etc. It is important that client receives DOM events only for the
+/// nodes that are known to the client. Backend keeps track of the nodes that were sent to the client
+/// and never sends the same node twice. It is client's responsibility to collect information about
+/// the nodes that were sent to the client. Note that <b>iframe</b> owner elements will return
+/// corresponding document elements as their child nodes.
+/// </summary>
+public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+{
+    private static DOMJsonSerializerContext JsonContext = DOMJsonSerializerContext.Default;
+
+    /// <summary>
+    /// Collects class names for the node with given id and all of it's child nodes.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to collect class names.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="CollectClassNamesFromSubtreeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="CollectClassNamesFromSubtreeResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, CollectClassNamesFromSubtreeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CollectClassNamesFromSubtreeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(CollectClassNamesFromSubtreeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CollectClassNamesFromSubtreeCommandParameters, CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeCommand = new("DOM.collectClassNamesFromSubtree", JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult);
+
+    /// <summary>
+    /// Creates a deep copy of the specified node and places it into the target container before the
+    /// given anchor.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>InsertBeforeNodeId</b> - Drop the copy before this node (if absent, the copy becomes the last child of <b>targetNodeId</b>).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// Id of the node to copy.
+    /// </param>
+    /// <param name="targetNodeId">
+    /// Id of the element to drop the copy into.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="CopyToCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="CopyToResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, CopyToCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CopyToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: options?.InsertBeforeNodeId);
+        return await ExecuteCommandAsync(CopyToCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CopyToCommandParameters, CopyToResult> CopyToCommand = new("DOM.copyTo", JsonContext.CopyToCommandParameters, JsonContext.CopyToResult);
+
+    /// <summary>
+    /// Describes node given its id, does not require domain to be enabled. Does not start tracking any
+    /// objects, can be used for automation.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
+    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
+    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="DescribeNodeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="DescribeNodeResult"/>.
+    /// </returns>
+    public async Task<DescribeNodeResult> DescribeNodeAsync(DescribeNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DescribeNodeCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId, Depth: options?.Depth, Pierce: options?.Pierce);
+        return await ExecuteCommandAsync(DescribeNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DescribeNodeCommandParameters, DescribeNodeResult> DescribeNodeCommand = new("DOM.describeNode", JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult);
+
+    /// <summary>
+    /// Scrolls the specified rect of the given node into view if not already visible.
+    /// Note: exactly one between nodeId, backendNodeId and objectId should be passed
+    /// to identify the node.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
+    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// <item><description><b>Rect</b> - The rect to be scrolled into view, relative to the node's border box, in CSS pixels. When omitted, center of the node will be used, similar to Element.scrollIntoView.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="ScrollIntoViewIfNeededCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ScrollIntoViewIfNeededResult"/>.
+    /// </returns>
+    public async Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(ScrollIntoViewIfNeededCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ScrollIntoViewIfNeededCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId, Rect: options?.Rect);
+        return await ExecuteCommandAsync(ScrollIntoViewIfNeededCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ScrollIntoViewIfNeededCommandParameters, ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededCommand = new("DOM.scrollIntoViewIfNeeded", JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult);
+
+    /// <summary>
+    /// Disables DOM agent for the given page.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
+    /// </returns>
+    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOM.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    /// <summary>
+    /// Discards search results from the session with the given id. <b>getSearchResults</b> should no longer
+    /// be called for that search.
+    /// </summary>
+    /// <param name="searchId">
+    /// Unique search session identifier.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="DiscardSearchResultsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="DiscardSearchResultsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, DiscardSearchResultsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DiscardSearchResultsCommandParameters(SearchId: searchId);
+        return await ExecuteCommandAsync(DiscardSearchResultsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DiscardSearchResultsCommandParameters, DiscardSearchResultsResult> DiscardSearchResultsCommand = new("DOM.discardSearchResults", JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult);
+
+    /// <summary>
+    /// Enables DOM agent for the given page.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>IncludeWhitespace</b> - Whether to include whitespaces in the children array of returned Nodes.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
+    /// </returns>
+    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(IncludeWhitespace: options?.IncludeWhitespace);
+        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOM.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    /// <summary>
+    /// Focuses the given element.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
+    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="FocusCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="FocusResult"/>.
+    /// </returns>
+    public async Task<FocusResult> FocusAsync(FocusCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new FocusCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
+        return await ExecuteCommandAsync(FocusCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<FocusCommandParameters, FocusResult> FocusCommand = new("DOM.focus", JsonContext.FocusCommandParameters, JsonContext.FocusResult);
+
+    /// <summary>
+    /// Returns attributes for the specified node.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to retrieve attributes for.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetAttributesCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetAttributesResult"/>.
+    /// </returns>
+    public async Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, GetAttributesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAttributesCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetAttributesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAttributesCommandParameters, GetAttributesResult> GetAttributesCommand = new("DOM.getAttributes", JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult);
+
+    /// <summary>
+    /// Returns boxes for the given node.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
+    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetBoxModelCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetBoxModelResult"/>.
+    /// </returns>
+    public async Task<GetBoxModelResult> GetBoxModelAsync(GetBoxModelCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetBoxModelCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
+        return await ExecuteCommandAsync(GetBoxModelCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetBoxModelCommandParameters, GetBoxModelResult> GetBoxModelCommand = new("DOM.getBoxModel", JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult);
+
+    /// <summary>
+    /// Returns quads that describe node position on the page. This method
+    /// might return multiple quads for inline nodes.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
+    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetContentQuadsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetContentQuadsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetContentQuadsResult> GetContentQuadsAsync(GetContentQuadsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetContentQuadsCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
+        return await ExecuteCommandAsync(GetContentQuadsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetContentQuadsCommandParameters, GetContentQuadsResult> GetContentQuadsCommand = new("DOM.getContentQuads", JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult);
+
+    /// <summary>
+    /// Returns the root DOM node (and optionally the subtree) to the caller.
+    /// Implicitly enables the DOM domain events for the current target.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
+    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetDocumentCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetDocumentResult"/>.
+    /// </returns>
+    public async Task<GetDocumentResult> GetDocumentAsync(GetDocumentCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDocumentCommandParameters(Depth: options?.Depth, Pierce: options?.Pierce);
+        return await ExecuteCommandAsync(GetDocumentCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDocumentCommandParameters, GetDocumentResult> GetDocumentCommand = new("DOM.getDocument", JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult);
+
+    /// <summary>
+    /// Returns the root DOM node (and optionally the subtree) to the caller.
+    /// Deprecated, as it is not designed to work well with the rest of the DOM agent.
+    /// Use DOMSnapshot.captureSnapshot instead.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
+    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetFlattenedDocumentCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetFlattenedDocumentResult"/>.
+    /// </returns>
+    [global::System.Obsolete]
+    public async Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(GetFlattenedDocumentCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFlattenedDocumentCommandParameters(Depth: options?.Depth, Pierce: options?.Pierce);
+        return await ExecuteCommandAsync(GetFlattenedDocumentCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFlattenedDocumentCommandParameters, GetFlattenedDocumentResult> GetFlattenedDocumentCommand = new("DOM.getFlattenedDocument", JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult);
+
+    /// <summary>
+    /// Finds nodes with a given computed style in a subtree.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots in the same target should be traversed when returning the results (default is false).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// Node ID pointing to the root of a subtree.
+    /// </param>
+    /// <param name="computedStyles">
+    /// The style to filter nodes by (includes nodes if any of properties matches).
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetNodesForSubtreeByStyleCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetNodesForSubtreeByStyleResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, IEnumerable<CSSComputedStyleProperty> computedStyles, GetNodesForSubtreeByStyleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetNodesForSubtreeByStyleCommandParameters(NodeId: nodeId, ComputedStyles: computedStyles, Pierce: options?.Pierce);
+        return await ExecuteCommandAsync(GetNodesForSubtreeByStyleCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetNodesForSubtreeByStyleCommandParameters, GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleCommand = new("DOM.getNodesForSubtreeByStyle", JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult);
+
+    /// <summary>
+    /// Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is
+    /// either returned or not.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>IncludeUserAgentShadowDOM</b> - False to skip to the nearest non-UA shadow root ancestor (default: false).</description></item>
+    /// <item><description><b>IgnorePointerEventsNone</b> - Whether to ignore pointer-events: none on elements and hit test them.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="x">
+    /// X coordinate.
+    /// </param>
+    /// <param name="y">
+    /// Y coordinate.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetNodeForLocationCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetNodeForLocationResult"/>.
+    /// </returns>
+    public async Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, GetNodeForLocationCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetNodeForLocationCommandParameters(X: x, Y: y, IncludeUserAgentShadowDOM: options?.IncludeUserAgentShadowDOM, IgnorePointerEventsNone: options?.IgnorePointerEventsNone);
+        return await ExecuteCommandAsync(GetNodeForLocationCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetNodeForLocationCommandParameters, GetNodeForLocationResult> GetNodeForLocationCommand = new("DOM.getNodeForLocation", JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult);
+
+    /// <summary>
+    /// Returns node's HTML markup.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
+    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetOuterHTMLCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetOuterHTMLResult"/>.
+    /// </returns>
+    public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(GetOuterHTMLCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetOuterHTMLCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
+        return await ExecuteCommandAsync(GetOuterHTMLCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetOuterHTMLCommandParameters, GetOuterHTMLResult> GetOuterHTMLCommand = new("DOM.getOuterHTML", JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult);
+
+    /// <summary>
+    /// Returns the id of the nearest ancestor that is a relayout boundary.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetRelayoutBoundaryCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetRelayoutBoundaryResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, GetRelayoutBoundaryCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetRelayoutBoundaryCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetRelayoutBoundaryCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetRelayoutBoundaryCommandParameters, GetRelayoutBoundaryResult> GetRelayoutBoundaryCommand = new("DOM.getRelayoutBoundary", JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult);
+
+    /// <summary>
+    /// Returns search results from given <b>fromIndex</b> to given <b>toIndex</b> from the search with the given
+    /// identifier.
+    /// </summary>
+    /// <param name="searchId">
+    /// Unique search session identifier.
+    /// </param>
+    /// <param name="fromIndex">
+    /// Start index of the search result to be returned.
+    /// </param>
+    /// <param name="toIndex">
+    /// End index of the search result to be returned.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetSearchResultsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetSearchResultsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, GetSearchResultsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSearchResultsCommandParameters(SearchId: searchId, FromIndex: fromIndex, ToIndex: toIndex);
+        return await ExecuteCommandAsync(GetSearchResultsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetSearchResultsCommandParameters, GetSearchResultsResult> GetSearchResultsCommand = new("DOM.getSearchResults", JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult);
+
+    /// <summary>
+    /// Hides any highlight.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="HideHighlightCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="HideHighlightResult"/>.
+    /// </returns>
+    public async Task<HideHighlightResult> HideHighlightAsync(HideHighlightCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HideHighlightCommandParameters();
+        return await ExecuteCommandAsync(HideHighlightCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HideHighlightCommandParameters, HideHighlightResult> HideHighlightCommand = new("DOM.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
+
+    /// <summary>
+    /// Highlights DOM node.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="HighlightNodeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="HighlightNodeResult"/>.
+    /// </returns>
+    public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightNodeCommandParameters();
+        return await ExecuteCommandAsync(HighlightNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult> HighlightNodeCommand = new("DOM.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
+
+    /// <summary>
+    /// Highlights given rectangle.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="HighlightRectCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="HighlightRectResult"/>.
+    /// </returns>
+    public async Task<HighlightRectResult> HighlightRectAsync(HighlightRectCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightRectCommandParameters();
+        return await ExecuteCommandAsync(HighlightRectCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightRectCommandParameters, HighlightRectResult> HighlightRectCommand = new("DOM.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
+
+    /// <summary>
+    /// Marks last undoable state.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="MarkUndoableStateCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="MarkUndoableStateResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<MarkUndoableStateResult> MarkUndoableStateAsync(MarkUndoableStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new MarkUndoableStateCommandParameters();
+        return await ExecuteCommandAsync(MarkUndoableStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<MarkUndoableStateCommandParameters, MarkUndoableStateResult> MarkUndoableStateCommand = new("DOM.markUndoableState", JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult);
+
+    /// <summary>
+    /// Moves node into the new container, places it before the given anchor.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>InsertBeforeNodeId</b> - Drop node before this one (if absent, the moved node becomes the last child of <b>targetNodeId</b>).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// Id of the node to move.
+    /// </param>
+    /// <param name="targetNodeId">
+    /// Id of the element to drop the moved node into.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="MoveToCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="MoveToResult"/>.
+    /// </returns>
+    public async Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, MoveToCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new MoveToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: options?.InsertBeforeNodeId);
+        return await ExecuteCommandAsync(MoveToCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<MoveToCommandParameters, MoveToResult> MoveToCommand = new("DOM.moveTo", JsonContext.MoveToCommandParameters, JsonContext.MoveToResult);
+
+    /// <summary>
+    /// Searches for a given string in the DOM tree. Use <b>getSearchResults</b> to access search results or
+    /// <b>cancelSearch</b> to end this search session.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>IncludeUserAgentShadowDOM</b> - True to search in user agent shadow DOM.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="query">
+    /// Plain text or query selector or XPath search query.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="PerformSearchCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="PerformSearchResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<PerformSearchResult> PerformSearchAsync(string query, PerformSearchCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PerformSearchCommandParameters(Query: query, IncludeUserAgentShadowDOM: options?.IncludeUserAgentShadowDOM);
+        return await ExecuteCommandAsync(PerformSearchCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PerformSearchCommandParameters, PerformSearchResult> PerformSearchCommand = new("DOM.performSearch", JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult);
+
+    /// <summary>
+    /// Requests that the node is sent to the caller given its path. // FIXME, use XPath
+    /// </summary>
+    /// <param name="path">
+    /// Path to node in the proprietary format.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="PushNodeByPathToFrontendCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="PushNodeByPathToFrontendResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, PushNodeByPathToFrontendCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PushNodeByPathToFrontendCommandParameters(Path: path);
+        return await ExecuteCommandAsync(PushNodeByPathToFrontendCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PushNodeByPathToFrontendCommandParameters, PushNodeByPathToFrontendResult> PushNodeByPathToFrontendCommand = new("DOM.pushNodeByPathToFrontend", JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult);
+
+    /// <summary>
+    /// Requests that a batch of nodes is sent to the caller given their backend node ids.
+    /// </summary>
+    /// <param name="backendNodeIds">
+    /// The array of backend node ids.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="PushNodesByBackendIdsToFrontendCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="PushNodesByBackendIdsToFrontendResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(IEnumerable<BackendNodeId> backendNodeIds, PushNodesByBackendIdsToFrontendCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PushNodesByBackendIdsToFrontendCommandParameters(BackendNodeIds: backendNodeIds);
+        return await ExecuteCommandAsync(PushNodesByBackendIdsToFrontendCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PushNodesByBackendIdsToFrontendCommandParameters, PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendCommand = new("DOM.pushNodesByBackendIdsToFrontend", JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult);
+
+    /// <summary>
+    /// Executes <b>querySelector</b> on a given node.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to query upon.
+    /// </param>
+    /// <param name="selector">
+    /// Selector string.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="QuerySelectorCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="QuerySelectorResult"/>.
+    /// </returns>
+    public async Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, QuerySelectorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new QuerySelectorCommandParameters(NodeId: nodeId, Selector: selector);
+        return await ExecuteCommandAsync(QuerySelectorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<QuerySelectorCommandParameters, QuerySelectorResult> QuerySelectorCommand = new("DOM.querySelector", JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult);
+
+    /// <summary>
+    /// Executes <b>querySelectorAll</b> on a given node.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to query upon.
+    /// </param>
+    /// <param name="selector">
+    /// Selector string.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="QuerySelectorAllCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="QuerySelectorAllResult"/>.
+    /// </returns>
+    public async Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, QuerySelectorAllCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new QuerySelectorAllCommandParameters(NodeId: nodeId, Selector: selector);
+        return await ExecuteCommandAsync(QuerySelectorAllCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<QuerySelectorAllCommandParameters, QuerySelectorAllResult> QuerySelectorAllCommand = new("DOM.querySelectorAll", JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult);
+
+    /// <summary>
+    /// Returns NodeIds of current top layer elements.
+    /// Top layer is rendered closest to the user within a viewport, therefore its elements always
+    /// appear on top of all other content.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetTopLayerElementsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetTopLayerElementsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(GetTopLayerElementsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetTopLayerElementsCommandParameters();
+        return await ExecuteCommandAsync(GetTopLayerElementsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetTopLayerElementsCommandParameters, GetTopLayerElementsResult> GetTopLayerElementsCommand = new("DOM.getTopLayerElements", JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult);
+
+    /// <summary>
+    /// Returns the NodeId of the matched element according to certain relations.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node from which to query the relation.
+    /// </param>
+    /// <param name="relation">
+    /// Type of relation to get.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetElementByRelationCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetElementByRelationResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, GetElementByRelationCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetElementByRelationCommandParameters(NodeId: nodeId, Relation: relation);
+        return await ExecuteCommandAsync(GetElementByRelationCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetElementByRelationCommandParameters, GetElementByRelationResult> GetElementByRelationCommand = new("DOM.getElementByRelation", JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult);
+
+    /// <summary>
+    /// Re-does the last undone action.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="RedoCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="RedoResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<RedoResult> RedoAsync(RedoCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RedoCommandParameters();
+        return await ExecuteCommandAsync(RedoCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RedoCommandParameters, RedoResult> RedoCommand = new("DOM.redo", JsonContext.RedoCommandParameters, JsonContext.RedoResult);
+
+    /// <summary>
+    /// Removes attribute with given name from an element with given id.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the element to remove attribute from.
+    /// </param>
+    /// <param name="name">
+    /// Name of the attribute to remove.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="RemoveAttributeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="RemoveAttributeResult"/>.
+    /// </returns>
+    public async Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, RemoveAttributeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveAttributeCommandParameters(NodeId: nodeId, Name: name);
+        return await ExecuteCommandAsync(RemoveAttributeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveAttributeCommandParameters, RemoveAttributeResult> RemoveAttributeCommand = new("DOM.removeAttribute", JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult);
+
+    /// <summary>
+    /// Removes node with given id.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to remove.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="RemoveNodeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="RemoveNodeResult"/>.
+    /// </returns>
+    public async Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, RemoveNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(RemoveNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveNodeCommandParameters, RemoveNodeResult> RemoveNodeCommand = new("DOM.removeNode", JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult);
+
+    /// <summary>
+    /// Requests that children of the node with given id are returned to the caller in form of
+    /// <b>setChildNodes</b> events where not only immediate children are retrieved, but all children down to
+    /// the specified depth.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
+    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the sub-tree (default is false).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// Id of the node to get children for.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="RequestChildNodesCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="RequestChildNodesResult"/>.
+    /// </returns>
+    public async Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, RequestChildNodesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestChildNodesCommandParameters(NodeId: nodeId, Depth: options?.Depth, Pierce: options?.Pierce);
+        return await ExecuteCommandAsync(RequestChildNodesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestChildNodesCommandParameters, RequestChildNodesResult> RequestChildNodesCommand = new("DOM.requestChildNodes", JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult);
+
+    /// <summary>
+    /// Requests that the node is sent to the caller given the JavaScript node object reference. All
+    /// nodes that form the path from the node to the root are also sent to the client as a series of
+    /// <b>setChildNodes</b> notifications.
+    /// </summary>
+    /// <param name="objectId">
+    /// JavaScript object id to convert into node.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="RequestNodeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="RequestNodeResult"/>.
+    /// </returns>
+    public async Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, RequestNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestNodeCommandParameters(ObjectId: objectId);
+        return await ExecuteCommandAsync(RequestNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestNodeCommandParameters, RequestNodeResult> RequestNodeCommand = new("DOM.requestNode", JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult);
+
+    /// <summary>
+    /// Resolves the JavaScript node object for a given NodeId or BackendNodeId.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Id of the node to resolve.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Backend identifier of the node to resolve.</description></item>
+    /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release multiple objects.</description></item>
+    /// <item><description><b>ExecutionContextId</b> - Execution context in which to resolve the node.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="ResolveNodeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ResolveNodeResult"/>.
+    /// </returns>
+    public async Task<ResolveNodeResult> ResolveNodeAsync(ResolveNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResolveNodeCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectGroup: options?.ObjectGroup, ExecutionContextId: options?.ExecutionContextId);
+        return await ExecuteCommandAsync(ResolveNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResolveNodeCommandParameters, ResolveNodeResult> ResolveNodeCommand = new("DOM.resolveNode", JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult);
+
+    /// <summary>
+    /// Sets attribute for an element with given id.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the element to set attribute for.
+    /// </param>
+    /// <param name="name">
+    /// Attribute name.
+    /// </param>
+    /// <param name="value">
+    /// Attribute value.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetAttributeValueCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetAttributeValueResult"/>.
+    /// </returns>
+    public async Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, SetAttributeValueCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAttributeValueCommandParameters(NodeId: nodeId, Name: name, Value: value);
+        return await ExecuteCommandAsync(SetAttributeValueCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAttributeValueCommandParameters, SetAttributeValueResult> SetAttributeValueCommand = new("DOM.setAttributeValue", JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult);
+
+    /// <summary>
+    /// Sets attributes on element with given id. This method is useful when user edits some existing
+    /// attribute value and types in several attribute name/value pairs.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Name</b> - Attribute name to replace with new attributes derived from text in case text parsed successfully.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// Id of the element to set attributes for.
+    /// </param>
+    /// <param name="text">
+    /// Text with a number of attributes. Will parse this text using HTML parser.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetAttributesAsTextCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetAttributesAsTextResult"/>.
+    /// </returns>
+    public async Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, SetAttributesAsTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAttributesAsTextCommandParameters(NodeId: nodeId, Text: text, Name: options?.Name);
+        return await ExecuteCommandAsync(SetAttributesAsTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAttributesAsTextCommandParameters, SetAttributesAsTextResult> SetAttributesAsTextCommand = new("DOM.setAttributesAsText", JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult);
+
+    /// <summary>
+    /// Sets files for the given file input element.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
+    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
+    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="files">
+    /// Array of file paths to set.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetFileInputFilesCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetFileInputFilesResult"/>.
+    /// </returns>
+    public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(IEnumerable<string> files, SetFileInputFilesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetFileInputFilesCommandParameters(Files: files, NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
+        return await ExecuteCommandAsync(SetFileInputFilesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetFileInputFilesCommandParameters, SetFileInputFilesResult> SetFileInputFilesCommand = new("DOM.setFileInputFiles", JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult);
+
+    /// <summary>
+    /// Sets if stack traces should be captured for Nodes. See <b>Node.getNodeStackTraces</b>. Default is disabled.
+    /// </summary>
+    /// <param name="enable">
+    /// Enable or disable.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetNodeStackTracesEnabledCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetNodeStackTracesEnabledResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, SetNodeStackTracesEnabledCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNodeStackTracesEnabledCommandParameters(Enable: enable);
+        return await ExecuteCommandAsync(SetNodeStackTracesEnabledCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNodeStackTracesEnabledCommandParameters, SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledCommand = new("DOM.setNodeStackTracesEnabled", JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult);
+
+    /// <summary>
+    /// Gets stack traces associated with a Node. As of now, only provides stack trace for Node creation.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to get stack traces for.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetNodeStackTracesCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetNodeStackTracesResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, GetNodeStackTracesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetNodeStackTracesCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetNodeStackTracesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetNodeStackTracesCommandParameters, GetNodeStackTracesResult> GetNodeStackTracesCommand = new("DOM.getNodeStackTraces", JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult);
+
+    /// <summary>
+    /// Returns file information for the given
+    /// File wrapper.
+    /// </summary>
+    /// <param name="objectId">
+    /// JavaScript object id of the node wrapper.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetFileInfoCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetFileInfoResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, GetFileInfoCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFileInfoCommandParameters(ObjectId: objectId);
+        return await ExecuteCommandAsync(GetFileInfoCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFileInfoCommandParameters, GetFileInfoResult> GetFileInfoCommand = new("DOM.getFileInfo", JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult);
+
+    /// <summary>
+    /// Returns list of detached nodes
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetDetachedDomNodesCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetDetachedDomNodesResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(GetDetachedDomNodesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDetachedDomNodesCommandParameters();
+        return await ExecuteCommandAsync(GetDetachedDomNodesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDetachedDomNodesCommandParameters, GetDetachedDomNodesResult> GetDetachedDomNodesCommand = new("DOM.getDetachedDomNodes", JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult);
+
+    /// <summary>
+    /// Enables console to refer to the node with given id via $x (see Command Line API for more details
+    /// $x functions).
+    /// </summary>
+    /// <param name="nodeId">
+    /// DOM node id to be accessible by means of $x command line API.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetInspectedNodeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetInspectedNodeResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, SetInspectedNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInspectedNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(SetInspectedNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetInspectedNodeCommandParameters, SetInspectedNodeResult> SetInspectedNodeCommand = new("DOM.setInspectedNode", JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult);
+
+    /// <summary>
+    /// Sets node name for a node with given id.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to set name for.
+    /// </param>
+    /// <param name="name">
+    /// New node's name.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetNodeNameCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetNodeNameResult"/>.
+    /// </returns>
+    public async Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, SetNodeNameCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNodeNameCommandParameters(NodeId: nodeId, Name: name);
+        return await ExecuteCommandAsync(SetNodeNameCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNodeNameCommandParameters, SetNodeNameResult> SetNodeNameCommand = new("DOM.setNodeName", JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult);
+
+    /// <summary>
+    /// Sets node value for a node with given id.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to set value for.
+    /// </param>
+    /// <param name="value">
+    /// New node's value.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetNodeValueCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetNodeValueResult"/>.
+    /// </returns>
+    public async Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, SetNodeValueCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNodeValueCommandParameters(NodeId: nodeId, Value: value);
+        return await ExecuteCommandAsync(SetNodeValueCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNodeValueCommandParameters, SetNodeValueResult> SetNodeValueCommand = new("DOM.setNodeValue", JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult);
+
+    /// <summary>
+    /// Sets node HTML markup, returns new node id.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the node to set markup for.
+    /// </param>
+    /// <param name="outerHTML">
+    /// Outer HTML markup to set.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetOuterHTMLCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetOuterHTMLResult"/>.
+    /// </returns>
+    public async Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, SetOuterHTMLCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetOuterHTMLCommandParameters(NodeId: nodeId, OuterHTML: outerHTML);
+        return await ExecuteCommandAsync(SetOuterHTMLCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetOuterHTMLCommandParameters, SetOuterHTMLResult> SetOuterHTMLCommand = new("DOM.setOuterHTML", JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult);
+
+    /// <summary>
+    /// Undoes the last performed action.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="UndoCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="UndoResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<UndoResult> UndoAsync(UndoCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UndoCommandParameters();
+        return await ExecuteCommandAsync(UndoCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UndoCommandParameters, UndoResult> UndoCommand = new("DOM.undo", JsonContext.UndoCommandParameters, JsonContext.UndoResult);
+
+    /// <summary>
+    /// Returns iframe node that owns iframe with the given domain.
+    /// </summary>
+    /// <param name="frameId">
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetFrameOwnerCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetFrameOwnerResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, GetFrameOwnerCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFrameOwnerCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetFrameOwnerCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFrameOwnerCommandParameters, GetFrameOwnerResult> GetFrameOwnerCommand = new("DOM.getFrameOwner", JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult);
+
+    /// <summary>
+    /// Returns the query container of the given node based on container query
+    /// conditions: containerName, physical and logical axes, and whether it queries
+    /// scroll-state. If no axes are provided and queriesScrollState is false, the
+    /// style container is returned, which is the direct parent or the closest
+    /// element with a matching container-name.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>ContainerName</b></description></item>
+    /// <item><description><b>PhysicalAxes</b></description></item>
+    /// <item><description><b>LogicalAxes</b></description></item>
+    /// <item><description><b>QueriesScrollState</b></description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetContainerForNodeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetContainerForNodeResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, GetContainerForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: options?.ContainerName, PhysicalAxes: options?.PhysicalAxes, LogicalAxes: options?.LogicalAxes, QueriesScrollState: options?.QueriesScrollState);
+        return await ExecuteCommandAsync(GetContainerForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetContainerForNodeCommandParameters, GetContainerForNodeResult> GetContainerForNodeCommand = new("DOM.getContainerForNode", JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult);
+
+    /// <summary>
+    /// Returns the descendants of a container query container that have
+    /// container queries against this container.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the container node to find querying descendants from.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetQueryingDescendantsForContainerCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetQueryingDescendantsForContainerResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, GetQueryingDescendantsForContainerCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetQueryingDescendantsForContainerCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetQueryingDescendantsForContainerCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetQueryingDescendantsForContainerCommandParameters, GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerCommand = new("DOM.getQueryingDescendantsForContainer", JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult);
+
+    /// <summary>
+    /// Returns the target anchor element of the given anchor query according to
+    /// https://www.w3.org/TR/css-anchor-position-1/#target.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>AnchorSpecifier</b> - An optional anchor specifier, as defined in https://www.w3.org/TR/css-anchor-position-1/#anchor-specifier. If not provided, it will return the implicit anchor element for the given positioned element.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// Id of the positioned element from which to find the anchor.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetAnchorElementCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetAnchorElementResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, GetAnchorElementCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAnchorElementCommandParameters(NodeId: nodeId, AnchorSpecifier: options?.AnchorSpecifier);
+        return await ExecuteCommandAsync(GetAnchorElementCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAnchorElementCommandParameters, GetAnchorElementResult> GetAnchorElementCommand = new("DOM.getAnchorElement", JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult);
+
+    /// <summary>
+    /// Fired when <b>Element</b>'s attribute is modified.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="AttributeModifiedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Id of the node that has changed.</description></item>
+    /// <item><description><b>Name</b> - Attribute name.</description></item>
+    /// <item><description><b>Value</b> - Attribute value.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);
+    /// <summary>
+    /// Fired when <b>Element</b>'s attribute is removed.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="AttributeRemovedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Id of the node that has changed.</description></item>
+    /// <item><description><b>Name</b> - A ttribute name.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<AttributeRemovedEventArgs> AttributeRemoved => CreateCdpEventSource(DOMDomainEvent.AttributeRemoved);
+    /// <summary>
+    /// Mirrors <b>DOMCharacterDataModified</b> event.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="CharacterDataModifiedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Id of the node that has changed.</description></item>
+    /// <item><description><b>CharacterData</b> - New text value.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<CharacterDataModifiedEventArgs> CharacterDataModified => CreateCdpEventSource(DOMDomainEvent.CharacterDataModified);
+    /// <summary>
+    /// Fired when <b>Container</b>'s child node count has changed.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="ChildNodeCountUpdatedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Id of the node that has changed.</description></item>
+    /// <item><description><b>ChildNodeCount</b> - New node count.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<ChildNodeCountUpdatedEventArgs> ChildNodeCountUpdated => CreateCdpEventSource(DOMDomainEvent.ChildNodeCountUpdated);
+    /// <summary>
+    /// Mirrors <b>DOMNodeInserted</b> event.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="ChildNodeInsertedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>ParentNodeId</b> - Id of the node that has changed.</description></item>
+    /// <item><description><b>PreviousNodeId</b> - Id of the previous sibling.</description></item>
+    /// <item><description><b>Node</b> - Inserted node data.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<ChildNodeInsertedEventArgs> ChildNodeInserted => CreateCdpEventSource(DOMDomainEvent.ChildNodeInserted);
+    /// <summary>
+    /// Mirrors <b>DOMNodeRemoved</b> event.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="ChildNodeRemovedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>ParentNodeId</b> - Parent id.</description></item>
+    /// <item><description><b>NodeId</b> - Id of the node that has been removed.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<ChildNodeRemovedEventArgs> ChildNodeRemoved => CreateCdpEventSource(DOMDomainEvent.ChildNodeRemoved);
+    /// <summary>
+    /// Called when distribution is changed.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="DistributedNodesUpdatedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>InsertionPointId</b> - Insertion point where distributed nodes were updated.</description></item>
+    /// <item><description><b>DistributedNodes</b> - Distributed nodes for given insertion point.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DistributedNodesUpdatedEventArgs> DistributedNodesUpdated => CreateCdpEventSource(DOMDomainEvent.DistributedNodesUpdated);
+    /// <summary>
+    /// Fired when <b>Document</b> has been totally updated. Node ids are no longer valid.
+    /// </summary>
+    public IEventSource<DocumentUpdatedEventArgs> DocumentUpdated => CreateCdpEventSource(DOMDomainEvent.DocumentUpdated);
+    /// <summary>
+    /// Fired when <b>Element</b>'s inline style is modified via a CSS property modification.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="InlineStyleInvalidatedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeIds</b> - Ids of the nodes for which the inline styles have been invalidated.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<InlineStyleInvalidatedEventArgs> InlineStyleInvalidated => CreateCdpEventSource(DOMDomainEvent.InlineStyleInvalidated);
+    /// <summary>
+    /// Called when a pseudo element is added to an element.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="PseudoElementAddedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>ParentId</b> - Pseudo element's parent element id.</description></item>
+    /// <item><description><b>PseudoElement</b> - The added pseudo element.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<PseudoElementAddedEventArgs> PseudoElementAdded => CreateCdpEventSource(DOMDomainEvent.PseudoElementAdded);
+    /// <summary>
+    /// Called when top layer elements are changed.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<TopLayerElementsUpdatedEventArgs> TopLayerElementsUpdated => CreateCdpEventSource(DOMDomainEvent.TopLayerElementsUpdated);
+    /// <summary>
+    /// Fired when a node's scrollability state changes.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="ScrollableFlagUpdatedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - The id of the node.</description></item>
+    /// <item><description><b>IsScrollable</b> - If the node is scrollable.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ScrollableFlagUpdatedEventArgs> ScrollableFlagUpdated => CreateCdpEventSource(DOMDomainEvent.ScrollableFlagUpdated);
+    /// <summary>
+    /// Called when a pseudo element is removed from an element.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="PseudoElementRemovedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>ParentId</b> - Pseudo element's parent element id.</description></item>
+    /// <item><description><b>PseudoElementId</b> - The removed pseudo element id.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<PseudoElementRemovedEventArgs> PseudoElementRemoved => CreateCdpEventSource(DOMDomainEvent.PseudoElementRemoved);
+    /// <summary>
+    /// Fired when backend wants to provide client with the missing DOM structure. This happens upon
+    /// most of the calls requesting node ids.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="SetChildNodesEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>ParentId</b> - Parent node id to populate with children.</description></item>
+    /// <item><description><b>Nodes</b> - Child nodes array.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<SetChildNodesEventArgs> SetChildNodes => CreateCdpEventSource(DOMDomainEvent.SetChildNodes);
+    /// <summary>
+    /// Called when shadow root is popped from the element.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="ShadowRootPoppedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>HostId</b> - Host element id.</description></item>
+    /// <item><description><b>RootId</b> - Shadow root id.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ShadowRootPoppedEventArgs> ShadowRootPopped => CreateCdpEventSource(DOMDomainEvent.ShadowRootPopped);
+    /// <summary>
+    /// Called when shadow root is pushed into the element.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="ShadowRootPushedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>HostId</b> - Host element id.</description></item>
+    /// <item><description><b>Root</b> - Shadow root.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ShadowRootPushedEventArgs> ShadowRootPushed => CreateCdpEventSource(DOMDomainEvent.ShadowRootPushed);
+}
+
+internal sealed record CollectClassNamesFromSubtreeCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.CollectClassNamesFromSubtreeAsync"/>.
+/// </summary>
+public sealed record CollectClassNamesFromSubtreeCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="ClassNames">
+/// Class name list.
+/// </param>
+public sealed record CollectClassNamesFromSubtreeResult(IReadOnlyList<string> ClassNames) : EmptyResult;
+
+
+internal sealed record CopyToCommandParameters(NodeId NodeId, NodeId TargetNodeId, NodeId? InsertBeforeNodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.CopyToAsync"/>.
+/// </summary>
+public sealed record CopyToCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Drop the copy before this node (if absent, the copy becomes the last child of
+    /// <b>targetNodeId</b>).
+    /// </summary>
+    public NodeId? InsertBeforeNodeId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// Id of the node clone.
+/// </param>
+public sealed record CopyToResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record DescribeNodeCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, long? Depth, bool? Pierce) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.DescribeNodeAsync"/>.
+/// </summary>
+public sealed record DescribeNodeCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Identifier of the node.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node.
+    /// </summary>
+    public BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// JavaScript object id of the node wrapper.
+    /// </summary>
+    public Runtime.RemoteObjectId? ObjectId { get; init; }
+
+    /// <summary>
+    /// The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+    /// entire subtree or provide an integer larger than 0.
+    /// </summary>
+    public long? Depth { get; init; }
+
+    /// <summary>
+    /// Whether or not iframes and shadow roots should be traversed when returning the subtree
+    /// (default is false).
+    /// </summary>
+    public bool? Pierce { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Node">
+/// Node description.
+/// </param>
+public sealed record DescribeNodeResult(Node Node) : EmptyResult;
+
+
+internal sealed record ScrollIntoViewIfNeededCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, Rect? Rect) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.ScrollIntoViewIfNeededAsync"/>.
+/// </summary>
+public sealed record ScrollIntoViewIfNeededCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Identifier of the node.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node.
+    /// </summary>
+    public BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// JavaScript object id of the node wrapper.
+    /// </summary>
+    public Runtime.RemoteObjectId? ObjectId { get; init; }
+
+    /// <summary>
+    /// The rect to be scrolled into view, relative to the node's border box, in CSS pixels.
+    /// When omitted, center of the node will be used, similar to Element.scrollIntoView.
+    /// </summary>
+    public Rect? Rect { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record ScrollIntoViewIfNeededResult() : EmptyResult;
+
+
+internal sealed record DisableCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.DisableAsync"/>.
+/// </summary>
+public sealed record DisableCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record DisableResult() : EmptyResult;
+
+
+internal sealed record DiscardSearchResultsCommandParameters(string SearchId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.DiscardSearchResultsAsync"/>.
+/// </summary>
+public sealed record DiscardSearchResultsCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record DiscardSearchResultsResult() : EmptyResult;
+
+
+internal sealed record EnableCommandParameters(string? IncludeWhitespace) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.EnableAsync"/>.
+/// </summary>
+public sealed record EnableCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Whether to include whitespaces in the children array of returned Nodes.
+    /// </summary>
+    public string? IncludeWhitespace { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record EnableResult() : EmptyResult;
+
+
+internal sealed record FocusCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.FocusAsync"/>.
+/// </summary>
+public sealed record FocusCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Identifier of the node.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node.
+    /// </summary>
+    public BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// JavaScript object id of the node wrapper.
+    /// </summary>
+    public Runtime.RemoteObjectId? ObjectId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record FocusResult() : EmptyResult;
+
+
+internal sealed record GetAttributesCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetAttributesAsync"/>.
+/// </summary>
+public sealed record GetAttributesCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Attributes">
+/// An interleaved array of node attribute names and values.
+/// </param>
+public sealed record GetAttributesResult(IReadOnlyList<string> Attributes) : EmptyResult;
+
+
+internal sealed record GetBoxModelCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetBoxModelAsync"/>.
+/// </summary>
+public sealed record GetBoxModelCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Identifier of the node.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node.
+    /// </summary>
+    public BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// JavaScript object id of the node wrapper.
+    /// </summary>
+    public Runtime.RemoteObjectId? ObjectId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Model">
+/// Box model for the node.
+/// </param>
+public sealed record GetBoxModelResult(BoxModel Model) : EmptyResult;
+
+
+internal sealed record GetContentQuadsCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetContentQuadsAsync"/>.
+/// </summary>
+public sealed record GetContentQuadsCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Identifier of the node.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node.
+    /// </summary>
+    public BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// JavaScript object id of the node wrapper.
+    /// </summary>
+    public Runtime.RemoteObjectId? ObjectId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Quads">
+/// Quads that describe node layout relative to viewport.
+/// </param>
+public sealed record GetContentQuadsResult(IReadOnlyList<IReadOnlyList<double>> Quads) : EmptyResult;
+
+
+internal sealed record GetDocumentCommandParameters(long? Depth, bool? Pierce) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetDocumentAsync"/>.
+/// </summary>
+public sealed record GetDocumentCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+    /// entire subtree or provide an integer larger than 0.
+    /// </summary>
+    public long? Depth { get; init; }
+
+    /// <summary>
+    /// Whether or not iframes and shadow roots should be traversed when returning the subtree
+    /// (default is false).
+    /// </summary>
+    public bool? Pierce { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Root">
+/// Resulting node.
+/// </param>
+public sealed record GetDocumentResult(Node Root) : EmptyResult;
+
+
+internal sealed record GetFlattenedDocumentCommandParameters(long? Depth, bool? Pierce) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetFlattenedDocumentAsync"/>.
+/// </summary>
+public sealed record GetFlattenedDocumentCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+    /// entire subtree or provide an integer larger than 0.
+    /// </summary>
+    public long? Depth { get; init; }
+
+    /// <summary>
+    /// Whether or not iframes and shadow roots should be traversed when returning the subtree
+    /// (default is false).
+    /// </summary>
+    public bool? Pierce { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Nodes">
+/// Resulting node.
+/// </param>
+public sealed record GetFlattenedDocumentResult(IReadOnlyList<Node> Nodes) : EmptyResult;
+
+
+internal sealed record GetNodesForSubtreeByStyleCommandParameters(NodeId NodeId, IEnumerable<CSSComputedStyleProperty> ComputedStyles, bool? Pierce) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetNodesForSubtreeByStyleAsync"/>.
+/// </summary>
+public sealed record GetNodesForSubtreeByStyleCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Whether or not iframes and shadow roots in the same target should be traversed when returning the
+    /// results (default is false).
+    /// </summary>
+    public bool? Pierce { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeIds">
+/// Resulting nodes.
+/// </param>
+public sealed record GetNodesForSubtreeByStyleResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record GetNodeForLocationCommandParameters(long X, long Y, bool? IncludeUserAgentShadowDOM, bool? IgnorePointerEventsNone) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetNodeForLocationAsync"/>.
+/// </summary>
+public sealed record GetNodeForLocationCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// False to skip to the nearest non-UA shadow root ancestor (default: false).
+    /// </summary>
+    public bool? IncludeUserAgentShadowDOM { get; init; }
+
+    /// <summary>
+    /// Whether to ignore pointer-events: none on elements and hit test them.
+    /// </summary>
+    public bool? IgnorePointerEventsNone { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="BackendNodeId">
+/// Resulting node.
+/// </param>
+/// <param name="FrameId">
+/// Frame this node belongs to.
+/// </param>
+/// <param name="NodeId">
+/// Id of the node at given coordinates, only when enabled and requested document.
+/// </param>
+public sealed record GetNodeForLocationResult(BackendNodeId BackendNodeId, Page.FrameId FrameId, NodeId? NodeId) : EmptyResult;
+
+
+internal sealed record GetOuterHTMLCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetOuterHTMLAsync"/>.
+/// </summary>
+public sealed record GetOuterHTMLCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Identifier of the node.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node.
+    /// </summary>
+    public BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// JavaScript object id of the node wrapper.
+    /// </summary>
+    public Runtime.RemoteObjectId? ObjectId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="OuterHTML">
+/// Outer HTML markup.
+/// </param>
+public sealed record GetOuterHTMLResult(string OuterHTML) : EmptyResult;
+
+
+internal sealed record GetRelayoutBoundaryCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetRelayoutBoundaryAsync"/>.
+/// </summary>
+public sealed record GetRelayoutBoundaryCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// Relayout boundary node id for the given node.
+/// </param>
+public sealed record GetRelayoutBoundaryResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record GetSearchResultsCommandParameters(string SearchId, long FromIndex, long ToIndex) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetSearchResultsAsync"/>.
+/// </summary>
+public sealed record GetSearchResultsCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeIds">
+/// Ids of the search result nodes.
+/// </param>
+public sealed record GetSearchResultsResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record HideHighlightCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.HideHighlightAsync"/>.
+/// </summary>
+public sealed record HideHighlightCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record HideHighlightResult() : EmptyResult;
+
+
+internal sealed record HighlightNodeCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.HighlightNodeAsync"/>.
+/// </summary>
+public sealed record HighlightNodeCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record HighlightNodeResult() : EmptyResult;
+
+
+internal sealed record HighlightRectCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.HighlightRectAsync"/>.
+/// </summary>
+public sealed record HighlightRectCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record HighlightRectResult() : EmptyResult;
+
+
+internal sealed record MarkUndoableStateCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.MarkUndoableStateAsync"/>.
+/// </summary>
+public sealed record MarkUndoableStateCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record MarkUndoableStateResult() : EmptyResult;
+
+
+internal sealed record MoveToCommandParameters(NodeId NodeId, NodeId TargetNodeId, NodeId? InsertBeforeNodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.MoveToAsync"/>.
+/// </summary>
+public sealed record MoveToCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Drop node before this one (if absent, the moved node becomes the last child of
+    /// <b>targetNodeId</b>).
+    /// </summary>
+    public NodeId? InsertBeforeNodeId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// New id of the moved node.
+/// </param>
+public sealed record MoveToResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record PerformSearchCommandParameters(string Query, bool? IncludeUserAgentShadowDOM) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.PerformSearchAsync"/>.
+/// </summary>
+public sealed record PerformSearchCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// True to search in user agent shadow DOM.
+    /// </summary>
+    public bool? IncludeUserAgentShadowDOM { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="SearchId">
+/// Unique search session identifier.
+/// </param>
+/// <param name="ResultCount">
+/// Number of search results.
+/// </param>
+public sealed record PerformSearchResult(string SearchId, long ResultCount) : EmptyResult;
+
+
+internal sealed record PushNodeByPathToFrontendCommandParameters(string Path) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.PushNodeByPathToFrontendAsync"/>.
+/// </summary>
+public sealed record PushNodeByPathToFrontendCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// Id of the node for given path.
+/// </param>
+public sealed record PushNodeByPathToFrontendResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record PushNodesByBackendIdsToFrontendCommandParameters(IEnumerable<BackendNodeId> BackendNodeIds) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.PushNodesByBackendIdsToFrontendAsync"/>.
+/// </summary>
+public sealed record PushNodesByBackendIdsToFrontendCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeIds">
+/// The array of ids of pushed nodes that correspond to the backend ids specified in
+/// backendNodeIds.
+/// </param>
+public sealed record PushNodesByBackendIdsToFrontendResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record QuerySelectorCommandParameters(NodeId NodeId, string Selector) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.QuerySelectorAsync"/>.
+/// </summary>
+public sealed record QuerySelectorCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// Query selector result.
+/// </param>
+public sealed record QuerySelectorResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record QuerySelectorAllCommandParameters(NodeId NodeId, string Selector) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.QuerySelectorAllAsync"/>.
+/// </summary>
+public sealed record QuerySelectorAllCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeIds">
+/// Query selector result.
+/// </param>
+public sealed record QuerySelectorAllResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record GetTopLayerElementsCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetTopLayerElementsAsync"/>.
+/// </summary>
+public sealed record GetTopLayerElementsCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeIds">
+/// NodeIds of top layer elements
+/// </param>
+public sealed record GetTopLayerElementsResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record GetElementByRelationCommandParameters(NodeId NodeId, string Relation) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetElementByRelationAsync"/>.
+/// </summary>
+public sealed record GetElementByRelationCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// NodeId of the element matching the queried relation.
+/// </param>
+public sealed record GetElementByRelationResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record RedoCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.RedoAsync"/>.
+/// </summary>
+public sealed record RedoCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record RedoResult() : EmptyResult;
+
+
+internal sealed record RemoveAttributeCommandParameters(NodeId NodeId, string Name) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.RemoveAttributeAsync"/>.
+/// </summary>
+public sealed record RemoveAttributeCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record RemoveAttributeResult() : EmptyResult;
+
+
+internal sealed record RemoveNodeCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.RemoveNodeAsync"/>.
+/// </summary>
+public sealed record RemoveNodeCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record RemoveNodeResult() : EmptyResult;
+
+
+internal sealed record RequestChildNodesCommandParameters(NodeId NodeId, long? Depth, bool? Pierce) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.RequestChildNodesAsync"/>.
+/// </summary>
+public sealed record RequestChildNodesCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+    /// entire subtree or provide an integer larger than 0.
+    /// </summary>
+    public long? Depth { get; init; }
+
+    /// <summary>
+    /// Whether or not iframes and shadow roots should be traversed when returning the sub-tree
+    /// (default is false).
+    /// </summary>
+    public bool? Pierce { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record RequestChildNodesResult() : EmptyResult;
+
+
+internal sealed record RequestNodeCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.RequestNodeAsync"/>.
+/// </summary>
+public sealed record RequestNodeCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// Node id for given object.
+/// </param>
+public sealed record RequestNodeResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record ResolveNodeCommandParameters(NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, string? ObjectGroup, Runtime.ExecutionContextId? ExecutionContextId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.ResolveNodeAsync"/>.
+/// </summary>
+public sealed record ResolveNodeCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Id of the node to resolve.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Backend identifier of the node to resolve.
+    /// </summary>
+    public DOM.BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// Symbolic group name that can be used to release multiple objects.
+    /// </summary>
+    public string? ObjectGroup { get; init; }
+
+    /// <summary>
+    /// Execution context in which to resolve the node.
+    /// </summary>
+    public Runtime.ExecutionContextId? ExecutionContextId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Object">
+/// JavaScript object wrapper for given node.
+/// </param>
+public sealed record ResolveNodeResult(Runtime.RemoteObject Object) : EmptyResult;
+
+
+internal sealed record SetAttributeValueCommandParameters(NodeId NodeId, string Name, string Value) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetAttributeValueAsync"/>.
+/// </summary>
+public sealed record SetAttributeValueCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetAttributeValueResult() : EmptyResult;
+
+
+internal sealed record SetAttributesAsTextCommandParameters(NodeId NodeId, string Text, string? Name) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetAttributesAsTextAsync"/>.
+/// </summary>
+public sealed record SetAttributesAsTextCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Attribute name to replace with new attributes derived from text in case text parsed
+    /// successfully.
+    /// </summary>
+    public string? Name { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetAttributesAsTextResult() : EmptyResult;
+
+
+internal sealed record SetFileInputFilesCommandParameters(IEnumerable<string> Files, NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetFileInputFilesAsync"/>.
+/// </summary>
+public sealed record SetFileInputFilesCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Identifier of the node.
+    /// </summary>
+    public NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node.
+    /// </summary>
+    public BackendNodeId? BackendNodeId { get; init; }
+
+    /// <summary>
+    /// JavaScript object id of the node wrapper.
+    /// </summary>
+    public Runtime.RemoteObjectId? ObjectId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetFileInputFilesResult() : EmptyResult;
+
+
+internal sealed record SetNodeStackTracesEnabledCommandParameters(bool Enable) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetNodeStackTracesEnabledAsync"/>.
+/// </summary>
+public sealed record SetNodeStackTracesEnabledCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetNodeStackTracesEnabledResult() : EmptyResult;
+
+
+internal sealed record GetNodeStackTracesCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetNodeStackTracesAsync"/>.
+/// </summary>
+public sealed record GetNodeStackTracesCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Creation">
+/// Creation stack trace, if available.
+/// </param>
+public sealed record GetNodeStackTracesResult(Runtime.StackTrace? Creation) : EmptyResult;
+
+
+internal sealed record GetFileInfoCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetFileInfoAsync"/>.
+/// </summary>
+public sealed record GetFileInfoCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Path">
+/// </param>
+public sealed record GetFileInfoResult(string Path) : EmptyResult;
+
+
+internal sealed record GetDetachedDomNodesCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetDetachedDomNodesAsync"/>.
+/// </summary>
+public sealed record GetDetachedDomNodesCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="DetachedNodes">
+/// The list of detached nodes
+/// </param>
+public sealed record GetDetachedDomNodesResult(IReadOnlyList<DetachedElementInfo> DetachedNodes) : EmptyResult;
+
+
+internal sealed record SetInspectedNodeCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetInspectedNodeAsync"/>.
+/// </summary>
+public sealed record SetInspectedNodeCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetInspectedNodeResult() : EmptyResult;
+
+
+internal sealed record SetNodeNameCommandParameters(NodeId NodeId, string Name) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetNodeNameAsync"/>.
+/// </summary>
+public sealed record SetNodeNameCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// New node's id.
+/// </param>
+public sealed record SetNodeNameResult(NodeId NodeId) : EmptyResult;
+
+
+internal sealed record SetNodeValueCommandParameters(NodeId NodeId, string Value) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetNodeValueAsync"/>.
+/// </summary>
+public sealed record SetNodeValueCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetNodeValueResult() : EmptyResult;
+
+
+internal sealed record SetOuterHTMLCommandParameters(NodeId NodeId, string OuterHTML) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.SetOuterHTMLAsync"/>.
+/// </summary>
+public sealed record SetOuterHTMLCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetOuterHTMLResult() : EmptyResult;
+
+
+internal sealed record UndoCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.UndoAsync"/>.
+/// </summary>
+public sealed record UndoCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record UndoResult() : EmptyResult;
+
+
+internal sealed record GetFrameOwnerCommandParameters(Page.FrameId FrameId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetFrameOwnerAsync"/>.
+/// </summary>
+public sealed record GetFrameOwnerCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="BackendNodeId">
+/// Resulting node.
+/// </param>
+/// <param name="NodeId">
+/// Id of the node at given coordinates, only when enabled and requested document.
+/// </param>
+public sealed record GetFrameOwnerResult(BackendNodeId BackendNodeId, NodeId? NodeId) : EmptyResult;
+
+
+internal sealed record GetContainerForNodeCommandParameters(NodeId NodeId, string? ContainerName, PhysicalAxes? PhysicalAxes, LogicalAxes? LogicalAxes, bool? QueriesScrollState) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetContainerForNodeAsync"/>.
+/// </summary>
+public sealed record GetContainerForNodeCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// </summary>
+    public string? ContainerName { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public PhysicalAxes? PhysicalAxes { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public LogicalAxes? LogicalAxes { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public bool? QueriesScrollState { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// The container node for the given node, or null if not found.
+/// </param>
+public sealed record GetContainerForNodeResult(NodeId? NodeId) : EmptyResult;
+
+
+internal sealed record GetQueryingDescendantsForContainerCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetQueryingDescendantsForContainerAsync"/>.
+/// </summary>
+public sealed record GetQueryingDescendantsForContainerCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeIds">
+/// Descendant nodes with container queries against the given container.
+/// </param>
+public sealed record GetQueryingDescendantsForContainerResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record GetAnchorElementCommandParameters(NodeId NodeId, string? AnchorSpecifier) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.GetAnchorElementAsync"/>.
+/// </summary>
+public sealed record GetAnchorElementCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// An optional anchor specifier, as defined in
+    /// https://www.w3.org/TR/css-anchor-position-1/#anchor-specifier.
+    /// If not provided, it will return the implicit anchor element for
+    /// the given positioned element.
+    /// </summary>
+    public string? AnchorSpecifier { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeId">
+/// The anchor element of the given anchor query.
+/// </param>
+public sealed record GetAnchorElementResult(NodeId NodeId) : EmptyResult;
+
+
+/// <summary>
+/// Fired when <b>Element</b>'s attribute is modified.
+/// </summary>
+/// <param name="NodeId">
+/// Id of the node that has changed.
+/// </param>
+/// <param name="Name">
+/// Attribute name.
+/// </param>
+/// <param name="Value">
+/// Attribute value.
+/// </param>
+public sealed record AttributeModifiedEventArgs(NodeId NodeId, string Name, string Value) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when <b>Element</b>'s attribute is removed.
+/// </summary>
+/// <param name="NodeId">
+/// Id of the node that has changed.
+/// </param>
+/// <param name="Name">
+/// A ttribute name.
+/// </param>
+public sealed record AttributeRemovedEventArgs(NodeId NodeId, string Name) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Mirrors <b>DOMCharacterDataModified</b> event.
+/// </summary>
+/// <param name="NodeId">
+/// Id of the node that has changed.
+/// </param>
+/// <param name="CharacterData">
+/// New text value.
+/// </param>
+public sealed record CharacterDataModifiedEventArgs(NodeId NodeId, string CharacterData) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when <b>Container</b>'s child node count has changed.
+/// </summary>
+/// <param name="NodeId">
+/// Id of the node that has changed.
+/// </param>
+/// <param name="ChildNodeCount">
+/// New node count.
+/// </param>
+public sealed record ChildNodeCountUpdatedEventArgs(NodeId NodeId, long ChildNodeCount) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Mirrors <b>DOMNodeInserted</b> event.
+/// </summary>
+/// <param name="ParentNodeId">
+/// Id of the node that has changed.
+/// </param>
+/// <param name="PreviousNodeId">
+/// Id of the previous sibling.
+/// </param>
+/// <param name="Node">
+/// Inserted node data.
+/// </param>
+public sealed record ChildNodeInsertedEventArgs(NodeId ParentNodeId, NodeId PreviousNodeId, Node Node) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Mirrors <b>DOMNodeRemoved</b> event.
+/// </summary>
+/// <param name="ParentNodeId">
+/// Parent id.
+/// </param>
+/// <param name="NodeId">
+/// Id of the node that has been removed.
+/// </param>
+public sealed record ChildNodeRemovedEventArgs(NodeId ParentNodeId, NodeId NodeId) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Called when distribution is changed.
+/// </summary>
+/// <param name="InsertionPointId">
+/// Insertion point where distributed nodes were updated.
+/// </param>
+/// <param name="DistributedNodes">
+/// Distributed nodes for given insertion point.
+/// </param>
+public sealed record DistributedNodesUpdatedEventArgs(NodeId InsertionPointId, IEnumerable<BackendNode> DistributedNodes) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when <b>Document</b> has been totally updated. Node ids are no longer valid.
+/// </summary>
+public sealed record DocumentUpdatedEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when <b>Element</b>'s inline style is modified via a CSS property modification.
+/// </summary>
+/// <param name="NodeIds">
+/// Ids of the nodes for which the inline styles have been invalidated.
+/// </param>
+public sealed record InlineStyleInvalidatedEventArgs(IEnumerable<NodeId> NodeIds) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Called when a pseudo element is added to an element.
+/// </summary>
+/// <param name="ParentId">
+/// Pseudo element's parent element id.
+/// </param>
+/// <param name="PseudoElement">
+/// The added pseudo element.
+/// </param>
+public sealed record PseudoElementAddedEventArgs(NodeId ParentId, Node PseudoElement) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Called when top layer elements are changed.
+/// </summary>
+public sealed record TopLayerElementsUpdatedEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when a node's scrollability state changes.
+/// </summary>
+/// <param name="NodeId">
+/// The id of the node.
+/// </param>
+/// <param name="IsScrollable">
+/// If the node is scrollable.
+/// </param>
+public sealed record ScrollableFlagUpdatedEventArgs(DOM.NodeId NodeId, bool IsScrollable) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Called when a pseudo element is removed from an element.
+/// </summary>
+/// <param name="ParentId">
+/// Pseudo element's parent element id.
+/// </param>
+/// <param name="PseudoElementId">
+/// The removed pseudo element id.
+/// </param>
+public sealed record PseudoElementRemovedEventArgs(NodeId ParentId, NodeId PseudoElementId) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when backend wants to provide client with the missing DOM structure. This happens upon
+/// most of the calls requesting node ids.
+/// </summary>
+/// <param name="ParentId">
+/// Parent node id to populate with children.
+/// </param>
+/// <param name="Nodes">
+/// Child nodes array.
+/// </param>
+public sealed record SetChildNodesEventArgs(NodeId ParentId, IEnumerable<Node> Nodes) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Called when shadow root is popped from the element.
+/// </summary>
+/// <param name="HostId">
+/// Host element id.
+/// </param>
+/// <param name="RootId">
+/// Shadow root id.
+/// </param>
+public sealed record ShadowRootPoppedEventArgs(NodeId HostId, NodeId RootId) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Called when shadow root is pushed into the element.
+/// </summary>
+/// <param name="HostId">
+/// Host element id.
+/// </param>
+/// <param name="Root">
+/// Shadow root.
+/// </param>
+public sealed record ShadowRootPushedEventArgs(NodeId HostId, Node Root) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Unique DOM node identifier.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<NodeId>))]
+public record NodeId : INumberRemoteId
+{
+    double INumberRemoteId.Id { get; init; }
+}
+
+/// <summary>
+/// Unique DOM node identifier used to reference a node that may not have been pushed to the
+/// front-end.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<BackendNodeId>))]
+public record BackendNodeId : INumberRemoteId
+{
+    double INumberRemoteId.Id { get; init; }
+}
+
+/// <summary>
+/// Backend node with a friendly name.
+/// </summary>
+/// <param name="NodeType">
+/// <b>Node</b>'s nodeType.
+/// </param>
+/// <param name="NodeName">
+/// <b>Node</b>'s nodeName.
+/// </param>
+/// <param name="BackendNodeId">
+/// </param>
+public sealed record BackendNode(long NodeType, string NodeName, BackendNodeId BackendNodeId)
+{
+}
+
+/// <summary>
+/// Pseudo element type.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PseudoType>))]
+public enum PseudoType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("first-line")]
+    FirstLine,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("first-letter")]
+    FirstLetter,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("checkmark")]
+    Checkmark,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("before")]
+    Before,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("after")]
+    After,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("picker-icon")]
+    PickerIcon,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("marker")]
+    Marker,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("backdrop")]
+    Backdrop,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("column")]
+    Column,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selection")]
+    Selection,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("search-text")]
+    SearchText,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("target-text")]
+    TargetText,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("spelling-error")]
+    SpellingError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("grammar-error")]
+    GrammarError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("highlight")]
+    Highlight,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("first-line-inherited")]
+    FirstLineInherited,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scroll-marker")]
+    ScrollMarker,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scroll-marker-group")]
+    ScrollMarkerGroup,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scroll-button")]
+    ScrollButton,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar")]
+    Scrollbar,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-thumb")]
+    ScrollbarThumb,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-button")]
+    ScrollbarButton,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-track")]
+    ScrollbarTrack,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-track-piece")]
+    ScrollbarTrackPiece,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-corner")]
+    ScrollbarCorner,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("resizer")]
+    Resizer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("input-list-button")]
+    InputListButton,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition")]
+    ViewTransition,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-group")]
+    ViewTransitionGroup,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-image-pair")]
+    ViewTransitionImagePair,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-group-children")]
+    ViewTransitionGroupChildren,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-old")]
+    ViewTransitionOld,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-new")]
+    ViewTransitionNew,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("placeholder")]
+    Placeholder,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("file-selector-button")]
+    FileSelectorButton,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("details-content")]
+    DetailsContent,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("picker")]
+    Picker,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("permission-icon")]
+    PermissionIcon,
+}
+
+/// <summary>
+/// Shadow root type.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ShadowRootType>))]
+public enum ShadowRootType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("user-agent")]
+    UserAgent,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("open")]
+    Open,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("closed")]
+    Closed,
+}
+
+/// <summary>
+/// Document compatibility mode.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<CompatibilityMode>))]
+public enum CompatibilityMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("QuirksMode")]
+    QuirksMode,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LimitedQuirksMode")]
+    LimitedQuirksMode,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoQuirksMode")]
+    NoQuirksMode,
+}
+
+/// <summary>
+/// ContainerSelector physical axes
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PhysicalAxes>))]
+public enum PhysicalAxes
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Horizontal")]
+    Horizontal,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Vertical")]
+    Vertical,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Both")]
+    Both,
+}
+
+/// <summary>
+/// ContainerSelector logical axes
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<LogicalAxes>))]
+public enum LogicalAxes
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Inline")]
+    Inline,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Block")]
+    Block,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Both")]
+    Both,
+}
+
+/// <summary>
+/// Physical scroll orientation
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ScrollOrientation>))]
+public enum ScrollOrientation
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("horizontal")]
+    Horizontal,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("vertical")]
+    Vertical,
+}
+
+/// <summary>
+/// DOM interaction is implemented in terms of mirror objects that represent the actual DOM nodes.
+/// DOMNode is a base node mirror type.
+/// </summary>
+/// <param name="NodeId">
+/// Node identifier that is passed into the rest of the DOM messages as the <b>nodeId</b>. Backend
+/// will only push node with given <b>id</b> once. It is aware of all requested nodes and will only
+/// fire DOM events for nodes known to the client.
+/// </param>
+/// <param name="BackendNodeId">
+/// The BackendNodeId for this node.
+/// </param>
+/// <param name="NodeType">
+/// <b>Node</b>'s nodeType.
+/// </param>
+/// <param name="NodeName">
+/// <b>Node</b>'s nodeName.
+/// </param>
+/// <param name="LocalName">
+/// <b>Node</b>'s localName.
+/// </param>
+/// <param name="NodeValue">
+/// <b>Node</b>'s nodeValue.
+/// </param>
+public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeType, string NodeName, string LocalName, string NodeValue)
+{
+    /// <summary>
+    /// The id of the parent node if any.
+    /// </summary>
+    public NodeId? ParentId { get; init; }
+
+    /// <summary>
+    /// Child count for <b>Container</b> nodes.
+    /// </summary>
+    public long? ChildNodeCount { get; init; }
+
+    /// <summary>
+    /// Child nodes of this node when requested with children.
+    /// </summary>
+    public IReadOnlyList<Node>? Children { get; init; }
+
+    /// <summary>
+    /// Attributes of the <b>Element</b> node in the form of flat array <b>[name1, value1, name2, value2]</b>.
+    /// </summary>
+    public IReadOnlyList<string>? Attributes { get; init; }
+
+    /// <summary>
+    /// Document URL that <b>Document</b> or <b>FrameOwner</b> node points to.
+    /// </summary>
+    public string? DocumentURL { get; init; }
+
+    /// <summary>
+    /// Base URL that <b>Document</b> or <b>FrameOwner</b> node uses for URL completion.
+    /// </summary>
+    public string? BaseURL { get; init; }
+
+    /// <summary>
+    /// <b>DocumentType</b>'s publicId.
+    /// </summary>
+    public string? PublicId { get; init; }
+
+    /// <summary>
+    /// <b>DocumentType</b>'s systemId.
+    /// </summary>
+    public string? SystemId { get; init; }
+
+    /// <summary>
+    /// <b>DocumentType</b>'s internalSubset.
+    /// </summary>
+    public string? InternalSubset { get; init; }
+
+    /// <summary>
+    /// <b>Document</b>'s XML version in case of XML documents.
+    /// </summary>
+    public string? XmlVersion { get; init; }
+
+    /// <summary>
+    /// <b>Attr</b>'s name.
+    /// </summary>
+    public string? Name { get; init; }
+
+    /// <summary>
+    /// <b>Attr</b>'s value.
+    /// </summary>
+    public string? Value { get; init; }
+
+    /// <summary>
+    /// Pseudo element type for this node.
+    /// </summary>
+    public PseudoType? PseudoType { get; init; }
+
+    /// <summary>
+    /// Pseudo element identifier for this node. Only present if there is a
+    /// valid pseudoType.
+    /// </summary>
+    public string? PseudoIdentifier { get; init; }
+
+    /// <summary>
+    /// Shadow root type.
+    /// </summary>
+    public ShadowRootType? ShadowRootType { get; init; }
+
+    /// <summary>
+    /// Frame ID for frame owner elements.
+    /// </summary>
+    public Page.FrameId? FrameId { get; init; }
+
+    /// <summary>
+    /// Content document for frame owner elements.
+    /// </summary>
+    public Node? ContentDocument { get; init; }
+
+    /// <summary>
+    /// Shadow root list for given element host.
+    /// </summary>
+    public IReadOnlyList<Node>? ShadowRoots { get; init; }
+
+    /// <summary>
+    /// Content document fragment for template elements.
+    /// </summary>
+    public Node? TemplateContent { get; init; }
+
+    /// <summary>
+    /// Pseudo elements associated with this node.
+    /// </summary>
+    public IReadOnlyList<Node>? PseudoElements { get; init; }
+
+    /// <summary>
+    /// Deprecated, as the HTML Imports API has been removed (crbug.com/937746).
+    /// This property used to return the imported document for the HTMLImport links.
+    /// The property is always undefined now.
+    /// </summary>
+    [global::System.Obsolete]
+    public Node? ImportedDocument { get; init; }
+
+    /// <summary>
+    /// Distributed nodes for given insertion point.
+    /// </summary>
+    public IReadOnlyList<BackendNode>? DistributedNodes { get; init; }
+
+    /// <summary>
+    /// Whether the node is SVG.
+    /// </summary>
+    public bool? IsSVG { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public CompatibilityMode? CompatibilityMode { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public BackendNode? AssignedSlot { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public bool? IsScrollable { get; init; }
+}
+
+/// <summary>
+/// A structure to hold the top-level node of a detached tree and an array of its retained descendants.
+/// </summary>
+/// <param name="TreeNode">
+/// </param>
+/// <param name="RetainedNodeIds">
+/// </param>
+public sealed record DetachedElementInfo(Node TreeNode, IReadOnlyList<NodeId> RetainedNodeIds)
+{
+}
+
+/// <summary>
+/// A structure holding an RGBA color.
+/// </summary>
+/// <param name="R">
+/// The red component, in the [0-255] range.
+/// </param>
+/// <param name="G">
+/// The green component, in the [0-255] range.
+/// </param>
+/// <param name="B">
+/// The blue component, in the [0-255] range.
+/// </param>
+public sealed record RGBA(long R, long G, long B)
+{
+    /// <summary>
+    /// The alpha component, in the [0-1] range (default: 1).
+    /// </summary>
+    public double? A { get; init; }
+}
+
+/// <summary>
+/// An array of quad vertices, x immediately followed by y for each point, points clock-wise.
+/// </summary>
+
+/// <summary>
+/// Box model.
+/// </summary>
+/// <param name="Content">
+/// Content box
+/// </param>
+/// <param name="Padding">
+/// Padding box
+/// </param>
+/// <param name="Border">
+/// Border box
+/// </param>
+/// <param name="Margin">
+/// Margin box
+/// </param>
+/// <param name="Width">
+/// Node width
+/// </param>
+/// <param name="Height">
+/// Node height
+/// </param>
+public sealed record BoxModel(IReadOnlyList<double> Content, IReadOnlyList<double> Padding, IReadOnlyList<double> Border, IReadOnlyList<double> Margin, long Width, long Height)
+{
+    /// <summary>
+    /// Shape outside coordinates
+    /// </summary>
+    public ShapeOutsideInfo? ShapeOutside { get; init; }
+}
+
+/// <summary>
+/// CSS Shape Outside details.
+/// </summary>
+/// <param name="Bounds">
+/// Shape bounds
+/// </param>
+/// <param name="Shape">
+/// Shape coordinate details
+/// </param>
+/// <param name="MarginShape">
+/// Margin shape bounds
+/// </param>
+public sealed record ShapeOutsideInfo(IReadOnlyList<double> Bounds, IReadOnlyList<global::System.Text.Json.JsonElement> Shape, IReadOnlyList<global::System.Text.Json.JsonElement> MarginShape)
+{
+}
+
+/// <summary>
+/// Rectangle.
+/// </summary>
+/// <param name="X">
+/// X coordinate
+/// </param>
+/// <param name="Y">
+/// Y coordinate
+/// </param>
+/// <param name="Width">
+/// Rectangle width
+/// </param>
+/// <param name="Height">
+/// Rectangle height
+/// </param>
+public sealed record Rect(double X, double Y, double Width, double Height)
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Name">
+/// Computed style property name.
+/// </param>
+/// <param name="Value">
+/// Computed style property value.
+/// </param>
+public sealed record CSSComputedStyleProperty(string Name, string Value)
+{
+}
+
+[JsonSerializable(typeof(CollectClassNamesFromSubtreeCommandParameters), TypeInfoPropertyName = "CollectClassNamesFromSubtreeCommandParameters")]
+[JsonSerializable(typeof(CollectClassNamesFromSubtreeResult), TypeInfoPropertyName = "CollectClassNamesFromSubtreeResult")]
+[JsonSerializable(typeof(CopyToCommandParameters), TypeInfoPropertyName = "CopyToCommandParameters")]
+[JsonSerializable(typeof(CopyToResult), TypeInfoPropertyName = "CopyToResult")]
+[JsonSerializable(typeof(DescribeNodeCommandParameters), TypeInfoPropertyName = "DescribeNodeCommandParameters")]
+[JsonSerializable(typeof(DescribeNodeResult), TypeInfoPropertyName = "DescribeNodeResult")]
+[JsonSerializable(typeof(ScrollIntoViewIfNeededCommandParameters), TypeInfoPropertyName = "ScrollIntoViewIfNeededCommandParameters")]
+[JsonSerializable(typeof(ScrollIntoViewIfNeededResult), TypeInfoPropertyName = "ScrollIntoViewIfNeededResult")]
+[JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]
+[JsonSerializable(typeof(DisableResult), TypeInfoPropertyName = "DisableResult")]
+[JsonSerializable(typeof(DiscardSearchResultsCommandParameters), TypeInfoPropertyName = "DiscardSearchResultsCommandParameters")]
+[JsonSerializable(typeof(DiscardSearchResultsResult), TypeInfoPropertyName = "DiscardSearchResultsResult")]
+[JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]
+[JsonSerializable(typeof(EnableResult), TypeInfoPropertyName = "EnableResult")]
+[JsonSerializable(typeof(FocusCommandParameters), TypeInfoPropertyName = "FocusCommandParameters")]
+[JsonSerializable(typeof(FocusResult), TypeInfoPropertyName = "FocusResult")]
+[JsonSerializable(typeof(GetAttributesCommandParameters), TypeInfoPropertyName = "GetAttributesCommandParameters")]
+[JsonSerializable(typeof(GetAttributesResult), TypeInfoPropertyName = "GetAttributesResult")]
+[JsonSerializable(typeof(GetBoxModelCommandParameters), TypeInfoPropertyName = "GetBoxModelCommandParameters")]
+[JsonSerializable(typeof(GetBoxModelResult), TypeInfoPropertyName = "GetBoxModelResult")]
+[JsonSerializable(typeof(GetContentQuadsCommandParameters), TypeInfoPropertyName = "GetContentQuadsCommandParameters")]
+[JsonSerializable(typeof(GetContentQuadsResult), TypeInfoPropertyName = "GetContentQuadsResult")]
+[JsonSerializable(typeof(GetDocumentCommandParameters), TypeInfoPropertyName = "GetDocumentCommandParameters")]
+[JsonSerializable(typeof(GetDocumentResult), TypeInfoPropertyName = "GetDocumentResult")]
+[JsonSerializable(typeof(GetFlattenedDocumentCommandParameters), TypeInfoPropertyName = "GetFlattenedDocumentCommandParameters")]
+[JsonSerializable(typeof(GetFlattenedDocumentResult), TypeInfoPropertyName = "GetFlattenedDocumentResult")]
+[JsonSerializable(typeof(GetNodesForSubtreeByStyleCommandParameters), TypeInfoPropertyName = "GetNodesForSubtreeByStyleCommandParameters")]
+[JsonSerializable(typeof(GetNodesForSubtreeByStyleResult), TypeInfoPropertyName = "GetNodesForSubtreeByStyleResult")]
+[JsonSerializable(typeof(GetNodeForLocationCommandParameters), TypeInfoPropertyName = "GetNodeForLocationCommandParameters")]
+[JsonSerializable(typeof(GetNodeForLocationResult), TypeInfoPropertyName = "GetNodeForLocationResult")]
+[JsonSerializable(typeof(GetOuterHTMLCommandParameters), TypeInfoPropertyName = "GetOuterHTMLCommandParameters")]
+[JsonSerializable(typeof(GetOuterHTMLResult), TypeInfoPropertyName = "GetOuterHTMLResult")]
+[JsonSerializable(typeof(GetRelayoutBoundaryCommandParameters), TypeInfoPropertyName = "GetRelayoutBoundaryCommandParameters")]
+[JsonSerializable(typeof(GetRelayoutBoundaryResult), TypeInfoPropertyName = "GetRelayoutBoundaryResult")]
+[JsonSerializable(typeof(GetSearchResultsCommandParameters), TypeInfoPropertyName = "GetSearchResultsCommandParameters")]
+[JsonSerializable(typeof(GetSearchResultsResult), TypeInfoPropertyName = "GetSearchResultsResult")]
+[JsonSerializable(typeof(HideHighlightCommandParameters), TypeInfoPropertyName = "HideHighlightCommandParameters")]
+[JsonSerializable(typeof(HideHighlightResult), TypeInfoPropertyName = "HideHighlightResult")]
+[JsonSerializable(typeof(HighlightNodeCommandParameters), TypeInfoPropertyName = "HighlightNodeCommandParameters")]
+[JsonSerializable(typeof(HighlightNodeResult), TypeInfoPropertyName = "HighlightNodeResult")]
+[JsonSerializable(typeof(HighlightRectCommandParameters), TypeInfoPropertyName = "HighlightRectCommandParameters")]
+[JsonSerializable(typeof(HighlightRectResult), TypeInfoPropertyName = "HighlightRectResult")]
+[JsonSerializable(typeof(MarkUndoableStateCommandParameters), TypeInfoPropertyName = "MarkUndoableStateCommandParameters")]
+[JsonSerializable(typeof(MarkUndoableStateResult), TypeInfoPropertyName = "MarkUndoableStateResult")]
+[JsonSerializable(typeof(MoveToCommandParameters), TypeInfoPropertyName = "MoveToCommandParameters")]
+[JsonSerializable(typeof(MoveToResult), TypeInfoPropertyName = "MoveToResult")]
+[JsonSerializable(typeof(PerformSearchCommandParameters), TypeInfoPropertyName = "PerformSearchCommandParameters")]
+[JsonSerializable(typeof(PerformSearchResult), TypeInfoPropertyName = "PerformSearchResult")]
+[JsonSerializable(typeof(PushNodeByPathToFrontendCommandParameters), TypeInfoPropertyName = "PushNodeByPathToFrontendCommandParameters")]
+[JsonSerializable(typeof(PushNodeByPathToFrontendResult), TypeInfoPropertyName = "PushNodeByPathToFrontendResult")]
+[JsonSerializable(typeof(PushNodesByBackendIdsToFrontendCommandParameters), TypeInfoPropertyName = "PushNodesByBackendIdsToFrontendCommandParameters")]
+[JsonSerializable(typeof(PushNodesByBackendIdsToFrontendResult), TypeInfoPropertyName = "PushNodesByBackendIdsToFrontendResult")]
+[JsonSerializable(typeof(QuerySelectorCommandParameters), TypeInfoPropertyName = "QuerySelectorCommandParameters")]
+[JsonSerializable(typeof(QuerySelectorResult), TypeInfoPropertyName = "QuerySelectorResult")]
+[JsonSerializable(typeof(QuerySelectorAllCommandParameters), TypeInfoPropertyName = "QuerySelectorAllCommandParameters")]
+[JsonSerializable(typeof(QuerySelectorAllResult), TypeInfoPropertyName = "QuerySelectorAllResult")]
+[JsonSerializable(typeof(GetTopLayerElementsCommandParameters), TypeInfoPropertyName = "GetTopLayerElementsCommandParameters")]
+[JsonSerializable(typeof(GetTopLayerElementsResult), TypeInfoPropertyName = "GetTopLayerElementsResult")]
+[JsonSerializable(typeof(GetElementByRelationCommandParameters), TypeInfoPropertyName = "GetElementByRelationCommandParameters")]
+[JsonSerializable(typeof(GetElementByRelationResult), TypeInfoPropertyName = "GetElementByRelationResult")]
+[JsonSerializable(typeof(RedoCommandParameters), TypeInfoPropertyName = "RedoCommandParameters")]
+[JsonSerializable(typeof(RedoResult), TypeInfoPropertyName = "RedoResult")]
+[JsonSerializable(typeof(RemoveAttributeCommandParameters), TypeInfoPropertyName = "RemoveAttributeCommandParameters")]
+[JsonSerializable(typeof(RemoveAttributeResult), TypeInfoPropertyName = "RemoveAttributeResult")]
+[JsonSerializable(typeof(RemoveNodeCommandParameters), TypeInfoPropertyName = "RemoveNodeCommandParameters")]
+[JsonSerializable(typeof(RemoveNodeResult), TypeInfoPropertyName = "RemoveNodeResult")]
+[JsonSerializable(typeof(RequestChildNodesCommandParameters), TypeInfoPropertyName = "RequestChildNodesCommandParameters")]
+[JsonSerializable(typeof(RequestChildNodesResult), TypeInfoPropertyName = "RequestChildNodesResult")]
+[JsonSerializable(typeof(RequestNodeCommandParameters), TypeInfoPropertyName = "RequestNodeCommandParameters")]
+[JsonSerializable(typeof(RequestNodeResult), TypeInfoPropertyName = "RequestNodeResult")]
+[JsonSerializable(typeof(ResolveNodeCommandParameters), TypeInfoPropertyName = "ResolveNodeCommandParameters")]
+[JsonSerializable(typeof(ResolveNodeResult), TypeInfoPropertyName = "ResolveNodeResult")]
+[JsonSerializable(typeof(SetAttributeValueCommandParameters), TypeInfoPropertyName = "SetAttributeValueCommandParameters")]
+[JsonSerializable(typeof(SetAttributeValueResult), TypeInfoPropertyName = "SetAttributeValueResult")]
+[JsonSerializable(typeof(SetAttributesAsTextCommandParameters), TypeInfoPropertyName = "SetAttributesAsTextCommandParameters")]
+[JsonSerializable(typeof(SetAttributesAsTextResult), TypeInfoPropertyName = "SetAttributesAsTextResult")]
+[JsonSerializable(typeof(SetFileInputFilesCommandParameters), TypeInfoPropertyName = "SetFileInputFilesCommandParameters")]
+[JsonSerializable(typeof(SetFileInputFilesResult), TypeInfoPropertyName = "SetFileInputFilesResult")]
+[JsonSerializable(typeof(SetNodeStackTracesEnabledCommandParameters), TypeInfoPropertyName = "SetNodeStackTracesEnabledCommandParameters")]
+[JsonSerializable(typeof(SetNodeStackTracesEnabledResult), TypeInfoPropertyName = "SetNodeStackTracesEnabledResult")]
+[JsonSerializable(typeof(GetNodeStackTracesCommandParameters), TypeInfoPropertyName = "GetNodeStackTracesCommandParameters")]
+[JsonSerializable(typeof(GetNodeStackTracesResult), TypeInfoPropertyName = "GetNodeStackTracesResult")]
+[JsonSerializable(typeof(GetFileInfoCommandParameters), TypeInfoPropertyName = "GetFileInfoCommandParameters")]
+[JsonSerializable(typeof(GetFileInfoResult), TypeInfoPropertyName = "GetFileInfoResult")]
+[JsonSerializable(typeof(GetDetachedDomNodesCommandParameters), TypeInfoPropertyName = "GetDetachedDomNodesCommandParameters")]
+[JsonSerializable(typeof(GetDetachedDomNodesResult), TypeInfoPropertyName = "GetDetachedDomNodesResult")]
+[JsonSerializable(typeof(SetInspectedNodeCommandParameters), TypeInfoPropertyName = "SetInspectedNodeCommandParameters")]
+[JsonSerializable(typeof(SetInspectedNodeResult), TypeInfoPropertyName = "SetInspectedNodeResult")]
+[JsonSerializable(typeof(SetNodeNameCommandParameters), TypeInfoPropertyName = "SetNodeNameCommandParameters")]
+[JsonSerializable(typeof(SetNodeNameResult), TypeInfoPropertyName = "SetNodeNameResult")]
+[JsonSerializable(typeof(SetNodeValueCommandParameters), TypeInfoPropertyName = "SetNodeValueCommandParameters")]
+[JsonSerializable(typeof(SetNodeValueResult), TypeInfoPropertyName = "SetNodeValueResult")]
+[JsonSerializable(typeof(SetOuterHTMLCommandParameters), TypeInfoPropertyName = "SetOuterHTMLCommandParameters")]
+[JsonSerializable(typeof(SetOuterHTMLResult), TypeInfoPropertyName = "SetOuterHTMLResult")]
+[JsonSerializable(typeof(UndoCommandParameters), TypeInfoPropertyName = "UndoCommandParameters")]
+[JsonSerializable(typeof(UndoResult), TypeInfoPropertyName = "UndoResult")]
+[JsonSerializable(typeof(GetFrameOwnerCommandParameters), TypeInfoPropertyName = "GetFrameOwnerCommandParameters")]
+[JsonSerializable(typeof(GetFrameOwnerResult), TypeInfoPropertyName = "GetFrameOwnerResult")]
+[JsonSerializable(typeof(GetContainerForNodeCommandParameters), TypeInfoPropertyName = "GetContainerForNodeCommandParameters")]
+[JsonSerializable(typeof(GetContainerForNodeResult), TypeInfoPropertyName = "GetContainerForNodeResult")]
+[JsonSerializable(typeof(GetQueryingDescendantsForContainerCommandParameters), TypeInfoPropertyName = "GetQueryingDescendantsForContainerCommandParameters")]
+[JsonSerializable(typeof(GetQueryingDescendantsForContainerResult), TypeInfoPropertyName = "GetQueryingDescendantsForContainerResult")]
+[JsonSerializable(typeof(GetAnchorElementCommandParameters), TypeInfoPropertyName = "GetAnchorElementCommandParameters")]
+[JsonSerializable(typeof(GetAnchorElementResult), TypeInfoPropertyName = "GetAnchorElementResult")]
+[JsonSerializable(typeof(CdpEventArgs<AttributeModifiedEventArgs>), TypeInfoPropertyName = "AttributeModifiedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<AttributeRemovedEventArgs>), TypeInfoPropertyName = "AttributeRemovedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<CharacterDataModifiedEventArgs>), TypeInfoPropertyName = "CharacterDataModifiedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<ChildNodeCountUpdatedEventArgs>), TypeInfoPropertyName = "ChildNodeCountUpdatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<ChildNodeInsertedEventArgs>), TypeInfoPropertyName = "ChildNodeInsertedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<ChildNodeRemovedEventArgs>), TypeInfoPropertyName = "ChildNodeRemovedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<DistributedNodesUpdatedEventArgs>), TypeInfoPropertyName = "DistributedNodesUpdatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<DocumentUpdatedEventArgs>), TypeInfoPropertyName = "DocumentUpdatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<InlineStyleInvalidatedEventArgs>), TypeInfoPropertyName = "InlineStyleInvalidatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<PseudoElementAddedEventArgs>), TypeInfoPropertyName = "PseudoElementAddedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<TopLayerElementsUpdatedEventArgs>), TypeInfoPropertyName = "TopLayerElementsUpdatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<ScrollableFlagUpdatedEventArgs>), TypeInfoPropertyName = "ScrollableFlagUpdatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<PseudoElementRemovedEventArgs>), TypeInfoPropertyName = "PseudoElementRemovedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<SetChildNodesEventArgs>), TypeInfoPropertyName = "SetChildNodesCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<ShadowRootPoppedEventArgs>), TypeInfoPropertyName = "ShadowRootPoppedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<ShadowRootPushedEventArgs>), TypeInfoPropertyName = "ShadowRootPushedCdpEventArgs")]
+[JsonSerializable(typeof(NodeId), TypeInfoPropertyName = "DOMNodeId")]
+[JsonSerializable(typeof(BackendNodeId), TypeInfoPropertyName = "DOMBackendNodeId")]
+[JsonSerializable(typeof(BackendNode), TypeInfoPropertyName = "DOMBackendNode")]
+[JsonSerializable(typeof(PseudoType), TypeInfoPropertyName = "DOMPseudoType")]
+[JsonSerializable(typeof(ShadowRootType), TypeInfoPropertyName = "DOMShadowRootType")]
+[JsonSerializable(typeof(CompatibilityMode), TypeInfoPropertyName = "DOMCompatibilityMode")]
+[JsonSerializable(typeof(PhysicalAxes), TypeInfoPropertyName = "DOMPhysicalAxes")]
+[JsonSerializable(typeof(LogicalAxes), TypeInfoPropertyName = "DOMLogicalAxes")]
+[JsonSerializable(typeof(ScrollOrientation), TypeInfoPropertyName = "DOMScrollOrientation")]
+[JsonSerializable(typeof(Node), TypeInfoPropertyName = "DOMNode")]
+[JsonSerializable(typeof(DetachedElementInfo), TypeInfoPropertyName = "DOMDetachedElementInfo")]
+[JsonSerializable(typeof(RGBA), TypeInfoPropertyName = "DOMRGBA")]
+[JsonSerializable(typeof(BoxModel), TypeInfoPropertyName = "DOMBoxModel")]
+[JsonSerializable(typeof(ShapeOutsideInfo), TypeInfoPropertyName = "DOMShapeOutsideInfo")]
+[JsonSerializable(typeof(Rect), TypeInfoPropertyName = "DOMRect")]
+[JsonSerializable(typeof(CSSComputedStyleProperty), TypeInfoPropertyName = "DOMCSSComputedStyleProperty")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Node>), TypeInfoPropertyName = "IReadOnlyListDOMNode")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSComputedStyleProperty>), TypeInfoPropertyName = "IReadOnlyListDOMCSSComputedStyleProperty")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<NodeId>), TypeInfoPropertyName = "IReadOnlyListDOMNodeId")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackendNodeId>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNodeId")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DetachedElementInfo>), TypeInfoPropertyName = "IReadOnlyListDOMDetachedElementInfo")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackendNode>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNode")]
+[JsonSourceGenerationOptions(
+PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+partial class DOMJsonSerializerContext : JsonSerializerContext;
+
+/// <summary>
+/// Provides static event descriptors for the <see cref="DOMDomain"/>.
+/// </summary>
+public static class DOMDomainEvent
+{
+    /// <summary>
+    /// Fired when <b>Element</b>'s attribute is modified.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>> AttributeModified { get; } =
+        EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>>.Create(
+            "goog:cdp.DOM.attributeModified",
+            DOMJsonSerializerContext.Default.AttributeModifiedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when <b>Element</b>'s attribute is removed.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<AttributeRemovedEventArgs>> AttributeRemoved { get; } =
+        EventDescriptor<CdpEventArgs<AttributeRemovedEventArgs>>.Create(
+            "goog:cdp.DOM.attributeRemoved",
+            DOMJsonSerializerContext.Default.AttributeRemovedCdpEventArgs);
+
+    /// <summary>
+    /// Mirrors <b>DOMCharacterDataModified</b> event.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<CharacterDataModifiedEventArgs>> CharacterDataModified { get; } =
+        EventDescriptor<CdpEventArgs<CharacterDataModifiedEventArgs>>.Create(
+            "goog:cdp.DOM.characterDataModified",
+            DOMJsonSerializerContext.Default.CharacterDataModifiedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when <b>Container</b>'s child node count has changed.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<ChildNodeCountUpdatedEventArgs>> ChildNodeCountUpdated { get; } =
+        EventDescriptor<CdpEventArgs<ChildNodeCountUpdatedEventArgs>>.Create(
+            "goog:cdp.DOM.childNodeCountUpdated",
+            DOMJsonSerializerContext.Default.ChildNodeCountUpdatedCdpEventArgs);
+
+    /// <summary>
+    /// Mirrors <b>DOMNodeInserted</b> event.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<ChildNodeInsertedEventArgs>> ChildNodeInserted { get; } =
+        EventDescriptor<CdpEventArgs<ChildNodeInsertedEventArgs>>.Create(
+            "goog:cdp.DOM.childNodeInserted",
+            DOMJsonSerializerContext.Default.ChildNodeInsertedCdpEventArgs);
+
+    /// <summary>
+    /// Mirrors <b>DOMNodeRemoved</b> event.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<ChildNodeRemovedEventArgs>> ChildNodeRemoved { get; } =
+        EventDescriptor<CdpEventArgs<ChildNodeRemovedEventArgs>>.Create(
+            "goog:cdp.DOM.childNodeRemoved",
+            DOMJsonSerializerContext.Default.ChildNodeRemovedCdpEventArgs);
+
+    /// <summary>
+    /// Called when distribution is changed.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<DistributedNodesUpdatedEventArgs>> DistributedNodesUpdated { get; } =
+        EventDescriptor<CdpEventArgs<DistributedNodesUpdatedEventArgs>>.Create(
+            "goog:cdp.DOM.distributedNodesUpdated",
+            DOMJsonSerializerContext.Default.DistributedNodesUpdatedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when <b>Document</b> has been totally updated. Node ids are no longer valid.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<DocumentUpdatedEventArgs>> DocumentUpdated { get; } =
+        EventDescriptor<CdpEventArgs<DocumentUpdatedEventArgs>>.Create(
+            "goog:cdp.DOM.documentUpdated",
+            DOMJsonSerializerContext.Default.DocumentUpdatedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when <b>Element</b>'s inline style is modified via a CSS property modification.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<InlineStyleInvalidatedEventArgs>> InlineStyleInvalidated { get; } =
+        EventDescriptor<CdpEventArgs<InlineStyleInvalidatedEventArgs>>.Create(
+            "goog:cdp.DOM.inlineStyleInvalidated",
+            DOMJsonSerializerContext.Default.InlineStyleInvalidatedCdpEventArgs);
+
+    /// <summary>
+    /// Called when a pseudo element is added to an element.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<PseudoElementAddedEventArgs>> PseudoElementAdded { get; } =
+        EventDescriptor<CdpEventArgs<PseudoElementAddedEventArgs>>.Create(
+            "goog:cdp.DOM.pseudoElementAdded",
+            DOMJsonSerializerContext.Default.PseudoElementAddedCdpEventArgs);
+
+    /// <summary>
+    /// Called when top layer elements are changed.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<TopLayerElementsUpdatedEventArgs>> TopLayerElementsUpdated { get; } =
+        EventDescriptor<CdpEventArgs<TopLayerElementsUpdatedEventArgs>>.Create(
+            "goog:cdp.DOM.topLayerElementsUpdated",
+            DOMJsonSerializerContext.Default.TopLayerElementsUpdatedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when a node's scrollability state changes.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>> ScrollableFlagUpdated { get; } =
+        EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>>.Create(
+            "goog:cdp.DOM.scrollableFlagUpdated",
+            DOMJsonSerializerContext.Default.ScrollableFlagUpdatedCdpEventArgs);
+
+    /// <summary>
+    /// Called when a pseudo element is removed from an element.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<PseudoElementRemovedEventArgs>> PseudoElementRemoved { get; } =
+        EventDescriptor<CdpEventArgs<PseudoElementRemovedEventArgs>>.Create(
+            "goog:cdp.DOM.pseudoElementRemoved",
+            DOMJsonSerializerContext.Default.PseudoElementRemovedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when backend wants to provide client with the missing DOM structure. This happens upon
+    /// most of the calls requesting node ids.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<SetChildNodesEventArgs>> SetChildNodes { get; } =
+        EventDescriptor<CdpEventArgs<SetChildNodesEventArgs>>.Create(
+            "goog:cdp.DOM.setChildNodes",
+            DOMJsonSerializerContext.Default.SetChildNodesCdpEventArgs);
+
+    /// <summary>
+    /// Called when shadow root is popped from the element.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<ShadowRootPoppedEventArgs>> ShadowRootPopped { get; } =
+        EventDescriptor<CdpEventArgs<ShadowRootPoppedEventArgs>>.Create(
+            "goog:cdp.DOM.shadowRootPopped",
+            DOMJsonSerializerContext.Default.ShadowRootPoppedCdpEventArgs);
+
+    /// <summary>
+    /// Called when shadow root is pushed into the element.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<ShadowRootPushedEventArgs>> ShadowRootPushed { get; } =
+        EventDescriptor<CdpEventArgs<ShadowRootPushedEventArgs>>.Create(
+            "goog:cdp.DOM.shadowRootPushed",
+            DOMJsonSerializerContext.Default.ShadowRootPushedCdpEventArgs);
+
+}

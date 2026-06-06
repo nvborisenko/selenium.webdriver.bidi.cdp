@@ -1,0 +1,9 @@
+<Project>
+
+  <PropertyGroup>
+    <MajorVersion>0</MajorVersion>
+    <ProtocolVersion>666</ProtocolVersion>
+    <VersionPrefix>$(MajorVersion).0.$(ProtocolVersion)</VersionPrefix>
+  </PropertyGroup>
+
+</Project>

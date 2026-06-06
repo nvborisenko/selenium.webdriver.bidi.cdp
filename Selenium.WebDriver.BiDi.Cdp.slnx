@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="src/cdp/Selenium.WebDriver.BiDi.Cdp.csproj" />
+  <Project Path="src/cdp.generator/Selenium.WebDriver.BiDi.Cdp.Generator.csproj" />
+
+  <Folder Name="/test/">
+    <Project Path="test/cdp.tests/Selenium.WebDriver.BiDi.Cdp.Tests.csproj" />
+    <Project Path="test/cdp.benchmark/Selenium.WebDriver.BiDi.Cdp.Benchmark.csproj" />
+  </Folder>
+</Solution>

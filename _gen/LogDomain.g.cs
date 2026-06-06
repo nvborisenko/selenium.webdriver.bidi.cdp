@@ -1,0 +1,302 @@
+#nullable enable
+#pragma warning disable CS0612
+using global::System.Text.Json.Serialization;
+using global::OpenQA.Selenium.BiDi;
+
+namespace Selenium.WebDriver.BiDi.Cdp.Log;
+
+/// <summary>
+/// Provides access to log entries.
+/// </summary>
+public sealed class LogDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+{
+    private static LogJsonSerializerContext JsonContext = LogJsonSerializerContext.Default;
+
+    /// <summary>
+    /// Clears the log.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="ClearCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ClearResult"/>.
+    /// </returns>
+    public async Task<ClearResult> ClearAsync(ClearCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearCommandParameters();
+        return await ExecuteCommandAsync(ClearCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearCommandParameters, ClearResult> ClearCommand = new("Log.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
+
+    /// <summary>
+    /// Disables log domain, prevents further log entries from being reported to the client.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
+    /// </returns>
+    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Log.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    /// <summary>
+    /// Enables log domain, sends the entries collected so far to the client by means of the
+    /// <b>entryAdded</b> notification.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
+    /// </returns>
+    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Log.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    /// <summary>
+    /// start violation reporting.
+    /// </summary>
+    /// <param name="config">
+    /// Configuration for violations.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="StartViolationsReportCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="StartViolationsReportResult"/>.
+    /// </returns>
+    public async Task<StartViolationsReportResult> StartViolationsReportAsync(IEnumerable<ViolationSetting> config, StartViolationsReportCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartViolationsReportCommandParameters(Config: config);
+        return await ExecuteCommandAsync(StartViolationsReportCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartViolationsReportCommandParameters, StartViolationsReportResult> StartViolationsReportCommand = new("Log.startViolationsReport", JsonContext.StartViolationsReportCommandParameters, JsonContext.StartViolationsReportResult);
+
+    /// <summary>
+    /// Stop violation reporting.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="StopViolationsReportCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="StopViolationsReportResult"/>.
+    /// </returns>
+    public async Task<StopViolationsReportResult> StopViolationsReportAsync(StopViolationsReportCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopViolationsReportCommandParameters();
+        return await ExecuteCommandAsync(StopViolationsReportCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopViolationsReportCommandParameters, StopViolationsReportResult> StopViolationsReportCommand = new("Log.stopViolationsReport", JsonContext.StopViolationsReportCommandParameters, JsonContext.StopViolationsReportResult);
+
+    /// <summary>
+    /// Issued when new message was logged.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="EntryAddedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Entry</b> - The entry.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<EntryAddedEventArgs> EntryAdded => CreateCdpEventSource(LogDomainEvent.EntryAdded);
+}
+
+internal sealed record ClearCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="LogDomain.ClearAsync"/>.
+/// </summary>
+public sealed record ClearCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record ClearResult() : EmptyResult;
+
+
+internal sealed record DisableCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="LogDomain.DisableAsync"/>.
+/// </summary>
+public sealed record DisableCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record DisableResult() : EmptyResult;
+
+
+internal sealed record EnableCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="LogDomain.EnableAsync"/>.
+/// </summary>
+public sealed record EnableCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record EnableResult() : EmptyResult;
+
+
+internal sealed record StartViolationsReportCommandParameters(IEnumerable<ViolationSetting> Config) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="LogDomain.StartViolationsReportAsync"/>.
+/// </summary>
+public sealed record StartViolationsReportCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record StartViolationsReportResult() : EmptyResult;
+
+
+internal sealed record StopViolationsReportCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="LogDomain.StopViolationsReportAsync"/>.
+/// </summary>
+public sealed record StopViolationsReportCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record StopViolationsReportResult() : EmptyResult;
+
+
+/// <summary>
+/// Issued when new message was logged.
+/// </summary>
+/// <param name="Entry">
+/// The entry.
+/// </param>
+public sealed record EntryAddedEventArgs(LogEntry Entry) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Log entry.
+/// </summary>
+/// <param name="Source">
+/// Log entry source.
+/// </param>
+/// <param name="Level">
+/// Log entry severity.
+/// </param>
+/// <param name="Text">
+/// Logged text.
+/// </param>
+/// <param name="Timestamp">
+/// Timestamp when this entry was added.
+/// </param>
+public sealed record LogEntry(string Source, string Level, string Text, Runtime.Timestamp Timestamp)
+{
+    /// <summary>
+    /// </summary>
+    public string? Category { get; init; }
+
+    /// <summary>
+    /// URL of the resource if known.
+    /// </summary>
+    public string? Url { get; init; }
+
+    /// <summary>
+    /// Line number in the resource.
+    /// </summary>
+    public long? LineNumber { get; init; }
+
+    /// <summary>
+    /// JavaScript stack trace.
+    /// </summary>
+    public Runtime.StackTrace? StackTrace { get; init; }
+
+    /// <summary>
+    /// Identifier of the network request associated with this entry.
+    /// </summary>
+    public Network.RequestId? NetworkRequestId { get; init; }
+
+    /// <summary>
+    /// Identifier of the worker associated with this entry.
+    /// </summary>
+    public string? WorkerId { get; init; }
+
+    /// <summary>
+    /// Call arguments.
+    /// </summary>
+    public IReadOnlyList<Runtime.RemoteObject>? Args { get; init; }
+}
+
+/// <summary>
+/// Violation configuration setting.
+/// </summary>
+/// <param name="Name">
+/// Violation type.
+/// </param>
+/// <param name="Threshold">
+/// Time threshold to trigger upon.
+/// </param>
+public sealed record ViolationSetting(string Name, double Threshold)
+{
+}
+
+[JsonSerializable(typeof(ClearCommandParameters), TypeInfoPropertyName = "ClearCommandParameters")]
+[JsonSerializable(typeof(ClearResult), TypeInfoPropertyName = "ClearResult")]
+[JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]
+[JsonSerializable(typeof(DisableResult), TypeInfoPropertyName = "DisableResult")]
+[JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]
+[JsonSerializable(typeof(EnableResult), TypeInfoPropertyName = "EnableResult")]
+[JsonSerializable(typeof(StartViolationsReportCommandParameters), TypeInfoPropertyName = "StartViolationsReportCommandParameters")]
+[JsonSerializable(typeof(StartViolationsReportResult), TypeInfoPropertyName = "StartViolationsReportResult")]
+[JsonSerializable(typeof(StopViolationsReportCommandParameters), TypeInfoPropertyName = "StopViolationsReportCommandParameters")]
+[JsonSerializable(typeof(StopViolationsReportResult), TypeInfoPropertyName = "StopViolationsReportResult")]
+[JsonSerializable(typeof(CdpEventArgs<EntryAddedEventArgs>), TypeInfoPropertyName = "EntryAddedCdpEventArgs")]
+[JsonSerializable(typeof(LogEntry), TypeInfoPropertyName = "LogLogEntry")]
+[JsonSerializable(typeof(ViolationSetting), TypeInfoPropertyName = "LogViolationSetting")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ViolationSetting>), TypeInfoPropertyName = "IReadOnlyListLogViolationSetting")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Runtime.RemoteObject>), TypeInfoPropertyName = "IReadOnlyListRuntimeRemoteObject")]
+[JsonSourceGenerationOptions(
+PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+partial class LogJsonSerializerContext : JsonSerializerContext;
+
+/// <summary>
+/// Provides static event descriptors for the <see cref="LogDomain"/>.
+/// </summary>
+public static class LogDomainEvent
+{
+    /// <summary>
+    /// Issued when new message was logged.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<EntryAddedEventArgs>> EntryAdded { get; } =
+        EventDescriptor<CdpEventArgs<EntryAddedEventArgs>>.Create(
+            "goog:cdp.Log.entryAdded",
+            LogJsonSerializerContext.Default.EntryAddedCdpEventArgs);
+
+}
