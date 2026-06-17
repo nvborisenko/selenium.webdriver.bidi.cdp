@@ -18,8 +18,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- <PackageReference Include="Selenium.WebDriver" Version="4.44.0" /> -->
-    <ProjectReference Include="..\..\..\selenium\dotnet\src\webdriver\Selenium.WebDriver.csproj" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.45.0" />
+    <!-- <ProjectReference Include="..\..\..\selenium\dotnet\src\webdriver\Selenium.WebDriver.csproj" /> -->
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
 
