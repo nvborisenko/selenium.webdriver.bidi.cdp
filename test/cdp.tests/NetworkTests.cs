@@ -9,8 +9,6 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task SendRequestWithUrlFiltersAndExtraHeadersAndVerifyRequests()
     {
-        await Cdp.Network.EnableAsync();
-
         await Cdp.Network.SetBlockedURLsAsync(["*://*/*.gif"]);
 
         await Cdp.Network.SetExtraHTTPHeadersAsync(new Dictionary<string, string>
@@ -34,8 +32,6 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task EmulateNetworkConditionOffline()
     {
-        await Cdp.Network.EnableAsync(new() { MaxTotalBufferSize = 100000000 });
-
         await Cdp.Network.EmulateNetworkConditionsAsync(
             offline: true,
             latency: 100,
@@ -61,8 +57,6 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task VerifySearchInResponseBody()
     {
-        await Cdp.Network.EnableAsync(new() { MaxResourceBufferSize = 100000000 });
-
         await using var responseReceivedStream = await Cdp.Network.ResponseReceived.StreamAsync();
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
@@ -80,8 +74,6 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task VerifyCacheDisabledAndClearCache()
     {
-        await Cdp.Network.EnableAsync(new() { MaxPostDataSize = 100000000 });
-
         await using var responseReceivedStream = await Cdp.Network.ResponseReceived.StreamAsync();
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
@@ -98,8 +90,6 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task VerifyResponseReceivedEventAndNetworkDisable()
     {
-        await Cdp.Network.EnableAsync();
-
         await using var responseReceivedStream = await Cdp.Network.ResponseReceived.StreamAsync();
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
@@ -111,8 +101,6 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task VerifyRequestPostData()
     {
-        await Cdp.Network.EnableAsync();
-
         await using var requestWillBeSentStream = await Cdp.Network.RequestWillBeSent.StreamAsync();
 
         string formPage = "data:text/html,<html><body><form method='POST' action='https://httpbin.org/post'><input type='hidden' name='key' value='value'/><input type='submit' id='submit'/></form></body></html>";
@@ -141,8 +129,6 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task ByPassServiceWorker()
     {
-        await Cdp.Network.EnableAsync();
-
         await Cdp.Network.SetBypassServiceWorkerAsync(true);
     }
 }
