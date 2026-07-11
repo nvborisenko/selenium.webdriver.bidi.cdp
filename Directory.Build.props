@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <MajorVersion>0</MajorVersion>
-    <ProtocolVersion>666</ProtocolVersion>
+    <ProtocolVersion>1</ProtocolVersion>
     <VersionPrefix>$(MajorVersion).0.$(ProtocolVersion)</VersionPrefix>
   </PropertyGroup>
 

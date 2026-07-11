@@ -1,0 +1,102 @@
+name: Update Protocol
+
+on:
+  schedule:
+    # Daily at 06:00 UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-protocol
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Fetch latest CDP and regenerate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Use a PAT so the pushed tag triggers the Release workflow.
+          # A push made with the default GITHUB_TOKEN does not trigger other workflows.
+          token: ${{ secrets.RELEASE_PAT }}
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Resolve latest upstream protocol tag
+        id: upstream
+        run: |
+          set -euo pipefail
+          latest_tag=$(git ls-remote --tags --sort=-v:refname \
+            https://github.com/ChromeDevTools/devtools-protocol.git 'v0.0.*' \
+            | grep -v '\^{}' | head -n1 | sed -E 's#.*refs/tags/##')
+          if [ -z "$latest_tag" ]; then
+            echo "Could not resolve latest upstream tag" >&2
+            exit 1
+          fi
+          new_version="${latest_tag#v0.0.}"
+          echo "Latest upstream tag: $latest_tag (version $new_version)"
+          echo "tag=$latest_tag" >> "$GITHUB_OUTPUT"
+          echo "version=$new_version" >> "$GITHUB_OUTPUT"
+
+      - name: Read current protocol version
+        id: current
+        run: |
+          set -euo pipefail
+          current_version=$(sed -nE 's#.*<ProtocolVersion>([0-9]+)</ProtocolVersion>.*#\1#p' Directory.Build.props)
+          echo "Current protocol version: $current_version"
+          echo "version=$current_version" >> "$GITHUB_OUTPUT"
+
+      - name: Check for update
+        id: check
+        run: |
+          set -euo pipefail
+          if [ "${{ steps.upstream.outputs.version }}" = "${{ steps.current.outputs.version }}" ]; then
+            echo "Already up to date at version ${{ steps.current.outputs.version }}."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download protocol definitions
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          base="https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/${{ steps.upstream.outputs.tag }}/json"
+          curl -fsSL "$base/browser_protocol.json" -o spec/browser_protocol.json
+          curl -fsSL "$base/js_protocol.json" -o spec/js_protocol.json
+
+      - name: Update protocol version
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          sed -i -E "s#<ProtocolVersion>[0-9]+</ProtocolVersion>#<ProtocolVersion>${{ steps.upstream.outputs.version }}</ProtocolVersion>#" Directory.Build.props
+
+      - name: Regenerate protocol code
+        if: steps.check.outputs.changed == 'true'
+        run: dotnet build src/cdp/Selenium.WebDriver.BiDi.Cdp.csproj --configuration Release /p:ForceGenerate=true
+
+      - name: Commit, push and tag
+        if: steps.check.outputs.changed == 'true'
+        env:
+          NEW_TAG: ${{ steps.upstream.outputs.tag }}
+          NEW_VERSION: ${{ steps.upstream.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add spec/ Directory.Build.props _gen/
+          git commit -m "Update CDP to $NEW_TAG"
+          git push origin HEAD:${{ github.ref_name }}
+          git tag "$NEW_TAG"
+          git push origin "$NEW_TAG"
