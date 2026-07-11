@@ -41,5 +41,12 @@ jobs:
           dotnet-version: |
             10.0.x
 
+      - name: Enable Automated Test Report Artifact Upload
+        uses: actions/github-script@v8
+        with:
+          script: |
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env['ACTIONS_RUNTIME_TOKEN']);
+            core.exportVariable('ACTIONS_RESULTS_URL', process.env['ACTIONS_RESULTS_URL']);
+
       - name: Test
         run: dotnet test test/cdp.tests/Selenium.WebDriver.BiDi.Cdp.Tests.csproj
