@@ -3,6 +3,42 @@ namespace Selenium.WebDriver.BiDi.Cdp;
 partial class CdpModule
 {
     /// <summary>
+    /// This domain is deprecated - use Runtime or Log instead.
+    /// </summary>
+    [global::System.Obsolete]
+    public Console.ConsoleDomain Console => new(this);
+
+    /// <summary>
+    /// Debugger domain exposes JavaScript debugging capabilities. It allows setting and removing
+    /// breakpoints, stepping through execution, exploring stack traces, etc.
+    /// </summary>
+    public Debugger.DebuggerDomain Debugger => new(this);
+
+    /// <summary>
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public HeapProfiler.HeapProfilerDomain HeapProfiler => new(this);
+
+    /// <summary>
+    /// </summary>
+    public Profiler.ProfilerDomain Profiler => new(this);
+
+    /// <summary>
+    /// Runtime domain exposes JavaScript runtime by means of remote evaluation and mirror objects.
+    /// Evaluation results are returned as mirror object that expose object type, string representation
+    /// and unique identifier that can be used for further object reference. Original objects are
+    /// maintained in memory unless they are either explicitly released or are released along with the
+    /// other objects in their object group.
+    /// </summary>
+    public Runtime.RuntimeDomain Runtime => new(this);
+
+    /// <summary>
+    /// This domain is deprecated.
+    /// </summary>
+    [global::System.Obsolete]
+    public Schema.SchemaDomain Schema => new(this);
+
+    /// <summary>
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public Accessibility.AccessibilityDomain Accessibility => new(this);
@@ -300,41 +336,5 @@ partial class CdpModule
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public WebMCP.WebMCPDomain WebMCP => new(this);
-
-    /// <summary>
-    /// This domain is deprecated - use Runtime or Log instead.
-    /// </summary>
-    [global::System.Obsolete]
-    public Console.ConsoleDomain Console => new(this);
-
-    /// <summary>
-    /// Debugger domain exposes JavaScript debugging capabilities. It allows setting and removing
-    /// breakpoints, stepping through execution, exploring stack traces, etc.
-    /// </summary>
-    public Debugger.DebuggerDomain Debugger => new(this);
-
-    /// <summary>
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public HeapProfiler.HeapProfilerDomain HeapProfiler => new(this);
-
-    /// <summary>
-    /// </summary>
-    public Profiler.ProfilerDomain Profiler => new(this);
-
-    /// <summary>
-    /// Runtime domain exposes JavaScript runtime by means of remote evaluation and mirror objects.
-    /// Evaluation results are returned as mirror object that expose object type, string representation
-    /// and unique identifier that can be used for further object reference. Original objects are
-    /// maintained in memory unless they are either explicitly released or are released along with the
-    /// other objects in their object group.
-    /// </summary>
-    public Runtime.RuntimeDomain Runtime => new(this);
-
-    /// <summary>
-    /// This domain is deprecated.
-    /// </summary>
-    [global::System.Obsolete]
-    public Schema.SchemaDomain Schema => new(this);
 
 }
