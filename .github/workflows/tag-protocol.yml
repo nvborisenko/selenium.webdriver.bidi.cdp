@@ -1,0 +1,47 @@
+name: Tag Protocol Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Directory.Build.props
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tag-protocol
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    name: Tag new protocol version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # Use a PAT so the pushed tag triggers the Release workflow.
+          # A push made with the default GITHUB_TOKEN does not trigger other workflows.
+          token: ${{ secrets.RELEASE_PAT }}
+          fetch-depth: 0
+
+      - name: Create tag if missing
+        run: |
+          set -euo pipefail
+          version=$(sed -nE 's#.*<ProtocolVersion>([0-9]+)</ProtocolVersion>.*#\1#p' Directory.Build.props)
+          if [ -z "$version" ]; then
+            echo "Could not read ProtocolVersion from Directory.Build.props" >&2
+            exit 1
+          fi
+          tag="v0.0.$version"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            echo "Tag $tag already exists. Nothing to do."
+            exit 0
+          fi
+          git config user.name "Arim Bot"
+          git config user.email "22616990+nvborisenko@users.noreply.github.com"
+          git tag "$tag"
+          git push origin "$tag"
+          echo "Created and pushed $tag."

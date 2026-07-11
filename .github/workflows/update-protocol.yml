@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: update-protocol
@@ -21,8 +22,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          # Use a PAT so the pushed tag triggers the Release workflow.
-          # A push made with the default GITHUB_TOKEN does not trigger other workflows.
+          # Use a PAT so the opened PR triggers the Build workflow checks.
+          # A PR created with the default GITHUB_TOKEN does not trigger other workflows.
           token: ${{ secrets.RELEASE_PAT }}
           fetch-depth: 0
 
@@ -90,17 +91,34 @@ jobs:
         if: steps.check.outputs.changed == 'true'
         run: dotnet build
 
-      - name: Commit, push and tag
+      - name: Open PR and enable auto-merge
         if: steps.check.outputs.changed == 'true'
         env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
           NEW_TAG: ${{ steps.upstream.outputs.tag }}
           NEW_VERSION: ${{ steps.upstream.outputs.version }}
         run: |
           set -euo pipefail
+          branch="bot/update-protocol-$NEW_TAG"
           git config user.name "Arim Bot"
           git config user.email "22616990+nvborisenko@users.noreply.github.com"
+          git checkout -b "$branch"
           git add spec/ Directory.Build.props _gen/
           git commit -m "Update CDP to $NEW_TAG"
-          git push origin HEAD:${{ github.ref_name }}
-          git tag "$NEW_TAG"
-          git push origin "$NEW_TAG"
+          git push --force-with-lease origin "$branch"
+          # Create the PR only if one does not already exist for this branch.
+          if ! gh pr view "$branch" >/dev/null 2>&1; then
+            body=$(cat <<EOF
+          Automated update of the Chrome DevTools Protocol to \`$NEW_TAG\` (version $NEW_VERSION).
+
+          The git tag and NuGet release are created automatically once this PR merges and the required checks pass.
+          EOF
+          )
+            gh pr create \
+              --base "${{ github.ref_name }}" \
+              --head "$branch" \
+              --title "Update CDP to $NEW_TAG" \
+              --body "$body"
+          fi
+          # Merge automatically once required status checks pass.
+          gh pr merge "$branch" --auto --squash
