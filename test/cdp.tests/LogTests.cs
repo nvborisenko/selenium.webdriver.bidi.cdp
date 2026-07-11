@@ -11,7 +11,7 @@ public class LogTests : CdpTestFixture
 
         await Cdp.Page.NavigateAsync("data:text/html,<html><body><img src='http://localhost:1/does_not_exist.png'></body></html>");
 
-        var entryAdded = await entryAddedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var entryAdded = await entryAddedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
 
         await Assert.That(entryAdded.Entry).IsNotNull();
         await Assert.That(entryAdded.Entry.Level).IsEqualTo("error");

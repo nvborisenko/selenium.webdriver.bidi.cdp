@@ -31,7 +31,7 @@ public class PlaygroundTests
 
         await context.NavigateAsync("https://www.example.com");
 
-        var somethingHappened = await somethingHappenedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var somethingHappened = await somethingHappenedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
         System.Console.WriteLine($"Something happened: FrameId={somethingHappened.FrameId}, LoaderId={somethingHappened.LoaderId}");
 
         // Network
@@ -42,7 +42,7 @@ public class PlaygroundTests
         await cdp.Page.ReloadAsync();
         // await context.ReloadAsync();
 
-        var requestWillBeSent = await requestWillBeSentStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var requestWillBeSent = await requestWillBeSentStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
         System.Console.WriteLine($"Request will be sent: RequestId={requestWillBeSent.RequestId}, Url={requestWillBeSent.Request.Url}");
 
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();

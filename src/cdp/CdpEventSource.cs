@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using OpenQA.Selenium.BiDi;
 
 namespace Selenium.WebDriver.BiDi.Cdp;
@@ -40,9 +41,9 @@ public sealed class CdpEventStream<TParams> : IEventStream<TParams>
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerator<TParams> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<TParams> ReadAllAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        await foreach (var item in _inner.WithCancellation(cancellationToken))
+        await foreach (var item in _inner.ReadAllAsync(cancellationToken).ConfigureAwait(false))
         {
             yield return item.Params;
         }

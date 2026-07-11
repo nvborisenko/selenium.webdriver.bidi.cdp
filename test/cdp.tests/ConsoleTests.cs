@@ -14,7 +14,7 @@ public class ConsoleTests : CdpTestFixture
 
         await Cdp.Page.NavigateAsync("data:text/html,<html><body><script>console.log('" + consoleMessage + "');</script></body></html>");
 
-        var messageAdded = await messageAddedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var messageAdded = await messageAddedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
 
         await Assert.That(messageAdded.Message.Text).IsEqualTo(consoleMessage);
     }

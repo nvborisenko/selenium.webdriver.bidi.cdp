@@ -35,7 +35,7 @@ public class FetchTests : CdpTestFixture
         // Navigate in background since it will be paused
         var navigateTask = Cdp.Page.NavigateAsync("https://www.example.com");
 
-        var requestPaused = await requestPausedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         await Assert.That(requestPaused.RequestId).IsNotNull();
         await Assert.That(requestPaused.Request.Url).Contains("example.com");
@@ -72,7 +72,7 @@ public class FetchTests : CdpTestFixture
 
         var navigateTask = Cdp.Page.NavigateAsync("https://www.example.com");
 
-        var requestPaused = await requestPausedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         // Redirect to a different URL
         await Cdp.Fetch.ContinueRequestAsync(requestPaused.RequestId, new()
@@ -109,7 +109,7 @@ public class FetchTests : CdpTestFixture
             catch { /* image failure may propagate */ }
         });
 
-        var requestPaused = await requestPausedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         // Block the image request
         await Cdp.Fetch.FailRequestAsync(requestPaused.RequestId, Network.ErrorReason.BlockedByClient);
@@ -136,7 +136,7 @@ public class FetchTests : CdpTestFixture
 
         var navigateTask = Cdp.Page.NavigateAsync("https://www.example.com");
 
-        var requestPaused = await requestPausedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         await Assert.That(requestPaused.ResourceType).IsEqualTo(Network.ResourceType.Document);
 
@@ -159,7 +159,7 @@ public class FetchTests : CdpTestFixture
 
         var navigateTask = Cdp.Page.NavigateAsync("https://www.example.com");
 
-        var requestPaused = await requestPausedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         // Continue with an extra header
         await Cdp.Fetch.ContinueRequestAsync(requestPaused.RequestId, new()

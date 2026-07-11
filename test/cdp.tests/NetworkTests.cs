@@ -22,10 +22,10 @@ public class NetworkTests : CdpTestFixture
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
-        var dataReceived = await dataReceivedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var dataReceived = await dataReceivedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
         await Assert.That(dataReceived.RequestId).IsNotNull();
 
-        var requestWillBeSent = await requestWillBeSentStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var requestWillBeSent = await requestWillBeSentStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
         await Assert.That(requestWillBeSent.Request.Headers).ContainsKey("headerName");
     }
 
@@ -50,7 +50,7 @@ public class NetworkTests : CdpTestFixture
             // Expected: navigation fails when offline
         }
 
-        var loadingFailed = await loadingFailedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var loadingFailed = await loadingFailedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
         await Assert.That(loadingFailed.ErrorText).IsEqualTo("net::ERR_INTERNET_DISCONNECTED");
     }
 
@@ -61,7 +61,7 @@ public class NetworkTests : CdpTestFixture
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
-        var responseReceived = await responseReceivedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var responseReceived = await responseReceivedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
 
         var searchResponse = await Cdp.Network.SearchInResponseBodyAsync(
             responseReceived.RequestId,
@@ -78,7 +78,7 @@ public class NetworkTests : CdpTestFixture
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
-        var responseReceived = await responseReceivedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var responseReceived = await responseReceivedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
         await Assert.That(responseReceived.Response.FromDiskCache).IsNotEqualTo(true);
 
         await Cdp.Network.SetCacheDisabledAsync(true);
@@ -94,7 +94,7 @@ public class NetworkTests : CdpTestFixture
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
-        var responseReceived = await responseReceivedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var responseReceived = await responseReceivedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
         await Assert.That(responseReceived).IsNotNull();
     }
 
@@ -111,7 +111,7 @@ public class NetworkTests : CdpTestFixture
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
         RequestWillBeSentEventArgs? postRequest = null;
-        await foreach (var evt in requestWillBeSentStream.WithCancellation(cts.Token))
+        await foreach (var evt in requestWillBeSentStream.ReadAllAsync().WithCancellation(cts.Token))
         {
             if (string.Equals(evt.Request.Method, "POST", StringComparison.OrdinalIgnoreCase))
             {

@@ -58,12 +58,12 @@ public class ProfilerTests : CdpTestFixture
 
         await Cdp.Runtime.EvaluateAsync("console.profile('test')");
 
-        var started = await consoleProfileStartedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var started = await consoleProfileStartedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
         await Assert.That(started).IsNotNull();
 
         await Cdp.Runtime.EvaluateAsync("console.profileEnd('test')");
 
-        var finished = await consoleProfileFinishedStream.FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+        var finished = await consoleProfileFinishedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
         await Assert.That(finished).IsNotNull();
 
         await ValidateProfile(finished.Profile);
