@@ -4,6 +4,8 @@
     <MajorVersion>0</MajorVersion>
     <ProtocolVersion>1</ProtocolVersion>
     <VersionPrefix>$(MajorVersion).0.$(ProtocolVersion)</VersionPrefix>
+    <AssemblyVersion>$(MajorVersion).0.0.0</AssemblyVersion>
+    <FileVersion>$(MajorVersion).0.0.0</FileVersion>
   </PropertyGroup>
 
 </Project>
