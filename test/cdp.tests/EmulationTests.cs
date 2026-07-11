@@ -16,7 +16,7 @@ public class EmulationTests : CdpTestFixture
             Accuracy = 1
         });
 
-        await Cdp.Page.NavigateAsync("https://www.example.com");
+        await NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var result = await Cdp.Runtime.EvaluateAsync("""
             new Promise((resolve, reject) => {
@@ -43,7 +43,7 @@ public class EmulationTests : CdpTestFixture
         await Cdp.Emulation.SetUserAgentOverrideAsync(
             "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1");
 
-        await Cdp.Page.NavigateAsync("https://www.selenium.dev");
+        await NavigateAndWaitForLoadAsync("https://www.selenium.dev");
 
         var result = await Cdp.Runtime.EvaluateAsync("JSON.stringify({ width: window.innerWidth, height: window.innerHeight })");
 
