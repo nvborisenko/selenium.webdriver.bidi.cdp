@@ -6,7 +6,6 @@ using global::OpenQA.Selenium.BiDi;
 namespace Selenium.WebDriver.BiDi.Cdp.Security;
 
 /// <summary>
-/// Security
 /// </summary>
 public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
 {

@@ -13,12 +13,13 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static BrowserJsonSerializerContext JsonContext = BrowserJsonSerializerContext.Default;
 
     /// <summary>
-    /// Set permission settings for given origin.
+    /// Set permission settings for given embedding and embedded origins.
     /// </summary>
     /// <remarks>
     /// Optional parameters (via <paramref name="options"/>):
     /// <list type="bullet">
-    /// <item><description><b>Origin</b> - Origin the permission applies to, all origins if not specified.</description></item>
+    /// <item><description><b>Origin</b> - Embedding origin the permission applies to, all origins if not specified.</description></item>
+    /// <item><description><b>EmbeddedOrigin</b> - Embedded origin the permission applies to. It is ignored unless the embedding origin is present and valid. If the embedding origin is provided but the embedded origin isn't, the embedding origin is used as the embedded origin.</description></item>
     /// <item><description><b>BrowserContextId</b> - Context to override. When omitted, default browser context is used.</description></item>
     /// </list>
     /// </remarks>
@@ -40,13 +41,14 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, SetPermissionCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetPermissionCommandParameters(Permission: permission, Setting: setting, Origin: options?.Origin, BrowserContextId: options?.BrowserContextId);
+        var @params = new SetPermissionCommandParameters(Permission: permission, Setting: setting, Origin: options?.Origin, EmbeddedOrigin: options?.EmbeddedOrigin, BrowserContextId: options?.BrowserContextId);
         return await ExecuteCommandAsync(SetPermissionCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetPermissionCommandParameters, SetPermissionResult> SetPermissionCommand = new("Browser.setPermission", JsonContext.SetPermissionCommandParameters, JsonContext.SetPermissionResult);
 
     /// <summary>
-    /// Grant specific permissions to the given origin and reject all others.
+    /// Grant specific permissions to the given origin and reject all others. Deprecated. Use
+    /// setPermission instead.
     /// </summary>
     /// <remarks>
     /// Optional parameters (via <paramref name="options"/>):
@@ -67,6 +69,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GrantPermissionsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
     public async Task<GrantPermissionsResult> GrantPermissionsAsync(IEnumerable<PermissionType> permissions, GrantPermissionsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GrantPermissionsCommandParameters(Permissions: permissions, Origin: options?.Origin, BrowserContextId: options?.BrowserContextId);
@@ -393,6 +396,36 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<SetWindowBoundsCommandParameters, SetWindowBoundsResult> SetWindowBoundsCommand = new("Browser.setWindowBounds", JsonContext.SetWindowBoundsCommandParameters, JsonContext.SetWindowBoundsResult);
 
     /// <summary>
+    /// Set size of the browser contents resizing browser window as necessary.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Width</b> - The window contents width in DIP. Assumes current width if omitted. Must be specified if 'height' is omitted.</description></item>
+    /// <item><description><b>Height</b> - The window contents height in DIP. Assumes current height if omitted. Must be specified if 'width' is omitted.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="windowId">
+    /// Browser window id.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetContentsSizeCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetContentsSizeResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, SetContentsSizeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetContentsSizeCommandParameters(WindowId: windowId, Width: options?.Width, Height: options?.Height);
+        return await ExecuteCommandAsync(SetContentsSizeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetContentsSizeCommandParameters, SetContentsSizeResult> SetContentsSizeCommand = new("Browser.setContentsSize", JsonContext.SetContentsSizeCommandParameters, JsonContext.SetContentsSizeResult);
+
+    /// <summary>
     /// Set dock tile details, platform-specific.
     /// </summary>
     /// <remarks>
@@ -528,7 +561,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     public IEventSource<DownloadProgressEventArgs> DownloadProgress => CreateCdpEventSource(BrowserDomainEvent.DownloadProgress);
 }
 
-internal sealed record SetPermissionCommandParameters(PermissionDescriptor Permission, PermissionSetting Setting, string? Origin, BrowserContextID? BrowserContextId) : Parameters;
+internal sealed record SetPermissionCommandParameters(PermissionDescriptor Permission, PermissionSetting Setting, string? Origin, string? EmbeddedOrigin, BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="BrowserDomain.SetPermissionAsync"/>.
@@ -536,9 +569,16 @@ internal sealed record SetPermissionCommandParameters(PermissionDescriptor Permi
 public sealed record SetPermissionCommandOptions : CdpCommandOptions
 {
     /// <summary>
-    /// Origin the permission applies to, all origins if not specified.
+    /// Embedding origin the permission applies to, all origins if not specified.
     /// </summary>
     public string? Origin { get; init; }
+
+    /// <summary>
+    /// Embedded origin the permission applies to. It is ignored unless the embedding origin is
+    /// present and valid. If the embedding origin is provided but the embedded origin isn't, the
+    /// embedding origin is used as the embedded origin.
+    /// </summary>
+    public string? EmbeddedOrigin { get; init; }
 
     /// <summary>
     /// Context to override. When omitted, default browser context is used.
@@ -833,6 +873,31 @@ public sealed record SetWindowBoundsCommandOptions : CdpCommandOptions
 public sealed record SetWindowBoundsResult() : EmptyResult;
 
 
+internal sealed record SetContentsSizeCommandParameters(WindowID WindowId, long? Width, long? Height) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="BrowserDomain.SetContentsSizeAsync"/>.
+/// </summary>
+public sealed record SetContentsSizeCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// The window contents width in DIP. Assumes current width if omitted.
+    /// Must be specified if 'height' is omitted.
+    /// </summary>
+    public long? Width { get; init; }
+
+    /// <summary>
+    /// The window contents height in DIP. Assumes current height if omitted.
+    /// Must be specified if 'width' is omitted.
+    /// </summary>
+    public long? Height { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetContentsSizeResult() : EmptyResult;
+
+
 internal sealed record SetDockTileCommandParameters(string? BadgeLabel, string? Image) : Parameters;
 
 /// <summary>
@@ -1083,8 +1148,16 @@ public enum PermissionType
     LocalFonts,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("localNetwork")]
+    LocalNetwork,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("localNetworkAccess")]
     LocalNetworkAccess,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("loopbackNetwork")]
+    LoopbackNetwork,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("midi")]
@@ -1323,6 +1396,8 @@ public enum PrivacySandboxAPI
 [JsonSerializable(typeof(GetWindowForTargetResult), TypeInfoPropertyName = "GetWindowForTargetResult")]
 [JsonSerializable(typeof(SetWindowBoundsCommandParameters), TypeInfoPropertyName = "SetWindowBoundsCommandParameters")]
 [JsonSerializable(typeof(SetWindowBoundsResult), TypeInfoPropertyName = "SetWindowBoundsResult")]
+[JsonSerializable(typeof(SetContentsSizeCommandParameters), TypeInfoPropertyName = "SetContentsSizeCommandParameters")]
+[JsonSerializable(typeof(SetContentsSizeResult), TypeInfoPropertyName = "SetContentsSizeResult")]
 [JsonSerializable(typeof(SetDockTileCommandParameters), TypeInfoPropertyName = "SetDockTileCommandParameters")]
 [JsonSerializable(typeof(SetDockTileResult), TypeInfoPropertyName = "SetDockTileResult")]
 [JsonSerializable(typeof(ExecuteBrowserCommandCommandParameters), TypeInfoPropertyName = "ExecuteBrowserCommandCommandParameters")]

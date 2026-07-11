@@ -552,9 +552,6 @@ public sealed record ViewOrScrollTimeline(DOM.ScrollOrientation Axis)
 /// <param name="IterationStart">
 /// <b>AnimationEffect</b>'s iteration start.
 /// </param>
-/// <param name="Iterations">
-/// <b>AnimationEffect</b>'s iterations.
-/// </param>
 /// <param name="Duration">
 /// <b>AnimationEffect</b>'s iteration duration.
 /// Milliseconds for time based animations and
@@ -570,8 +567,13 @@ public sealed record ViewOrScrollTimeline(DOM.ScrollOrientation Axis)
 /// <param name="Easing">
 /// <b>AnimationEffect</b>'s timing function.
 /// </param>
-public sealed record AnimationEffect(double Delay, double EndDelay, double IterationStart, double Iterations, double Duration, string Direction, string Fill, string Easing)
+public sealed record AnimationEffect(double Delay, double EndDelay, double IterationStart, double Duration, string Direction, string Fill, string Easing)
 {
+    /// <summary>
+    /// <b>AnimationEffect</b>'s iterations. Omitted if the value is infinite.
+    /// </summary>
+    public double? Iterations { get; init; }
+
     /// <summary>
     /// <b>AnimationEffect</b>'s target node.
     /// </summary>

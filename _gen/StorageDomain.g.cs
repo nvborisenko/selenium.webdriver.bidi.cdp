@@ -14,6 +14,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 
     /// <summary>
     /// Returns a storage key given a frame id.
+    /// Deprecated. Please use Storage.getStorageKey instead.
     /// </summary>
     /// <param name="frameId">
     /// </param>
@@ -26,12 +27,39 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStorageKeyForFrameResult"/>.
     /// </returns>
+    [global::System.Obsolete]
     public async Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, GetStorageKeyForFrameCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStorageKeyForFrameCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync(GetStorageKeyForFrameCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetStorageKeyForFrameCommandParameters, GetStorageKeyForFrameResult> GetStorageKeyForFrameCommand = new("Storage.getStorageKeyForFrame", JsonContext.GetStorageKeyForFrameCommandParameters, JsonContext.GetStorageKeyForFrameResult);
+
+    /// <summary>
+    /// Returns storage key for the given frame. If no frame ID is provided,
+    /// the storage key of the target executing this command is returned.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>FrameId</b></description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetStorageKeyCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetStorageKeyResult"/>.
+    /// </returns>
+    public async Task<GetStorageKeyResult> GetStorageKeyAsync(GetStorageKeyCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetStorageKeyCommandParameters(FrameId: options?.FrameId);
+        return await ExecuteCommandAsync(GetStorageKeyCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetStorageKeyCommandParameters, GetStorageKeyResult> GetStorageKeyCommand = new("Storage.getStorageKey", JsonContext.GetStorageKeyCommandParameters, JsonContext.GetStorageKeyResult);
 
     /// <summary>
     /// Clears storage for origin.
@@ -718,69 +746,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<RunBounceTrackingMitigationsCommandParameters, RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsCommand = new("Storage.runBounceTrackingMitigations", JsonContext.RunBounceTrackingMitigationsCommandParameters, JsonContext.RunBounceTrackingMitigationsResult);
 
     /// <summary>
-    /// https://wicg.github.io/attribution-reporting-api/
-    /// </summary>
-    /// <param name="enabled">
-    /// If enabled, noise is suppressed and reports are sent immediately.
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAttributionReportingLocalTestingModeCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetAttributionReportingLocalTestingModeResult"/>.
-    /// </returns>
-    public async Task<SetAttributionReportingLocalTestingModeResult> SetAttributionReportingLocalTestingModeAsync(bool enabled, SetAttributionReportingLocalTestingModeCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAttributionReportingLocalTestingModeCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAttributionReportingLocalTestingModeCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAttributionReportingLocalTestingModeCommandParameters, SetAttributionReportingLocalTestingModeResult> SetAttributionReportingLocalTestingModeCommand = new("Storage.setAttributionReportingLocalTestingMode", JsonContext.SetAttributionReportingLocalTestingModeCommandParameters, JsonContext.SetAttributionReportingLocalTestingModeResult);
-
-    /// <summary>
-    /// Enables/disables issuing of Attribution Reporting events.
-    /// </summary>
-    /// <param name="enable">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAttributionReportingTrackingCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetAttributionReportingTrackingResult"/>.
-    /// </returns>
-    public async Task<SetAttributionReportingTrackingResult> SetAttributionReportingTrackingAsync(bool enable, SetAttributionReportingTrackingCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAttributionReportingTrackingCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(SetAttributionReportingTrackingCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAttributionReportingTrackingCommandParameters, SetAttributionReportingTrackingResult> SetAttributionReportingTrackingCommand = new("Storage.setAttributionReportingTracking", JsonContext.SetAttributionReportingTrackingCommandParameters, JsonContext.SetAttributionReportingTrackingResult);
-
-    /// <summary>
-    /// Sends all pending Attribution Reports immediately, regardless of their
-    /// scheduled report time.
-    /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SendPendingAttributionReportsCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SendPendingAttributionReportsResult"/>.
-    /// </returns>
-    public async Task<SendPendingAttributionReportsResult> SendPendingAttributionReportsAsync(SendPendingAttributionReportsCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SendPendingAttributionReportsCommandParameters();
-        return await ExecuteCommandAsync(SendPendingAttributionReportsCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SendPendingAttributionReportsCommandParameters, SendPendingAttributionReportsResult> SendPendingAttributionReportsCommand = new("Storage.sendPendingAttributionReports", JsonContext.SendPendingAttributionReportsCommandParameters, JsonContext.SendPendingAttributionReportsResult);
-
-    /// <summary>
     /// Returns the effective Related Website Sets in use by this profile for the browser
     /// session. The effective Related Website Sets will not change during a browser session.
     /// </summary>
@@ -799,33 +764,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
         return await ExecuteCommandAsync(GetRelatedWebsiteSetsCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetRelatedWebsiteSetsCommandParameters, GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsCommand = new("Storage.getRelatedWebsiteSets", JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult);
-
-    /// <summary>
-    /// Returns the list of URLs from a page and its embedded resources that match
-    /// existing grace period URL pattern rules.
-    /// https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period
-    /// </summary>
-    /// <param name="firstPartyUrl">
-    /// The URL of the page currently being visited.
-    /// </param>
-    /// <param name="thirdPartyUrls">
-    /// The list of embedded resource URLs from the page.
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetAffectedUrlsForThirdPartyCookieMetadataCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="GetAffectedUrlsForThirdPartyCookieMetadataResult"/>.
-    /// </returns>
-    public async Task<GetAffectedUrlsForThirdPartyCookieMetadataResult> GetAffectedUrlsForThirdPartyCookieMetadataAsync(string firstPartyUrl, IEnumerable<string> thirdPartyUrls, GetAffectedUrlsForThirdPartyCookieMetadataCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAffectedUrlsForThirdPartyCookieMetadataCommandParameters(FirstPartyUrl: firstPartyUrl, ThirdPartyUrls: thirdPartyUrls);
-        return await ExecuteCommandAsync(GetAffectedUrlsForThirdPartyCookieMetadataCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAffectedUrlsForThirdPartyCookieMetadataCommandParameters, GetAffectedUrlsForThirdPartyCookieMetadataResult> GetAffectedUrlsForThirdPartyCookieMetadataCommand = new("Storage.getAffectedUrlsForThirdPartyCookieMetadata", JsonContext.GetAffectedUrlsForThirdPartyCookieMetadataCommandParameters, JsonContext.GetAffectedUrlsForThirdPartyCookieMetadataResult);
 
     /// <summary>
     /// </summary>
@@ -1004,58 +942,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     public IEventSource<StorageBucketDeletedEventArgs> StorageBucketDeleted => CreateCdpEventSource(StorageDomainEvent.StorageBucketDeleted);
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="AttributionReportingSourceRegisteredEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>Registration</b></description></item>
-    /// <item><description><b>Result</b></description></item>
-    /// </list>
-    /// </remarks>
-    public IEventSource<AttributionReportingSourceRegisteredEventArgs> AttributionReportingSourceRegistered => CreateCdpEventSource(StorageDomainEvent.AttributionReportingSourceRegistered);
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="AttributionReportingTriggerRegisteredEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>Registration</b></description></item>
-    /// <item><description><b>EventLevel</b></description></item>
-    /// <item><description><b>Aggregatable</b></description></item>
-    /// </list>
-    /// </remarks>
-    public IEventSource<AttributionReportingTriggerRegisteredEventArgs> AttributionReportingTriggerRegistered => CreateCdpEventSource(StorageDomainEvent.AttributionReportingTriggerRegistered);
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="AttributionReportingReportSentEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>Url</b></description></item>
-    /// <item><description><b>Body</b></description></item>
-    /// <item><description><b>Result</b></description></item>
-    /// <item><description><b>NetError</b> - If result is <b>sent</b>, populated with net/HTTP status.</description></item>
-    /// <item><description><b>NetErrorName</b></description></item>
-    /// <item><description><b>HttpStatusCode</b></description></item>
-    /// </list>
-    /// </remarks>
-    public IEventSource<AttributionReportingReportSentEventArgs> AttributionReportingReportSent => CreateCdpEventSource(StorageDomainEvent.AttributionReportingReportSent);
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="AttributionReportingVerboseDebugReportSentEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>Url</b></description></item>
-    /// <item><description><b>Body</b></description></item>
-    /// <item><description><b>NetError</b></description></item>
-    /// <item><description><b>NetErrorName</b></description></item>
-    /// <item><description><b>HttpStatusCode</b></description></item>
-    /// </list>
-    /// </remarks>
-    public IEventSource<AttributionReportingVerboseDebugReportSentEventArgs> AttributionReportingVerboseDebugReportSent => CreateCdpEventSource(StorageDomainEvent.AttributionReportingVerboseDebugReportSent);
 }
 
 internal sealed record GetStorageKeyForFrameCommandParameters(Page.FrameId FrameId) : Parameters;
@@ -1072,6 +958,25 @@ public sealed record GetStorageKeyForFrameCommandOptions : CdpCommandOptions
 /// <param name="StorageKey">
 /// </param>
 public sealed record GetStorageKeyForFrameResult(SerializedStorageKey StorageKey) : EmptyResult;
+
+
+internal sealed record GetStorageKeyCommandParameters(Page.FrameId? FrameId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="StorageDomain.GetStorageKeyAsync"/>.
+/// </summary>
+public sealed record GetStorageKeyCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// </summary>
+    public Page.FrameId? FrameId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="StorageKey">
+/// </param>
+public sealed record GetStorageKeyResult(SerializedStorageKey StorageKey) : EmptyResult;
 
 
 internal sealed record ClearDataForOriginCommandParameters(string Origin, string StorageTypes) : Parameters;
@@ -1553,51 +1458,6 @@ public sealed record RunBounceTrackingMitigationsCommandOptions : CdpCommandOpti
 public sealed record RunBounceTrackingMitigationsResult(IReadOnlyList<string> DeletedSites) : EmptyResult;
 
 
-internal sealed record SetAttributionReportingLocalTestingModeCommandParameters(bool Enabled) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.SetAttributionReportingLocalTestingModeAsync"/>.
-/// </summary>
-public sealed record SetAttributionReportingLocalTestingModeCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-public sealed record SetAttributionReportingLocalTestingModeResult() : EmptyResult;
-
-
-internal sealed record SetAttributionReportingTrackingCommandParameters(bool Enable) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.SetAttributionReportingTrackingAsync"/>.
-/// </summary>
-public sealed record SetAttributionReportingTrackingCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-public sealed record SetAttributionReportingTrackingResult() : EmptyResult;
-
-
-internal sealed record SendPendingAttributionReportsCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.SendPendingAttributionReportsAsync"/>.
-/// </summary>
-public sealed record SendPendingAttributionReportsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="NumSent">
-/// The number of reports that were sent.
-/// </param>
-public sealed record SendPendingAttributionReportsResult(long NumSent) : EmptyResult;
-
-
 internal sealed record GetRelatedWebsiteSetsCommandParameters() : Parameters;
 
 /// <summary>
@@ -1612,24 +1472,6 @@ public sealed record GetRelatedWebsiteSetsCommandOptions : CdpCommandOptions
 /// <param name="Sets">
 /// </param>
 public sealed record GetRelatedWebsiteSetsResult(IReadOnlyList<RelatedWebsiteSet> Sets) : EmptyResult;
-
-
-internal sealed record GetAffectedUrlsForThirdPartyCookieMetadataCommandParameters(string FirstPartyUrl, IEnumerable<string> ThirdPartyUrls) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.GetAffectedUrlsForThirdPartyCookieMetadataAsync"/>.
-/// </summary>
-public sealed record GetAffectedUrlsForThirdPartyCookieMetadataCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="MatchedUrls">
-/// Array of matching URLs. If there is a primary pattern match for the first-
-/// party URL, only the first-party URL is returned in the array.
-/// </param>
-public sealed record GetAffectedUrlsForThirdPartyCookieMetadataResult(IReadOnlyList<string> MatchedUrls) : EmptyResult;
 
 
 internal sealed record SetProtectedAudienceKAnonymityCommandParameters(string Owner, string Name, IEnumerable<string> Hashes) : Parameters;
@@ -1840,55 +1682,6 @@ public sealed record StorageBucketCreatedOrUpdatedEventArgs(StorageBucketInfo Bu
 /// <param name="BucketId">
 /// </param>
 public sealed record StorageBucketDeletedEventArgs(string BucketId) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// </summary>
-/// <param name="Registration">
-/// </param>
-/// <param name="Result">
-/// </param>
-public sealed record AttributionReportingSourceRegisteredEventArgs(AttributionReportingSourceRegistration Registration, AttributionReportingSourceRegistrationResult Result) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// </summary>
-/// <param name="Registration">
-/// </param>
-/// <param name="EventLevel">
-/// </param>
-/// <param name="Aggregatable">
-/// </param>
-public sealed record AttributionReportingTriggerRegisteredEventArgs(AttributionReportingTriggerRegistration Registration, AttributionReportingEventLevelResult EventLevel, AttributionReportingAggregatableResult Aggregatable) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// </summary>
-/// <param name="Url">
-/// </param>
-/// <param name="Body">
-/// </param>
-/// <param name="Result">
-/// </param>
-/// <param name="NetError">
-/// If result is <b>sent</b>, populated with net/HTTP status.
-/// </param>
-/// <param name="NetErrorName">
-/// </param>
-/// <param name="HttpStatusCode">
-/// </param>
-public sealed record AttributionReportingReportSentEventArgs(string Url, global::System.Text.Json.JsonElement Body, AttributionReportingReportResult Result, long? NetError = null, string? NetErrorName = null, long? HttpStatusCode = null) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// </summary>
-/// <param name="Url">
-/// </param>
-/// <param name="Body">
-/// </param>
-/// <param name="NetError">
-/// </param>
-/// <param name="NetErrorName">
-/// </param>
-/// <param name="HttpStatusCode">
-/// </param>
-public sealed record AttributionReportingVerboseDebugReportSentEventArgs(string Url, IEnumerable<global::System.Text.Json.JsonElement>? Body = null, long? NetError = null, string? NetErrorName = null, long? HttpStatusCode = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>
@@ -2429,599 +2222,6 @@ public sealed record StorageBucketInfo(StorageBucket Bucket, string Id, Network.
 }
 
 /// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingSourceType>))]
-public enum AttributionReportingSourceType
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("navigation")]
-    Navigation,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("event")]
-    Event,
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<UnsignedInt64AsBase10>))]
-public record UnsignedInt64AsBase10 : IStringRemoteId
-{
-    string IStringRemoteId.Id { get; init; } = null!;
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<UnsignedInt128AsBase16>))]
-public record UnsignedInt128AsBase16 : IStringRemoteId
-{
-    string IStringRemoteId.Id { get; init; } = null!;
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<SignedInt64AsBase10>))]
-public record SignedInt64AsBase10 : IStringRemoteId
-{
-    string IStringRemoteId.Id { get; init; } = null!;
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Key">
-/// </param>
-/// <param name="Values">
-/// </param>
-public sealed record AttributionReportingFilterDataEntry(string Key, IReadOnlyList<string> Values)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="FilterValues">
-/// </param>
-public sealed record AttributionReportingFilterConfig(IReadOnlyList<AttributionReportingFilterDataEntry> FilterValues)
-{
-    /// <summary>
-    /// duration in seconds
-    /// </summary>
-    public long? LookbackWindow { get; init; }
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Filters">
-/// </param>
-/// <param name="NotFilters">
-/// </param>
-public sealed record AttributionReportingFilterPair(IReadOnlyList<AttributionReportingFilterConfig> Filters, IReadOnlyList<AttributionReportingFilterConfig> NotFilters)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Key">
-/// </param>
-/// <param name="Value">
-/// </param>
-public sealed record AttributionReportingAggregationKeysEntry(string Key, UnsignedInt128AsBase16 Value)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Start">
-/// duration in seconds
-/// </param>
-/// <param name="Ends">
-/// duration in seconds
-/// </param>
-public sealed record AttributionReportingEventReportWindows(long Start, IReadOnlyList<long> Ends)
-{
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingTriggerDataMatching>))]
-public enum AttributionReportingTriggerDataMatching
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exact")]
-    Exact,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("modulus")]
-    Modulus,
-}
-
-/// <summary>
-/// </summary>
-/// <param name="KeyPiece">
-/// </param>
-/// <param name="Value">
-/// number instead of integer because not all uint32 can be represented by
-/// int
-/// </param>
-/// <param name="Types">
-/// </param>
-public sealed record AttributionReportingAggregatableDebugReportingData(UnsignedInt128AsBase16 KeyPiece, double Value, IReadOnlyList<string> Types)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="KeyPiece">
-/// </param>
-/// <param name="DebugData">
-/// </param>
-public sealed record AttributionReportingAggregatableDebugReportingConfig(UnsignedInt128AsBase16 KeyPiece, IReadOnlyList<AttributionReportingAggregatableDebugReportingData> DebugData)
-{
-    /// <summary>
-    /// number instead of integer because not all uint32 can be represented by
-    /// int, only present for source registrations
-    /// </summary>
-    public double? Budget { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public string? AggregationCoordinatorOrigin { get; init; }
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Values">
-/// </param>
-/// <param name="Limit">
-/// number instead of integer because not all uint32 can be represented by
-/// int
-/// </param>
-/// <param name="MaxEventStates">
-/// </param>
-public sealed record AttributionScopesData(IReadOnlyList<string> Values, double Limit, double MaxEventStates)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Name">
-/// </param>
-/// <param name="Budget">
-/// </param>
-public sealed record AttributionReportingNamedBudgetDef(string Name, long Budget)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Time">
-/// </param>
-/// <param name="Expiry">
-/// duration in seconds
-/// </param>
-/// <param name="TriggerData">
-/// number instead of integer because not all uint32 can be represented by
-/// int
-/// </param>
-/// <param name="EventReportWindows">
-/// </param>
-/// <param name="AggregatableReportWindow">
-/// duration in seconds
-/// </param>
-/// <param name="Type">
-/// </param>
-/// <param name="SourceOrigin">
-/// </param>
-/// <param name="ReportingOrigin">
-/// </param>
-/// <param name="DestinationSites">
-/// </param>
-/// <param name="EventId">
-/// </param>
-/// <param name="Priority">
-/// </param>
-/// <param name="FilterData">
-/// </param>
-/// <param name="AggregationKeys">
-/// </param>
-/// <param name="TriggerDataMatching">
-/// </param>
-/// <param name="DestinationLimitPriority">
-/// </param>
-/// <param name="AggregatableDebugReportingConfig">
-/// </param>
-/// <param name="MaxEventLevelReports">
-/// </param>
-/// <param name="NamedBudgets">
-/// </param>
-/// <param name="DebugReporting">
-/// </param>
-/// <param name="EventLevelEpsilon">
-/// </param>
-public sealed record AttributionReportingSourceRegistration(Network.TimeSinceEpoch Time, long Expiry, IReadOnlyList<double> TriggerData, AttributionReportingEventReportWindows EventReportWindows, long AggregatableReportWindow, AttributionReportingSourceType Type, string SourceOrigin, string ReportingOrigin, IReadOnlyList<string> DestinationSites, UnsignedInt64AsBase10 EventId, SignedInt64AsBase10 Priority, IReadOnlyList<AttributionReportingFilterDataEntry> FilterData, IReadOnlyList<AttributionReportingAggregationKeysEntry> AggregationKeys, AttributionReportingTriggerDataMatching TriggerDataMatching, SignedInt64AsBase10 DestinationLimitPriority, AttributionReportingAggregatableDebugReportingConfig AggregatableDebugReportingConfig, long MaxEventLevelReports, IReadOnlyList<AttributionReportingNamedBudgetDef> NamedBudgets, bool DebugReporting, double EventLevelEpsilon)
-{
-    /// <summary>
-    /// </summary>
-    public UnsignedInt64AsBase10? DebugKey { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public AttributionScopesData? ScopesData { get; init; }
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingSourceRegistrationResult>))]
-public enum AttributionReportingSourceRegistrationResult
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("success")]
-    Success,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("internalError")]
-    InternalError,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("insufficientSourceCapacity")]
-    InsufficientSourceCapacity,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("insufficientUniqueDestinationCapacity")]
-    InsufficientUniqueDestinationCapacity,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("excessiveReportingOrigins")]
-    ExcessiveReportingOrigins,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("prohibitedByBrowserPolicy")]
-    ProhibitedByBrowserPolicy,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("successNoised")]
-    SuccessNoised,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("destinationReportingLimitReached")]
-    DestinationReportingLimitReached,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("destinationGlobalLimitReached")]
-    DestinationGlobalLimitReached,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("destinationBothLimitsReached")]
-    DestinationBothLimitsReached,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reportingOriginsPerSiteLimitReached")]
-    ReportingOriginsPerSiteLimitReached,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exceedsMaxChannelCapacity")]
-    ExceedsMaxChannelCapacity,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exceedsMaxScopesChannelCapacity")]
-    ExceedsMaxScopesChannelCapacity,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exceedsMaxTriggerStateCardinality")]
-    ExceedsMaxTriggerStateCardinality,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exceedsMaxEventStatesLimit")]
-    ExceedsMaxEventStatesLimit,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("destinationPerDayReportingLimitReached")]
-    DestinationPerDayReportingLimitReached,
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingSourceRegistrationTimeConfig>))]
-public enum AttributionReportingSourceRegistrationTimeConfig
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("include")]
-    Include,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exclude")]
-    Exclude,
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Key">
-/// </param>
-/// <param name="Value">
-/// number instead of integer because not all uint32 can be represented by
-/// int
-/// </param>
-/// <param name="FilteringId">
-/// </param>
-public sealed record AttributionReportingAggregatableValueDictEntry(string Key, double Value, UnsignedInt64AsBase10 FilteringId)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Values">
-/// </param>
-/// <param name="Filters">
-/// </param>
-public sealed record AttributionReportingAggregatableValueEntry(IReadOnlyList<AttributionReportingAggregatableValueDictEntry> Values, AttributionReportingFilterPair Filters)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Data">
-/// </param>
-/// <param name="Priority">
-/// </param>
-/// <param name="Filters">
-/// </param>
-public sealed record AttributionReportingEventTriggerData(UnsignedInt64AsBase10 Data, SignedInt64AsBase10 Priority, AttributionReportingFilterPair Filters)
-{
-    /// <summary>
-    /// </summary>
-    public UnsignedInt64AsBase10? DedupKey { get; init; }
-}
-
-/// <summary>
-/// </summary>
-/// <param name="KeyPiece">
-/// </param>
-/// <param name="SourceKeys">
-/// </param>
-/// <param name="Filters">
-/// </param>
-public sealed record AttributionReportingAggregatableTriggerData(UnsignedInt128AsBase16 KeyPiece, IReadOnlyList<string> SourceKeys, AttributionReportingFilterPair Filters)
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Filters">
-/// </param>
-public sealed record AttributionReportingAggregatableDedupKey(AttributionReportingFilterPair Filters)
-{
-    /// <summary>
-    /// </summary>
-    public UnsignedInt64AsBase10? DedupKey { get; init; }
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Filters">
-/// </param>
-public sealed record AttributionReportingNamedBudgetCandidate(AttributionReportingFilterPair Filters)
-{
-    /// <summary>
-    /// </summary>
-    public string? Name { get; init; }
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Filters">
-/// </param>
-/// <param name="AggregatableDedupKeys">
-/// </param>
-/// <param name="EventTriggerData">
-/// </param>
-/// <param name="AggregatableTriggerData">
-/// </param>
-/// <param name="AggregatableValues">
-/// </param>
-/// <param name="AggregatableFilteringIdMaxBytes">
-/// </param>
-/// <param name="DebugReporting">
-/// </param>
-/// <param name="SourceRegistrationTimeConfig">
-/// </param>
-/// <param name="AggregatableDebugReportingConfig">
-/// </param>
-/// <param name="Scopes">
-/// </param>
-/// <param name="NamedBudgets">
-/// </param>
-public sealed record AttributionReportingTriggerRegistration(AttributionReportingFilterPair Filters, IReadOnlyList<AttributionReportingAggregatableDedupKey> AggregatableDedupKeys, IReadOnlyList<AttributionReportingEventTriggerData> EventTriggerData, IReadOnlyList<AttributionReportingAggregatableTriggerData> AggregatableTriggerData, IReadOnlyList<AttributionReportingAggregatableValueEntry> AggregatableValues, long AggregatableFilteringIdMaxBytes, bool DebugReporting, AttributionReportingSourceRegistrationTimeConfig SourceRegistrationTimeConfig, AttributionReportingAggregatableDebugReportingConfig AggregatableDebugReportingConfig, IReadOnlyList<string> Scopes, IReadOnlyList<AttributionReportingNamedBudgetCandidate> NamedBudgets)
-{
-    /// <summary>
-    /// </summary>
-    public UnsignedInt64AsBase10? DebugKey { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public string? AggregationCoordinatorOrigin { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public string? TriggerContextId { get; init; }
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingEventLevelResult>))]
-public enum AttributionReportingEventLevelResult
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("success")]
-    Success,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("successDroppedLowerPriority")]
-    SuccessDroppedLowerPriority,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("internalError")]
-    InternalError,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noCapacityForAttributionDestination")]
-    NoCapacityForAttributionDestination,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noMatchingSources")]
-    NoMatchingSources,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deduplicated")]
-    Deduplicated,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("excessiveAttributions")]
-    ExcessiveAttributions,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("priorityTooLow")]
-    PriorityTooLow,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("neverAttributedSource")]
-    NeverAttributedSource,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("excessiveReportingOrigins")]
-    ExcessiveReportingOrigins,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noMatchingSourceFilterData")]
-    NoMatchingSourceFilterData,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("prohibitedByBrowserPolicy")]
-    ProhibitedByBrowserPolicy,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noMatchingConfigurations")]
-    NoMatchingConfigurations,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("excessiveReports")]
-    ExcessiveReports,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("falselyAttributedSource")]
-    FalselyAttributedSource,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reportWindowPassed")]
-    ReportWindowPassed,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notRegistered")]
-    NotRegistered,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reportWindowNotStarted")]
-    ReportWindowNotStarted,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noMatchingTriggerData")]
-    NoMatchingTriggerData,
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingAggregatableResult>))]
-public enum AttributionReportingAggregatableResult
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("success")]
-    Success,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("internalError")]
-    InternalError,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noCapacityForAttributionDestination")]
-    NoCapacityForAttributionDestination,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noMatchingSources")]
-    NoMatchingSources,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("excessiveAttributions")]
-    ExcessiveAttributions,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("excessiveReportingOrigins")]
-    ExcessiveReportingOrigins,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noHistograms")]
-    NoHistograms,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("insufficientBudget")]
-    InsufficientBudget,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("insufficientNamedBudget")]
-    InsufficientNamedBudget,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noMatchingSourceFilterData")]
-    NoMatchingSourceFilterData,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notRegistered")]
-    NotRegistered,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("prohibitedByBrowserPolicy")]
-    ProhibitedByBrowserPolicy,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deduplicated")]
-    Deduplicated,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reportWindowPassed")]
-    ReportWindowPassed,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("excessiveReports")]
-    ExcessiveReports,
-}
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingReportResult>))]
-public enum AttributionReportingReportResult
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sent")]
-    Sent,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("prohibited")]
-    Prohibited,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("failedToAssemble")]
-    FailedToAssemble,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("expired")]
-    Expired,
-}
-
-/// <summary>
 /// A single Related Website Set object.
 /// </summary>
 /// <param name="PrimarySites">
@@ -3039,6 +2239,8 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 
 [JsonSerializable(typeof(GetStorageKeyForFrameCommandParameters), TypeInfoPropertyName = "GetStorageKeyForFrameCommandParameters")]
 [JsonSerializable(typeof(GetStorageKeyForFrameResult), TypeInfoPropertyName = "GetStorageKeyForFrameResult")]
+[JsonSerializable(typeof(GetStorageKeyCommandParameters), TypeInfoPropertyName = "GetStorageKeyCommandParameters")]
+[JsonSerializable(typeof(GetStorageKeyResult), TypeInfoPropertyName = "GetStorageKeyResult")]
 [JsonSerializable(typeof(ClearDataForOriginCommandParameters), TypeInfoPropertyName = "ClearDataForOriginCommandParameters")]
 [JsonSerializable(typeof(ClearDataForOriginResult), TypeInfoPropertyName = "ClearDataForOriginResult")]
 [JsonSerializable(typeof(ClearDataForStorageKeyCommandParameters), TypeInfoPropertyName = "ClearDataForStorageKeyCommandParameters")]
@@ -3099,16 +2301,8 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(DeleteStorageBucketResult), TypeInfoPropertyName = "DeleteStorageBucketResult")]
 [JsonSerializable(typeof(RunBounceTrackingMitigationsCommandParameters), TypeInfoPropertyName = "RunBounceTrackingMitigationsCommandParameters")]
 [JsonSerializable(typeof(RunBounceTrackingMitigationsResult), TypeInfoPropertyName = "RunBounceTrackingMitigationsResult")]
-[JsonSerializable(typeof(SetAttributionReportingLocalTestingModeCommandParameters), TypeInfoPropertyName = "SetAttributionReportingLocalTestingModeCommandParameters")]
-[JsonSerializable(typeof(SetAttributionReportingLocalTestingModeResult), TypeInfoPropertyName = "SetAttributionReportingLocalTestingModeResult")]
-[JsonSerializable(typeof(SetAttributionReportingTrackingCommandParameters), TypeInfoPropertyName = "SetAttributionReportingTrackingCommandParameters")]
-[JsonSerializable(typeof(SetAttributionReportingTrackingResult), TypeInfoPropertyName = "SetAttributionReportingTrackingResult")]
-[JsonSerializable(typeof(SendPendingAttributionReportsCommandParameters), TypeInfoPropertyName = "SendPendingAttributionReportsCommandParameters")]
-[JsonSerializable(typeof(SendPendingAttributionReportsResult), TypeInfoPropertyName = "SendPendingAttributionReportsResult")]
 [JsonSerializable(typeof(GetRelatedWebsiteSetsCommandParameters), TypeInfoPropertyName = "GetRelatedWebsiteSetsCommandParameters")]
 [JsonSerializable(typeof(GetRelatedWebsiteSetsResult), TypeInfoPropertyName = "GetRelatedWebsiteSetsResult")]
-[JsonSerializable(typeof(GetAffectedUrlsForThirdPartyCookieMetadataCommandParameters), TypeInfoPropertyName = "GetAffectedUrlsForThirdPartyCookieMetadataCommandParameters")]
-[JsonSerializable(typeof(GetAffectedUrlsForThirdPartyCookieMetadataResult), TypeInfoPropertyName = "GetAffectedUrlsForThirdPartyCookieMetadataResult")]
 [JsonSerializable(typeof(SetProtectedAudienceKAnonymityCommandParameters), TypeInfoPropertyName = "SetProtectedAudienceKAnonymityCommandParameters")]
 [JsonSerializable(typeof(SetProtectedAudienceKAnonymityResult), TypeInfoPropertyName = "SetProtectedAudienceKAnonymityResult")]
 [JsonSerializable(typeof(CdpEventArgs<CacheStorageContentUpdatedEventArgs>), TypeInfoPropertyName = "CacheStorageContentUpdatedCdpEventArgs")]
@@ -3122,10 +2316,6 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(CdpEventArgs<SharedStorageWorkletOperationExecutionFinishedEventArgs>), TypeInfoPropertyName = "SharedStorageWorkletOperationExecutionFinishedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>), TypeInfoPropertyName = "StorageBucketCreatedOrUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StorageBucketDeletedEventArgs>), TypeInfoPropertyName = "StorageBucketDeletedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<AttributionReportingSourceRegisteredEventArgs>), TypeInfoPropertyName = "AttributionReportingSourceRegisteredCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<AttributionReportingTriggerRegisteredEventArgs>), TypeInfoPropertyName = "AttributionReportingTriggerRegisteredCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<AttributionReportingReportSentEventArgs>), TypeInfoPropertyName = "AttributionReportingReportSentCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<AttributionReportingVerboseDebugReportSentEventArgs>), TypeInfoPropertyName = "AttributionReportingVerboseDebugReportSentCdpEventArgs")]
 [JsonSerializable(typeof(SerializedStorageKey), TypeInfoPropertyName = "StorageSerializedStorageKey")]
 [JsonSerializable(typeof(StorageType), TypeInfoPropertyName = "StorageStorageType")]
 [JsonSerializable(typeof(UsageForType), TypeInfoPropertyName = "StorageUsageForType")]
@@ -3145,33 +2335,6 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(StorageBucketsDurability), TypeInfoPropertyName = "StorageStorageBucketsDurability")]
 [JsonSerializable(typeof(StorageBucket), TypeInfoPropertyName = "StorageStorageBucket")]
 [JsonSerializable(typeof(StorageBucketInfo), TypeInfoPropertyName = "StorageStorageBucketInfo")]
-[JsonSerializable(typeof(AttributionReportingSourceType), TypeInfoPropertyName = "StorageAttributionReportingSourceType")]
-[JsonSerializable(typeof(UnsignedInt64AsBase10), TypeInfoPropertyName = "StorageUnsignedInt64AsBase10")]
-[JsonSerializable(typeof(UnsignedInt128AsBase16), TypeInfoPropertyName = "StorageUnsignedInt128AsBase16")]
-[JsonSerializable(typeof(SignedInt64AsBase10), TypeInfoPropertyName = "StorageSignedInt64AsBase10")]
-[JsonSerializable(typeof(AttributionReportingFilterDataEntry), TypeInfoPropertyName = "StorageAttributionReportingFilterDataEntry")]
-[JsonSerializable(typeof(AttributionReportingFilterConfig), TypeInfoPropertyName = "StorageAttributionReportingFilterConfig")]
-[JsonSerializable(typeof(AttributionReportingFilterPair), TypeInfoPropertyName = "StorageAttributionReportingFilterPair")]
-[JsonSerializable(typeof(AttributionReportingAggregationKeysEntry), TypeInfoPropertyName = "StorageAttributionReportingAggregationKeysEntry")]
-[JsonSerializable(typeof(AttributionReportingEventReportWindows), TypeInfoPropertyName = "StorageAttributionReportingEventReportWindows")]
-[JsonSerializable(typeof(AttributionReportingTriggerDataMatching), TypeInfoPropertyName = "StorageAttributionReportingTriggerDataMatching")]
-[JsonSerializable(typeof(AttributionReportingAggregatableDebugReportingData), TypeInfoPropertyName = "StorageAttributionReportingAggregatableDebugReportingData")]
-[JsonSerializable(typeof(AttributionReportingAggregatableDebugReportingConfig), TypeInfoPropertyName = "StorageAttributionReportingAggregatableDebugReportingConfig")]
-[JsonSerializable(typeof(AttributionScopesData), TypeInfoPropertyName = "StorageAttributionScopesData")]
-[JsonSerializable(typeof(AttributionReportingNamedBudgetDef), TypeInfoPropertyName = "StorageAttributionReportingNamedBudgetDef")]
-[JsonSerializable(typeof(AttributionReportingSourceRegistration), TypeInfoPropertyName = "StorageAttributionReportingSourceRegistration")]
-[JsonSerializable(typeof(AttributionReportingSourceRegistrationResult), TypeInfoPropertyName = "StorageAttributionReportingSourceRegistrationResult")]
-[JsonSerializable(typeof(AttributionReportingSourceRegistrationTimeConfig), TypeInfoPropertyName = "StorageAttributionReportingSourceRegistrationTimeConfig")]
-[JsonSerializable(typeof(AttributionReportingAggregatableValueDictEntry), TypeInfoPropertyName = "StorageAttributionReportingAggregatableValueDictEntry")]
-[JsonSerializable(typeof(AttributionReportingAggregatableValueEntry), TypeInfoPropertyName = "StorageAttributionReportingAggregatableValueEntry")]
-[JsonSerializable(typeof(AttributionReportingEventTriggerData), TypeInfoPropertyName = "StorageAttributionReportingEventTriggerData")]
-[JsonSerializable(typeof(AttributionReportingAggregatableTriggerData), TypeInfoPropertyName = "StorageAttributionReportingAggregatableTriggerData")]
-[JsonSerializable(typeof(AttributionReportingAggregatableDedupKey), TypeInfoPropertyName = "StorageAttributionReportingAggregatableDedupKey")]
-[JsonSerializable(typeof(AttributionReportingNamedBudgetCandidate), TypeInfoPropertyName = "StorageAttributionReportingNamedBudgetCandidate")]
-[JsonSerializable(typeof(AttributionReportingTriggerRegistration), TypeInfoPropertyName = "StorageAttributionReportingTriggerRegistration")]
-[JsonSerializable(typeof(AttributionReportingEventLevelResult), TypeInfoPropertyName = "StorageAttributionReportingEventLevelResult")]
-[JsonSerializable(typeof(AttributionReportingAggregatableResult), TypeInfoPropertyName = "StorageAttributionReportingAggregatableResult")]
-[JsonSerializable(typeof(AttributionReportingReportResult), TypeInfoPropertyName = "StorageAttributionReportingReportResult")]
 [JsonSerializable(typeof(RelatedWebsiteSet), TypeInfoPropertyName = "StorageRelatedWebsiteSet")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Network.Cookie>), TypeInfoPropertyName = "IReadOnlyListNetworkCookie")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Network.CookieParam>), TypeInfoPropertyName = "IReadOnlyListNetworkCookieParam")]
@@ -3182,17 +2345,6 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InterestGroupAuctionId>), TypeInfoPropertyName = "IReadOnlyListStorageInterestGroupAuctionId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageReportingMetadata>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageReportingMetadata")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageUrlWithMetadata>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageUrlWithMetadata")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingFilterDataEntry>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingFilterDataEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingFilterConfig>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingFilterConfig")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingAggregatableDebugReportingData>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingAggregatableDebugReportingData")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingAggregationKeysEntry>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingAggregationKeysEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingNamedBudgetDef>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingNamedBudgetDef")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingAggregatableValueDictEntry>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingAggregatableValueDictEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingAggregatableDedupKey>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingAggregatableDedupKey")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingEventTriggerData>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingEventTriggerData")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingAggregatableTriggerData>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingAggregatableTriggerData")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingAggregatableValueEntry>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingAggregatableValueEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AttributionReportingNamedBudgetCandidate>), TypeInfoPropertyName = "IReadOnlyListStorageAttributionReportingNamedBudgetCandidate")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
@@ -3297,37 +2449,5 @@ public static class StorageDomainEvent
         EventDescriptor<CdpEventArgs<StorageBucketDeletedEventArgs>>.Create(
             "goog:cdp.Storage.storageBucketDeleted",
             StorageJsonSerializerContext.Default.StorageBucketDeletedCdpEventArgs);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<AttributionReportingSourceRegisteredEventArgs>> AttributionReportingSourceRegistered { get; } =
-        EventDescriptor<CdpEventArgs<AttributionReportingSourceRegisteredEventArgs>>.Create(
-            "goog:cdp.Storage.attributionReportingSourceRegistered",
-            StorageJsonSerializerContext.Default.AttributionReportingSourceRegisteredCdpEventArgs);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<AttributionReportingTriggerRegisteredEventArgs>> AttributionReportingTriggerRegistered { get; } =
-        EventDescriptor<CdpEventArgs<AttributionReportingTriggerRegisteredEventArgs>>.Create(
-            "goog:cdp.Storage.attributionReportingTriggerRegistered",
-            StorageJsonSerializerContext.Default.AttributionReportingTriggerRegisteredCdpEventArgs);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<AttributionReportingReportSentEventArgs>> AttributionReportingReportSent { get; } =
-        EventDescriptor<CdpEventArgs<AttributionReportingReportSentEventArgs>>.Create(
-            "goog:cdp.Storage.attributionReportingReportSent",
-            StorageJsonSerializerContext.Default.AttributionReportingReportSentCdpEventArgs);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<AttributionReportingVerboseDebugReportSentEventArgs>> AttributionReportingVerboseDebugReportSent { get; } =
-        EventDescriptor<CdpEventArgs<AttributionReportingVerboseDebugReportSentEventArgs>>.Create(
-            "goog:cdp.Storage.attributionReportingVerboseDebugReportSent",
-            StorageJsonSerializerContext.Default.AttributionReportingVerboseDebugReportSentCdpEventArgs);
 
 }

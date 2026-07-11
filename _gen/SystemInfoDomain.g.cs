@@ -262,26 +262,6 @@ public enum ImageType
 }
 
 /// <summary>
-/// Describes a supported image decoding profile with its associated minimum and
-/// maximum resolutions and subsampling.
-/// </summary>
-/// <param name="ImageType">
-/// Image coded, e.g. Jpeg.
-/// </param>
-/// <param name="MaxDimensions">
-/// Maximum supported dimensions of the image in pixels.
-/// </param>
-/// <param name="MinDimensions">
-/// Minimum supported dimensions of the image in pixels.
-/// </param>
-/// <param name="Subsamplings">
-/// Optional array of supported subsampling formats, e.g. 4:2:0, if known.
-/// </param>
-public sealed record ImageDecodeAcceleratorCapability(ImageType ImageType, Size MaxDimensions, Size MinDimensions, IReadOnlyList<SubsamplingFormat> Subsamplings)
-{
-}
-
-/// <summary>
 /// Provides information about the GPU(s) on the system.
 /// </summary>
 /// <param name="Devices">
@@ -296,10 +276,7 @@ public sealed record ImageDecodeAcceleratorCapability(ImageType ImageType, Size 
 /// <param name="VideoEncoding">
 /// Supported accelerated video encoding capabilities.
 /// </param>
-/// <param name="ImageDecoding">
-/// Supported accelerated image decoding capabilities.
-/// </param>
-public sealed record GPUInfo(IReadOnlyList<GPUDevice> Devices, IReadOnlyList<string> DriverBugWorkarounds, IReadOnlyList<VideoDecodeAcceleratorCapability> VideoDecoding, IReadOnlyList<VideoEncodeAcceleratorCapability> VideoEncoding, IReadOnlyList<ImageDecodeAcceleratorCapability> ImageDecoding)
+public sealed record GPUInfo(IReadOnlyList<GPUDevice> Devices, IReadOnlyList<string> DriverBugWorkarounds, IReadOnlyList<VideoDecodeAcceleratorCapability> VideoDecoding, IReadOnlyList<VideoEncodeAcceleratorCapability> VideoEncoding)
 {
     /// <summary>
     /// An optional dictionary of additional GPU related attributes.
@@ -341,15 +318,12 @@ public sealed record ProcessInfo(string Type, long Id, double CpuTime)
 [JsonSerializable(typeof(VideoEncodeAcceleratorCapability), TypeInfoPropertyName = "SystemInfoVideoEncodeAcceleratorCapability")]
 [JsonSerializable(typeof(SubsamplingFormat), TypeInfoPropertyName = "SystemInfoSubsamplingFormat")]
 [JsonSerializable(typeof(ImageType), TypeInfoPropertyName = "SystemInfoImageType")]
-[JsonSerializable(typeof(ImageDecodeAcceleratorCapability), TypeInfoPropertyName = "SystemInfoImageDecodeAcceleratorCapability")]
 [JsonSerializable(typeof(GPUInfo), TypeInfoPropertyName = "SystemInfoGPUInfo")]
 [JsonSerializable(typeof(ProcessInfo), TypeInfoPropertyName = "SystemInfoProcessInfo")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ProcessInfo>), TypeInfoPropertyName = "IReadOnlyListSystemInfoProcessInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SubsamplingFormat>), TypeInfoPropertyName = "IReadOnlyListSystemInfoSubsamplingFormat")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<GPUDevice>), TypeInfoPropertyName = "IReadOnlyListSystemInfoGPUDevice")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<VideoDecodeAcceleratorCapability>), TypeInfoPropertyName = "IReadOnlyListSystemInfoVideoDecodeAcceleratorCapability")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<VideoEncodeAcceleratorCapability>), TypeInfoPropertyName = "IReadOnlyListSystemInfoVideoEncodeAcceleratorCapability")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ImageDecodeAcceleratorCapability>), TypeInfoPropertyName = "IReadOnlyListSystemInfoImageDecodeAcceleratorCapability")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

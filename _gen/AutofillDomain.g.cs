@@ -21,13 +21,12 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Optional parameters (via <paramref name="options"/>):
     /// <list type="bullet">
     /// <item><description><b>FrameId</b> - Identifies the frame that field belongs to.</description></item>
+    /// <item><description><b>Card</b> - Credit card information to fill out the form. Credit card data is not saved.  Mutually exclusive with <b>address</b>.</description></item>
+    /// <item><description><b>Address</b> - Address to fill out the form. Address data is not saved. Mutually exclusive with <b>card</b>.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="fieldId">
     /// Identifies a field that serves as an anchor for autofill.
-    /// </param>
-    /// <param name="card">
-    /// Credit card information to fill out the form. Credit card data is not saved.
     /// </param>
     /// <param name="options">
     /// Optional parameters. See <see cref="TriggerCommandOptions"/>.
@@ -38,9 +37,9 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TriggerResult"/>.
     /// </returns>
-    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, CreditCard card, TriggerCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, TriggerCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: options?.FrameId, Card: card);
+        var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: options?.FrameId, Card: options?.Card, Address: options?.Address);
         return await ExecuteCommandAsync(TriggerCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TriggerCommandParameters, TriggerResult> TriggerCommand = new("Autofill.trigger", JsonContext.TriggerCommandParameters, JsonContext.TriggerResult);
@@ -117,7 +116,7 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     public IEventSource<AddressFormFilledEventArgs> AddressFormFilled => CreateCdpEventSource(AutofillDomainEvent.AddressFormFilled);
 }
 
-internal sealed record TriggerCommandParameters(DOM.BackendNodeId FieldId, Page.FrameId? FrameId, CreditCard Card) : Parameters;
+internal sealed record TriggerCommandParameters(DOM.BackendNodeId FieldId, Page.FrameId? FrameId, CreditCard? Card, Address? Address) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="AutofillDomain.TriggerAsync"/>.
@@ -128,6 +127,16 @@ public sealed record TriggerCommandOptions : CdpCommandOptions
     /// Identifies the frame that field belongs to.
     /// </summary>
     public Page.FrameId? FrameId { get; init; }
+
+    /// <summary>
+    /// Credit card information to fill out the form. Credit card data is not saved.  Mutually exclusive with <b>address</b>.
+    /// </summary>
+    public CreditCard? Card { get; init; }
+
+    /// <summary>
+    /// Address to fill out the form. Address data is not saved. Mutually exclusive with <b>card</b>.
+    /// </summary>
+    public Address? Address { get; init; }
 }
 
 /// <summary>
@@ -214,6 +223,8 @@ public sealed record CreditCard(string Number, string Name, string ExpiryMonth, 
 /// </summary>
 /// <param name="Name">
 /// address field name, for example GIVEN_NAME.
+/// The full list of supported field names:
+/// https://source.chromium.org/chromium/chromium/src/+/main:components/autofill/core/browser/field_types.cc;l=38
 /// </param>
 /// <param name="Value">
 /// address field value, for example Jon Doe.

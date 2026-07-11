@@ -51,6 +51,26 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<GetCategoriesCommandParameters, GetCategoriesResult> GetCategoriesCommand = new("Tracing.getCategories", JsonContext.GetCategoriesCommandParameters, JsonContext.GetCategoriesResult);
 
     /// <summary>
+    /// Return a descriptor for all available tracing categories.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetTrackEventDescriptorCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetTrackEventDescriptorResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(GetTrackEventDescriptorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetTrackEventDescriptorCommandParameters();
+        return await ExecuteCommandAsync(GetTrackEventDescriptorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetTrackEventDescriptorCommandParameters, GetTrackEventDescriptorResult> GetTrackEventDescriptorCommand = new("Tracing.getTrackEventDescriptor", JsonContext.GetTrackEventDescriptorCommandParameters, JsonContext.GetTrackEventDescriptorResult);
+
+    /// <summary>
     /// Record a clock sync marker in the trace.
     /// </summary>
     /// <param name="syncId">
@@ -115,6 +135,8 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>TraceConfig</b></description></item>
     /// <item><description><b>PerfettoConfig</b> - Base64-encoded serialized perfetto.protos.TraceConfig protobuf message When specified, the parameters <b>categories</b>, <b>options</b>, <b>traceConfig</b> are ignored. (Encoded as a base64 string when passed over JSON)</description></item>
     /// <item><description><b>TracingBackend</b> - Backend type (defaults to <b>auto</b>)</description></item>
+    /// <item><description><b>ScreenshotMaxSize</b> - Maximum width and height (in pixels) of each captured screenshot. Only used when the <b>disabled-by-default-devtools.screenshot</b> category is enabled. Defaults to 500. The combined memory footprint of screenshots (<b>screenshotMaxSize</b> * <b>screenshotMaxSize</b> * 4 * <b>screenshotMaxCount</b>) is clamped to the existing per-session budget.</description></item>
+    /// <item><description><b>ScreenshotMaxCount</b> - Maximum number of screenshots captured during a single tracing session. Only used when the <b>disabled-by-default-devtools.screenshot</b> category is enabled. Defaults to 450. Clamped together with <b>screenshotMaxSize</b> to stay within the per-session screenshot memory budget.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="options">
@@ -128,7 +150,7 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     public async Task<StartResult> StartAsync(StartCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StartCommandParameters(Categories: options?.Categories, Options: options?.Options, BufferUsageReportingInterval: options?.BufferUsageReportingInterval, TransferMode: options?.TransferMode, StreamFormat: options?.StreamFormat, StreamCompression: options?.StreamCompression, TraceConfig: options?.TraceConfig, PerfettoConfig: options?.PerfettoConfig, TracingBackend: options?.TracingBackend);
+        var @params = new StartCommandParameters(Categories: options?.Categories, Options: options?.Options, BufferUsageReportingInterval: options?.BufferUsageReportingInterval, TransferMode: options?.TransferMode, StreamFormat: options?.StreamFormat, StreamCompression: options?.StreamCompression, TraceConfig: options?.TraceConfig, PerfettoConfig: options?.PerfettoConfig, TracingBackend: options?.TracingBackend, ScreenshotMaxSize: options?.ScreenshotMaxSize, ScreenshotMaxCount: options?.ScreenshotMaxCount);
         return await ExecuteCommandAsync(StartCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartCommandParameters, StartResult> StartCommand = new("Tracing.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
@@ -205,6 +227,23 @@ public sealed record GetCategoriesCommandOptions : CdpCommandOptions
 public sealed record GetCategoriesResult(IReadOnlyList<string> Categories) : EmptyResult;
 
 
+internal sealed record GetTrackEventDescriptorCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="TracingDomain.GetTrackEventDescriptorAsync"/>.
+/// </summary>
+public sealed record GetTrackEventDescriptorCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Descriptor">
+/// Base64-encoded serialized perfetto.protos.TrackEventDescriptor protobuf message. (Encoded as a base64 string when passed over JSON)
+/// </param>
+public sealed record GetTrackEventDescriptorResult(string Descriptor) : EmptyResult;
+
+
 internal sealed record RecordClockSyncMarkerCommandParameters(string SyncId) : Parameters;
 
 /// <summary>
@@ -248,7 +287,7 @@ public sealed record RequestMemoryDumpCommandOptions : CdpCommandOptions
 public sealed record RequestMemoryDumpResult(string DumpGuid, bool Success) : EmptyResult;
 
 
-internal sealed record StartCommandParameters(string? Categories, string? Options, double? BufferUsageReportingInterval, string? TransferMode, StreamFormat? StreamFormat, StreamCompression? StreamCompression, TraceConfig? TraceConfig, string? PerfettoConfig, TracingBackend? TracingBackend) : Parameters;
+internal sealed record StartCommandParameters(string? Categories, string? Options, double? BufferUsageReportingInterval, string? TransferMode, StreamFormat? StreamFormat, StreamCompression? StreamCompression, TraceConfig? TraceConfig, string? PerfettoConfig, TracingBackend? TracingBackend, long? ScreenshotMaxSize, long? ScreenshotMaxCount) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TracingDomain.StartAsync"/>.
@@ -305,6 +344,23 @@ public sealed record StartCommandOptions : CdpCommandOptions
     /// Backend type (defaults to <b>auto</b>)
     /// </summary>
     public TracingBackend? TracingBackend { get; init; }
+
+    /// <summary>
+    /// Maximum width and height (in pixels) of each captured screenshot.
+    /// Only used when the <b>disabled-by-default-devtools.screenshot</b> category is
+    /// enabled. Defaults to 500. The combined memory footprint of screenshots
+    /// (<b>screenshotMaxSize</b> * <b>screenshotMaxSize</b> * 4 * <b>screenshotMaxCount</b>)
+    /// is clamped to the existing per-session budget.
+    /// </summary>
+    public long? ScreenshotMaxSize { get; init; }
+
+    /// <summary>
+    /// Maximum number of screenshots captured during a single tracing session.
+    /// Only used when the <b>disabled-by-default-devtools.screenshot</b> category is
+    /// enabled. Defaults to 450. Clamped together with <b>screenshotMaxSize</b> to
+    /// stay within the per-session screenshot memory budget.
+    /// </summary>
+    public long? ScreenshotMaxCount { get; init; }
 }
 
 /// <summary>
@@ -492,6 +548,8 @@ public enum TracingBackend
 [JsonSerializable(typeof(EndResult), TypeInfoPropertyName = "EndResult")]
 [JsonSerializable(typeof(GetCategoriesCommandParameters), TypeInfoPropertyName = "GetCategoriesCommandParameters")]
 [JsonSerializable(typeof(GetCategoriesResult), TypeInfoPropertyName = "GetCategoriesResult")]
+[JsonSerializable(typeof(GetTrackEventDescriptorCommandParameters), TypeInfoPropertyName = "GetTrackEventDescriptorCommandParameters")]
+[JsonSerializable(typeof(GetTrackEventDescriptorResult), TypeInfoPropertyName = "GetTrackEventDescriptorResult")]
 [JsonSerializable(typeof(RecordClockSyncMarkerCommandParameters), TypeInfoPropertyName = "RecordClockSyncMarkerCommandParameters")]
 [JsonSerializable(typeof(RecordClockSyncMarkerResult), TypeInfoPropertyName = "RecordClockSyncMarkerResult")]
 [JsonSerializable(typeof(RequestMemoryDumpCommandParameters), TypeInfoPropertyName = "RequestMemoryDumpCommandParameters")]

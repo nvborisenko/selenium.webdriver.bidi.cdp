@@ -156,6 +156,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
     /// <item><description><b>StorageKey</b> - Storage key.</description></item>
     /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
+    /// <item><description><b>IndexName</b> - Index name. If not specified, it performs an object store data request.</description></item>
     /// <item><description><b>KeyRange</b> - Key range.</description></item>
     /// </list>
     /// </remarks>
@@ -164,9 +165,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// </param>
     /// <param name="objectStoreName">
     /// Object store name.
-    /// </param>
-    /// <param name="indexName">
-    /// Index name, empty string for object store data requests.
     /// </param>
     /// <param name="skipCount">
     /// Number of records to skip.
@@ -183,9 +181,9 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestDataResult"/>.
     /// </returns>
-    public async Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, string indexName, long skipCount, long pageSize, RequestDataCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, RequestDataCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new RequestDataCommandParameters(SecurityOrigin: options?.SecurityOrigin, StorageKey: options?.StorageKey, StorageBucket: options?.StorageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, IndexName: indexName, SkipCount: skipCount, PageSize: pageSize, KeyRange: options?.KeyRange);
+        var @params = new RequestDataCommandParameters(SecurityOrigin: options?.SecurityOrigin, StorageKey: options?.StorageKey, StorageBucket: options?.StorageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, IndexName: options?.IndexName, SkipCount: skipCount, PageSize: pageSize, KeyRange: options?.KeyRange);
         return await ExecuteCommandAsync(RequestDataCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RequestDataCommandParameters, RequestDataResult> RequestDataCommand = new("IndexedDB.requestData", JsonContext.RequestDataCommandParameters, JsonContext.RequestDataResult);
@@ -397,7 +395,7 @@ public sealed record EnableCommandOptions : CdpCommandOptions
 public sealed record EnableResult() : EmptyResult;
 
 
-internal sealed record RequestDataCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName, string ObjectStoreName, string IndexName, long SkipCount, long PageSize, KeyRange? KeyRange) : Parameters;
+internal sealed record RequestDataCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName, string ObjectStoreName, string? IndexName, long SkipCount, long PageSize, KeyRange? KeyRange) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="IndexedDBDomain.RequestDataAsync"/>.
@@ -419,6 +417,11 @@ public sealed record RequestDataCommandOptions : CdpCommandOptions
     /// Storage bucket. If not specified, it uses the default bucket.
     /// </summary>
     public Storage.StorageBucket? StorageBucket { get; init; }
+
+    /// <summary>
+    /// Index name. If not specified, it performs an object store data request.
+    /// </summary>
+    public string? IndexName { get; init; }
 
     /// <summary>
     /// Key range.

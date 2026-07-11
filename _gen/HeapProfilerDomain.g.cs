@@ -160,6 +160,7 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// Optional parameters (via <paramref name="options"/>):
     /// <list type="bullet">
     /// <item><description><b>SamplingInterval</b> - Average sample interval in bytes. Poisson distribution is used for the intervals. The default value is 32768 bytes.</description></item>
+    /// <item><description><b>StackDepth</b> - Maximum stack depth. The default value is 128.</description></item>
     /// <item><description><b>IncludeObjectsCollectedByMajorGC</b> - By default, the sampling heap profiler reports only objects which are still alive when the profile is returned via getSamplingProfile or stopSampling, which is useful for determining what functions contribute the most to steady-state memory usage. This flag instructs the sampling heap profiler to also include information about objects discarded by major GC, which will show which functions cause large temporary memory usage or long GC pauses.</description></item>
     /// <item><description><b>IncludeObjectsCollectedByMinorGC</b> - By default, the sampling heap profiler reports only objects which are still alive when the profile is returned via getSamplingProfile or stopSampling, which is useful for determining what functions contribute the most to steady-state memory usage. This flag instructs the sampling heap profiler to also include information about objects discarded by minor GC, which is useful when tuning a latency-sensitive application for minimal GC activity.</description></item>
     /// </list>
@@ -175,7 +176,7 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// </returns>
     public async Task<StartSamplingResult> StartSamplingAsync(StartSamplingCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StartSamplingCommandParameters(SamplingInterval: options?.SamplingInterval, IncludeObjectsCollectedByMajorGC: options?.IncludeObjectsCollectedByMajorGC, IncludeObjectsCollectedByMinorGC: options?.IncludeObjectsCollectedByMinorGC);
+        var @params = new StartSamplingCommandParameters(SamplingInterval: options?.SamplingInterval, StackDepth: options?.StackDepth, IncludeObjectsCollectedByMajorGC: options?.IncludeObjectsCollectedByMajorGC, IncludeObjectsCollectedByMinorGC: options?.IncludeObjectsCollectedByMinorGC);
         return await ExecuteCommandAsync(StartSamplingCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartSamplingCommandParameters, StartSamplingResult> StartSamplingCommand = new("HeapProfiler.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
@@ -438,7 +439,7 @@ public sealed record GetSamplingProfileCommandOptions : CdpCommandOptions
 public sealed record GetSamplingProfileResult(SamplingHeapProfile Profile) : EmptyResult;
 
 
-internal sealed record StartSamplingCommandParameters(double? SamplingInterval, bool? IncludeObjectsCollectedByMajorGC, bool? IncludeObjectsCollectedByMinorGC) : Parameters;
+internal sealed record StartSamplingCommandParameters(double? SamplingInterval, double? StackDepth, bool? IncludeObjectsCollectedByMajorGC, bool? IncludeObjectsCollectedByMinorGC) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="HeapProfilerDomain.StartSamplingAsync"/>.
@@ -450,6 +451,11 @@ public sealed record StartSamplingCommandOptions : CdpCommandOptions
     /// default value is 32768 bytes.
     /// </summary>
     public double? SamplingInterval { get; init; }
+
+    /// <summary>
+    /// Maximum stack depth. The default value is 128.
+    /// </summary>
+    public double? StackDepth { get; init; }
 
     /// <summary>
     /// By default, the sampling heap profiler reports only objects which are

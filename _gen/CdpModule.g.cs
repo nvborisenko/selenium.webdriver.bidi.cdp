@@ -8,6 +8,12 @@ partial class CdpModule
     public Accessibility.AccessibilityDomain Accessibility => new(this);
 
     /// <summary>
+    /// A domain for ad-related metrics and data.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public Ads.AdsDomain Ads => new(this);
+
+    /// <summary>
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public Animation.AnimationDomain Animation => new(this);
@@ -17,12 +23,6 @@ partial class CdpModule
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public Audits.AuditsDomain Audits => new(this);
-
-    /// <summary>
-    /// Defines commands and events for browser extensions.
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public Extensions.ExtensionsDomain Extensions => new(this);
 
     /// <summary>
     /// Defines commands and events for Autofill.
@@ -35,6 +35,13 @@ partial class CdpModule
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public BackgroundService.BackgroundServiceDomain BackgroundService => new(this);
+
+    /// <summary>
+    /// This domain allows configuring virtual Bluetooth devices to test
+    /// the web-bluetooth API.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public BluetoothEmulation.BluetoothEmulationDomain BluetoothEmulation => new(this);
 
     /// <summary>
     /// The Browser domain defines methods and events for browser managing.
@@ -65,6 +72,12 @@ partial class CdpModule
     public Cast.CastDomain Cast => new(this);
 
     /// <summary>
+    /// This domain exposes the current state of the CrashReportContext API.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public CrashReportContext.CrashReportContextDomain CrashReportContext => new(this);
+
+    /// <summary>
     /// This domain exposes DOM read/write operations. Each DOM Node is represented with its mirror object
     /// that has an <b>id</b>. This <b>id</b> can be used to get additional information on the Node, resolve it into
     /// the JavaScript object wrapper, etc. It is important that client receives DOM events only for the
@@ -82,14 +95,6 @@ partial class CdpModule
     public DOMDebugger.DOMDebuggerDomain DOMDebugger => new(this);
 
     /// <summary>
-    /// EventBreakpoints permits setting JavaScript breakpoints on operations and events
-    /// occurring in native code invoked from JavaScript. Once breakpoint is hit, it is
-    /// reported through Debugger domain, similarly to regular breakpoints being hit.
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public EventBreakpoints.EventBreakpointsDomain EventBreakpoints => new(this);
-
-    /// <summary>
     /// This domain facilitates obtaining document snapshots with DOM, layout, and style information.
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -104,12 +109,53 @@ partial class CdpModule
     /// <summary>
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public DeviceAccess.DeviceAccessDomain DeviceAccess => new(this);
+
+    /// <summary>
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public DeviceOrientation.DeviceOrientationDomain DeviceOrientation => new(this);
+
+    /// <summary>
+    /// This domain allows interacting with the Digital Credentials API for automation.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public DigitalCredentials.DigitalCredentialsDomain DigitalCredentials => new(this);
 
     /// <summary>
     /// This domain emulates different environments for the page.
     /// </summary>
     public Emulation.EmulationDomain Emulation => new(this);
+
+    /// <summary>
+    /// EventBreakpoints permits setting JavaScript breakpoints on operations and events
+    /// occurring in native code invoked from JavaScript. Once breakpoint is hit, it is
+    /// reported through Debugger domain, similarly to regular breakpoints being hit.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public EventBreakpoints.EventBreakpointsDomain EventBreakpoints => new(this);
+
+    /// <summary>
+    /// Defines commands and events for browser extensions.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public Extensions.ExtensionsDomain Extensions => new(this);
+
+    /// <summary>
+    /// This domain allows interacting with the FedCM dialog.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public FedCm.FedCmDomain FedCm => new(this);
+
+    /// <summary>
+    /// A domain for letting clients substitute browser's network layer with client code.
+    /// </summary>
+    public Fetch.FetchDomain Fetch => new(this);
+
+    /// <summary>
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public FileSystem.FileSystemDomain FileSystem => new(this);
 
     /// <summary>
     /// This domain provides experimental commands only supported in headless mode.
@@ -121,11 +167,6 @@ partial class CdpModule
     /// Input/Output operations for streams produced by DevTools.
     /// </summary>
     public IO.IODomain IO => new(this);
-
-    /// <summary>
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public FileSystem.FileSystemDomain FileSystem => new(this);
 
     /// <summary>
     /// </summary>
@@ -152,6 +193,12 @@ partial class CdpModule
     public Log.LogDomain Log => new(this);
 
     /// <summary>
+    /// This domain allows detailed inspection of media elements.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public Media.MediaDomain Media => new(this);
+
+    /// <summary>
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public Memory.MemoryDomain Memory => new(this);
@@ -167,6 +214,12 @@ partial class CdpModule
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public Overlay.OverlayDomain Overlay => new(this);
+
+    /// <summary>
+    /// This domain allows interacting with the browser to control PWAs.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public PWA.PWADomain PWA => new(this);
 
     /// <summary>
     /// Actions and events related to the inspected page belong to the page domain.
@@ -185,7 +238,11 @@ partial class CdpModule
     public PerformanceTimeline.PerformanceTimelineDomain PerformanceTimeline => new(this);
 
     /// <summary>
-    /// Security
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public Preload.PreloadDomain Preload => new(this);
+
+    /// <summary>
     /// </summary>
     public Security.SecurityDomain Security => new(this);
 
@@ -193,6 +250,11 @@ partial class CdpModule
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public ServiceWorker.ServiceWorkerDomain ServiceWorker => new(this);
+
+    /// <summary>
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public SmartCardEmulation.SmartCardEmulationDomain SmartCardEmulation => new(this);
 
     /// <summary>
     /// </summary>
@@ -221,11 +283,6 @@ partial class CdpModule
     public Tracing.TracingDomain Tracing => new(this);
 
     /// <summary>
-    /// A domain for letting clients substitute browser's network layer with client code.
-    /// </summary>
-    public Fetch.FetchDomain Fetch => new(this);
-
-    /// <summary>
     /// This domain allows inspection of Web Audio API.
     /// https://webaudio.github.io/web-audio-api/
     /// </summary>
@@ -240,39 +297,9 @@ partial class CdpModule
     public WebAuthn.WebAuthnDomain WebAuthn => new(this);
 
     /// <summary>
-    /// This domain allows detailed inspection of media elements
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public Media.MediaDomain Media => new(this);
-
-    /// <summary>
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public DeviceAccess.DeviceAccessDomain DeviceAccess => new(this);
-
-    /// <summary>
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public Preload.PreloadDomain Preload => new(this);
-
-    /// <summary>
-    /// This domain allows interacting with the FedCM dialog.
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public FedCm.FedCmDomain FedCm => new(this);
-
-    /// <summary>
-    /// This domain allows interacting with the browser to control PWAs.
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public PWA.PWADomain PWA => new(this);
-
-    /// <summary>
-    /// This domain allows configuring virtual Bluetooth devices to test
-    /// the web-bluetooth API.
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public BluetoothEmulation.BluetoothEmulationDomain BluetoothEmulation => new(this);
+    public WebMCP.WebMCPDomain WebMCP => new(this);
 
     /// <summary>
     /// This domain is deprecated - use Runtime or Log instead.

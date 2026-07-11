@@ -663,6 +663,10 @@ public enum Ctap2Version
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ctap2_1")]
     Ctap21,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ctap2_2")]
+    Ctap22,
 }
 
 /// <summary>
@@ -742,6 +746,20 @@ public sealed record VirtualAuthenticatorOptions(AuthenticatorProtocol Protocol,
     /// Defaults to false.
     /// </summary>
     public bool? HasPrf { get; init; }
+
+    /// <summary>
+    /// If set to true, the authenticator will support the hmac-secret extension.
+    /// https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-hmac-secret-extension
+    /// Defaults to false.
+    /// </summary>
+    public bool? HasHmacSecret { get; init; }
+
+    /// <summary>
+    /// If set to true, the authenticator will support the hmac-secret-mc extension.
+    /// https://fidoalliance.org/specs/fido-v2.2-rd-20241003/fido-client-to-authenticator-protocol-v2.2-rd-20241003.html#sctn-hmac-secret-make-cred-extension
+    /// Defaults to false.
+    /// </summary>
+    public bool? HasHmacSecretMc { get; init; }
 
     /// <summary>
     /// If set to true, tests of user presence will succeed immediately.

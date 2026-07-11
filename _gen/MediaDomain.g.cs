@@ -6,7 +6,7 @@ using global::OpenQA.Selenium.BiDi;
 namespace Selenium.WebDriver.BiDi.Cdp.Media;
 
 /// <summary>
-/// This domain allows detailed inspection of media elements
+/// This domain allows detailed inspection of media elements.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
@@ -99,16 +99,16 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     public IEventSource<PlayerErrorsRaisedEventArgs> PlayerErrorsRaised => CreateCdpEventSource(MediaDomainEvent.PlayerErrorsRaised);
     /// <summary>
     /// Called whenever a player is created, or when a new agent joins and receives
-    /// a list of active players. If an agent is restored, it will receive the full
-    /// list of player ids and all events again.
+    /// a list of active players. If an agent is restored, it will receive one
+    /// event for each active player.
     /// </summary>
     /// <remarks>
-    /// Event args (<see cref="PlayersCreatedEventArgs"/>):
+    /// Event args (<see cref="PlayerCreatedEventArgs"/>):
     /// <list type="bullet">
-    /// <item><description><b>Players</b></description></item>
+    /// <item><description><b>Player</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PlayersCreatedEventArgs> PlayersCreated => CreateCdpEventSource(MediaDomainEvent.PlayersCreated);
+    public IEventSource<PlayerCreatedEventArgs> PlayerCreated => CreateCdpEventSource(MediaDomainEvent.PlayerCreated);
 }
 
 internal sealed record EnableCommandParameters() : Parameters;
@@ -179,12 +179,12 @@ public sealed record PlayerErrorsRaisedEventArgs(PlayerId PlayerId, IEnumerable<
 
 /// <summary>
 /// Called whenever a player is created, or when a new agent joins and receives
-/// a list of active players. If an agent is restored, it will receive the full
-/// list of player ids and all events again.
+/// a list of active players. If an agent is restored, it will receive one
+/// event for each active player.
 /// </summary>
-/// <param name="Players">
+/// <param name="Player">
 /// </param>
-public sealed record PlayersCreatedEventArgs(IEnumerable<PlayerId> Players) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PlayerCreatedEventArgs(Player Player) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Players will get an ID that is unique within the agent context.
@@ -281,6 +281,17 @@ public sealed record PlayerError(string ErrorType, long Code, IReadOnlyList<Play
 {
 }
 
+/// <summary>
+/// </summary>
+/// <param name="PlayerId">
+/// </param>
+public sealed record Player(PlayerId PlayerId)
+{
+    /// <summary>
+    /// </summary>
+    public DOM.BackendNodeId? DomNodeId { get; init; }
+}
+
 [JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]
 [JsonSerializable(typeof(EnableResult), TypeInfoPropertyName = "EnableResult")]
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]
@@ -289,7 +300,7 @@ public sealed record PlayerError(string ErrorType, long Code, IReadOnlyList<Play
 [JsonSerializable(typeof(CdpEventArgs<PlayerEventsAddedEventArgs>), TypeInfoPropertyName = "PlayerEventsAddedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<PlayerMessagesLoggedEventArgs>), TypeInfoPropertyName = "PlayerMessagesLoggedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<PlayerErrorsRaisedEventArgs>), TypeInfoPropertyName = "PlayerErrorsRaisedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<PlayersCreatedEventArgs>), TypeInfoPropertyName = "PlayersCreatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<PlayerCreatedEventArgs>), TypeInfoPropertyName = "PlayerCreatedCdpEventArgs")]
 [JsonSerializable(typeof(PlayerId), TypeInfoPropertyName = "MediaPlayerId")]
 [JsonSerializable(typeof(Timestamp), TypeInfoPropertyName = "MediaTimestamp")]
 [JsonSerializable(typeof(PlayerMessage), TypeInfoPropertyName = "MediaPlayerMessage")]
@@ -297,11 +308,11 @@ public sealed record PlayerError(string ErrorType, long Code, IReadOnlyList<Play
 [JsonSerializable(typeof(PlayerEvent), TypeInfoPropertyName = "MediaPlayerEvent")]
 [JsonSerializable(typeof(PlayerErrorSourceLocation), TypeInfoPropertyName = "MediaPlayerErrorSourceLocation")]
 [JsonSerializable(typeof(PlayerError), TypeInfoPropertyName = "MediaPlayerError")]
+[JsonSerializable(typeof(Player), TypeInfoPropertyName = "MediaPlayer")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerProperty>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerProperty")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerEvent>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerEvent")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerMessage>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerMessage")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerError>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerError")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerId>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerErrorSourceLocation>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerErrorSourceLocation")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
@@ -349,12 +360,12 @@ public static class MediaDomainEvent
 
     /// <summary>
     /// Called whenever a player is created, or when a new agent joins and receives
-    /// a list of active players. If an agent is restored, it will receive the full
-    /// list of player ids and all events again.
+    /// a list of active players. If an agent is restored, it will receive one
+    /// event for each active player.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PlayersCreatedEventArgs>> PlayersCreated { get; } =
-        EventDescriptor<CdpEventArgs<PlayersCreatedEventArgs>>.Create(
-            "goog:cdp.Media.playersCreated",
-            MediaJsonSerializerContext.Default.PlayersCreatedCdpEventArgs);
+    public static EventDescriptor<CdpEventArgs<PlayerCreatedEventArgs>> PlayerCreated { get; } =
+        EventDescriptor<CdpEventArgs<PlayerCreatedEventArgs>>.Create(
+            "goog:cdp.Media.playerCreated",
+            MediaJsonSerializerContext.Default.PlayerCreatedCdpEventArgs);
 
 }

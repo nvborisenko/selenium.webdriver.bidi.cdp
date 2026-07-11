@@ -244,7 +244,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Network.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
-    /// Activates emulation of network conditions.
+    /// Activates emulation of network conditions. This command is deprecated in favor of the emulateNetworkConditionsByRule
+    /// and overrideNetworkState commands, which can be used together to the same effect.
     /// </summary>
     /// <remarks>
     /// Optional parameters (via <paramref name="options"/>):
@@ -276,6 +277,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsResult"/>.
     /// </returns>
+    [global::System.Obsolete]
     public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, EmulateNetworkConditionsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: options?.ConnectionType, PacketLoss: options?.PacketLoss, PacketQueueLength: options?.PacketQueueLength, PacketReordering: options?.PacketReordering);
@@ -284,15 +286,88 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<EmulateNetworkConditionsCommandParameters, EmulateNetworkConditionsResult> EmulateNetworkConditionsCommand = new("Network.emulateNetworkConditions", JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult);
 
     /// <summary>
+    /// Activates emulation of network conditions for individual requests using URL match patterns. Unlike the deprecated
+    /// Network.emulateNetworkConditions this method does not affect <b>navigator</b> state. Use Network.overrideNetworkState to
+    /// explicitly modify <b>navigator</b> behavior.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Offline</b> - True to emulate internet disconnection. Deprecated, use the offline property in matchedNetworkConditions or emulateOfflineServiceWorker instead.</description></item>
+    /// <item><description><b>EmulateOfflineServiceWorker</b> - True to emulate offline service worker.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="matchedNetworkConditions">
+    /// Configure conditions for matching requests. If multiple entries match a request, the first entry wins.  Global
+    /// conditions can be configured by leaving the urlPattern for the conditions empty. These global conditions are
+    /// also applied for throttling of p2p connections.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="EmulateNetworkConditionsByRuleCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsByRuleResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(IEnumerable<NetworkConditions> matchedNetworkConditions, EmulateNetworkConditionsByRuleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: options?.Offline, EmulateOfflineServiceWorker: options?.EmulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
+        return await ExecuteCommandAsync(EmulateNetworkConditionsByRuleCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EmulateNetworkConditionsByRuleCommandParameters, EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleCommand = new("Network.emulateNetworkConditionsByRule", JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult);
+
+    /// <summary>
+    /// Override the state of navigator.onLine and navigator.connection.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>ConnectionType</b> - Connection type if known.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="offline">
+    /// True to emulate internet disconnection.
+    /// </param>
+    /// <param name="latency">
+    /// Minimum latency from request sent to response headers received (ms).
+    /// </param>
+    /// <param name="downloadThroughput">
+    /// Maximal aggregated download throughput (bytes/sec). -1 disables download throttling.
+    /// </param>
+    /// <param name="uploadThroughput">
+    /// Maximal aggregated upload throughput (bytes/sec).  -1 disables upload throttling.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="OverrideNetworkStateCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="OverrideNetworkStateResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, OverrideNetworkStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: options?.ConnectionType);
+        return await ExecuteCommandAsync(OverrideNetworkStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<OverrideNetworkStateCommandParameters, OverrideNetworkStateResult> OverrideNetworkStateCommand = new("Network.overrideNetworkState", JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult);
+
+    /// <summary>
     /// Enables network tracking, network events will now be delivered to the client.
     /// </summary>
     /// <remarks>
     /// Optional parameters (via <paramref name="options"/>):
     /// <list type="bullet">
-    /// <item><description><b>MaxTotalBufferSize</b> - Buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
+    /// <item><description><b>MaxTotalBufferSize</b> - Buffer size in bytes to use when preserving network payloads (XHRs, etc). This is the maximum number of bytes that will be collected by this DevTools session.</description></item>
     /// <item><description><b>MaxResourceBufferSize</b> - Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
     /// <item><description><b>MaxPostDataSize</b> - Longest post body size (in bytes) that would be included in requestWillBeSent notification</description></item>
     /// <item><description><b>ReportDirectSocketTraffic</b> - Whether DirectSocket chunk send/receive events should be reported.</description></item>
+    /// <item><description><b>EnableDurableMessages</b> - Enable storing response bodies outside of renderer, so that these survive a cross-process navigation. Requires maxTotalBufferSize to be set. Currently defaults to false. This field is being deprecated in favor of the dedicated configureDurableMessages command, due to the possibility of deadlocks when awaiting Network.enable before issuing Runtime.runIfWaitingForDebugger.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="options">
@@ -306,10 +381,39 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EnableCommandParameters(MaxTotalBufferSize: options?.MaxTotalBufferSize, MaxResourceBufferSize: options?.MaxResourceBufferSize, MaxPostDataSize: options?.MaxPostDataSize, ReportDirectSocketTraffic: options?.ReportDirectSocketTraffic);
+        var @params = new EnableCommandParameters(MaxTotalBufferSize: options?.MaxTotalBufferSize, MaxResourceBufferSize: options?.MaxResourceBufferSize, MaxPostDataSize: options?.MaxPostDataSize, ReportDirectSocketTraffic: options?.ReportDirectSocketTraffic, EnableDurableMessages: options?.EnableDurableMessages);
         return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Network.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    /// <summary>
+    /// Configures storing response bodies outside of renderer, so that these survive
+    /// a cross-process navigation.
+    /// If maxTotalBufferSize is not set, durable messages are disabled.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>MaxTotalBufferSize</b> - Buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
+    /// <item><description><b>MaxResourceBufferSize</b> - Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="ConfigureDurableMessagesCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ConfigureDurableMessagesResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(ConfigureDurableMessagesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: options?.MaxTotalBufferSize, MaxResourceBufferSize: options?.MaxResourceBufferSize);
+        return await ExecuteCommandAsync(ConfigureDurableMessagesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ConfigureDurableMessagesCommandParameters, ConfigureDurableMessagesResult> ConfigureDurableMessagesCommand = new("Network.configureDurableMessages", JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult);
 
     /// <summary>
     /// Returns all browser cookies. Depending on the backend support, will return detailed cookie
@@ -535,9 +639,13 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Blocks URLs from loading.
     /// </summary>
-    /// <param name="urls">
-    /// URL patterns to block. Wildcards ('*') are allowed.
-    /// </param>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>UrlPatterns</b> - Patterns to match in the order in which they are given. These patterns also take precedence over any wildcard patterns defined in <b>urls</b>.</description></item>
+    /// <item><description><b>Urls</b> - URL patterns to block. Wildcards ('*') are allowed.</description></item>
+    /// </list>
+    /// </remarks>
     /// <param name="options">
     /// Optional parameters. See <see cref="SetBlockedURLsCommandOptions"/>.
     /// </param>
@@ -548,9 +656,9 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetBlockedURLsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(IEnumerable<string> urls, SetBlockedURLsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(SetBlockedURLsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetBlockedURLsCommandParameters(Urls: urls);
+        var @params = new SetBlockedURLsCommandParameters(UrlPatterns: options?.UrlPatterns, Urls: options?.Urls);
         return await ExecuteCommandAsync(SetBlockedURLsCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBlockedURLsCommandParameters, SetBlockedURLsResult> SetBlockedURLsCommand = new("Network.setBlockedURLs", JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult);
@@ -613,7 +721,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>SameSite</b> - Cookie SameSite type.</description></item>
     /// <item><description><b>Expires</b> - Cookie expiration date, session cookie if not set</description></item>
     /// <item><description><b>Priority</b> - Cookie Priority type.</description></item>
-    /// <item><description><b>SameParty</b> - True if cookie is SameParty.</description></item>
     /// <item><description><b>SourceScheme</b> - Cookie source scheme type.</description></item>
     /// <item><description><b>SourcePort</b> - Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.</description></item>
     /// <item><description><b>PartitionKey</b> - Cookie partition key. If not set, the cookie will be set as not partitioned.</description></item>
@@ -636,7 +743,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     public async Task<SetCookieResult> SetCookieAsync(string name, string value, SetCookieCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: options?.Url, Domain: options?.Domain, Path: options?.Path, Secure: options?.Secure, HttpOnly: options?.HttpOnly, SameSite: options?.SameSite, Expires: options?.Expires, Priority: options?.Priority, SameParty: options?.SameParty, SourceScheme: options?.SourceScheme, SourcePort: options?.SourcePort, PartitionKey: options?.PartitionKey);
+        var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: options?.Url, Domain: options?.Domain, Path: options?.Path, Secure: options?.Secure, HttpOnly: options?.HttpOnly, SameSite: options?.SameSite, Expires: options?.Expires, Priority: options?.Priority, SourceScheme: options?.SourceScheme, SourcePort: options?.SourcePort, PartitionKey: options?.PartitionKey);
         return await ExecuteCommandAsync(SetCookieCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCookieCommandParameters, SetCookieResult> SetCookieCommand = new("Network.setCookie", JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult);
@@ -839,6 +946,74 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<EnableReportingApiCommandParameters, EnableReportingApiResult> EnableReportingApiCommand = new("Network.enableReportingApi", JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult);
 
     /// <summary>
+    /// Sets up tracking device bound sessions and fetching of initial set of sessions.
+    /// </summary>
+    /// <param name="enable">
+    /// Whether to enable or disable events.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="EnableDeviceBoundSessionsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="EnableDeviceBoundSessionsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, EnableDeviceBoundSessionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableDeviceBoundSessionsCommandParameters(Enable: enable);
+        return await ExecuteCommandAsync(EnableDeviceBoundSessionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableDeviceBoundSessionsCommandParameters, EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsCommand = new("Network.enableDeviceBoundSessions", JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult);
+
+    /// <summary>
+    /// Deletes a device bound session.
+    /// </summary>
+    /// <param name="key">
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="DeleteDeviceBoundSessionCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="DeleteDeviceBoundSessionResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, DeleteDeviceBoundSessionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteDeviceBoundSessionCommandParameters(Key: key);
+        return await ExecuteCommandAsync(DeleteDeviceBoundSessionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteDeviceBoundSessionCommandParameters, DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionCommand = new("Network.deleteDeviceBoundSession", JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult);
+
+    /// <summary>
+    /// Fetches the schemeful site for a specific origin.
+    /// </summary>
+    /// <param name="origin">
+    /// The URL origin.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="FetchSchemefulSiteCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="FetchSchemefulSiteResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, FetchSchemefulSiteCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new FetchSchemefulSiteCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(FetchSchemefulSiteCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<FetchSchemefulSiteCommandParameters, FetchSchemefulSiteResult> FetchSchemefulSiteCommand = new("Network.fetchSchemefulSite", JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult);
+
+    /// <summary>
     /// Fetches the resource and returns the content.
     /// </summary>
     /// <remarks>
@@ -877,12 +1052,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="enableThirdPartyCookieRestriction">
     /// Whether 3pc restriction is enabled.
     /// </param>
-    /// <param name="disableThirdPartyCookieMetadata">
-    /// Whether 3pc grace period exception should be enabled; false by default.
-    /// </param>
-    /// <param name="disableThirdPartyCookieHeuristics">
-    /// Whether 3pc heuristics exceptions should be enabled; false by default.
-    /// </param>
     /// <param name="options">
     /// Optional parameters. See <see cref="SetCookieControlsCommandOptions"/>.
     /// </param>
@@ -893,9 +1062,9 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetCookieControlsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, bool disableThirdPartyCookieMetadata, bool disableThirdPartyCookieHeuristics, SetCookieControlsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, SetCookieControlsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction, DisableThirdPartyCookieMetadata: disableThirdPartyCookieMetadata, DisableThirdPartyCookieHeuristics: disableThirdPartyCookieHeuristics);
+        var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction);
         return await ExecuteCommandAsync(SetCookieControlsCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCookieControlsCommandParameters, SetCookieControlsResult> SetCookieControlsCommand = new("Network.setCookieControls", JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult);
@@ -1009,6 +1178,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Type</b> - Type of this resource.</description></item>
     /// <item><description><b>FrameId</b> - Frame identifier.</description></item>
     /// <item><description><b>HasUserGesture</b> - Whether the request is initiated by a user gesture. Defaults to false.</description></item>
+    /// <item><description><b>RenderBlockingBehavior</b> - The render-blocking behavior of the request.</description></item>
     /// </list>
     /// </remarks>
     public IEventSource<RequestWillBeSentEventArgs> RequestWillBeSent => CreateCdpEventSource(NetworkDomainEvent.RequestWillBeSent);
@@ -1256,6 +1426,30 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DirectTCPSocketChunkReceivedEventArgs> DirectTCPSocketChunkReceived => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketChunkReceived);
     /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="DirectUDPSocketJoinedMulticastGroupEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Identifier</b></description></item>
+    /// <item><description><b>IPAddress</b></description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketJoinedMulticastGroupEventArgs> DirectUDPSocketJoinedMulticastGroup => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketJoinedMulticastGroup);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="DirectUDPSocketLeftMulticastGroupEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Identifier</b></description></item>
+    /// <item><description><b>IPAddress</b></description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketLeftMulticastGroupEventArgs> DirectUDPSocketLeftMulticastGroup => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketLeftMulticastGroup);
+    /// <summary>
     /// Fired upon direct_socket.UDPSocket creation.
     /// </summary>
     /// <remarks>
@@ -1349,8 +1543,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>AssociatedCookies</b> - A list of cookies potentially associated to the requested URL. This includes both cookies sent with the request and the ones not sent; the latter are distinguished by having blockedReasons field set.</description></item>
     /// <item><description><b>Headers</b> - Raw request headers as they will be sent over the wire.</description></item>
     /// <item><description><b>ConnectTiming</b> - Connection timing information for the request.</description></item>
+    /// <item><description><b>DeviceBoundSessionUsages</b> - How the request site's device bound sessions were used during this request.</description></item>
     /// <item><description><b>ClientSecurityState</b> - The client security state set for the request.</description></item>
     /// <item><description><b>SiteHasCookieInOtherPartition</b> - Whether the site has partitioned cookies stored in a partition different than the current one.</description></item>
+    /// <item><description><b>AppliedNetworkConditionsId</b> - The network conditions id if this request was affected by network conditions configured via emulateNetworkConditionsByRule.</description></item>
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -1415,59 +1611,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<PolicyUpdatedEventArgs> PolicyUpdated => CreateCdpEventSource(NetworkDomainEvent.PolicyUpdated);
     /// <summary>
-    /// Fired once when parsing the .wbn file has succeeded.
-    /// The event contains the information about the web bundle contents.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="SubresourceWebBundleMetadataReceivedEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>RequestId</b> - Request identifier. Used to match this information to another event.</description></item>
-    /// <item><description><b>Urls</b> - A list of URLs of resources in the subresource Web Bundle.</description></item>
-    /// </list>
-    /// </remarks>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<SubresourceWebBundleMetadataReceivedEventArgs> SubresourceWebBundleMetadataReceived => CreateCdpEventSource(NetworkDomainEvent.SubresourceWebBundleMetadataReceived);
-    /// <summary>
-    /// Fired once when parsing the .wbn file has failed.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="SubresourceWebBundleMetadataErrorEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>RequestId</b> - Request identifier. Used to match this information to another event.</description></item>
-    /// <item><description><b>ErrorMessage</b> - Error message</description></item>
-    /// </list>
-    /// </remarks>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<SubresourceWebBundleMetadataErrorEventArgs> SubresourceWebBundleMetadataError => CreateCdpEventSource(NetworkDomainEvent.SubresourceWebBundleMetadataError);
-    /// <summary>
-    /// Fired when handling requests for resources within a .wbn file.
-    /// Note: this will only be fired for resources that are requested by the webpage.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="SubresourceWebBundleInnerResponseParsedEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>InnerRequestId</b> - Request identifier of the subresource request</description></item>
-    /// <item><description><b>InnerRequestURL</b> - URL of the subresource resource.</description></item>
-    /// <item><description><b>BundleRequestId</b> - Bundle request identifier. Used to match this information to another event. This made be absent in case when the instrumentation was enabled only after webbundle was parsed.</description></item>
-    /// </list>
-    /// </remarks>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<SubresourceWebBundleInnerResponseParsedEventArgs> SubresourceWebBundleInnerResponseParsed => CreateCdpEventSource(NetworkDomainEvent.SubresourceWebBundleInnerResponseParsed);
-    /// <summary>
-    /// Fired when request for resources within a .wbn file failed.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="SubresourceWebBundleInnerResponseErrorEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>InnerRequestId</b> - Request identifier of the subresource request</description></item>
-    /// <item><description><b>InnerRequestURL</b> - URL of the subresource resource.</description></item>
-    /// <item><description><b>ErrorMessage</b> - Error message</description></item>
-    /// <item><description><b>BundleRequestId</b> - Bundle request identifier. Used to match this information to another event. This made be absent in case when the instrumentation was enabled only after webbundle was parsed.</description></item>
-    /// </list>
-    /// </remarks>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<SubresourceWebBundleInnerResponseErrorEventArgs> SubresourceWebBundleInnerResponseError => CreateCdpEventSource(NetworkDomainEvent.SubresourceWebBundleInnerResponseError);
-    /// <summary>
     /// Is sent whenever a new report is added.
     /// And after 'enableReportingApi' for all existing reports.
     /// </summary>
@@ -1502,6 +1645,35 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<ReportingApiEndpointsChangedForOriginEventArgs> ReportingApiEndpointsChangedForOrigin => CreateCdpEventSource(NetworkDomainEvent.ReportingApiEndpointsChangedForOrigin);
+    /// <summary>
+    /// Triggered when the initial set of device bound sessions is added.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="DeviceBoundSessionsAddedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Sessions</b> - The device bound sessions.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DeviceBoundSessionsAddedEventArgs> DeviceBoundSessionsAdded => CreateCdpEventSource(NetworkDomainEvent.DeviceBoundSessionsAdded);
+    /// <summary>
+    /// Triggered when a device bound session event occurs.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="DeviceBoundSessionEventOccurredEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>EventId</b> - A unique identifier for this session event.</description></item>
+    /// <item><description><b>Site</b> - The site this session event is associated with.</description></item>
+    /// <item><description><b>Succeeded</b> - Whether this event was considered successful.</description></item>
+    /// <item><description><b>SessionId</b> - The session ID this event is associated with. May not be populated for failed events.</description></item>
+    /// <item><description><b>CreationEventDetails</b> - The below are the different session event type details. Exactly one is populated.</description></item>
+    /// <item><description><b>RefreshEventDetails</b></description></item>
+    /// <item><description><b>TerminationEventDetails</b></description></item>
+    /// <item><description><b>ChallengeEventDetails</b></description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DeviceBoundSessionEventOccurredEventArgs> DeviceBoundSessionEventOccurred => CreateCdpEventSource(NetworkDomainEvent.DeviceBoundSessionEventOccurred);
 }
 
 internal sealed record SetAcceptedEncodingsCommandParameters(IEnumerable<ContentEncoding> Encodings) : Parameters;
@@ -1747,7 +1919,54 @@ public sealed record EmulateNetworkConditionsCommandOptions : CdpCommandOptions
 public sealed record EmulateNetworkConditionsResult() : EmptyResult;
 
 
-internal sealed record EnableCommandParameters(long? MaxTotalBufferSize, long? MaxResourceBufferSize, long? MaxPostDataSize, bool? ReportDirectSocketTraffic) : Parameters;
+internal sealed record EmulateNetworkConditionsByRuleCommandParameters(bool? Offline, bool? EmulateOfflineServiceWorker, IEnumerable<NetworkConditions> MatchedNetworkConditions) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="NetworkDomain.EmulateNetworkConditionsByRuleAsync"/>.
+/// </summary>
+public sealed record EmulateNetworkConditionsByRuleCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// True to emulate internet disconnection. Deprecated, use the offline property in matchedNetworkConditions
+    /// or emulateOfflineServiceWorker instead.
+    /// </summary>
+    [global::System.Obsolete]
+    public bool? Offline { get; init; }
+
+    /// <summary>
+    /// True to emulate offline service worker.
+    /// </summary>
+    public bool? EmulateOfflineServiceWorker { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="RuleIds">
+/// An id for each entry in matchedNetworkConditions. The id will be included in the requestWillBeSentExtraInfo for
+/// requests affected by a rule.
+/// </param>
+public sealed record EmulateNetworkConditionsByRuleResult(IReadOnlyList<string> RuleIds) : EmptyResult;
+
+
+internal sealed record OverrideNetworkStateCommandParameters(bool Offline, double Latency, double DownloadThroughput, double UploadThroughput, ConnectionType? ConnectionType) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="NetworkDomain.OverrideNetworkStateAsync"/>.
+/// </summary>
+public sealed record OverrideNetworkStateCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Connection type if known.
+    /// </summary>
+    public ConnectionType? ConnectionType { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record OverrideNetworkStateResult() : EmptyResult;
+
+
+internal sealed record EnableCommandParameters(long? MaxTotalBufferSize, long? MaxResourceBufferSize, long? MaxPostDataSize, bool? ReportDirectSocketTraffic, bool? EnableDurableMessages) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.EnableAsync"/>.
@@ -1756,6 +1975,8 @@ public sealed record EnableCommandOptions : CdpCommandOptions
 {
     /// <summary>
     /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
+    /// This is the maximum number of bytes that will be collected by this
+    /// DevTools session.
     /// </summary>
     public long? MaxTotalBufferSize { get; init; }
 
@@ -1773,11 +1994,43 @@ public sealed record EnableCommandOptions : CdpCommandOptions
     /// Whether DirectSocket chunk send/receive events should be reported.
     /// </summary>
     public bool? ReportDirectSocketTraffic { get; init; }
+
+    /// <summary>
+    /// Enable storing response bodies outside of renderer, so that these survive
+    /// a cross-process navigation. Requires maxTotalBufferSize to be set.
+    /// Currently defaults to false. This field is being deprecated in favor of the dedicated
+    /// configureDurableMessages command, due to the possibility of deadlocks when awaiting
+    /// Network.enable before issuing Runtime.runIfWaitingForDebugger.
+    /// </summary>
+    public bool? EnableDurableMessages { get; init; }
 }
 
 /// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
+
+
+internal sealed record ConfigureDurableMessagesCommandParameters(long? MaxTotalBufferSize, long? MaxResourceBufferSize) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="NetworkDomain.ConfigureDurableMessagesAsync"/>.
+/// </summary>
+public sealed record ConfigureDurableMessagesCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
+    /// </summary>
+    public long? MaxTotalBufferSize { get; init; }
+
+    /// <summary>
+    /// Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
+    /// </summary>
+    public long? MaxResourceBufferSize { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record ConfigureDurableMessagesResult() : EmptyResult;
 
 
 internal sealed record GetAllCookiesCommandParameters() : Parameters;
@@ -1870,7 +2123,10 @@ public sealed record GetRequestPostDataCommandOptions : CdpCommandOptions
 /// <param name="PostData">
 /// Request body string, omitting files from multipart requests
 /// </param>
-public sealed record GetRequestPostDataResult(string PostData) : EmptyResult;
+/// <param name="Base64Encoded">
+/// True, if content was sent as base64.
+/// </param>
+public sealed record GetRequestPostDataResult(string PostData, bool Base64Encoded) : EmptyResult;
 
 
 internal sealed record GetResponseBodyForInterceptionCommandParameters(InterceptionId InterceptionId) : Parameters;
@@ -1949,13 +2205,24 @@ public sealed record SearchInResponseBodyCommandOptions : CdpCommandOptions
 public sealed record SearchInResponseBodyResult(IReadOnlyList<Debugger.SearchMatch> Result) : EmptyResult;
 
 
-internal sealed record SetBlockedURLsCommandParameters(IEnumerable<string> Urls) : Parameters;
+internal sealed record SetBlockedURLsCommandParameters(IEnumerable<BlockPattern>? UrlPatterns, IEnumerable<string>? Urls) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.SetBlockedURLsAsync"/>.
 /// </summary>
 public sealed record SetBlockedURLsCommandOptions : CdpCommandOptions
 {
+    /// <summary>
+    /// Patterns to match in the order in which they are given. These patterns
+    /// also take precedence over any wildcard patterns defined in <b>urls</b>.
+    /// </summary>
+    public IEnumerable<BlockPattern>? UrlPatterns { get; init; }
+
+    /// <summary>
+    /// URL patterns to block. Wildcards ('*') are allowed.
+    /// </summary>
+    [global::System.Obsolete]
+    public IEnumerable<string>? Urls { get; init; }
 }
 
 /// <summary>
@@ -1991,7 +2258,7 @@ public sealed record SetCacheDisabledCommandOptions : CdpCommandOptions
 public sealed record SetCacheDisabledResult() : EmptyResult;
 
 
-internal sealed record SetCookieCommandParameters(string Name, string Value, string? Url, string? Domain, string? Path, bool? Secure, bool? HttpOnly, CookieSameSite? SameSite, TimeSinceEpoch? Expires, CookiePriority? Priority, bool? SameParty, CookieSourceScheme? SourceScheme, long? SourcePort, CookiePartitionKey? PartitionKey) : Parameters;
+internal sealed record SetCookieCommandParameters(string Name, string Value, string? Url, string? Domain, string? Path, bool? Secure, bool? HttpOnly, CookieSameSite? SameSite, TimeSinceEpoch? Expires, CookiePriority? Priority, CookieSourceScheme? SourceScheme, long? SourcePort, CookiePartitionKey? PartitionKey) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.SetCookieAsync"/>.
@@ -2038,11 +2305,6 @@ public sealed record SetCookieCommandOptions : CdpCommandOptions
     /// Cookie Priority type.
     /// </summary>
     public CookiePriority? Priority { get; init; }
-
-    /// <summary>
-    /// True if cookie is SameParty.
-    /// </summary>
-    public bool? SameParty { get; init; }
 
     /// <summary>
     /// Cookie source scheme type.
@@ -2205,6 +2467,51 @@ public sealed record EnableReportingApiCommandOptions : CdpCommandOptions
 public sealed record EnableReportingApiResult() : EmptyResult;
 
 
+internal sealed record EnableDeviceBoundSessionsCommandParameters(bool Enable) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="NetworkDomain.EnableDeviceBoundSessionsAsync"/>.
+/// </summary>
+public sealed record EnableDeviceBoundSessionsCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record EnableDeviceBoundSessionsResult() : EmptyResult;
+
+
+internal sealed record DeleteDeviceBoundSessionCommandParameters(DeviceBoundSessionKey Key) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="NetworkDomain.DeleteDeviceBoundSessionAsync"/>.
+/// </summary>
+public sealed record DeleteDeviceBoundSessionCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record DeleteDeviceBoundSessionResult() : EmptyResult;
+
+
+internal sealed record FetchSchemefulSiteCommandParameters(string Origin) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="NetworkDomain.FetchSchemefulSiteAsync"/>.
+/// </summary>
+public sealed record FetchSchemefulSiteCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="SchemefulSite">
+/// The corresponding schemeful site.
+/// </param>
+public sealed record FetchSchemefulSiteResult(string SchemefulSite) : EmptyResult;
+
+
 internal sealed record LoadNetworkResourceCommandParameters(Page.FrameId? FrameId, string Url, LoadNetworkResourceOptions Options) : Parameters;
 
 /// <summary>
@@ -2226,7 +2533,7 @@ public sealed record LoadNetworkResourceCommandOptions : CdpCommandOptions
 public sealed record LoadNetworkResourceResult(LoadNetworkResourcePageResult Resource) : EmptyResult;
 
 
-internal sealed record SetCookieControlsCommandParameters(bool EnableThirdPartyCookieRestriction, bool DisableThirdPartyCookieMetadata, bool DisableThirdPartyCookieHeuristics) : Parameters;
+internal sealed record SetCookieControlsCommandParameters(bool EnableThirdPartyCookieRestriction) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.SetCookieControlsAsync"/>.
@@ -2419,7 +2726,10 @@ public sealed record RequestServedFromCacheEventArgs(RequestId RequestId) : Open
 /// <param name="HasUserGesture">
 /// Whether the request is initiated by a user gesture. Defaults to false.
 /// </param>
-public sealed record RequestWillBeSentEventArgs(RequestId RequestId, LoaderId LoaderId, string DocumentURL, Request Request, MonotonicTime Timestamp, TimeSinceEpoch WallTime, Initiator Initiator, bool RedirectHasExtraInfo, Response? RedirectResponse = null, ResourceType? Type = null, Page.FrameId? FrameId = null, bool? HasUserGesture = null) : OpenQA.Selenium.BiDi.EventArgs;
+/// <param name="RenderBlockingBehavior">
+/// The render-blocking behavior of the request.
+/// </param>
+public sealed record RequestWillBeSentEventArgs(RequestId RequestId, LoaderId LoaderId, string DocumentURL, Request Request, MonotonicTime Timestamp, TimeSinceEpoch WallTime, Initiator Initiator, bool RedirectHasExtraInfo, Response? RedirectResponse = null, ResourceType? Type = null, Page.FrameId? FrameId = null, bool? HasUserGesture = null, RenderBlockingBehavior? RenderBlockingBehavior = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when resource loading priority is changed
@@ -2690,6 +3000,22 @@ public sealed record DirectTCPSocketChunkSentEventArgs(RequestId Identifier, str
 public sealed record DirectTCPSocketChunkReceivedEventArgs(RequestId Identifier, string Data, MonotonicTime Timestamp) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
+/// </summary>
+/// <param name="Identifier">
+/// </param>
+/// <param name="IPAddress">
+/// </param>
+public sealed record DirectUDPSocketJoinedMulticastGroupEventArgs(RequestId Identifier, string IPAddress) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// </summary>
+/// <param name="Identifier">
+/// </param>
+/// <param name="IPAddress">
+/// </param>
+public sealed record DirectUDPSocketLeftMulticastGroupEventArgs(RequestId Identifier, string IPAddress) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
 /// Fired upon direct_socket.UDPSocket creation.
 /// </summary>
 /// <param name="Identifier">
@@ -2782,13 +3108,20 @@ public sealed record DirectUDPSocketChunkReceivedEventArgs(RequestId Identifier,
 /// <param name="ConnectTiming">
 /// Connection timing information for the request.
 /// </param>
+/// <param name="DeviceBoundSessionUsages">
+/// How the request site's device bound sessions were used during this request.
+/// </param>
 /// <param name="ClientSecurityState">
 /// The client security state set for the request.
 /// </param>
 /// <param name="SiteHasCookieInOtherPartition">
 /// Whether the site has partitioned cookies stored in a partition different than the current one.
 /// </param>
-public sealed record RequestWillBeSentExtraInfoEventArgs(RequestId RequestId, IEnumerable<AssociatedCookie> AssociatedCookies, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, ConnectTiming ConnectTiming, ClientSecurityState? ClientSecurityState = null, bool? SiteHasCookieInOtherPartition = null) : OpenQA.Selenium.BiDi.EventArgs;
+/// <param name="AppliedNetworkConditionsId">
+/// The network conditions id if this request was affected by network conditions configured via
+/// emulateNetworkConditionsByRule.
+/// </param>
+public sealed record RequestWillBeSentExtraInfoEventArgs(RequestId RequestId, IEnumerable<AssociatedCookie> AssociatedCookies, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, ConnectTiming ConnectTiming, IEnumerable<DeviceBoundSessionWithUsage>? DeviceBoundSessionUsages = null, ClientSecurityState? ClientSecurityState = null, bool? SiteHasCookieInOtherPartition = null, string? AppliedNetworkConditionsId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when additional information about a responseReceived event is available from the network
@@ -2884,65 +3217,6 @@ public sealed record TrustTokenOperationDoneEventArgs(string Status, TrustTokenO
 public sealed record PolicyUpdatedEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
-/// Fired once when parsing the .wbn file has succeeded.
-/// The event contains the information about the web bundle contents.
-/// </summary>
-/// <param name="RequestId">
-/// Request identifier. Used to match this information to another event.
-/// </param>
-/// <param name="Urls">
-/// A list of URLs of resources in the subresource Web Bundle.
-/// </param>
-public sealed record SubresourceWebBundleMetadataReceivedEventArgs(RequestId RequestId, IEnumerable<string> Urls) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// Fired once when parsing the .wbn file has failed.
-/// </summary>
-/// <param name="RequestId">
-/// Request identifier. Used to match this information to another event.
-/// </param>
-/// <param name="ErrorMessage">
-/// Error message
-/// </param>
-public sealed record SubresourceWebBundleMetadataErrorEventArgs(RequestId RequestId, string ErrorMessage) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// Fired when handling requests for resources within a .wbn file.
-/// Note: this will only be fired for resources that are requested by the webpage.
-/// </summary>
-/// <param name="InnerRequestId">
-/// Request identifier of the subresource request
-/// </param>
-/// <param name="InnerRequestURL">
-/// URL of the subresource resource.
-/// </param>
-/// <param name="BundleRequestId">
-/// Bundle request identifier. Used to match this information to another event.
-/// This made be absent in case when the instrumentation was enabled only
-/// after webbundle was parsed.
-/// </param>
-public sealed record SubresourceWebBundleInnerResponseParsedEventArgs(RequestId InnerRequestId, string InnerRequestURL, RequestId? BundleRequestId = null) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// Fired when request for resources within a .wbn file failed.
-/// </summary>
-/// <param name="InnerRequestId">
-/// Request identifier of the subresource request
-/// </param>
-/// <param name="InnerRequestURL">
-/// URL of the subresource resource.
-/// </param>
-/// <param name="ErrorMessage">
-/// Error message
-/// </param>
-/// <param name="BundleRequestId">
-/// Bundle request identifier. Used to match this information to another event.
-/// This made be absent in case when the instrumentation was enabled only
-/// after webbundle was parsed.
-/// </param>
-public sealed record SubresourceWebBundleInnerResponseErrorEventArgs(RequestId InnerRequestId, string InnerRequestURL, string ErrorMessage, RequestId? BundleRequestId = null) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
 /// Is sent whenever a new report is added.
 /// And after 'enableReportingApi' for all existing reports.
 /// </summary>
@@ -2964,6 +3238,41 @@ public sealed record ReportingApiReportUpdatedEventArgs(ReportingApiReport Repor
 /// <param name="Endpoints">
 /// </param>
 public sealed record ReportingApiEndpointsChangedForOriginEventArgs(string Origin, IEnumerable<ReportingApiEndpoint> Endpoints) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Triggered when the initial set of device bound sessions is added.
+/// </summary>
+/// <param name="Sessions">
+/// The device bound sessions.
+/// </param>
+public sealed record DeviceBoundSessionsAddedEventArgs(IEnumerable<DeviceBoundSession> Sessions) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Triggered when a device bound session event occurs.
+/// </summary>
+/// <param name="EventId">
+/// A unique identifier for this session event.
+/// </param>
+/// <param name="Site">
+/// The site this session event is associated with.
+/// </param>
+/// <param name="Succeeded">
+/// Whether this event was considered successful.
+/// </param>
+/// <param name="SessionId">
+/// The session ID this event is associated with. May not be populated for
+/// failed events.
+/// </param>
+/// <param name="CreationEventDetails">
+/// The below are the different session event type details. Exactly one is populated.
+/// </param>
+/// <param name="RefreshEventDetails">
+/// </param>
+/// <param name="TerminationEventDetails">
+/// </param>
+/// <param name="ChallengeEventDetails">
+/// </param>
+public sealed record DeviceBoundSessionEventOccurredEventArgs(DeviceBoundSessionEventId EventId, string Site, bool Succeeded, string? SessionId = null, CreationEventDetails? CreationEventDetails = null, RefreshEventDetails? RefreshEventDetails = null, TerminationEventDetails? TerminationEventDetails = null, ChallengeEventDetails? ChallengeEventDetails = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Resource type as it was perceived by the rendering engine.
@@ -3375,6 +3684,34 @@ public enum ResourcePriority
 }
 
 /// <summary>
+/// The render-blocking behavior of a resource request.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<RenderBlockingBehavior>))]
+public enum RenderBlockingBehavior
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Blocking")]
+    Blocking,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InBodyParserBlocking")]
+    InBodyParserBlocking,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonBlocking")]
+    NonBlocking,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonBlockingDynamic")]
+    NonBlockingDynamic,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PotentiallyBlocking")]
+    PotentiallyBlocking,
+}
+
+/// <summary>
 /// Post data entry for HTTP request
 /// </summary>
 public sealed record PostDataEntry()
@@ -3447,6 +3784,11 @@ public sealed record Request(string Url, string Method, global::System.Collectio
     /// request corresponding to the main frame.
     /// </summary>
     public bool? IsSameSite { get; init; }
+
+    /// <summary>
+    /// True when the resource request is ad-related.
+    /// </summary>
+    public bool? IsAdRelated { get; init; }
 }
 
 /// <summary>
@@ -3716,14 +4058,6 @@ public enum CorsError
     PreflightInvalidAllowExternal,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightMissingAllowPrivateNetwork")]
-    PreflightMissingAllowPrivateNetwork,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightInvalidAllowPrivateNetwork")]
-    PreflightInvalidAllowPrivateNetwork,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowMethodsPreflightResponse")]
     InvalidAllowMethodsPreflightResponse,
     /// <summary>
@@ -3744,36 +4078,16 @@ public enum CorsError
     RedirectContainsCredentials,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InsecurePrivateNetwork")]
-    InsecurePrivateNetwork,
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InsecureLocalNetwork")]
+    InsecureLocalNetwork,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidPrivateNetworkAccess")]
-    InvalidPrivateNetworkAccess,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnexpectedPrivateNetworkAccess")]
-    UnexpectedPrivateNetworkAccess,
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidLocalNetworkAccess")]
+    InvalidLocalNetworkAccess,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoCorsRedirectModeNotFollow")]
     NoCorsRedirectModeNotFollow,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightMissingPrivateNetworkAccessId")]
-    PreflightMissingPrivateNetworkAccessId,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightMissingPrivateNetworkAccessName")]
-    PreflightMissingPrivateNetworkAccessName,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrivateNetworkAccessPermissionUnavailable")]
-    PrivateNetworkAccessPermissionUnavailable,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrivateNetworkAccessPermissionDenied")]
-    PrivateNetworkAccessPermissionDenied,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LocalNetworkAccessPermissionDenied")]
@@ -4216,6 +4530,9 @@ public sealed record CookiePartitionKey(string TopLevelSite, bool HasCrossSiteAn
 /// </param>
 /// <param name="Expires">
 /// Cookie expiration date as the number of seconds since the UNIX epoch.
+/// The value is set to -1 if the expiry date is not set.
+/// The value can be null for values that cannot be represented in
+/// JSON (±Inf).
 /// </param>
 /// <param name="Size">
 /// Cookie size.
@@ -4232,9 +4549,6 @@ public sealed record CookiePartitionKey(string TopLevelSite, bool HasCrossSiteAn
 /// <param name="Priority">
 /// Cookie Priority
 /// </param>
-/// <param name="SameParty">
-/// True if cookie is SameParty.
-/// </param>
 /// <param name="SourceScheme">
 /// Cookie source scheme type.
 /// </param>
@@ -4243,7 +4557,7 @@ public sealed record CookiePartitionKey(string TopLevelSite, bool HasCrossSiteAn
 /// An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 /// This is a temporary ability and it will be removed in the future.
 /// </param>
-public sealed record Cookie(string Name, string Value, string Domain, string Path, double Expires, long Size, bool HttpOnly, bool Secure, bool Session, CookiePriority Priority, bool SameParty, CookieSourceScheme SourceScheme, long SourcePort)
+public sealed record Cookie(string Name, string Value, string Domain, string Path, double Expires, long Size, bool HttpOnly, bool Secure, bool Session, CookiePriority Priority, CookieSourceScheme SourceScheme, long SourcePort)
 {
     /// <summary>
     /// Cookie SameSite type.
@@ -4337,14 +4651,6 @@ public enum SetCookieBlockedReason
     SchemefulSameSiteUnspecifiedTreatedAsLax,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SamePartyFromCrossPartyContext")]
-    SamePartyFromCrossPartyContext,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SamePartyConflictsWithOtherAttributes")]
-    SamePartyConflictsWithOtherAttributes,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NameValuePairExceedsMaxSize")]
     NameValuePairExceedsMaxSize,
     /// <summary>
@@ -4421,10 +4727,6 @@ public enum CookieBlockedReason
     SchemefulSameSiteUnspecifiedTreatedAsLax,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SamePartyFromCrossPartyContext")]
-    SamePartyFromCrossPartyContext,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NameValuePairExceedsMaxSize")]
     NameValuePairExceedsMaxSize,
     /// <summary>
@@ -4455,22 +4757,6 @@ public enum CookieExemptionReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UserSetting")]
     UserSetting,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TPCDMetadata")]
-    TPCDMetadata,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TPCDDeprecationTrial")]
-    TPCDDeprecationTrial,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TopLevelTPCDDeprecationTrial")]
-    TopLevelTPCDDeprecationTrial,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TPCDHeuristics")]
-    TPCDHeuristics,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EnterprisePolicy")]
@@ -4600,11 +4886,6 @@ public sealed record CookieParam(string Name, string Value)
     /// Cookie Priority.
     /// </summary>
     public CookiePriority? Priority { get; init; }
-
-    /// <summary>
-    /// True if cookie is SameParty.
-    /// </summary>
-    public bool? SameParty { get; init; }
 
     /// <summary>
     /// Cookie source scheme type.
@@ -4874,6 +5155,64 @@ public enum ContentEncoding
 
 /// <summary>
 /// </summary>
+/// <param name="UrlPattern">
+/// Only matching requests will be affected by these conditions. Patterns use the URLPattern constructor string
+/// syntax (https://urlpattern.spec.whatwg.org/) and must be absolute. If the pattern is empty, all requests are
+/// matched (including p2p connections).
+/// </param>
+/// <param name="Latency">
+/// Minimum latency from request sent to response headers received (ms).
+/// </param>
+/// <param name="DownloadThroughput">
+/// Maximal aggregated download throughput (bytes/sec). -1 disables download throttling.
+/// </param>
+/// <param name="UploadThroughput">
+/// Maximal aggregated upload throughput (bytes/sec).  -1 disables upload throttling.
+/// </param>
+public sealed record NetworkConditions(string UrlPattern, double Latency, double DownloadThroughput, double UploadThroughput)
+{
+    /// <summary>
+    /// Connection type if known.
+    /// </summary>
+    public ConnectionType? ConnectionType { get; init; }
+
+    /// <summary>
+    /// WebRTC packet loss (percent, 0-100). 0 disables packet loss emulation, 100 drops all the packets.
+    /// </summary>
+    public double? PacketLoss { get; init; }
+
+    /// <summary>
+    /// WebRTC packet queue length (packet). 0 removes any queue length limitations.
+    /// </summary>
+    public long? PacketQueueLength { get; init; }
+
+    /// <summary>
+    /// WebRTC packetReordering feature.
+    /// </summary>
+    public bool? PacketReordering { get; init; }
+
+    /// <summary>
+    /// True to emulate internet disconnection.
+    /// </summary>
+    public bool? Offline { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="UrlPattern">
+/// URL pattern to match. Patterns use the URLPattern constructor string syntax
+/// (https://urlpattern.spec.whatwg.org/) and must be absolute. Example: <b>*://*:*/*.css</b>.
+/// </param>
+/// <param name="Block">
+/// Whether or not to block the pattern. If false, a matching request will not be blocked even if it matches a later
+/// <b>BlockPattern</b>.
+/// </param>
+public sealed record BlockPattern(string UrlPattern, bool Block)
+{
+}
+
+/// <summary>
+/// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DirectSocketDnsQueryType>))]
 public enum DirectSocketDnsQueryType
 {
@@ -4949,6 +5288,19 @@ public sealed record DirectUDPSocketOptions()
     /// Expected to be unsigned integer.
     /// </summary>
     public double? ReceiveBufferSize { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public bool? MulticastLoopback { get; init; }
+
+    /// <summary>
+    /// Unsigned int 8.
+    /// </summary>
+    public long? MulticastTimeToLive { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public bool? MulticastAllowAddressSharing { get; init; }
 }
 
 /// <summary>
@@ -4971,8 +5323,8 @@ public sealed record DirectUDPMessage(string Data)
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PrivateNetworkRequestPolicy>))]
-public enum PrivateNetworkRequestPolicy
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<LocalNetworkAccessRequestPolicy>))]
+public enum LocalNetworkAccessRequestPolicy
 {
     /// <summary>
     /// </summary>
@@ -4986,14 +5338,6 @@ public enum PrivateNetworkRequestPolicy
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnFromInsecureToMorePrivate")]
     WarnFromInsecureToMorePrivate,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightBlock")]
-    PreflightBlock,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightWarn")]
-    PreflightWarn,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PermissionBlock")]
@@ -5015,8 +5359,8 @@ public enum IPAddressSpace
     Loopback,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Private")]
-    Private,
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Local")]
+    Local,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Public")]
@@ -5044,10 +5388,69 @@ public sealed record ConnectTiming(double RequestTime)
 /// </param>
 /// <param name="InitiatorIPAddressSpace">
 /// </param>
-/// <param name="PrivateNetworkRequestPolicy">
+/// <param name="LocalNetworkAccessRequestPolicy">
 /// </param>
-public sealed record ClientSecurityState(bool InitiatorIsSecureContext, IPAddressSpace InitiatorIPAddressSpace, PrivateNetworkRequestPolicy PrivateNetworkRequestPolicy)
+public sealed record ClientSecurityState(bool InitiatorIsSecureContext, IPAddressSpace InitiatorIPAddressSpace, LocalNetworkAccessRequestPolicy LocalNetworkAccessRequestPolicy)
 {
+}
+
+/// <summary>
+/// Identifies the script on the stack that caused a resource or element to be
+/// labeled as an ad. For resources, this indicates the context that triggered
+/// the fetch. For elements, this indicates the context that caused the element
+/// to be appended to the DOM.
+/// </summary>
+/// <param name="ScriptId">
+/// The script's V8 identifier.
+/// </param>
+/// <param name="DebuggerId">
+/// V8's debugging ID for the v8::Context.
+/// </param>
+/// <param name="Name">
+/// The script's url (or generated name based on id if inline script).
+/// </param>
+public sealed record AdScriptIdentifier(Runtime.ScriptId ScriptId, Runtime.UniqueDebuggerId DebuggerId, string Name)
+{
+}
+
+/// <summary>
+/// Encapsulates the script ancestry and the root script filter list rule that
+/// caused the resource or element to be labeled as an ad.
+/// </summary>
+/// <param name="AncestryChain">
+/// A chain of <b>AdScriptIdentifier</b>s representing the ancestry of an ad
+/// script that led to the creation of a resource or element. The chain is
+/// ordered from the script itself (lowest level) up to its root ancestor
+/// that was flagged by a filter list.
+/// </param>
+public sealed record AdAncestry(IReadOnlyList<AdScriptIdentifier> AncestryChain)
+{
+    /// <summary>
+    /// The filter list rule that caused the root (last) script in
+    /// <b>ancestryChain</b> to be tagged as an ad.
+    /// </summary>
+    public string? RootScriptFilterlistRule { get; init; }
+}
+
+/// <summary>
+/// Represents the provenance of an ad resource or element. Only one of
+/// <b>filterlistRule</b> or <b>adScriptAncestry</b> can be set. If <b>filterlistRule</b>
+/// is provided, the resource URL directly matches a filter list rule. If
+/// <b>adScriptAncestry</b> is provided, an ad script initiated the resource fetch or
+/// appended the element to the DOM. If neither is provided, the entity is
+/// known to be an ad, but provenance tracking information is unavailable.
+/// </summary>
+public sealed record AdProvenance()
+{
+    /// <summary>
+    /// The filterlist rule that matched, if any.
+    /// </summary>
+    public string? FilterlistRule { get; init; }
+
+    /// <summary>
+    /// The script ancestry that created the ad, if any.
+    /// </summary>
+    public AdAncestry? AdScriptAncestry { get; init; }
 }
 
 /// <summary>
@@ -5258,6 +5661,534 @@ public sealed record ReportingApiEndpoint(string Url, string GroupName)
 }
 
 /// <summary>
+/// Unique identifier for a device bound session.
+/// </summary>
+/// <param name="Site">
+/// The site the session is set up for.
+/// </param>
+/// <param name="Id">
+/// The id of the session.
+/// </param>
+public sealed record DeviceBoundSessionKey(string Site, string Id)
+{
+}
+
+/// <summary>
+/// How a device bound session was used during a request.
+/// </summary>
+/// <param name="SessionKey">
+/// The key for the session.
+/// </param>
+/// <param name="Usage">
+/// How the session was used (or not used).
+/// </param>
+public sealed record DeviceBoundSessionWithUsage(DeviceBoundSessionKey SessionKey, string Usage)
+{
+}
+
+/// <summary>
+/// A device bound session's cookie craving.
+/// </summary>
+/// <param name="Name">
+/// The name of the craving.
+/// </param>
+/// <param name="Domain">
+/// The domain of the craving.
+/// </param>
+/// <param name="Path">
+/// The path of the craving.
+/// </param>
+/// <param name="Secure">
+/// The <b>Secure</b> attribute of the craving attributes.
+/// </param>
+/// <param name="HttpOnly">
+/// The <b>HttpOnly</b> attribute of the craving attributes.
+/// </param>
+public sealed record DeviceBoundSessionCookieCraving(string Name, string Domain, string Path, bool Secure, bool HttpOnly)
+{
+    /// <summary>
+    /// The <b>SameSite</b> attribute of the craving attributes.
+    /// </summary>
+    public CookieSameSite? SameSite { get; init; }
+}
+
+/// <summary>
+/// A device bound session's inclusion URL rule.
+/// </summary>
+/// <param name="RuleType">
+/// See comments on <b>net::device_bound_sessions::SessionInclusionRules::UrlRule::rule_type</b>.
+/// </param>
+/// <param name="HostPattern">
+/// See comments on <b>net::device_bound_sessions::SessionInclusionRules::UrlRule::host_pattern</b>.
+/// </param>
+/// <param name="PathPrefix">
+/// See comments on <b>net::device_bound_sessions::SessionInclusionRules::UrlRule::path_prefix</b>.
+/// </param>
+public sealed record DeviceBoundSessionUrlRule(string RuleType, string HostPattern, string PathPrefix)
+{
+}
+
+/// <summary>
+/// A device bound session's inclusion rules.
+/// </summary>
+/// <param name="Origin">
+/// See comments on <b>net::device_bound_sessions::SessionInclusionRules::origin_</b>.
+/// </param>
+/// <param name="IncludeSite">
+/// Whether the whole site is included. See comments on
+/// <b>net::device_bound_sessions::SessionInclusionRules::include_site_</b> for more
+/// details; this boolean is true if that value is populated.
+/// </param>
+/// <param name="UrlRules">
+/// See comments on <b>net::device_bound_sessions::SessionInclusionRules::url_rules_</b>.
+/// </param>
+public sealed record DeviceBoundSessionInclusionRules(string Origin, bool IncludeSite, IReadOnlyList<DeviceBoundSessionUrlRule> UrlRules)
+{
+}
+
+/// <summary>
+/// A device bound session.
+/// </summary>
+/// <param name="Key">
+/// The site and session ID of the session.
+/// </param>
+/// <param name="RefreshUrl">
+/// See comments on <b>net::device_bound_sessions::Session::refresh_url_</b>.
+/// </param>
+/// <param name="InclusionRules">
+/// See comments on <b>net::device_bound_sessions::Session::inclusion_rules_</b>.
+/// </param>
+/// <param name="CookieCravings">
+/// See comments on <b>net::device_bound_sessions::Session::cookie_cravings_</b>.
+/// </param>
+/// <param name="ExpiryDate">
+/// See comments on <b>net::device_bound_sessions::Session::expiry_date_</b>.
+/// </param>
+/// <param name="AllowedRefreshInitiators">
+/// See comments on <b>net::device_bound_sessions::Session::allowed_refresh_initiators_</b>.
+/// </param>
+public sealed record DeviceBoundSession(DeviceBoundSessionKey Key, string RefreshUrl, DeviceBoundSessionInclusionRules InclusionRules, IReadOnlyList<DeviceBoundSessionCookieCraving> CookieCravings, Network.TimeSinceEpoch ExpiryDate, IReadOnlyList<string> AllowedRefreshInitiators)
+{
+    /// <summary>
+    /// See comments on <b>net::device_bound_sessions::Session::cached_challenge__</b>.
+    /// </summary>
+    public string? CachedChallenge { get; init; }
+}
+
+/// <summary>
+/// A unique identifier for a device bound session event.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<DeviceBoundSessionEventId>))]
+public record DeviceBoundSessionEventId : IStringRemoteId
+{
+    string IStringRemoteId.Id { get; init; } = null!;
+}
+
+/// <summary>
+/// A fetch result for a device bound session creation or refresh.
+/// LINT.IfChange(DeviceBoundSessionFetchResult)
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DeviceBoundSessionFetchResult>))]
+public enum DeviceBoundSessionFetchResult
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Success")]
+    Success,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningKeyGenerationError")]
+    SigningKeyGenerationError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttestationKeyGenerationError")]
+    AttestationKeyGenerationError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningError")]
+    SigningError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TransientSigningError")]
+    TransientSigningError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServerRequestedTermination")]
+    ServerRequestedTermination,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSessionId")]
+    InvalidSessionId,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidChallenge")]
+    InvalidChallenge,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TooManyChallenges")]
+    TooManyChallenges,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFetcherUrl")]
+    InvalidFetcherUrl,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRefreshUrl")]
+    InvalidRefreshUrl,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TransientHttpError")]
+    TransientHttpError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeOriginSameSiteMismatch")]
+    ScopeOriginSameSiteMismatch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshUrlSameSiteMismatch")]
+    RefreshUrlSameSiteMismatch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MismatchedSessionId")]
+    MismatchedSessionId,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingScope")]
+    MissingScope,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoCredentials")]
+    NoCredentials,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubdomainRegistrationWellKnownUnavailable")]
+    SubdomainRegistrationWellKnownUnavailable,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubdomainRegistrationUnauthorized")]
+    SubdomainRegistrationUnauthorized,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubdomainRegistrationWellKnownMalformed")]
+    SubdomainRegistrationWellKnownMalformed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionProviderWellKnownUnavailable")]
+    SessionProviderWellKnownUnavailable,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelyingPartyWellKnownUnavailable")]
+    RelyingPartyWellKnownUnavailable,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedKeyThumbprintMismatch")]
+    FederatedKeyThumbprintMismatch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionUrl")]
+    InvalidFederatedSessionUrl,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedKey")]
+    InvalidFederatedKey,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TooManyRelyingOriginLabels")]
+    TooManyRelyingOriginLabels,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BoundCookieSetForbidden")]
+    BoundCookieSetForbidden,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NetError")]
+    NetError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProxyError")]
+    ProxyError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmptySessionConfig")]
+    EmptySessionConfig,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsConfig")]
+    InvalidCredentialsConfig,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsType")]
+    InvalidCredentialsType,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsEmptyName")]
+    InvalidCredentialsEmptyName,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookie")]
+    InvalidCredentialsCookie,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PersistentHttpError")]
+    PersistentHttpError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RegistrationAttemptedChallenge")]
+    RegistrationAttemptedChallenge,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeOrigin")]
+    InvalidScopeOrigin,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeOriginContainsPath")]
+    ScopeOriginContainsPath,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshInitiatorNotString")]
+    RefreshInitiatorNotString,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshInitiatorInvalidHostPattern")]
+    RefreshInitiatorInvalidHostPattern,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeSpecification")]
+    InvalidScopeSpecification,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingScopeSpecificationType")]
+    MissingScopeSpecificationType,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmptyScopeSpecificationDomain")]
+    EmptyScopeSpecificationDomain,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmptyScopeSpecificationPath")]
+    EmptyScopeSpecificationPath,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeSpecificationType")]
+    InvalidScopeSpecificationType,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeIncludeSite")]
+    InvalidScopeIncludeSite,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingScopeIncludeSite")]
+    MissingScopeIncludeSite,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedNotAuthorizedByProvider")]
+    FederatedNotAuthorizedByProvider,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedNotAuthorizedByRelyingParty")]
+    FederatedNotAuthorizedByRelyingParty,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionProviderWellKnownMalformed")]
+    SessionProviderWellKnownMalformed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionProviderWellKnownHasProviderOrigin")]
+    SessionProviderWellKnownHasProviderOrigin,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelyingPartyWellKnownMalformed")]
+    RelyingPartyWellKnownMalformed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelyingPartyWellKnownHasRelyingOrigins")]
+    RelyingPartyWellKnownHasRelyingOrigins,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionProviderSessionMissing")]
+    InvalidFederatedSessionProviderSessionMissing,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionWrongProviderOrigin")]
+    InvalidFederatedSessionWrongProviderOrigin,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieCreationTime")]
+    InvalidCredentialsCookieCreationTime,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieName")]
+    InvalidCredentialsCookieName,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieParsing")]
+    InvalidCredentialsCookieParsing,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieUnpermittedAttribute")]
+    InvalidCredentialsCookieUnpermittedAttribute,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieInvalidDomain")]
+    InvalidCredentialsCookieInvalidDomain,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookiePrefix")]
+    InvalidCredentialsCookiePrefix,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeRulePath")]
+    InvalidScopeRulePath,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeRuleHostPattern")]
+    InvalidScopeRuleHostPattern,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeRuleOriginScopedHostPatternMismatch")]
+    ScopeRuleOriginScopedHostPatternMismatch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeRuleSiteScopedHostPatternMismatch")]
+    ScopeRuleSiteScopedHostPatternMismatch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningQuotaExceeded")]
+    SigningQuotaExceeded,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidConfigJson")]
+    InvalidConfigJson,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionProviderFailedToRestoreKey")]
+    InvalidFederatedSessionProviderFailedToRestoreKey,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedToUnwrapKey")]
+    FailedToUnwrapKey,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionDeletedDuringRefresh")]
+    SessionDeletedDuringRefresh,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossOriginRegistrationSiteNotIncluded")]
+    CrossOriginRegistrationSiteNotIncluded,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidPreProvisionedKeyInitiatorMissing")]
+    InvalidPreProvisionedKeyInitiatorMissing,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreProvisionedKeyAccessNotGranted")]
+    PreProvisionedKeyAccessNotGranted,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreProvisionedKeyNotFound")]
+    PreProvisionedKeyNotFound,
+}
+
+/// <summary>
+/// Details about a failed device bound session network request.
+/// </summary>
+/// <param name="RequestUrl">
+/// The failed request URL.
+/// </param>
+public sealed record DeviceBoundSessionFailedRequest(string RequestUrl)
+{
+    /// <summary>
+    /// The net error of the response if it was not OK.
+    /// </summary>
+    public string? NetError { get; init; }
+
+    /// <summary>
+    /// The response code if the net error was OK and the response code was not
+    /// 200.
+    /// </summary>
+    public long? ResponseError { get; init; }
+
+    /// <summary>
+    /// The body of the response if the net error was OK, the response code was
+    /// not 200, and the response body was not empty.
+    /// </summary>
+    public string? ResponseErrorBody { get; init; }
+}
+
+/// <summary>
+/// Session event details specific to creation.
+/// </summary>
+/// <param name="FetchResult">
+/// The result of the fetch attempt.
+/// </param>
+public sealed record CreationEventDetails(DeviceBoundSessionFetchResult FetchResult)
+{
+    /// <summary>
+    /// The session if there was a newly created session. This is populated for
+    /// all successful creation events.
+    /// </summary>
+    public DeviceBoundSession? NewSession { get; init; }
+
+    /// <summary>
+    /// Details about a failed device bound session network request if there was
+    /// one.
+    /// </summary>
+    public DeviceBoundSessionFailedRequest? FailedRequest { get; init; }
+}
+
+/// <summary>
+/// Session event details specific to refresh.
+/// </summary>
+/// <param name="RefreshResult">
+/// The result of a refresh.
+/// </param>
+/// <param name="WasFullyProactiveRefresh">
+/// See comments on <b>net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh</b>.
+/// </param>
+public sealed record RefreshEventDetails(string RefreshResult, bool WasFullyProactiveRefresh)
+{
+    /// <summary>
+    /// If there was a fetch attempt, the result of that.
+    /// </summary>
+    public DeviceBoundSessionFetchResult? FetchResult { get; init; }
+
+    /// <summary>
+    /// The session display if there was a newly created session. This is populated
+    /// for any refresh event that modifies the session config.
+    /// </summary>
+    public DeviceBoundSession? NewSession { get; init; }
+
+    /// <summary>
+    /// Details about a failed device bound session network request if there was
+    /// one.
+    /// </summary>
+    public DeviceBoundSessionFailedRequest? FailedRequest { get; init; }
+}
+
+/// <summary>
+/// Session event details specific to termination.
+/// </summary>
+/// <param name="DeletionReason">
+/// The reason for a session being deleted.
+/// </param>
+public sealed record TerminationEventDetails(string DeletionReason)
+{
+}
+
+/// <summary>
+/// Session event details specific to challenges.
+/// </summary>
+/// <param name="ChallengeResult">
+/// The result of a challenge.
+/// </param>
+/// <param name="Challenge">
+/// The challenge set.
+/// </param>
+public sealed record ChallengeEventDetails(string ChallengeResult, string Challenge)
+{
+}
+
+/// <summary>
 /// An object providing the result of a network resource load.
 /// </summary>
 /// <param name="Success">
@@ -5322,8 +6253,14 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(DisableResult), TypeInfoPropertyName = "DisableResult")]
 [JsonSerializable(typeof(EmulateNetworkConditionsCommandParameters), TypeInfoPropertyName = "EmulateNetworkConditionsCommandParameters")]
 [JsonSerializable(typeof(EmulateNetworkConditionsResult), TypeInfoPropertyName = "EmulateNetworkConditionsResult")]
+[JsonSerializable(typeof(EmulateNetworkConditionsByRuleCommandParameters), TypeInfoPropertyName = "EmulateNetworkConditionsByRuleCommandParameters")]
+[JsonSerializable(typeof(EmulateNetworkConditionsByRuleResult), TypeInfoPropertyName = "EmulateNetworkConditionsByRuleResult")]
+[JsonSerializable(typeof(OverrideNetworkStateCommandParameters), TypeInfoPropertyName = "OverrideNetworkStateCommandParameters")]
+[JsonSerializable(typeof(OverrideNetworkStateResult), TypeInfoPropertyName = "OverrideNetworkStateResult")]
 [JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]
 [JsonSerializable(typeof(EnableResult), TypeInfoPropertyName = "EnableResult")]
+[JsonSerializable(typeof(ConfigureDurableMessagesCommandParameters), TypeInfoPropertyName = "ConfigureDurableMessagesCommandParameters")]
+[JsonSerializable(typeof(ConfigureDurableMessagesResult), TypeInfoPropertyName = "ConfigureDurableMessagesResult")]
 [JsonSerializable(typeof(GetAllCookiesCommandParameters), TypeInfoPropertyName = "GetAllCookiesCommandParameters")]
 [JsonSerializable(typeof(GetAllCookiesResult), TypeInfoPropertyName = "GetAllCookiesResult")]
 [JsonSerializable(typeof(GetCertificateCommandParameters), TypeInfoPropertyName = "GetCertificateCommandParameters")]
@@ -5366,6 +6303,12 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(GetSecurityIsolationStatusResult), TypeInfoPropertyName = "GetSecurityIsolationStatusResult")]
 [JsonSerializable(typeof(EnableReportingApiCommandParameters), TypeInfoPropertyName = "EnableReportingApiCommandParameters")]
 [JsonSerializable(typeof(EnableReportingApiResult), TypeInfoPropertyName = "EnableReportingApiResult")]
+[JsonSerializable(typeof(EnableDeviceBoundSessionsCommandParameters), TypeInfoPropertyName = "EnableDeviceBoundSessionsCommandParameters")]
+[JsonSerializable(typeof(EnableDeviceBoundSessionsResult), TypeInfoPropertyName = "EnableDeviceBoundSessionsResult")]
+[JsonSerializable(typeof(DeleteDeviceBoundSessionCommandParameters), TypeInfoPropertyName = "DeleteDeviceBoundSessionCommandParameters")]
+[JsonSerializable(typeof(DeleteDeviceBoundSessionResult), TypeInfoPropertyName = "DeleteDeviceBoundSessionResult")]
+[JsonSerializable(typeof(FetchSchemefulSiteCommandParameters), TypeInfoPropertyName = "FetchSchemefulSiteCommandParameters")]
+[JsonSerializable(typeof(FetchSchemefulSiteResult), TypeInfoPropertyName = "FetchSchemefulSiteResult")]
 [JsonSerializable(typeof(LoadNetworkResourceCommandParameters), TypeInfoPropertyName = "LoadNetworkResourceCommandParameters")]
 [JsonSerializable(typeof(LoadNetworkResourceResult), TypeInfoPropertyName = "LoadNetworkResourceResult")]
 [JsonSerializable(typeof(SetCookieControlsCommandParameters), TypeInfoPropertyName = "SetCookieControlsCommandParameters")]
@@ -5396,6 +6339,8 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(CdpEventArgs<DirectTCPSocketClosedEventArgs>), TypeInfoPropertyName = "DirectTCPSocketClosedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DirectTCPSocketChunkSentEventArgs>), TypeInfoPropertyName = "DirectTCPSocketChunkSentCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DirectTCPSocketChunkReceivedEventArgs>), TypeInfoPropertyName = "DirectTCPSocketChunkReceivedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>), TypeInfoPropertyName = "DirectUDPSocketJoinedMulticastGroupCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>), TypeInfoPropertyName = "DirectUDPSocketLeftMulticastGroupCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DirectUDPSocketCreatedEventArgs>), TypeInfoPropertyName = "DirectUDPSocketCreatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DirectUDPSocketOpenedEventArgs>), TypeInfoPropertyName = "DirectUDPSocketOpenedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DirectUDPSocketAbortedEventArgs>), TypeInfoPropertyName = "DirectUDPSocketAbortedCdpEventArgs")]
@@ -5407,13 +6352,11 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(CdpEventArgs<ResponseReceivedEarlyHintsEventArgs>), TypeInfoPropertyName = "ResponseReceivedEarlyHintsCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<TrustTokenOperationDoneEventArgs>), TypeInfoPropertyName = "TrustTokenOperationDoneCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<PolicyUpdatedEventArgs>), TypeInfoPropertyName = "PolicyUpdatedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<SubresourceWebBundleMetadataReceivedEventArgs>), TypeInfoPropertyName = "SubresourceWebBundleMetadataReceivedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<SubresourceWebBundleMetadataErrorEventArgs>), TypeInfoPropertyName = "SubresourceWebBundleMetadataErrorCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<SubresourceWebBundleInnerResponseParsedEventArgs>), TypeInfoPropertyName = "SubresourceWebBundleInnerResponseParsedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<SubresourceWebBundleInnerResponseErrorEventArgs>), TypeInfoPropertyName = "SubresourceWebBundleInnerResponseErrorCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ReportingApiReportAddedEventArgs>), TypeInfoPropertyName = "ReportingApiReportAddedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ReportingApiReportUpdatedEventArgs>), TypeInfoPropertyName = "ReportingApiReportUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ReportingApiEndpointsChangedForOriginEventArgs>), TypeInfoPropertyName = "ReportingApiEndpointsChangedForOriginCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<DeviceBoundSessionsAddedEventArgs>), TypeInfoPropertyName = "DeviceBoundSessionsAddedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>), TypeInfoPropertyName = "DeviceBoundSessionEventOccurredCdpEventArgs")]
 [JsonSerializable(typeof(ResourceType), TypeInfoPropertyName = "NetworkResourceType")]
 [JsonSerializable(typeof(LoaderId), TypeInfoPropertyName = "NetworkLoaderId")]
 [JsonSerializable(typeof(RequestId), TypeInfoPropertyName = "NetworkRequestId")]
@@ -5427,6 +6370,7 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(CookieSourceScheme), TypeInfoPropertyName = "NetworkCookieSourceScheme")]
 [JsonSerializable(typeof(ResourceTiming), TypeInfoPropertyName = "NetworkResourceTiming")]
 [JsonSerializable(typeof(ResourcePriority), TypeInfoPropertyName = "NetworkResourcePriority")]
+[JsonSerializable(typeof(RenderBlockingBehavior), TypeInfoPropertyName = "NetworkRenderBlockingBehavior")]
 [JsonSerializable(typeof(PostDataEntry), TypeInfoPropertyName = "NetworkPostDataEntry")]
 [JsonSerializable(typeof(Request), TypeInfoPropertyName = "NetworkRequest")]
 [JsonSerializable(typeof(SignedCertificateTimestamp), TypeInfoPropertyName = "NetworkSignedCertificateTimestamp")]
@@ -5466,14 +6410,19 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(SignedExchangeError), TypeInfoPropertyName = "NetworkSignedExchangeError")]
 [JsonSerializable(typeof(SignedExchangeInfo), TypeInfoPropertyName = "NetworkSignedExchangeInfo")]
 [JsonSerializable(typeof(ContentEncoding), TypeInfoPropertyName = "NetworkContentEncoding")]
+[JsonSerializable(typeof(NetworkConditions), TypeInfoPropertyName = "NetworkNetworkConditions")]
+[JsonSerializable(typeof(BlockPattern), TypeInfoPropertyName = "NetworkBlockPattern")]
 [JsonSerializable(typeof(DirectSocketDnsQueryType), TypeInfoPropertyName = "NetworkDirectSocketDnsQueryType")]
 [JsonSerializable(typeof(DirectTCPSocketOptions), TypeInfoPropertyName = "NetworkDirectTCPSocketOptions")]
 [JsonSerializable(typeof(DirectUDPSocketOptions), TypeInfoPropertyName = "NetworkDirectUDPSocketOptions")]
 [JsonSerializable(typeof(DirectUDPMessage), TypeInfoPropertyName = "NetworkDirectUDPMessage")]
-[JsonSerializable(typeof(PrivateNetworkRequestPolicy), TypeInfoPropertyName = "NetworkPrivateNetworkRequestPolicy")]
+[JsonSerializable(typeof(LocalNetworkAccessRequestPolicy), TypeInfoPropertyName = "NetworkLocalNetworkAccessRequestPolicy")]
 [JsonSerializable(typeof(IPAddressSpace), TypeInfoPropertyName = "NetworkIPAddressSpace")]
 [JsonSerializable(typeof(ConnectTiming), TypeInfoPropertyName = "NetworkConnectTiming")]
 [JsonSerializable(typeof(ClientSecurityState), TypeInfoPropertyName = "NetworkClientSecurityState")]
+[JsonSerializable(typeof(AdScriptIdentifier), TypeInfoPropertyName = "NetworkAdScriptIdentifier")]
+[JsonSerializable(typeof(AdAncestry), TypeInfoPropertyName = "NetworkAdAncestry")]
+[JsonSerializable(typeof(AdProvenance), TypeInfoPropertyName = "NetworkAdProvenance")]
 [JsonSerializable(typeof(CrossOriginOpenerPolicyValue), TypeInfoPropertyName = "NetworkCrossOriginOpenerPolicyValue")]
 [JsonSerializable(typeof(CrossOriginOpenerPolicyStatus), TypeInfoPropertyName = "NetworkCrossOriginOpenerPolicyStatus")]
 [JsonSerializable(typeof(CrossOriginEmbedderPolicyValue), TypeInfoPropertyName = "NetworkCrossOriginEmbedderPolicyValue")]
@@ -5485,24 +6434,44 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(ReportId), TypeInfoPropertyName = "NetworkReportId")]
 [JsonSerializable(typeof(ReportingApiReport), TypeInfoPropertyName = "NetworkReportingApiReport")]
 [JsonSerializable(typeof(ReportingApiEndpoint), TypeInfoPropertyName = "NetworkReportingApiEndpoint")]
+[JsonSerializable(typeof(DeviceBoundSessionKey), TypeInfoPropertyName = "NetworkDeviceBoundSessionKey")]
+[JsonSerializable(typeof(DeviceBoundSessionWithUsage), TypeInfoPropertyName = "NetworkDeviceBoundSessionWithUsage")]
+[JsonSerializable(typeof(DeviceBoundSessionCookieCraving), TypeInfoPropertyName = "NetworkDeviceBoundSessionCookieCraving")]
+[JsonSerializable(typeof(DeviceBoundSessionUrlRule), TypeInfoPropertyName = "NetworkDeviceBoundSessionUrlRule")]
+[JsonSerializable(typeof(DeviceBoundSessionInclusionRules), TypeInfoPropertyName = "NetworkDeviceBoundSessionInclusionRules")]
+[JsonSerializable(typeof(DeviceBoundSession), TypeInfoPropertyName = "NetworkDeviceBoundSession")]
+[JsonSerializable(typeof(DeviceBoundSessionEventId), TypeInfoPropertyName = "NetworkDeviceBoundSessionEventId")]
+[JsonSerializable(typeof(DeviceBoundSessionFetchResult), TypeInfoPropertyName = "NetworkDeviceBoundSessionFetchResult")]
+[JsonSerializable(typeof(DeviceBoundSessionFailedRequest), TypeInfoPropertyName = "NetworkDeviceBoundSessionFailedRequest")]
+[JsonSerializable(typeof(CreationEventDetails), TypeInfoPropertyName = "NetworkCreationEventDetails")]
+[JsonSerializable(typeof(RefreshEventDetails), TypeInfoPropertyName = "NetworkRefreshEventDetails")]
+[JsonSerializable(typeof(TerminationEventDetails), TypeInfoPropertyName = "NetworkTerminationEventDetails")]
+[JsonSerializable(typeof(ChallengeEventDetails), TypeInfoPropertyName = "NetworkChallengeEventDetails")]
 [JsonSerializable(typeof(LoadNetworkResourcePageResult), TypeInfoPropertyName = "NetworkLoadNetworkResourcePageResult")]
 [JsonSerializable(typeof(LoadNetworkResourceOptions), TypeInfoPropertyName = "NetworkLoadNetworkResourceOptions")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ContentEncoding>), TypeInfoPropertyName = "IReadOnlyListNetworkContentEncoding")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<NetworkConditions>), TypeInfoPropertyName = "IReadOnlyListNetworkNetworkConditions")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Cookie>), TypeInfoPropertyName = "IReadOnlyListNetworkCookie")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Debugger.SearchMatch>), TypeInfoPropertyName = "IReadOnlyListDebuggerSearchMatch")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BlockPattern>), TypeInfoPropertyName = "IReadOnlyListNetworkBlockPattern")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CookieParam>), TypeInfoPropertyName = "IReadOnlyListNetworkCookieParam")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RequestPattern>), TypeInfoPropertyName = "IReadOnlyListNetworkRequestPattern")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AssociatedCookie>), TypeInfoPropertyName = "IReadOnlyListNetworkAssociatedCookie")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSessionWithUsage>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSessionWithUsage")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BlockedSetCookieWithReason>), TypeInfoPropertyName = "IReadOnlyListNetworkBlockedSetCookieWithReason")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ExemptedSetCookieWithReason>), TypeInfoPropertyName = "IReadOnlyListNetworkExemptedSetCookieWithReason")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ReportingApiEndpoint>), TypeInfoPropertyName = "IReadOnlyListNetworkReportingApiEndpoint")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSession>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSession")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PostDataEntry>), TypeInfoPropertyName = "IReadOnlyListNetworkPostDataEntry")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SignedCertificateTimestamp>), TypeInfoPropertyName = "IReadOnlyListNetworkSignedCertificateTimestamp")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SetCookieBlockedReason>), TypeInfoPropertyName = "IReadOnlyListNetworkSetCookieBlockedReason")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CookieBlockedReason>), TypeInfoPropertyName = "IReadOnlyListNetworkCookieBlockedReason")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SignedExchangeSignature>), TypeInfoPropertyName = "IReadOnlyListNetworkSignedExchangeSignature")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SignedExchangeError>), TypeInfoPropertyName = "IReadOnlyListNetworkSignedExchangeError")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AdScriptIdentifier>), TypeInfoPropertyName = "IReadOnlyListNetworkAdScriptIdentifier")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ContentSecurityPolicyStatus>), TypeInfoPropertyName = "IReadOnlyListNetworkContentSecurityPolicyStatus")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSessionUrlRule>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSessionUrlRule")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSessionCookieCraving>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSessionCookieCraving")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
@@ -5724,6 +6693,22 @@ public static class NetworkDomainEvent
             NetworkJsonSerializerContext.Default.DirectTCPSocketChunkReceivedCdpEventArgs);
 
     /// <summary>
+    /// 
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>> DirectUDPSocketJoinedMulticastGroup { get; } =
+        EventDescriptor<CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>>.Create(
+            "goog:cdp.Network.directUDPSocketJoinedMulticastGroup",
+            NetworkJsonSerializerContext.Default.DirectUDPSocketJoinedMulticastGroupCdpEventArgs);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>> DirectUDPSocketLeftMulticastGroup { get; } =
+        EventDescriptor<CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>>.Create(
+            "goog:cdp.Network.directUDPSocketLeftMulticastGroup",
+            NetworkJsonSerializerContext.Default.DirectUDPSocketLeftMulticastGroupCdpEventArgs);
+
+    /// <summary>
     /// Fired upon direct_socket.UDPSocket creation.
     /// </summary>
     public static EventDescriptor<CdpEventArgs<DirectUDPSocketCreatedEventArgs>> DirectUDPSocketCreated { get; } =
@@ -5822,40 +6807,6 @@ public static class NetworkDomainEvent
             NetworkJsonSerializerContext.Default.PolicyUpdatedCdpEventArgs);
 
     /// <summary>
-    /// Fired once when parsing the .wbn file has succeeded.
-    /// The event contains the information about the web bundle contents.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<SubresourceWebBundleMetadataReceivedEventArgs>> SubresourceWebBundleMetadataReceived { get; } =
-        EventDescriptor<CdpEventArgs<SubresourceWebBundleMetadataReceivedEventArgs>>.Create(
-            "goog:cdp.Network.subresourceWebBundleMetadataReceived",
-            NetworkJsonSerializerContext.Default.SubresourceWebBundleMetadataReceivedCdpEventArgs);
-
-    /// <summary>
-    /// Fired once when parsing the .wbn file has failed.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<SubresourceWebBundleMetadataErrorEventArgs>> SubresourceWebBundleMetadataError { get; } =
-        EventDescriptor<CdpEventArgs<SubresourceWebBundleMetadataErrorEventArgs>>.Create(
-            "goog:cdp.Network.subresourceWebBundleMetadataError",
-            NetworkJsonSerializerContext.Default.SubresourceWebBundleMetadataErrorCdpEventArgs);
-
-    /// <summary>
-    /// Fired when handling requests for resources within a .wbn file.
-    /// Note: this will only be fired for resources that are requested by the webpage.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<SubresourceWebBundleInnerResponseParsedEventArgs>> SubresourceWebBundleInnerResponseParsed { get; } =
-        EventDescriptor<CdpEventArgs<SubresourceWebBundleInnerResponseParsedEventArgs>>.Create(
-            "goog:cdp.Network.subresourceWebBundleInnerResponseParsed",
-            NetworkJsonSerializerContext.Default.SubresourceWebBundleInnerResponseParsedCdpEventArgs);
-
-    /// <summary>
-    /// Fired when request for resources within a .wbn file failed.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<SubresourceWebBundleInnerResponseErrorEventArgs>> SubresourceWebBundleInnerResponseError { get; } =
-        EventDescriptor<CdpEventArgs<SubresourceWebBundleInnerResponseErrorEventArgs>>.Create(
-            "goog:cdp.Network.subresourceWebBundleInnerResponseError",
-            NetworkJsonSerializerContext.Default.SubresourceWebBundleInnerResponseErrorCdpEventArgs);
-
-    /// <summary>
     /// Is sent whenever a new report is added.
     /// And after 'enableReportingApi' for all existing reports.
     /// </summary>
@@ -5879,5 +6830,21 @@ public static class NetworkDomainEvent
         EventDescriptor<CdpEventArgs<ReportingApiEndpointsChangedForOriginEventArgs>>.Create(
             "goog:cdp.Network.reportingApiEndpointsChangedForOrigin",
             NetworkJsonSerializerContext.Default.ReportingApiEndpointsChangedForOriginCdpEventArgs);
+
+    /// <summary>
+    /// Triggered when the initial set of device bound sessions is added.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<DeviceBoundSessionsAddedEventArgs>> DeviceBoundSessionsAdded { get; } =
+        EventDescriptor<CdpEventArgs<DeviceBoundSessionsAddedEventArgs>>.Create(
+            "goog:cdp.Network.deviceBoundSessionsAdded",
+            NetworkJsonSerializerContext.Default.DeviceBoundSessionsAddedCdpEventArgs);
+
+    /// <summary>
+    /// Triggered when a device bound session event occurs.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>> DeviceBoundSessionEventOccurred { get; } =
+        EventDescriptor<CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>>.Create(
+            "goog:cdp.Network.deviceBoundSessionEventOccurred",
+            NetworkJsonSerializerContext.Default.DeviceBoundSessionEventOccurredCdpEventArgs);
 
 }

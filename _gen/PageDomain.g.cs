@@ -210,6 +210,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <list type="bullet">
     /// <item><description><b>WorldName</b> - An optional name which is reported in the Execution Context.</description></item>
     /// <item><description><b>GrantUniveralAccess</b> - Whether or not universal access should be granted to the isolated world. This is a powerful option, use with caution.</description></item>
+    /// <item><description><b>ContentSecurityPolicy</b> - An optional content security policy to set for the isolated world. If omitted, any existing CSP for the world will be cleared. Note that clearing or updating the CSP does not immediately affect the active context in the same document because LocalDOMWindow caches the ContentSecurityPolicy object. The change takes effect on subsequent navigations when a new window context is created.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="frameId">
@@ -226,7 +227,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     public async Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, CreateIsolatedWorldCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new CreateIsolatedWorldCommandParameters(FrameId: frameId, WorldName: options?.WorldName, GrantUniveralAccess: options?.GrantUniveralAccess);
+        var @params = new CreateIsolatedWorldCommandParameters(FrameId: frameId, WorldName: options?.WorldName, GrantUniveralAccess: options?.GrantUniveralAccess, ContentSecurityPolicy: options?.ContentSecurityPolicy);
         return await ExecuteCommandAsync(CreateIsolatedWorldCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CreateIsolatedWorldCommandParameters, CreateIsolatedWorldResult> CreateIsolatedWorldCommand = new("Page.createIsolatedWorld", JsonContext.CreateIsolatedWorldCommandParameters, JsonContext.CreateIsolatedWorldResult);
@@ -1503,6 +1504,33 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     private static readonly CdpCommand<SetPrerenderingAllowedCommandParameters, SetPrerenderingAllowedResult> SetPrerenderingAllowedCommand = new("Page.setPrerenderingAllowed", JsonContext.SetPrerenderingAllowedCommandParameters, JsonContext.SetPrerenderingAllowedResult);
 
     /// <summary>
+    /// Get the annotated page content for the main frame.
+    /// This is an experimental command that is subject to change.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>IncludeActionableInformation</b> - Whether to include actionable information. Defaults to true.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetAnnotatedPageContentCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetAnnotatedPageContentResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(GetAnnotatedPageContentCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAnnotatedPageContentCommandParameters(IncludeActionableInformation: options?.IncludeActionableInformation);
+        return await ExecuteCommandAsync(GetAnnotatedPageContentCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAnnotatedPageContentCommandParameters, GetAnnotatedPageContentResult> GetAnnotatedPageContentCommand = new("Page.getAnnotatedPageContent", JsonContext.GetAnnotatedPageContentCommandParameters, JsonContext.GetAnnotatedPageContentResult);
+
+    /// <summary>
     /// 
     /// </summary>
     /// <remarks>
@@ -1830,8 +1858,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </remarks>
     public IEventSource<WindowOpenEventArgs> WindowOpen => CreateCdpEventSource(PageDomainEvent.WindowOpen);
     /// <summary>
-    /// Issued for every compilation cache generated. Is only available
-    /// if Page.setGenerateCompilationCache is enabled.
+    /// Issued for every compilation cache generated.
     /// </summary>
     /// <remarks>
     /// Event args (<see cref="CompilationCacheProducedEventArgs"/>):
@@ -2019,7 +2046,7 @@ public sealed record ClearGeolocationOverrideCommandOptions : CdpCommandOptions
 public sealed record ClearGeolocationOverrideResult() : EmptyResult;
 
 
-internal sealed record CreateIsolatedWorldCommandParameters(FrameId FrameId, string? WorldName, bool? GrantUniveralAccess) : Parameters;
+internal sealed record CreateIsolatedWorldCommandParameters(FrameId FrameId, string? WorldName, bool? GrantUniveralAccess, string? ContentSecurityPolicy) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="PageDomain.CreateIsolatedWorldAsync"/>.
@@ -2036,6 +2063,16 @@ public sealed record CreateIsolatedWorldCommandOptions : CdpCommandOptions
     /// option, use with caution.
     /// </summary>
     public bool? GrantUniveralAccess { get; init; }
+
+    /// <summary>
+    /// An optional content security policy to set for the isolated world.
+    /// If omitted, any existing CSP for the world will be cleared.
+    /// Note that clearing or updating the CSP does not immediately affect the active
+    /// context in the same document because LocalDOMWindow caches the
+    /// ContentSecurityPolicy object. The change takes effect on subsequent
+    /// navigations when a new window context is created.
+    /// </summary>
+    public string? ContentSecurityPolicy { get; init; }
 }
 
 /// <summary>
@@ -2193,7 +2230,7 @@ public sealed record GetAdScriptAncestryCommandOptions : CdpCommandOptions
 /// stack) to more distant ancestors (that created the immediately preceding
 /// script). Only sent if frame is labelled as an ad and ids are available.
 /// </param>
-public sealed record GetAdScriptAncestryResult(AdScriptAncestry? AdScriptAncestry) : EmptyResult;
+public sealed record GetAdScriptAncestryResult(Network.AdAncestry? AdScriptAncestry) : EmptyResult;
 
 
 internal sealed record GetFrameTreeCommandParameters() : Parameters;
@@ -2375,7 +2412,10 @@ public sealed record NavigateCommandOptions : CdpCommandOptions
 /// <param name="ErrorText">
 /// User friendly error message, present if and only if navigation has failed.
 /// </param>
-public sealed record NavigateResult(FrameId FrameId, Network.LoaderId? LoaderId, string? ErrorText) : EmptyResult;
+/// <param name="IsDownload">
+/// Whether the navigation resulted in a download.
+/// </param>
+public sealed record NavigateResult(FrameId FrameId, Network.LoaderId? LoaderId, string? ErrorText, bool? IsDownload) : EmptyResult;
 
 
 internal sealed record NavigateToHistoryEntryCommandParameters(long EntryId) : Parameters;
@@ -3106,6 +3146,29 @@ public sealed record SetPrerenderingAllowedCommandOptions : CdpCommandOptions
 public sealed record SetPrerenderingAllowedResult() : EmptyResult;
 
 
+internal sealed record GetAnnotatedPageContentCommandParameters(bool? IncludeActionableInformation) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="PageDomain.GetAnnotatedPageContentAsync"/>.
+/// </summary>
+public sealed record GetAnnotatedPageContentCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Whether to include actionable information. Defaults to true.
+    /// </summary>
+    public bool? IncludeActionableInformation { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Content">
+/// The annotated page content as a base64 encoded protobuf.
+/// The format is defined by the <b>AnnotatedPageContent</b> message in
+/// components/optimization_guide/proto/features/common_quality_data.proto (Encoded as a base64 string when passed over JSON)
+/// </param>
+public sealed record GetAnnotatedPageContentResult(string Content) : EmptyResult;
+
+
 /// <summary>
 /// </summary>
 /// <param name="Timestamp">
@@ -3450,8 +3513,7 @@ public sealed record ScreencastVisibilityChangedEventArgs(bool Visible) : OpenQA
 public sealed record WindowOpenEventArgs(string Url, string WindowName, IEnumerable<string> WindowFeatures, bool UserGesture) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
-/// Issued for every compilation cache generated. Is only available
-/// if Page.setGenerateCompilationCache is enabled.
+/// Issued for every compilation cache generated.
 /// </summary>
 /// <param name="Url">
 /// </param>
@@ -3518,42 +3580,6 @@ public sealed record AdFrameStatus(AdFrameType AdFrameType)
     /// <summary>
     /// </summary>
     public IReadOnlyList<AdFrameExplanation>? Explanations { get; init; }
-}
-
-/// <summary>
-/// Identifies the script which caused a script or frame to be labelled as an
-/// ad.
-/// </summary>
-/// <param name="ScriptId">
-/// Script Id of the script which caused a script or frame to be labelled as
-/// an ad.
-/// </param>
-/// <param name="DebuggerId">
-/// Id of scriptId's debugger.
-/// </param>
-public sealed record AdScriptId(Runtime.ScriptId ScriptId, Runtime.UniqueDebuggerId DebuggerId)
-{
-}
-
-/// <summary>
-/// Encapsulates the script ancestry and the root script filterlist rule that
-/// caused the frame to be labelled as an ad. Only created when <b>ancestryChain</b>
-/// is not empty.
-/// </summary>
-/// <param name="AncestryChain">
-/// A chain of <b>AdScriptId</b>s representing the ancestry of an ad script that
-/// led to the creation of a frame. The chain is ordered from the script
-/// itself (lower level) up to its root ancestor that was flagged by
-/// filterlist.
-/// </param>
-public sealed record AdScriptAncestry(IReadOnlyList<AdScriptId> AncestryChain)
-{
-    /// <summary>
-    /// The filterlist rule that caused the root (last) script in
-    /// <b>ancestryChain</b> to be ad-tagged. Only populated if the rule is
-    /// available.
-    /// </summary>
-    public string? RootScriptFilterlistRule { get; init; }
 }
 
 /// <summary>
@@ -3645,8 +3671,16 @@ public enum PermissionsPolicyFeature
     AmbientLightSensor,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("aria-notify")]
+    AriaNotify,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("attribution-reporting")]
     AttributionReporting,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autofill")]
+    Autofill,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoplay")]
@@ -3797,6 +3831,10 @@ public enum PermissionsPolicyFeature
     DeviceAttributes,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("digital-credentials-create")]
+    DigitalCredentialsCreate,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("digital-credentials-get")]
     DigitalCredentialsGet,
     /// <summary>
@@ -3805,8 +3843,8 @@ public enum PermissionsPolicyFeature
     DirectSockets,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("direct-sockets-private")]
-    DirectSocketsPrivate,
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("direct-sockets-multicast")]
+    DirectSocketsMulticast,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("display-capture")]
@@ -3827,10 +3865,6 @@ public enum PermissionsPolicyFeature
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("execution-while-not-rendered")]
     ExecutionWhileNotRendered,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fenced-unpartitioned-storage-read")]
-    FencedUnpartitionedStorageRead,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("focus-without-user-activation")]
@@ -3893,12 +3927,24 @@ public enum PermissionsPolicyFeature
     LocalFonts,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local-network")]
+    LocalNetwork,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local-network-access")]
     LocalNetworkAccess,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("loopback-network")]
+    LoopbackNetwork,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("magnetometer")]
     Magnetometer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("manual-text")]
+    ManualText,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("media-playback-while-not-visible")]
@@ -3927,10 +3973,6 @@ public enum PermissionsPolicyFeature
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("picture-in-picture")]
     PictureInPicture,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("popins")]
-    Popins,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("private-aggregation")]
@@ -3973,10 +4015,6 @@ public enum PermissionsPolicyFeature
     Serial,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared-autofill")]
-    SharedAutofill,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared-storage")]
     SharedStorage,
     /// <summary>
@@ -4009,6 +4047,10 @@ public enum PermissionsPolicyFeature
     SyncXhr,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("tools")]
+    Tools,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("translator")]
     Translator,
     /// <summary>
@@ -4031,6 +4073,10 @@ public enum PermissionsPolicyFeature
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("web-app-installation")]
     WebAppInstallation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webnn")]
+    Webnn,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("web-printing")]
@@ -5287,6 +5333,10 @@ public enum BackForwardCacheNotRestoredReason
     ForegroundCacheLimit,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ForwardCacheDisabled")]
+    ForwardCacheDisabled,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BrowsingInstanceNotSwapped")]
     BrowsingInstanceNotSwapped,
     /// <summary>
@@ -5451,12 +5501,24 @@ public enum BackForwardCacheNotRestoredReason
     SharedWorkerMessage,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedWorkerWithNoActiveClient")]
+    SharedWorkerWithNoActiveClient,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebLocks")]
     WebLocks,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebLocksContention")]
+    WebLocksContention,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebHID")]
     WebHID,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebBluetooth")]
+    WebBluetooth,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebShare")]
@@ -5547,16 +5609,16 @@ public enum BackForwardCacheNotRestoredReason
     JsNetworkRequestReceivedCacheControlNoStoreResource,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebRTCSticky")]
-    WebRTCSticky,
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebRTCUsedWithCCNS")]
+    WebRTCUsedWithCCNS,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebTransportSticky")]
-    WebTransportSticky,
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebTransportUsedWithCCNS")]
+    WebTransportUsedWithCCNS,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebSocketSticky")]
-    WebSocketSticky,
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebSocketUsedWithCCNS")]
+    WebSocketUsedWithCCNS,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SmartCard")]
@@ -5677,6 +5739,10 @@ public enum BackForwardCacheNotRestoredReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderExtensionSentMessageToCachedFrame")]
     EmbedderExtensionSentMessageToCachedFrame,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderExtensionFrame")]
+    EmbedderExtensionFrame,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedByWebViewClient")]
@@ -5897,6 +5963,8 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, IRea
 [JsonSerializable(typeof(SetInterceptFileChooserDialogResult), TypeInfoPropertyName = "SetInterceptFileChooserDialogResult")]
 [JsonSerializable(typeof(SetPrerenderingAllowedCommandParameters), TypeInfoPropertyName = "SetPrerenderingAllowedCommandParameters")]
 [JsonSerializable(typeof(SetPrerenderingAllowedResult), TypeInfoPropertyName = "SetPrerenderingAllowedResult")]
+[JsonSerializable(typeof(GetAnnotatedPageContentCommandParameters), TypeInfoPropertyName = "GetAnnotatedPageContentCommandParameters")]
+[JsonSerializable(typeof(GetAnnotatedPageContentResult), TypeInfoPropertyName = "GetAnnotatedPageContentResult")]
 [JsonSerializable(typeof(CdpEventArgs<DomContentEventFiredEventArgs>), TypeInfoPropertyName = "DomContentEventFiredCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<FileChooserOpenedEventArgs>), TypeInfoPropertyName = "FileChooserOpenedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<FrameAttachedEventArgs>), TypeInfoPropertyName = "FrameAttachedCdpEventArgs")]
@@ -5929,8 +5997,6 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, IRea
 [JsonSerializable(typeof(AdFrameType), TypeInfoPropertyName = "PageAdFrameType")]
 [JsonSerializable(typeof(AdFrameExplanation), TypeInfoPropertyName = "PageAdFrameExplanation")]
 [JsonSerializable(typeof(AdFrameStatus), TypeInfoPropertyName = "PageAdFrameStatus")]
-[JsonSerializable(typeof(AdScriptId), TypeInfoPropertyName = "PageAdScriptId")]
-[JsonSerializable(typeof(AdScriptAncestry), TypeInfoPropertyName = "PageAdScriptAncestry")]
 [JsonSerializable(typeof(SecureContextType), TypeInfoPropertyName = "PageSecureContextType")]
 [JsonSerializable(typeof(CrossOriginIsolatedContextType), TypeInfoPropertyName = "PageCrossOriginIsolatedContextType")]
 [JsonSerializable(typeof(GatedAPIFeatures), TypeInfoPropertyName = "PageGatedAPIFeatures")]
@@ -5995,7 +6061,6 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, IRea
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CompilationCacheParams>), TypeInfoPropertyName = "IReadOnlyListPageCompilationCacheParams")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackForwardCacheNotRestoredExplanation>), TypeInfoPropertyName = "IReadOnlyListPageBackForwardCacheNotRestoredExplanation")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AdFrameExplanation>), TypeInfoPropertyName = "IReadOnlyListPageAdFrameExplanation")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AdScriptId>), TypeInfoPropertyName = "IReadOnlyListPageAdScriptId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<OriginTrialTokenWithStatus>), TypeInfoPropertyName = "IReadOnlyListPageOriginTrialTokenWithStatus")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<GatedAPIFeatures>), TypeInfoPropertyName = "IReadOnlyListPageGatedAPIFeatures")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FrameResourceTree>), TypeInfoPropertyName = "IReadOnlyListPageFrameResourceTree")]
@@ -6256,8 +6321,7 @@ public static class PageDomainEvent
             PageJsonSerializerContext.Default.WindowOpenCdpEventArgs);
 
     /// <summary>
-    /// Issued for every compilation cache generated. Is only available
-    /// if Page.setGenerateCompilationCache is enabled.
+    /// Issued for every compilation cache generated.
     /// </summary>
     public static EventDescriptor<CdpEventArgs<CompilationCacheProducedEventArgs>> CompilationCacheProduced { get; } =
         EventDescriptor<CdpEventArgs<CompilationCacheProducedEventArgs>>.Create(

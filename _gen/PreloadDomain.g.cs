@@ -291,6 +291,12 @@ public sealed record RuleSet(RuleSetId Id, Network.LoaderId LoaderId, string Sou
     /// </summary>
     [global::System.Obsolete]
     public string? ErrorMessage { get; init; }
+
+    /// <summary>
+    /// For more details, see:
+    /// https://github.com/WICG/nav-speculation/blob/main/speculation-rules-tags.md
+    /// </summary>
+    public string? Tag { get; init; }
 }
 
 /// <summary>
@@ -306,6 +312,10 @@ public enum RuleSetErrorType
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRulesSkipped")]
     InvalidRulesSkipped,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRulesetLevelTag")]
+    InvalidRulesetLevelTag,
 }
 
 /// <summary>
@@ -324,6 +334,10 @@ public enum SpeculationAction
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Prerender")]
     Prerender,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrerenderUntilScript")]
+    PrerenderUntilScript,
 }
 
 /// <summary>
@@ -359,6 +373,10 @@ public enum SpeculationTargetHint
 /// </param>
 public sealed record PreloadingAttemptKey(Network.LoaderId LoaderId, SpeculationAction Action, string Url)
 {
+    /// <summary>
+    /// </summary>
+    public bool? FormSubmission { get; init; }
+
     /// <summary>
     /// </summary>
     public SpeculationTargetHint? TargetHint { get; init; }
@@ -694,6 +712,18 @@ public enum PrerenderFinalStatus
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BrowsingDataRemoved")]
     BrowsingDataRemoved,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrerenderHostReused")]
+    PrerenderHostReused,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormSubmitWhenPrerendering")]
+    FormSubmitWhenPrerendering,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossDocumentRestart")]
+    CrossDocumentRestart,
 }
 
 /// <summary>
@@ -790,6 +820,10 @@ public enum PrefetchStatus
     PrefetchIsStale,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleBlockedByConnectionAllowlist")]
+    PrefetchNotEligibleBlockedByConnectionAllowlist,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleBrowserContextOffTheRecord")]
     PrefetchNotEligibleBrowserContextOffTheRecord,
     /// <summary>
@@ -872,6 +906,10 @@ public enum PrefetchStatus
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotUsedProbeFailed")]
     PrefetchNotUsedProbeFailed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchCancelledOnUserNavigation")]
+    PrefetchCancelledOnUserNavigation,
 }
 
 /// <summary>

@@ -241,6 +241,9 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 
     /// <summary>
     /// Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport.
+    /// Issue: the method does not handle device pixel ratio (DPR) correctly.
+    /// The coordinates currently have to be adjusted by the client
+    /// if DPR is not 1 (see crbug.com/437807128).
     /// </summary>
     /// <remarks>
     /// Optional parameters (via <paramref name="options"/>):
@@ -513,6 +516,27 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<SetShowContainerQueryOverlaysCommandParameters, SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysCommand = new("Overlay.setShowContainerQueryOverlays", JsonContext.SetShowContainerQueryOverlaysCommandParameters, JsonContext.SetShowContainerQueryOverlaysResult);
 
     /// <summary>
+    /// </summary>
+    /// <param name="inspectedElementAnchorConfig">
+    /// Node identifier for which to show an anchor for.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetShowInspectedElementAnchorCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetShowInspectedElementAnchorResult"/>.
+    /// </returns>
+    public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, SetShowInspectedElementAnchorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig: inspectedElementAnchorConfig);
+        return await ExecuteCommandAsync(SetShowInspectedElementAnchorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowInspectedElementAnchorCommandParameters, SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorCommand = new("Overlay.setShowInspectedElementAnchor", JsonContext.SetShowInspectedElementAnchorCommandParameters, JsonContext.SetShowInspectedElementAnchorResult);
+
+    /// <summary>
     /// Requests that backend shows paint rectangles
     /// </summary>
     /// <param name="result">
@@ -671,6 +695,31 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<SetShowHingeCommandParameters, SetShowHingeResult> SetShowHingeCommand = new("Overlay.setShowHinge", JsonContext.SetShowHingeCommandParameters, JsonContext.SetShowHingeResult);
 
     /// <summary>
+    /// Add a display cutout overlay.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>DisplayCutoutConfig</b> - display cutout data, null means hide display cutout</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetShowDisplayCutoutCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetShowDisplayCutoutResult"/>.
+    /// </returns>
+    public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(SetShowDisplayCutoutCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig: options?.DisplayCutoutConfig);
+        return await ExecuteCommandAsync(SetShowDisplayCutoutCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowDisplayCutoutCommandParameters, SetShowDisplayCutoutResult> SetShowDisplayCutoutCommand = new("Overlay.setShowDisplayCutout", JsonContext.SetShowDisplayCutoutCommandParameters, JsonContext.SetShowDisplayCutoutResult);
+
+    /// <summary>
     /// Show elements in isolation mode with overlays.
     /// </summary>
     /// <param name="isolatedElementHighlightConfigs">
@@ -748,6 +797,26 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     public IEventSource<ScreenshotRequestedEventArgs> ScreenshotRequested => CreateCdpEventSource(OverlayDomainEvent.ScreenshotRequested);
+    /// <summary>
+    /// Fired when user asks to show the Inspect panel.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="InspectPanelShowRequestedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>BackendNodeId</b> - Id of the node to show in the panel.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<InspectPanelShowRequestedEventArgs> InspectPanelShowRequested => CreateCdpEventSource(OverlayDomainEvent.InspectPanelShowRequested);
+    /// <summary>
+    /// Fired when user asks to restore the Inspected Element floating window.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="InspectedElementWindowRestoredEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>BackendNodeId</b> - Id of the node to restore the floating window for.</description></item>
+    /// </list>
+    /// </remarks>
+    public IEventSource<InspectedElementWindowRestoredEventArgs> InspectedElementWindowRestored => CreateCdpEventSource(OverlayDomainEvent.InspectedElementWindowRestored);
     /// <summary>
     /// Fired when user cancels the inspect mode.
     /// </summary>
@@ -1131,6 +1200,20 @@ public sealed record SetShowContainerQueryOverlaysCommandOptions : CdpCommandOpt
 public sealed record SetShowContainerQueryOverlaysResult() : EmptyResult;
 
 
+internal sealed record SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig InspectedElementAnchorConfig) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="OverlayDomain.SetShowInspectedElementAnchorAsync"/>.
+/// </summary>
+public sealed record SetShowInspectedElementAnchorCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetShowInspectedElementAnchorResult() : EmptyResult;
+
+
 internal sealed record SetShowPaintRectsCommandParameters(bool Result) : Parameters;
 
 /// <summary>
@@ -1233,6 +1316,24 @@ public sealed record SetShowHingeCommandOptions : CdpCommandOptions
 public sealed record SetShowHingeResult() : EmptyResult;
 
 
+internal sealed record SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig? DisplayCutoutConfig) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="OverlayDomain.SetShowDisplayCutoutAsync"/>.
+/// </summary>
+public sealed record SetShowDisplayCutoutCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// display cutout data, null means hide display cutout
+    /// </summary>
+    public DisplayCutoutConfig? DisplayCutoutConfig { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetShowDisplayCutoutResult() : EmptyResult;
+
+
 internal sealed record SetShowIsolatedElementsCommandParameters(IEnumerable<IsolatedElementHighlightConfig> IsolatedElementHighlightConfigs) : Parameters;
 
 /// <summary>
@@ -1288,6 +1389,22 @@ public sealed record NodeHighlightRequestedEventArgs(DOM.NodeId NodeId) : OpenQA
 /// Viewport to capture, in device independent pixels (dip).
 /// </param>
 public sealed record ScreenshotRequestedEventArgs(Page.Viewport Viewport) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when user asks to show the Inspect panel.
+/// </summary>
+/// <param name="BackendNodeId">
+/// Id of the node to show in the panel.
+/// </param>
+public sealed record InspectPanelShowRequestedEventArgs(DOM.BackendNodeId BackendNodeId) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when user asks to restore the Inspected Element floating window.
+/// </summary>
+/// <param name="BackendNodeId">
+/// Id of the node to restore the floating window for.
+/// </param>
+public sealed record InspectedElementWindowRestoredEventArgs(DOM.BackendNodeId BackendNodeId) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when user cancels the inspect mode.
@@ -1739,6 +1856,77 @@ public sealed record HingeConfig(DOM.Rect Rect)
 }
 
 /// <summary>
+/// Supported display cutout shapes.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DisplayCutoutShape>))]
+public enum DisplayCutoutShape
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pill")]
+    Pill,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notch")]
+    Notch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("circle")]
+    Circle,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rectangle")]
+    Rectangle,
+}
+
+/// <summary>
+/// Configuration for a display cutout.
+/// </summary>
+/// <param name="Rect">
+/// A rectangle representing the cutout bounds.
+/// </param>
+/// <param name="Shape">
+/// Shape used to draw the cutout.
+/// </param>
+public sealed record DisplayCutoutConfig(DOM.Rect Rect, DisplayCutoutShape Shape)
+{
+    /// <summary>
+    /// Border radius for rounded cutout shapes.
+    /// </summary>
+    public long? BorderRadius { get; init; }
+
+    /// <summary>
+    /// Upper shoulder radius for notch cutout shapes.
+    /// </summary>
+    public long? UpperRadius { get; init; }
+
+    /// <summary>
+    /// Lower transition radius for notch cutout shapes.
+    /// </summary>
+    public long? LowerRadius { get; init; }
+
+    /// <summary>
+    /// Center x coordinate for circle cutout shapes.
+    /// </summary>
+    public long? Cx { get; init; }
+
+    /// <summary>
+    /// Center y coordinate for circle cutout shapes.
+    /// </summary>
+    public long? Cy { get; init; }
+
+    /// <summary>
+    /// Radius for circle cutout shapes.
+    /// </summary>
+    public long? Radius { get; init; }
+
+    /// <summary>
+    /// The cutout fill color (default: black).
+    /// </summary>
+    public DOM.RGBA? ContentColor { get; init; }
+}
+
+/// <summary>
 /// Configuration for Window Controls Overlay
 /// </summary>
 /// <param name="ShowCSS">
@@ -1832,12 +2020,23 @@ public enum InspectMode
     CaptureAreaScreenshot,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("showDistances")]
-    ShowDistances,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
+}
+
+/// <summary>
+/// </summary>
+public sealed record InspectedElementAnchorConfig()
+{
+    /// <summary>
+    /// Identifier of the node to highlight.
+    /// </summary>
+    public DOM.NodeId? NodeId { get; init; }
+
+    /// <summary>
+    /// Identifier of the backend node to highlight.
+    /// </summary>
+    public DOM.BackendNodeId? BackendNodeId { get; init; }
 }
 
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]
@@ -1880,6 +2079,8 @@ public enum InspectMode
 [JsonSerializable(typeof(SetShowScrollSnapOverlaysResult), TypeInfoPropertyName = "SetShowScrollSnapOverlaysResult")]
 [JsonSerializable(typeof(SetShowContainerQueryOverlaysCommandParameters), TypeInfoPropertyName = "SetShowContainerQueryOverlaysCommandParameters")]
 [JsonSerializable(typeof(SetShowContainerQueryOverlaysResult), TypeInfoPropertyName = "SetShowContainerQueryOverlaysResult")]
+[JsonSerializable(typeof(SetShowInspectedElementAnchorCommandParameters), TypeInfoPropertyName = "SetShowInspectedElementAnchorCommandParameters")]
+[JsonSerializable(typeof(SetShowInspectedElementAnchorResult), TypeInfoPropertyName = "SetShowInspectedElementAnchorResult")]
 [JsonSerializable(typeof(SetShowPaintRectsCommandParameters), TypeInfoPropertyName = "SetShowPaintRectsCommandParameters")]
 [JsonSerializable(typeof(SetShowPaintRectsResult), TypeInfoPropertyName = "SetShowPaintRectsResult")]
 [JsonSerializable(typeof(SetShowLayoutShiftRegionsCommandParameters), TypeInfoPropertyName = "SetShowLayoutShiftRegionsCommandParameters")]
@@ -1894,6 +2095,8 @@ public enum InspectMode
 [JsonSerializable(typeof(SetShowViewportSizeOnResizeResult), TypeInfoPropertyName = "SetShowViewportSizeOnResizeResult")]
 [JsonSerializable(typeof(SetShowHingeCommandParameters), TypeInfoPropertyName = "SetShowHingeCommandParameters")]
 [JsonSerializable(typeof(SetShowHingeResult), TypeInfoPropertyName = "SetShowHingeResult")]
+[JsonSerializable(typeof(SetShowDisplayCutoutCommandParameters), TypeInfoPropertyName = "SetShowDisplayCutoutCommandParameters")]
+[JsonSerializable(typeof(SetShowDisplayCutoutResult), TypeInfoPropertyName = "SetShowDisplayCutoutResult")]
 [JsonSerializable(typeof(SetShowIsolatedElementsCommandParameters), TypeInfoPropertyName = "SetShowIsolatedElementsCommandParameters")]
 [JsonSerializable(typeof(SetShowIsolatedElementsResult), TypeInfoPropertyName = "SetShowIsolatedElementsResult")]
 [JsonSerializable(typeof(SetShowWindowControlsOverlayCommandParameters), TypeInfoPropertyName = "SetShowWindowControlsOverlayCommandParameters")]
@@ -1901,6 +2104,8 @@ public enum InspectMode
 [JsonSerializable(typeof(CdpEventArgs<InspectNodeRequestedEventArgs>), TypeInfoPropertyName = "InspectNodeRequestedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<NodeHighlightRequestedEventArgs>), TypeInfoPropertyName = "NodeHighlightRequestedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ScreenshotRequestedEventArgs>), TypeInfoPropertyName = "ScreenshotRequestedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<InspectPanelShowRequestedEventArgs>), TypeInfoPropertyName = "InspectPanelShowRequestedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<InspectedElementWindowRestoredEventArgs>), TypeInfoPropertyName = "InspectedElementWindowRestoredCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<InspectModeCanceledEventArgs>), TypeInfoPropertyName = "InspectModeCanceledCdpEventArgs")]
 [JsonSerializable(typeof(SourceOrderConfig), TypeInfoPropertyName = "OverlaySourceOrderConfig")]
 [JsonSerializable(typeof(GridHighlightConfig), TypeInfoPropertyName = "OverlayGridHighlightConfig")]
@@ -1916,12 +2121,15 @@ public enum InspectMode
 [JsonSerializable(typeof(ScrollSnapContainerHighlightConfig), TypeInfoPropertyName = "OverlayScrollSnapContainerHighlightConfig")]
 [JsonSerializable(typeof(ScrollSnapHighlightConfig), TypeInfoPropertyName = "OverlayScrollSnapHighlightConfig")]
 [JsonSerializable(typeof(HingeConfig), TypeInfoPropertyName = "OverlayHingeConfig")]
+[JsonSerializable(typeof(DisplayCutoutShape), TypeInfoPropertyName = "OverlayDisplayCutoutShape")]
+[JsonSerializable(typeof(DisplayCutoutConfig), TypeInfoPropertyName = "OverlayDisplayCutoutConfig")]
 [JsonSerializable(typeof(WindowControlsOverlayConfig), TypeInfoPropertyName = "OverlayWindowControlsOverlayConfig")]
 [JsonSerializable(typeof(ContainerQueryHighlightConfig), TypeInfoPropertyName = "OverlayContainerQueryHighlightConfig")]
 [JsonSerializable(typeof(ContainerQueryContainerHighlightConfig), TypeInfoPropertyName = "OverlayContainerQueryContainerHighlightConfig")]
 [JsonSerializable(typeof(IsolatedElementHighlightConfig), TypeInfoPropertyName = "OverlayIsolatedElementHighlightConfig")]
 [JsonSerializable(typeof(IsolationModeHighlightConfig), TypeInfoPropertyName = "OverlayIsolationModeHighlightConfig")]
 [JsonSerializable(typeof(InspectMode), TypeInfoPropertyName = "OverlayInspectMode")]
+[JsonSerializable(typeof(InspectedElementAnchorConfig), TypeInfoPropertyName = "OverlayInspectedElementAnchorConfig")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOM.NodeId>), TypeInfoPropertyName = "IReadOnlyListDOMNodeId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<GridNodeHighlightConfig>), TypeInfoPropertyName = "IReadOnlyListOverlayGridNodeHighlightConfig")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FlexNodeHighlightConfig>), TypeInfoPropertyName = "IReadOnlyListOverlayFlexNodeHighlightConfig")]
@@ -1962,6 +2170,22 @@ public static class OverlayDomainEvent
         EventDescriptor<CdpEventArgs<ScreenshotRequestedEventArgs>>.Create(
             "goog:cdp.Overlay.screenshotRequested",
             OverlayJsonSerializerContext.Default.ScreenshotRequestedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when user asks to show the Inspect panel.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<InspectPanelShowRequestedEventArgs>> InspectPanelShowRequested { get; } =
+        EventDescriptor<CdpEventArgs<InspectPanelShowRequestedEventArgs>>.Create(
+            "goog:cdp.Overlay.inspectPanelShowRequested",
+            OverlayJsonSerializerContext.Default.InspectPanelShowRequestedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when user asks to restore the Inspected Element floating window.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<InspectedElementWindowRestoredEventArgs>> InspectedElementWindowRestored { get; } =
+        EventDescriptor<CdpEventArgs<InspectedElementWindowRestoredEventArgs>>.Create(
+            "goog:cdp.Overlay.inspectedElementWindowRestored",
+            OverlayJsonSerializerContext.Default.InspectedElementWindowRestoredCdpEventArgs);
 
     /// <summary>
     /// Fired when user cancels the inspect mode.

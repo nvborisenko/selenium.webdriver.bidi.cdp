@@ -46,7 +46,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddRuleResult"/>.
     /// </returns>
-    public async Task<AddRuleResult> AddRuleAsync(StyleSheetId styleSheetId, string ruleText, SourceRange location, AddRuleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, AddRuleCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddRuleCommandParameters(StyleSheetId: styleSheetId, RuleText: ruleText, Location: location, NodeForPropertySyntaxValidation: options?.NodeForPropertySyntaxValidation);
         return await ExecuteCommandAsync(AddRuleCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -67,7 +67,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CollectClassNamesResult"/>.
     /// </returns>
-    public async Task<CollectClassNamesResult> CollectClassNamesAsync(StyleSheetId styleSheetId, CollectClassNamesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, CollectClassNamesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectClassNamesCommandParameters(StyleSheetId: styleSheetId);
         return await ExecuteCommandAsync(CollectClassNamesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -244,6 +244,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// to the provided property syntax, the value is parsed using combined
     /// syntax as if null <b>propertyName</b> was provided. If the value cannot be
     /// resolved even then, return the provided value without any changes.
+    /// Note: this function currently does not resolve CSS random() function,
+    /// it returns unmodified random() function parts.`
     /// </summary>
     /// <remarks>
     /// Optional parameters (via <paramref name="options"/>):
@@ -254,8 +256,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     /// <param name="values">
-    /// Substitution functions (var()/env()/attr()) and cascade-dependent
-    /// keywords (revert/revert-layer) do not work.
+    /// Cascade-dependent keywords (revert/revert-layer) do not work.
     /// </param>
     /// <param name="nodeId">
     /// Id of the node in whose context the expression is evaluated
@@ -364,6 +365,25 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     private static readonly CdpCommand<GetMatchedStylesForNodeCommandParameters, GetMatchedStylesForNodeResult> GetMatchedStylesForNodeCommand = new("CSS.getMatchedStylesForNode", JsonContext.GetMatchedStylesForNodeCommandParameters, JsonContext.GetMatchedStylesForNodeResult);
 
     /// <summary>
+    /// Returns the values of the default UA-defined environment variables used in env()
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetEnvironmentVariablesCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetEnvironmentVariablesResult"/>.
+    /// </returns>
+    public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(GetEnvironmentVariablesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetEnvironmentVariablesCommandParameters();
+        return await ExecuteCommandAsync(GetEnvironmentVariablesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetEnvironmentVariablesCommandParameters, GetEnvironmentVariablesResult> GetEnvironmentVariablesCommand = new("CSS.getEnvironmentVariables", JsonContext.GetEnvironmentVariablesCommandParameters, JsonContext.GetEnvironmentVariablesResult);
+
+    /// <summary>
     /// Returns all media queries parsed by the rendering engine.
     /// </summary>
     /// <param name="options">
@@ -418,7 +438,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStyleSheetTextResult"/>.
     /// </returns>
-    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(StyleSheetId styleSheetId, GetStyleSheetTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, GetStyleSheetTextCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId);
         return await ExecuteCommandAsync(GetStyleSheetTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -466,7 +486,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLocationForSelectorResult"/>.
     /// </returns>
-    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(StyleSheetId styleSheetId, string selectorText, GetLocationForSelectorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, GetLocationForSelectorCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLocationForSelectorCommandParameters(StyleSheetId: styleSheetId, SelectorText: selectorText);
         return await ExecuteCommandAsync(GetLocationForSelectorCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -593,7 +613,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPropertyRulePropertyNameResult"/>.
     /// </returns>
-    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(StyleSheetId styleSheetId, SourceRange range, string propertyName, SetPropertyRulePropertyNameCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, SetPropertyRulePropertyNameCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPropertyRulePropertyNameCommandParameters(StyleSheetId: styleSheetId, Range: range, PropertyName: propertyName);
         return await ExecuteCommandAsync(SetPropertyRulePropertyNameCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -618,7 +638,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetKeyframeKeyResult"/>.
     /// </returns>
-    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(StyleSheetId styleSheetId, SourceRange range, string keyText, SetKeyframeKeyCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, SetKeyframeKeyCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetKeyframeKeyCommandParameters(StyleSheetId: styleSheetId, Range: range, KeyText: keyText);
         return await ExecuteCommandAsync(SetKeyframeKeyCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -643,7 +663,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetMediaTextResult"/>.
     /// </returns>
-    public async Task<SetMediaTextResult> SetMediaTextAsync(StyleSheetId styleSheetId, SourceRange range, string text, SetMediaTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetMediaTextCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetMediaTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync(SetMediaTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -652,6 +672,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
 
     /// <summary>
     /// Modifies the expression of a container query.
+    /// Deprecated. Use setContainerQueryConditionText instead.
     /// </summary>
     /// <param name="styleSheetId">
     /// </param>
@@ -668,12 +689,37 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryTextResult"/>.
     /// </returns>
-    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(StyleSheetId styleSheetId, SourceRange range, string text, SetContainerQueryTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    [global::System.Obsolete]
+    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetContainerQueryTextCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetContainerQueryTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync(SetContainerQueryTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetContainerQueryTextCommandParameters, SetContainerQueryTextResult> SetContainerQueryTextCommand = new("CSS.setContainerQueryText", JsonContext.SetContainerQueryTextCommandParameters, JsonContext.SetContainerQueryTextResult);
+
+    /// <summary>
+    /// </summary>
+    /// <param name="styleSheetId">
+    /// </param>
+    /// <param name="range">
+    /// </param>
+    /// <param name="text">
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetContainerQueryConditionTextCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryConditionTextResult"/>.
+    /// </returns>
+    public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetContainerQueryConditionTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetContainerQueryConditionTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetContainerQueryConditionTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetContainerQueryConditionTextCommandParameters, SetContainerQueryConditionTextResult> SetContainerQueryConditionTextCommand = new("CSS.setContainerQueryConditionText", JsonContext.SetContainerQueryConditionTextCommandParameters, JsonContext.SetContainerQueryConditionTextResult);
 
     /// <summary>
     /// Modifies the expression of a supports at-rule.
@@ -693,12 +739,37 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSupportsTextResult"/>.
     /// </returns>
-    public async Task<SetSupportsTextResult> SetSupportsTextAsync(StyleSheetId styleSheetId, SourceRange range, string text, SetSupportsTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetSupportsTextCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSupportsTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync(SetSupportsTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetSupportsTextCommandParameters, SetSupportsTextResult> SetSupportsTextCommand = new("CSS.setSupportsText", JsonContext.SetSupportsTextCommandParameters, JsonContext.SetSupportsTextResult);
+
+    /// <summary>
+    /// Modifies the expression of a navigation at-rule.
+    /// </summary>
+    /// <param name="styleSheetId">
+    /// </param>
+    /// <param name="range">
+    /// </param>
+    /// <param name="text">
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetNavigationTextCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetNavigationTextResult"/>.
+    /// </returns>
+    public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetNavigationTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNavigationTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetNavigationTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNavigationTextCommandParameters, SetNavigationTextResult> SetNavigationTextCommand = new("CSS.setNavigationText", JsonContext.SetNavigationTextCommandParameters, JsonContext.SetNavigationTextResult);
 
     /// <summary>
     /// Modifies the expression of a scope at-rule.
@@ -718,7 +789,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScopeTextResult"/>.
     /// </returns>
-    public async Task<SetScopeTextResult> SetScopeTextAsync(StyleSheetId styleSheetId, SourceRange range, string text, SetScopeTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetScopeTextCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetScopeTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync(SetScopeTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -743,7 +814,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetRuleSelectorResult"/>.
     /// </returns>
-    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(StyleSheetId styleSheetId, SourceRange range, string selector, SetRuleSelectorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, SetRuleSelectorCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRuleSelectorCommandParameters(StyleSheetId: styleSheetId, Range: range, Selector: selector);
         return await ExecuteCommandAsync(SetRuleSelectorCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -766,7 +837,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleSheetTextResult"/>.
     /// </returns>
-    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(StyleSheetId styleSheetId, string text, SetStyleSheetTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, SetStyleSheetTextCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId, Text: text);
         return await ExecuteCommandAsync(SetStyleSheetTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -939,7 +1010,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     public IEventSource<ComputedStyleUpdatedEventArgs> ComputedStyleUpdated => CreateCdpEventSource(CSSDomainEvent.ComputedStyleUpdated);
 }
 
-internal sealed record AddRuleCommandParameters(StyleSheetId StyleSheetId, string RuleText, SourceRange Location, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
+internal sealed record AddRuleCommandParameters(DOM.StyleSheetId StyleSheetId, string RuleText, SourceRange Location, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.AddRuleAsync"/>.
@@ -962,7 +1033,7 @@ public sealed record AddRuleCommandOptions : CdpCommandOptions
 public sealed record AddRuleResult(CSSRule Rule) : EmptyResult;
 
 
-internal sealed record CollectClassNamesCommandParameters(StyleSheetId StyleSheetId) : Parameters;
+internal sealed record CollectClassNamesCommandParameters(DOM.StyleSheetId StyleSheetId) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.CollectClassNamesAsync"/>.
@@ -1000,7 +1071,7 @@ public sealed record CreateStyleSheetCommandOptions : CdpCommandOptions
 /// <param name="StyleSheetId">
 /// Identifier of the created "via-inspector" stylesheet.
 /// </param>
-public sealed record CreateStyleSheetResult(StyleSheetId StyleSheetId) : EmptyResult;
+public sealed record CreateStyleSheetResult(DOM.StyleSheetId StyleSheetId) : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
@@ -1101,7 +1172,11 @@ public sealed record GetComputedStyleForNodeCommandOptions : CdpCommandOptions
 /// <param name="ComputedStyle">
 /// Computed style for the specified DOM node.
 /// </param>
-public sealed record GetComputedStyleForNodeResult(IReadOnlyList<CSSComputedStyleProperty> ComputedStyle) : EmptyResult;
+/// <param name="ExtraFields">
+/// A list of non-standard "extra fields" which blink stores alongside each
+/// computed style.
+/// </param>
+public sealed record GetComputedStyleForNodeResult(IReadOnlyList<CSSComputedStyleProperty> ComputedStyle, ComputedStyleExtraFields ExtraFields) : EmptyResult;
 
 
 internal sealed record ResolveValuesCommandParameters(IEnumerable<string> Values, DOM.NodeId NodeId, string? PropertyName, DOM.PseudoType? PseudoType, string? PseudoIdentifier) : Parameters;
@@ -1240,8 +1315,8 @@ public sealed record GetMatchedStylesForNodeCommandOptions : CdpCommandOptions
 /// <param name="CssPropertyRegistrations">
 /// A list of CSS property registrations matching this node.
 /// </param>
-/// <param name="CssFontPaletteValuesRule">
-/// A font-palette-values rule matching this node.
+/// <param name="CssAtRules">
+/// A list of simple @rules matching this node or its pseudo-elements.
 /// </param>
 /// <param name="ParentLayoutNodeId">
 /// Id of the first parent element that does not have display: contents.
@@ -1249,7 +1324,23 @@ public sealed record GetMatchedStylesForNodeCommandOptions : CdpCommandOptions
 /// <param name="CssFunctionRules">
 /// A list of CSS at-function rules referenced by styles of this node.
 /// </param>
-public sealed record GetMatchedStylesForNodeResult(CSSStyle? InlineStyle, CSSStyle? AttributesStyle, IReadOnlyList<RuleMatch>? MatchedCSSRules, IReadOnlyList<PseudoElementMatches>? PseudoElements, IReadOnlyList<InheritedStyleEntry>? Inherited, IReadOnlyList<InheritedPseudoElementMatches>? InheritedPseudoElements, IReadOnlyList<CSSKeyframesRule>? CssKeyframesRules, IReadOnlyList<CSSPositionTryRule>? CssPositionTryRules, long? ActivePositionFallbackIndex, IReadOnlyList<CSSPropertyRule>? CssPropertyRules, IReadOnlyList<CSSPropertyRegistration>? CssPropertyRegistrations, CSSFontPaletteValuesRule? CssFontPaletteValuesRule, DOM.NodeId? ParentLayoutNodeId, IReadOnlyList<CSSFunctionRule>? CssFunctionRules) : EmptyResult;
+public sealed record GetMatchedStylesForNodeResult(CSSStyle? InlineStyle, CSSStyle? AttributesStyle, IReadOnlyList<RuleMatch>? MatchedCSSRules, IReadOnlyList<PseudoElementMatches>? PseudoElements, IReadOnlyList<InheritedStyleEntry>? Inherited, IReadOnlyList<InheritedPseudoElementMatches>? InheritedPseudoElements, IReadOnlyList<CSSKeyframesRule>? CssKeyframesRules, IReadOnlyList<CSSPositionTryRule>? CssPositionTryRules, long? ActivePositionFallbackIndex, IReadOnlyList<CSSPropertyRule>? CssPropertyRules, IReadOnlyList<CSSPropertyRegistration>? CssPropertyRegistrations, IReadOnlyList<CSSAtRule>? CssAtRules, DOM.NodeId? ParentLayoutNodeId, IReadOnlyList<CSSFunctionRule>? CssFunctionRules) : EmptyResult;
+
+
+internal sealed record GetEnvironmentVariablesCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="CSSDomain.GetEnvironmentVariablesAsync"/>.
+/// </summary>
+public sealed record GetEnvironmentVariablesCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="EnvironmentVariables">
+/// </param>
+public sealed record GetEnvironmentVariablesResult(global::System.Text.Json.JsonElement EnvironmentVariables) : EmptyResult;
 
 
 internal sealed record GetMediaQueriesCommandParameters() : Parameters;
@@ -1285,7 +1376,7 @@ public sealed record GetPlatformFontsForNodeCommandOptions : CdpCommandOptions
 public sealed record GetPlatformFontsForNodeResult(IReadOnlyList<PlatformFontUsage> Fonts) : EmptyResult;
 
 
-internal sealed record GetStyleSheetTextCommandParameters(StyleSheetId StyleSheetId) : Parameters;
+internal sealed record GetStyleSheetTextCommandParameters(DOM.StyleSheetId StyleSheetId) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.GetStyleSheetTextAsync"/>.
@@ -1318,7 +1409,7 @@ public sealed record GetLayersForNodeCommandOptions : CdpCommandOptions
 public sealed record GetLayersForNodeResult(CSSLayerData RootLayer) : EmptyResult;
 
 
-internal sealed record GetLocationForSelectorCommandParameters(StyleSheetId StyleSheetId, string SelectorText) : Parameters;
+internal sealed record GetLocationForSelectorCommandParameters(DOM.StyleSheetId StyleSheetId, string SelectorText) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.GetLocationForSelectorAsync"/>.
@@ -1396,7 +1487,7 @@ public sealed record SetEffectivePropertyValueForNodeCommandOptions : CdpCommand
 public sealed record SetEffectivePropertyValueForNodeResult() : EmptyResult;
 
 
-internal sealed record SetPropertyRulePropertyNameCommandParameters(StyleSheetId StyleSheetId, SourceRange Range, string PropertyName) : Parameters;
+internal sealed record SetPropertyRulePropertyNameCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string PropertyName) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetPropertyRulePropertyNameAsync"/>.
@@ -1413,7 +1504,7 @@ public sealed record SetPropertyRulePropertyNameCommandOptions : CdpCommandOptio
 public sealed record SetPropertyRulePropertyNameResult(Value PropertyName) : EmptyResult;
 
 
-internal sealed record SetKeyframeKeyCommandParameters(StyleSheetId StyleSheetId, SourceRange Range, string KeyText) : Parameters;
+internal sealed record SetKeyframeKeyCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string KeyText) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetKeyframeKeyAsync"/>.
@@ -1430,7 +1521,7 @@ public sealed record SetKeyframeKeyCommandOptions : CdpCommandOptions
 public sealed record SetKeyframeKeyResult(Value KeyText) : EmptyResult;
 
 
-internal sealed record SetMediaTextCommandParameters(StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
+internal sealed record SetMediaTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetMediaTextAsync"/>.
@@ -1447,7 +1538,7 @@ public sealed record SetMediaTextCommandOptions : CdpCommandOptions
 public sealed record SetMediaTextResult(CSSMedia Media) : EmptyResult;
 
 
-internal sealed record SetContainerQueryTextCommandParameters(StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
+internal sealed record SetContainerQueryTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetContainerQueryTextAsync"/>.
@@ -1464,7 +1555,24 @@ public sealed record SetContainerQueryTextCommandOptions : CdpCommandOptions
 public sealed record SetContainerQueryTextResult(CSSContainerQuery ContainerQuery) : EmptyResult;
 
 
-internal sealed record SetSupportsTextCommandParameters(StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
+internal sealed record SetContainerQueryConditionTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="CSSDomain.SetContainerQueryConditionTextAsync"/>.
+/// </summary>
+public sealed record SetContainerQueryConditionTextCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="ContainerQuery">
+/// The resulting CSS container query rule after modification.
+/// </param>
+public sealed record SetContainerQueryConditionTextResult(CSSContainerQuery ContainerQuery) : EmptyResult;
+
+
+internal sealed record SetSupportsTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetSupportsTextAsync"/>.
@@ -1481,7 +1589,24 @@ public sealed record SetSupportsTextCommandOptions : CdpCommandOptions
 public sealed record SetSupportsTextResult(CSSSupports Supports) : EmptyResult;
 
 
-internal sealed record SetScopeTextCommandParameters(StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
+internal sealed record SetNavigationTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="CSSDomain.SetNavigationTextAsync"/>.
+/// </summary>
+public sealed record SetNavigationTextCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Navigation">
+/// The resulting CSS Navigation rule after modification.
+/// </param>
+public sealed record SetNavigationTextResult(CSSNavigation Navigation) : EmptyResult;
+
+
+internal sealed record SetScopeTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetScopeTextAsync"/>.
@@ -1498,7 +1623,7 @@ public sealed record SetScopeTextCommandOptions : CdpCommandOptions
 public sealed record SetScopeTextResult(CSSScope Scope) : EmptyResult;
 
 
-internal sealed record SetRuleSelectorCommandParameters(StyleSheetId StyleSheetId, SourceRange Range, string Selector) : Parameters;
+internal sealed record SetRuleSelectorCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Selector) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetRuleSelectorAsync"/>.
@@ -1515,7 +1640,7 @@ public sealed record SetRuleSelectorCommandOptions : CdpCommandOptions
 public sealed record SetRuleSelectorResult(SelectorList SelectorList) : EmptyResult;
 
 
-internal sealed record SetStyleSheetTextCommandParameters(StyleSheetId StyleSheetId, string Text) : Parameters;
+internal sealed record SetStyleSheetTextCommandParameters(DOM.StyleSheetId StyleSheetId, string Text) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetStyleSheetTextAsync"/>.
@@ -1646,7 +1771,7 @@ public sealed record StyleSheetAddedEventArgs(CSSStyleSheetHeader Header) : Open
 /// </summary>
 /// <param name="StyleSheetId">
 /// </param>
-public sealed record StyleSheetChangedEventArgs(StyleSheetId StyleSheetId) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record StyleSheetChangedEventArgs(DOM.StyleSheetId StyleSheetId) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired whenever an active document stylesheet is removed.
@@ -1654,7 +1779,7 @@ public sealed record StyleSheetChangedEventArgs(StyleSheetId StyleSheetId) : Ope
 /// <param name="StyleSheetId">
 /// Identifier of the removed stylesheet.
 /// </param>
-public sealed record StyleSheetRemovedEventArgs(StyleSheetId StyleSheetId) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record StyleSheetRemovedEventArgs(DOM.StyleSheetId StyleSheetId) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>
@@ -1662,14 +1787,6 @@ public sealed record StyleSheetRemovedEventArgs(StyleSheetId StyleSheetId) : Ope
 /// The node id that has updated computed styles.
 /// </param>
 public sealed record ComputedStyleUpdatedEventArgs(DOM.NodeId NodeId) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<StyleSheetId>))]
-public record StyleSheetId : IStringRemoteId
-{
-    string IStringRemoteId.Id { get; init; } = null!;
-}
 
 /// <summary>
 /// Stylesheet type: "injected" for stylesheets injected via extension, "user-agent" for user-agent
@@ -1801,6 +1918,25 @@ public sealed record Value(string Text)
 }
 
 /// <summary>
+/// Contribution of an individual simple selector to specificity.
+/// </summary>
+/// <param name="Text">
+/// The simple selector text that contributes to specificity.
+/// </param>
+/// <param name="A">
+/// The a component contribution.
+/// </param>
+/// <param name="B">
+/// The b component contribution.
+/// </param>
+/// <param name="C">
+/// The c component contribution.
+/// </param>
+public sealed record SpecificityComponent(string Text, long A, long B, long C)
+{
+}
+
+/// <summary>
 /// Specificity:
 /// https://drafts.csswg.org/selectors/#specificity-rules
 /// </summary>
@@ -1816,6 +1952,10 @@ public sealed record Value(string Text)
 /// </param>
 public sealed record Specificity(long A, long B, long C)
 {
+    /// <summary>
+    /// Per-simple-selector contributions used to explain this specificity.
+    /// </summary>
+    public IReadOnlyList<SpecificityComponent>? Components { get; init; }
 }
 
 /// <summary>
@@ -1883,7 +2023,7 @@ public sealed record SelectorList(IReadOnlyList<Value> Selectors, string Text)
 /// <param name="EndColumn">
 /// Column offset of the end of the stylesheet within the resource (zero based).
 /// </param>
-public sealed record CSSStyleSheetHeader(StyleSheetId StyleSheetId, Page.FrameId FrameId, string SourceURL, StyleSheetOrigin Origin, string Title, bool Disabled, bool IsInline, bool IsMutable, bool IsConstructed, double StartLine, double StartColumn, double Length, double EndLine, double EndColumn)
+public sealed record CSSStyleSheetHeader(DOM.StyleSheetId StyleSheetId, Page.FrameId FrameId, string SourceURL, StyleSheetOrigin Origin, string Title, bool Disabled, bool IsInline, bool IsMutable, bool IsConstructed, double StartLine, double StartColumn, double Length, double EndLine, double EndColumn)
 {
     /// <summary>
     /// URL of source map associated with the stylesheet (if any).
@@ -1924,12 +2064,17 @@ public sealed record CSSRule(SelectorList SelectorList, StyleSheetOrigin Origin,
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 
     /// <summary>
     /// Array of selectors from ancestor style rules, sorted by distance from the current rule.
     /// </summary>
     public IReadOnlyList<string>? NestingSelectors { get; init; }
+
+    /// <summary>
+    /// The BackendNodeId of the DOM node that constitutes the origin tree scope of this rule.
+    /// </summary>
+    public DOM.BackendNodeId? OriginTreeScopeNodeId { get; init; }
 
     /// <summary>
     /// Media list array (for rules involving media queries). The array enumerates media queries
@@ -1971,6 +2116,12 @@ public sealed record CSSRule(SelectorList SelectorList, StyleSheetOrigin Origin,
     /// The array enumerates @starting-style at-rules starting with the innermost one, going outwards.
     /// </summary>
     public IReadOnlyList<CSSStartingStyle>? StartingStyles { get; init; }
+
+    /// <summary>
+    /// @navigation CSS at-rule array.
+    /// The array enumerates @navigation at-rules starting with the innermost one, going outwards.
+    /// </summary>
+    public IReadOnlyList<CSSNavigation>? Navigations { get; init; }
 }
 
 /// <summary>
@@ -2008,6 +2159,10 @@ public enum CSSRuleType
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StartingStyleRule")]
     StartingStyleRule,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationRule")]
+    NavigationRule,
 }
 
 /// <summary>
@@ -2026,7 +2181,7 @@ public enum CSSRuleType
 /// <param name="Used">
 /// Indicates whether the rule was actually used by some element in the page.
 /// </param>
-public sealed record RuleUsage(StyleSheetId StyleSheetId, double StartOffset, double EndOffset, bool Used)
+public sealed record RuleUsage(DOM.StyleSheetId StyleSheetId, double StartOffset, double EndOffset, bool Used)
 {
 }
 
@@ -2078,6 +2233,17 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 }
 
 /// <summary>
+/// </summary>
+/// <param name="IsAppearanceBase">
+/// Returns whether or not this node is being rendered with base appearance,
+/// which happens when it has its appearance property set to base/base-select
+/// or it is in the subtree of an element being rendered with base appearance.
+/// </param>
+public sealed record ComputedStyleExtraFields(bool IsAppearanceBase)
+{
+}
+
+/// <summary>
 /// CSS style representation.
 /// </summary>
 /// <param name="CssProperties">
@@ -2092,7 +2258,7 @@ public sealed record CSSStyle(IReadOnlyList<CSSProperty> CssProperties, IReadOnl
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 
     /// <summary>
     /// Style declaration text (if available).
@@ -2181,7 +2347,7 @@ public sealed record CSSMedia(string Text, string Source)
     /// <summary>
     /// Identifier of the stylesheet containing this object (if exists).
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 
     /// <summary>
     /// Array of media queries.
@@ -2232,8 +2398,14 @@ public sealed record MediaQueryExpression(double Value, string Unit, string Feat
 /// </summary>
 /// <param name="Text">
 /// Container query text.
+/// Contains the query part without the container name for a single query.
+/// Deprecated in favor of conditionText which contains the full prelude
+/// after @container.
 /// </param>
-public sealed record CSSContainerQuery(string Text)
+/// <param name="ConditionText">
+/// CSSContainerRule.conditionText
+/// </param>
+public sealed record CSSContainerQuery(string Text, string ConditionText)
 {
     /// <summary>
     /// The associated rule header range in the enclosing stylesheet (if
@@ -2244,7 +2416,7 @@ public sealed record CSSContainerQuery(string Text)
     /// <summary>
     /// Identifier of the stylesheet containing this object (if exists).
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 
     /// <summary>
     /// Optional name for the container.
@@ -2265,6 +2437,11 @@ public sealed record CSSContainerQuery(string Text)
     /// true if the query contains scroll-state() queries.
     /// </summary>
     public bool? QueriesScrollState { get; init; }
+
+    /// <summary>
+    /// true if the query contains anchored() queries.
+    /// </summary>
+    public bool? QueriesAnchored { get; init; }
 }
 
 /// <summary>
@@ -2287,7 +2464,32 @@ public sealed record CSSSupports(string Text, bool Active)
     /// <summary>
     /// Identifier of the stylesheet containing this object (if exists).
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
+}
+
+/// <summary>
+/// CSS Navigation at-rule descriptor.
+/// </summary>
+/// <param name="Text">
+/// Navigation rule text.
+/// </param>
+public sealed record CSSNavigation(string Text)
+{
+    /// <summary>
+    /// Whether the navigation condition is satisfied.
+    /// </summary>
+    public bool? Active { get; init; }
+
+    /// <summary>
+    /// The associated rule header range in the enclosing stylesheet (if
+    /// available).
+    /// </summary>
+    public SourceRange? Range { get; init; }
+
+    /// <summary>
+    /// Identifier of the stylesheet containing this object (if exists).
+    /// </summary>
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2307,7 +2509,7 @@ public sealed record CSSScope(string Text)
     /// <summary>
     /// Identifier of the stylesheet containing this object (if exists).
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2327,7 +2529,7 @@ public sealed record CSSLayer(string Text)
     /// <summary>
     /// Identifier of the stylesheet containing this object (if exists).
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2344,7 +2546,7 @@ public sealed record CSSStartingStyle()
     /// <summary>
     /// Identifier of the stylesheet containing this object (if exists).
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2460,7 +2662,7 @@ public sealed record CSSTryRule(StyleSheetOrigin Origin, CSSStyle Style)
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2483,7 +2685,7 @@ public sealed record CSSPositionTryRule(Value Name, StyleSheetOrigin Origin, CSS
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2516,24 +2718,35 @@ public sealed record CSSPropertyRegistration(string PropertyName, bool Inherits,
 }
 
 /// <summary>
-/// CSS font-palette-values rule representation.
+/// CSS generic @rule representation.
 /// </summary>
+/// <param name="Type">
+/// Type of at-rule.
+/// </param>
 /// <param name="Origin">
 /// Parent stylesheet's origin.
-/// </param>
-/// <param name="FontPaletteName">
-/// Associated font palette name.
 /// </param>
 /// <param name="Style">
 /// Associated style declaration.
 /// </param>
-public sealed record CSSFontPaletteValuesRule(StyleSheetOrigin Origin, Value FontPaletteName, CSSStyle Style)
+public sealed record CSSAtRule(string Type, StyleSheetOrigin Origin, CSSStyle Style)
 {
+    /// <summary>
+    /// Subsection of font-feature-values, if this is a subsection.
+    /// </summary>
+    public string? Subsection { get; init; }
+
+    /// <summary>
+    /// LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)
+    /// Associated name, if applicable.
+    /// </summary>
+    public Value? Name { get; init; }
+
     /// <summary>
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2554,7 +2767,7 @@ public sealed record CSSPropertyRule(StyleSheetOrigin Origin, Value PropertyName
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2595,6 +2808,11 @@ public sealed record CSSFunctionConditionNode(IReadOnlyList<CSSFunctionNode> Chi
     /// @supports CSS at-rule condition. Only one type of condition should be set.
     /// </summary>
     public CSSSupports? Supports { get; init; }
+
+    /// <summary>
+    /// @navigation condition. Only one type of condition should be set.
+    /// </summary>
+    public CSSNavigation? Navigation { get; init; }
 }
 
 /// <summary>
@@ -2634,7 +2852,12 @@ public sealed record CSSFunctionRule(Value Name, StyleSheetOrigin Origin, IReadO
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
+
+    /// <summary>
+    /// The BackendNodeId of the DOM node that constitutes the origin tree scope of this rule.
+    /// </summary>
+    public DOM.BackendNodeId? OriginTreeScopeNodeId { get; init; }
 }
 
 /// <summary>
@@ -2655,7 +2878,7 @@ public sealed record CSSKeyframeRule(StyleSheetOrigin Origin, Value KeyText, CSS
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
     /// stylesheet rules) this rule came from.
     /// </summary>
-    public StyleSheetId? StyleSheetId { get; init; }
+    public DOM.StyleSheetId? StyleSheetId { get; init; }
 }
 
 /// <summary>
@@ -2670,7 +2893,7 @@ public sealed record CSSKeyframeRule(StyleSheetOrigin Origin, Value KeyText, CSS
 /// <param name="Text">
 /// New style text.
 /// </param>
-public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange Range, string Text)
+public sealed record StyleDeclarationEdit(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text)
 {
 }
 
@@ -2702,6 +2925,8 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(GetAnimatedStylesForNodeResult), TypeInfoPropertyName = "GetAnimatedStylesForNodeResult")]
 [JsonSerializable(typeof(GetMatchedStylesForNodeCommandParameters), TypeInfoPropertyName = "GetMatchedStylesForNodeCommandParameters")]
 [JsonSerializable(typeof(GetMatchedStylesForNodeResult), TypeInfoPropertyName = "GetMatchedStylesForNodeResult")]
+[JsonSerializable(typeof(GetEnvironmentVariablesCommandParameters), TypeInfoPropertyName = "GetEnvironmentVariablesCommandParameters")]
+[JsonSerializable(typeof(GetEnvironmentVariablesResult), TypeInfoPropertyName = "GetEnvironmentVariablesResult")]
 [JsonSerializable(typeof(GetMediaQueriesCommandParameters), TypeInfoPropertyName = "GetMediaQueriesCommandParameters")]
 [JsonSerializable(typeof(GetMediaQueriesResult), TypeInfoPropertyName = "GetMediaQueriesResult")]
 [JsonSerializable(typeof(GetPlatformFontsForNodeCommandParameters), TypeInfoPropertyName = "GetPlatformFontsForNodeCommandParameters")]
@@ -2728,8 +2953,12 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(SetMediaTextResult), TypeInfoPropertyName = "SetMediaTextResult")]
 [JsonSerializable(typeof(SetContainerQueryTextCommandParameters), TypeInfoPropertyName = "SetContainerQueryTextCommandParameters")]
 [JsonSerializable(typeof(SetContainerQueryTextResult), TypeInfoPropertyName = "SetContainerQueryTextResult")]
+[JsonSerializable(typeof(SetContainerQueryConditionTextCommandParameters), TypeInfoPropertyName = "SetContainerQueryConditionTextCommandParameters")]
+[JsonSerializable(typeof(SetContainerQueryConditionTextResult), TypeInfoPropertyName = "SetContainerQueryConditionTextResult")]
 [JsonSerializable(typeof(SetSupportsTextCommandParameters), TypeInfoPropertyName = "SetSupportsTextCommandParameters")]
 [JsonSerializable(typeof(SetSupportsTextResult), TypeInfoPropertyName = "SetSupportsTextResult")]
+[JsonSerializable(typeof(SetNavigationTextCommandParameters), TypeInfoPropertyName = "SetNavigationTextCommandParameters")]
+[JsonSerializable(typeof(SetNavigationTextResult), TypeInfoPropertyName = "SetNavigationTextResult")]
 [JsonSerializable(typeof(SetScopeTextCommandParameters), TypeInfoPropertyName = "SetScopeTextCommandParameters")]
 [JsonSerializable(typeof(SetScopeTextResult), TypeInfoPropertyName = "SetScopeTextResult")]
 [JsonSerializable(typeof(SetRuleSelectorCommandParameters), TypeInfoPropertyName = "SetRuleSelectorCommandParameters")]
@@ -2752,7 +2981,6 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(CdpEventArgs<StyleSheetChangedEventArgs>), TypeInfoPropertyName = "StyleSheetChangedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StyleSheetRemovedEventArgs>), TypeInfoPropertyName = "StyleSheetRemovedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ComputedStyleUpdatedEventArgs>), TypeInfoPropertyName = "ComputedStyleUpdatedCdpEventArgs")]
-[JsonSerializable(typeof(StyleSheetId), TypeInfoPropertyName = "CSSStyleSheetId")]
 [JsonSerializable(typeof(StyleSheetOrigin), TypeInfoPropertyName = "CSSStyleSheetOrigin")]
 [JsonSerializable(typeof(PseudoElementMatches), TypeInfoPropertyName = "CSSPseudoElementMatches")]
 [JsonSerializable(typeof(CSSAnimationStyle), TypeInfoPropertyName = "CSSCSSAnimationStyle")]
@@ -2761,6 +2989,7 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(InheritedPseudoElementMatches), TypeInfoPropertyName = "CSSInheritedPseudoElementMatches")]
 [JsonSerializable(typeof(RuleMatch), TypeInfoPropertyName = "CSSRuleMatch")]
 [JsonSerializable(typeof(Value), TypeInfoPropertyName = "CSSValue")]
+[JsonSerializable(typeof(SpecificityComponent), TypeInfoPropertyName = "CSSSpecificityComponent")]
 [JsonSerializable(typeof(Specificity), TypeInfoPropertyName = "CSSSpecificity")]
 [JsonSerializable(typeof(SelectorList), TypeInfoPropertyName = "CSSSelectorList")]
 [JsonSerializable(typeof(CSSStyleSheetHeader), TypeInfoPropertyName = "CSSCSSStyleSheetHeader")]
@@ -2770,6 +2999,7 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(SourceRange), TypeInfoPropertyName = "CSSSourceRange")]
 [JsonSerializable(typeof(ShorthandEntry), TypeInfoPropertyName = "CSSShorthandEntry")]
 [JsonSerializable(typeof(CSSComputedStyleProperty), TypeInfoPropertyName = "CSSCSSComputedStyleProperty")]
+[JsonSerializable(typeof(ComputedStyleExtraFields), TypeInfoPropertyName = "CSSComputedStyleExtraFields")]
 [JsonSerializable(typeof(CSSStyle), TypeInfoPropertyName = "CSSCSSStyle")]
 [JsonSerializable(typeof(CSSProperty), TypeInfoPropertyName = "CSSCSSProperty")]
 [JsonSerializable(typeof(CSSMedia), TypeInfoPropertyName = "CSSCSSMedia")]
@@ -2777,6 +3007,7 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(MediaQueryExpression), TypeInfoPropertyName = "CSSMediaQueryExpression")]
 [JsonSerializable(typeof(CSSContainerQuery), TypeInfoPropertyName = "CSSCSSContainerQuery")]
 [JsonSerializable(typeof(CSSSupports), TypeInfoPropertyName = "CSSCSSSupports")]
+[JsonSerializable(typeof(CSSNavigation), TypeInfoPropertyName = "CSSCSSNavigation")]
 [JsonSerializable(typeof(CSSScope), TypeInfoPropertyName = "CSSCSSScope")]
 [JsonSerializable(typeof(CSSLayer), TypeInfoPropertyName = "CSSCSSLayer")]
 [JsonSerializable(typeof(CSSStartingStyle), TypeInfoPropertyName = "CSSCSSStartingStyle")]
@@ -2788,7 +3019,7 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(CSSPositionTryRule), TypeInfoPropertyName = "CSSCSSPositionTryRule")]
 [JsonSerializable(typeof(CSSKeyframesRule), TypeInfoPropertyName = "CSSCSSKeyframesRule")]
 [JsonSerializable(typeof(CSSPropertyRegistration), TypeInfoPropertyName = "CSSCSSPropertyRegistration")]
-[JsonSerializable(typeof(CSSFontPaletteValuesRule), TypeInfoPropertyName = "CSSCSSFontPaletteValuesRule")]
+[JsonSerializable(typeof(CSSAtRule), TypeInfoPropertyName = "CSSCSSAtRule")]
 [JsonSerializable(typeof(CSSPropertyRule), TypeInfoPropertyName = "CSSCSSPropertyRule")]
 [JsonSerializable(typeof(CSSFunctionParameter), TypeInfoPropertyName = "CSSCSSFunctionParameter")]
 [JsonSerializable(typeof(CSSFunctionConditionNode), TypeInfoPropertyName = "CSSCSSFunctionConditionNode")]
@@ -2808,6 +3039,7 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSPositionTryRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSPositionTryRule")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSPropertyRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSPropertyRule")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSPropertyRegistration>), TypeInfoPropertyName = "IReadOnlyListCSSCSSPropertyRegistration")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSAtRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSAtRule")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSFunctionRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSFunctionRule")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSMedia>), TypeInfoPropertyName = "IReadOnlyListCSSCSSMedia")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlatformFontUsage>), TypeInfoPropertyName = "IReadOnlyListCSSPlatformFontUsage")]
@@ -2816,6 +3048,7 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<StyleDeclarationEdit>), TypeInfoPropertyName = "IReadOnlyListCSSStyleDeclarationEdit")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSStyle>), TypeInfoPropertyName = "IReadOnlyListCSSCSSStyle")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RuleUsage>), TypeInfoPropertyName = "IReadOnlyListCSSRuleUsage")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SpecificityComponent>), TypeInfoPropertyName = "IReadOnlyListCSSSpecificityComponent")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Value>), TypeInfoPropertyName = "IReadOnlyListCSSValue")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSContainerQuery>), TypeInfoPropertyName = "IReadOnlyListCSSCSSContainerQuery")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSSupports>), TypeInfoPropertyName = "IReadOnlyListCSSCSSSupports")]
@@ -2823,6 +3056,7 @@ public sealed record StyleDeclarationEdit(StyleSheetId StyleSheetId, SourceRange
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSScope>), TypeInfoPropertyName = "IReadOnlyListCSSCSSScope")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSRuleType>), TypeInfoPropertyName = "IReadOnlyListCSSCSSRuleType")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSStartingStyle>), TypeInfoPropertyName = "IReadOnlyListCSSCSSStartingStyle")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSNavigation>), TypeInfoPropertyName = "IReadOnlyListCSSCSSNavigation")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ShorthandEntry>), TypeInfoPropertyName = "IReadOnlyListCSSShorthandEntry")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<MediaQuery>), TypeInfoPropertyName = "IReadOnlyListCSSMediaQuery")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<MediaQueryExpression>), TypeInfoPropertyName = "IReadOnlyListCSSMediaQueryExpression")]

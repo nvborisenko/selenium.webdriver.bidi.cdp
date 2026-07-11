@@ -202,6 +202,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>Background</b> - Whether to create the target in background or foreground (false by default, not supported by headless shell).</description></item>
     /// <item><description><b>ForTab</b> - Whether to create the target of type "tab".</description></item>
     /// <item><description><b>Hidden</b> - Whether to create a hidden target. The hidden target is observable via protocol, but not present in the tab UI strip. Cannot be created with <b>forTab: true</b>, <b>newWindow: true</b> or <b>background: false</b>. The life-time of the tab is limited to the life-time of the session.</description></item>
+    /// <item><description><b>Focus</b> - If specified, determines whether the new target should be focused. By default, the focus behavior depends on the <b>background</b> parameter: - If <b>background</b> is false (default) and <b>focus</b> is omitted, the new target is focused and the browser window is brought to the foreground. - If <b>background</b> is false and <b>focus</b> is false, the target is opened but the browser window's focus remains unchanged (e.g., if the window was in the background, it stays there). - If <b>background</b> is true, setting <b>focus</b> to true is not supported and will result in an error.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="url">
@@ -218,7 +219,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </returns>
     public async Task<CreateTargetResult> CreateTargetAsync(string url, CreateTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new CreateTargetCommandParameters(Url: url, Left: options?.Left, Top: options?.Top, Width: options?.Width, Height: options?.Height, WindowState: options?.WindowState, BrowserContextId: options?.BrowserContextId, EnableBeginFrameControl: options?.EnableBeginFrameControl, NewWindow: options?.NewWindow, Background: options?.Background, ForTab: options?.ForTab, Hidden: options?.Hidden);
+        var @params = new CreateTargetCommandParameters(Url: url, Left: options?.Left, Top: options?.Top, Width: options?.Width, Height: options?.Height, WindowState: options?.WindowState, BrowserContextId: options?.BrowserContextId, EnableBeginFrameControl: options?.EnableBeginFrameControl, NewWindow: options?.NewWindow, Background: options?.Background, ForTab: options?.ForTab, Hidden: options?.Hidden, Focus: options?.Focus);
         return await ExecuteCommandAsync(CreateTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CreateTargetCommandParameters, CreateTargetResult> CreateTargetCommand = new("Target.createTarget", JsonContext.CreateTargetCommandParameters, JsonContext.CreateTargetResult);
@@ -483,6 +484,59 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     private static readonly CdpCommand<SetRemoteLocationsCommandParameters, SetRemoteLocationsResult> SetRemoteLocationsCommand = new("Target.setRemoteLocations", JsonContext.SetRemoteLocationsCommandParameters, JsonContext.SetRemoteLocationsResult);
 
     /// <summary>
+    /// Gets the targetId of the DevTools page target opened for the given target
+    /// (if any).
+    /// </summary>
+    /// <param name="targetId">
+    /// Page or tab target ID.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetDevToolsTargetCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetDevToolsTargetResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, GetDevToolsTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDevToolsTargetCommandParameters(TargetId: targetId);
+        return await ExecuteCommandAsync(GetDevToolsTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDevToolsTargetCommandParameters, GetDevToolsTargetResult> GetDevToolsTargetCommand = new("Target.getDevToolsTarget", JsonContext.GetDevToolsTargetCommandParameters, JsonContext.GetDevToolsTargetResult);
+
+    /// <summary>
+    /// Opens a DevTools window for the target.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>PanelId</b> - The id of the panel we want DevTools to open initially. Currently supported panels are elements, console, network, sources, resources, timeline, chrome-recorder, heap-profiler, lighthouse, and security.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="targetId">
+    /// This can be the page or tab target ID.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="OpenDevToolsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="OpenDevToolsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, OpenDevToolsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new OpenDevToolsCommandParameters(TargetId: targetId, PanelId: options?.PanelId);
+        return await ExecuteCommandAsync(OpenDevToolsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<OpenDevToolsCommandParameters, OpenDevToolsResult> OpenDevToolsCommand = new("Target.openDevTools", JsonContext.OpenDevToolsCommandParameters, JsonContext.OpenDevToolsResult);
+
+    /// <summary>
     /// Issued when attached to target because of auto-attach or <b>attachToTarget</b> command.
     /// </summary>
     /// <remarks>
@@ -711,10 +765,13 @@ public sealed record GetBrowserContextsCommandOptions : CdpCommandOptions
 /// <param name="BrowserContextIds">
 /// An array of browser context ids.
 /// </param>
-public sealed record GetBrowserContextsResult(IReadOnlyList<Browser.BrowserContextID> BrowserContextIds) : EmptyResult;
+/// <param name="DefaultBrowserContextId">
+/// The id of the default browser context if available.
+/// </param>
+public sealed record GetBrowserContextsResult(IReadOnlyList<Browser.BrowserContextID> BrowserContextIds, Browser.BrowserContextID? DefaultBrowserContextId) : EmptyResult;
 
 
-internal sealed record CreateTargetCommandParameters(string Url, long? Left, long? Top, long? Width, long? Height, WindowState? WindowState, Browser.BrowserContextID? BrowserContextId, bool? EnableBeginFrameControl, bool? NewWindow, bool? Background, bool? ForTab, bool? Hidden) : Parameters;
+internal sealed record CreateTargetCommandParameters(string Url, long? Left, long? Top, long? Width, long? Height, WindowState? WindowState, Browser.BrowserContextID? BrowserContextId, bool? EnableBeginFrameControl, bool? NewWindow, bool? Background, bool? ForTab, bool? Hidden, bool? Focus) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TargetDomain.CreateTargetAsync"/>.
@@ -780,6 +837,15 @@ public sealed record CreateTargetCommandOptions : CdpCommandOptions
     /// <b>background: false</b>. The life-time of the tab is limited to the life-time of the session.
     /// </summary>
     public bool? Hidden { get; init; }
+
+    /// <summary>
+    /// If specified, determines whether the new target should be focused.
+    /// By default, the focus behavior depends on the <b>background</b> parameter:
+    /// - If <b>background</b> is false (default) and <b>focus</b> is omitted, the new target is focused and the browser window is brought to the foreground.
+    /// - If <b>background</b> is false and <b>focus</b> is false, the target is opened but the browser window's focus remains unchanged (e.g., if the window was in the background, it stays there).
+    /// - If <b>background</b> is true, setting <b>focus</b> to true is not supported and will result in an error.
+    /// </summary>
+    public bool? Focus { get; init; }
 }
 
 /// <summary>
@@ -970,6 +1036,46 @@ public sealed record SetRemoteLocationsCommandOptions : CdpCommandOptions
 public sealed record SetRemoteLocationsResult() : EmptyResult;
 
 
+internal sealed record GetDevToolsTargetCommandParameters(TargetID TargetId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="TargetDomain.GetDevToolsTargetAsync"/>.
+/// </summary>
+public sealed record GetDevToolsTargetCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="TargetId">
+/// The targetId of DevTools page target if exists.
+/// </param>
+public sealed record GetDevToolsTargetResult(TargetID? TargetId) : EmptyResult;
+
+
+internal sealed record OpenDevToolsCommandParameters(TargetID TargetId, string? PanelId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="TargetDomain.OpenDevToolsAsync"/>.
+/// </summary>
+public sealed record OpenDevToolsCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// The id of the panel we want DevTools to open initially. Currently
+    /// supported panels are elements, console, network, sources, resources,
+    /// timeline, chrome-recorder, heap-profiler, lighthouse, and security.
+    /// </summary>
+    public string? PanelId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="TargetId">
+/// The targetId of DevTools page target.
+/// </param>
+public sealed record OpenDevToolsResult(TargetID TargetId) : EmptyResult;
+
+
 /// <summary>
 /// Issued when attached to target because of auto-attach or <b>attachToTarget</b> command.
 /// </summary>
@@ -1080,6 +1186,11 @@ public record SessionID : IStringRemoteId
 public sealed record TargetInfo(TargetID TargetId, string Type, string Title, string Url, bool Attached, bool CanAccessOpener)
 {
     /// <summary>
+    /// Id of the parent target, if any. For example, "iframe" target may have a "page" parent.
+    /// </summary>
+    public TargetID? ParentId { get; init; }
+
+    /// <summary>
     /// Opener target Id
     /// </summary>
     public TargetID? OpenerId { get; init; }
@@ -1090,6 +1201,12 @@ public sealed record TargetInfo(TargetID TargetId, string Type, string Title, st
     public Page.FrameId? OpenerFrameId { get; init; }
 
     /// <summary>
+    /// Id of the parent frame, present for "iframe" and "worker" targets. For nested workers,
+    /// this is the "ancestor" frame that created the first worker in the nested chain.
+    /// </summary>
+    public Page.FrameId? ParentFrameId { get; init; }
+
+    /// <summary>
     /// </summary>
     public Browser.BrowserContextID? BrowserContextId { get; init; }
 
@@ -1098,6 +1215,12 @@ public sealed record TargetInfo(TargetID TargetId, string Type, string Title, st
     /// the type of "page", this may be set to "prerender".
     /// </summary>
     public string? Subtype { get; init; }
+
+    /// <summary>
+    /// Embedder-specific target metadata. This is only set for targets of
+    /// type "tab".
+    /// </summary>
+    public global::System.Text.Json.JsonElement? EmbedderData { get; init; }
 }
 
 /// <summary>
@@ -1193,6 +1316,10 @@ public enum WindowState
 [JsonSerializable(typeof(SetDiscoverTargetsResult), TypeInfoPropertyName = "SetDiscoverTargetsResult")]
 [JsonSerializable(typeof(SetRemoteLocationsCommandParameters), TypeInfoPropertyName = "SetRemoteLocationsCommandParameters")]
 [JsonSerializable(typeof(SetRemoteLocationsResult), TypeInfoPropertyName = "SetRemoteLocationsResult")]
+[JsonSerializable(typeof(GetDevToolsTargetCommandParameters), TypeInfoPropertyName = "GetDevToolsTargetCommandParameters")]
+[JsonSerializable(typeof(GetDevToolsTargetResult), TypeInfoPropertyName = "GetDevToolsTargetResult")]
+[JsonSerializable(typeof(OpenDevToolsCommandParameters), TypeInfoPropertyName = "OpenDevToolsCommandParameters")]
+[JsonSerializable(typeof(OpenDevToolsResult), TypeInfoPropertyName = "OpenDevToolsResult")]
 [JsonSerializable(typeof(CdpEventArgs<AttachedToTargetEventArgs>), TypeInfoPropertyName = "AttachedToTargetCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DetachedFromTargetEventArgs>), TypeInfoPropertyName = "DetachedFromTargetCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ReceivedMessageFromTargetEventArgs>), TypeInfoPropertyName = "ReceivedMessageFromTargetCdpEventArgs")]

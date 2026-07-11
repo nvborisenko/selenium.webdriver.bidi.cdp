@@ -68,6 +68,10 @@ public sealed class InspectorDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// Fired when debugging target has reloaded after crash
     /// </summary>
     public IEventSource<TargetReloadedAfterCrashEventArgs> TargetReloadedAfterCrash => CreateCdpEventSource(InspectorDomainEvent.TargetReloadedAfterCrash);
+    /// <summary>
+    /// Fired on worker targets when main worker script and any imported scripts have been evaluated.
+    /// </summary>
+    public IEventSource<WorkerScriptLoadedEventArgs> WorkerScriptLoaded => CreateCdpEventSource(InspectorDomainEvent.WorkerScriptLoaded);
 }
 
 internal sealed record DisableCommandParameters() : Parameters;
@@ -116,6 +120,11 @@ public sealed record TargetCrashedEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
 /// </summary>
 public sealed record TargetReloadedAfterCrashEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
 
+/// <summary>
+/// Fired on worker targets when main worker script and any imported scripts have been evaluated.
+/// </summary>
+public sealed record WorkerScriptLoadedEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
+
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]
 [JsonSerializable(typeof(DisableResult), TypeInfoPropertyName = "DisableResult")]
 [JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]
@@ -123,6 +132,7 @@ public sealed record TargetReloadedAfterCrashEventArgs() : OpenQA.Selenium.BiDi.
 [JsonSerializable(typeof(CdpEventArgs<DetachedEventArgs>), TypeInfoPropertyName = "DetachedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<TargetCrashedEventArgs>), TypeInfoPropertyName = "TargetCrashedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<TargetReloadedAfterCrashEventArgs>), TypeInfoPropertyName = "TargetReloadedAfterCrashCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<WorkerScriptLoadedEventArgs>), TypeInfoPropertyName = "WorkerScriptLoadedCdpEventArgs")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
@@ -156,5 +166,13 @@ public static class InspectorDomainEvent
         EventDescriptor<CdpEventArgs<TargetReloadedAfterCrashEventArgs>>.Create(
             "goog:cdp.Inspector.targetReloadedAfterCrash",
             InspectorJsonSerializerContext.Default.TargetReloadedAfterCrashCdpEventArgs);
+
+    /// <summary>
+    /// Fired on worker targets when main worker script and any imported scripts have been evaluated.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<WorkerScriptLoadedEventArgs>> WorkerScriptLoaded { get; } =
+        EventDescriptor<CdpEventArgs<WorkerScriptLoadedEventArgs>>.Create(
+            "goog:cdp.Inspector.workerScriptLoaded",
+            InspectorJsonSerializerContext.Default.WorkerScriptLoadedCdpEventArgs);
 
 }

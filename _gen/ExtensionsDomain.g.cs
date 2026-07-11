@@ -14,12 +14,41 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     private static ExtensionsJsonSerializerContext JsonContext = ExtensionsJsonSerializerContext.Default;
 
     /// <summary>
+    /// Runs an extension default action.
+    /// </summary>
+    /// <param name="id">
+    /// Extension id.
+    /// </param>
+    /// <param name="targetId">
+    /// A tab target ID to trigger the default extension action on.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="TriggerActionCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="TriggerActionResult"/>.
+    /// </returns>
+    public async Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, TriggerActionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TriggerActionCommandParameters(Id: id, TargetId: targetId);
+        return await ExecuteCommandAsync(TriggerActionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TriggerActionCommandParameters, TriggerActionResult> TriggerActionCommand = new("Extensions.triggerAction", JsonContext.TriggerActionCommandParameters, JsonContext.TriggerActionResult);
+
+    /// <summary>
     /// Installs an unpacked extension from the filesystem similar to
     /// --load-extension CLI flags. Returns extension ID once the extension
-    /// has been installed. Available if the client is connected using the
-    /// --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
-    /// flag is set.
+    /// has been installed.
     /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>EnableInIncognito</b> - Enable the extension in incognito</description></item>
+    /// </list>
+    /// </remarks>
     /// <param name="path">
     /// Absolute file path.
     /// </param>
@@ -34,15 +63,32 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// </returns>
     public async Task<LoadUnpackedResult> LoadUnpackedAsync(string path, LoadUnpackedCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new LoadUnpackedCommandParameters(Path: path);
+        var @params = new LoadUnpackedCommandParameters(Path: path, EnableInIncognito: options?.EnableInIncognito);
         return await ExecuteCommandAsync(LoadUnpackedCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<LoadUnpackedCommandParameters, LoadUnpackedResult> LoadUnpackedCommand = new("Extensions.loadUnpacked", JsonContext.LoadUnpackedCommandParameters, JsonContext.LoadUnpackedResult);
 
     /// <summary>
+    /// Gets a list of all unpacked extensions.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetExtensionsCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetExtensionsResult"/>.
+    /// </returns>
+    public async Task<GetExtensionsResult> GetExtensionsAsync(GetExtensionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetExtensionsCommandParameters();
+        return await ExecuteCommandAsync(GetExtensionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetExtensionsCommandParameters, GetExtensionsResult> GetExtensionsCommand = new("Extensions.getExtensions", JsonContext.GetExtensionsCommandParameters, JsonContext.GetExtensionsResult);
+
+    /// <summary>
     /// Uninstalls an unpacked extension (others not supported) from the profile.
-    /// Available if the client is connected using the --remote-debugging-pipe flag
-    /// and the --enable-unsafe-extension-debugging.
     /// </summary>
     /// <param name="id">
     /// Extension id.
@@ -179,13 +225,31 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
 
 }
 
-internal sealed record LoadUnpackedCommandParameters(string Path) : Parameters;
+internal sealed record TriggerActionCommandParameters(string Id, string TargetId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="ExtensionsDomain.TriggerActionAsync"/>.
+/// </summary>
+public sealed record TriggerActionCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record TriggerActionResult() : EmptyResult;
+
+
+internal sealed record LoadUnpackedCommandParameters(string Path, bool? EnableInIncognito) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="ExtensionsDomain.LoadUnpackedAsync"/>.
 /// </summary>
 public sealed record LoadUnpackedCommandOptions : CdpCommandOptions
 {
+    /// <summary>
+    /// Enable the extension in incognito
+    /// </summary>
+    public bool? EnableInIncognito { get; init; }
 }
 
 /// <summary>
@@ -194,6 +258,22 @@ public sealed record LoadUnpackedCommandOptions : CdpCommandOptions
 /// Extension id.
 /// </param>
 public sealed record LoadUnpackedResult(string Id) : EmptyResult;
+
+
+internal sealed record GetExtensionsCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="ExtensionsDomain.GetExtensionsAsync"/>.
+/// </summary>
+public sealed record GetExtensionsCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Extensions">
+/// </param>
+public sealed record GetExtensionsResult(IReadOnlyList<ExtensionInfo> Extensions) : EmptyResult;
 
 
 internal sealed record UninstallCommandParameters(string Id) : Parameters;
@@ -296,8 +376,34 @@ public enum StorageArea
     Managed,
 }
 
+/// <summary>
+/// Detailed information about an extension.
+/// </summary>
+/// <param name="Id">
+/// Extension id.
+/// </param>
+/// <param name="Name">
+/// Extension name.
+/// </param>
+/// <param name="Version">
+/// Extension version.
+/// </param>
+/// <param name="Path">
+/// The path from which the extension was loaded.
+/// </param>
+/// <param name="Enabled">
+/// Extension enabled status.
+/// </param>
+public sealed record ExtensionInfo(string Id, string Name, string Version, string Path, bool Enabled)
+{
+}
+
+[JsonSerializable(typeof(TriggerActionCommandParameters), TypeInfoPropertyName = "TriggerActionCommandParameters")]
+[JsonSerializable(typeof(TriggerActionResult), TypeInfoPropertyName = "TriggerActionResult")]
 [JsonSerializable(typeof(LoadUnpackedCommandParameters), TypeInfoPropertyName = "LoadUnpackedCommandParameters")]
 [JsonSerializable(typeof(LoadUnpackedResult), TypeInfoPropertyName = "LoadUnpackedResult")]
+[JsonSerializable(typeof(GetExtensionsCommandParameters), TypeInfoPropertyName = "GetExtensionsCommandParameters")]
+[JsonSerializable(typeof(GetExtensionsResult), TypeInfoPropertyName = "GetExtensionsResult")]
 [JsonSerializable(typeof(UninstallCommandParameters), TypeInfoPropertyName = "UninstallCommandParameters")]
 [JsonSerializable(typeof(UninstallResult), TypeInfoPropertyName = "UninstallResult")]
 [JsonSerializable(typeof(GetStorageItemsCommandParameters), TypeInfoPropertyName = "GetStorageItemsCommandParameters")]
@@ -309,6 +415,8 @@ public enum StorageArea
 [JsonSerializable(typeof(SetStorageItemsCommandParameters), TypeInfoPropertyName = "SetStorageItemsCommandParameters")]
 [JsonSerializable(typeof(SetStorageItemsResult), TypeInfoPropertyName = "SetStorageItemsResult")]
 [JsonSerializable(typeof(StorageArea), TypeInfoPropertyName = "ExtensionsStorageArea")]
+[JsonSerializable(typeof(ExtensionInfo), TypeInfoPropertyName = "ExtensionsExtensionInfo")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ExtensionInfo>), TypeInfoPropertyName = "IReadOnlyListExtensionsExtensionInfo")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -228,6 +228,8 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Viewport</b> - If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.</description></item>
     /// <item><description><b>DisplayFeature</b> - If set, the display feature of a multi-segment screen. If not set, multi-segment support is turned-off. Deprecated, use Emulation.setDisplayFeaturesOverride.</description></item>
     /// <item><description><b>DevicePosture</b> - If set, the posture of a foldable device. If not set the posture is set to continuous. Deprecated, use Emulation.setDevicePostureOverride.</description></item>
+    /// <item><description><b>ScrollbarType</b> - Scrollbar type. Default: <b>default</b>.</description></item>
+    /// <item><description><b>ScreenOrientationLockEmulation</b> - If set to true, enables screen orientation lock emulation, which intercepts screen.orientation.lock() calls from the page and reports orientation changes via screenOrientationLockChanged events. This is useful for emulating mobile device orientation lock behavior in responsive design mode.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="width">
@@ -254,7 +256,7 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// </returns>
     public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, SetDeviceMetricsOverrideCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: options?.Scale, ScreenWidth: options?.ScreenWidth, ScreenHeight: options?.ScreenHeight, PositionX: options?.PositionX, PositionY: options?.PositionY, DontSetVisibleSize: options?.DontSetVisibleSize, ScreenOrientation: options?.ScreenOrientation, Viewport: options?.Viewport, DisplayFeature: options?.DisplayFeature, DevicePosture: options?.DevicePosture);
+        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: options?.Scale, ScreenWidth: options?.ScreenWidth, ScreenHeight: options?.ScreenHeight, PositionX: options?.PositionX, PositionY: options?.PositionY, DontSetVisibleSize: options?.DontSetVisibleSize, ScreenOrientation: options?.ScreenOrientation, Viewport: options?.Viewport, DisplayFeature: options?.DisplayFeature, DevicePosture: options?.DevicePosture, ScrollbarType: options?.ScrollbarType, ScreenOrientationLockEmulation: options?.ScreenOrientationLockEmulation);
         return await ExecuteCommandAsync(SetDeviceMetricsOverrideCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideCommand = new("Emulation.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
@@ -643,7 +645,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly CdpCommand<SetPressureSourceOverrideEnabledCommandParameters, SetPressureSourceOverrideEnabledResult> SetPressureSourceOverrideEnabledCommand = new("Emulation.setPressureSourceOverrideEnabled", JsonContext.SetPressureSourceOverrideEnabledCommandParameters, JsonContext.SetPressureSourceOverrideEnabledResult);
 
     /// <summary>
-    /// TODO: OBSOLETE: To remove when setPressureDataOverride is merged.
     /// Provides a given pressure state that will be processed and eventually be
     /// delivered to PressureObserver users. |source| must have been previously
     /// overridden by setPressureSourceOverrideEnabled.
@@ -668,38 +669,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
         return await ExecuteCommandAsync(SetPressureStateOverrideCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetPressureStateOverrideCommandParameters, SetPressureStateOverrideResult> SetPressureStateOverrideCommand = new("Emulation.setPressureStateOverride", JsonContext.SetPressureStateOverrideCommandParameters, JsonContext.SetPressureStateOverrideResult);
-
-    /// <summary>
-    /// Provides a given pressure data set that will be processed and eventually be
-    /// delivered to PressureObserver users. |source| must have been previously
-    /// overridden by setPressureSourceOverrideEnabled.
-    /// </summary>
-    /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
-    /// <list type="bullet">
-    /// <item><description><b>OwnContributionEstimate</b></description></item>
-    /// </list>
-    /// </remarks>
-    /// <param name="source">
-    /// </param>
-    /// <param name="state">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetPressureDataOverrideCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetPressureDataOverrideResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPressureDataOverrideResult> SetPressureDataOverrideAsync(PressureSource source, PressureState state, SetPressureDataOverrideCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPressureDataOverrideCommandParameters(Source: source, State: state, OwnContributionEstimate: options?.OwnContributionEstimate);
-        return await ExecuteCommandAsync(SetPressureDataOverrideCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPressureDataOverrideCommandParameters, SetPressureDataOverrideResult> SetPressureDataOverrideCommand = new("Emulation.setPressureDataOverride", JsonContext.SetPressureDataOverrideCommandParameters, JsonContext.SetPressureDataOverrideResult);
 
     /// <summary>
     /// Overrides the Idle state.
@@ -975,6 +944,32 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly CdpCommand<SetDisabledImageTypesCommandParameters, SetDisabledImageTypesResult> SetDisabledImageTypesCommand = new("Emulation.setDisabledImageTypes", JsonContext.SetDisabledImageTypesCommandParameters, JsonContext.SetDisabledImageTypesResult);
 
     /// <summary>
+    /// Override the value of navigator.connection.saveData
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>DataSaverEnabled</b> - Override value. Omitting the parameter disables the override.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetDataSaverOverrideCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetDataSaverOverrideResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetDataSaverOverrideResult> SetDataSaverOverrideAsync(SetDataSaverOverrideCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDataSaverOverrideCommandParameters(DataSaverEnabled: options?.DataSaverEnabled);
+        return await ExecuteCommandAsync(SetDataSaverOverrideCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDataSaverOverrideCommandParameters, SetDataSaverOverrideResult> SetDataSaverOverrideCommand = new("Emulation.setDataSaverOverride", JsonContext.SetDataSaverOverrideCommandParameters, JsonContext.SetDataSaverOverrideResult);
+
+    /// <summary>
     /// </summary>
     /// <param name="hardwareConcurrency">
     /// Hardware concurrency to report
@@ -1076,10 +1071,173 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly CdpCommand<SetSmallViewportHeightDifferenceOverrideCommandParameters, SetSmallViewportHeightDifferenceOverrideResult> SetSmallViewportHeightDifferenceOverrideCommand = new("Emulation.setSmallViewportHeightDifferenceOverride", JsonContext.SetSmallViewportHeightDifferenceOverrideCommandParameters, JsonContext.SetSmallViewportHeightDifferenceOverrideResult);
 
     /// <summary>
+    /// Returns device's screen configuration. In headful mode, the physical screens configuration is returned,
+    /// whereas in headless mode, a virtual headless screen configuration is provided instead.
+    /// </summary>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="GetScreenInfosCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetScreenInfosResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetScreenInfosResult> GetScreenInfosAsync(GetScreenInfosCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetScreenInfosCommandParameters();
+        return await ExecuteCommandAsync(GetScreenInfosCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetScreenInfosCommandParameters, GetScreenInfosResult> GetScreenInfosCommand = new("Emulation.getScreenInfos", JsonContext.GetScreenInfosCommandParameters, JsonContext.GetScreenInfosResult);
+
+    /// <summary>
+    /// Add a new screen to the device. Only supported in headless mode.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>WorkAreaInsets</b> - Specifies the screen's work area. Default is entire screen.</description></item>
+    /// <item><description><b>DevicePixelRatio</b> - Specifies the screen's device pixel ratio. Default is 1.</description></item>
+    /// <item><description><b>Rotation</b> - Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270. Default is 0.</description></item>
+    /// <item><description><b>ColorDepth</b> - Specifies the screen's color depth in bits. Default is 24.</description></item>
+    /// <item><description><b>Label</b> - Specifies the descriptive label for the screen. Default is none.</description></item>
+    /// <item><description><b>IsInternal</b> - Indicates whether the screen is internal to the device or external, attached to the device. Default is false.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="left">
+    /// Offset of the left edge of the screen in pixels.
+    /// </param>
+    /// <param name="top">
+    /// Offset of the top edge of the screen in pixels.
+    /// </param>
+    /// <param name="width">
+    /// The width of the screen in pixels.
+    /// </param>
+    /// <param name="height">
+    /// The height of the screen in pixels.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="AddScreenCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="AddScreenResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<AddScreenResult> AddScreenAsync(long left, long top, long width, long height, AddScreenCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddScreenCommandParameters(Left: left, Top: top, Width: width, Height: height, WorkAreaInsets: options?.WorkAreaInsets, DevicePixelRatio: options?.DevicePixelRatio, Rotation: options?.Rotation, ColorDepth: options?.ColorDepth, Label: options?.Label, IsInternal: options?.IsInternal);
+        return await ExecuteCommandAsync(AddScreenCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddScreenCommandParameters, AddScreenResult> AddScreenCommand = new("Emulation.addScreen", JsonContext.AddScreenCommandParameters, JsonContext.AddScreenResult);
+
+    /// <summary>
+    /// Updates specified screen parameters. Only supported in headless mode.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Left</b> - Offset of the left edge of the screen in pixels.</description></item>
+    /// <item><description><b>Top</b> - Offset of the top edge of the screen in pixels.</description></item>
+    /// <item><description><b>Width</b> - The width of the screen in pixels.</description></item>
+    /// <item><description><b>Height</b> - The height of the screen in pixels.</description></item>
+    /// <item><description><b>WorkAreaInsets</b> - Specifies the screen's work area.</description></item>
+    /// <item><description><b>DevicePixelRatio</b> - Specifies the screen's device pixel ratio.</description></item>
+    /// <item><description><b>Rotation</b> - Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270.</description></item>
+    /// <item><description><b>ColorDepth</b> - Specifies the screen's color depth in bits.</description></item>
+    /// <item><description><b>Label</b> - Specifies the descriptive label for the screen.</description></item>
+    /// <item><description><b>IsInternal</b> - Indicates whether the screen is internal to the device or external, attached to the device. Default is false.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="screenId">
+    /// Target screen identifier.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="UpdateScreenCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="UpdateScreenResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<UpdateScreenResult> UpdateScreenAsync(ScreenId screenId, UpdateScreenCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UpdateScreenCommandParameters(ScreenId: screenId, Left: options?.Left, Top: options?.Top, Width: options?.Width, Height: options?.Height, WorkAreaInsets: options?.WorkAreaInsets, DevicePixelRatio: options?.DevicePixelRatio, Rotation: options?.Rotation, ColorDepth: options?.ColorDepth, Label: options?.Label, IsInternal: options?.IsInternal);
+        return await ExecuteCommandAsync(UpdateScreenCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UpdateScreenCommandParameters, UpdateScreenResult> UpdateScreenCommand = new("Emulation.updateScreen", JsonContext.UpdateScreenCommandParameters, JsonContext.UpdateScreenResult);
+
+    /// <summary>
+    /// Remove screen from the device. Only supported in headless mode.
+    /// </summary>
+    /// <param name="screenId">
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="RemoveScreenCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="RemoveScreenResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<RemoveScreenResult> RemoveScreenAsync(ScreenId screenId, RemoveScreenCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveScreenCommandParameters(ScreenId: screenId);
+        return await ExecuteCommandAsync(RemoveScreenCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveScreenCommandParameters, RemoveScreenResult> RemoveScreenCommand = new("Emulation.removeScreen", JsonContext.RemoveScreenCommandParameters, JsonContext.RemoveScreenResult);
+
+    /// <summary>
+    /// Set primary screen. Only supported in headless mode.
+    /// Note that this changes the coordinate system origin to the top-left
+    /// of the new primary screen, updating the bounds and work areas
+    /// of all existing screens accordingly.
+    /// </summary>
+    /// <param name="screenId">
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="SetPrimaryScreenCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetPrimaryScreenResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetPrimaryScreenResult> SetPrimaryScreenAsync(ScreenId screenId, SetPrimaryScreenCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPrimaryScreenCommandParameters(ScreenId: screenId);
+        return await ExecuteCommandAsync(SetPrimaryScreenCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPrimaryScreenCommandParameters, SetPrimaryScreenResult> SetPrimaryScreenCommand = new("Emulation.setPrimaryScreen", JsonContext.SetPrimaryScreenCommandParameters, JsonContext.SetPrimaryScreenResult);
+
+    /// <summary>
     /// Notification sent after the virtual time budget for the current VirtualTimePolicy has run out.
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<VirtualTimeBudgetExpiredEventArgs> VirtualTimeBudgetExpired => CreateCdpEventSource(EmulationDomainEvent.VirtualTimeBudgetExpired);
+    /// <summary>
+    /// Fired when a page calls screen.orientation.lock() or screen.orientation.unlock()
+    /// while device emulation is enabled. This allows the DevTools frontend to update the
+    /// emulated device orientation accordingly.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="ScreenOrientationLockChangedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>Locked</b> - Whether the screen orientation is currently locked.</description></item>
+    /// <item><description><b>Orientation</b> - The orientation lock type requested by the page. Only set when locked is true.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ScreenOrientationLockChangedEventArgs> ScreenOrientationLockChanged => CreateCdpEventSource(EmulationDomainEvent.ScreenOrientationLockChanged);
 }
 
 internal sealed record CanEmulateCommandParameters() : Parameters;
@@ -1221,7 +1379,7 @@ public sealed record SetSafeAreaInsetsOverrideCommandOptions : CdpCommandOptions
 public sealed record SetSafeAreaInsetsOverrideResult() : EmptyResult;
 
 
-internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture) : Parameters;
+internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, string? ScrollbarType, bool? ScreenOrientationLockEmulation) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="EmulationDomain.SetDeviceMetricsOverrideAsync"/>.
@@ -1284,6 +1442,20 @@ public sealed record SetDeviceMetricsOverrideCommandOptions : CdpCommandOptions
     /// </summary>
     [global::System.Obsolete]
     public DevicePosture? DevicePosture { get; init; }
+
+    /// <summary>
+    /// Scrollbar type. Default: <b>default</b>.
+    /// </summary>
+    public string? ScrollbarType { get; init; }
+
+    /// <summary>
+    /// If set to true, enables screen orientation lock emulation, which
+    /// intercepts screen.orientation.lock() calls from the page and reports
+    /// orientation changes via screenOrientationLockChanged events. This is
+    /// useful for emulating mobile device orientation lock behavior in
+    /// responsive design mode.
+    /// </summary>
+    public bool? ScreenOrientationLockEmulation { get; init; }
 }
 
 /// <summary>
@@ -1573,23 +1745,6 @@ public sealed record SetPressureStateOverrideCommandOptions : CdpCommandOptions
 public sealed record SetPressureStateOverrideResult() : EmptyResult;
 
 
-internal sealed record SetPressureDataOverrideCommandParameters(PressureSource Source, PressureState State, double? OwnContributionEstimate) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="EmulationDomain.SetPressureDataOverrideAsync"/>.
-/// </summary>
-public sealed record SetPressureDataOverrideCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public double? OwnContributionEstimate { get; init; }
-}
-
-/// <summary>
-/// </summary>
-public sealed record SetPressureDataOverrideResult() : EmptyResult;
-
-
 internal sealed record SetIdleOverrideCommandParameters(bool IsUserActive, bool IsScreenUnlocked) : Parameters;
 
 /// <summary>
@@ -1772,6 +1927,24 @@ public sealed record SetDisabledImageTypesCommandOptions : CdpCommandOptions
 public sealed record SetDisabledImageTypesResult() : EmptyResult;
 
 
+internal sealed record SetDataSaverOverrideCommandParameters(bool? DataSaverEnabled) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="EmulationDomain.SetDataSaverOverrideAsync"/>.
+/// </summary>
+public sealed record SetDataSaverOverrideCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Override value. Omitting the parameter disables the override.
+    /// </summary>
+    public bool? DataSaverEnabled { get; init; }
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetDataSaverOverrideResult() : EmptyResult;
+
+
 internal sealed record SetHardwareConcurrencyOverrideCommandParameters(long HardwareConcurrency) : Parameters;
 
 /// <summary>
@@ -1842,10 +2015,177 @@ public sealed record SetSmallViewportHeightDifferenceOverrideCommandOptions : Cd
 public sealed record SetSmallViewportHeightDifferenceOverrideResult() : EmptyResult;
 
 
+internal sealed record GetScreenInfosCommandParameters() : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="EmulationDomain.GetScreenInfosAsync"/>.
+/// </summary>
+public sealed record GetScreenInfosCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+/// <param name="ScreenInfos">
+/// </param>
+public sealed record GetScreenInfosResult(IReadOnlyList<ScreenInfo> ScreenInfos) : EmptyResult;
+
+
+internal sealed record AddScreenCommandParameters(long Left, long Top, long Width, long Height, WorkAreaInsets? WorkAreaInsets, double? DevicePixelRatio, long? Rotation, long? ColorDepth, string? Label, bool? IsInternal) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="EmulationDomain.AddScreenAsync"/>.
+/// </summary>
+public sealed record AddScreenCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Specifies the screen's work area. Default is entire screen.
+    /// </summary>
+    public WorkAreaInsets? WorkAreaInsets { get; init; }
+
+    /// <summary>
+    /// Specifies the screen's device pixel ratio. Default is 1.
+    /// </summary>
+    public double? DevicePixelRatio { get; init; }
+
+    /// <summary>
+    /// Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270. Default is 0.
+    /// </summary>
+    public long? Rotation { get; init; }
+
+    /// <summary>
+    /// Specifies the screen's color depth in bits. Default is 24.
+    /// </summary>
+    public long? ColorDepth { get; init; }
+
+    /// <summary>
+    /// Specifies the descriptive label for the screen. Default is none.
+    /// </summary>
+    public string? Label { get; init; }
+
+    /// <summary>
+    /// Indicates whether the screen is internal to the device or external, attached to the device. Default is false.
+    /// </summary>
+    public bool? IsInternal { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="ScreenInfo">
+/// </param>
+public sealed record AddScreenResult(ScreenInfo ScreenInfo) : EmptyResult;
+
+
+internal sealed record UpdateScreenCommandParameters(ScreenId ScreenId, long? Left, long? Top, long? Width, long? Height, WorkAreaInsets? WorkAreaInsets, double? DevicePixelRatio, long? Rotation, long? ColorDepth, string? Label, bool? IsInternal) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="EmulationDomain.UpdateScreenAsync"/>.
+/// </summary>
+public sealed record UpdateScreenCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Offset of the left edge of the screen in pixels.
+    /// </summary>
+    public long? Left { get; init; }
+
+    /// <summary>
+    /// Offset of the top edge of the screen in pixels.
+    /// </summary>
+    public long? Top { get; init; }
+
+    /// <summary>
+    /// The width of the screen in pixels.
+    /// </summary>
+    public long? Width { get; init; }
+
+    /// <summary>
+    /// The height of the screen in pixels.
+    /// </summary>
+    public long? Height { get; init; }
+
+    /// <summary>
+    /// Specifies the screen's work area.
+    /// </summary>
+    public WorkAreaInsets? WorkAreaInsets { get; init; }
+
+    /// <summary>
+    /// Specifies the screen's device pixel ratio.
+    /// </summary>
+    public double? DevicePixelRatio { get; init; }
+
+    /// <summary>
+    /// Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270.
+    /// </summary>
+    public long? Rotation { get; init; }
+
+    /// <summary>
+    /// Specifies the screen's color depth in bits.
+    /// </summary>
+    public long? ColorDepth { get; init; }
+
+    /// <summary>
+    /// Specifies the descriptive label for the screen.
+    /// </summary>
+    public string? Label { get; init; }
+
+    /// <summary>
+    /// Indicates whether the screen is internal to the device or external, attached to the device. Default is false.
+    /// </summary>
+    public bool? IsInternal { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="ScreenInfo">
+/// </param>
+public sealed record UpdateScreenResult(ScreenInfo ScreenInfo) : EmptyResult;
+
+
+internal sealed record RemoveScreenCommandParameters(ScreenId ScreenId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="EmulationDomain.RemoveScreenAsync"/>.
+/// </summary>
+public sealed record RemoveScreenCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record RemoveScreenResult() : EmptyResult;
+
+
+internal sealed record SetPrimaryScreenCommandParameters(ScreenId ScreenId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="EmulationDomain.SetPrimaryScreenAsync"/>.
+/// </summary>
+public sealed record SetPrimaryScreenCommandOptions : CdpCommandOptions
+{
+}
+
+/// <summary>
+/// </summary>
+public sealed record SetPrimaryScreenResult() : EmptyResult;
+
+
 /// <summary>
 /// Notification sent after the virtual time budget for the current VirtualTimePolicy has run out.
 /// </summary>
 public sealed record VirtualTimeBudgetExpiredEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when a page calls screen.orientation.lock() or screen.orientation.unlock()
+/// while device emulation is enabled. This allows the DevTools frontend to update the
+/// emulated device orientation accordingly.
+/// </summary>
+/// <param name="Locked">
+/// Whether the screen orientation is currently locked.
+/// </param>
+/// <param name="Orientation">
+/// The orientation lock type requested by the page. Only set when locked is true.
+/// </param>
+public sealed record ScreenOrientationLockChangedEventArgs(bool Locked, ScreenOrientation? Orientation = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>
@@ -2175,6 +2515,95 @@ public sealed record PressureMetadata()
 }
 
 /// <summary>
+/// </summary>
+public sealed record WorkAreaInsets()
+{
+    /// <summary>
+    /// Work area top inset in pixels. Default is 0;
+    /// </summary>
+    public long? Top { get; init; }
+
+    /// <summary>
+    /// Work area left inset in pixels. Default is 0;
+    /// </summary>
+    public long? Left { get; init; }
+
+    /// <summary>
+    /// Work area bottom inset in pixels. Default is 0;
+    /// </summary>
+    public long? Bottom { get; init; }
+
+    /// <summary>
+    /// Work area right inset in pixels. Default is 0;
+    /// </summary>
+    public long? Right { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<ScreenId>))]
+public record ScreenId : IStringRemoteId
+{
+    string IStringRemoteId.Id { get; init; } = null!;
+}
+
+/// <summary>
+/// Screen information similar to the one returned by window.getScreenDetails() method,
+/// see https://w3c.github.io/window-management/#screendetailed.
+/// </summary>
+/// <param name="Left">
+/// Offset of the left edge of the screen.
+/// </param>
+/// <param name="Top">
+/// Offset of the top edge of the screen.
+/// </param>
+/// <param name="Width">
+/// Width of the screen.
+/// </param>
+/// <param name="Height">
+/// Height of the screen.
+/// </param>
+/// <param name="AvailLeft">
+/// Offset of the left edge of the available screen area.
+/// </param>
+/// <param name="AvailTop">
+/// Offset of the top edge of the available screen area.
+/// </param>
+/// <param name="AvailWidth">
+/// Width of the available screen area.
+/// </param>
+/// <param name="AvailHeight">
+/// Height of the available screen area.
+/// </param>
+/// <param name="DevicePixelRatio">
+/// Specifies the screen's device pixel ratio.
+/// </param>
+/// <param name="Orientation">
+/// Specifies the screen's orientation.
+/// </param>
+/// <param name="ColorDepth">
+/// Specifies the screen's color depth in bits.
+/// </param>
+/// <param name="IsExtended">
+/// Indicates whether the device has multiple screens.
+/// </param>
+/// <param name="IsInternal">
+/// Indicates whether the screen is internal to the device or external, attached to the device.
+/// </param>
+/// <param name="IsPrimary">
+/// Indicates whether the screen is set as the the operating system primary screen.
+/// </param>
+/// <param name="Label">
+/// Specifies the descriptive label for the screen.
+/// </param>
+/// <param name="Id">
+/// Specifies the unique identifier of the screen.
+/// </param>
+public sealed record ScreenInfo(long Left, long Top, long Width, long Height, long AvailLeft, long AvailTop, long AvailWidth, long AvailHeight, double DevicePixelRatio, ScreenOrientation Orientation, long ColorDepth, bool IsExtended, bool IsInternal, bool IsPrimary, string Label, ScreenId Id)
+{
+}
+
+/// <summary>
 /// Enum of image types that can be disabled.
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DisabledImageType>))]
@@ -2184,6 +2613,10 @@ public enum DisabledImageType
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("avif")]
     Avif,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jxl")]
+    Jxl,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
@@ -2242,8 +2675,6 @@ public enum DisabledImageType
 [JsonSerializable(typeof(SetPressureSourceOverrideEnabledResult), TypeInfoPropertyName = "SetPressureSourceOverrideEnabledResult")]
 [JsonSerializable(typeof(SetPressureStateOverrideCommandParameters), TypeInfoPropertyName = "SetPressureStateOverrideCommandParameters")]
 [JsonSerializable(typeof(SetPressureStateOverrideResult), TypeInfoPropertyName = "SetPressureStateOverrideResult")]
-[JsonSerializable(typeof(SetPressureDataOverrideCommandParameters), TypeInfoPropertyName = "SetPressureDataOverrideCommandParameters")]
-[JsonSerializable(typeof(SetPressureDataOverrideResult), TypeInfoPropertyName = "SetPressureDataOverrideResult")]
 [JsonSerializable(typeof(SetIdleOverrideCommandParameters), TypeInfoPropertyName = "SetIdleOverrideCommandParameters")]
 [JsonSerializable(typeof(SetIdleOverrideResult), TypeInfoPropertyName = "SetIdleOverrideResult")]
 [JsonSerializable(typeof(ClearIdleOverrideCommandParameters), TypeInfoPropertyName = "ClearIdleOverrideCommandParameters")]
@@ -2266,6 +2697,8 @@ public enum DisabledImageType
 [JsonSerializable(typeof(SetVisibleSizeResult), TypeInfoPropertyName = "SetVisibleSizeResult")]
 [JsonSerializable(typeof(SetDisabledImageTypesCommandParameters), TypeInfoPropertyName = "SetDisabledImageTypesCommandParameters")]
 [JsonSerializable(typeof(SetDisabledImageTypesResult), TypeInfoPropertyName = "SetDisabledImageTypesResult")]
+[JsonSerializable(typeof(SetDataSaverOverrideCommandParameters), TypeInfoPropertyName = "SetDataSaverOverrideCommandParameters")]
+[JsonSerializable(typeof(SetDataSaverOverrideResult), TypeInfoPropertyName = "SetDataSaverOverrideResult")]
 [JsonSerializable(typeof(SetHardwareConcurrencyOverrideCommandParameters), TypeInfoPropertyName = "SetHardwareConcurrencyOverrideCommandParameters")]
 [JsonSerializable(typeof(SetHardwareConcurrencyOverrideResult), TypeInfoPropertyName = "SetHardwareConcurrencyOverrideResult")]
 [JsonSerializable(typeof(SetUserAgentOverrideCommandParameters), TypeInfoPropertyName = "SetUserAgentOverrideCommandParameters")]
@@ -2274,7 +2707,18 @@ public enum DisabledImageType
 [JsonSerializable(typeof(SetAutomationOverrideResult), TypeInfoPropertyName = "SetAutomationOverrideResult")]
 [JsonSerializable(typeof(SetSmallViewportHeightDifferenceOverrideCommandParameters), TypeInfoPropertyName = "SetSmallViewportHeightDifferenceOverrideCommandParameters")]
 [JsonSerializable(typeof(SetSmallViewportHeightDifferenceOverrideResult), TypeInfoPropertyName = "SetSmallViewportHeightDifferenceOverrideResult")]
+[JsonSerializable(typeof(GetScreenInfosCommandParameters), TypeInfoPropertyName = "GetScreenInfosCommandParameters")]
+[JsonSerializable(typeof(GetScreenInfosResult), TypeInfoPropertyName = "GetScreenInfosResult")]
+[JsonSerializable(typeof(AddScreenCommandParameters), TypeInfoPropertyName = "AddScreenCommandParameters")]
+[JsonSerializable(typeof(AddScreenResult), TypeInfoPropertyName = "AddScreenResult")]
+[JsonSerializable(typeof(UpdateScreenCommandParameters), TypeInfoPropertyName = "UpdateScreenCommandParameters")]
+[JsonSerializable(typeof(UpdateScreenResult), TypeInfoPropertyName = "UpdateScreenResult")]
+[JsonSerializable(typeof(RemoveScreenCommandParameters), TypeInfoPropertyName = "RemoveScreenCommandParameters")]
+[JsonSerializable(typeof(RemoveScreenResult), TypeInfoPropertyName = "RemoveScreenResult")]
+[JsonSerializable(typeof(SetPrimaryScreenCommandParameters), TypeInfoPropertyName = "SetPrimaryScreenCommandParameters")]
+[JsonSerializable(typeof(SetPrimaryScreenResult), TypeInfoPropertyName = "SetPrimaryScreenResult")]
 [JsonSerializable(typeof(CdpEventArgs<VirtualTimeBudgetExpiredEventArgs>), TypeInfoPropertyName = "VirtualTimeBudgetExpiredCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<ScreenOrientationLockChangedEventArgs>), TypeInfoPropertyName = "ScreenOrientationLockChangedCdpEventArgs")]
 [JsonSerializable(typeof(SafeAreaInsets), TypeInfoPropertyName = "EmulationSafeAreaInsets")]
 [JsonSerializable(typeof(ScreenOrientation), TypeInfoPropertyName = "EmulationScreenOrientation")]
 [JsonSerializable(typeof(DisplayFeature), TypeInfoPropertyName = "EmulationDisplayFeature")]
@@ -2292,10 +2736,14 @@ public enum DisabledImageType
 [JsonSerializable(typeof(PressureSource), TypeInfoPropertyName = "EmulationPressureSource")]
 [JsonSerializable(typeof(PressureState), TypeInfoPropertyName = "EmulationPressureState")]
 [JsonSerializable(typeof(PressureMetadata), TypeInfoPropertyName = "EmulationPressureMetadata")]
+[JsonSerializable(typeof(WorkAreaInsets), TypeInfoPropertyName = "EmulationWorkAreaInsets")]
+[JsonSerializable(typeof(ScreenId), TypeInfoPropertyName = "EmulationScreenId")]
+[JsonSerializable(typeof(ScreenInfo), TypeInfoPropertyName = "EmulationScreenInfo")]
 [JsonSerializable(typeof(DisabledImageType), TypeInfoPropertyName = "EmulationDisabledImageType")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DisplayFeature>), TypeInfoPropertyName = "IReadOnlyListEmulationDisplayFeature")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<MediaFeature>), TypeInfoPropertyName = "IReadOnlyListEmulationMediaFeature")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DisabledImageType>), TypeInfoPropertyName = "IReadOnlyListEmulationDisabledImageType")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScreenInfo>), TypeInfoPropertyName = "IReadOnlyListEmulationScreenInfo")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<UserAgentBrandVersion>), TypeInfoPropertyName = "IReadOnlyListEmulationUserAgentBrandVersion")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
@@ -2314,5 +2762,15 @@ public static class EmulationDomainEvent
         EventDescriptor<CdpEventArgs<VirtualTimeBudgetExpiredEventArgs>>.Create(
             "goog:cdp.Emulation.virtualTimeBudgetExpired",
             EmulationJsonSerializerContext.Default.VirtualTimeBudgetExpiredCdpEventArgs);
+
+    /// <summary>
+    /// Fired when a page calls screen.orientation.lock() or screen.orientation.unlock()
+    /// while device emulation is enabled. This allows the DevTools frontend to update the
+    /// emulated device orientation accordingly.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<ScreenOrientationLockChangedEventArgs>> ScreenOrientationLockChanged { get; } =
+        EventDescriptor<CdpEventArgs<ScreenOrientationLockChangedEventArgs>>.Create(
+            "goog:cdp.Emulation.screenOrientationLockChanged",
+            EmulationJsonSerializerContext.Default.ScreenOrientationLockChangedCdpEventArgs);
 
 }

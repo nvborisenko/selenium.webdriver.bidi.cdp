@@ -124,26 +124,6 @@ public sealed class ServiceWorkerDomain(CdpModule cdp) : global::Selenium.WebDri
 
     /// <summary>
     /// </summary>
-    /// <param name="versionId">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="InspectWorkerCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="InspectWorkerResult"/>.
-    /// </returns>
-    public async Task<InspectWorkerResult> InspectWorkerAsync(string versionId, InspectWorkerCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new InspectWorkerCommandParameters(VersionId: versionId);
-        return await ExecuteCommandAsync(InspectWorkerCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<InspectWorkerCommandParameters, InspectWorkerResult> InspectWorkerCommand = new("ServiceWorker.inspectWorker", JsonContext.InspectWorkerCommandParameters, JsonContext.InspectWorkerResult);
-
-    /// <summary>
-    /// </summary>
     /// <param name="forceUpdateOnPageLoad">
     /// </param>
     /// <param name="options">
@@ -380,20 +360,6 @@ public sealed record EnableCommandOptions : CdpCommandOptions
 /// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
-
-
-internal sealed record InspectWorkerCommandParameters(string VersionId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ServiceWorkerDomain.InspectWorkerAsync"/>.
-/// </summary>
-public sealed record InspectWorkerCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-public sealed record InspectWorkerResult() : EmptyResult;
 
 
 internal sealed record SetForceUpdateOnPageLoadCommandParameters(bool ForceUpdateOnPageLoad) : Parameters;
@@ -655,8 +621,6 @@ public sealed record ServiceWorkerErrorMessage(string ErrorMessage, Registration
 [JsonSerializable(typeof(DispatchPeriodicSyncEventResult), TypeInfoPropertyName = "DispatchPeriodicSyncEventResult")]
 [JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]
 [JsonSerializable(typeof(EnableResult), TypeInfoPropertyName = "EnableResult")]
-[JsonSerializable(typeof(InspectWorkerCommandParameters), TypeInfoPropertyName = "InspectWorkerCommandParameters")]
-[JsonSerializable(typeof(InspectWorkerResult), TypeInfoPropertyName = "InspectWorkerResult")]
 [JsonSerializable(typeof(SetForceUpdateOnPageLoadCommandParameters), TypeInfoPropertyName = "SetForceUpdateOnPageLoadCommandParameters")]
 [JsonSerializable(typeof(SetForceUpdateOnPageLoadResult), TypeInfoPropertyName = "SetForceUpdateOnPageLoadResult")]
 [JsonSerializable(typeof(SkipWaitingCommandParameters), TypeInfoPropertyName = "SkipWaitingCommandParameters")]

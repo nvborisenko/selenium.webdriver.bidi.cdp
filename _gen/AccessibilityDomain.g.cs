@@ -740,7 +740,8 @@ public sealed record AXValue(AXValueType Type)
 /// - from 'live' to 'root': attributes which apply to nodes in live regions
 /// - from 'autocomplete' to 'valuetext': attributes which apply to widgets
 /// - from 'checked' to 'selected': states which apply to widgets
-/// - from 'activedescendant' to 'owns' - relationships between elements other than parent/child/sibling.
+/// - from 'activedescendant' to 'owns': relationships between elements other than parent/child/sibling
+/// - from 'activeFullscreenElement' to 'uninteresting': reasons why this noode is hidden
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AXPropertyName>))]
 public enum AXPropertyName
@@ -909,6 +910,74 @@ public enum AXPropertyName
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("url")]
     Url,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activeFullscreenElement")]
+    ActiveFullscreenElement,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activeModalDialog")]
+    ActiveModalDialog,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activeAriaModalDialog")]
+    ActiveAriaModalDialog,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ariaHiddenElement")]
+    AriaHiddenElement,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ariaHiddenSubtree")]
+    AriaHiddenSubtree,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("emptyAlt")]
+    EmptyAlt,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("emptyText")]
+    EmptyText,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inertElement")]
+    InertElement,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inertSubtree")]
+    InertSubtree,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("labelContainer")]
+    LabelContainer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("labelFor")]
+    LabelFor,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notRendered")]
+    NotRendered,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notVisible")]
+    NotVisible,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("presentationalRole")]
+    PresentationalRole,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("probablyPresentational")]
+    ProbablyPresentational,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inactiveCarouselTabContent")]
+    InactiveCarouselTabContent,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("uninteresting")]
+    Uninteresting,
 }
 
 /// <summary>

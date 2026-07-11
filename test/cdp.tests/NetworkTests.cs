@@ -9,7 +9,7 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task SendRequestWithUrlFiltersAndExtraHeadersAndVerifyRequests()
     {
-        await Cdp.Network.SetBlockedURLsAsync(["*://*/*.gif"]);
+        await Cdp.Network.SetBlockedURLsAsync(new() { UrlPatterns = [new BlockPattern("*://*/*.gif", Block: true)] });
 
         await Cdp.Network.SetExtraHTTPHeadersAsync(new Dictionary<string, string>
         {

@@ -42,7 +42,7 @@ public class PlaygroundTests
 
         for (int i = 0; i < 500; i++)
         {
-            await cdp.Network.SetBlockedURLsAsync(["https://www.example.com/*"]);
+            await cdp.Network.SetBlockedURLsAsync(new() { UrlPatterns = [new Network.BlockPattern("https://www.example.com/*", Block: true)] });
         }
 
         System.Console.WriteLine($"Took {stopwatch.Elapsed}");

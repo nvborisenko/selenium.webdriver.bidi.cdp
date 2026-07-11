@@ -437,6 +437,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
     /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
     /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
+    /// <item><description><b>IncludeShadowDOM</b> - Include all shadow roots. Equals to false if not specified.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="options">
@@ -450,7 +451,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </returns>
     public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(GetOuterHTMLCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetOuterHTMLCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
+        var @params = new GetOuterHTMLCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId, IncludeShadowDOM: options?.IncludeShadowDOM);
         return await ExecuteCommandAsync(GetOuterHTMLCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetOuterHTMLCommandParameters, GetOuterHTMLResult> GetOuterHTMLCommand = new("DOM.getOuterHTML", JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult);
@@ -1264,9 +1265,9 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Returns the query container of the given node based on container query
     /// conditions: containerName, physical and logical axes, and whether it queries
-    /// scroll-state. If no axes are provided and queriesScrollState is false, the
-    /// style container is returned, which is the direct parent or the closest
-    /// element with a matching container-name.
+    /// scroll-state or anchored elements. If no axes are provided and
+    /// queriesScrollState is false, the style container is returned, which is the
+    /// direct parent or the closest element with a matching container-name.
     /// </summary>
     /// <remarks>
     /// Optional parameters (via <paramref name="options"/>):
@@ -1275,6 +1276,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>PhysicalAxes</b></description></item>
     /// <item><description><b>LogicalAxes</b></description></item>
     /// <item><description><b>QueriesScrollState</b></description></item>
+    /// <item><description><b>QueriesAnchored</b></description></item>
     /// </list>
     /// </remarks>
     /// <param name="nodeId">
@@ -1291,7 +1293,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, GetContainerForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: options?.ContainerName, PhysicalAxes: options?.PhysicalAxes, LogicalAxes: options?.LogicalAxes, QueriesScrollState: options?.QueriesScrollState);
+        var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: options?.ContainerName, PhysicalAxes: options?.PhysicalAxes, LogicalAxes: options?.LogicalAxes, QueriesScrollState: options?.QueriesScrollState, QueriesAnchored: options?.QueriesAnchored);
         return await ExecuteCommandAsync(GetContainerForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetContainerForNodeCommandParameters, GetContainerForNodeResult> GetContainerForNodeCommand = new("DOM.getContainerForNode", JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult);
@@ -1351,6 +1353,40 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     private static readonly CdpCommand<GetAnchorElementCommandParameters, GetAnchorElementResult> GetAnchorElementCommand = new("DOM.getAnchorElement", JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult);
 
     /// <summary>
+    /// When enabling, this API force-opens the popover identified by nodeId
+    /// and keeps it open until disabled.
+    /// </summary>
+    /// <remarks>
+    /// Optional parameters (via <paramref name="options"/>):
+    /// <list type="bullet">
+    /// <item><description><b>InvokerNodeId</b> - Optional ID of the element invoking this popover, used to establish the implicit anchor. If not provided, it will fall back to the first invoker in the document, preferring elements with a popovertarget attribute over those with a commandfor attribute. Note that if there are multiple invokers, this is just an estimate.</description></item>
+    /// </list>
+    /// </remarks>
+    /// <param name="nodeId">
+    /// Id of the popover HTMLElement
+    /// </param>
+    /// <param name="enable">
+    /// If true, opens the popover and keeps it open. If false, closes the
+    /// popover if it was previously force-opened.
+    /// </param>
+    /// <param name="options">
+    /// Optional parameters. See <see cref="ForceShowPopoverCommandOptions"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ForceShowPopoverResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, ForceShowPopoverCommandOptions? options = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ForceShowPopoverCommandParameters(NodeId: nodeId, Enable: enable, InvokerNodeId: options?.InvokerNodeId);
+        return await ExecuteCommandAsync(ForceShowPopoverCommand, @params, options, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ForceShowPopoverCommandParameters, ForceShowPopoverResult> ForceShowPopoverCommand = new("DOM.forceShowPopover", JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult);
+
+    /// <summary>
     /// Fired when <b>Element</b>'s attribute is modified.
     /// </summary>
     /// <remarks>
@@ -1362,6 +1398,18 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);
+    /// <summary>
+    /// Fired when <b>Element</b>'s adoptedStyleSheets are modified.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="AdoptedStyleSheetsModifiedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - Id of the node that has changed.</description></item>
+    /// <item><description><b>AdoptedStyleSheets</b> - New adoptedStyleSheets array.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<AdoptedStyleSheetsModifiedEventArgs> AdoptedStyleSheetsModified => CreateCdpEventSource(DOMDomainEvent.AdoptedStyleSheetsModified);
     /// <summary>
     /// Fired when <b>Element</b>'s attribute is removed.
     /// </summary>
@@ -1474,6 +1522,30 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<ScrollableFlagUpdatedEventArgs> ScrollableFlagUpdated => CreateCdpEventSource(DOMDomainEvent.ScrollableFlagUpdated);
+    /// <summary>
+    /// Fired when a node's ad related state changes.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="AdRelatedStateUpdatedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - The id of the node.</description></item>
+    /// <item><description><b>AdProvenance</b> - The provenance of the ad related node, if it is ad related.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<AdRelatedStateUpdatedEventArgs> AdRelatedStateUpdated => CreateCdpEventSource(DOMDomainEvent.AdRelatedStateUpdated);
+    /// <summary>
+    /// Fired when a node's starting styles changes.
+    /// </summary>
+    /// <remarks>
+    /// Event args (<see cref="AffectedByStartingStylesFlagUpdatedEventArgs"/>):
+    /// <list type="bullet">
+    /// <item><description><b>NodeId</b> - The id of the node.</description></item>
+    /// <item><description><b>AffectedByStartingStyles</b> - If the node has starting styles.</description></item>
+    /// </list>
+    /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<AffectedByStartingStylesFlagUpdatedEventArgs> AffectedByStartingStylesFlagUpdated => CreateCdpEventSource(DOMDomainEvent.AffectedByStartingStylesFlagUpdated);
     /// <summary>
     /// Called when a pseudo element is removed from an element.
     /// </summary>
@@ -1903,7 +1975,7 @@ public sealed record GetNodeForLocationCommandOptions : CdpCommandOptions
 public sealed record GetNodeForLocationResult(BackendNodeId BackendNodeId, Page.FrameId FrameId, NodeId? NodeId) : EmptyResult;
 
 
-internal sealed record GetOuterHTMLCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
+internal sealed record GetOuterHTMLCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, bool? IncludeShadowDOM) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMDomain.GetOuterHTMLAsync"/>.
@@ -1924,6 +1996,11 @@ public sealed record GetOuterHTMLCommandOptions : CdpCommandOptions
     /// JavaScript object id of the node wrapper.
     /// </summary>
     public Runtime.RemoteObjectId? ObjectId { get; init; }
+
+    /// <summary>
+    /// Include all shadow roots. Equals to false if not specified.
+    /// </summary>
+    public bool? IncludeShadowDOM { get; init; }
 }
 
 /// <summary>
@@ -2511,7 +2588,7 @@ public sealed record GetFrameOwnerCommandOptions : CdpCommandOptions
 public sealed record GetFrameOwnerResult(BackendNodeId BackendNodeId, NodeId? NodeId) : EmptyResult;
 
 
-internal sealed record GetContainerForNodeCommandParameters(NodeId NodeId, string? ContainerName, PhysicalAxes? PhysicalAxes, LogicalAxes? LogicalAxes, bool? QueriesScrollState) : Parameters;
+internal sealed record GetContainerForNodeCommandParameters(NodeId NodeId, string? ContainerName, PhysicalAxes? PhysicalAxes, LogicalAxes? LogicalAxes, bool? QueriesScrollState, bool? QueriesAnchored) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMDomain.GetContainerForNodeAsync"/>.
@@ -2533,6 +2610,10 @@ public sealed record GetContainerForNodeCommandOptions : CdpCommandOptions
     /// <summary>
     /// </summary>
     public bool? QueriesScrollState { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public bool? QueriesAnchored { get; init; }
 }
 
 /// <summary>
@@ -2584,6 +2665,30 @@ public sealed record GetAnchorElementCommandOptions : CdpCommandOptions
 public sealed record GetAnchorElementResult(NodeId NodeId) : EmptyResult;
 
 
+internal sealed record ForceShowPopoverCommandParameters(NodeId NodeId, bool Enable, BackendNodeId? InvokerNodeId) : Parameters;
+
+/// <summary>
+/// Optional parameters for <see cref="DOMDomain.ForceShowPopoverAsync"/>.
+/// </summary>
+public sealed record ForceShowPopoverCommandOptions : CdpCommandOptions
+{
+    /// <summary>
+    /// Optional ID of the element invoking this popover, used to establish the implicit anchor.
+    /// If not provided, it will fall back to the first invoker in the document, preferring
+    /// elements with a popovertarget attribute over those with a commandfor attribute. Note that
+    /// if there are multiple invokers, this is just an estimate.
+    /// </summary>
+    public BackendNodeId? InvokerNodeId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="NodeIds">
+/// List of popovers that were closed in order to respect popover stacking order.
+/// </param>
+public sealed record ForceShowPopoverResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+
+
 /// <summary>
 /// Fired when <b>Element</b>'s attribute is modified.
 /// </summary>
@@ -2597,6 +2702,17 @@ public sealed record GetAnchorElementResult(NodeId NodeId) : EmptyResult;
 /// Attribute value.
 /// </param>
 public sealed record AttributeModifiedEventArgs(NodeId NodeId, string Name, string Value) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when <b>Element</b>'s adoptedStyleSheets are modified.
+/// </summary>
+/// <param name="NodeId">
+/// Id of the node that has changed.
+/// </param>
+/// <param name="AdoptedStyleSheets">
+/// New adoptedStyleSheets array.
+/// </param>
+public sealed record AdoptedStyleSheetsModifiedEventArgs(NodeId NodeId, IEnumerable<StyleSheetId> AdoptedStyleSheets) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when <b>Element</b>'s attribute is removed.
@@ -2708,6 +2824,28 @@ public sealed record TopLayerElementsUpdatedEventArgs() : OpenQA.Selenium.BiDi.E
 public sealed record ScrollableFlagUpdatedEventArgs(DOM.NodeId NodeId, bool IsScrollable) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
+/// Fired when a node's ad related state changes.
+/// </summary>
+/// <param name="NodeId">
+/// The id of the node.
+/// </param>
+/// <param name="AdProvenance">
+/// The provenance of the ad related node, if it is ad related.
+/// </param>
+public sealed record AdRelatedStateUpdatedEventArgs(DOM.NodeId NodeId, Network.AdProvenance? AdProvenance = null) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
+/// Fired when a node's starting styles changes.
+/// </summary>
+/// <param name="NodeId">
+/// The id of the node.
+/// </param>
+/// <param name="AffectedByStartingStyles">
+/// If the node has starting styles.
+/// </param>
+public sealed record AffectedByStartingStylesFlagUpdatedEventArgs(DOM.NodeId NodeId, bool AffectedByStartingStyles) : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
 /// Called when a pseudo element is removed from an element.
 /// </summary>
 /// <param name="ParentId">
@@ -2772,6 +2910,15 @@ public record BackendNodeId : INumberRemoteId
 }
 
 /// <summary>
+/// Unique identifier for a CSS stylesheet.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<StyleSheetId>))]
+public record StyleSheetId : IStringRemoteId
+{
+    string IStringRemoteId.Id { get; init; } = null!;
+}
+
+/// <summary>
 /// Backend node with a friendly name.
 /// </summary>
 /// <param name="NodeType">
@@ -2814,8 +2961,16 @@ public enum PseudoType
     After,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("expand-icon")]
+    ExpandIcon,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("picker-icon")]
     PickerIcon,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("interest-button")]
+    InterestButton,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("marker")]
@@ -2942,8 +3097,24 @@ public enum PseudoType
     Picker,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("select-listbox")]
+    SelectListbox,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("permission-icon")]
     PermissionIcon,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overscroll-area-parent")]
+    OverscrollAreaParent,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overscroll-backdrop")]
+    OverscrollBackdrop,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("skeleton")]
+    Skeleton,
 }
 
 /// <summary>
@@ -3198,6 +3369,18 @@ public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeT
     /// <summary>
     /// </summary>
     public bool? IsScrollable { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public bool? AffectedByStartingStyles { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public IReadOnlyList<StyleSheetId>? AdoptedStyleSheets { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public Network.AdProvenance? AdProvenance { get; init; }
 }
 
 /// <summary>
@@ -3415,7 +3598,10 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 [JsonSerializable(typeof(GetQueryingDescendantsForContainerResult), TypeInfoPropertyName = "GetQueryingDescendantsForContainerResult")]
 [JsonSerializable(typeof(GetAnchorElementCommandParameters), TypeInfoPropertyName = "GetAnchorElementCommandParameters")]
 [JsonSerializable(typeof(GetAnchorElementResult), TypeInfoPropertyName = "GetAnchorElementResult")]
+[JsonSerializable(typeof(ForceShowPopoverCommandParameters), TypeInfoPropertyName = "ForceShowPopoverCommandParameters")]
+[JsonSerializable(typeof(ForceShowPopoverResult), TypeInfoPropertyName = "ForceShowPopoverResult")]
 [JsonSerializable(typeof(CdpEventArgs<AttributeModifiedEventArgs>), TypeInfoPropertyName = "AttributeModifiedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>), TypeInfoPropertyName = "AdoptedStyleSheetsModifiedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<AttributeRemovedEventArgs>), TypeInfoPropertyName = "AttributeRemovedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<CharacterDataModifiedEventArgs>), TypeInfoPropertyName = "CharacterDataModifiedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ChildNodeCountUpdatedEventArgs>), TypeInfoPropertyName = "ChildNodeCountUpdatedCdpEventArgs")]
@@ -3427,12 +3613,15 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 [JsonSerializable(typeof(CdpEventArgs<PseudoElementAddedEventArgs>), TypeInfoPropertyName = "PseudoElementAddedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<TopLayerElementsUpdatedEventArgs>), TypeInfoPropertyName = "TopLayerElementsUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ScrollableFlagUpdatedEventArgs>), TypeInfoPropertyName = "ScrollableFlagUpdatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<AdRelatedStateUpdatedEventArgs>), TypeInfoPropertyName = "AdRelatedStateUpdatedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>), TypeInfoPropertyName = "AffectedByStartingStylesFlagUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<PseudoElementRemovedEventArgs>), TypeInfoPropertyName = "PseudoElementRemovedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<SetChildNodesEventArgs>), TypeInfoPropertyName = "SetChildNodesCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ShadowRootPoppedEventArgs>), TypeInfoPropertyName = "ShadowRootPoppedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ShadowRootPushedEventArgs>), TypeInfoPropertyName = "ShadowRootPushedCdpEventArgs")]
 [JsonSerializable(typeof(NodeId), TypeInfoPropertyName = "DOMNodeId")]
 [JsonSerializable(typeof(BackendNodeId), TypeInfoPropertyName = "DOMBackendNodeId")]
+[JsonSerializable(typeof(StyleSheetId), TypeInfoPropertyName = "DOMStyleSheetId")]
 [JsonSerializable(typeof(BackendNode), TypeInfoPropertyName = "DOMBackendNode")]
 [JsonSerializable(typeof(PseudoType), TypeInfoPropertyName = "DOMPseudoType")]
 [JsonSerializable(typeof(ShadowRootType), TypeInfoPropertyName = "DOMShadowRootType")]
@@ -3452,6 +3641,7 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<NodeId>), TypeInfoPropertyName = "IReadOnlyListDOMNodeId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackendNodeId>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNodeId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DetachedElementInfo>), TypeInfoPropertyName = "IReadOnlyListDOMDetachedElementInfo")]
+[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<StyleSheetId>), TypeInfoPropertyName = "IReadOnlyListDOMStyleSheetId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackendNode>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNode")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
@@ -3470,6 +3660,14 @@ public static class DOMDomainEvent
         EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>>.Create(
             "goog:cdp.DOM.attributeModified",
             DOMJsonSerializerContext.Default.AttributeModifiedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when <b>Element</b>'s adoptedStyleSheets are modified.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>> AdoptedStyleSheetsModified { get; } =
+        EventDescriptor<CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>>.Create(
+            "goog:cdp.DOM.adoptedStyleSheetsModified",
+            DOMJsonSerializerContext.Default.AdoptedStyleSheetsModifiedCdpEventArgs);
 
     /// <summary>
     /// Fired when <b>Element</b>'s attribute is removed.
@@ -3558,6 +3756,22 @@ public static class DOMDomainEvent
         EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.scrollableFlagUpdated",
             DOMJsonSerializerContext.Default.ScrollableFlagUpdatedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when a node's ad related state changes.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<AdRelatedStateUpdatedEventArgs>> AdRelatedStateUpdated { get; } =
+        EventDescriptor<CdpEventArgs<AdRelatedStateUpdatedEventArgs>>.Create(
+            "goog:cdp.DOM.adRelatedStateUpdated",
+            DOMJsonSerializerContext.Default.AdRelatedStateUpdatedCdpEventArgs);
+
+    /// <summary>
+    /// Fired when a node's starting styles changes.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>> AffectedByStartingStylesFlagUpdated { get; } =
+        EventDescriptor<CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>>.Create(
+            "goog:cdp.DOM.affectedByStartingStylesFlagUpdated",
+            DOMJsonSerializerContext.Default.AffectedByStartingStylesFlagUpdatedCdpEventArgs);
 
     /// <summary>
     /// Called when a pseudo element is removed from an element.
