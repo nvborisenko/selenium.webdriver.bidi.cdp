@@ -39,7 +39,7 @@
           Outputs="$(_GenDir)CdpModule.cs"
           Condition="'$(ForceGenerate)' == 'true' Or !Exists('$(_GenDir)CdpModule.cs') Or '@(_ProtocolInput)' != ''">
     <Message Importance="high" Text="Building protocol code generator..." />
-    <MSBuild Projects="$(_GeneratorProject)" Targets="Build" Properties="TargetFramework=net10.0">
+    <MSBuild Projects="$(_GeneratorProject)" Targets="Restore;Build" Properties="TargetFramework=net10.0">
       <Output TaskParameter="TargetOutputs" ItemName="_GeneratorAssembly" />
     </MSBuild>
     <Message Importance="high" Text="Running protocol code generator..." />

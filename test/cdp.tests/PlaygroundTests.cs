@@ -10,7 +10,10 @@ public class PlaygroundTests
     {
         // OpenQA.Selenium.Internal.Logging.Log.SetLevel(OpenQA.Selenium.Internal.Logging.LogEventLevel.Trace);
 
-        await using var driver = new ChromeDriver(new ChromeOptions { UseWebSocketUrl = true });
+        var options = new ChromeOptions { UseWebSocketUrl = true };
+        options.AddArgument("--headless=new");
+
+        await using var driver = new ChromeDriver(options);
 
         await using var bidi = await driver.AsBiDiAsync();
 

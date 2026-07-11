@@ -13,7 +13,13 @@ public abstract class CdpTestFixture
     [Before(Test)]
     public async Task SetUp()
     {
-        Driver = new ChromeDriver(new ChromeOptions { UseWebSocketUrl = true });
+        var options = new ChromeOptions { UseWebSocketUrl = true };
+        options.AddArgument("--headless=new");
+        options.AddArgument("--no-sandbox");
+        options.AddArgument("--disable-gpu");
+        options.AddArgument("--disable-dev-shm-usage");
+
+        Driver = new ChromeDriver(options);
         BiDi = await Driver.AsBiDiAsync();
         Context = (await BiDi.BrowsingContext.GetTreeAsync()).Contexts[0].Context;
         Cdp = await Context.AsCdpAsync();

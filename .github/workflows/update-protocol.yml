@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           # Use a PAT so the pushed tag triggers the Release workflow.
           # A push made with the default GITHUB_TOKEN does not trigger other workflows.
@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             8.0.x
@@ -84,9 +84,7 @@ jobs:
 
       - name: Regenerate protocol code
         if: steps.check.outputs.changed == 'true'
-        run: |
-          dotnet build src/cdp.generator/Selenium.WebDriver.BiDi.Cdp.Generator.csproj
-          dotnet build src/cdp/Selenium.WebDriver.BiDi.Cdp.csproj --configuration Release /p:ForceGenerate=true
+        run: dotnet build src/cdp/Selenium.WebDriver.BiDi.Cdp.csproj --configuration Release /p:ForceGenerate=true
 
       - name: Commit, push and tag
         if: steps.check.outputs.changed == 'true'

@@ -18,7 +18,10 @@ public class EvaluateBenchmark
     [GlobalSetup]
     public async Task Setup()
     {
-        _driver = new ChromeDriver(new ChromeOptions { UseWebSocketUrl = true });
+        var options = new ChromeOptions { UseWebSocketUrl = true };
+        options.AddArgument("--headless=new");
+
+        _driver = new ChromeDriver(options);
         _bidi = await _driver.AsBiDiAsync();
         var context = (await _bidi.BrowsingContext.GetTreeAsync()).Contexts[0].Context;
         _cdp = await context.AsCdpAsync();
