@@ -101,13 +101,11 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task VerifyRequestPostData()
     {
+        await Cdp.Page.NavigateAsync(SimpleTestPage);
+
         await using var requestWillBeSentStream = await Cdp.Network.RequestWillBeSent.StreamAsync();
 
-        string formPage = "data:text/html,<html><body><form method='POST' action='https://httpbin.org/post'><input type='hidden' name='key' value='value'/><input type='submit' id='submit'/></form></body></html>";
-        await Cdp.Page.NavigateAsync(formPage);
-
-        // Click submit via CDP Runtime.evaluate
-        await Cdp.Runtime.EvaluateAsync("document.getElementById('submit').click()");
+        await Cdp.Runtime.EvaluateAsync("fetch(location.href, { method: 'POST', body: 'key=value' })");
 
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
         RequestWillBeSentEventArgs? postRequest = null;
@@ -122,8 +120,8 @@ public class NetworkTests : CdpTestFixture
 
         await Assert.That(postRequest).IsNotNull();
 
-        var response = await Cdp.Network.GetRequestPostDataAsync(postRequest!.RequestId);
-        await Assert.That(response.PostData).IsNotNull();
+        var response = await Cdp.Network.GetRequestPostDataAsync(postRequest!.RequestId, cancellationToken: cts.Token);
+        await Assert.That(response.PostData).IsEqualTo("key=value");
     }
 
     [Test]
