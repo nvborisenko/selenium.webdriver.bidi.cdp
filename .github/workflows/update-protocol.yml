@@ -84,7 +84,9 @@ jobs:
 
       - name: Regenerate protocol code
         if: steps.check.outputs.changed == 'true'
-        run: dotnet build src/cdp/Selenium.WebDriver.BiDi.Cdp.csproj --configuration Release /p:ForceGenerate=true
+        run: |
+          dotnet build src/cdp.generator/Selenium.WebDriver.BiDi.Cdp.Generator.csproj
+          dotnet build src/cdp/Selenium.WebDriver.BiDi.Cdp.csproj --configuration Release /p:ForceGenerate=true
 
       - name: Commit, push and tag
         if: steps.check.outputs.changed == 'true'

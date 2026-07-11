@@ -22,14 +22,13 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            8.0.x
             10.0.x
 
-      - name: Restore
-        run: dotnet restore Selenium.WebDriver.BiDi.Cdp.slnx
+      - name: Build code generator
+        run: dotnet build src/cdp.generator/Selenium.WebDriver.BiDi.Cdp.Generator.csproj
 
       - name: Build
-        run: dotnet build Selenium.WebDriver.BiDi.Cdp.slnx --configuration Release --no-restore /m:1
+        run: dotnet build Selenium.WebDriver.BiDi.Cdp.slnx /m:1
 
   test:
     name: Test
@@ -43,8 +42,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            8.0.x
             10.0.x
 
       - name: Test
-        run: dotnet test test/cdp.tests/Selenium.WebDriver.BiDi.Cdp.Tests.csproj --configuration Release
+        run: dotnet test test/cdp.tests/Selenium.WebDriver.BiDi.Cdp.Tests.csproj

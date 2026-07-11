@@ -24,6 +24,9 @@ jobs:
             8.0.x
             10.0.x
 
+      - name: Build code generator
+        run: dotnet build src/cdp.generator/Selenium.WebDriver.BiDi.Cdp.Generator.csproj --configuration Release
+
       - name: Pack
         run: dotnet pack src/cdp/Selenium.WebDriver.BiDi.Cdp.csproj --configuration Release --output artifacts
 
