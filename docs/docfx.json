@@ -40,8 +40,8 @@
     "globalMetadata": {
       "_appName": "CDP over WebDriver BiDi",
       "_appTitle": "CDP over WebDriver BiDi",
-      "_appLogoPath": "images/logo.svg",
-      "_appFaviconPath": "images/logo.png",
+      "_appLogoPath": "images/cdp-logo.svg",
+      "_appFaviconPath": "images/cdp-logo.png",
       "_enableSearch": true,
       "pdf": false,
       "_gitContribute": {

@@ -8,6 +8,7 @@
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">true</IsAotCompatible>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadme>README.md</PackageReadme>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageDescription>Provides support for the Chrome DevTools Protocol (CDP) over Selenium WebDriver BiDi (Chromium BiDi+).</PackageDescription>
     <PackageReleaseNotes>This release adds support for $(ProtocolVersion) of the Chrome DevTools Protocol (CDP).</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
@@ -66,6 +67,7 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="..\..\docs\images\cdp-logo.png" Pack="true" PackagePath="icon.png" Visible="false" />
   </ItemGroup>
 
 </Project>
