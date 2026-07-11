@@ -33,11 +33,10 @@
     <_ProtocolInput Include="$(_RepoRoot)/spec/*.json" />
   </ItemGroup>
 
-  <Target Name="GenerateProtocol"
-          BeforeTargets="DispatchToInnerBuilds;BeforeBuild"
-          Inputs="@(_ProtocolInput)"
-          Outputs="$(_GenDir)CdpModule.cs"
-          Condition="'$(ForceGenerate)' == 'true' Or !Exists('$(_GenDir)CdpModule.cs') Or '@(_ProtocolInput)' != ''">
+  <!-- Shared generation logic. Building and running the generator deletes and
+       rewrites the files under _gen/, so it must run exactly once and never
+       concurrently with a compilation that consumes those files. -->
+  <Target Name="_RunProtocolGenerator">
     <Message Importance="high" Text="Building protocol code generator..." />
     <MSBuild Projects="$(_GeneratorProject)" Targets="Restore;Build" Properties="TargetFramework=net10.0">
       <Output TaskParameter="TargetOutputs" ItemName="_GeneratorAssembly" />
@@ -45,6 +44,21 @@
     <Message Importance="high" Text="Running protocol code generator..." />
     <Exec Command="dotnet exec &quot;@(_GeneratorAssembly)&quot;" WorkingDirectory="$(_RepoRoot)" />
   </Target>
+
+  <!-- Multi-targeting (outer) build: generate once before dispatching to the
+       inner per-TFM builds. Honors ForceGenerate. -->
+  <Target Name="GenerateProtocolOuter"
+          BeforeTargets="DispatchToInnerBuilds"
+          DependsOnTargets="_RunProtocolGenerator"
+          Condition="'$(ForceGenerate)' == 'true' Or !Exists('$(_GenDir)CdpModule.g.cs')" />
+
+  <!-- Single-TFM build (no dispatch): generate only if the output is missing.
+       ForceGenerate is intentionally ignored here so that the parallel inner
+       builds of a multi-targeting build never regenerate concurrently. -->
+  <Target Name="GenerateProtocolInner"
+          BeforeTargets="BeforeBuild"
+          DependsOnTargets="_RunProtocolGenerator"
+          Condition="'$(TargetFramework)' != '' And !Exists('$(_GenDir)CdpModule.g.cs')" />
 
   <ItemGroup>
     <Compile Include="..\..\_gen\**\*.cs" LinkBase="_gen" />
