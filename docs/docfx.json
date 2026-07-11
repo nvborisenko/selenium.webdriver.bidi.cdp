@@ -28,7 +28,8 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "robots.txt"
         ]
       }
     ],
@@ -37,6 +38,11 @@
       "default",
       "modern"
     ],
+    "sitemap": {
+      "baseUrl": "https://nvborisenko.github.io/Selenium.webdriver.bidi.cdp/",
+      "changefreq": "weekly",
+      "priority": 0.5
+    },
     "globalMetadata": {
       "_appName": "CDP over WebDriver BiDi",
       "_appTitle": "CDP over WebDriver BiDi",

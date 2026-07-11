@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nvborisenko.github.io/Selenium.webdriver.bidi.cdp/sitemap.xml
