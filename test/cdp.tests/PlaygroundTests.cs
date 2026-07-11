@@ -22,17 +22,7 @@ public class PlaygroundTests
 
         await Assert.That(sessionResult).IsNotNull();
 
-        // My domain tests
-        var my = cdp.My;
-
-        var enableResult = await my.EnableAsync(new() { Session = sessionResult.Session, MaxResourceBufferSize = 10000 });
-
-        await using var somethingHappenedStream = await my.SomethingHappened.StreamAsync();
-
         await context.NavigateAsync("https://www.example.com");
-
-        var somethingHappened = await somethingHappenedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
-        System.Console.WriteLine($"Something happened: FrameId={somethingHappened.FrameId}, LoaderId={somethingHappened.LoaderId}");
 
         // Network
         await cdp.Network.EnableAsync(new() { Session = sessionResult.Session, MaxResourceBufferSize = 999 });

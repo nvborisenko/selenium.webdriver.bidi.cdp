@@ -5,7 +5,7 @@ namespace Selenium.WebDriver.BiDi.Cdp.My;
 /// <summary>
 /// Event descriptors for custom CDP events.
 /// </summary>
-public static class MyEvent
+internal static class MyEvent
 {
     /// <summary>
     /// Descriptor for the <c>goog:cdp.Page.lifecycleEvent</c> event.

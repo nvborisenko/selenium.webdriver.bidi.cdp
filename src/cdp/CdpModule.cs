@@ -56,7 +56,7 @@ public partial class CdpModule : Module
     /// <summary>
     /// Provides access to domain instances scoped to this CDP module.
     /// </summary>
-    public My.MyDomain My => new(this);
+    internal My.MyDomain My => new(this);
 }
 
 [JsonSerializable(typeof(GetSessionParameters))]

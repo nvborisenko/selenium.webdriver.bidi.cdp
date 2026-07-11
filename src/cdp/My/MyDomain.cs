@@ -6,7 +6,7 @@ namespace Selenium.WebDriver.BiDi.Cdp.My;
 /// <summary>
 /// Example domain demonstrating hand-written CDP domain usage.
 /// </summary>
-public sealed class MyDomain(CdpModule cdp) : Domain(cdp)
+internal sealed class MyDomain(CdpModule cdp) : Domain(cdp)
 {
     private static readonly MyJsonSerializerContext JsonContext = MyJsonSerializerContext.Default;
 
@@ -34,7 +34,7 @@ internal record EnableParameters(int? MaxTotalBufferSize, int? MaxResourceBuffer
 /// <summary>
 /// Optional parameters for <see cref="MyDomain.EnableAsync"/>.
 /// </summary>
-public record EnableOptions : CdpCommandOptions
+internal record EnableOptions : CdpCommandOptions
 {
     /// <summary>Maximum total buffer size.</summary>
     public int? MaxTotalBufferSize { get; set; }
@@ -49,14 +49,14 @@ public record EnableOptions : CdpCommandOptions
 /// <summary>
 /// Result of <see cref="MyDomain.EnableAsync"/>.
 /// </summary>
-public record EnableResult : EmptyResult;
+internal record EnableResult : EmptyResult;
 
 /// <summary>
 /// Event args for the <c>goog:cdp.Page.lifecycleEvent</c> event.
 /// </summary>
 /// <param name="FrameId">Frame identifier.</param>
 /// <param name="LoaderId">Loader identifier.</param>
-public record SomethingHappenedEventArgs(string FrameId, string LoaderId) : OpenQA.Selenium.BiDi.EventArgs;
+internal record SomethingHappenedEventArgs(string FrameId, string LoaderId) : OpenQA.Selenium.BiDi.EventArgs;
 
 [JsonSerializable(typeof(EnableParameters))]
 [JsonSerializable(typeof(EnableResult))]
