@@ -58,10 +58,16 @@ public class NetworkTests : CdpTestFixture
     public async Task VerifySearchInResponseBody()
     {
         await using var responseReceivedStream = await Cdp.Network.ResponseReceived.StreamAsync();
+        await using var loadingFinishedStream = await Cdp.Network.LoadingFinished.StreamAsync();
 
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
         var responseReceived = await responseReceivedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
+
+        // The response body is only available after the resource has finished loading.
+        await loadingFinishedStream.ReadAllAsync()
+            .FirstAsync(e => e.RequestId == responseReceived.RequestId)
+            .AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         var searchResponse = await Cdp.Network.SearchInResponseBodyAsync(
             responseReceived.RequestId,
