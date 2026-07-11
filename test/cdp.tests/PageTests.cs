@@ -51,7 +51,7 @@ public class PageTests : CdpTestFixture
     [Test]
     public async Task CaptureScreenshotWithClip()
     {
-        await Cdp.Page.NavigateAsync("https://www.example.com");
+        await NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var result = await Cdp.Page.CaptureScreenshotAsync(new()
         {
@@ -74,7 +74,7 @@ public class PageTests : CdpTestFixture
     [Test]
     public async Task CaptureScreenshotAsJpeg()
     {
-        await Cdp.Page.NavigateAsync("https://www.example.com");
+        await NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var result = await Cdp.Page.CaptureScreenshotAsync(new()
         {
@@ -95,7 +95,7 @@ public class PageTests : CdpTestFixture
     [Test]
     public async Task CaptureFullPageScreenshot()
     {
-        await Cdp.Page.NavigateAsync("https://www.selenium.dev");
+        await NavigateAndWaitForLoadAsync("https://www.selenium.dev");
 
         // Get full page dimensions
         var metrics = await Cdp.Runtime.EvaluateAsync(
