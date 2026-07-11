@@ -31,4 +31,15 @@ public abstract class CdpTestFixture
         await BiDi.DisposeAsync();
         await Driver.DisposeAsync();
     }
+
+    protected async Task NavigateAndWaitForLoadAsync(string url, TimeSpan? timeout = null)
+    {
+        await Cdp.Page.EnableAsync();
+
+        await using var loadStream = await Cdp.Page.LoadEventFired.StreamAsync();
+
+        await Cdp.Page.NavigateAsync(url);
+
+        await loadStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(timeout ?? TimeSpan.FromSeconds(30));
+    }
 }

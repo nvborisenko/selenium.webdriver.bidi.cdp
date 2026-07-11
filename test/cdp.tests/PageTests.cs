@@ -5,7 +5,7 @@ public class PageTests : CdpTestFixture
     [Test]
     public async Task PrintToPdf()
     {
-        await Cdp.Page.NavigateAsync("https://www.example.com");
+        await NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var result = await Cdp.Page.PrintToPDFAsync(new()
         {
@@ -34,7 +34,7 @@ public class PageTests : CdpTestFixture
     [Test]
     public async Task PrintToPdfWithHeaderAndFooter()
     {
-        await Cdp.Page.NavigateAsync("https://www.example.com");
+        await NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var result = await Cdp.Page.PrintToPDFAsync(new()
         {
