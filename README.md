@@ -1,6 +1,19 @@
-# Selenium.WebDriver.BiDi.Cdp
+<p align="center">
+  <img src="docs/images/cdp-logo.svg" alt="CDP over BiDi logo" width="128" />
+</p>
 
-A .NET library that provides strongly-typed access to the [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) (CDP) over the [WebDriver BiDi](https://w3c.github.io/webdriver-bidi/) transport, extending [Selenium WebDriver](https://www.selenium.dev/).
+<h1 align="center">CDP over BiDi</h1>
+
+<p align="center">
+  <strong>Strongly-typed access to the <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol</a> for .NET,<br />
+  over the <a href="https://w3c.github.io/webdriver-bidi/">WebDriver BiDi</a> transport, extending <a href="https://www.selenium.dev/">Selenium WebDriver</a>.</strong>
+</p>
+
+<p align="center">
+  <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/v/Selenium.WebDriver.BiDi.Cdp.svg" alt="NuGet" /></a>
+  <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/dt/Selenium.WebDriver.BiDi.Cdp.svg" alt="NuGet Downloads" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
+</p>
 
 ## Features
 
