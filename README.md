@@ -49,6 +49,8 @@ var result = await cdp.Page.CaptureScreenshotAsync();
 Console.WriteLine($"Screenshot data length: {result.Data.Length}");
 ```
 
+Full API and usage documentation is available at https://nvborisenko.github.io/selenium.webdriver.bidi.cdp
+
 ## Building
 
 ```shell
