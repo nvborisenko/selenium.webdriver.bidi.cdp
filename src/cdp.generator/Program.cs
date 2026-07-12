@@ -723,6 +723,7 @@ foreach (var inputFile in inputFiles)
 var cdpModuleBuilder = new StringBuilder();
 
 cdpModuleBuilder.AppendLine("#nullable enable");
+cdpModuleBuilder.AppendLine("#pragma warning disable CS0612");
 cdpModuleBuilder.AppendLine();
 cdpModuleBuilder.AppendLine($"namespace {rootNamespace};");
 cdpModuleBuilder.AppendLine();
@@ -778,6 +779,7 @@ foreach (var (inputFile, domainInfo) in domainsToGenerate)
 }
 
 cdpModuleBuilder.AppendLine("#pragma warning restore BIDICDP001");
+cdpModuleBuilder.AppendLine("#pragma warning restore CS0612");
 cdpModuleBuilder.AppendLine("}");
 
 File.WriteAllText($"{outputDirectory}/CdpModule.g.cs", cdpModuleBuilder.ToString());
