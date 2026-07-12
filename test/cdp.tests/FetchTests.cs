@@ -33,7 +33,7 @@ public class FetchTests : CdpTestFixture
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
         // Navigate in background since it will be paused
-        var navigateTask = Cdp.Page.NavigateAsync("https://www.example.com");
+        var navigateTask = NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
@@ -134,7 +134,7 @@ public class FetchTests : CdpTestFixture
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
-        var navigateTask = Cdp.Page.NavigateAsync("https://www.example.com");
+        var navigateTask = NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
@@ -157,7 +157,7 @@ public class FetchTests : CdpTestFixture
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
-        var navigateTask = Cdp.Page.NavigateAsync("https://www.example.com");
+        var navigateTask = NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
