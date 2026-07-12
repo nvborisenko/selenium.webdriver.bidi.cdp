@@ -32,12 +32,14 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task EmulateNetworkConditionOffline()
     {
+#pragma warning disable CS0612
         await Cdp.Network.EmulateNetworkConditionsAsync(
             offline: true,
             latency: 100,
             downloadThroughput: 1000,
             uploadThroughput: 2000,
             new() { ConnectionType = ConnectionType.Cellular3g });
+#pragma warning restore CS0612
 
         await using var loadingFailedStream = await Cdp.Network.LoadingFailed.StreamAsync();
 

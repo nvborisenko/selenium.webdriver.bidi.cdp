@@ -1,4 +1,5 @@
 #nullable enable
+#pragma warning disable CS0612
 
 namespace Selenium.WebDriver.BiDi.Cdp;
 
@@ -457,4 +458,5 @@ partial class CdpModule
     public Schema.SchemaDomain Schema => _schema ?? global::System.Threading.Interlocked.CompareExchange(ref _schema, new(this), null) ?? _schema;
 
 #pragma warning restore BIDICDP001
+#pragma warning restore CS0612
 }

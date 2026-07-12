@@ -7,7 +7,9 @@ public class EmulationTests : CdpTestFixture
     [Test]
     public async Task SetGeolocationOverride()
     {
+#pragma warning disable CS0612
         await Cdp.Browser.GrantPermissionsAsync([PermissionType.Geolocation]);
+#pragma warning restore CS0612
 
         await Cdp.Emulation.SetGeolocationOverrideAsync(new()
         {
