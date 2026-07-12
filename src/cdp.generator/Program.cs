@@ -722,43 +722,62 @@ foreach (var inputFile in inputFiles)
 // domain accessors
 var cdpModuleBuilder = new StringBuilder();
 
+cdpModuleBuilder.AppendLine("#nullable enable");
+cdpModuleBuilder.AppendLine();
 cdpModuleBuilder.AppendLine($"namespace {rootNamespace};");
 cdpModuleBuilder.AppendLine();
 
 cdpModuleBuilder.AppendLine("partial class CdpModule");
 cdpModuleBuilder.AppendLine("{");
+cdpModuleBuilder.AppendLine("#pragma warning disable BIDICDP001");
 
+// Generate fields and properties together
+var domainsToGenerate = new List<(string InputFile, DomainInfo Domain)>();
 foreach (var inputFile in inputFiles)
 {
     var browserProtocol = Parser.ParseBrowserProtocol(File.ReadAllText(inputFile));
-
     foreach (var domainInfo in browserProtocol.Domains)
     {
-        cdpModuleBuilder.AppendLine("    /// <summary>");
-        if (domainInfo.Description is not null)
-        {
-            foreach (var line in GetNormalizedDescription(domainInfo.Description))
-            {
-                cdpModuleBuilder.AppendLine($"    /// {line}");
-            }
-        }
-        cdpModuleBuilder.AppendLine("    /// </summary>");
-
-        if (domainInfo.Experimental is true)
-        {
-            cdpModuleBuilder.AppendLine($"    [global::System.Diagnostics.CodeAnalysis.Experimental(\"{experimentalDiagnosticId}\")]");
-        }
-
-        if (domainInfo.Deprecated is true)
-        {
-            cdpModuleBuilder.AppendLine("    [global::System.Obsolete]");
-        }
-
-        cdpModuleBuilder.AppendLine($"    public {domainInfo.Domain}.{domainInfo.Domain}Domain {domainInfo.Domain} => new(this);");
-        cdpModuleBuilder.AppendLine();
+        domainsToGenerate.Add((inputFile, domainInfo));
     }
 }
 
+// Generate each field-property pair together
+foreach (var (inputFile, domainInfo) in domainsToGenerate)
+{
+    var propertyNameCamelCase = domainInfo.Domain.Substring(0, 1).ToLower() + (domainInfo.Domain.Length > 1 ? domainInfo.Domain.Substring(1) : "");
+    
+    // Generate the backing field
+    cdpModuleBuilder.AppendLine($"    private {domainInfo.Domain}.{domainInfo.Domain}Domain? _{propertyNameCamelCase};");
+    cdpModuleBuilder.AppendLine();
+    
+    // Generate the property documentation and attribute
+    cdpModuleBuilder.AppendLine("    /// <summary>");
+    if (domainInfo.Description is not null)
+    {
+        foreach (var line in GetNormalizedDescription(domainInfo.Description))
+        {
+            cdpModuleBuilder.AppendLine($"    /// {line}");
+        }
+    }
+    cdpModuleBuilder.AppendLine("    /// </summary>");
+
+    if (domainInfo.Experimental is true)
+    {
+        cdpModuleBuilder.AppendLine($"    [global::System.Diagnostics.CodeAnalysis.Experimental(\"{experimentalDiagnosticId}\")]");
+    }
+
+    if (domainInfo.Deprecated is true)
+    {
+        cdpModuleBuilder.AppendLine("    [global::System.Obsolete]");
+    }
+
+    // Generate the property
+    cdpModuleBuilder.AppendLine($"    public {domainInfo.Domain}.{domainInfo.Domain}Domain {domainInfo.Domain} => _{propertyNameCamelCase} ?? global::System.Threading.Interlocked.CompareExchange(ref _{propertyNameCamelCase}, new(this), null) ?? _{propertyNameCamelCase};");
+    cdpModuleBuilder.AppendLine();
+}
+
+cdpModuleBuilder.AppendLine("#pragma warning restore BIDICDP001");
 cdpModuleBuilder.AppendLine("}");
 
 File.WriteAllText($"{outputDirectory}/CdpModule.g.cs", cdpModuleBuilder.ToString());
