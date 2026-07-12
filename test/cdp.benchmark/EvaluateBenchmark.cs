@@ -2,8 +2,8 @@ using BenchmarkDotNet.Attributes;
 using OpenQA.Selenium.BiDi;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V148.Runtime;
-using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V148.DevToolsSessionDomains;
+using OpenQA.Selenium.DevTools.V150.Runtime;
+using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V150.DevToolsSessionDomains;
 
 namespace Selenium.WebDriver.BiDi.Cdp.Benchmark;
 
