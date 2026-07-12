@@ -23,11 +23,22 @@ public abstract class Domain(CdpModule cdp)
         where TParameters : Parameters
         where TResult : EmptyResult
     {
-        var @params = JsonSerializer.SerializeToNode(parameters, command.ParametersTypeInfo)!.AsObject();
+        var @params = SerializeParameters(parameters, command.ParametersTypeInfo);
 
         var sendResult = await cdp.SendCommandAsync(command.Method, @params, options, cancellationToken);
 
         return sendResult.Result.Deserialize(command.ResultTypeInfo)!;
+    }
+
+    private static JsonElement SerializeParameters<TParameters>(TParameters parameters, JsonTypeInfo<TParameters> parametersTypeInfo)
+        where TParameters : Parameters
+    {
+#if NET8_0_OR_GREATER
+        return JsonSerializer.SerializeToElement(parameters, parametersTypeInfo);
+#else
+        using var json = JsonDocument.Parse(JsonSerializer.Serialize(parameters, parametersTypeInfo));
+        return json.RootElement.Clone();
+#endif
     }
 
     /// <summary>

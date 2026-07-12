@@ -1,10 +1,9 @@
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using OpenQA.Selenium.BiDi;
 
 namespace Selenium.WebDriver.BiDi.Cdp;
 
-internal sealed record SendCommandParameters(string Method, JsonObject Params, string? Session) : Parameters;
+internal sealed record SendCommandParameters(string Method, JsonElement Params, string? Session) : Parameters;
 
 /// <summary>
 /// Options for sending a CDP command.
