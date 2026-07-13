@@ -18151,10 +18151,7 @@
                         "InvalidFederatedSessionProviderFailedToRestoreKey",
                         "FailedToUnwrapKey",
                         "SessionDeletedDuringRefresh",
-                        "CrossOriginRegistrationSiteNotIncluded",
-                        "InvalidPreProvisionedKeyInitiatorMissing",
-                        "PreProvisionedKeyAccessNotGranted",
-                        "PreProvisionedKeyNotFound"
+                        "CrossOriginRegistrationSiteNotIncluded"
                     ]
                 },
                 {
