@@ -38,13 +38,13 @@ jobs:
         id: upstream
         run: |
           set -euo pipefail
-          # Read all remote tags first (grep consumes the full stream, so no SIGPIPE
-          from `head` closing the pipe early, which previously broke `set -o pipefail`).
-          tags=$(git ls-remote --tags --sort=-v:refname \
-            https://github.com/ChromeDevTools/devtools-protocol.git 'v0.0.*' \
-            | grep -v '\^{}')
-          first_ref=${tags%%$'\n'*}
-          latest_tag=${first_ref##*refs/tags/}
+          # Resolve semantic version tags only and pick the highest version.
+          tags=$(git ls-remote --refs --tags \
+            https://github.com/ChromeDevTools/devtools-protocol.git 'v*' \
+            | awk '{print $2}' \
+            | sed 's#refs/tags/##' \
+            | awk '/^v[0-9]+\.[0-9]+\.[0-9]+$/')
+          latest_tag=$(printf '%s\n' "$tags" | sort -V | tail -n1)
           if [ -z "$latest_tag" ]; then
             echo "Could not resolve latest upstream tag" >&2
             exit 1
