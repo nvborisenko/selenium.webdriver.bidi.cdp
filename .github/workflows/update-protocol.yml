@@ -90,7 +90,7 @@ jobs:
 
       - name: Regenerate protocol code
         if: steps.check.outputs.changed == 'true'
-        run: dotnet build /p:ForceGenerate=true
+        run: dotnet build /m:1 /p:ForceGenerate=true
 
       - name: Open PR and enable auto-merge
         if: steps.check.outputs.changed == 'true'
