@@ -6,6 +6,54 @@ namespace Selenium.WebDriver.BiDi.Cdp;
 partial class CdpModule
 {
 #pragma warning disable BIDICDP001
+    private Console.ConsoleDomain? _console;
+
+    /// <summary>
+    /// This domain is deprecated - use Runtime or Log instead.
+    /// </summary>
+    [global::System.Obsolete]
+    public Console.ConsoleDomain Console => _console ?? global::System.Threading.Interlocked.CompareExchange(ref _console, new(this), null) ?? _console;
+
+    private Debugger.DebuggerDomain? _debugger;
+
+    /// <summary>
+    /// Debugger domain exposes JavaScript debugging capabilities. It allows setting and removing
+    /// breakpoints, stepping through execution, exploring stack traces, etc.
+    /// </summary>
+    public Debugger.DebuggerDomain Debugger => _debugger ?? global::System.Threading.Interlocked.CompareExchange(ref _debugger, new(this), null) ?? _debugger;
+
+    private HeapProfiler.HeapProfilerDomain? _heapProfiler;
+
+    /// <summary>
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public HeapProfiler.HeapProfilerDomain HeapProfiler => _heapProfiler ?? global::System.Threading.Interlocked.CompareExchange(ref _heapProfiler, new(this), null) ?? _heapProfiler;
+
+    private Profiler.ProfilerDomain? _profiler;
+
+    /// <summary>
+    /// </summary>
+    public Profiler.ProfilerDomain Profiler => _profiler ?? global::System.Threading.Interlocked.CompareExchange(ref _profiler, new(this), null) ?? _profiler;
+
+    private Runtime.RuntimeDomain? _runtime;
+
+    /// <summary>
+    /// Runtime domain exposes JavaScript runtime by means of remote evaluation and mirror objects.
+    /// Evaluation results are returned as mirror object that expose object type, string representation
+    /// and unique identifier that can be used for further object reference. Original objects are
+    /// maintained in memory unless they are either explicitly released or are released along with the
+    /// other objects in their object group.
+    /// </summary>
+    public Runtime.RuntimeDomain Runtime => _runtime ?? global::System.Threading.Interlocked.CompareExchange(ref _runtime, new(this), null) ?? _runtime;
+
+    private Schema.SchemaDomain? _schema;
+
+    /// <summary>
+    /// This domain is deprecated.
+    /// </summary>
+    [global::System.Obsolete]
+    public Schema.SchemaDomain Schema => _schema ?? global::System.Threading.Interlocked.CompareExchange(ref _schema, new(this), null) ?? _schema;
+
     private Accessibility.AccessibilityDomain? _accessibility;
 
     /// <summary>
@@ -408,54 +456,6 @@ partial class CdpModule
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public WebMCP.WebMCPDomain WebMCP => _webMCP ?? global::System.Threading.Interlocked.CompareExchange(ref _webMCP, new(this), null) ?? _webMCP;
-
-    private Console.ConsoleDomain? _console;
-
-    /// <summary>
-    /// This domain is deprecated - use Runtime or Log instead.
-    /// </summary>
-    [global::System.Obsolete]
-    public Console.ConsoleDomain Console => _console ?? global::System.Threading.Interlocked.CompareExchange(ref _console, new(this), null) ?? _console;
-
-    private Debugger.DebuggerDomain? _debugger;
-
-    /// <summary>
-    /// Debugger domain exposes JavaScript debugging capabilities. It allows setting and removing
-    /// breakpoints, stepping through execution, exploring stack traces, etc.
-    /// </summary>
-    public Debugger.DebuggerDomain Debugger => _debugger ?? global::System.Threading.Interlocked.CompareExchange(ref _debugger, new(this), null) ?? _debugger;
-
-    private HeapProfiler.HeapProfilerDomain? _heapProfiler;
-
-    /// <summary>
-    /// </summary>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public HeapProfiler.HeapProfilerDomain HeapProfiler => _heapProfiler ?? global::System.Threading.Interlocked.CompareExchange(ref _heapProfiler, new(this), null) ?? _heapProfiler;
-
-    private Profiler.ProfilerDomain? _profiler;
-
-    /// <summary>
-    /// </summary>
-    public Profiler.ProfilerDomain Profiler => _profiler ?? global::System.Threading.Interlocked.CompareExchange(ref _profiler, new(this), null) ?? _profiler;
-
-    private Runtime.RuntimeDomain? _runtime;
-
-    /// <summary>
-    /// Runtime domain exposes JavaScript runtime by means of remote evaluation and mirror objects.
-    /// Evaluation results are returned as mirror object that expose object type, string representation
-    /// and unique identifier that can be used for further object reference. Original objects are
-    /// maintained in memory unless they are either explicitly released or are released along with the
-    /// other objects in their object group.
-    /// </summary>
-    public Runtime.RuntimeDomain Runtime => _runtime ?? global::System.Threading.Interlocked.CompareExchange(ref _runtime, new(this), null) ?? _runtime;
-
-    private Schema.SchemaDomain? _schema;
-
-    /// <summary>
-    /// This domain is deprecated.
-    /// </summary>
-    [global::System.Obsolete]
-    public Schema.SchemaDomain Schema => _schema ?? global::System.Threading.Interlocked.CompareExchange(ref _schema, new(this), null) ?? _schema;
 
 #pragma warning restore BIDICDP001
 #pragma warning restore CS0612
