@@ -22,7 +22,6 @@ public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.W
     /// <list type="bullet">
     /// <item><description><b>Protocol</b> - The protocol identifier (e.g. "openid4vp"). Required when |action| is "respond", forbidden otherwise.</description></item>
     /// <item><description><b>Response</b> - The response data object returned by the wallet. Required when |action| is "respond", forbidden otherwise.</description></item>
-    /// <item><description><b>FrameId</b> - The frame to scope the virtual wallet behavior to.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="action">
@@ -39,14 +38,14 @@ public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.W
     /// </returns>
     public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, SetVirtualWalletBehaviorCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: options?.Protocol, Response: options?.Response, FrameId: options?.FrameId);
+        var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: options?.Protocol, Response: options?.Response);
         return await ExecuteCommandAsync(SetVirtualWalletBehaviorCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetVirtualWalletBehaviorCommandParameters, SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorCommand = new("DigitalCredentials.setVirtualWalletBehavior", JsonContext.SetVirtualWalletBehaviorCommandParameters, JsonContext.SetVirtualWalletBehaviorResult);
 
 }
 
-internal sealed record SetVirtualWalletBehaviorCommandParameters(VirtualWalletAction Action, string? Protocol, global::System.Text.Json.JsonElement? Response, Page.FrameId? FrameId) : Parameters;
+internal sealed record SetVirtualWalletBehaviorCommandParameters(VirtualWalletAction Action, string? Protocol, global::System.Text.Json.JsonElement? Response) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DigitalCredentialsDomain.SetVirtualWalletBehaviorAsync"/>.
@@ -64,11 +63,6 @@ public sealed record SetVirtualWalletBehaviorCommandOptions : CdpCommandOptions
     /// Required when |action| is "respond", forbidden otherwise.
     /// </summary>
     public global::System.Text.Json.JsonElement? Response { get; init; }
-
-    /// <summary>
-    /// The frame to scope the virtual wallet behavior to.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
 }
 
 /// <summary>

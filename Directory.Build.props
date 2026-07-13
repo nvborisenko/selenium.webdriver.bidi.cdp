@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <MajorVersion>0</MajorVersion>
-    <ProtocolVersion>1657692</ProtocolVersion>
+    <ProtocolVersion>1656784</ProtocolVersion>
     <VersionPrefix>$(MajorVersion).0.$(ProtocolVersion)</VersionPrefix>
     <AssemblyVersion>$(MajorVersion).0.0.0</AssemblyVersion>
     <FileVersion>$(MajorVersion).0.0.0</FileVersion>
