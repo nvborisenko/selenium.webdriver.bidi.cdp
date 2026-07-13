@@ -20,8 +20,8 @@
 - **50+ CDP domains** — Page, Network, DOM, Runtime, Debugger, Console, and more
 - **Fully async** — async/await with `CancellationToken` support throughout
 - **Strongly typed** — auto-generated records for all commands, parameters, and results
+- **Spec evolution aware** — uses `Obsolete` and `Experimental` attributes to reflect CDP API changes over time
 - **AOT and trimming compatible** — supports Native AOT compilation and IL trimming on .NET 8+
-- **Source-generated JSON** — uses `System.Text.Json` source generators for fast, allocation-free serialization
 
 ## Installation
 
