@@ -5,8 +5,8 @@
 <h1 align="center">CDP over BiDi</h1>
 
 <p align="center">
-  <strong>Strongly-typed access to the <a href="https://chromedevtools.github.io/devtools-protocol/" target="_blank" rel="noopener noreferrer">Chrome DevTools Protocol</a> for .NET,<br />
-  over the <a href="https://w3c.github.io/webdriver-bidi/" target="_blank" rel="noopener noreferrer">WebDriver BiDi</a> transport, extending <a href="https://www.selenium.dev/" target="_blank" rel="noopener noreferrer">Selenium WebDriver</a>.</strong>
+  <strong>Strongly-typed access to the <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol</a> for .NET,<br />
+  over the <a href="https://w3c.github.io/webdriver-bidi/">WebDriver BiDi</a> transport, extending <a href="https://www.selenium.dev/">Selenium WebDriver</a>.</strong>
 </p>
 
 <p align="center">
