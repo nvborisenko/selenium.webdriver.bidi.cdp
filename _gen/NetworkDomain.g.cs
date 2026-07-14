@@ -6075,6 +6075,18 @@ public enum DeviceBoundSessionFetchResult
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossOriginRegistrationSiteNotIncluded")]
     CrossOriginRegistrationSiteNotIncluded,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidPreProvisionedKeyInitiatorMissing")]
+    InvalidPreProvisionedKeyInitiatorMissing,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreProvisionedKeyAccessNotGranted")]
+    PreProvisionedKeyAccessNotGranted,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreProvisionedKeyNotFound")]
+    PreProvisionedKeyNotFound,
 }
 
 /// <summary>
