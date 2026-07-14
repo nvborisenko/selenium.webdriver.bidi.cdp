@@ -20,7 +20,7 @@
 - **50+ CDP domains** — Page, Network, DOM, Runtime, Debugger, Console, and more
 - **Fully async** — async/await with `CancellationToken` support throughout
 - **Strongly typed** — auto-generated records for all commands, parameters, and results
-- **Spec evolution aware** — always up to date with CDP API changes, using `Obsolete` and `Experimental` attributes to reflect evolution over time
+- **Spec evolution aware** — always up to date with [CDP API](https://github.com/ChromeDevTools/devtools-protocol) changes, using `Obsolete` and `Experimental` attributes to reflect evolution over time
 - **AOT and trimming compatible** — supports Native AOT compilation and IL trimming on .NET 8+
 
 ## Installation
