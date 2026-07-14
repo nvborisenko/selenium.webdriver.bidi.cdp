@@ -10,9 +10,9 @@
 </p>
 
 <p align="center">
-  <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/v/Selenium.WebDriver.BiDi.Cdp.svg" alt="NuGet" /></a>
-  <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/dt/Selenium.WebDriver.BiDi.Cdp.svg" alt="NuGet Downloads" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
+  <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/v/Selenium.WebDriver.BiDi.Cdp.svg?color=512BD4" alt="NuGet" /></a>
+  <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/dt/Selenium.WebDriver.BiDi.Cdp.svg?color=512BD4" alt="NuGet Downloads" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=512BD4" alt="License: MIT" /></a>
 </p>
 
 ## Features
