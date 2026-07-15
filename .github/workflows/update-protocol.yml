@@ -2,8 +2,8 @@ name: Update Protocol
 
 on:
   schedule:
-    # Daily at 02:00 UTC
-    - cron: '0 2 * * *'
+    # Daily at 05:00 UTC
+    - cron: '0 5 * * *'
   workflow_dispatch:
 
 permissions:
