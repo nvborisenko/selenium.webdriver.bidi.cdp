@@ -881,97 +881,6 @@ public sealed record CorsIssueDetails(Network.CorsErrorStatus CorsErrorStatus, b
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AttributionReportingIssueType>))]
-public enum AttributionReportingIssueType
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PermissionPolicyDisabled")]
-    PermissionPolicyDisabled,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UntrustworthyReportingOrigin")]
-    UntrustworthyReportingOrigin,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InsecureContext")]
-    InsecureContext,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidHeader")]
-    InvalidHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRegisterTriggerHeader")]
-    InvalidRegisterTriggerHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SourceAndTriggerHeaders")]
-    SourceAndTriggerHeaders,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SourceIgnored")]
-    SourceIgnored,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TriggerIgnored")]
-    TriggerIgnored,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OsSourceIgnored")]
-    OsSourceIgnored,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OsTriggerIgnored")]
-    OsTriggerIgnored,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRegisterOsSourceHeader")]
-    InvalidRegisterOsSourceHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRegisterOsTriggerHeader")]
-    InvalidRegisterOsTriggerHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebAndOsHeaders")]
-    WebAndOsHeaders,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoWebOrOsSupport")]
-    NoWebOrOsSupport,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationRegistrationWithoutTransientUserActivation")]
-    NavigationRegistrationWithoutTransientUserActivation,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidInfoHeader")]
-    InvalidInfoHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoRegisterSourceHeader")]
-    NoRegisterSourceHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoRegisterTriggerHeader")]
-    NoRegisterTriggerHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoRegisterOsSourceHeader")]
-    NoRegisterOsSourceHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoRegisterOsTriggerHeader")]
-    NoRegisterOsTriggerHeader,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationRegistrationUniqueScopeAlreadySet")]
-    NavigationRegistrationUniqueScopeAlreadySet,
-}
-
-/// <summary>
-/// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SharedDictionaryError>))]
 public enum SharedDictionaryError
 {
@@ -1240,27 +1149,6 @@ public enum ConnectionAllowlistError
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidUrlPattern")]
     InvalidUrlPattern,
-}
-
-/// <summary>
-/// Details for issues around "Attribution Reporting API" usage.
-/// Explainer: https://github.com/WICG/attribution-reporting-api
-/// </summary>
-/// <param name="ViolationType">
-/// </param>
-public sealed record AttributionReportingIssueDetails(AttributionReportingIssueType ViolationType)
-{
-    /// <summary>
-    /// </summary>
-    public AffectedRequest? Request { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public DOM.BackendNodeId? ViolatingNodeId { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public string? InvalidParameter { get; init; }
 }
 
 /// <summary>
@@ -2376,6 +2264,22 @@ public sealed record SelectivePermissionsInterventionIssueDetails(string ApiName
 }
 
 /// <summary>
+/// Details for issues about lazy-loaded images without explicit dimensions.
+/// </summary>
+/// <param name="NodeId">
+/// DOM node of the problematic HTMLImageElement.
+/// </param>
+/// <param name="Url">
+/// URL or src attribute of the image.
+/// </param>
+/// <param name="FrameId">
+/// Frame containing the image.
+/// </param>
+public sealed record LazyLoadImageIssueDetails(DOM.BackendNodeId NodeId, string Url, Page.FrameId FrameId)
+{
+}
+
+/// <summary>
 /// A unique identifier for the type of issue. Each type may use one of the
 /// optional fields in InspectorIssueDetails to convey more specific
 /// information about the kind of issue.
@@ -2411,10 +2315,6 @@ public enum InspectorIssueCode
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorsIssue")]
     CorsIssue,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttributionReportingIssue")]
-    AttributionReportingIssue,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("QuirksModeIssue")]
@@ -2503,6 +2403,10 @@ public enum InspectorIssueCode
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerificationRequestIssue")]
     EmailVerificationRequestIssue,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LazyLoadImageIssue")]
+    LazyLoadImageIssue,
 }
 
 /// <summary>
@@ -2539,10 +2443,6 @@ public sealed record InspectorIssueDetails()
     /// <summary>
     /// </summary>
     public CorsIssueDetails? CorsIssueDetails { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public AttributionReportingIssueDetails? AttributionReportingIssueDetails { get; init; }
 
     /// <summary>
     /// </summary>
@@ -2632,6 +2532,10 @@ public sealed record InspectorIssueDetails()
     /// <summary>
     /// </summary>
     public EmailVerificationRequestIssueDetails? EmailVerificationRequestIssueDetails { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public LazyLoadImageIssueDetails? LazyLoadImageIssueDetails { get; init; }
 }
 
 /// <summary>
@@ -2694,12 +2598,10 @@ public sealed record InspectorIssue(InspectorIssueCode Code, InspectorIssueDetai
 [JsonSerializable(typeof(SharedArrayBufferIssueType), TypeInfoPropertyName = "AuditsSharedArrayBufferIssueType")]
 [JsonSerializable(typeof(SharedArrayBufferIssueDetails), TypeInfoPropertyName = "AuditsSharedArrayBufferIssueDetails")]
 [JsonSerializable(typeof(CorsIssueDetails), TypeInfoPropertyName = "AuditsCorsIssueDetails")]
-[JsonSerializable(typeof(AttributionReportingIssueType), TypeInfoPropertyName = "AuditsAttributionReportingIssueType")]
 [JsonSerializable(typeof(SharedDictionaryError), TypeInfoPropertyName = "AuditsSharedDictionaryError")]
 [JsonSerializable(typeof(SRIMessageSignatureError), TypeInfoPropertyName = "AuditsSRIMessageSignatureError")]
 [JsonSerializable(typeof(UnencodedDigestError), TypeInfoPropertyName = "AuditsUnencodedDigestError")]
 [JsonSerializable(typeof(ConnectionAllowlistError), TypeInfoPropertyName = "AuditsConnectionAllowlistError")]
-[JsonSerializable(typeof(AttributionReportingIssueDetails), TypeInfoPropertyName = "AuditsAttributionReportingIssueDetails")]
 [JsonSerializable(typeof(QuirksModeIssueDetails), TypeInfoPropertyName = "AuditsQuirksModeIssueDetails")]
 [JsonSerializable(typeof(NavigatorUserAgentIssueDetails), TypeInfoPropertyName = "AuditsNavigatorUserAgentIssueDetails")]
 [JsonSerializable(typeof(SharedDictionaryIssueDetails), TypeInfoPropertyName = "AuditsSharedDictionaryIssueDetails")]
@@ -2733,6 +2635,7 @@ public sealed record InspectorIssue(InspectorIssueCode Code, InspectorIssueDetai
 [JsonSerializable(typeof(PermissionElementIssueType), TypeInfoPropertyName = "AuditsPermissionElementIssueType")]
 [JsonSerializable(typeof(PermissionElementIssueDetails), TypeInfoPropertyName = "AuditsPermissionElementIssueDetails")]
 [JsonSerializable(typeof(SelectivePermissionsInterventionIssueDetails), TypeInfoPropertyName = "AuditsSelectivePermissionsInterventionIssueDetails")]
+[JsonSerializable(typeof(LazyLoadImageIssueDetails), TypeInfoPropertyName = "AuditsLazyLoadImageIssueDetails")]
 [JsonSerializable(typeof(InspectorIssueCode), TypeInfoPropertyName = "AuditsInspectorIssueCode")]
 [JsonSerializable(typeof(InspectorIssueDetails), TypeInfoPropertyName = "AuditsInspectorIssueDetails")]
 [JsonSerializable(typeof(IssueId), TypeInfoPropertyName = "AuditsIssueId")]

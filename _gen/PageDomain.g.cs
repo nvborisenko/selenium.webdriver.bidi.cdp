@@ -3675,10 +3675,6 @@ public enum PermissionsPolicyFeature
     AriaNotify,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("attribution-reporting")]
-    AttributionReporting,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autofill")]
     Autofill,
     /// <summary>
