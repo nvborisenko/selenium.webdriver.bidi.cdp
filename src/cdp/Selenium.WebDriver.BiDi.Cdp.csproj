@@ -10,6 +10,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
     <PackageDescription>Provides support for the Chrome DevTools Protocol (CDP) over Selenium WebDriver BiDi (Chromium BiDi+).</PackageDescription>
+    <PackageTags>bidi cdp devtools chrome edge</PackageTags>
     <PackageReleaseNotes>This release adds support for $(ProtocolVersion) of the Chrome DevTools Protocol (CDP).</PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\Public.snk</AssemblyOriginatorKeyFile>
