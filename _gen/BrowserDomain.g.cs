@@ -497,40 +497,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<AddPrivacySandboxEnrollmentOverrideCommandParameters, AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideCommand = new("Browser.addPrivacySandboxEnrollmentOverride", JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult);
 
     /// <summary>
-    /// Configures encryption keys used with a given privacy sandbox API to talk
-    /// to a trusted coordinator.  Since this is intended for test automation only,
-    /// coordinatorOrigin must be a .test domain. No existing coordinator
-    /// configuration for the origin may exist.
-    /// </summary>
-    /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
-    /// <list type="bullet">
-    /// <item><description><b>BrowserContextId</b> - BrowserContext to perform the action in. When omitted, default browser context is used.</description></item>
-    /// </list>
-    /// </remarks>
-    /// <param name="api">
-    /// </param>
-    /// <param name="coordinatorOrigin">
-    /// </param>
-    /// <param name="keyConfig">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AddPrivacySandboxCoordinatorKeyConfigCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="AddPrivacySandboxCoordinatorKeyConfigResult"/>.
-    /// </returns>
-    public async Task<AddPrivacySandboxCoordinatorKeyConfigResult> AddPrivacySandboxCoordinatorKeyConfigAsync(PrivacySandboxAPI api, string coordinatorOrigin, string keyConfig, AddPrivacySandboxCoordinatorKeyConfigCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddPrivacySandboxCoordinatorKeyConfigCommandParameters(Api: api, CoordinatorOrigin: coordinatorOrigin, KeyConfig: keyConfig, BrowserContextId: options?.BrowserContextId);
-        return await ExecuteCommandAsync(AddPrivacySandboxCoordinatorKeyConfigCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AddPrivacySandboxCoordinatorKeyConfigCommandParameters, AddPrivacySandboxCoordinatorKeyConfigResult> AddPrivacySandboxCoordinatorKeyConfigCommand = new("Browser.addPrivacySandboxCoordinatorKeyConfig", JsonContext.AddPrivacySandboxCoordinatorKeyConfigCommandParameters, JsonContext.AddPrivacySandboxCoordinatorKeyConfigResult);
-
-    /// <summary>
     /// Fired when page is about to start a download.
     /// </summary>
     /// <remarks>
@@ -948,25 +914,6 @@ public sealed record AddPrivacySandboxEnrollmentOverrideCommandOptions : CdpComm
 public sealed record AddPrivacySandboxEnrollmentOverrideResult() : EmptyResult;
 
 
-internal sealed record AddPrivacySandboxCoordinatorKeyConfigCommandParameters(PrivacySandboxAPI Api, string CoordinatorOrigin, string KeyConfig, BrowserContextID? BrowserContextId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BrowserDomain.AddPrivacySandboxCoordinatorKeyConfigAsync"/>.
-/// </summary>
-public sealed record AddPrivacySandboxCoordinatorKeyConfigCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// BrowserContext to perform the action in. When omitted, default browser
-    /// context is used.
-    /// </summary>
-    public BrowserContextID? BrowserContextId { get; init; }
-}
-
-/// <summary>
-/// </summary>
-public sealed record AddPrivacySandboxCoordinatorKeyConfigResult() : EmptyResult;
-
-
 /// <summary>
 /// Fired when page is about to start a download.
 /// </summary>
@@ -1351,21 +1298,6 @@ public sealed record Histogram(string Name, long Sum, long Count, IReadOnlyList<
 {
 }
 
-/// <summary>
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PrivacySandboxAPI>))]
-public enum PrivacySandboxAPI
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BiddingAndAuctionServices")]
-    BiddingAndAuctionServices,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TrustedKeyValue")]
-    TrustedKeyValue,
-}
-
 [JsonSerializable(typeof(SetPermissionCommandParameters), TypeInfoPropertyName = "SetPermissionCommandParameters")]
 [JsonSerializable(typeof(SetPermissionResult), TypeInfoPropertyName = "SetPermissionResult")]
 [JsonSerializable(typeof(GrantPermissionsCommandParameters), TypeInfoPropertyName = "GrantPermissionsCommandParameters")]
@@ -1404,8 +1336,6 @@ public enum PrivacySandboxAPI
 [JsonSerializable(typeof(ExecuteBrowserCommandResult), TypeInfoPropertyName = "ExecuteBrowserCommandResult")]
 [JsonSerializable(typeof(AddPrivacySandboxEnrollmentOverrideCommandParameters), TypeInfoPropertyName = "AddPrivacySandboxEnrollmentOverrideCommandParameters")]
 [JsonSerializable(typeof(AddPrivacySandboxEnrollmentOverrideResult), TypeInfoPropertyName = "AddPrivacySandboxEnrollmentOverrideResult")]
-[JsonSerializable(typeof(AddPrivacySandboxCoordinatorKeyConfigCommandParameters), TypeInfoPropertyName = "AddPrivacySandboxCoordinatorKeyConfigCommandParameters")]
-[JsonSerializable(typeof(AddPrivacySandboxCoordinatorKeyConfigResult), TypeInfoPropertyName = "AddPrivacySandboxCoordinatorKeyConfigResult")]
 [JsonSerializable(typeof(CdpEventArgs<DownloadWillBeginEventArgs>), TypeInfoPropertyName = "DownloadWillBeginCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DownloadProgressEventArgs>), TypeInfoPropertyName = "DownloadProgressCdpEventArgs")]
 [JsonSerializable(typeof(BrowserContextID), TypeInfoPropertyName = "BrowserBrowserContextID")]
@@ -1418,7 +1348,6 @@ public enum PrivacySandboxAPI
 [JsonSerializable(typeof(BrowserCommandId), TypeInfoPropertyName = "BrowserBrowserCommandId")]
 [JsonSerializable(typeof(Bucket), TypeInfoPropertyName = "BrowserBucket")]
 [JsonSerializable(typeof(Histogram), TypeInfoPropertyName = "BrowserHistogram")]
-[JsonSerializable(typeof(PrivacySandboxAPI), TypeInfoPropertyName = "BrowserPrivacySandboxAPI")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PermissionType>), TypeInfoPropertyName = "IReadOnlyListBrowserPermissionType")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Histogram>), TypeInfoPropertyName = "IReadOnlyListBrowserHistogram")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Bucket>), TypeInfoPropertyName = "IReadOnlyListBrowserBucket")]
