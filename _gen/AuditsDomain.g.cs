@@ -483,10 +483,6 @@ public enum MixedContentResourceType
 {
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttributionSrc")]
-    AttributionSrc,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Audio")]
     Audio,
     /// <summary>

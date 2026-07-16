@@ -458,72 +458,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<ClearTrustTokensCommandParameters, ClearTrustTokensResult> ClearTrustTokensCommand = new("Storage.clearTrustTokens", JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult);
 
     /// <summary>
-    /// Gets details for a named interest group.
-    /// </summary>
-    /// <param name="ownerOrigin">
-    /// </param>
-    /// <param name="name">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetInterestGroupDetailsCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="GetInterestGroupDetailsResult"/>.
-    /// </returns>
-    public async Task<GetInterestGroupDetailsResult> GetInterestGroupDetailsAsync(string ownerOrigin, string name, GetInterestGroupDetailsCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetInterestGroupDetailsCommandParameters(OwnerOrigin: ownerOrigin, Name: name);
-        return await ExecuteCommandAsync(GetInterestGroupDetailsCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetInterestGroupDetailsCommandParameters, GetInterestGroupDetailsResult> GetInterestGroupDetailsCommand = new("Storage.getInterestGroupDetails", JsonContext.GetInterestGroupDetailsCommandParameters, JsonContext.GetInterestGroupDetailsResult);
-
-    /// <summary>
-    /// Enables/Disables issuing of interestGroupAccessed events.
-    /// </summary>
-    /// <param name="enable">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetInterestGroupTrackingCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetInterestGroupTrackingResult"/>.
-    /// </returns>
-    public async Task<SetInterestGroupTrackingResult> SetInterestGroupTrackingAsync(bool enable, SetInterestGroupTrackingCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInterestGroupTrackingCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(SetInterestGroupTrackingCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInterestGroupTrackingCommandParameters, SetInterestGroupTrackingResult> SetInterestGroupTrackingCommand = new("Storage.setInterestGroupTracking", JsonContext.SetInterestGroupTrackingCommandParameters, JsonContext.SetInterestGroupTrackingResult);
-
-    /// <summary>
-    /// Enables/Disables issuing of interestGroupAuctionEventOccurred and
-    /// interestGroupAuctionNetworkRequestCreated.
-    /// </summary>
-    /// <param name="enable">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetInterestGroupAuctionTrackingCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetInterestGroupAuctionTrackingResult"/>.
-    /// </returns>
-    public async Task<SetInterestGroupAuctionTrackingResult> SetInterestGroupAuctionTrackingAsync(bool enable, SetInterestGroupAuctionTrackingCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInterestGroupAuctionTrackingCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(SetInterestGroupAuctionTrackingCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInterestGroupAuctionTrackingCommandParameters, SetInterestGroupAuctionTrackingResult> SetInterestGroupAuctionTrackingCommand = new("Storage.setInterestGroupAuctionTracking", JsonContext.SetInterestGroupAuctionTrackingCommandParameters, JsonContext.SetInterestGroupAuctionTrackingResult);
-
-    /// <summary>
     /// Gets metadata for an origin's shared storage.
     /// </summary>
     /// <param name="ownerOrigin">
@@ -766,30 +700,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly CdpCommand<GetRelatedWebsiteSetsCommandParameters, GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsCommand = new("Storage.getRelatedWebsiteSets", JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult);
 
     /// <summary>
-    /// </summary>
-    /// <param name="owner">
-    /// </param>
-    /// <param name="name">
-    /// </param>
-    /// <param name="hashes">
-    /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetProtectedAudienceKAnonymityCommandOptions"/>.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetProtectedAudienceKAnonymityResult"/>.
-    /// </returns>
-    public async Task<SetProtectedAudienceKAnonymityResult> SetProtectedAudienceKAnonymityAsync(string owner, string name, IEnumerable<string> hashes, SetProtectedAudienceKAnonymityCommandOptions? options = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetProtectedAudienceKAnonymityCommandParameters(Owner: owner, Name: name, Hashes: hashes);
-        return await ExecuteCommandAsync(SetProtectedAudienceKAnonymityCommand, @params, options, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetProtectedAudienceKAnonymityCommandParameters, SetProtectedAudienceKAnonymityResult> SetProtectedAudienceKAnonymityCommand = new("Storage.setProtectedAudienceKAnonymity", JsonContext.SetProtectedAudienceKAnonymityCommandParameters, JsonContext.SetProtectedAudienceKAnonymityResult);
-
-    /// <summary>
     /// A cache's contents have been modified.
     /// </summary>
     /// <remarks>
@@ -840,54 +750,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     public IEventSource<IndexedDBListUpdatedEventArgs> IndexedDBListUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBListUpdated);
-    /// <summary>
-    /// One of the interest groups was accessed. Note that these events are global
-    /// to all targets sharing an interest group store.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="InterestGroupAccessedEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>AccessTime</b></description></item>
-    /// <item><description><b>Type</b></description></item>
-    /// <item><description><b>OwnerOrigin</b></description></item>
-    /// <item><description><b>Name</b></description></item>
-    /// <item><description><b>ComponentSellerOrigin</b> - For topLevelBid/topLevelAdditionalBid, and when appropriate, win and additionalBidWin</description></item>
-    /// <item><description><b>Bid</b> - For bid or somethingBid event, if done locally and not on a server.</description></item>
-    /// <item><description><b>BidCurrency</b></description></item>
-    /// <item><description><b>UniqueAuctionId</b> - For non-global events --- links to interestGroupAuctionEvent</description></item>
-    /// </list>
-    /// </remarks>
-    public IEventSource<InterestGroupAccessedEventArgs> InterestGroupAccessed => CreateCdpEventSource(StorageDomainEvent.InterestGroupAccessed);
-    /// <summary>
-    /// An auction involving interest groups is taking place. These events are
-    /// target-specific.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="InterestGroupAuctionEventOccurredEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>EventTime</b></description></item>
-    /// <item><description><b>Type</b></description></item>
-    /// <item><description><b>UniqueAuctionId</b></description></item>
-    /// <item><description><b>ParentAuctionId</b> - Set for child auctions.</description></item>
-    /// <item><description><b>AuctionConfig</b> - Set for started and configResolved</description></item>
-    /// </list>
-    /// </remarks>
-    public IEventSource<InterestGroupAuctionEventOccurredEventArgs> InterestGroupAuctionEventOccurred => CreateCdpEventSource(StorageDomainEvent.InterestGroupAuctionEventOccurred);
-    /// <summary>
-    /// Specifies which auctions a particular network fetch may be related to, and
-    /// in what role. Note that it is not ordered with respect to
-    /// Network.requestWillBeSent (but will happen before loadingFinished
-    /// loadingFailed).
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="InterestGroupAuctionNetworkRequestCreatedEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>Type</b></description></item>
-    /// <item><description><b>RequestId</b></description></item>
-    /// <item><description><b>Auctions</b> - This is the set of the auctions using the worklet that issued this request.  In the case of trusted signals, it's possible that only some of them actually care about the keys being queried.</description></item>
-    /// </list>
-    /// </remarks>
-    public IEventSource<InterestGroupAuctionNetworkRequestCreatedEventArgs> InterestGroupAuctionNetworkRequestCreated => CreateCdpEventSource(StorageDomainEvent.InterestGroupAuctionNetworkRequestCreated);
     /// <summary>
     /// Shared storage was accessed by the associated page.
     /// The following parameters are included in all events.
@@ -1259,54 +1121,6 @@ public sealed record ClearTrustTokensCommandOptions : CdpCommandOptions
 public sealed record ClearTrustTokensResult(bool DidDeleteTokens) : EmptyResult;
 
 
-internal sealed record GetInterestGroupDetailsCommandParameters(string OwnerOrigin, string Name) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.GetInterestGroupDetailsAsync"/>.
-/// </summary>
-public sealed record GetInterestGroupDetailsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-/// <param name="Details">
-/// This largely corresponds to:
-/// https://wicg.github.io/turtledove/#dictdef-generatebidinterestgroup
-/// but has absolute expirationTime instead of relative lifetimeMs and
-/// also adds joiningOrigin.
-/// </param>
-public sealed record GetInterestGroupDetailsResult(global::System.Text.Json.JsonElement Details) : EmptyResult;
-
-
-internal sealed record SetInterestGroupTrackingCommandParameters(bool Enable) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.SetInterestGroupTrackingAsync"/>.
-/// </summary>
-public sealed record SetInterestGroupTrackingCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-public sealed record SetInterestGroupTrackingResult() : EmptyResult;
-
-
-internal sealed record SetInterestGroupAuctionTrackingCommandParameters(bool Enable) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.SetInterestGroupAuctionTrackingAsync"/>.
-/// </summary>
-public sealed record SetInterestGroupAuctionTrackingCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-public sealed record SetInterestGroupAuctionTrackingResult() : EmptyResult;
-
-
 internal sealed record GetSharedStorageMetadataCommandParameters(string OwnerOrigin) : Parameters;
 
 /// <summary>
@@ -1474,20 +1288,6 @@ public sealed record GetRelatedWebsiteSetsCommandOptions : CdpCommandOptions
 public sealed record GetRelatedWebsiteSetsResult(IReadOnlyList<RelatedWebsiteSet> Sets) : EmptyResult;
 
 
-internal sealed record SetProtectedAudienceKAnonymityCommandParameters(string Owner, string Name, IEnumerable<string> Hashes) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="StorageDomain.SetProtectedAudienceKAnonymityAsync"/>.
-/// </summary>
-public sealed record SetProtectedAudienceKAnonymityCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
-/// </summary>
-public sealed record SetProtectedAudienceKAnonymityResult() : EmptyResult;
-
-
 /// <summary>
 /// A cache's contents have been modified.
 /// </summary>
@@ -1552,67 +1352,6 @@ public sealed record IndexedDBContentUpdatedEventArgs(string Origin, string Stor
 /// Storage bucket to update.
 /// </param>
 public sealed record IndexedDBListUpdatedEventArgs(string Origin, string StorageKey, string BucketId) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// One of the interest groups was accessed. Note that these events are global
-/// to all targets sharing an interest group store.
-/// </summary>
-/// <param name="AccessTime">
-/// </param>
-/// <param name="Type">
-/// </param>
-/// <param name="OwnerOrigin">
-/// </param>
-/// <param name="Name">
-/// </param>
-/// <param name="ComponentSellerOrigin">
-/// For topLevelBid/topLevelAdditionalBid, and when appropriate,
-/// win and additionalBidWin
-/// </param>
-/// <param name="Bid">
-/// For bid or somethingBid event, if done locally and not on a server.
-/// </param>
-/// <param name="BidCurrency">
-/// </param>
-/// <param name="UniqueAuctionId">
-/// For non-global events --- links to interestGroupAuctionEvent
-/// </param>
-public sealed record InterestGroupAccessedEventArgs(Network.TimeSinceEpoch AccessTime, InterestGroupAccessType Type, string OwnerOrigin, string Name, string? ComponentSellerOrigin = null, double? Bid = null, string? BidCurrency = null, InterestGroupAuctionId? UniqueAuctionId = null) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// An auction involving interest groups is taking place. These events are
-/// target-specific.
-/// </summary>
-/// <param name="EventTime">
-/// </param>
-/// <param name="Type">
-/// </param>
-/// <param name="UniqueAuctionId">
-/// </param>
-/// <param name="ParentAuctionId">
-/// Set for child auctions.
-/// </param>
-/// <param name="AuctionConfig">
-/// Set for started and configResolved
-/// </param>
-public sealed record InterestGroupAuctionEventOccurredEventArgs(Network.TimeSinceEpoch EventTime, InterestGroupAuctionEventType Type, InterestGroupAuctionId UniqueAuctionId, InterestGroupAuctionId? ParentAuctionId = null, global::System.Text.Json.JsonElement? AuctionConfig = null) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// Specifies which auctions a particular network fetch may be related to, and
-/// in what role. Note that it is not ordered with respect to
-/// Network.requestWillBeSent (but will happen before loadingFinished
-/// loadingFailed).
-/// </summary>
-/// <param name="Type">
-/// </param>
-/// <param name="RequestId">
-/// </param>
-/// <param name="Auctions">
-/// This is the set of the auctions using the worklet that issued this
-/// request.  In the case of trusted signals, it's possible that only some of
-/// them actually care about the keys being queried.
-/// </param>
-public sealed record InterestGroupAuctionNetworkRequestCreatedEventArgs(InterestGroupAuctionFetchType Type, Network.RequestId RequestId, IEnumerable<InterestGroupAuctionId> Auctions) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Shared storage was accessed by the associated page.
@@ -1777,111 +1516,6 @@ public sealed record TrustTokens(string IssuerOrigin, double Count)
 }
 
 /// <summary>
-/// Protected audience interest group auction identifier.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<InterestGroupAuctionId>))]
-public record InterestGroupAuctionId : IStringRemoteId
-{
-    string IStringRemoteId.Id { get; init; } = null!;
-}
-
-/// <summary>
-/// Enum of interest group access types.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<InterestGroupAccessType>))]
-public enum InterestGroupAccessType
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("join")]
-    Join,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("leave")]
-    Leave,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("update")]
-    Update,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("loaded")]
-    Loaded,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bid")]
-    Bid,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("win")]
-    Win,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("additionalBid")]
-    AdditionalBid,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("additionalBidWin")]
-    AdditionalBidWin,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("topLevelBid")]
-    TopLevelBid,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("topLevelAdditionalBid")]
-    TopLevelAdditionalBid,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clear")]
-    Clear,
-}
-
-/// <summary>
-/// Enum of auction events.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<InterestGroupAuctionEventType>))]
-public enum InterestGroupAuctionEventType
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("started")]
-    Started,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("configResolved")]
-    ConfigResolved,
-}
-
-/// <summary>
-/// Enum of network fetches auctions can do.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<InterestGroupAuctionFetchType>))]
-public enum InterestGroupAuctionFetchType
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bidderJs")]
-    BidderJs,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bidderWasm")]
-    BidderWasm,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sellerJs")]
-    SellerJs,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bidderTrustedSignals")]
-    BidderTrustedSignals,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sellerTrustedSignals")]
-    SellerTrustedSignals,
-}
-
-/// <summary>
 /// Enum of shared storage access scopes.
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SharedStorageAccessScope>))]
@@ -1895,10 +1529,6 @@ public enum SharedStorageAccessScope
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sharedStorageWorklet")]
     SharedStorageWorklet,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("protectedAudienceWorklet")]
-    ProtectedAudienceWorklet,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("header")]
@@ -2275,12 +1905,6 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(GetTrustTokensResult), TypeInfoPropertyName = "GetTrustTokensResult")]
 [JsonSerializable(typeof(ClearTrustTokensCommandParameters), TypeInfoPropertyName = "ClearTrustTokensCommandParameters")]
 [JsonSerializable(typeof(ClearTrustTokensResult), TypeInfoPropertyName = "ClearTrustTokensResult")]
-[JsonSerializable(typeof(GetInterestGroupDetailsCommandParameters), TypeInfoPropertyName = "GetInterestGroupDetailsCommandParameters")]
-[JsonSerializable(typeof(GetInterestGroupDetailsResult), TypeInfoPropertyName = "GetInterestGroupDetailsResult")]
-[JsonSerializable(typeof(SetInterestGroupTrackingCommandParameters), TypeInfoPropertyName = "SetInterestGroupTrackingCommandParameters")]
-[JsonSerializable(typeof(SetInterestGroupTrackingResult), TypeInfoPropertyName = "SetInterestGroupTrackingResult")]
-[JsonSerializable(typeof(SetInterestGroupAuctionTrackingCommandParameters), TypeInfoPropertyName = "SetInterestGroupAuctionTrackingCommandParameters")]
-[JsonSerializable(typeof(SetInterestGroupAuctionTrackingResult), TypeInfoPropertyName = "SetInterestGroupAuctionTrackingResult")]
 [JsonSerializable(typeof(GetSharedStorageMetadataCommandParameters), TypeInfoPropertyName = "GetSharedStorageMetadataCommandParameters")]
 [JsonSerializable(typeof(GetSharedStorageMetadataResult), TypeInfoPropertyName = "GetSharedStorageMetadataResult")]
 [JsonSerializable(typeof(GetSharedStorageEntriesCommandParameters), TypeInfoPropertyName = "GetSharedStorageEntriesCommandParameters")]
@@ -2303,15 +1927,10 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(RunBounceTrackingMitigationsResult), TypeInfoPropertyName = "RunBounceTrackingMitigationsResult")]
 [JsonSerializable(typeof(GetRelatedWebsiteSetsCommandParameters), TypeInfoPropertyName = "GetRelatedWebsiteSetsCommandParameters")]
 [JsonSerializable(typeof(GetRelatedWebsiteSetsResult), TypeInfoPropertyName = "GetRelatedWebsiteSetsResult")]
-[JsonSerializable(typeof(SetProtectedAudienceKAnonymityCommandParameters), TypeInfoPropertyName = "SetProtectedAudienceKAnonymityCommandParameters")]
-[JsonSerializable(typeof(SetProtectedAudienceKAnonymityResult), TypeInfoPropertyName = "SetProtectedAudienceKAnonymityResult")]
 [JsonSerializable(typeof(CdpEventArgs<CacheStorageContentUpdatedEventArgs>), TypeInfoPropertyName = "CacheStorageContentUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<CacheStorageListUpdatedEventArgs>), TypeInfoPropertyName = "CacheStorageListUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<IndexedDBContentUpdatedEventArgs>), TypeInfoPropertyName = "IndexedDBContentUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<IndexedDBListUpdatedEventArgs>), TypeInfoPropertyName = "IndexedDBListUpdatedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<InterestGroupAccessedEventArgs>), TypeInfoPropertyName = "InterestGroupAccessedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<InterestGroupAuctionEventOccurredEventArgs>), TypeInfoPropertyName = "InterestGroupAuctionEventOccurredCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<InterestGroupAuctionNetworkRequestCreatedEventArgs>), TypeInfoPropertyName = "InterestGroupAuctionNetworkRequestCreatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<SharedStorageAccessedEventArgs>), TypeInfoPropertyName = "SharedStorageAccessedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<SharedStorageWorkletOperationExecutionFinishedEventArgs>), TypeInfoPropertyName = "SharedStorageWorkletOperationExecutionFinishedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>), TypeInfoPropertyName = "StorageBucketCreatedOrUpdatedCdpEventArgs")]
@@ -2320,10 +1939,6 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(StorageType), TypeInfoPropertyName = "StorageStorageType")]
 [JsonSerializable(typeof(UsageForType), TypeInfoPropertyName = "StorageUsageForType")]
 [JsonSerializable(typeof(TrustTokens), TypeInfoPropertyName = "StorageTrustTokens")]
-[JsonSerializable(typeof(InterestGroupAuctionId), TypeInfoPropertyName = "StorageInterestGroupAuctionId")]
-[JsonSerializable(typeof(InterestGroupAccessType), TypeInfoPropertyName = "StorageInterestGroupAccessType")]
-[JsonSerializable(typeof(InterestGroupAuctionEventType), TypeInfoPropertyName = "StorageInterestGroupAuctionEventType")]
-[JsonSerializable(typeof(InterestGroupAuctionFetchType), TypeInfoPropertyName = "StorageInterestGroupAuctionFetchType")]
 [JsonSerializable(typeof(SharedStorageAccessScope), TypeInfoPropertyName = "StorageSharedStorageAccessScope")]
 [JsonSerializable(typeof(SharedStorageAccessMethod), TypeInfoPropertyName = "StorageSharedStorageAccessMethod")]
 [JsonSerializable(typeof(SharedStorageEntry), TypeInfoPropertyName = "StorageSharedStorageEntry")]
@@ -2342,7 +1957,6 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<TrustTokens>), TypeInfoPropertyName = "IReadOnlyListStorageTrustTokens")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageEntry>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageEntry")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RelatedWebsiteSet>), TypeInfoPropertyName = "IReadOnlyListStorageRelatedWebsiteSet")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InterestGroupAuctionId>), TypeInfoPropertyName = "IReadOnlyListStorageInterestGroupAuctionId")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageReportingMetadata>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageReportingMetadata")]
 [JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageUrlWithMetadata>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageUrlWithMetadata")]
 [JsonSourceGenerationOptions(
@@ -2386,35 +2000,6 @@ public static class StorageDomainEvent
         EventDescriptor<CdpEventArgs<IndexedDBListUpdatedEventArgs>>.Create(
             "goog:cdp.Storage.indexedDBListUpdated",
             StorageJsonSerializerContext.Default.IndexedDBListUpdatedCdpEventArgs);
-
-    /// <summary>
-    /// One of the interest groups was accessed. Note that these events are global
-    /// to all targets sharing an interest group store.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<InterestGroupAccessedEventArgs>> InterestGroupAccessed { get; } =
-        EventDescriptor<CdpEventArgs<InterestGroupAccessedEventArgs>>.Create(
-            "goog:cdp.Storage.interestGroupAccessed",
-            StorageJsonSerializerContext.Default.InterestGroupAccessedCdpEventArgs);
-
-    /// <summary>
-    /// An auction involving interest groups is taking place. These events are
-    /// target-specific.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<InterestGroupAuctionEventOccurredEventArgs>> InterestGroupAuctionEventOccurred { get; } =
-        EventDescriptor<CdpEventArgs<InterestGroupAuctionEventOccurredEventArgs>>.Create(
-            "goog:cdp.Storage.interestGroupAuctionEventOccurred",
-            StorageJsonSerializerContext.Default.InterestGroupAuctionEventOccurredCdpEventArgs);
-
-    /// <summary>
-    /// Specifies which auctions a particular network fetch may be related to, and
-    /// in what role. Note that it is not ordered with respect to
-    /// Network.requestWillBeSent (but will happen before loadingFinished
-    /// loadingFailed).
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<InterestGroupAuctionNetworkRequestCreatedEventArgs>> InterestGroupAuctionNetworkRequestCreated { get; } =
-        EventDescriptor<CdpEventArgs<InterestGroupAuctionNetworkRequestCreatedEventArgs>>.Create(
-            "goog:cdp.Storage.interestGroupAuctionNetworkRequestCreated",
-            StorageJsonSerializerContext.Default.InterestGroupAuctionNetworkRequestCreatedCdpEventArgs);
 
     /// <summary>
     /// Shared storage was accessed by the associated page.
