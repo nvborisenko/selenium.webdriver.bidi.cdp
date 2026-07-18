@@ -1,15 +1,16 @@
-<p align="center">
-  <img src="docs/images/cdp-logo.svg" alt="CDP over BiDi logo" width="128" />
-</p>
+<table width="100%">
+  <tr>
+    <td valign="middle" align="left" width="140">
+      <img src="docs/images/cdp-logo.svg" alt="CDP over BiDi logo" width="128" height="128" />
+    </td>
+    <td valign="top" align="left">
+      <h1 align="middle">CDP over BiDi</h1>
+      <strong>Strongly-typed access to the <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol</a> for .NET, over the <a href="https://w3c.github.io/webdriver-bidi/">WebDriver BiDi</a> transport, extending <a href="https://www.selenium.dev/">Selenium WebDriver</a>.</strong>
+    </td>
+  </tr>
+</table>
 
-<h1 align="center">CDP over BiDi</h1>
-
-<p align="center">
-  <strong>Strongly-typed access to the <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol</a> for .NET,<br />
-  over the <a href="https://w3c.github.io/webdriver-bidi/">WebDriver BiDi</a> transport, extending <a href="https://www.selenium.dev/">Selenium WebDriver</a>.</strong>
-</p>
-
-<p align="center">
+<p align="right">
   <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/v/Selenium.WebDriver.BiDi.Cdp.svg?color=512BD4" alt="NuGet" /></a>
   <a href="https://www.nuget.org/packages/Selenium.WebDriver.BiDi.Cdp/"><img src="https://img.shields.io/nuget/dt/Selenium.WebDriver.BiDi.Cdp.svg?color=512BD4" alt="NuGet Downloads" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?color=512BD4" alt="License: MIT" /></a>
