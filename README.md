@@ -41,10 +41,9 @@ await using var bidi = await driver.AsBiDiAsync();
 
 var tab = (await bidi.BrowsingContext.GetTreeAsync()).Contexts[0].Context;
 
-// Your entry point
-var cdp = await tab.AsCdpAsync();
 
-// Capture a screenshot
+var cdp = await tab.AsCdpAsync();  // 👈 Your entry point
+
 var result = await cdp.Page.CaptureScreenshotAsync();
 Console.WriteLine($"Screenshot data length: {result.Data.Length}");
 ```
