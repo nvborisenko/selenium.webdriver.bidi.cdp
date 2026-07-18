@@ -1,10 +1,10 @@
-<table width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: none;">
   <tr>
-    <td valign="middle" align="left" width="140">
+    <td valign="middle" align="left" width="140" style="border: none;">
       <img src="docs/images/cdp-logo.svg" alt="CDP over BiDi logo" width="128" height="128" />
     </td>
-    <td valign="top" align="left">
-      <h1 align="middle">CDP over BiDi</h1>
+    <td valign="middle" align="left" style="border: none;">
+      <h1 align="left">CDP over BiDi</h1>
       <strong>Strongly-typed access to the <a href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol</a> for .NET, over the <a href="https://w3c.github.io/webdriver-bidi/">WebDriver BiDi</a> transport, extending <a href="https://www.selenium.dev/">Selenium WebDriver</a>.</strong>
     </td>
   </tr>
