@@ -49,4 +49,4 @@ Console.WriteLine($"Screenshot data length: {result.Data.Length}");
 
 - [Introduction](docs/introduction.md) — what the library is and why it exists.
 - [Getting started](docs/getting-started.md) — install, connect, and run your first CDP command.
-- [API reference](api/) — full API documentation for all CDP domains.
+- [API reference](api/index.md) — full API documentation for all CDP domains.

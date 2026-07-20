@@ -36,6 +36,6 @@ Console.WriteLine($"Screenshot data length: {result.Data.Length}");
 
 ## Next steps
 
-- Browse the [API reference](../api/) for every supported CDP domain.
+- Browse the [API reference](../api/index.md) for every supported CDP domain.
 - Read the [Introduction](introduction.md) for background on how CDP is
   tunnelled over WebDriver BiDi.
