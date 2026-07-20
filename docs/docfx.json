@@ -49,6 +49,7 @@
       "_appTitle": "CDP over WebDriver BiDi",
       "_appLogoPath": "images/cdp-logo.svg",
       "_appFaviconPath": "images/cdp-logo.png",
+      "_appFooter": "<small>CDP over WebDriver BiDi docs · <a href=\"https://github.com/nvborisenko/selenium.webdriver.bidi.cdp\" aria-label=\"GitHub repository\">GitHub</a></small>",
       "_enableSearch": true,
       "pdf": false,
       "_gitContribute": {
