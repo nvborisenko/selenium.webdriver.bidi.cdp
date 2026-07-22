@@ -1470,10 +1470,6 @@ public enum StorageType
     CacheStorage,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("interest_groups")]
-    InterestGroups,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared_storage")]
     SharedStorage,
     /// <summary>
