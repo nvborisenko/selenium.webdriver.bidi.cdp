@@ -24,6 +24,7 @@ public class CaptureScreenshotBenchmark
         _driver = new ChromeDriver(options);
         _bidi = await _driver.AsBiDiAsync();
         var context = (await _bidi.BrowsingContext.GetTreeAsync()).Contexts[0].Context;
+        await context.NavigateAsync("https://selenium.dev", new() { Wait = OpenQA.Selenium.BiDi.BrowsingContext.ReadinessState.Complete });
         _cdp = await context.AsCdpAsync();
 
         _devToolsSession = _driver.GetDevToolsSession();
