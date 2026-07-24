@@ -16,8 +16,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Disables domain notifications.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,18 +25,18 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Overlay.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables domain notifications.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -44,10 +44,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Overlay.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -55,7 +55,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// For testing.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>IncludeDistance</b> - Whether to include distance info.</description></item>
     /// <item><description><b>IncludeStyle</b> - Whether to include style info.</description></item>
@@ -66,8 +66,20 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="nodeId">
     /// Id of the node to get highlight object for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetHighlightObjectForTestCommandOptions"/>.
+    /// <param name="includeDistance">
+    /// Whether to include distance info.
+    /// </param>
+    /// <param name="includeStyle">
+    /// Whether to include style info.
+    /// </param>
+    /// <param name="colorFormat">
+    /// The color format to get config with (default: hex).
+    /// </param>
+    /// <param name="showAccessibilityInfo">
+    /// Whether to show accessibility info (default: true).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -75,10 +87,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetHighlightObjectForTestResult"/>.
     /// </returns>
-    public async Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, GetHighlightObjectForTestCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = default, bool? includeStyle = default, ColorFormat? colorFormat = default, bool? showAccessibilityInfo = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetHighlightObjectForTestCommandParameters(NodeId: nodeId, IncludeDistance: options?.IncludeDistance, IncludeStyle: options?.IncludeStyle, ColorFormat: options?.ColorFormat, ShowAccessibilityInfo: options?.ShowAccessibilityInfo);
-        return await ExecuteCommandAsync(GetHighlightObjectForTestCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetHighlightObjectForTestCommandParameters(NodeId: nodeId, IncludeDistance: includeDistance, IncludeStyle: includeStyle, ColorFormat: colorFormat, ShowAccessibilityInfo: showAccessibilityInfo);
+        return await ExecuteCommandAsync(GetHighlightObjectForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetHighlightObjectForTestCommandParameters, GetHighlightObjectForTestResult> GetHighlightObjectForTestCommand = new("Overlay.getHighlightObjectForTest", JsonContext.GetHighlightObjectForTestCommandParameters, JsonContext.GetHighlightObjectForTestResult);
 
@@ -88,8 +100,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="nodeIds">
     /// Ids of the node to get highlight object for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetGridHighlightObjectsForTestCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -97,10 +109,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetGridHighlightObjectsForTestResult"/>.
     /// </returns>
-    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, GetGridHighlightObjectsForTestCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetGridHighlightObjectsForTestCommandParameters(NodeIds: nodeIds);
-        return await ExecuteCommandAsync(GetGridHighlightObjectsForTestCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetGridHighlightObjectsForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetGridHighlightObjectsForTestCommandParameters, GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestCommand = new("Overlay.getGridHighlightObjectsForTest", JsonContext.GetGridHighlightObjectsForTestCommandParameters, JsonContext.GetGridHighlightObjectsForTestResult);
 
@@ -110,8 +122,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="nodeId">
     /// Id of the node to highlight.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetSourceOrderHighlightObjectForTestCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -119,18 +131,18 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSourceOrderHighlightObjectForTestResult"/>.
     /// </returns>
-    public async Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, GetSourceOrderHighlightObjectForTestCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSourceOrderHighlightObjectForTestCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetSourceOrderHighlightObjectForTestCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetSourceOrderHighlightObjectForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetSourceOrderHighlightObjectForTestCommandParameters, GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestCommand = new("Overlay.getSourceOrderHighlightObjectForTest", JsonContext.GetSourceOrderHighlightObjectForTestCommandParameters, JsonContext.GetSourceOrderHighlightObjectForTestResult);
 
     /// <summary>
     /// Hides any highlight.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="HideHighlightCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -138,10 +150,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HideHighlightResult"/>.
     /// </returns>
-    public async Task<HideHighlightResult> HideHighlightAsync(HideHighlightCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HideHighlightCommandParameters();
-        return await ExecuteCommandAsync(HideHighlightCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(HideHighlightCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<HideHighlightCommandParameters, HideHighlightResult> HideHighlightCommand = new("Overlay.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
 
@@ -152,7 +164,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// the owner node in the client and use highlightNode.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ContentColor</b> - The content box highlight fill color (default: transparent).</description></item>
     /// <item><description><b>ContentOutlineColor</b> - The content box highlight outline color (default: transparent).</description></item>
@@ -161,8 +173,14 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="frameId">
     /// Identifier of the frame to highlight.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="HighlightFrameCommandOptions"/>.
+    /// <param name="contentColor">
+    /// The content box highlight fill color (default: transparent).
+    /// </param>
+    /// <param name="contentOutlineColor">
+    /// The content box highlight outline color (default: transparent).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -171,10 +189,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="HighlightFrameResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, HighlightFrameCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = default, DOM.RGBA? contentOutlineColor = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new HighlightFrameCommandParameters(FrameId: frameId, ContentColor: options?.ContentColor, ContentOutlineColor: options?.ContentOutlineColor);
-        return await ExecuteCommandAsync(HighlightFrameCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new HighlightFrameCommandParameters(FrameId: frameId, ContentColor: contentColor, ContentOutlineColor: contentOutlineColor);
+        return await ExecuteCommandAsync(HighlightFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<HighlightFrameCommandParameters, HighlightFrameResult> HighlightFrameCommand = new("Overlay.highlightFrame", JsonContext.HighlightFrameCommandParameters, JsonContext.HighlightFrameResult);
 
@@ -183,7 +201,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// objectId must be specified.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeId</b> - Identifier of the node to highlight.</description></item>
     /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to highlight.</description></item>
@@ -194,8 +212,20 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="highlightConfig">
     /// A descriptor for the highlight appearance.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="HighlightNodeCommandOptions"/>.
+    /// <param name="nodeId">
+    /// Identifier of the node to highlight.
+    /// </param>
+    /// <param name="backendNodeId">
+    /// Identifier of the backend node to highlight.
+    /// </param>
+    /// <param name="objectId">
+    /// JavaScript object id of the node to be highlighted.
+    /// </param>
+    /// <param name="selector">
+    /// Selectors to highlight relevant nodes.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -203,10 +233,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightNodeResult"/>.
     /// </returns>
-    public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, HighlightNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? selector = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new HighlightNodeCommandParameters(HighlightConfig: highlightConfig, NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId, Selector: options?.Selector);
-        return await ExecuteCommandAsync(HighlightNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new HighlightNodeCommandParameters(HighlightConfig: highlightConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Selector: selector);
+        return await ExecuteCommandAsync(HighlightNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult> HighlightNodeCommand = new("Overlay.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
 
@@ -214,7 +244,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Highlights given quad. Coordinates are absolute with respect to the main frame viewport.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Color</b> - The highlight fill color (default: transparent).</description></item>
     /// <item><description><b>OutlineColor</b> - The highlight outline color (default: transparent).</description></item>
@@ -223,8 +253,14 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="quad">
     /// Quad to highlight
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="HighlightQuadCommandOptions"/>.
+    /// <param name="color">
+    /// The highlight fill color (default: transparent).
+    /// </param>
+    /// <param name="outlineColor">
+    /// The highlight outline color (default: transparent).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -232,10 +268,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightQuadResult"/>.
     /// </returns>
-    public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, HighlightQuadCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new HighlightQuadCommandParameters(Quad: quad, Color: options?.Color, OutlineColor: options?.OutlineColor);
-        return await ExecuteCommandAsync(HighlightQuadCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new HighlightQuadCommandParameters(Quad: quad, Color: color, OutlineColor: outlineColor);
+        return await ExecuteCommandAsync(HighlightQuadCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<HighlightQuadCommandParameters, HighlightQuadResult> HighlightQuadCommand = new("Overlay.highlightQuad", JsonContext.HighlightQuadCommandParameters, JsonContext.HighlightQuadResult);
 
@@ -246,7 +282,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// if DPR is not 1 (see crbug.com/437807128).
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Color</b> - The highlight fill color (default: transparent).</description></item>
     /// <item><description><b>OutlineColor</b> - The highlight outline color (default: transparent).</description></item>
@@ -264,8 +300,14 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="height">
     /// Rectangle height
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="HighlightRectCommandOptions"/>.
+    /// <param name="color">
+    /// The highlight fill color (default: transparent).
+    /// </param>
+    /// <param name="outlineColor">
+    /// The highlight outline color (default: transparent).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -273,10 +315,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightRectResult"/>.
     /// </returns>
-    public async Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, HighlightRectCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new HighlightRectCommandParameters(X: x, Y: y, Width: width, Height: height, Color: options?.Color, OutlineColor: options?.OutlineColor);
-        return await ExecuteCommandAsync(HighlightRectCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new HighlightRectCommandParameters(X: x, Y: y, Width: width, Height: height, Color: color, OutlineColor: outlineColor);
+        return await ExecuteCommandAsync(HighlightRectCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<HighlightRectCommandParameters, HighlightRectResult> HighlightRectCommand = new("Overlay.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
 
@@ -285,7 +327,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// JavaScript object wrapper. Either nodeId or objectId must be specified.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeId</b> - Identifier of the node to highlight.</description></item>
     /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to highlight.</description></item>
@@ -295,8 +337,17 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="sourceOrderConfig">
     /// A descriptor for the appearance of the overlay drawing.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="HighlightSourceOrderCommandOptions"/>.
+    /// <param name="nodeId">
+    /// Identifier of the node to highlight.
+    /// </param>
+    /// <param name="backendNodeId">
+    /// Identifier of the backend node to highlight.
+    /// </param>
+    /// <param name="objectId">
+    /// JavaScript object id of the node to be highlighted.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -304,10 +355,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightSourceOrderResult"/>.
     /// </returns>
-    public async Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, HighlightSourceOrderCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new HighlightSourceOrderCommandParameters(SourceOrderConfig: sourceOrderConfig, NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
-        return await ExecuteCommandAsync(HighlightSourceOrderCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new HighlightSourceOrderCommandParameters(SourceOrderConfig: sourceOrderConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
+        return await ExecuteCommandAsync(HighlightSourceOrderCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<HighlightSourceOrderCommandParameters, HighlightSourceOrderResult> HighlightSourceOrderCommand = new("Overlay.highlightSourceOrder", JsonContext.HighlightSourceOrderCommandParameters, JsonContext.HighlightSourceOrderResult);
 
@@ -316,7 +367,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Backend then generates 'inspectNodeRequested' event upon element selection.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>HighlightConfig</b> - A descriptor for the highlight appearance of hovered-over nodes. May be omitted if `enabled == false`.</description></item>
     /// </list>
@@ -324,8 +375,12 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="mode">
     /// Set an inspection mode.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetInspectModeCommandOptions"/>.
+    /// <param name="highlightConfig">
+    /// A descriptor for the highlight appearance of hovered-over nodes. May be omitted if `enabled
+    /// == false`.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -333,10 +388,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInspectModeResult"/>.
     /// </returns>
-    public async Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, SetInspectModeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetInspectModeCommandParameters(Mode: mode, HighlightConfig: options?.HighlightConfig);
-        return await ExecuteCommandAsync(SetInspectModeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetInspectModeCommandParameters(Mode: mode, HighlightConfig: highlightConfig);
+        return await ExecuteCommandAsync(SetInspectModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetInspectModeCommandParameters, SetInspectModeResult> SetInspectModeCommand = new("Overlay.setInspectMode", JsonContext.SetInspectModeCommandParameters, JsonContext.SetInspectModeResult);
 
@@ -346,8 +401,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="show">
     /// True for showing ad highlights
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowAdHighlightsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -355,23 +410,26 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowAdHighlightsResult"/>.
     /// </returns>
-    public async Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, SetShowAdHighlightsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowAdHighlightsCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowAdHighlightsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowAdHighlightsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowAdHighlightsCommandParameters, SetShowAdHighlightsResult> SetShowAdHighlightsCommand = new("Overlay.setShowAdHighlights", JsonContext.SetShowAdHighlightsCommandParameters, JsonContext.SetShowAdHighlightsResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Message</b> - The message to display, also triggers resume and step over controls.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetPausedInDebuggerMessageCommandOptions"/>.
+    /// <param name="message">
+    /// The message to display, also triggers resume and step over controls.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -379,10 +437,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPausedInDebuggerMessageResult"/>.
     /// </returns>
-    public async Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(SetPausedInDebuggerMessageCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetPausedInDebuggerMessageCommandParameters(Message: options?.Message);
-        return await ExecuteCommandAsync(SetPausedInDebuggerMessageCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetPausedInDebuggerMessageCommandParameters(Message: message);
+        return await ExecuteCommandAsync(SetPausedInDebuggerMessageCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetPausedInDebuggerMessageCommandParameters, SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageCommand = new("Overlay.setPausedInDebuggerMessage", JsonContext.SetPausedInDebuggerMessageCommandParameters, JsonContext.SetPausedInDebuggerMessageResult);
 
@@ -392,8 +450,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="show">
     /// True for showing debug borders
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowDebugBordersCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -401,10 +459,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowDebugBordersResult"/>.
     /// </returns>
-    public async Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, SetShowDebugBordersCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowDebugBordersCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowDebugBordersCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowDebugBordersCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowDebugBordersCommandParameters, SetShowDebugBordersResult> SetShowDebugBordersCommand = new("Overlay.setShowDebugBorders", JsonContext.SetShowDebugBordersCommandParameters, JsonContext.SetShowDebugBordersResult);
 
@@ -414,8 +472,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="show">
     /// True for showing the FPS counter
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowFPSCounterCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -423,10 +481,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowFPSCounterResult"/>.
     /// </returns>
-    public async Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, SetShowFPSCounterCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowFPSCounterCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowFPSCounterCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowFPSCounterCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowFPSCounterCommandParameters, SetShowFPSCounterResult> SetShowFPSCounterCommand = new("Overlay.setShowFPSCounter", JsonContext.SetShowFPSCounterCommandParameters, JsonContext.SetShowFPSCounterResult);
 
@@ -436,8 +494,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="gridNodeHighlightConfigs">
     /// An array of node identifiers and descriptors for the highlight appearance.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowGridOverlaysCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -445,10 +503,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowGridOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, SetShowGridOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowGridOverlaysCommandParameters(GridNodeHighlightConfigs: gridNodeHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowGridOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowGridOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowGridOverlaysCommandParameters, SetShowGridOverlaysResult> SetShowGridOverlaysCommand = new("Overlay.setShowGridOverlays", JsonContext.SetShowGridOverlaysCommandParameters, JsonContext.SetShowGridOverlaysResult);
 
@@ -457,8 +515,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="flexNodeHighlightConfigs">
     /// An array of node identifiers and descriptors for the highlight appearance.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowFlexOverlaysCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -466,10 +524,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowFlexOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, SetShowFlexOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowFlexOverlaysCommandParameters(FlexNodeHighlightConfigs: flexNodeHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowFlexOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowFlexOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowFlexOverlaysCommandParameters, SetShowFlexOverlaysResult> SetShowFlexOverlaysCommand = new("Overlay.setShowFlexOverlays", JsonContext.SetShowFlexOverlaysCommandParameters, JsonContext.SetShowFlexOverlaysResult);
 
@@ -478,8 +536,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="scrollSnapHighlightConfigs">
     /// An array of node identifiers and descriptors for the highlight appearance.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowScrollSnapOverlaysCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -487,10 +545,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowScrollSnapOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, SetShowScrollSnapOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowScrollSnapOverlaysCommandParameters(ScrollSnapHighlightConfigs: scrollSnapHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowScrollSnapOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowScrollSnapOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowScrollSnapOverlaysCommandParameters, SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysCommand = new("Overlay.setShowScrollSnapOverlays", JsonContext.SetShowScrollSnapOverlaysCommandParameters, JsonContext.SetShowScrollSnapOverlaysResult);
 
@@ -499,8 +557,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="containerQueryHighlightConfigs">
     /// An array of node identifiers and descriptors for the highlight appearance.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowContainerQueryOverlaysCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -508,10 +566,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowContainerQueryOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, SetShowContainerQueryOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowContainerQueryOverlaysCommandParameters(ContainerQueryHighlightConfigs: containerQueryHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowContainerQueryOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowContainerQueryOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowContainerQueryOverlaysCommandParameters, SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysCommand = new("Overlay.setShowContainerQueryOverlays", JsonContext.SetShowContainerQueryOverlaysCommandParameters, JsonContext.SetShowContainerQueryOverlaysResult);
 
@@ -520,8 +578,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="inspectedElementAnchorConfig">
     /// Node identifier for which to show an anchor for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowInspectedElementAnchorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -529,10 +587,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowInspectedElementAnchorResult"/>.
     /// </returns>
-    public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, SetShowInspectedElementAnchorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig: inspectedElementAnchorConfig);
-        return await ExecuteCommandAsync(SetShowInspectedElementAnchorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowInspectedElementAnchorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowInspectedElementAnchorCommandParameters, SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorCommand = new("Overlay.setShowInspectedElementAnchor", JsonContext.SetShowInspectedElementAnchorCommandParameters, JsonContext.SetShowInspectedElementAnchorResult);
 
@@ -542,8 +600,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="result">
     /// True for showing paint rectangles
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowPaintRectsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -551,10 +609,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowPaintRectsResult"/>.
     /// </returns>
-    public async Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, SetShowPaintRectsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowPaintRectsCommandParameters(Result: result);
-        return await ExecuteCommandAsync(SetShowPaintRectsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowPaintRectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowPaintRectsCommandParameters, SetShowPaintRectsResult> SetShowPaintRectsCommand = new("Overlay.setShowPaintRects", JsonContext.SetShowPaintRectsCommandParameters, JsonContext.SetShowPaintRectsResult);
 
@@ -564,8 +622,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="result">
     /// True for showing layout shift regions
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowLayoutShiftRegionsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -573,10 +631,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowLayoutShiftRegionsResult"/>.
     /// </returns>
-    public async Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, SetShowLayoutShiftRegionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowLayoutShiftRegionsCommandParameters(Result: result);
-        return await ExecuteCommandAsync(SetShowLayoutShiftRegionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowLayoutShiftRegionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowLayoutShiftRegionsCommandParameters, SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsCommand = new("Overlay.setShowLayoutShiftRegions", JsonContext.SetShowLayoutShiftRegionsCommandParameters, JsonContext.SetShowLayoutShiftRegionsResult);
 
@@ -586,8 +644,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="show">
     /// True for showing scroll bottleneck rects
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowScrollBottleneckRectsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -595,10 +653,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowScrollBottleneckRectsResult"/>.
     /// </returns>
-    public async Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, SetShowScrollBottleneckRectsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowScrollBottleneckRectsCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowScrollBottleneckRectsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowScrollBottleneckRectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowScrollBottleneckRectsCommandParameters, SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsCommand = new("Overlay.setShowScrollBottleneckRects", JsonContext.SetShowScrollBottleneckRectsCommandParameters, JsonContext.SetShowScrollBottleneckRectsResult);
 
@@ -608,8 +666,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="show">
     /// True for showing hit-test borders
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowHitTestBordersCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -618,10 +676,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetShowHitTestBordersResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, SetShowHitTestBordersCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowHitTestBordersCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowHitTestBordersCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowHitTestBordersCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowHitTestBordersCommandParameters, SetShowHitTestBordersResult> SetShowHitTestBordersCommand = new("Overlay.setShowHitTestBorders", JsonContext.SetShowHitTestBordersCommandParameters, JsonContext.SetShowHitTestBordersResult);
 
@@ -630,8 +688,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </summary>
     /// <param name="show">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowWebVitalsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -640,10 +698,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetShowWebVitalsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, SetShowWebVitalsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowWebVitalsCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowWebVitalsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowWebVitalsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowWebVitalsCommandParameters, SetShowWebVitalsResult> SetShowWebVitalsCommand = new("Overlay.setShowWebVitals", JsonContext.SetShowWebVitalsCommandParameters, JsonContext.SetShowWebVitalsResult);
 
@@ -653,8 +711,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="show">
     /// Whether to paint size or not.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowViewportSizeOnResizeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -662,10 +720,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowViewportSizeOnResizeResult"/>.
     /// </returns>
-    public async Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, SetShowViewportSizeOnResizeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowViewportSizeOnResizeCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowViewportSizeOnResizeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowViewportSizeOnResizeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowViewportSizeOnResizeCommandParameters, SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeCommand = new("Overlay.setShowViewportSizeOnResize", JsonContext.SetShowViewportSizeOnResizeCommandParameters, JsonContext.SetShowViewportSizeOnResizeResult);
 
@@ -673,13 +731,16 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Add a dual screen device hinge
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>HingeConfig</b> - hinge data, null means hideHinge</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowHingeCommandOptions"/>.
+    /// <param name="hingeConfig">
+    /// hinge data, null means hideHinge
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -687,10 +748,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowHingeResult"/>.
     /// </returns>
-    public async Task<SetShowHingeResult> SetShowHingeAsync(SetShowHingeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetShowHingeCommandParameters(HingeConfig: options?.HingeConfig);
-        return await ExecuteCommandAsync(SetShowHingeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetShowHingeCommandParameters(HingeConfig: hingeConfig);
+        return await ExecuteCommandAsync(SetShowHingeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowHingeCommandParameters, SetShowHingeResult> SetShowHingeCommand = new("Overlay.setShowHinge", JsonContext.SetShowHingeCommandParameters, JsonContext.SetShowHingeResult);
 
@@ -698,13 +759,16 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Add a display cutout overlay.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>DisplayCutoutConfig</b> - display cutout data, null means hide display cutout</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowDisplayCutoutCommandOptions"/>.
+    /// <param name="displayCutoutConfig">
+    /// display cutout data, null means hide display cutout
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -712,10 +776,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowDisplayCutoutResult"/>.
     /// </returns>
-    public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(SetShowDisplayCutoutCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig: options?.DisplayCutoutConfig);
-        return await ExecuteCommandAsync(SetShowDisplayCutoutCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig: displayCutoutConfig);
+        return await ExecuteCommandAsync(SetShowDisplayCutoutCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowDisplayCutoutCommandParameters, SetShowDisplayCutoutResult> SetShowDisplayCutoutCommand = new("Overlay.setShowDisplayCutout", JsonContext.SetShowDisplayCutoutCommandParameters, JsonContext.SetShowDisplayCutoutResult);
 
@@ -725,8 +789,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="isolatedElementHighlightConfigs">
     /// An array of node identifiers and descriptors for the highlight appearance.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowIsolatedElementsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -734,10 +798,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowIsolatedElementsResult"/>.
     /// </returns>
-    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, SetShowIsolatedElementsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowIsolatedElementsCommandParameters(IsolatedElementHighlightConfigs: isolatedElementHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowIsolatedElementsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetShowIsolatedElementsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowIsolatedElementsCommandParameters, SetShowIsolatedElementsResult> SetShowIsolatedElementsCommand = new("Overlay.setShowIsolatedElements", JsonContext.SetShowIsolatedElementsCommandParameters, JsonContext.SetShowIsolatedElementsResult);
 
@@ -745,13 +809,16 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Show Window Controls Overlay for PWA
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>WindowControlsOverlayConfig</b> - Window Controls Overlay data, null means hide Window Controls Overlay</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetShowWindowControlsOverlayCommandOptions"/>.
+    /// <param name="windowControlsOverlayConfig">
+    /// Window Controls Overlay data, null means hide Window Controls Overlay
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -759,10 +826,10 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowWindowControlsOverlayResult"/>.
     /// </returns>
-    public async Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(SetShowWindowControlsOverlayCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig: options?.WindowControlsOverlayConfig);
-        return await ExecuteCommandAsync(SetShowWindowControlsOverlayCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig: windowControlsOverlayConfig);
+        return await ExecuteCommandAsync(SetShowWindowControlsOverlayCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetShowWindowControlsOverlayCommandParameters, SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayCommand = new("Overlay.setShowWindowControlsOverlay", JsonContext.SetShowWindowControlsOverlayCommandParameters, JsonContext.SetShowWindowControlsOverlayResult);
 
@@ -826,13 +893,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -840,44 +900,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record GetHighlightObjectForTestCommandParameters(DOM.NodeId NodeId, bool? IncludeDistance, bool? IncludeStyle, ColorFormat? ColorFormat, bool? ShowAccessibilityInfo) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.GetHighlightObjectForTestAsync"/>.
-/// </summary>
-public sealed record GetHighlightObjectForTestCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Whether to include distance info.
-    /// </summary>
-    public bool? IncludeDistance { get; init; }
-
-    /// <summary>
-    /// Whether to include style info.
-    /// </summary>
-    public bool? IncludeStyle { get; init; }
-
-    /// <summary>
-    /// The color format to get config with (default: hex).
-    /// </summary>
-    public ColorFormat? ColorFormat { get; init; }
-
-    /// <summary>
-    /// Whether to show accessibility info (default: true).
-    /// </summary>
-    public bool? ShowAccessibilityInfo { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -890,13 +917,6 @@ public sealed record GetHighlightObjectForTestResult(global::System.Text.Json.Js
 internal sealed record GetGridHighlightObjectsForTestCommandParameters(ImmutableArray<DOM.NodeId> NodeIds) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.GetGridHighlightObjectsForTestAsync"/>.
-/// </summary>
-public sealed record GetGridHighlightObjectsForTestCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Highlights">
 /// Grid Highlight data for the node ids provided.
@@ -905,13 +925,6 @@ public sealed record GetGridHighlightObjectsForTestResult(global::System.Text.Js
 
 
 internal sealed record GetSourceOrderHighlightObjectForTestCommandParameters(DOM.NodeId NodeId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.GetSourceOrderHighlightObjectForTestAsync"/>.
-/// </summary>
-public sealed record GetSourceOrderHighlightObjectForTestCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -924,34 +937,11 @@ public sealed record GetSourceOrderHighlightObjectForTestResult(global::System.T
 internal sealed record HideHighlightCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.HideHighlightAsync"/>.
-/// </summary>
-public sealed record HideHighlightCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record HideHighlightResult() : EmptyResult;
 
 
 internal sealed record HighlightFrameCommandParameters(Page.FrameId FrameId, DOM.RGBA? ContentColor, DOM.RGBA? ContentOutlineColor) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.HighlightFrameAsync"/>.
-/// </summary>
-public sealed record HighlightFrameCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The content box highlight fill color (default: transparent).
-    /// </summary>
-    public DOM.RGBA? ContentColor { get; init; }
-
-    /// <summary>
-    /// The content box highlight outline color (default: transparent).
-    /// </summary>
-    public DOM.RGBA? ContentOutlineColor { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -961,53 +951,11 @@ public sealed record HighlightFrameResult() : EmptyResult;
 internal sealed record HighlightNodeCommandParameters(HighlightConfig HighlightConfig, DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, string? Selector) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.HighlightNodeAsync"/>.
-/// </summary>
-public sealed record HighlightNodeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Identifier of the node to highlight.
-    /// </summary>
-    public DOM.NodeId? NodeId { get; init; }
-
-    /// <summary>
-    /// Identifier of the backend node to highlight.
-    /// </summary>
-    public DOM.BackendNodeId? BackendNodeId { get; init; }
-
-    /// <summary>
-    /// JavaScript object id of the node to be highlighted.
-    /// </summary>
-    public Runtime.RemoteObjectId? ObjectId { get; init; }
-
-    /// <summary>
-    /// Selectors to highlight relevant nodes.
-    /// </summary>
-    public string? Selector { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record HighlightNodeResult() : EmptyResult;
 
 
 internal sealed record HighlightQuadCommandParameters(ImmutableArray<double> Quad, DOM.RGBA? Color, DOM.RGBA? OutlineColor) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.HighlightQuadAsync"/>.
-/// </summary>
-public sealed record HighlightQuadCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The highlight fill color (default: transparent).
-    /// </summary>
-    public DOM.RGBA? Color { get; init; }
-
-    /// <summary>
-    /// The highlight outline color (default: transparent).
-    /// </summary>
-    public DOM.RGBA? OutlineColor { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1017,48 +965,11 @@ public sealed record HighlightQuadResult() : EmptyResult;
 internal sealed record HighlightRectCommandParameters(long X, long Y, long Width, long Height, DOM.RGBA? Color, DOM.RGBA? OutlineColor) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.HighlightRectAsync"/>.
-/// </summary>
-public sealed record HighlightRectCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The highlight fill color (default: transparent).
-    /// </summary>
-    public DOM.RGBA? Color { get; init; }
-
-    /// <summary>
-    /// The highlight outline color (default: transparent).
-    /// </summary>
-    public DOM.RGBA? OutlineColor { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record HighlightRectResult() : EmptyResult;
 
 
 internal sealed record HighlightSourceOrderCommandParameters(SourceOrderConfig SourceOrderConfig, DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.HighlightSourceOrderAsync"/>.
-/// </summary>
-public sealed record HighlightSourceOrderCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Identifier of the node to highlight.
-    /// </summary>
-    public DOM.NodeId? NodeId { get; init; }
-
-    /// <summary>
-    /// Identifier of the backend node to highlight.
-    /// </summary>
-    public DOM.BackendNodeId? BackendNodeId { get; init; }
-
-    /// <summary>
-    /// JavaScript object id of the node to be highlighted.
-    /// </summary>
-    public Runtime.RemoteObjectId? ObjectId { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1068,30 +979,11 @@ public sealed record HighlightSourceOrderResult() : EmptyResult;
 internal sealed record SetInspectModeCommandParameters(InspectMode Mode, HighlightConfig? HighlightConfig) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetInspectModeAsync"/>.
-/// </summary>
-public sealed record SetInspectModeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// A descriptor for the highlight appearance of hovered-over nodes. May be omitted if `enabled
-    /// == false`.
-    /// </summary>
-    public HighlightConfig? HighlightConfig { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetInspectModeResult() : EmptyResult;
 
 
 internal sealed record SetShowAdHighlightsCommandParameters(bool Show) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowAdHighlightsAsync"/>.
-/// </summary>
-public sealed record SetShowAdHighlightsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1101,29 +993,11 @@ public sealed record SetShowAdHighlightsResult() : EmptyResult;
 internal sealed record SetPausedInDebuggerMessageCommandParameters(string? Message) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetPausedInDebuggerMessageAsync"/>.
-/// </summary>
-public sealed record SetPausedInDebuggerMessageCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The message to display, also triggers resume and step over controls.
-    /// </summary>
-    public string? Message { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetPausedInDebuggerMessageResult() : EmptyResult;
 
 
 internal sealed record SetShowDebugBordersCommandParameters(bool Show) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowDebugBordersAsync"/>.
-/// </summary>
-public sealed record SetShowDebugBordersCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1133,25 +1007,11 @@ public sealed record SetShowDebugBordersResult() : EmptyResult;
 internal sealed record SetShowFPSCounterCommandParameters(bool Show) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowFPSCounterAsync"/>.
-/// </summary>
-public sealed record SetShowFPSCounterCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowFPSCounterResult() : EmptyResult;
 
 
 internal sealed record SetShowGridOverlaysCommandParameters(ImmutableArray<GridNodeHighlightConfig> GridNodeHighlightConfigs) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowGridOverlaysAsync"/>.
-/// </summary>
-public sealed record SetShowGridOverlaysCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1161,25 +1021,11 @@ public sealed record SetShowGridOverlaysResult() : EmptyResult;
 internal sealed record SetShowFlexOverlaysCommandParameters(ImmutableArray<FlexNodeHighlightConfig> FlexNodeHighlightConfigs) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowFlexOverlaysAsync"/>.
-/// </summary>
-public sealed record SetShowFlexOverlaysCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowFlexOverlaysResult() : EmptyResult;
 
 
 internal sealed record SetShowScrollSnapOverlaysCommandParameters(ImmutableArray<ScrollSnapHighlightConfig> ScrollSnapHighlightConfigs) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowScrollSnapOverlaysAsync"/>.
-/// </summary>
-public sealed record SetShowScrollSnapOverlaysCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1189,25 +1035,11 @@ public sealed record SetShowScrollSnapOverlaysResult() : EmptyResult;
 internal sealed record SetShowContainerQueryOverlaysCommandParameters(ImmutableArray<ContainerQueryHighlightConfig> ContainerQueryHighlightConfigs) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowContainerQueryOverlaysAsync"/>.
-/// </summary>
-public sealed record SetShowContainerQueryOverlaysCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowContainerQueryOverlaysResult() : EmptyResult;
 
 
 internal sealed record SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig InspectedElementAnchorConfig) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowInspectedElementAnchorAsync"/>.
-/// </summary>
-public sealed record SetShowInspectedElementAnchorCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1217,25 +1049,11 @@ public sealed record SetShowInspectedElementAnchorResult() : EmptyResult;
 internal sealed record SetShowPaintRectsCommandParameters(bool Result) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowPaintRectsAsync"/>.
-/// </summary>
-public sealed record SetShowPaintRectsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowPaintRectsResult() : EmptyResult;
 
 
 internal sealed record SetShowLayoutShiftRegionsCommandParameters(bool Result) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowLayoutShiftRegionsAsync"/>.
-/// </summary>
-public sealed record SetShowLayoutShiftRegionsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1245,25 +1063,11 @@ public sealed record SetShowLayoutShiftRegionsResult() : EmptyResult;
 internal sealed record SetShowScrollBottleneckRectsCommandParameters(bool Show) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowScrollBottleneckRectsAsync"/>.
-/// </summary>
-public sealed record SetShowScrollBottleneckRectsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowScrollBottleneckRectsResult() : EmptyResult;
 
 
 internal sealed record SetShowHitTestBordersCommandParameters(bool Show) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowHitTestBordersAsync"/>.
-/// </summary>
-public sealed record SetShowHitTestBordersCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1273,25 +1077,11 @@ public sealed record SetShowHitTestBordersResult() : EmptyResult;
 internal sealed record SetShowWebVitalsCommandParameters(bool Show) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowWebVitalsAsync"/>.
-/// </summary>
-public sealed record SetShowWebVitalsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowWebVitalsResult() : EmptyResult;
 
 
 internal sealed record SetShowViewportSizeOnResizeCommandParameters(bool Show) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowViewportSizeOnResizeAsync"/>.
-/// </summary>
-public sealed record SetShowViewportSizeOnResizeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1301,33 +1091,11 @@ public sealed record SetShowViewportSizeOnResizeResult() : EmptyResult;
 internal sealed record SetShowHingeCommandParameters(HingeConfig? HingeConfig) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowHingeAsync"/>.
-/// </summary>
-public sealed record SetShowHingeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// hinge data, null means hideHinge
-    /// </summary>
-    public HingeConfig? HingeConfig { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowHingeResult() : EmptyResult;
 
 
 internal sealed record SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig? DisplayCutoutConfig) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowDisplayCutoutAsync"/>.
-/// </summary>
-public sealed record SetShowDisplayCutoutCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// display cutout data, null means hide display cutout
-    /// </summary>
-    public DisplayCutoutConfig? DisplayCutoutConfig { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1337,29 +1105,11 @@ public sealed record SetShowDisplayCutoutResult() : EmptyResult;
 internal sealed record SetShowIsolatedElementsCommandParameters(ImmutableArray<IsolatedElementHighlightConfig> IsolatedElementHighlightConfigs) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowIsolatedElementsAsync"/>.
-/// </summary>
-public sealed record SetShowIsolatedElementsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetShowIsolatedElementsResult() : EmptyResult;
 
 
 internal sealed record SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig? WindowControlsOverlayConfig) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="OverlayDomain.SetShowWindowControlsOverlayAsync"/>.
-/// </summary>
-public sealed record SetShowWindowControlsOverlayCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Window Controls Overlay data, null means hide Window Controls Overlay
-    /// </summary>
-    public WindowControlsOverlayConfig? WindowControlsOverlayConfig { get; init; }
-}
 
 /// <summary>
 /// </summary>

@@ -14,8 +14,8 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -23,17 +23,17 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Preload.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -41,10 +41,10 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Preload.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -129,25 +129,11 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="PreloadDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="PreloadDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

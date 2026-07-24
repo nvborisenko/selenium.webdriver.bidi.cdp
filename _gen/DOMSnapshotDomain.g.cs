@@ -16,8 +16,8 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <summary>
     /// Disables DOM snapshot agent for the given page.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,18 +25,18 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOMSnapshot.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables DOM snapshot agent for the given page.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -44,10 +44,10 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOMSnapshot.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -58,7 +58,7 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// flattened.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>IncludeEventListeners</b> - Whether or not to retrieve details of DOM listeners (default false).</description></item>
     /// <item><description><b>IncludePaintOrder</b> - Whether to determine and include the paint order index of LayoutTreeNodes (default false).</description></item>
@@ -68,8 +68,17 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <param name="computedStyleWhitelist">
     /// Whitelist of computed styles to return.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetSnapshotCommandOptions"/>.
+    /// <param name="includeEventListeners">
+    /// Whether or not to retrieve details of DOM listeners (default false).
+    /// </param>
+    /// <param name="includePaintOrder">
+    /// Whether to determine and include the paint order index of LayoutTreeNodes (default false).
+    /// </param>
+    /// <param name="includeUserAgentShadowTree">
+    /// Whether to include UA shadow tree in the snapshot (default false).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -78,10 +87,10 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// A task representing the asynchronous operation, containing a <see cref="GetSnapshotResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, GetSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, bool? includeEventListeners = default, bool? includePaintOrder = default, bool? includeUserAgentShadowTree = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetSnapshotCommandParameters(ComputedStyleWhitelist: computedStyleWhitelist, IncludeEventListeners: options?.IncludeEventListeners, IncludePaintOrder: options?.IncludePaintOrder, IncludeUserAgentShadowTree: options?.IncludeUserAgentShadowTree);
-        return await ExecuteCommandAsync(GetSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetSnapshotCommandParameters(ComputedStyleWhitelist: computedStyleWhitelist, IncludeEventListeners: includeEventListeners, IncludePaintOrder: includePaintOrder, IncludeUserAgentShadowTree: includeUserAgentShadowTree);
+        return await ExecuteCommandAsync(GetSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetSnapshotCommandParameters, GetSnapshotResult> GetSnapshotCommand = new("DOMSnapshot.getSnapshot", JsonContext.GetSnapshotCommandParameters, JsonContext.GetSnapshotResult);
 
@@ -92,7 +101,7 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// flattened.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>IncludePaintOrder</b> - Whether to include layout object paint orders into the snapshot.</description></item>
     /// <item><description><b>IncludeDOMRects</b> - Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot</description></item>
@@ -103,8 +112,24 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <param name="computedStyles">
     /// Whitelist of computed styles to return.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CaptureSnapshotCommandOptions"/>.
+    /// <param name="includePaintOrder">
+    /// Whether to include layout object paint orders into the snapshot.
+    /// </param>
+    /// <param name="includeDOMRects">
+    /// Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot
+    /// </param>
+    /// <param name="includeBlendedBackgroundColors">
+    /// Whether to include blended background colors in the snapshot (default: false).
+    /// Blended background color is achieved by blending background colors of all elements
+    /// that overlap with the current element.
+    /// </param>
+    /// <param name="includeTextColorOpacities">
+    /// Whether to include text color opacity in the snapshot (default: false).
+    /// An element might have the opacity property set that affects the text color of the element.
+    /// The final text color opacity is computed based on the opacity of all overlapping elements.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -112,23 +137,16 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CaptureSnapshotResult"/>.
     /// </returns>
-    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, CaptureSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, bool? includePaintOrder = default, bool? includeDOMRects = default, bool? includeBlendedBackgroundColors = default, bool? includeTextColorOpacities = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new CaptureSnapshotCommandParameters(ComputedStyles: computedStyles, IncludePaintOrder: options?.IncludePaintOrder, IncludeDOMRects: options?.IncludeDOMRects, IncludeBlendedBackgroundColors: options?.IncludeBlendedBackgroundColors, IncludeTextColorOpacities: options?.IncludeTextColorOpacities);
-        return await ExecuteCommandAsync(CaptureSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new CaptureSnapshotCommandParameters(ComputedStyles: computedStyles, IncludePaintOrder: includePaintOrder, IncludeDOMRects: includeDOMRects, IncludeBlendedBackgroundColors: includeBlendedBackgroundColors, IncludeTextColorOpacities: includeTextColorOpacities);
+        return await ExecuteCommandAsync(CaptureSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult> CaptureSnapshotCommand = new("DOMSnapshot.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
 
 }
 
 internal sealed record DisableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DOMSnapshotDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -138,39 +156,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DOMSnapshotDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record GetSnapshotCommandParameters(ImmutableArray<string> ComputedStyleWhitelist, bool? IncludeEventListeners, bool? IncludePaintOrder, bool? IncludeUserAgentShadowTree) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DOMSnapshotDomain.GetSnapshotAsync"/>.
-/// </summary>
-public sealed record GetSnapshotCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Whether or not to retrieve details of DOM listeners (default false).
-    /// </summary>
-    public bool? IncludeEventListeners { get; init; }
-
-    /// <summary>
-    /// Whether to determine and include the paint order index of LayoutTreeNodes (default false).
-    /// </summary>
-    public bool? IncludePaintOrder { get; init; }
-
-    /// <summary>
-    /// Whether to include UA shadow tree in the snapshot (default false).
-    /// </summary>
-    public bool? IncludeUserAgentShadowTree { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -187,36 +177,6 @@ public sealed record GetSnapshotResult(ImmutableArray<DOMNode> DomNodes, Immutab
 
 
 internal sealed record CaptureSnapshotCommandParameters(ImmutableArray<string> ComputedStyles, bool? IncludePaintOrder, bool? IncludeDOMRects, bool? IncludeBlendedBackgroundColors, bool? IncludeTextColorOpacities) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DOMSnapshotDomain.CaptureSnapshotAsync"/>.
-/// </summary>
-public sealed record CaptureSnapshotCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Whether to include layout object paint orders into the snapshot.
-    /// </summary>
-    public bool? IncludePaintOrder { get; init; }
-
-    /// <summary>
-    /// Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot
-    /// </summary>
-    public bool? IncludeDOMRects { get; init; }
-
-    /// <summary>
-    /// Whether to include blended background colors in the snapshot (default: false).
-    /// Blended background color is achieved by blending background colors of all elements
-    /// that overlap with the current element.
-    /// </summary>
-    public bool? IncludeBlendedBackgroundColors { get; init; }
-
-    /// <summary>
-    /// Whether to include text color opacity in the snapshot (default: false).
-    /// An element might have the opacity property set that affects the text color of the element.
-    /// The final text color opacity is computed based on the opacity of all overlapping elements.
-    /// </summary>
-    public bool? IncludeTextColorOpacities { get; init; }
-}
 
 /// <summary>
 /// </summary>

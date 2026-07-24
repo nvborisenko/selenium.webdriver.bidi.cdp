@@ -22,8 +22,8 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <param name="targetId">
     /// A tab target ID to trigger the default extension action on.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TriggerActionCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -31,10 +31,10 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TriggerActionResult"/>.
     /// </returns>
-    public async Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, TriggerActionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TriggerActionCommandParameters(Id: id, TargetId: targetId);
-        return await ExecuteCommandAsync(TriggerActionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(TriggerActionCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TriggerActionCommandParameters, TriggerActionResult> TriggerActionCommand = new("Extensions.triggerAction", JsonContext.TriggerActionCommandParameters, JsonContext.TriggerActionResult);
 
@@ -44,7 +44,7 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// has been installed.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>EnableInIncognito</b> - Enable the extension in incognito</description></item>
     /// </list>
@@ -52,8 +52,11 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <param name="path">
     /// Absolute file path.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="LoadUnpackedCommandOptions"/>.
+    /// <param name="enableInIncognito">
+    /// Enable the extension in incognito
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -61,18 +64,18 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LoadUnpackedResult"/>.
     /// </returns>
-    public async Task<LoadUnpackedResult> LoadUnpackedAsync(string path, LoadUnpackedCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<LoadUnpackedResult> LoadUnpackedAsync(string path, bool? enableInIncognito = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new LoadUnpackedCommandParameters(Path: path, EnableInIncognito: options?.EnableInIncognito);
-        return await ExecuteCommandAsync(LoadUnpackedCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new LoadUnpackedCommandParameters(Path: path, EnableInIncognito: enableInIncognito);
+        return await ExecuteCommandAsync(LoadUnpackedCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<LoadUnpackedCommandParameters, LoadUnpackedResult> LoadUnpackedCommand = new("Extensions.loadUnpacked", JsonContext.LoadUnpackedCommandParameters, JsonContext.LoadUnpackedResult);
 
     /// <summary>
     /// Gets a list of all unpacked extensions.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetExtensionsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -80,10 +83,10 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetExtensionsResult"/>.
     /// </returns>
-    public async Task<GetExtensionsResult> GetExtensionsAsync(GetExtensionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetExtensionsResult> GetExtensionsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetExtensionsCommandParameters();
-        return await ExecuteCommandAsync(GetExtensionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetExtensionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetExtensionsCommandParameters, GetExtensionsResult> GetExtensionsCommand = new("Extensions.getExtensions", JsonContext.GetExtensionsCommandParameters, JsonContext.GetExtensionsResult);
 
@@ -93,8 +96,8 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <param name="id">
     /// Extension id.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="UninstallCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -102,10 +105,10 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UninstallResult"/>.
     /// </returns>
-    public async Task<UninstallResult> UninstallAsync(string id, UninstallCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<UninstallResult> UninstallAsync(string id, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UninstallCommandParameters(Id: id);
-        return await ExecuteCommandAsync(UninstallCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(UninstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<UninstallCommandParameters, UninstallResult> UninstallCommand = new("Extensions.uninstall", JsonContext.UninstallCommandParameters, JsonContext.UninstallResult);
 
@@ -114,7 +117,7 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// specified, these are used to filter the result.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Keys</b> - Keys to retrieve.</description></item>
     /// </list>
@@ -125,8 +128,11 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <param name="storageArea">
     /// StorageArea to retrieve data from.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetStorageItemsCommandOptions"/>.
+    /// <param name="keys">
+    /// Keys to retrieve.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -134,10 +140,10 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStorageItemsResult"/>.
     /// </returns>
-    public async Task<GetStorageItemsResult> GetStorageItemsAsync(string id, StorageArea storageArea, GetStorageItemsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetStorageItemsResult> GetStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string>? keys = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: options?.Keys);
-        return await ExecuteCommandAsync(GetStorageItemsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: keys);
+        return await ExecuteCommandAsync(GetStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetStorageItemsCommandParameters, GetStorageItemsResult> GetStorageItemsCommand = new("Extensions.getStorageItems", JsonContext.GetStorageItemsCommandParameters, JsonContext.GetStorageItemsResult);
 
@@ -153,8 +159,8 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <param name="keys">
     /// Keys to remove.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveStorageItemsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -162,10 +168,10 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveStorageItemsResult"/>.
     /// </returns>
-    public async Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, RemoveStorageItemsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: keys);
-        return await ExecuteCommandAsync(RemoveStorageItemsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveStorageItemsCommandParameters, RemoveStorageItemsResult> RemoveStorageItemsCommand = new("Extensions.removeStorageItems", JsonContext.RemoveStorageItemsCommandParameters, JsonContext.RemoveStorageItemsResult);
 
@@ -178,8 +184,8 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <param name="storageArea">
     /// StorageArea to remove data from.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearStorageItemsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -187,10 +193,10 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearStorageItemsResult"/>.
     /// </returns>
-    public async Task<ClearStorageItemsResult> ClearStorageItemsAsync(string id, StorageArea storageArea, ClearStorageItemsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearStorageItemsResult> ClearStorageItemsAsync(string id, StorageArea storageArea, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearStorageItemsCommandParameters(Id: id, StorageArea: storageArea);
-        return await ExecuteCommandAsync(ClearStorageItemsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearStorageItemsCommandParameters, ClearStorageItemsResult> ClearStorageItemsCommand = new("Extensions.clearStorageItems", JsonContext.ClearStorageItemsCommandParameters, JsonContext.ClearStorageItemsResult);
 
@@ -207,8 +213,8 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <param name="values">
     /// Values to set.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetStorageItemsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -216,10 +222,10 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStorageItemsResult"/>.
     /// </returns>
-    public async Task<SetStorageItemsResult> SetStorageItemsAsync(string id, StorageArea storageArea, global::System.Text.Json.JsonElement values, SetStorageItemsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetStorageItemsResult> SetStorageItemsAsync(string id, StorageArea storageArea, global::System.Text.Json.JsonElement values, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Values: values);
-        return await ExecuteCommandAsync(SetStorageItemsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetStorageItemsCommandParameters, SetStorageItemsResult> SetStorageItemsCommand = new("Extensions.setStorageItems", JsonContext.SetStorageItemsCommandParameters, JsonContext.SetStorageItemsResult);
 
@@ -228,29 +234,11 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
 internal sealed record TriggerActionCommandParameters(string Id, string TargetId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.TriggerActionAsync"/>.
-/// </summary>
-public sealed record TriggerActionCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record TriggerActionResult() : EmptyResult;
 
 
 internal sealed record LoadUnpackedCommandParameters(string Path, bool? EnableInIncognito) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.LoadUnpackedAsync"/>.
-/// </summary>
-public sealed record LoadUnpackedCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Enable the extension in incognito
-    /// </summary>
-    public bool? EnableInIncognito { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -263,13 +251,6 @@ public sealed record LoadUnpackedResult(string Id) : EmptyResult;
 internal sealed record GetExtensionsCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.GetExtensionsAsync"/>.
-/// </summary>
-public sealed record GetExtensionsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Extensions">
 /// </param>
@@ -279,29 +260,11 @@ public sealed record GetExtensionsResult(ImmutableArray<ExtensionInfo> Extension
 internal sealed record UninstallCommandParameters(string Id) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.UninstallAsync"/>.
-/// </summary>
-public sealed record UninstallCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record UninstallResult() : EmptyResult;
 
 
 internal sealed record GetStorageItemsCommandParameters(string Id, StorageArea StorageArea, ImmutableArray<string>? Keys) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.GetStorageItemsAsync"/>.
-/// </summary>
-public sealed record GetStorageItemsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Keys to retrieve.
-    /// </summary>
-    public ImmutableArray<string>? Keys { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -313,13 +276,6 @@ public sealed record GetStorageItemsResult(global::System.Text.Json.JsonElement 
 internal sealed record RemoveStorageItemsCommandParameters(string Id, StorageArea StorageArea, ImmutableArray<string> Keys) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.RemoveStorageItemsAsync"/>.
-/// </summary>
-public sealed record RemoveStorageItemsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveStorageItemsResult() : EmptyResult;
 
@@ -327,25 +283,11 @@ public sealed record RemoveStorageItemsResult() : EmptyResult;
 internal sealed record ClearStorageItemsCommandParameters(string Id, StorageArea StorageArea) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.ClearStorageItemsAsync"/>.
-/// </summary>
-public sealed record ClearStorageItemsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ClearStorageItemsResult() : EmptyResult;
 
 
 internal sealed record SetStorageItemsCommandParameters(string Id, StorageArea StorageArea, global::System.Text.Json.JsonElement Values) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ExtensionsDomain.SetStorageItemsAsync"/>.
-/// </summary>
-public sealed record SetStorageItemsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

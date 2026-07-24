@@ -19,8 +19,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="encodings">
     /// List of accepted content encodings.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAcceptedEncodingsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -29,18 +29,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetAcceptedEncodingsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, SetAcceptedEncodingsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAcceptedEncodingsCommandParameters(Encodings: encodings);
-        return await ExecuteCommandAsync(SetAcceptedEncodingsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetAcceptedEncodingsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetAcceptedEncodingsCommandParameters, SetAcceptedEncodingsResult> SetAcceptedEncodingsCommand = new("Network.setAcceptedEncodings", JsonContext.SetAcceptedEncodingsCommandParameters, JsonContext.SetAcceptedEncodingsResult);
 
     /// <summary>
     /// Clears accepted encodings set by setAcceptedEncodings
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearAcceptedEncodingsOverrideCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -49,18 +49,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="ClearAcceptedEncodingsOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideAsync(ClearAcceptedEncodingsOverrideCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearAcceptedEncodingsOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearAcceptedEncodingsOverrideCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearAcceptedEncodingsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearAcceptedEncodingsOverrideCommandParameters, ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideCommand = new("Network.clearAcceptedEncodingsOverride", JsonContext.ClearAcceptedEncodingsOverrideCommandParameters, JsonContext.ClearAcceptedEncodingsOverrideResult);
 
     /// <summary>
     /// Tells whether clearing browser cache is supported.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CanClearBrowserCacheCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -69,18 +69,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CanClearBrowserCacheResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(CanClearBrowserCacheCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCacheCommandParameters();
-        return await ExecuteCommandAsync(CanClearBrowserCacheCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CanClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CanClearBrowserCacheCommandParameters, CanClearBrowserCacheResult> CanClearBrowserCacheCommand = new("Network.canClearBrowserCache", JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult);
 
     /// <summary>
     /// Tells whether clearing browser cookies is supported.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CanClearBrowserCookiesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -89,18 +89,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CanClearBrowserCookiesResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(CanClearBrowserCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCookiesCommandParameters();
-        return await ExecuteCommandAsync(CanClearBrowserCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CanClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CanClearBrowserCookiesCommandParameters, CanClearBrowserCookiesResult> CanClearBrowserCookiesCommand = new("Network.canClearBrowserCookies", JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult);
 
     /// <summary>
     /// Tells whether emulation of network conditions is supported.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CanEmulateNetworkConditionsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -109,18 +109,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CanEmulateNetworkConditionsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(CanEmulateNetworkConditionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanEmulateNetworkConditionsCommandParameters();
-        return await ExecuteCommandAsync(CanEmulateNetworkConditionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CanEmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CanEmulateNetworkConditionsCommandParameters, CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsCommand = new("Network.canEmulateNetworkConditions", JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult);
 
     /// <summary>
     /// Clears browser cache.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearBrowserCacheCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -128,18 +128,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearBrowserCacheResult"/>.
     /// </returns>
-    public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(ClearBrowserCacheCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCacheCommandParameters();
-        return await ExecuteCommandAsync(ClearBrowserCacheCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearBrowserCacheCommandParameters, ClearBrowserCacheResult> ClearBrowserCacheCommand = new("Network.clearBrowserCache", JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult);
 
     /// <summary>
     /// Clears browser cookies.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearBrowserCookiesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -147,10 +147,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearBrowserCookiesResult"/>.
     /// </returns>
-    public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(ClearBrowserCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCookiesCommandParameters();
-        return await ExecuteCommandAsync(ClearBrowserCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearBrowserCookiesCommandParameters, ClearBrowserCookiesResult> ClearBrowserCookiesCommand = new("Network.clearBrowserCookies", JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult);
 
@@ -162,7 +162,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ErrorReason</b> - If set this causes the request to fail with the given reason. Passing <b>Aborted</b> for requests marked with <b>isNavigationRequest</b> also cancels the navigation. Must not be set in response to an authChallenge.</description></item>
     /// <item><description><b>RawResponse</b> - If set the requests completes using with the provided base64 encoded raw response, including HTTP status line and headers etc... Must not be set in response to an authChallenge. (Encoded as a base64 string when passed over JSON)</description></item>
@@ -175,8 +175,35 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </remarks>
     /// <param name="interceptionId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ContinueInterceptedRequestCommandOptions"/>.
+    /// <param name="errorReason">
+    /// If set this causes the request to fail with the given reason. Passing <b>Aborted</b> for requests
+    /// marked with <b>isNavigationRequest</b> also cancels the navigation. Must not be set in response
+    /// to an authChallenge.
+    /// </param>
+    /// <param name="rawResponse">
+    /// If set the requests completes using with the provided base64 encoded raw response, including
+    /// HTTP status line and headers etc... Must not be set in response to an authChallenge. (Encoded as a base64 string when passed over JSON)
+    /// </param>
+    /// <param name="url">
+    /// If set the request url will be modified in a way that's not observable by page. Must not be
+    /// set in response to an authChallenge.
+    /// </param>
+    /// <param name="method">
+    /// If set this allows the request method to be overridden. Must not be set in response to an
+    /// authChallenge.
+    /// </param>
+    /// <param name="postData">
+    /// If set this allows postData to be set. Must not be set in response to an authChallenge.
+    /// </param>
+    /// <param name="headers">
+    /// If set this allows the request headers to be changed. Must not be set in response to an
+    /// authChallenge.
+    /// </param>
+    /// <param name="authChallengeResponse">
+    /// Response to a requestIntercepted with an authChallenge. Must not be set otherwise.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -186,10 +213,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<ContinueInterceptedRequestResult> ContinueInterceptedRequestAsync(InterceptionId interceptionId, ContinueInterceptedRequestCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ContinueInterceptedRequestResult> ContinueInterceptedRequestAsync(InterceptionId interceptionId, ErrorReason? errorReason = default, string? rawResponse = default, string? url = default, string? method = default, string? postData = default, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? headers = default, AuthChallengeResponse? authChallengeResponse = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ContinueInterceptedRequestCommandParameters(InterceptionId: interceptionId, ErrorReason: options?.ErrorReason, RawResponse: options?.RawResponse, Url: options?.Url, Method: options?.Method, PostData: options?.PostData, Headers: options?.Headers, AuthChallengeResponse: options?.AuthChallengeResponse);
-        return await ExecuteCommandAsync(ContinueInterceptedRequestCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ContinueInterceptedRequestCommandParameters(InterceptionId: interceptionId, ErrorReason: errorReason, RawResponse: rawResponse, Url: url, Method: method, PostData: postData, Headers: headers, AuthChallengeResponse: authChallengeResponse);
+        return await ExecuteCommandAsync(ContinueInterceptedRequestCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ContinueInterceptedRequestCommandParameters, ContinueInterceptedRequestResult> ContinueInterceptedRequestCommand = new("Network.continueInterceptedRequest", JsonContext.ContinueInterceptedRequestCommandParameters, JsonContext.ContinueInterceptedRequestResult);
 
@@ -197,7 +224,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Deletes browser cookies with matching name and url or domain/path/partitionKey pair.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Url</b> - If specified, deletes all the cookies with the given name where domain and path match provided URL.</description></item>
     /// <item><description><b>Domain</b> - If specified, deletes only cookies with the exact domain.</description></item>
@@ -208,8 +235,22 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="name">
     /// Name of the cookies to remove.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DeleteCookiesCommandOptions"/>.
+    /// <param name="url">
+    /// If specified, deletes all the cookies with the given name where domain and path match
+    /// provided URL.
+    /// </param>
+    /// <param name="domain">
+    /// If specified, deletes only cookies with the exact domain.
+    /// </param>
+    /// <param name="path">
+    /// If specified, deletes only cookies with the exact path.
+    /// </param>
+    /// <param name="partitionKey">
+    /// If specified, deletes only cookies with the the given name and partitionKey where
+    /// all partition key attributes match the cookie partition key attribute.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -217,18 +258,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteCookiesResult"/>.
     /// </returns>
-    public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, DeleteCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new DeleteCookiesCommandParameters(Name: name, Url: options?.Url, Domain: options?.Domain, Path: options?.Path, PartitionKey: options?.PartitionKey);
-        return await ExecuteCommandAsync(DeleteCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new DeleteCookiesCommandParameters(Name: name, Url: url, Domain: domain, Path: path, PartitionKey: partitionKey);
+        return await ExecuteCommandAsync(DeleteCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DeleteCookiesCommandParameters, DeleteCookiesResult> DeleteCookiesCommand = new("Network.deleteCookies", JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult);
 
     /// <summary>
     /// Disables network tracking, prevents network events from being sent to the client.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -236,10 +277,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Network.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -248,7 +289,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// and overrideNetworkState commands, which can be used together to the same effect.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ConnectionType</b> - Connection type if known.</description></item>
     /// <item><description><b>PacketLoss</b> - WebRTC packet loss (percent, 0-100). 0 disables packet loss emulation, 100 drops all the packets.</description></item>
@@ -268,8 +309,20 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="uploadThroughput">
     /// Maximal aggregated upload throughput (bytes/sec).  -1 disables upload throttling.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EmulateNetworkConditionsCommandOptions"/>.
+    /// <param name="connectionType">
+    /// Connection type if known.
+    /// </param>
+    /// <param name="packetLoss">
+    /// WebRTC packet loss (percent, 0-100). 0 disables packet loss emulation, 100 drops all the packets.
+    /// </param>
+    /// <param name="packetQueueLength">
+    /// WebRTC packet queue length (packet). 0 removes any queue length limitations.
+    /// </param>
+    /// <param name="packetReordering">
+    /// WebRTC packetReordering feature.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -278,10 +331,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, EmulateNetworkConditionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: options?.ConnectionType, PacketLoss: options?.PacketLoss, PacketQueueLength: options?.PacketQueueLength, PacketReordering: options?.PacketReordering);
-        return await ExecuteCommandAsync(EmulateNetworkConditionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType, PacketLoss: packetLoss, PacketQueueLength: packetQueueLength, PacketReordering: packetReordering);
+        return await ExecuteCommandAsync(EmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EmulateNetworkConditionsCommandParameters, EmulateNetworkConditionsResult> EmulateNetworkConditionsCommand = new("Network.emulateNetworkConditions", JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult);
 
@@ -291,7 +344,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// explicitly modify <b>navigator</b> behavior.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Offline</b> - True to emulate internet disconnection. Deprecated, use the offline property in matchedNetworkConditions or emulateOfflineServiceWorker instead.</description></item>
     /// <item><description><b>EmulateOfflineServiceWorker</b> - True to emulate offline service worker.</description></item>
@@ -302,8 +355,15 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// conditions can be configured by leaving the urlPattern for the conditions empty. These global conditions are
     /// also applied for throttling of p2p connections.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EmulateNetworkConditionsByRuleCommandOptions"/>.
+    /// <param name="offline">
+    /// True to emulate internet disconnection. Deprecated, use the offline property in matchedNetworkConditions
+    /// or emulateOfflineServiceWorker instead.
+    /// </param>
+    /// <param name="emulateOfflineServiceWorker">
+    /// True to emulate offline service worker.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -312,10 +372,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsByRuleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, EmulateNetworkConditionsByRuleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: options?.Offline, EmulateOfflineServiceWorker: options?.EmulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
-        return await ExecuteCommandAsync(EmulateNetworkConditionsByRuleCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: offline, EmulateOfflineServiceWorker: emulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
+        return await ExecuteCommandAsync(EmulateNetworkConditionsByRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EmulateNetworkConditionsByRuleCommandParameters, EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleCommand = new("Network.emulateNetworkConditionsByRule", JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult);
 
@@ -323,7 +383,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Override the state of navigator.onLine and navigator.connection.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ConnectionType</b> - Connection type if known.</description></item>
     /// </list>
@@ -340,8 +400,11 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="uploadThroughput">
     /// Maximal aggregated upload throughput (bytes/sec).  -1 disables upload throttling.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="OverrideNetworkStateCommandOptions"/>.
+    /// <param name="connectionType">
+    /// Connection type if known.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -350,10 +413,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="OverrideNetworkStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, OverrideNetworkStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: options?.ConnectionType);
-        return await ExecuteCommandAsync(OverrideNetworkStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType);
+        return await ExecuteCommandAsync(OverrideNetworkStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<OverrideNetworkStateCommandParameters, OverrideNetworkStateResult> OverrideNetworkStateCommand = new("Network.overrideNetworkState", JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult);
 
@@ -361,7 +424,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Enables network tracking, network events will now be delivered to the client.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>MaxTotalBufferSize</b> - Buffer size in bytes to use when preserving network payloads (XHRs, etc). This is the maximum number of bytes that will be collected by this DevTools session.</description></item>
     /// <item><description><b>MaxResourceBufferSize</b> - Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
@@ -370,8 +433,29 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>EnableDurableMessages</b> - Enable storing response bodies outside of renderer, so that these survive a cross-process navigation. Requires maxTotalBufferSize to be set. Currently defaults to false. This field is being deprecated in favor of the dedicated configureDurableMessages command, due to the possibility of deadlocks when awaiting Network.enable before issuing Runtime.runIfWaitingForDebugger.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="maxTotalBufferSize">
+    /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
+    /// This is the maximum number of bytes that will be collected by this
+    /// DevTools session.
+    /// </param>
+    /// <param name="maxResourceBufferSize">
+    /// Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
+    /// </param>
+    /// <param name="maxPostDataSize">
+    /// Longest post body size (in bytes) that would be included in requestWillBeSent notification
+    /// </param>
+    /// <param name="reportDirectSocketTraffic">
+    /// Whether DirectSocket chunk send/receive events should be reported.
+    /// </param>
+    /// <param name="enableDurableMessages">
+    /// Enable storing response bodies outside of renderer, so that these survive
+    /// a cross-process navigation. Requires maxTotalBufferSize to be set.
+    /// Currently defaults to false. This field is being deprecated in favor of the dedicated
+    /// configureDurableMessages command, due to the possibility of deadlocks when awaiting
+    /// Network.enable before issuing Runtime.runIfWaitingForDebugger.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -379,10 +463,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EnableCommandParameters(MaxTotalBufferSize: options?.MaxTotalBufferSize, MaxResourceBufferSize: options?.MaxResourceBufferSize, MaxPostDataSize: options?.MaxPostDataSize, ReportDirectSocketTraffic: options?.ReportDirectSocketTraffic, EnableDurableMessages: options?.EnableDurableMessages);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EnableCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize, MaxPostDataSize: maxPostDataSize, ReportDirectSocketTraffic: reportDirectSocketTraffic, EnableDurableMessages: enableDurableMessages);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Network.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -392,14 +476,20 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// If maxTotalBufferSize is not set, durable messages are disabled.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>MaxTotalBufferSize</b> - Buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
     /// <item><description><b>MaxResourceBufferSize</b> - Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ConfigureDurableMessagesCommandOptions"/>.
+    /// <param name="maxTotalBufferSize">
+    /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
+    /// </param>
+    /// <param name="maxResourceBufferSize">
+    /// Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -408,10 +498,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="ConfigureDurableMessagesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(ConfigureDurableMessagesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: options?.MaxTotalBufferSize, MaxResourceBufferSize: options?.MaxResourceBufferSize);
-        return await ExecuteCommandAsync(ConfigureDurableMessagesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize);
+        return await ExecuteCommandAsync(ConfigureDurableMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ConfigureDurableMessagesCommandParameters, ConfigureDurableMessagesResult> ConfigureDurableMessagesCommand = new("Network.configureDurableMessages", JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult);
 
@@ -420,8 +510,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// information in the <b>cookies</b> field.
     /// Deprecated. Use Storage.getCookies instead.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetAllCookiesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -430,10 +520,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetAllCookiesResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetAllCookiesResult> GetAllCookiesAsync(GetAllCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAllCookiesCommandParameters();
-        return await ExecuteCommandAsync(GetAllCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetAllCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetAllCookiesCommandParameters, GetAllCookiesResult> GetAllCookiesCommand = new("Network.getAllCookies", JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult);
 
@@ -443,8 +533,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="origin">
     /// Origin to get certificate for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetCertificateCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -453,10 +543,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetCertificateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetCertificateResult> GetCertificateAsync(string origin, GetCertificateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCertificateCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(GetCertificateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetCertificateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetCertificateCommandParameters, GetCertificateResult> GetCertificateCommand = new("Network.getCertificate", JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult);
 
@@ -465,13 +555,18 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// detailed cookie information in the <b>cookies</b> field.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Urls</b> - The list of URLs for which applicable cookies will be fetched. If not specified, it's assumed to be set to the list containing the URLs of the page and all of its subframes.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetCookiesCommandOptions"/>.
+    /// <param name="urls">
+    /// The list of URLs for which applicable cookies will be fetched.
+    /// If not specified, it's assumed to be set to the list containing
+    /// the URLs of the page and all of its subframes.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -479,10 +574,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCookiesResult"/>.
     /// </returns>
-    public async Task<GetCookiesResult> GetCookiesAsync(GetCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetCookiesCommandParameters(Urls: options?.Urls);
-        return await ExecuteCommandAsync(GetCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetCookiesCommandParameters(Urls: urls);
+        return await ExecuteCommandAsync(GetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetCookiesCommandParameters, GetCookiesResult> GetCookiesCommand = new("Network.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
 
@@ -492,8 +587,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="requestId">
     /// Identifier of the network request to get content for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetResponseBodyCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -501,10 +596,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetResponseBodyResult"/>.
     /// </returns>
-    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, GetResponseBodyCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(GetResponseBodyCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult> GetResponseBodyCommand = new("Network.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
 
@@ -514,8 +609,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="requestId">
     /// Identifier of the network request to get content for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetRequestPostDataCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -523,10 +618,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRequestPostDataResult"/>.
     /// </returns>
-    public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, GetRequestPostDataCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRequestPostDataCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(GetRequestPostDataCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetRequestPostDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetRequestPostDataCommandParameters, GetRequestPostDataResult> GetRequestPostDataCommand = new("Network.getRequestPostData", JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult);
 
@@ -536,8 +631,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="interceptionId">
     /// Identifier for the intercepted request to get body for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetResponseBodyForInterceptionCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -546,10 +641,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetResponseBodyForInterceptionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionAsync(InterceptionId interceptionId, GetResponseBodyForInterceptionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetResponseBodyForInterceptionCommandParameters(InterceptionId: interceptionId);
-        return await ExecuteCommandAsync(GetResponseBodyForInterceptionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetResponseBodyForInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetResponseBodyForInterceptionCommandParameters, GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionCommand = new("Network.getResponseBodyForInterception", JsonContext.GetResponseBodyForInterceptionCommandParameters, JsonContext.GetResponseBodyForInterceptionResult);
 
@@ -561,8 +656,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </summary>
     /// <param name="interceptionId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TakeResponseBodyForInterceptionAsStreamCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -571,10 +666,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="TakeResponseBodyForInterceptionAsStreamResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamAsync(InterceptionId interceptionId, TakeResponseBodyForInterceptionAsStreamCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeResponseBodyForInterceptionAsStreamCommandParameters(InterceptionId: interceptionId);
-        return await ExecuteCommandAsync(TakeResponseBodyForInterceptionAsStreamCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(TakeResponseBodyForInterceptionAsStreamCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TakeResponseBodyForInterceptionAsStreamCommandParameters, TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamCommand = new("Network.takeResponseBodyForInterceptionAsStream", JsonContext.TakeResponseBodyForInterceptionAsStreamCommandParameters, JsonContext.TakeResponseBodyForInterceptionAsStreamResult);
 
@@ -586,8 +681,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="requestId">
     /// Identifier of XHR to replay.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReplayXHRCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -596,10 +691,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="ReplayXHRResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, ReplayXHRCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReplayXHRCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReplayXHRCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReplayXHRCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReplayXHRCommandParameters, ReplayXHRResult> ReplayXHRCommand = new("Network.replayXHR", JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult);
 
@@ -607,7 +702,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Searches for given string in response content.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>CaseSensitive</b> - If true, search is case sensitive.</description></item>
     /// <item><description><b>IsRegex</b> - If true, treats string parameter as regex.</description></item>
@@ -619,8 +714,14 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="query">
     /// String to search for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SearchInResponseBodyCommandOptions"/>.
+    /// <param name="caseSensitive">
+    /// If true, search is case sensitive.
+    /// </param>
+    /// <param name="isRegex">
+    /// If true, treats string parameter as regex.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -629,10 +730,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SearchInResponseBodyResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, SearchInResponseBodyCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SearchInResponseBodyCommandParameters(RequestId: requestId, Query: query, CaseSensitive: options?.CaseSensitive, IsRegex: options?.IsRegex);
-        return await ExecuteCommandAsync(SearchInResponseBodyCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SearchInResponseBodyCommandParameters(RequestId: requestId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
+        return await ExecuteCommandAsync(SearchInResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SearchInResponseBodyCommandParameters, SearchInResponseBodyResult> SearchInResponseBodyCommand = new("Network.searchInResponseBody", JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult);
 
@@ -640,14 +741,21 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Blocks URLs from loading.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>UrlPatterns</b> - Patterns to match in the order in which they are given. These patterns also take precedence over any wildcard patterns defined in <b>urls</b>.</description></item>
     /// <item><description><b>Urls</b> - URL patterns to block. Wildcards ('*') are allowed.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBlockedURLsCommandOptions"/>.
+    /// <param name="urlPatterns">
+    /// Patterns to match in the order in which they are given. These patterns
+    /// also take precedence over any wildcard patterns defined in <b>urls</b>.
+    /// </param>
+    /// <param name="urls">
+    /// URL patterns to block. Wildcards ('*') are allowed.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -656,10 +764,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetBlockedURLsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(SetBlockedURLsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetBlockedURLsCommandParameters(UrlPatterns: options?.UrlPatterns, Urls: options?.Urls);
-        return await ExecuteCommandAsync(SetBlockedURLsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetBlockedURLsCommandParameters(UrlPatterns: urlPatterns, Urls: urls);
+        return await ExecuteCommandAsync(SetBlockedURLsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBlockedURLsCommandParameters, SetBlockedURLsResult> SetBlockedURLsCommand = new("Network.setBlockedURLs", JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult);
 
@@ -669,8 +777,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="bypass">
     /// Bypass service worker and load from network.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBypassServiceWorkerCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -678,10 +786,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBypassServiceWorkerResult"/>.
     /// </returns>
-    public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, SetBypassServiceWorkerCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBypassServiceWorkerCommandParameters(Bypass: bypass);
-        return await ExecuteCommandAsync(SetBypassServiceWorkerCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetBypassServiceWorkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBypassServiceWorkerCommandParameters, SetBypassServiceWorkerResult> SetBypassServiceWorkerCommand = new("Network.setBypassServiceWorker", JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult);
 
@@ -691,8 +799,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="cacheDisabled">
     /// Cache disabled state.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetCacheDisabledCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -700,10 +808,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCacheDisabledResult"/>.
     /// </returns>
-    public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, SetCacheDisabledCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCacheDisabledCommandParameters(CacheDisabled: cacheDisabled);
-        return await ExecuteCommandAsync(SetCacheDisabledCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetCacheDisabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCacheDisabledCommandParameters, SetCacheDisabledResult> SetCacheDisabledCommand = new("Network.setCacheDisabled", JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult);
 
@@ -711,7 +819,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Url</b> - The request-URI to associate with the setting of the cookie. This value can affect the default domain, path, source port, and source scheme values of the created cookie.</description></item>
     /// <item><description><b>Domain</b> - Cookie domain.</description></item>
@@ -732,8 +840,44 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="value">
     /// Cookie value.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetCookieCommandOptions"/>.
+    /// <param name="url">
+    /// The request-URI to associate with the setting of the cookie. This value can affect the
+    /// default domain, path, source port, and source scheme values of the created cookie.
+    /// </param>
+    /// <param name="domain">
+    /// Cookie domain.
+    /// </param>
+    /// <param name="path">
+    /// Cookie path.
+    /// </param>
+    /// <param name="secure">
+    /// True if cookie is secure.
+    /// </param>
+    /// <param name="httpOnly">
+    /// True if cookie is http-only.
+    /// </param>
+    /// <param name="sameSite">
+    /// Cookie SameSite type.
+    /// </param>
+    /// <param name="expires">
+    /// Cookie expiration date, session cookie if not set
+    /// </param>
+    /// <param name="priority">
+    /// Cookie Priority type.
+    /// </param>
+    /// <param name="sourceScheme">
+    /// Cookie source scheme type.
+    /// </param>
+    /// <param name="sourcePort">
+    /// Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+    /// An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
+    /// This is a temporary ability and it will be removed in the future.
+    /// </param>
+    /// <param name="partitionKey">
+    /// Cookie partition key. If not set, the cookie will be set as not partitioned.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -741,10 +885,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookieResult"/>.
     /// </returns>
-    public async Task<SetCookieResult> SetCookieAsync(string name, string value, SetCookieCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: options?.Url, Domain: options?.Domain, Path: options?.Path, Secure: options?.Secure, HttpOnly: options?.HttpOnly, SameSite: options?.SameSite, Expires: options?.Expires, Priority: options?.Priority, SourceScheme: options?.SourceScheme, SourcePort: options?.SourcePort, PartitionKey: options?.PartitionKey);
-        return await ExecuteCommandAsync(SetCookieCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: url, Domain: domain, Path: path, Secure: secure, HttpOnly: httpOnly, SameSite: sameSite, Expires: expires, Priority: priority, SourceScheme: sourceScheme, SourcePort: sourcePort, PartitionKey: partitionKey);
+        return await ExecuteCommandAsync(SetCookieCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCookieCommandParameters, SetCookieResult> SetCookieCommand = new("Network.setCookie", JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult);
 
@@ -754,8 +898,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="cookies">
     /// Cookies to be set.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetCookiesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -763,10 +907,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookiesResult"/>.
     /// </returns>
-    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, SetCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies);
-        return await ExecuteCommandAsync(SetCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCookiesCommandParameters, SetCookiesResult> SetCookiesCommand = new("Network.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
 
@@ -776,8 +920,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="headers">
     /// Map with extra HTTP headers.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetExtraHTTPHeadersCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -785,10 +929,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetExtraHTTPHeadersResult"/>.
     /// </returns>
-    public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, SetExtraHTTPHeadersCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetExtraHTTPHeadersCommandParameters(Headers: headers);
-        return await ExecuteCommandAsync(SetExtraHTTPHeadersCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetExtraHTTPHeadersCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetExtraHTTPHeadersCommandParameters, SetExtraHTTPHeadersResult> SetExtraHTTPHeadersCommand = new("Network.setExtraHTTPHeaders", JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult);
 
@@ -798,8 +942,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="enabled">
     /// Whether to attach a page script stack for debugging purpose.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAttachDebugStackCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -808,10 +952,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetAttachDebugStackResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, SetAttachDebugStackCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttachDebugStackCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAttachDebugStackCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetAttachDebugStackCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetAttachDebugStackCommandParameters, SetAttachDebugStackResult> SetAttachDebugStackCommand = new("Network.setAttachDebugStack", JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult);
 
@@ -823,8 +967,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Requests matching any of these patterns will be forwarded and wait for the corresponding
     /// continueInterceptedRequest call.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetRequestInterceptionCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -834,10 +978,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, SetRequestInterceptionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRequestInterceptionCommandParameters(Patterns: patterns);
-        return await ExecuteCommandAsync(SetRequestInterceptionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetRequestInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetRequestInterceptionCommandParameters, SetRequestInterceptionResult> SetRequestInterceptionCommand = new("Network.setRequestInterception", JsonContext.SetRequestInterceptionCommandParameters, JsonContext.SetRequestInterceptionResult);
 
@@ -845,7 +989,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Allows overriding user agent with the given string.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>AcceptLanguage</b> - Browser language to emulate.</description></item>
     /// <item><description><b>Platform</b> - The platform navigator.platform should return.</description></item>
@@ -855,8 +999,17 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="userAgent">
     /// User agent to use.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetUserAgentOverrideCommandOptions"/>.
+    /// <param name="acceptLanguage">
+    /// Browser language to emulate.
+    /// </param>
+    /// <param name="platform">
+    /// The platform navigator.platform should return.
+    /// </param>
+    /// <param name="userAgentMetadata">
+    /// To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -864,10 +1017,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetUserAgentOverrideResult"/>.
     /// </returns>
-    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, SetUserAgentOverrideCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: options?.AcceptLanguage, Platform: options?.Platform, UserAgentMetadata: options?.UserAgentMetadata);
-        return await ExecuteCommandAsync(SetUserAgentOverrideCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
+        return await ExecuteCommandAsync(SetUserAgentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult> SetUserAgentOverrideCommand = new("Network.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
 
@@ -878,8 +1031,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="requestId">
     /// Identifier of the request to stream.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StreamResourceContentCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -888,10 +1041,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="StreamResourceContentResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, StreamResourceContentCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StreamResourceContentCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(StreamResourceContentCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StreamResourceContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StreamResourceContentCommandParameters, StreamResourceContentResult> StreamResourceContentCommand = new("Network.streamResourceContent", JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult);
 
@@ -899,13 +1052,16 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Returns information about the COEP/COOP isolation status.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>FrameId</b> - If no frameId is provided, the status of the target is provided.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetSecurityIsolationStatusCommandOptions"/>.
+    /// <param name="frameId">
+    /// If no frameId is provided, the status of the target is provided.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -914,10 +1070,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetSecurityIsolationStatusResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(GetSecurityIsolationStatusCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetSecurityIsolationStatusCommandParameters(FrameId: options?.FrameId);
-        return await ExecuteCommandAsync(GetSecurityIsolationStatusCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetSecurityIsolationStatusCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetSecurityIsolationStatusCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetSecurityIsolationStatusCommandParameters, GetSecurityIsolationStatusResult> GetSecurityIsolationStatusCommand = new("Network.getSecurityIsolationStatus", JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult);
 
@@ -928,8 +1084,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="enable">
     /// Whether to enable or disable events for the Reporting API
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableReportingApiCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -938,10 +1094,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EnableReportingApiResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, EnableReportingApiCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableReportingApiCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(EnableReportingApiCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableReportingApiCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableReportingApiCommandParameters, EnableReportingApiResult> EnableReportingApiCommand = new("Network.enableReportingApi", JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult);
 
@@ -951,8 +1107,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="enable">
     /// Whether to enable or disable events.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableDeviceBoundSessionsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -961,10 +1117,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EnableDeviceBoundSessionsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, EnableDeviceBoundSessionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableDeviceBoundSessionsCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(EnableDeviceBoundSessionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableDeviceBoundSessionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableDeviceBoundSessionsCommandParameters, EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsCommand = new("Network.enableDeviceBoundSessions", JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult);
 
@@ -973,8 +1129,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </summary>
     /// <param name="key">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DeleteDeviceBoundSessionCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -983,10 +1139,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="DeleteDeviceBoundSessionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, DeleteDeviceBoundSessionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteDeviceBoundSessionCommandParameters(Key: key);
-        return await ExecuteCommandAsync(DeleteDeviceBoundSessionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DeleteDeviceBoundSessionCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DeleteDeviceBoundSessionCommandParameters, DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionCommand = new("Network.deleteDeviceBoundSession", JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult);
 
@@ -996,8 +1152,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="origin">
     /// The URL origin.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="FetchSchemefulSiteCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -1006,10 +1162,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="FetchSchemefulSiteResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, FetchSchemefulSiteCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new FetchSchemefulSiteCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(FetchSchemefulSiteCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(FetchSchemefulSiteCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<FetchSchemefulSiteCommandParameters, FetchSchemefulSiteResult> FetchSchemefulSiteCommand = new("Network.fetchSchemefulSite", JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult);
 
@@ -1017,7 +1173,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Fetches the resource and returns the content.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="loadNetworkResourceOptions"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>FrameId</b> - Frame id to get the resource for. Mandatory for frame targets, and should be omitted for worker targets.</description></item>
     /// </list>
@@ -1028,8 +1184,12 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="options">
     /// Options for the request.
     /// </param>
-    /// <param name="loadNetworkResourceOptions">
-    /// Optional parameters. See <see cref="LoadNetworkResourceCommandOptions"/>.
+    /// <param name="frameId">
+    /// Frame id to get the resource for. Mandatory for frame targets, and
+    /// should be omitted for worker targets.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -1038,10 +1198,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="LoadNetworkResourceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, LoadNetworkResourceCommandOptions? loadNetworkResourceOptions = default, CancellationToken cancellationToken = default)
+    public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new LoadNetworkResourceCommandParameters(FrameId: loadNetworkResourceOptions?.FrameId, Url: url, Options: options);
-        return await ExecuteCommandAsync(LoadNetworkResourceCommand, @params, loadNetworkResourceOptions, cancellationToken).ConfigureAwait(false);
+        var @params = new LoadNetworkResourceCommandParameters(FrameId: frameId, Url: url, Options: options);
+        return await ExecuteCommandAsync(LoadNetworkResourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<LoadNetworkResourceCommandParameters, LoadNetworkResourceResult> LoadNetworkResourceCommand = new("Network.loadNetworkResource", JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult);
 
@@ -1052,8 +1212,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="enableThirdPartyCookieRestriction">
     /// Whether 3pc restriction is enabled.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetCookieControlsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -1062,10 +1222,10 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetCookieControlsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, SetCookieControlsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction);
-        return await ExecuteCommandAsync(SetCookieControlsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetCookieControlsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCookieControlsCommandParameters, SetCookieControlsResult> SetCookieControlsCommand = new("Network.setCookieControls", JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult);
 
@@ -1679,13 +1839,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record SetAcceptedEncodingsCommandParameters(ImmutableArray<ContentEncoding> Encodings) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetAcceptedEncodingsAsync"/>.
-/// </summary>
-public sealed record SetAcceptedEncodingsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetAcceptedEncodingsResult() : EmptyResult;
 
@@ -1693,25 +1846,11 @@ public sealed record SetAcceptedEncodingsResult() : EmptyResult;
 internal sealed record ClearAcceptedEncodingsOverrideCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.ClearAcceptedEncodingsOverrideAsync"/>.
-/// </summary>
-public sealed record ClearAcceptedEncodingsOverrideCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ClearAcceptedEncodingsOverrideResult() : EmptyResult;
 
 
 internal sealed record CanClearBrowserCacheCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.CanClearBrowserCacheAsync"/>.
-/// </summary>
-public sealed record CanClearBrowserCacheCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1724,13 +1863,6 @@ public sealed record CanClearBrowserCacheResult(bool Result) : EmptyResult;
 internal sealed record CanClearBrowserCookiesCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.CanClearBrowserCookiesAsync"/>.
-/// </summary>
-public sealed record CanClearBrowserCookiesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Result">
 /// True if browser cookies can be cleared.
@@ -1739,13 +1871,6 @@ public sealed record CanClearBrowserCookiesResult(bool Result) : EmptyResult;
 
 
 internal sealed record CanEmulateNetworkConditionsCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.CanEmulateNetworkConditionsAsync"/>.
-/// </summary>
-public sealed record CanEmulateNetworkConditionsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1758,25 +1883,11 @@ public sealed record CanEmulateNetworkConditionsResult(bool Result) : EmptyResul
 internal sealed record ClearBrowserCacheCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.ClearBrowserCacheAsync"/>.
-/// </summary>
-public sealed record ClearBrowserCacheCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ClearBrowserCacheResult() : EmptyResult;
 
 
 internal sealed record ClearBrowserCookiesCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.ClearBrowserCookiesAsync"/>.
-/// </summary>
-public sealed record ClearBrowserCookiesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1786,86 +1897,11 @@ public sealed record ClearBrowserCookiesResult() : EmptyResult;
 internal sealed record ContinueInterceptedRequestCommandParameters(InterceptionId InterceptionId, ErrorReason? ErrorReason, string? RawResponse, string? Url, string? Method, string? PostData, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? Headers, AuthChallengeResponse? AuthChallengeResponse) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.ContinueInterceptedRequestAsync"/>.
-/// </summary>
-public sealed record ContinueInterceptedRequestCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If set this causes the request to fail with the given reason. Passing <b>Aborted</b> for requests
-    /// marked with <b>isNavigationRequest</b> also cancels the navigation. Must not be set in response
-    /// to an authChallenge.
-    /// </summary>
-    public ErrorReason? ErrorReason { get; init; }
-
-    /// <summary>
-    /// If set the requests completes using with the provided base64 encoded raw response, including
-    /// HTTP status line and headers etc... Must not be set in response to an authChallenge. (Encoded as a base64 string when passed over JSON)
-    /// </summary>
-    public string? RawResponse { get; init; }
-
-    /// <summary>
-    /// If set the request url will be modified in a way that's not observable by page. Must not be
-    /// set in response to an authChallenge.
-    /// </summary>
-    public string? Url { get; init; }
-
-    /// <summary>
-    /// If set this allows the request method to be overridden. Must not be set in response to an
-    /// authChallenge.
-    /// </summary>
-    public string? Method { get; init; }
-
-    /// <summary>
-    /// If set this allows postData to be set. Must not be set in response to an authChallenge.
-    /// </summary>
-    public string? PostData { get; init; }
-
-    /// <summary>
-    /// If set this allows the request headers to be changed. Must not be set in response to an
-    /// authChallenge.
-    /// </summary>
-    public global::System.Collections.Generic.IReadOnlyDictionary<string, string>? Headers { get; init; }
-
-    /// <summary>
-    /// Response to a requestIntercepted with an authChallenge. Must not be set otherwise.
-    /// </summary>
-    public AuthChallengeResponse? AuthChallengeResponse { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record ContinueInterceptedRequestResult() : EmptyResult;
 
 
 internal sealed record DeleteCookiesCommandParameters(string Name, string? Url, string? Domain, string? Path, CookiePartitionKey? PartitionKey) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.DeleteCookiesAsync"/>.
-/// </summary>
-public sealed record DeleteCookiesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If specified, deletes all the cookies with the given name where domain and path match
-    /// provided URL.
-    /// </summary>
-    public string? Url { get; init; }
-
-    /// <summary>
-    /// If specified, deletes only cookies with the exact domain.
-    /// </summary>
-    public string? Domain { get; init; }
-
-    /// <summary>
-    /// If specified, deletes only cookies with the exact path.
-    /// </summary>
-    public string? Path { get; init; }
-
-    /// <summary>
-    /// If specified, deletes only cookies with the the given name and partitionKey where
-    /// all partition key attributes match the cookie partition key attribute.
-    /// </summary>
-    public CookiePartitionKey? PartitionKey { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1875,13 +1911,6 @@ public sealed record DeleteCookiesResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -1889,55 +1918,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EmulateNetworkConditionsCommandParameters(bool Offline, double Latency, double DownloadThroughput, double UploadThroughput, ConnectionType? ConnectionType, double? PacketLoss, long? PacketQueueLength, bool? PacketReordering) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.EmulateNetworkConditionsAsync"/>.
-/// </summary>
-public sealed record EmulateNetworkConditionsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Connection type if known.
-    /// </summary>
-    public ConnectionType? ConnectionType { get; init; }
-
-    /// <summary>
-    /// WebRTC packet loss (percent, 0-100). 0 disables packet loss emulation, 100 drops all the packets.
-    /// </summary>
-    public double? PacketLoss { get; init; }
-
-    /// <summary>
-    /// WebRTC packet queue length (packet). 0 removes any queue length limitations.
-    /// </summary>
-    public long? PacketQueueLength { get; init; }
-
-    /// <summary>
-    /// WebRTC packetReordering feature.
-    /// </summary>
-    public bool? PacketReordering { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record EmulateNetworkConditionsResult() : EmptyResult;
 
 
 internal sealed record EmulateNetworkConditionsByRuleCommandParameters(bool? Offline, bool? EmulateOfflineServiceWorker, ImmutableArray<NetworkConditions> MatchedNetworkConditions) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.EmulateNetworkConditionsByRuleAsync"/>.
-/// </summary>
-public sealed record EmulateNetworkConditionsByRuleCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// True to emulate internet disconnection. Deprecated, use the offline property in matchedNetworkConditions
-    /// or emulateOfflineServiceWorker instead.
-    /// </summary>
-    [global::System.Obsolete]
-    public bool? Offline { get; init; }
-
-    /// <summary>
-    /// True to emulate offline service worker.
-    /// </summary>
-    public bool? EmulateOfflineServiceWorker { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1951,59 +1936,11 @@ public sealed record EmulateNetworkConditionsByRuleResult(ImmutableArray<string>
 internal sealed record OverrideNetworkStateCommandParameters(bool Offline, double Latency, double DownloadThroughput, double UploadThroughput, ConnectionType? ConnectionType) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.OverrideNetworkStateAsync"/>.
-/// </summary>
-public sealed record OverrideNetworkStateCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Connection type if known.
-    /// </summary>
-    public ConnectionType? ConnectionType { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record OverrideNetworkStateResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters(long? MaxTotalBufferSize, long? MaxResourceBufferSize, long? MaxPostDataSize, bool? ReportDirectSocketTraffic, bool? EnableDurableMessages) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
-    /// This is the maximum number of bytes that will be collected by this
-    /// DevTools session.
-    /// </summary>
-    public long? MaxTotalBufferSize { get; init; }
-
-    /// <summary>
-    /// Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
-    /// </summary>
-    public long? MaxResourceBufferSize { get; init; }
-
-    /// <summary>
-    /// Longest post body size (in bytes) that would be included in requestWillBeSent notification
-    /// </summary>
-    public long? MaxPostDataSize { get; init; }
-
-    /// <summary>
-    /// Whether DirectSocket chunk send/receive events should be reported.
-    /// </summary>
-    public bool? ReportDirectSocketTraffic { get; init; }
-
-    /// <summary>
-    /// Enable storing response bodies outside of renderer, so that these survive
-    /// a cross-process navigation. Requires maxTotalBufferSize to be set.
-    /// Currently defaults to false. This field is being deprecated in favor of the dedicated
-    /// configureDurableMessages command, due to the possibility of deadlocks when awaiting
-    /// Network.enable before issuing Runtime.runIfWaitingForDebugger.
-    /// </summary>
-    public bool? EnableDurableMessages { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -2013,34 +1950,11 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record ConfigureDurableMessagesCommandParameters(long? MaxTotalBufferSize, long? MaxResourceBufferSize) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.ConfigureDurableMessagesAsync"/>.
-/// </summary>
-public sealed record ConfigureDurableMessagesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
-    /// </summary>
-    public long? MaxTotalBufferSize { get; init; }
-
-    /// <summary>
-    /// Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).
-    /// </summary>
-    public long? MaxResourceBufferSize { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record ConfigureDurableMessagesResult() : EmptyResult;
 
 
 internal sealed record GetAllCookiesCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.GetAllCookiesAsync"/>.
-/// </summary>
-public sealed record GetAllCookiesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2053,13 +1967,6 @@ public sealed record GetAllCookiesResult(ImmutableArray<Cookie> Cookies) : Empty
 internal sealed record GetCertificateCommandParameters(string Origin) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.GetCertificateAsync"/>.
-/// </summary>
-public sealed record GetCertificateCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="TableNames">
 /// </param>
@@ -2067,19 +1974,6 @@ public sealed record GetCertificateResult(ImmutableArray<string> TableNames) : E
 
 
 internal sealed record GetCookiesCommandParameters(ImmutableArray<string>? Urls) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.GetCookiesAsync"/>.
-/// </summary>
-public sealed record GetCookiesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The list of URLs for which applicable cookies will be fetched.
-    /// If not specified, it's assumed to be set to the list containing
-    /// the URLs of the page and all of its subframes.
-    /// </summary>
-    public ImmutableArray<string>? Urls { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -2090,13 +1984,6 @@ public sealed record GetCookiesResult(ImmutableArray<Cookie> Cookies) : EmptyRes
 
 
 internal sealed record GetResponseBodyCommandParameters(RequestId RequestId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.GetResponseBodyAsync"/>.
-/// </summary>
-public sealed record GetResponseBodyCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2112,13 +1999,6 @@ public sealed record GetResponseBodyResult(string Body, bool Base64Encoded) : Em
 internal sealed record GetRequestPostDataCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.GetRequestPostDataAsync"/>.
-/// </summary>
-public sealed record GetRequestPostDataCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="PostData">
 /// Request body string, omitting files from multipart requests
@@ -2130,13 +2010,6 @@ public sealed record GetRequestPostDataResult(string PostData, bool Base64Encode
 
 
 internal sealed record GetResponseBodyForInterceptionCommandParameters(InterceptionId InterceptionId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.GetResponseBodyForInterceptionAsync"/>.
-/// </summary>
-public sealed record GetResponseBodyForInterceptionCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2152,13 +2025,6 @@ public sealed record GetResponseBodyForInterceptionResult(string Body, bool Base
 internal sealed record TakeResponseBodyForInterceptionAsStreamCommandParameters(InterceptionId InterceptionId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.TakeResponseBodyForInterceptionAsStreamAsync"/>.
-/// </summary>
-public sealed record TakeResponseBodyForInterceptionAsStreamCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Stream">
 /// </param>
@@ -2168,34 +2034,11 @@ public sealed record TakeResponseBodyForInterceptionAsStreamResult(IO.StreamHand
 internal sealed record ReplayXHRCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.ReplayXHRAsync"/>.
-/// </summary>
-public sealed record ReplayXHRCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReplayXHRResult() : EmptyResult;
 
 
 internal sealed record SearchInResponseBodyCommandParameters(RequestId RequestId, string Query, bool? CaseSensitive, bool? IsRegex) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SearchInResponseBodyAsync"/>.
-/// </summary>
-public sealed record SearchInResponseBodyCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If true, search is case sensitive.
-    /// </summary>
-    public bool? CaseSensitive { get; init; }
-
-    /// <summary>
-    /// If true, treats string parameter as regex.
-    /// </summary>
-    public bool? IsRegex { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -2208,36 +2051,11 @@ public sealed record SearchInResponseBodyResult(ImmutableArray<Debugger.SearchMa
 internal sealed record SetBlockedURLsCommandParameters(ImmutableArray<BlockPattern>? UrlPatterns, ImmutableArray<string>? Urls) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetBlockedURLsAsync"/>.
-/// </summary>
-public sealed record SetBlockedURLsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Patterns to match in the order in which they are given. These patterns
-    /// also take precedence over any wildcard patterns defined in <b>urls</b>.
-    /// </summary>
-    public ImmutableArray<BlockPattern>? UrlPatterns { get; init; }
-
-    /// <summary>
-    /// URL patterns to block. Wildcards ('*') are allowed.
-    /// </summary>
-    [global::System.Obsolete]
-    public ImmutableArray<string>? Urls { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetBlockedURLsResult() : EmptyResult;
 
 
 internal sealed record SetBypassServiceWorkerCommandParameters(bool Bypass) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetBypassServiceWorkerAsync"/>.
-/// </summary>
-public sealed record SetBypassServiceWorkerCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2247,82 +2065,11 @@ public sealed record SetBypassServiceWorkerResult() : EmptyResult;
 internal sealed record SetCacheDisabledCommandParameters(bool CacheDisabled) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetCacheDisabledAsync"/>.
-/// </summary>
-public sealed record SetCacheDisabledCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetCacheDisabledResult() : EmptyResult;
 
 
 internal sealed record SetCookieCommandParameters(string Name, string Value, string? Url, string? Domain, string? Path, bool? Secure, bool? HttpOnly, CookieSameSite? SameSite, TimeSinceEpoch? Expires, CookiePriority? Priority, CookieSourceScheme? SourceScheme, long? SourcePort, CookiePartitionKey? PartitionKey) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetCookieAsync"/>.
-/// </summary>
-public sealed record SetCookieCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The request-URI to associate with the setting of the cookie. This value can affect the
-    /// default domain, path, source port, and source scheme values of the created cookie.
-    /// </summary>
-    public string? Url { get; init; }
-
-    /// <summary>
-    /// Cookie domain.
-    /// </summary>
-    public string? Domain { get; init; }
-
-    /// <summary>
-    /// Cookie path.
-    /// </summary>
-    public string? Path { get; init; }
-
-    /// <summary>
-    /// True if cookie is secure.
-    /// </summary>
-    public bool? Secure { get; init; }
-
-    /// <summary>
-    /// True if cookie is http-only.
-    /// </summary>
-    public bool? HttpOnly { get; init; }
-
-    /// <summary>
-    /// Cookie SameSite type.
-    /// </summary>
-    public CookieSameSite? SameSite { get; init; }
-
-    /// <summary>
-    /// Cookie expiration date, session cookie if not set
-    /// </summary>
-    public TimeSinceEpoch? Expires { get; init; }
-
-    /// <summary>
-    /// Cookie Priority type.
-    /// </summary>
-    public CookiePriority? Priority { get; init; }
-
-    /// <summary>
-    /// Cookie source scheme type.
-    /// </summary>
-    public CookieSourceScheme? SourceScheme { get; init; }
-
-    /// <summary>
-    /// Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
-    /// An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-    /// This is a temporary ability and it will be removed in the future.
-    /// </summary>
-    public long? SourcePort { get; init; }
-
-    /// <summary>
-    /// Cookie partition key. If not set, the cookie will be set as not partitioned.
-    /// </summary>
-    public CookiePartitionKey? PartitionKey { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -2335,25 +2082,11 @@ public sealed record SetCookieResult(bool Success) : EmptyResult;
 internal sealed record SetCookiesCommandParameters(ImmutableArray<CookieParam> Cookies) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetCookiesAsync"/>.
-/// </summary>
-public sealed record SetCookiesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetCookiesResult() : EmptyResult;
 
 
 internal sealed record SetExtraHTTPHeadersCommandParameters(global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetExtraHTTPHeadersAsync"/>.
-/// </summary>
-public sealed record SetExtraHTTPHeadersCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2363,25 +2096,11 @@ public sealed record SetExtraHTTPHeadersResult() : EmptyResult;
 internal sealed record SetAttachDebugStackCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetAttachDebugStackAsync"/>.
-/// </summary>
-public sealed record SetAttachDebugStackCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetAttachDebugStackResult() : EmptyResult;
 
 
 internal sealed record SetRequestInterceptionCommandParameters(ImmutableArray<RequestPattern> Patterns) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetRequestInterceptionAsync"/>.
-/// </summary>
-public sealed record SetRequestInterceptionCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2391,39 +2110,11 @@ public sealed record SetRequestInterceptionResult() : EmptyResult;
 internal sealed record SetUserAgentOverrideCommandParameters(string UserAgent, string? AcceptLanguage, string? Platform, Emulation.UserAgentMetadata? UserAgentMetadata) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetUserAgentOverrideAsync"/>.
-/// </summary>
-public sealed record SetUserAgentOverrideCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Browser language to emulate.
-    /// </summary>
-    public string? AcceptLanguage { get; init; }
-
-    /// <summary>
-    /// The platform navigator.platform should return.
-    /// </summary>
-    public string? Platform { get; init; }
-
-    /// <summary>
-    /// To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData
-    /// </summary>
-    public Emulation.UserAgentMetadata? UserAgentMetadata { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetUserAgentOverrideResult() : EmptyResult;
 
 
 internal sealed record StreamResourceContentCommandParameters(RequestId RequestId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.StreamResourceContentAsync"/>.
-/// </summary>
-public sealed record StreamResourceContentCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2436,17 +2127,6 @@ public sealed record StreamResourceContentResult(string BufferedData) : EmptyRes
 internal sealed record GetSecurityIsolationStatusCommandParameters(Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.GetSecurityIsolationStatusAsync"/>.
-/// </summary>
-public sealed record GetSecurityIsolationStatusCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If no frameId is provided, the status of the target is provided.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Status">
 /// </param>
@@ -2456,25 +2136,11 @@ public sealed record GetSecurityIsolationStatusResult(SecurityIsolationStatus St
 internal sealed record EnableReportingApiCommandParameters(bool Enable) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.EnableReportingApiAsync"/>.
-/// </summary>
-public sealed record EnableReportingApiCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableReportingApiResult() : EmptyResult;
 
 
 internal sealed record EnableDeviceBoundSessionsCommandParameters(bool Enable) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.EnableDeviceBoundSessionsAsync"/>.
-/// </summary>
-public sealed record EnableDeviceBoundSessionsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2484,25 +2150,11 @@ public sealed record EnableDeviceBoundSessionsResult() : EmptyResult;
 internal sealed record DeleteDeviceBoundSessionCommandParameters(DeviceBoundSessionKey Key) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.DeleteDeviceBoundSessionAsync"/>.
-/// </summary>
-public sealed record DeleteDeviceBoundSessionCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DeleteDeviceBoundSessionResult() : EmptyResult;
 
 
 internal sealed record FetchSchemefulSiteCommandParameters(string Origin) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.FetchSchemefulSiteAsync"/>.
-/// </summary>
-public sealed record FetchSchemefulSiteCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -2515,18 +2167,6 @@ public sealed record FetchSchemefulSiteResult(string SchemefulSite) : EmptyResul
 internal sealed record LoadNetworkResourceCommandParameters(Page.FrameId? FrameId, string Url, LoadNetworkResourceOptions Options) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="NetworkDomain.LoadNetworkResourceAsync"/>.
-/// </summary>
-public sealed record LoadNetworkResourceCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Frame id to get the resource for. Mandatory for frame targets, and
-    /// should be omitted for worker targets.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Resource">
 /// </param>
@@ -2534,13 +2174,6 @@ public sealed record LoadNetworkResourceResult(LoadNetworkResourcePageResult Res
 
 
 internal sealed record SetCookieControlsCommandParameters(bool EnableThirdPartyCookieRestriction) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="NetworkDomain.SetCookieControlsAsync"/>.
-/// </summary>
-public sealed record SetCookieControlsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

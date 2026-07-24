@@ -15,8 +15,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Disables animation domain notifications.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -24,18 +24,18 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Animation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables animation domain notifications.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -43,10 +43,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Animation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -56,8 +56,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="id">
     /// Id of animation.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetCurrentTimeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -65,18 +65,18 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCurrentTimeResult"/>.
     /// </returns>
-    public async Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, GetCurrentTimeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCurrentTimeCommandParameters(Id: id);
-        return await ExecuteCommandAsync(GetCurrentTimeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetCurrentTimeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetCurrentTimeCommandParameters, GetCurrentTimeResult> GetCurrentTimeCommand = new("Animation.getCurrentTime", JsonContext.GetCurrentTimeCommandParameters, JsonContext.GetCurrentTimeResult);
 
     /// <summary>
     /// Gets the playback rate of the document timeline.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetPlaybackRateCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -84,10 +84,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPlaybackRateResult"/>.
     /// </returns>
-    public async Task<GetPlaybackRateResult> GetPlaybackRateAsync(GetPlaybackRateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPlaybackRateCommandParameters();
-        return await ExecuteCommandAsync(GetPlaybackRateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetPlaybackRateCommandParameters, GetPlaybackRateResult> GetPlaybackRateCommand = new("Animation.getPlaybackRate", JsonContext.GetPlaybackRateCommandParameters, JsonContext.GetPlaybackRateResult);
 
@@ -97,8 +97,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="animations">
     /// List of animation ids to seek.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReleaseAnimationsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -106,10 +106,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseAnimationsResult"/>.
     /// </returns>
-    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, ReleaseAnimationsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseAnimationsCommandParameters(Animations: animations);
-        return await ExecuteCommandAsync(ReleaseAnimationsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReleaseAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReleaseAnimationsCommandParameters, ReleaseAnimationsResult> ReleaseAnimationsCommand = new("Animation.releaseAnimations", JsonContext.ReleaseAnimationsCommandParameters, JsonContext.ReleaseAnimationsResult);
 
@@ -119,8 +119,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="animationId">
     /// Animation id.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ResolveAnimationCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -128,10 +128,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveAnimationResult"/>.
     /// </returns>
-    public async Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, ResolveAnimationCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveAnimationCommandParameters(AnimationId: animationId);
-        return await ExecuteCommandAsync(ResolveAnimationCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ResolveAnimationCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ResolveAnimationCommandParameters, ResolveAnimationResult> ResolveAnimationCommand = new("Animation.resolveAnimation", JsonContext.ResolveAnimationCommandParameters, JsonContext.ResolveAnimationResult);
 
@@ -144,8 +144,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="currentTime">
     /// Set the current time of each animation.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SeekAnimationsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -153,10 +153,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SeekAnimationsResult"/>.
     /// </returns>
-    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, SeekAnimationsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime);
-        return await ExecuteCommandAsync(SeekAnimationsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SeekAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SeekAnimationsCommandParameters, SeekAnimationsResult> SeekAnimationsCommand = new("Animation.seekAnimations", JsonContext.SeekAnimationsCommandParameters, JsonContext.SeekAnimationsResult);
 
@@ -169,8 +169,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="paused">
     /// Paused state to set to.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetPausedCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -178,10 +178,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPausedResult"/>.
     /// </returns>
-    public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, SetPausedCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPausedCommandParameters(Animations: animations, Paused: paused);
-        return await ExecuteCommandAsync(SetPausedCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetPausedCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetPausedCommandParameters, SetPausedResult> SetPausedCommand = new("Animation.setPaused", JsonContext.SetPausedCommandParameters, JsonContext.SetPausedResult);
 
@@ -191,8 +191,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="playbackRate">
     /// Playback rate for animations on page
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetPlaybackRateCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -200,10 +200,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPlaybackRateResult"/>.
     /// </returns>
-    public async Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, SetPlaybackRateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPlaybackRateCommandParameters(PlaybackRate: playbackRate);
-        return await ExecuteCommandAsync(SetPlaybackRateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetPlaybackRateCommandParameters, SetPlaybackRateResult> SetPlaybackRateCommand = new("Animation.setPlaybackRate", JsonContext.SetPlaybackRateCommandParameters, JsonContext.SetPlaybackRateResult);
 
@@ -219,8 +219,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="delay">
     /// Delay of the animation.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetTimingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -228,10 +228,10 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetTimingResult"/>.
     /// </returns>
-    public async Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, SetTimingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimingCommandParameters(AnimationId: animationId, Duration: duration, Delay: delay);
-        return await ExecuteCommandAsync(SetTimingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetTimingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetTimingCommandParameters, SetTimingResult> SetTimingCommand = new("Animation.setTiming", JsonContext.SetTimingCommandParameters, JsonContext.SetTimingResult);
 
@@ -280,13 +280,6 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AnimationDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -294,25 +287,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AnimationDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record GetCurrentTimeCommandParameters(string Id) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AnimationDomain.GetCurrentTimeAsync"/>.
-/// </summary>
-public sealed record GetCurrentTimeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -325,13 +304,6 @@ public sealed record GetCurrentTimeResult(double CurrentTime) : EmptyResult;
 internal sealed record GetPlaybackRateCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AnimationDomain.GetPlaybackRateAsync"/>.
-/// </summary>
-public sealed record GetPlaybackRateCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="PlaybackRate">
 /// Playback rate for animations on page.
@@ -342,25 +314,11 @@ public sealed record GetPlaybackRateResult(double PlaybackRate) : EmptyResult;
 internal sealed record ReleaseAnimationsCommandParameters(ImmutableArray<string> Animations) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AnimationDomain.ReleaseAnimationsAsync"/>.
-/// </summary>
-public sealed record ReleaseAnimationsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReleaseAnimationsResult() : EmptyResult;
 
 
 internal sealed record ResolveAnimationCommandParameters(string AnimationId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AnimationDomain.ResolveAnimationAsync"/>.
-/// </summary>
-public sealed record ResolveAnimationCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -373,25 +331,11 @@ public sealed record ResolveAnimationResult(Runtime.RemoteObject RemoteObject) :
 internal sealed record SeekAnimationsCommandParameters(ImmutableArray<string> Animations, double CurrentTime) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AnimationDomain.SeekAnimationsAsync"/>.
-/// </summary>
-public sealed record SeekAnimationsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SeekAnimationsResult() : EmptyResult;
 
 
 internal sealed record SetPausedCommandParameters(ImmutableArray<string> Animations, bool Paused) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AnimationDomain.SetPausedAsync"/>.
-/// </summary>
-public sealed record SetPausedCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -401,25 +345,11 @@ public sealed record SetPausedResult() : EmptyResult;
 internal sealed record SetPlaybackRateCommandParameters(double PlaybackRate) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AnimationDomain.SetPlaybackRateAsync"/>.
-/// </summary>
-public sealed record SetPlaybackRateCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetPlaybackRateResult() : EmptyResult;
 
 
 internal sealed record SetTimingCommandParameters(string AnimationId, double Duration, double Delay) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AnimationDomain.SetTimingAsync"/>.
-/// </summary>
-public sealed record SetTimingCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

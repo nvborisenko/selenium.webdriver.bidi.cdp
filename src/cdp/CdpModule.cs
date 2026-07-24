@@ -35,16 +35,16 @@ public partial class CdpModule : Module
     /// </summary>
     /// <param name="method">The CDP method name (e.g. "Page.navigate").</param>
     /// <param name="parameters">The JSON parameters for the command.</param>
-    /// <param name="options">Optional command options including session override.</param>
+    /// <param name="session">Optional CDP session override.</param>
     /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
     /// <returns>The raw command result.</returns>
-    public async Task<SendCommandResult> SendCommandAsync(string method, JsonElement parameters, SendCommandOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<SendCommandResult> SendCommandAsync(string method, JsonElement parameters, string? session = null, CancellationToken cancellationToken = default)
     {
-        var session = options?.Session ?? Session;
+        session ??= Session;
 
         var @params = new SendCommandParameters(method, parameters, session);
 
-        return await ExecuteAsync(SendCommandCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteAsync(SendCommandCommand, @params, options: null, cancellationToken).ConfigureAwait(false);
     }
 
     internal IEventSource<TParams> CreateCdpEventSource<TParams>(EventDescriptor<CdpEventArgs<TParams>> descriptor)

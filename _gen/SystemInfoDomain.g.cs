@@ -16,8 +16,8 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <summary>
     /// Returns information about the system.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetInfoCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,10 +25,10 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetInfoResult"/>.
     /// </returns>
-    public async Task<GetInfoResult> GetInfoAsync(GetInfoCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetInfoCommandParameters();
-        return await ExecuteCommandAsync(GetInfoCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetInfoCommandParameters, GetInfoResult> GetInfoCommand = new("SystemInfo.getInfo", JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult);
 
@@ -37,8 +37,8 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// </summary>
     /// <param name="featureState">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetFeatureStateCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -46,18 +46,18 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetFeatureStateResult"/>.
     /// </returns>
-    public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, GetFeatureStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFeatureStateCommandParameters(FeatureState: featureState);
-        return await ExecuteCommandAsync(GetFeatureStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetFeatureStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetFeatureStateCommandParameters, GetFeatureStateResult> GetFeatureStateCommand = new("SystemInfo.getFeatureState", JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult);
 
     /// <summary>
     /// Returns information about all running processes.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetProcessInfoCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -65,23 +65,16 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetProcessInfoResult"/>.
     /// </returns>
-    public async Task<GetProcessInfoResult> GetProcessInfoAsync(GetProcessInfoCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetProcessInfoCommandParameters();
-        return await ExecuteCommandAsync(GetProcessInfoCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetProcessInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetProcessInfoCommandParameters, GetProcessInfoResult> GetProcessInfoCommand = new("SystemInfo.getProcessInfo", JsonContext.GetProcessInfoCommandParameters, JsonContext.GetProcessInfoResult);
 
 }
 
 internal sealed record GetInfoCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SystemInfoDomain.GetInfoAsync"/>.
-/// </summary>
-public sealed record GetInfoCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -106,13 +99,6 @@ public sealed record GetInfoResult(GPUInfo Gpu, string ModelName, string ModelVe
 internal sealed record GetFeatureStateCommandParameters(string FeatureState) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SystemInfoDomain.GetFeatureStateAsync"/>.
-/// </summary>
-public sealed record GetFeatureStateCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="FeatureEnabled">
 /// </param>
@@ -120,13 +106,6 @@ public sealed record GetFeatureStateResult(bool FeatureEnabled) : EmptyResult;
 
 
 internal sealed record GetProcessInfoCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SystemInfoDomain.GetProcessInfoAsync"/>.
-/// </summary>
-public sealed record GetProcessInfoCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

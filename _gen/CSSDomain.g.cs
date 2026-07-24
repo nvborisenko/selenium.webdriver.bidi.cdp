@@ -23,7 +23,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// position specified by <b>location</b>.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeForPropertySyntaxValidation</b> - NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.</description></item>
     /// </list>
@@ -37,8 +37,13 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <param name="location">
     /// Text position of a new rule in the target style sheet.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AddRuleCommandOptions"/>.
+    /// <param name="nodeForPropertySyntaxValidation">
+    /// NodeId for the DOM node in whose context custom property declarations for registered properties should be
+    /// validated. If omitted, declarations in the new rule text can only be validated statically, which may produce
+    /// incorrect results if the declaration contains a var() for example.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -46,10 +51,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddRuleResult"/>.
     /// </returns>
-    public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, AddRuleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new AddRuleCommandParameters(StyleSheetId: styleSheetId, RuleText: ruleText, Location: location, NodeForPropertySyntaxValidation: options?.NodeForPropertySyntaxValidation);
-        return await ExecuteCommandAsync(AddRuleCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new AddRuleCommandParameters(StyleSheetId: styleSheetId, RuleText: ruleText, Location: location, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
+        return await ExecuteCommandAsync(AddRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AddRuleCommandParameters, AddRuleResult> AddRuleCommand = new("CSS.addRule", JsonContext.AddRuleCommandParameters, JsonContext.AddRuleResult);
 
@@ -58,8 +63,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="styleSheetId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CollectClassNamesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -67,10 +72,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CollectClassNamesResult"/>.
     /// </returns>
-    public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, CollectClassNamesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectClassNamesCommandParameters(StyleSheetId: styleSheetId);
-        return await ExecuteCommandAsync(CollectClassNamesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CollectClassNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CollectClassNamesCommandParameters, CollectClassNamesResult> CollectClassNamesCommand = new("CSS.collectClassNames", JsonContext.CollectClassNamesCommandParameters, JsonContext.CollectClassNamesResult);
 
@@ -78,7 +83,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Creates a new special "via-inspector" stylesheet in the frame with given <b>frameId</b>.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Force</b> - If true, creates a new stylesheet for every call. If false, returns a stylesheet previously created by a call with force=false for the frame's document if it exists or creates a new stylesheet (default: false).</description></item>
     /// </list>
@@ -86,8 +91,14 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <param name="frameId">
     /// Identifier of the frame where "via-inspector" stylesheet should be created.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CreateStyleSheetCommandOptions"/>.
+    /// <param name="force">
+    /// If true, creates a new stylesheet for every call. If false,
+    /// returns a stylesheet previously created by a call with force=false
+    /// for the frame's document if it exists or creates a new stylesheet
+    /// (default: false).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -95,18 +106,18 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateStyleSheetResult"/>.
     /// </returns>
-    public async Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, CreateStyleSheetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new CreateStyleSheetCommandParameters(FrameId: frameId, Force: options?.Force);
-        return await ExecuteCommandAsync(CreateStyleSheetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new CreateStyleSheetCommandParameters(FrameId: frameId, Force: force);
+        return await ExecuteCommandAsync(CreateStyleSheetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CreateStyleSheetCommandParameters, CreateStyleSheetResult> CreateStyleSheetCommand = new("CSS.createStyleSheet", JsonContext.CreateStyleSheetCommandParameters, JsonContext.CreateStyleSheetResult);
 
     /// <summary>
     /// Disables the CSS agent for the given page.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -114,10 +125,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("CSS.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -125,8 +136,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Enables the CSS agent for the given page. Clients should not assume that the CSS agent has been
     /// enabled until the result of this command is received.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -134,10 +145,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("CSS.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -151,8 +162,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <param name="forcedPseudoClasses">
     /// Element pseudo classes to force when computing the element's style.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ForcePseudoStateCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -160,10 +171,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForcePseudoStateResult"/>.
     /// </returns>
-    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, ForcePseudoStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForcePseudoStateCommandParameters(NodeId: nodeId, ForcedPseudoClasses: forcedPseudoClasses);
-        return await ExecuteCommandAsync(ForcePseudoStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ForcePseudoStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ForcePseudoStateCommandParameters, ForcePseudoStateResult> ForcePseudoStateCommand = new("CSS.forcePseudoState", JsonContext.ForcePseudoStateCommandParameters, JsonContext.ForcePseudoStateResult);
 
@@ -176,8 +187,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <param name="forced">
     /// Boolean indicating if this is on or off.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ForceStartingStyleCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -185,10 +196,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForceStartingStyleResult"/>.
     /// </returns>
-    public async Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, ForceStartingStyleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForceStartingStyleCommandParameters(NodeId: nodeId, Forced: forced);
-        return await ExecuteCommandAsync(ForceStartingStyleCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ForceStartingStyleCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ForceStartingStyleCommandParameters, ForceStartingStyleResult> ForceStartingStyleCommand = new("CSS.forceStartingStyle", JsonContext.ForceStartingStyleCommandParameters, JsonContext.ForceStartingStyleResult);
 
@@ -197,8 +208,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <param name="nodeId">
     /// Id of the node to get background colors for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetBackgroundColorsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -206,10 +217,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBackgroundColorsResult"/>.
     /// </returns>
-    public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, GetBackgroundColorsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBackgroundColorsCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetBackgroundColorsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetBackgroundColorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetBackgroundColorsCommandParameters, GetBackgroundColorsResult> GetBackgroundColorsCommand = new("CSS.getBackgroundColors", JsonContext.GetBackgroundColorsCommandParameters, JsonContext.GetBackgroundColorsResult);
 
@@ -218,8 +229,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="nodeId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetComputedStyleForNodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -227,10 +238,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetComputedStyleForNodeResult"/>.
     /// </returns>
-    public async Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, GetComputedStyleForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetComputedStyleForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetComputedStyleForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetComputedStyleForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetComputedStyleForNodeCommandParameters, GetComputedStyleForNodeResult> GetComputedStyleForNodeCommand = new("CSS.getComputedStyleForNode", JsonContext.GetComputedStyleForNodeCommandParameters, JsonContext.GetComputedStyleForNodeResult);
 
@@ -248,7 +259,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// it returns unmodified random() function parts.`
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>PropertyName</b> - Only longhands and custom property names are accepted.</description></item>
     /// <item><description><b>PseudoType</b> - Pseudo element type, only works for pseudo elements that generate elements in the tree, such as ::before and ::after.</description></item>
@@ -261,8 +272,18 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <param name="nodeId">
     /// Id of the node in whose context the expression is evaluated
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ResolveValuesCommandOptions"/>.
+    /// <param name="propertyName">
+    /// Only longhands and custom property names are accepted.
+    /// </param>
+    /// <param name="pseudoType">
+    /// Pseudo element type, only works for pseudo elements that generate
+    /// elements in the tree, such as ::before and ::after.
+    /// </param>
+    /// <param name="pseudoIdentifier">
+    /// Pseudo element custom ident.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -270,10 +291,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveValuesResult"/>.
     /// </returns>
-    public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, ResolveValuesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = default, DOM.PseudoType? pseudoType = default, string? pseudoIdentifier = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ResolveValuesCommandParameters(Values: values, NodeId: nodeId, PropertyName: options?.PropertyName, PseudoType: options?.PseudoType, PseudoIdentifier: options?.PseudoIdentifier);
-        return await ExecuteCommandAsync(ResolveValuesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ResolveValuesCommandParameters(Values: values, NodeId: nodeId, PropertyName: propertyName, PseudoType: pseudoType, PseudoIdentifier: pseudoIdentifier);
+        return await ExecuteCommandAsync(ResolveValuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ResolveValuesCommandParameters, ResolveValuesResult> ResolveValuesCommand = new("CSS.resolveValues", JsonContext.ResolveValuesCommandParameters, JsonContext.ResolveValuesResult);
 
@@ -283,8 +304,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="value">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetLonghandPropertiesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -292,10 +313,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLonghandPropertiesResult"/>.
     /// </returns>
-    public async Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, GetLonghandPropertiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLonghandPropertiesCommandParameters(ShorthandName: shorthandName, Value: value);
-        return await ExecuteCommandAsync(GetLonghandPropertiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetLonghandPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetLonghandPropertiesCommandParameters, GetLonghandPropertiesResult> GetLonghandPropertiesCommand = new("CSS.getLonghandProperties", JsonContext.GetLonghandPropertiesCommandParameters, JsonContext.GetLonghandPropertiesResult);
 
@@ -305,8 +326,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="nodeId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetInlineStylesForNodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -314,10 +335,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetInlineStylesForNodeResult"/>.
     /// </returns>
-    public async Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, GetInlineStylesForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetInlineStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetInlineStylesForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetInlineStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetInlineStylesForNodeCommandParameters, GetInlineStylesForNodeResult> GetInlineStylesForNodeCommand = new("CSS.getInlineStylesForNode", JsonContext.GetInlineStylesForNodeCommandParameters, JsonContext.GetInlineStylesForNodeResult);
 
@@ -327,8 +348,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="nodeId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetAnimatedStylesForNodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -336,10 +357,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAnimatedStylesForNodeResult"/>.
     /// </returns>
-    public async Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, GetAnimatedStylesForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnimatedStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetAnimatedStylesForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetAnimatedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetAnimatedStylesForNodeCommandParameters, GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeCommand = new("CSS.getAnimatedStylesForNode", JsonContext.GetAnimatedStylesForNodeCommandParameters, JsonContext.GetAnimatedStylesForNodeResult);
 
@@ -348,8 +369,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="nodeId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetMatchedStylesForNodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -357,18 +378,18 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMatchedStylesForNodeResult"/>.
     /// </returns>
-    public async Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, GetMatchedStylesForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMatchedStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetMatchedStylesForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetMatchedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetMatchedStylesForNodeCommandParameters, GetMatchedStylesForNodeResult> GetMatchedStylesForNodeCommand = new("CSS.getMatchedStylesForNode", JsonContext.GetMatchedStylesForNodeCommandParameters, JsonContext.GetMatchedStylesForNodeResult);
 
     /// <summary>
     /// Returns the values of the default UA-defined environment variables used in env()
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetEnvironmentVariablesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -376,18 +397,18 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEnvironmentVariablesResult"/>.
     /// </returns>
-    public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(GetEnvironmentVariablesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEnvironmentVariablesCommandParameters();
-        return await ExecuteCommandAsync(GetEnvironmentVariablesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetEnvironmentVariablesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetEnvironmentVariablesCommandParameters, GetEnvironmentVariablesResult> GetEnvironmentVariablesCommand = new("CSS.getEnvironmentVariables", JsonContext.GetEnvironmentVariablesCommandParameters, JsonContext.GetEnvironmentVariablesResult);
 
     /// <summary>
     /// Returns all media queries parsed by the rendering engine.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetMediaQueriesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -395,10 +416,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMediaQueriesResult"/>.
     /// </returns>
-    public async Task<GetMediaQueriesResult> GetMediaQueriesAsync(GetMediaQueriesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMediaQueriesCommandParameters();
-        return await ExecuteCommandAsync(GetMediaQueriesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetMediaQueriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetMediaQueriesCommandParameters, GetMediaQueriesResult> GetMediaQueriesCommand = new("CSS.getMediaQueries", JsonContext.GetMediaQueriesCommandParameters, JsonContext.GetMediaQueriesResult);
 
@@ -408,8 +429,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="nodeId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetPlatformFontsForNodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -417,10 +438,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPlatformFontsForNodeResult"/>.
     /// </returns>
-    public async Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, GetPlatformFontsForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPlatformFontsForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetPlatformFontsForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetPlatformFontsForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetPlatformFontsForNodeCommandParameters, GetPlatformFontsForNodeResult> GetPlatformFontsForNodeCommand = new("CSS.getPlatformFontsForNode", JsonContext.GetPlatformFontsForNodeCommandParameters, JsonContext.GetPlatformFontsForNodeResult);
 
@@ -429,8 +450,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="styleSheetId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetStyleSheetTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -438,10 +459,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStyleSheetTextResult"/>.
     /// </returns>
-    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, GetStyleSheetTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId);
-        return await ExecuteCommandAsync(GetStyleSheetTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetStyleSheetTextCommandParameters, GetStyleSheetTextResult> GetStyleSheetTextCommand = new("CSS.getStyleSheetText", JsonContext.GetStyleSheetTextCommandParameters, JsonContext.GetStyleSheetTextResult);
 
@@ -453,8 +474,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="nodeId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetLayersForNodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -462,10 +483,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLayersForNodeResult"/>.
     /// </returns>
-    public async Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, GetLayersForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLayersForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetLayersForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetLayersForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetLayersForNodeCommandParameters, GetLayersForNodeResult> GetLayersForNodeCommand = new("CSS.getLayersForNode", JsonContext.GetLayersForNodeCommandParameters, JsonContext.GetLayersForNodeResult);
 
@@ -477,8 +498,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="selectorText">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetLocationForSelectorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -486,10 +507,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLocationForSelectorResult"/>.
     /// </returns>
-    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, GetLocationForSelectorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLocationForSelectorCommandParameters(StyleSheetId: styleSheetId, SelectorText: selectorText);
-        return await ExecuteCommandAsync(GetLocationForSelectorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetLocationForSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetLocationForSelectorCommandParameters, GetLocationForSelectorResult> GetLocationForSelectorCommand = new("CSS.getLocationForSelector", JsonContext.GetLocationForSelectorCommandParameters, JsonContext.GetLocationForSelectorResult);
 
@@ -502,13 +523,15 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Pass <b>undefined</b> to disable tracking.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeId</b></description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TrackComputedStyleUpdatesForNodeCommandOptions"/>.
+    /// <param name="nodeId">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -516,10 +539,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackComputedStyleUpdatesForNodeResult"/>.
     /// </returns>
-    public async Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(TrackComputedStyleUpdatesForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new TrackComputedStyleUpdatesForNodeCommandParameters(NodeId: options?.NodeId);
-        return await ExecuteCommandAsync(TrackComputedStyleUpdatesForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new TrackComputedStyleUpdatesForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(TrackComputedStyleUpdatesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TrackComputedStyleUpdatesForNodeCommandParameters, TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeCommand = new("CSS.trackComputedStyleUpdatesForNode", JsonContext.TrackComputedStyleUpdatesForNodeCommandParameters, JsonContext.TrackComputedStyleUpdatesForNodeResult);
 
@@ -533,8 +556,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="propertiesToTrack">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TrackComputedStyleUpdatesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -542,18 +565,18 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackComputedStyleUpdatesResult"/>.
     /// </returns>
-    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, TrackComputedStyleUpdatesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackComputedStyleUpdatesCommandParameters(PropertiesToTrack: propertiesToTrack);
-        return await ExecuteCommandAsync(TrackComputedStyleUpdatesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(TrackComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TrackComputedStyleUpdatesCommandParameters, TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesCommand = new("CSS.trackComputedStyleUpdates", JsonContext.TrackComputedStyleUpdatesCommandParameters, JsonContext.TrackComputedStyleUpdatesResult);
 
     /// <summary>
     /// Polls the next batch of computed style updates.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TakeComputedStyleUpdatesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -561,10 +584,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeComputedStyleUpdatesResult"/>.
     /// </returns>
-    public async Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(TakeComputedStyleUpdatesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeComputedStyleUpdatesCommandParameters();
-        return await ExecuteCommandAsync(TakeComputedStyleUpdatesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(TakeComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TakeComputedStyleUpdatesCommandParameters, TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesCommand = new("CSS.takeComputedStyleUpdates", JsonContext.TakeComputedStyleUpdatesCommandParameters, JsonContext.TakeComputedStyleUpdatesResult);
 
@@ -579,8 +602,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="value">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetEffectivePropertyValueForNodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -588,10 +611,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetEffectivePropertyValueForNodeResult"/>.
     /// </returns>
-    public async Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, SetEffectivePropertyValueForNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEffectivePropertyValueForNodeCommandParameters(NodeId: nodeId, PropertyName: propertyName, Value: value);
-        return await ExecuteCommandAsync(SetEffectivePropertyValueForNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetEffectivePropertyValueForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetEffectivePropertyValueForNodeCommandParameters, SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeCommand = new("CSS.setEffectivePropertyValueForNode", JsonContext.SetEffectivePropertyValueForNodeCommandParameters, JsonContext.SetEffectivePropertyValueForNodeResult);
 
@@ -604,8 +627,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="propertyName">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetPropertyRulePropertyNameCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -613,10 +636,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPropertyRulePropertyNameResult"/>.
     /// </returns>
-    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, SetPropertyRulePropertyNameCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPropertyRulePropertyNameCommandParameters(StyleSheetId: styleSheetId, Range: range, PropertyName: propertyName);
-        return await ExecuteCommandAsync(SetPropertyRulePropertyNameCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetPropertyRulePropertyNameCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetPropertyRulePropertyNameCommandParameters, SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameCommand = new("CSS.setPropertyRulePropertyName", JsonContext.SetPropertyRulePropertyNameCommandParameters, JsonContext.SetPropertyRulePropertyNameResult);
 
@@ -629,8 +652,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="keyText">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetKeyframeKeyCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -638,10 +661,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetKeyframeKeyResult"/>.
     /// </returns>
-    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, SetKeyframeKeyCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetKeyframeKeyCommandParameters(StyleSheetId: styleSheetId, Range: range, KeyText: keyText);
-        return await ExecuteCommandAsync(SetKeyframeKeyCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetKeyframeKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetKeyframeKeyCommandParameters, SetKeyframeKeyResult> SetKeyframeKeyCommand = new("CSS.setKeyframeKey", JsonContext.SetKeyframeKeyCommandParameters, JsonContext.SetKeyframeKeyResult);
 
@@ -654,8 +677,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="text">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetMediaTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -663,10 +686,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetMediaTextResult"/>.
     /// </returns>
-    public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetMediaTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetMediaTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetMediaTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetMediaTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetMediaTextCommandParameters, SetMediaTextResult> SetMediaTextCommand = new("CSS.setMediaText", JsonContext.SetMediaTextCommandParameters, JsonContext.SetMediaTextResult);
 
@@ -680,8 +703,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="text">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetContainerQueryTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -690,10 +713,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryTextResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetContainerQueryTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetContainerQueryTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetContainerQueryTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetContainerQueryTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetContainerQueryTextCommandParameters, SetContainerQueryTextResult> SetContainerQueryTextCommand = new("CSS.setContainerQueryText", JsonContext.SetContainerQueryTextCommandParameters, JsonContext.SetContainerQueryTextResult);
 
@@ -705,8 +728,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="text">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetContainerQueryConditionTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -714,10 +737,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryConditionTextResult"/>.
     /// </returns>
-    public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetContainerQueryConditionTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetContainerQueryConditionTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetContainerQueryConditionTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetContainerQueryConditionTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetContainerQueryConditionTextCommandParameters, SetContainerQueryConditionTextResult> SetContainerQueryConditionTextCommand = new("CSS.setContainerQueryConditionText", JsonContext.SetContainerQueryConditionTextCommandParameters, JsonContext.SetContainerQueryConditionTextResult);
 
@@ -730,8 +753,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="text">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetSupportsTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -739,10 +762,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSupportsTextResult"/>.
     /// </returns>
-    public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetSupportsTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSupportsTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetSupportsTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetSupportsTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetSupportsTextCommandParameters, SetSupportsTextResult> SetSupportsTextCommand = new("CSS.setSupportsText", JsonContext.SetSupportsTextCommandParameters, JsonContext.SetSupportsTextResult);
 
@@ -755,8 +778,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="text">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetNavigationTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -764,10 +787,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetNavigationTextResult"/>.
     /// </returns>
-    public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetNavigationTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNavigationTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetNavigationTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetNavigationTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetNavigationTextCommandParameters, SetNavigationTextResult> SetNavigationTextCommand = new("CSS.setNavigationText", JsonContext.SetNavigationTextCommandParameters, JsonContext.SetNavigationTextResult);
 
@@ -780,8 +803,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="text">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetScopeTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -789,10 +812,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScopeTextResult"/>.
     /// </returns>
-    public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, SetScopeTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetScopeTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetScopeTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetScopeTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetScopeTextCommandParameters, SetScopeTextResult> SetScopeTextCommand = new("CSS.setScopeText", JsonContext.SetScopeTextCommandParameters, JsonContext.SetScopeTextResult);
 
@@ -805,8 +828,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="selector">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetRuleSelectorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -814,10 +837,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetRuleSelectorResult"/>.
     /// </returns>
-    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, SetRuleSelectorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRuleSelectorCommandParameters(StyleSheetId: styleSheetId, Range: range, Selector: selector);
-        return await ExecuteCommandAsync(SetRuleSelectorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetRuleSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetRuleSelectorCommandParameters, SetRuleSelectorResult> SetRuleSelectorCommand = new("CSS.setRuleSelector", JsonContext.SetRuleSelectorCommandParameters, JsonContext.SetRuleSelectorResult);
 
@@ -828,8 +851,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="text">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetStyleSheetTextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -837,10 +860,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleSheetTextResult"/>.
     /// </returns>
-    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, SetStyleSheetTextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId, Text: text);
-        return await ExecuteCommandAsync(SetStyleSheetTextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetStyleSheetTextCommandParameters, SetStyleSheetTextResult> SetStyleSheetTextCommand = new("CSS.setStyleSheetText", JsonContext.SetStyleSheetTextCommandParameters, JsonContext.SetStyleSheetTextResult);
 
@@ -848,15 +871,20 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Applies specified style edits one after another in the given order.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeForPropertySyntaxValidation</b> - NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="edits">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetStyleTextsCommandOptions"/>.
+    /// <param name="nodeForPropertySyntaxValidation">
+    /// NodeId for the DOM node in whose context custom property declarations for registered properties should be
+    /// validated. If omitted, declarations in the new rule text can only be validated statically, which may produce
+    /// incorrect results if the declaration contains a var() for example.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -864,18 +892,18 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleTextsResult"/>.
     /// </returns>
-    public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, SetStyleTextsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetStyleTextsCommandParameters(Edits: edits, NodeForPropertySyntaxValidation: options?.NodeForPropertySyntaxValidation);
-        return await ExecuteCommandAsync(SetStyleTextsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetStyleTextsCommandParameters(Edits: edits, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
+        return await ExecuteCommandAsync(SetStyleTextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetStyleTextsCommandParameters, SetStyleTextsResult> SetStyleTextsCommand = new("CSS.setStyleTexts", JsonContext.SetStyleTextsCommandParameters, JsonContext.SetStyleTextsResult);
 
     /// <summary>
     /// Enables the selector recording.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartRuleUsageTrackingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -883,10 +911,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartRuleUsageTrackingResult"/>.
     /// </returns>
-    public async Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(StartRuleUsageTrackingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartRuleUsageTrackingCommandParameters();
-        return await ExecuteCommandAsync(StartRuleUsageTrackingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StartRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartRuleUsageTrackingCommandParameters, StartRuleUsageTrackingResult> StartRuleUsageTrackingCommand = new("CSS.startRuleUsageTracking", JsonContext.StartRuleUsageTrackingCommandParameters, JsonContext.StartRuleUsageTrackingResult);
 
@@ -894,8 +922,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Stop tracking rule usage and return the list of rules that were used since last call to
     /// <b>takeCoverageDelta</b> (or since start of coverage instrumentation).
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StopRuleUsageTrackingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -903,10 +931,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopRuleUsageTrackingResult"/>.
     /// </returns>
-    public async Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(StopRuleUsageTrackingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopRuleUsageTrackingCommandParameters();
-        return await ExecuteCommandAsync(StopRuleUsageTrackingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StopRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StopRuleUsageTrackingCommandParameters, StopRuleUsageTrackingResult> StopRuleUsageTrackingCommand = new("CSS.stopRuleUsageTracking", JsonContext.StopRuleUsageTrackingCommandParameters, JsonContext.StopRuleUsageTrackingResult);
 
@@ -914,8 +942,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Obtain list of rules that became used since last call to this method (or since start of coverage
     /// instrumentation).
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TakeCoverageDeltaCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -923,10 +951,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeCoverageDeltaResult"/>.
     /// </returns>
-    public async Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(TakeCoverageDeltaCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeCoverageDeltaCommandParameters();
-        return await ExecuteCommandAsync(TakeCoverageDeltaCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(TakeCoverageDeltaCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TakeCoverageDeltaCommandParameters, TakeCoverageDeltaResult> TakeCoverageDeltaCommand = new("CSS.takeCoverageDelta", JsonContext.TakeCoverageDeltaCommandParameters, JsonContext.TakeCoverageDeltaResult);
 
@@ -936,8 +964,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <param name="enabled">
     /// Whether rendering of local fonts is enabled.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetLocalFontsEnabledCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -945,10 +973,10 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetLocalFontsEnabledResult"/>.
     /// </returns>
-    public async Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, SetLocalFontsEnabledCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetLocalFontsEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetLocalFontsEnabledCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetLocalFontsEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetLocalFontsEnabledCommandParameters, SetLocalFontsEnabledResult> SetLocalFontsEnabledCommand = new("CSS.setLocalFontsEnabled", JsonContext.SetLocalFontsEnabledCommandParameters, JsonContext.SetLocalFontsEnabledResult);
 
@@ -1013,19 +1041,6 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
 internal sealed record AddRuleCommandParameters(DOM.StyleSheetId StyleSheetId, string RuleText, SourceRange Location, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.AddRuleAsync"/>.
-/// </summary>
-public sealed record AddRuleCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// NodeId for the DOM node in whose context custom property declarations for registered properties should be
-    /// validated. If omitted, declarations in the new rule text can only be validated statically, which may produce
-    /// incorrect results if the declaration contains a var() for example.
-    /// </summary>
-    public DOM.NodeId? NodeForPropertySyntaxValidation { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Rule">
 /// The newly created rule.
@@ -1034,13 +1049,6 @@ public sealed record AddRuleResult(CSSRule Rule) : EmptyResult;
 
 
 internal sealed record CollectClassNamesCommandParameters(DOM.StyleSheetId StyleSheetId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.CollectClassNamesAsync"/>.
-/// </summary>
-public sealed record CollectClassNamesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1053,20 +1061,6 @@ public sealed record CollectClassNamesResult(ImmutableArray<string> ClassNames) 
 internal sealed record CreateStyleSheetCommandParameters(Page.FrameId FrameId, bool? Force) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.CreateStyleSheetAsync"/>.
-/// </summary>
-public sealed record CreateStyleSheetCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If true, creates a new stylesheet for every call. If false,
-    /// returns a stylesheet previously created by a call with force=false
-    /// for the frame's document if it exists or creates a new stylesheet
-    /// (default: false).
-    /// </summary>
-    public bool? Force { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="StyleSheetId">
 /// Identifier of the created "via-inspector" stylesheet.
@@ -1077,25 +1071,11 @@ public sealed record CreateStyleSheetResult(DOM.StyleSheetId StyleSheetId) : Emp
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1105,13 +1085,6 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record ForcePseudoStateCommandParameters(DOM.NodeId NodeId, ImmutableArray<string> ForcedPseudoClasses) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.ForcePseudoStateAsync"/>.
-/// </summary>
-public sealed record ForcePseudoStateCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ForcePseudoStateResult() : EmptyResult;
 
@@ -1119,25 +1092,11 @@ public sealed record ForcePseudoStateResult() : EmptyResult;
 internal sealed record ForceStartingStyleCommandParameters(DOM.NodeId NodeId, bool Forced) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.ForceStartingStyleAsync"/>.
-/// </summary>
-public sealed record ForceStartingStyleCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ForceStartingStyleResult() : EmptyResult;
 
 
 internal sealed record GetBackgroundColorsCommandParameters(DOM.NodeId NodeId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetBackgroundColorsAsync"/>.
-/// </summary>
-public sealed record GetBackgroundColorsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1161,13 +1120,6 @@ public sealed record GetBackgroundColorsResult(ImmutableArray<string>? Backgroun
 internal sealed record GetComputedStyleForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetComputedStyleForNodeAsync"/>.
-/// </summary>
-public sealed record GetComputedStyleForNodeCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="ComputedStyle">
 /// Computed style for the specified DOM node.
@@ -1182,28 +1134,6 @@ public sealed record GetComputedStyleForNodeResult(ImmutableArray<CSSComputedSty
 internal sealed record ResolveValuesCommandParameters(ImmutableArray<string> Values, DOM.NodeId NodeId, string? PropertyName, DOM.PseudoType? PseudoType, string? PseudoIdentifier) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.ResolveValuesAsync"/>.
-/// </summary>
-public sealed record ResolveValuesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Only longhands and custom property names are accepted.
-    /// </summary>
-    public string? PropertyName { get; init; }
-
-    /// <summary>
-    /// Pseudo element type, only works for pseudo elements that generate
-    /// elements in the tree, such as ::before and ::after.
-    /// </summary>
-    public DOM.PseudoType? PseudoType { get; init; }
-
-    /// <summary>
-    /// Pseudo element custom ident.
-    /// </summary>
-    public string? PseudoIdentifier { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Results">
 /// </param>
@@ -1213,13 +1143,6 @@ public sealed record ResolveValuesResult(ImmutableArray<string> Results) : Empty
 internal sealed record GetLonghandPropertiesCommandParameters(string ShorthandName, string Value) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetLonghandPropertiesAsync"/>.
-/// </summary>
-public sealed record GetLonghandPropertiesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="LonghandProperties">
 /// </param>
@@ -1227,13 +1150,6 @@ public sealed record GetLonghandPropertiesResult(ImmutableArray<CSSProperty> Lon
 
 
 internal sealed record GetInlineStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetInlineStylesForNodeAsync"/>.
-/// </summary>
-public sealed record GetInlineStylesForNodeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1247,13 +1163,6 @@ public sealed record GetInlineStylesForNodeResult(CSSStyle? InlineStyle, CSSStyl
 
 
 internal sealed record GetAnimatedStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetAnimatedStylesForNodeAsync"/>.
-/// </summary>
-public sealed record GetAnimatedStylesForNodeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1271,13 +1180,6 @@ public sealed record GetAnimatedStylesForNodeResult(ImmutableArray<CSSAnimationS
 
 
 internal sealed record GetMatchedStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetMatchedStylesForNodeAsync"/>.
-/// </summary>
-public sealed record GetMatchedStylesForNodeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1330,13 +1232,6 @@ public sealed record GetMatchedStylesForNodeResult(CSSStyle? InlineStyle, CSSSty
 internal sealed record GetEnvironmentVariablesCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetEnvironmentVariablesAsync"/>.
-/// </summary>
-public sealed record GetEnvironmentVariablesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="EnvironmentVariables">
 /// </param>
@@ -1346,13 +1241,6 @@ public sealed record GetEnvironmentVariablesResult(global::System.Text.Json.Json
 internal sealed record GetMediaQueriesCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetMediaQueriesAsync"/>.
-/// </summary>
-public sealed record GetMediaQueriesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Medias">
 /// </param>
@@ -1360,13 +1248,6 @@ public sealed record GetMediaQueriesResult(ImmutableArray<CSSMedia> Medias) : Em
 
 
 internal sealed record GetPlatformFontsForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetPlatformFontsForNodeAsync"/>.
-/// </summary>
-public sealed record GetPlatformFontsForNodeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1379,13 +1260,6 @@ public sealed record GetPlatformFontsForNodeResult(ImmutableArray<PlatformFontUs
 internal sealed record GetStyleSheetTextCommandParameters(DOM.StyleSheetId StyleSheetId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetStyleSheetTextAsync"/>.
-/// </summary>
-public sealed record GetStyleSheetTextCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Text">
 /// The stylesheet text.
@@ -1394,13 +1268,6 @@ public sealed record GetStyleSheetTextResult(string Text) : EmptyResult;
 
 
 internal sealed record GetLayersForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetLayersForNodeAsync"/>.
-/// </summary>
-public sealed record GetLayersForNodeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1412,13 +1279,6 @@ public sealed record GetLayersForNodeResult(CSSLayerData RootLayer) : EmptyResul
 internal sealed record GetLocationForSelectorCommandParameters(DOM.StyleSheetId StyleSheetId, string SelectorText) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.GetLocationForSelectorAsync"/>.
-/// </summary>
-public sealed record GetLocationForSelectorCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Ranges">
 /// </param>
@@ -1428,16 +1288,6 @@ public sealed record GetLocationForSelectorResult(ImmutableArray<SourceRange> Ra
 internal sealed record TrackComputedStyleUpdatesForNodeCommandParameters(DOM.NodeId? NodeId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.TrackComputedStyleUpdatesForNodeAsync"/>.
-/// </summary>
-public sealed record TrackComputedStyleUpdatesForNodeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public DOM.NodeId? NodeId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record TrackComputedStyleUpdatesForNodeResult() : EmptyResult;
 
@@ -1445,25 +1295,11 @@ public sealed record TrackComputedStyleUpdatesForNodeResult() : EmptyResult;
 internal sealed record TrackComputedStyleUpdatesCommandParameters(ImmutableArray<CSSComputedStyleProperty> PropertiesToTrack) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.TrackComputedStyleUpdatesAsync"/>.
-/// </summary>
-public sealed record TrackComputedStyleUpdatesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record TrackComputedStyleUpdatesResult() : EmptyResult;
 
 
 internal sealed record TakeComputedStyleUpdatesCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.TakeComputedStyleUpdatesAsync"/>.
-/// </summary>
-public sealed record TakeComputedStyleUpdatesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1476,25 +1312,11 @@ public sealed record TakeComputedStyleUpdatesResult(ImmutableArray<DOM.NodeId> N
 internal sealed record SetEffectivePropertyValueForNodeCommandParameters(DOM.NodeId NodeId, string PropertyName, string Value) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetEffectivePropertyValueForNodeAsync"/>.
-/// </summary>
-public sealed record SetEffectivePropertyValueForNodeCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetEffectivePropertyValueForNodeResult() : EmptyResult;
 
 
 internal sealed record SetPropertyRulePropertyNameCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string PropertyName) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetPropertyRulePropertyNameAsync"/>.
-/// </summary>
-public sealed record SetPropertyRulePropertyNameCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1507,13 +1329,6 @@ public sealed record SetPropertyRulePropertyNameResult(Value PropertyName) : Emp
 internal sealed record SetKeyframeKeyCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string KeyText) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetKeyframeKeyAsync"/>.
-/// </summary>
-public sealed record SetKeyframeKeyCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="KeyText">
 /// The resulting key text after modification.
@@ -1522,13 +1337,6 @@ public sealed record SetKeyframeKeyResult(Value KeyText) : EmptyResult;
 
 
 internal sealed record SetMediaTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetMediaTextAsync"/>.
-/// </summary>
-public sealed record SetMediaTextCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1541,13 +1349,6 @@ public sealed record SetMediaTextResult(CSSMedia Media) : EmptyResult;
 internal sealed record SetContainerQueryTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetContainerQueryTextAsync"/>.
-/// </summary>
-public sealed record SetContainerQueryTextCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="ContainerQuery">
 /// The resulting CSS container query rule after modification.
@@ -1556,13 +1357,6 @@ public sealed record SetContainerQueryTextResult(CSSContainerQuery ContainerQuer
 
 
 internal sealed record SetContainerQueryConditionTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetContainerQueryConditionTextAsync"/>.
-/// </summary>
-public sealed record SetContainerQueryConditionTextCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1575,13 +1369,6 @@ public sealed record SetContainerQueryConditionTextResult(CSSContainerQuery Cont
 internal sealed record SetSupportsTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetSupportsTextAsync"/>.
-/// </summary>
-public sealed record SetSupportsTextCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Supports">
 /// The resulting CSS Supports rule after modification.
@@ -1590,13 +1377,6 @@ public sealed record SetSupportsTextResult(CSSSupports Supports) : EmptyResult;
 
 
 internal sealed record SetNavigationTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetNavigationTextAsync"/>.
-/// </summary>
-public sealed record SetNavigationTextCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1609,13 +1389,6 @@ public sealed record SetNavigationTextResult(CSSNavigation Navigation) : EmptyRe
 internal sealed record SetScopeTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetScopeTextAsync"/>.
-/// </summary>
-public sealed record SetScopeTextCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Scope">
 /// The resulting CSS Scope rule after modification.
@@ -1624,13 +1397,6 @@ public sealed record SetScopeTextResult(CSSScope Scope) : EmptyResult;
 
 
 internal sealed record SetRuleSelectorCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Selector) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetRuleSelectorAsync"/>.
-/// </summary>
-public sealed record SetRuleSelectorCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1643,13 +1409,6 @@ public sealed record SetRuleSelectorResult(SelectorList SelectorList) : EmptyRes
 internal sealed record SetStyleSheetTextCommandParameters(DOM.StyleSheetId StyleSheetId, string Text) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetStyleSheetTextAsync"/>.
-/// </summary>
-public sealed record SetStyleSheetTextCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="SourceMapURL">
 /// URL of source map associated with script (if any).
@@ -1658,19 +1417,6 @@ public sealed record SetStyleSheetTextResult(string? SourceMapURL) : EmptyResult
 
 
 internal sealed record SetStyleTextsCommandParameters(ImmutableArray<StyleDeclarationEdit> Edits, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetStyleTextsAsync"/>.
-/// </summary>
-public sealed record SetStyleTextsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// NodeId for the DOM node in whose context custom property declarations for registered properties should be
-    /// validated. If omitted, declarations in the new rule text can only be validated statically, which may produce
-    /// incorrect results if the declaration contains a var() for example.
-    /// </summary>
-    public DOM.NodeId? NodeForPropertySyntaxValidation { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1683,25 +1429,11 @@ public sealed record SetStyleTextsResult(ImmutableArray<CSSStyle> Styles) : Empt
 internal sealed record StartRuleUsageTrackingCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CSSDomain.StartRuleUsageTrackingAsync"/>.
-/// </summary>
-public sealed record StartRuleUsageTrackingCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record StartRuleUsageTrackingResult() : EmptyResult;
 
 
 internal sealed record StopRuleUsageTrackingCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.StopRuleUsageTrackingAsync"/>.
-/// </summary>
-public sealed record StopRuleUsageTrackingCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1711,13 +1443,6 @@ public sealed record StopRuleUsageTrackingResult(ImmutableArray<RuleUsage> RuleU
 
 
 internal sealed record TakeCoverageDeltaCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.TakeCoverageDeltaAsync"/>.
-/// </summary>
-public sealed record TakeCoverageDeltaCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1730,13 +1455,6 @@ public sealed record TakeCoverageDeltaResult(ImmutableArray<RuleUsage> Coverage,
 
 
 internal sealed record SetLocalFontsEnabledCommandParameters(bool Enabled) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CSSDomain.SetLocalFontsEnabledAsync"/>.
-/// </summary>
-public sealed record SetLocalFontsEnabledCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

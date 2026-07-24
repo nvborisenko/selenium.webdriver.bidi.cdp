@@ -35,7 +35,7 @@ public class ProfilerTests : CdpTestFixture
         await Cdp.Profiler.EnableAsync();
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
-        await Cdp.Profiler.StartPreciseCoverageAsync(new() { CallCount = true, Detailed = true });
+        await Cdp.Profiler.StartPreciseCoverageAsync(callCount: true, detailed: true);
         await Cdp.Profiler.StartAsync();
 
         var coverageResponse = await Cdp.Profiler.TakePreciseCoverageAsync();

@@ -18,8 +18,8 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// </summary>
     /// <param name="service">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartObservingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -27,10 +27,10 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartObservingResult"/>.
     /// </returns>
-    public async Task<StartObservingResult> StartObservingAsync(ServiceName service, StartObservingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartObservingCommandParameters(Service: service);
-        return await ExecuteCommandAsync(StartObservingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StartObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartObservingCommandParameters, StartObservingResult> StartObservingCommand = new("BackgroundService.startObserving", JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult);
 
@@ -39,8 +39,8 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// </summary>
     /// <param name="service">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StopObservingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -48,10 +48,10 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopObservingResult"/>.
     /// </returns>
-    public async Task<StopObservingResult> StopObservingAsync(ServiceName service, StopObservingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopObservingCommandParameters(Service: service);
-        return await ExecuteCommandAsync(StopObservingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StopObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StopObservingCommandParameters, StopObservingResult> StopObservingCommand = new("BackgroundService.stopObserving", JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult);
 
@@ -62,8 +62,8 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// </param>
     /// <param name="service">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetRecordingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -71,10 +71,10 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetRecordingResult"/>.
     /// </returns>
-    public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, SetRecordingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRecordingCommandParameters(ShouldRecord: shouldRecord, Service: service);
-        return await ExecuteCommandAsync(SetRecordingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetRecordingCommandParameters, SetRecordingResult> SetRecordingCommand = new("BackgroundService.setRecording", JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult);
 
@@ -83,8 +83,8 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// </summary>
     /// <param name="service">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearEventsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -92,10 +92,10 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearEventsResult"/>.
     /// </returns>
-    public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, ClearEventsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearEventsCommandParameters(Service: service);
-        return await ExecuteCommandAsync(ClearEventsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearEventsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearEventsCommandParameters, ClearEventsResult> ClearEventsCommand = new("BackgroundService.clearEvents", JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult);
 
@@ -126,25 +126,11 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
 internal sealed record StartObservingCommandParameters(ServiceName Service) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BackgroundServiceDomain.StartObservingAsync"/>.
-/// </summary>
-public sealed record StartObservingCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record StartObservingResult() : EmptyResult;
 
 
 internal sealed record StopObservingCommandParameters(ServiceName Service) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BackgroundServiceDomain.StopObservingAsync"/>.
-/// </summary>
-public sealed record StopObservingCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -154,25 +140,11 @@ public sealed record StopObservingResult() : EmptyResult;
 internal sealed record SetRecordingCommandParameters(bool ShouldRecord, ServiceName Service) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BackgroundServiceDomain.SetRecordingAsync"/>.
-/// </summary>
-public sealed record SetRecordingCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetRecordingResult() : EmptyResult;
 
 
 internal sealed record ClearEventsCommandParameters(ServiceName Service) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BackgroundServiceDomain.ClearEventsAsync"/>.
-/// </summary>
-public sealed record ClearEventsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

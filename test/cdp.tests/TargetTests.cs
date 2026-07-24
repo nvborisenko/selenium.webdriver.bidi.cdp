@@ -22,10 +22,10 @@ public class TargetTests : CdpTestFixture
 
             await Cdp.Target.ActivateTargetAsync(targetInfo.TargetId);
 
-            var attachResponse = await Cdp.Target.AttachToTargetAsync(targetInfo.TargetId, new() { Flatten = true });
+            var attachResponse = await Cdp.Target.AttachToTargetAsync(targetInfo.TargetId, flatten: true);
             await Assert.That(attachResponse.SessionId).IsNotNull();
 
-            var getInfoResponse = await Cdp.Target.GetTargetInfoAsync(new() { TargetId = targetInfo.TargetId });
+            var getInfoResponse = await Cdp.Target.GetTargetInfoAsync(targetId: targetInfo.TargetId);
             await Assert.That(getInfoResponse.TargetInfo).IsNotNull();
             await Assert.That(getInfoResponse.TargetInfo.TargetId).IsNotNull();
         }
@@ -36,7 +36,7 @@ public class TargetTests : CdpTestFixture
     {
         await using var targetInfoChangedStream = await Cdp.Target.TargetInfoChanged.StreamAsync();
 
-        var response = await Cdp.Target.CreateTargetAsync("https://www.selenium.dev", new() { NewWindow = true, Background = false });
+        var response = await Cdp.Target.CreateTargetAsync("https://www.selenium.dev", newWindow: true, background: false);
 
         await Assert.That(response.TargetId).IsNotNull();
 

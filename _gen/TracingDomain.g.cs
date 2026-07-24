@@ -14,8 +14,8 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Stop trace events collection.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EndCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -23,18 +23,18 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EndResult"/>.
     /// </returns>
-    public async Task<EndResult> EndAsync(EndCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EndResult> EndAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EndCommandParameters();
-        return await ExecuteCommandAsync(EndCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EndCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EndCommandParameters, EndResult> EndCommand = new("Tracing.end", JsonContext.EndCommandParameters, JsonContext.EndResult);
 
     /// <summary>
     /// Gets supported tracing categories.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetCategoriesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -43,18 +43,18 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetCategoriesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetCategoriesResult> GetCategoriesAsync(GetCategoriesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetCategoriesResult> GetCategoriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCategoriesCommandParameters();
-        return await ExecuteCommandAsync(GetCategoriesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetCategoriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetCategoriesCommandParameters, GetCategoriesResult> GetCategoriesCommand = new("Tracing.getCategories", JsonContext.GetCategoriesCommandParameters, JsonContext.GetCategoriesResult);
 
     /// <summary>
     /// Return a descriptor for all available tracing categories.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetTrackEventDescriptorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -63,10 +63,10 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetTrackEventDescriptorResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(GetTrackEventDescriptorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetTrackEventDescriptorCommandParameters();
-        return await ExecuteCommandAsync(GetTrackEventDescriptorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetTrackEventDescriptorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetTrackEventDescriptorCommandParameters, GetTrackEventDescriptorResult> GetTrackEventDescriptorCommand = new("Tracing.getTrackEventDescriptor", JsonContext.GetTrackEventDescriptorCommandParameters, JsonContext.GetTrackEventDescriptorResult);
 
@@ -76,8 +76,8 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <param name="syncId">
     /// The ID of this clock sync marker
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RecordClockSyncMarkerCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -86,10 +86,10 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="RecordClockSyncMarkerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<RecordClockSyncMarkerResult> RecordClockSyncMarkerAsync(string syncId, RecordClockSyncMarkerCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RecordClockSyncMarkerResult> RecordClockSyncMarkerAsync(string syncId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RecordClockSyncMarkerCommandParameters(SyncId: syncId);
-        return await ExecuteCommandAsync(RecordClockSyncMarkerCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RecordClockSyncMarkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RecordClockSyncMarkerCommandParameters, RecordClockSyncMarkerResult> RecordClockSyncMarkerCommand = new("Tracing.recordClockSyncMarker", JsonContext.RecordClockSyncMarkerCommandParameters, JsonContext.RecordClockSyncMarkerResult);
 
@@ -97,14 +97,20 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Request a global memory dump.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Deterministic</b> - Enables more deterministic results by forcing garbage collection</description></item>
     /// <item><description><b>LevelOfDetail</b> - Specifies level of details in memory dump. Defaults to "detailed".</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RequestMemoryDumpCommandOptions"/>.
+    /// <param name="deterministic">
+    /// Enables more deterministic results by forcing garbage collection
+    /// </param>
+    /// <param name="levelOfDetail">
+    /// Specifies level of details in memory dump. Defaults to "detailed".
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -113,10 +119,10 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="RequestMemoryDumpResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<RequestMemoryDumpResult> RequestMemoryDumpAsync(RequestMemoryDumpCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RequestMemoryDumpResult> RequestMemoryDumpAsync(bool? deterministic = default, MemoryDumpLevelOfDetail? levelOfDetail = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new RequestMemoryDumpCommandParameters(Deterministic: options?.Deterministic, LevelOfDetail: options?.LevelOfDetail);
-        return await ExecuteCommandAsync(RequestMemoryDumpCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new RequestMemoryDumpCommandParameters(Deterministic: deterministic, LevelOfDetail: levelOfDetail);
+        return await ExecuteCommandAsync(RequestMemoryDumpCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RequestMemoryDumpCommandParameters, RequestMemoryDumpResult> RequestMemoryDumpCommand = new("Tracing.requestMemoryDump", JsonContext.RequestMemoryDumpCommandParameters, JsonContext.RequestMemoryDumpResult);
 
@@ -124,7 +130,7 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Start trace events collection.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Categories</b> - Category/tag filter</description></item>
     /// <item><description><b>Options</b> - Tracing options</description></item>
@@ -139,8 +145,52 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ScreenshotMaxCount</b> - Maximum number of screenshots captured during a single tracing session. Only used when the <b>disabled-by-default-devtools.screenshot</b> category is enabled. Defaults to 450. Clamped together with <b>screenshotMaxSize</b> to stay within the per-session screenshot memory budget.</description></item>
     /// </list>
     /// </remarks>
+    /// <param name="categories">
+    /// Category/tag filter
+    /// </param>
     /// <param name="options">
-    /// Optional parameters. See <see cref="StartCommandOptions"/>.
+    /// Tracing options
+    /// </param>
+    /// <param name="bufferUsageReportingInterval">
+    /// If set, the agent will issue bufferUsage events at this interval, specified in milliseconds
+    /// </param>
+    /// <param name="transferMode">
+    /// Whether to report trace events as series of dataCollected events or to save trace to a
+    /// stream (defaults to <b>ReportEvents</b>).
+    /// </param>
+    /// <param name="streamFormat">
+    /// Trace data format to use. This only applies when using <b>ReturnAsStream</b>
+    /// transfer mode (defaults to <b>json</b>).
+    /// </param>
+    /// <param name="streamCompression">
+    /// Compression format to use. This only applies when using <b>ReturnAsStream</b>
+    /// transfer mode (defaults to <b>none</b>)
+    /// </param>
+    /// <param name="traceConfig">
+    /// </param>
+    /// <param name="perfettoConfig">
+    /// Base64-encoded serialized perfetto.protos.TraceConfig protobuf message
+    /// When specified, the parameters <b>categories</b>, <b>options</b>, <b>traceConfig</b>
+    /// are ignored. (Encoded as a base64 string when passed over JSON)
+    /// </param>
+    /// <param name="tracingBackend">
+    /// Backend type (defaults to <b>auto</b>)
+    /// </param>
+    /// <param name="screenshotMaxSize">
+    /// Maximum width and height (in pixels) of each captured screenshot.
+    /// Only used when the <b>disabled-by-default-devtools.screenshot</b> category is
+    /// enabled. Defaults to 500. The combined memory footprint of screenshots
+    /// (<b>screenshotMaxSize</b> * <b>screenshotMaxSize</b> * 4 * <b>screenshotMaxCount</b>)
+    /// is clamped to the existing per-session budget.
+    /// </param>
+    /// <param name="screenshotMaxCount">
+    /// Maximum number of screenshots captured during a single tracing session.
+    /// Only used when the <b>disabled-by-default-devtools.screenshot</b> category is
+    /// enabled. Defaults to 450. Clamped together with <b>screenshotMaxSize</b> to
+    /// stay within the per-session screenshot memory budget.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -148,10 +198,10 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartResult"/>.
     /// </returns>
-    public async Task<StartResult> StartAsync(StartCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, string? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StartCommandParameters(Categories: options?.Categories, Options: options?.Options, BufferUsageReportingInterval: options?.BufferUsageReportingInterval, TransferMode: options?.TransferMode, StreamFormat: options?.StreamFormat, StreamCompression: options?.StreamCompression, TraceConfig: options?.TraceConfig, PerfettoConfig: options?.PerfettoConfig, TracingBackend: options?.TracingBackend, ScreenshotMaxSize: options?.ScreenshotMaxSize, ScreenshotMaxCount: options?.ScreenshotMaxCount);
-        return await ExecuteCommandAsync(StartCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new StartCommandParameters(Categories: categories, Options: options, BufferUsageReportingInterval: bufferUsageReportingInterval, TransferMode: transferMode, StreamFormat: streamFormat, StreamCompression: streamCompression, TraceConfig: traceConfig, PerfettoConfig: perfettoConfig, TracingBackend: tracingBackend, ScreenshotMaxSize: screenshotMaxSize, ScreenshotMaxCount: screenshotMaxCount);
+        return await ExecuteCommandAsync(StartCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartCommandParameters, StartResult> StartCommand = new("Tracing.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
 
@@ -199,25 +249,11 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record EndCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TracingDomain.EndAsync"/>.
-/// </summary>
-public sealed record EndCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EndResult() : EmptyResult;
 
 
 internal sealed record GetCategoriesCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TracingDomain.GetCategoriesAsync"/>.
-/// </summary>
-public sealed record GetCategoriesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -230,13 +266,6 @@ public sealed record GetCategoriesResult(ImmutableArray<string> Categories) : Em
 internal sealed record GetTrackEventDescriptorCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TracingDomain.GetTrackEventDescriptorAsync"/>.
-/// </summary>
-public sealed record GetTrackEventDescriptorCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Descriptor">
 /// Base64-encoded serialized perfetto.protos.TrackEventDescriptor protobuf message. (Encoded as a base64 string when passed over JSON)
@@ -247,34 +276,11 @@ public sealed record GetTrackEventDescriptorResult(string Descriptor) : EmptyRes
 internal sealed record RecordClockSyncMarkerCommandParameters(string SyncId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TracingDomain.RecordClockSyncMarkerAsync"/>.
-/// </summary>
-public sealed record RecordClockSyncMarkerCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RecordClockSyncMarkerResult() : EmptyResult;
 
 
 internal sealed record RequestMemoryDumpCommandParameters(bool? Deterministic, MemoryDumpLevelOfDetail? LevelOfDetail) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TracingDomain.RequestMemoryDumpAsync"/>.
-/// </summary>
-public sealed record RequestMemoryDumpCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Enables more deterministic results by forcing garbage collection
-    /// </summary>
-    public bool? Deterministic { get; init; }
-
-    /// <summary>
-    /// Specifies level of details in memory dump. Defaults to "detailed".
-    /// </summary>
-    public MemoryDumpLevelOfDetail? LevelOfDetail { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -288,80 +294,6 @@ public sealed record RequestMemoryDumpResult(string DumpGuid, bool Success) : Em
 
 
 internal sealed record StartCommandParameters(string? Categories, string? Options, double? BufferUsageReportingInterval, string? TransferMode, StreamFormat? StreamFormat, StreamCompression? StreamCompression, TraceConfig? TraceConfig, string? PerfettoConfig, TracingBackend? TracingBackend, long? ScreenshotMaxSize, long? ScreenshotMaxCount) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TracingDomain.StartAsync"/>.
-/// </summary>
-public sealed record StartCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Category/tag filter
-    /// </summary>
-    [global::System.Obsolete]
-    public string? Categories { get; init; }
-
-    /// <summary>
-    /// Tracing options
-    /// </summary>
-    [global::System.Obsolete]
-    public string? Options { get; init; }
-
-    /// <summary>
-    /// If set, the agent will issue bufferUsage events at this interval, specified in milliseconds
-    /// </summary>
-    public double? BufferUsageReportingInterval { get; init; }
-
-    /// <summary>
-    /// Whether to report trace events as series of dataCollected events or to save trace to a
-    /// stream (defaults to <b>ReportEvents</b>).
-    /// </summary>
-    public string? TransferMode { get; init; }
-
-    /// <summary>
-    /// Trace data format to use. This only applies when using <b>ReturnAsStream</b>
-    /// transfer mode (defaults to <b>json</b>).
-    /// </summary>
-    public StreamFormat? StreamFormat { get; init; }
-
-    /// <summary>
-    /// Compression format to use. This only applies when using <b>ReturnAsStream</b>
-    /// transfer mode (defaults to <b>none</b>)
-    /// </summary>
-    public StreamCompression? StreamCompression { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public TraceConfig? TraceConfig { get; init; }
-
-    /// <summary>
-    /// Base64-encoded serialized perfetto.protos.TraceConfig protobuf message
-    /// When specified, the parameters <b>categories</b>, <b>options</b>, <b>traceConfig</b>
-    /// are ignored. (Encoded as a base64 string when passed over JSON)
-    /// </summary>
-    public string? PerfettoConfig { get; init; }
-
-    /// <summary>
-    /// Backend type (defaults to <b>auto</b>)
-    /// </summary>
-    public TracingBackend? TracingBackend { get; init; }
-
-    /// <summary>
-    /// Maximum width and height (in pixels) of each captured screenshot.
-    /// Only used when the <b>disabled-by-default-devtools.screenshot</b> category is
-    /// enabled. Defaults to 500. The combined memory footprint of screenshots
-    /// (<b>screenshotMaxSize</b> * <b>screenshotMaxSize</b> * 4 * <b>screenshotMaxCount</b>)
-    /// is clamped to the existing per-session budget.
-    /// </summary>
-    public long? ScreenshotMaxSize { get; init; }
-
-    /// <summary>
-    /// Maximum number of screenshots captured during a single tracing session.
-    /// Only used when the <b>disabled-by-default-devtools.screenshot</b> category is
-    /// enabled. Defaults to 450. Clamped together with <b>screenshotMaxSize</b> to
-    /// stay within the per-session screenshot memory budget.
-    /// </summary>
-    public long? ScreenshotMaxCount { get; init; }
-}
 
 /// <summary>
 /// </summary>

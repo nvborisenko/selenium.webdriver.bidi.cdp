@@ -19,8 +19,8 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="port">
     /// Port number to bind.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="BindCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -28,10 +28,10 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BindResult"/>.
     /// </returns>
-    public async Task<BindResult> BindAsync(long port, BindCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new BindCommandParameters(Port: port);
-        return await ExecuteCommandAsync(BindCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(BindCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<BindCommandParameters, BindResult> BindCommand = new("Tethering.bind", JsonContext.BindCommandParameters, JsonContext.BindResult);
 
@@ -41,8 +41,8 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="port">
     /// Port number to unbind.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="UnbindCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -50,10 +50,10 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UnbindResult"/>.
     /// </returns>
-    public async Task<UnbindResult> UnbindAsync(long port, UnbindCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UnbindCommandParameters(Port: port);
-        return await ExecuteCommandAsync(UnbindCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(UnbindCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<UnbindCommandParameters, UnbindResult> UnbindCommand = new("Tethering.unbind", JsonContext.UnbindCommandParameters, JsonContext.UnbindResult);
 
@@ -73,25 +73,11 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record BindCommandParameters(long Port) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TetheringDomain.BindAsync"/>.
-/// </summary>
-public sealed record BindCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record BindResult() : EmptyResult;
 
 
 internal sealed record UnbindCommandParameters(long Port) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TetheringDomain.UnbindAsync"/>.
-/// </summary>
-public sealed record UnbindCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

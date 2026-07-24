@@ -17,7 +17,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Continues execution until specific location is reached.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>TargetCallFrames</b></description></item>
     /// </list>
@@ -25,8 +25,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="location">
     /// Location to continue to.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ContinueToLocationCommandOptions"/>.
+    /// <param name="targetCallFrames">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -34,18 +36,18 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ContinueToLocationResult"/>.
     /// </returns>
-    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, ContinueToLocationCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, string? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ContinueToLocationCommandParameters(Location: location, TargetCallFrames: options?.TargetCallFrames);
-        return await ExecuteCommandAsync(ContinueToLocationCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ContinueToLocationCommandParameters(Location: location, TargetCallFrames: targetCallFrames);
+        return await ExecuteCommandAsync(ContinueToLocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ContinueToLocationCommandParameters, ContinueToLocationResult> ContinueToLocationCommand = new("Debugger.continueToLocation", JsonContext.ContinueToLocationCommandParameters, JsonContext.ContinueToLocationResult);
 
     /// <summary>
     /// Disables debugger for given page.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -53,10 +55,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Debugger.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -65,13 +67,17 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// enabled until the result for this command is received.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>MaxScriptsCacheSize</b> - The maximum size in bytes of collected scripts (not referenced by other heap objects) the debugger can hold. Puts no limit if parameter is omitted.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="maxScriptsCacheSize">
+    /// The maximum size in bytes of collected scripts (not referenced by other heap objects)
+    /// the debugger can hold. Puts no limit if parameter is omitted.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -79,10 +85,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EnableCommandParameters(MaxScriptsCacheSize: options?.MaxScriptsCacheSize);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EnableCommandParameters(MaxScriptsCacheSize: maxScriptsCacheSize);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Debugger.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -90,7 +96,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Evaluates expression on a given call frame.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ObjectGroup</b> - String object group name to put result into (allows rapid releasing resulting object handles using <b>releaseObjectGroup</b>).</description></item>
     /// <item><description><b>IncludeCommandLineAPI</b> - Specifies whether command line API should be available to the evaluated expression, defaults to false.</description></item>
@@ -107,8 +113,32 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="expression">
     /// Expression to evaluate.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EvaluateOnCallFrameCommandOptions"/>.
+    /// <param name="objectGroup">
+    /// String object group name to put result into (allows rapid releasing resulting object handles
+    /// using <b>releaseObjectGroup</b>).
+    /// </param>
+    /// <param name="includeCommandLineAPI">
+    /// Specifies whether command line API should be available to the evaluated expression, defaults
+    /// to false.
+    /// </param>
+    /// <param name="silent">
+    /// In silent mode exceptions thrown during evaluation are not reported and do not pause
+    /// execution. Overrides <b>setPauseOnException</b> state.
+    /// </param>
+    /// <param name="returnByValue">
+    /// Whether the result is expected to be a JSON object that should be sent by value.
+    /// </param>
+    /// <param name="generatePreview">
+    /// Whether preview should be generated for the result.
+    /// </param>
+    /// <param name="throwOnSideEffect">
+    /// Whether to throw an exception if side effect cannot be ruled out during evaluation.
+    /// </param>
+    /// <param name="timeout">
+    /// Terminate execution after timing out (number of milliseconds).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -116,10 +146,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EvaluateOnCallFrameResult"/>.
     /// </returns>
-    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, EvaluateOnCallFrameCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EvaluateOnCallFrameCommandParameters(CallFrameId: callFrameId, Expression: expression, ObjectGroup: options?.ObjectGroup, IncludeCommandLineAPI: options?.IncludeCommandLineAPI, Silent: options?.Silent, ReturnByValue: options?.ReturnByValue, GeneratePreview: options?.GeneratePreview, ThrowOnSideEffect: options?.ThrowOnSideEffect, Timeout: options?.Timeout);
-        return await ExecuteCommandAsync(EvaluateOnCallFrameCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EvaluateOnCallFrameCommandParameters(CallFrameId: callFrameId, Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout);
+        return await ExecuteCommandAsync(EvaluateOnCallFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EvaluateOnCallFrameCommandParameters, EvaluateOnCallFrameResult> EvaluateOnCallFrameCommand = new("Debugger.evaluateOnCallFrame", JsonContext.EvaluateOnCallFrameCommandParameters, JsonContext.EvaluateOnCallFrameResult);
 
@@ -128,7 +158,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// the same.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>End</b> - End of range to search possible breakpoint locations in (excluding). When not specified, end of scripts is used as end of range.</description></item>
     /// <item><description><b>RestrictToFunction</b> - Only consider locations which are in the same (non-nested) function as start.</description></item>
@@ -137,8 +167,15 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="start">
     /// Start of range to search possible breakpoint locations in.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetPossibleBreakpointsCommandOptions"/>.
+    /// <param name="end">
+    /// End of range to search possible breakpoint locations in (excluding). When not specified, end
+    /// of scripts is used as end of range.
+    /// </param>
+    /// <param name="restrictToFunction">
+    /// Only consider locations which are in the same (non-nested) function as start.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -146,10 +183,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPossibleBreakpointsResult"/>.
     /// </returns>
-    public async Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, GetPossibleBreakpointsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = default, bool? restrictToFunction = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetPossibleBreakpointsCommandParameters(Start: start, End: options?.End, RestrictToFunction: options?.RestrictToFunction);
-        return await ExecuteCommandAsync(GetPossibleBreakpointsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetPossibleBreakpointsCommandParameters(Start: start, End: end, RestrictToFunction: restrictToFunction);
+        return await ExecuteCommandAsync(GetPossibleBreakpointsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetPossibleBreakpointsCommandParameters, GetPossibleBreakpointsResult> GetPossibleBreakpointsCommand = new("Debugger.getPossibleBreakpoints", JsonContext.GetPossibleBreakpointsCommandParameters, JsonContext.GetPossibleBreakpointsResult);
 
@@ -159,8 +196,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="scriptId">
     /// Id of the script to get source for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetScriptSourceCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -168,10 +205,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetScriptSourceResult"/>.
     /// </returns>
-    public async Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, GetScriptSourceCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetScriptSourceCommandParameters(ScriptId: scriptId);
-        return await ExecuteCommandAsync(GetScriptSourceCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetScriptSourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetScriptSourceCommandParameters, GetScriptSourceResult> GetScriptSourceCommand = new("Debugger.getScriptSource", JsonContext.GetScriptSourceCommandParameters, JsonContext.GetScriptSourceResult);
 
@@ -180,8 +217,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="scriptId">
     /// Id of the script to disassemble
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisassembleWasmModuleCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -190,10 +227,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="DisassembleWasmModuleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, DisassembleWasmModuleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisassembleWasmModuleCommandParameters(ScriptId: scriptId);
-        return await ExecuteCommandAsync(DisassembleWasmModuleCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisassembleWasmModuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisassembleWasmModuleCommandParameters, DisassembleWasmModuleResult> DisassembleWasmModuleCommand = new("Debugger.disassembleWasmModule", JsonContext.DisassembleWasmModuleCommandParameters, JsonContext.DisassembleWasmModuleResult);
 
@@ -205,8 +242,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="streamId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="NextWasmDisassemblyChunkCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -215,10 +252,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="NextWasmDisassemblyChunkResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, NextWasmDisassemblyChunkCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new NextWasmDisassemblyChunkCommandParameters(StreamId: streamId);
-        return await ExecuteCommandAsync(NextWasmDisassemblyChunkCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(NextWasmDisassemblyChunkCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<NextWasmDisassemblyChunkCommandParameters, NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkCommand = new("Debugger.nextWasmDisassemblyChunk", JsonContext.NextWasmDisassemblyChunkCommandParameters, JsonContext.NextWasmDisassemblyChunkResult);
 
@@ -228,8 +265,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="scriptId">
     /// Id of the Wasm script to get source for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetWasmBytecodeCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -238,10 +275,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="GetWasmBytecodeResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, GetWasmBytecodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetWasmBytecodeCommandParameters(ScriptId: scriptId);
-        return await ExecuteCommandAsync(GetWasmBytecodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetWasmBytecodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetWasmBytecodeCommandParameters, GetWasmBytecodeResult> GetWasmBytecodeCommand = new("Debugger.getWasmBytecode", JsonContext.GetWasmBytecodeCommandParameters, JsonContext.GetWasmBytecodeResult);
 
@@ -250,8 +287,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="stackTraceId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetStackTraceCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -260,18 +297,18 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="GetStackTraceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, GetStackTraceCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStackTraceCommandParameters(StackTraceId: stackTraceId);
-        return await ExecuteCommandAsync(GetStackTraceCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetStackTraceCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetStackTraceCommandParameters, GetStackTraceResult> GetStackTraceCommand = new("Debugger.getStackTrace", JsonContext.GetStackTraceCommandParameters, JsonContext.GetStackTraceResult);
 
     /// <summary>
     /// Stops on the next JavaScript statement.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="PauseCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -279,10 +316,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PauseResult"/>.
     /// </returns>
-    public async Task<PauseResult> PauseAsync(PauseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<PauseResult> PauseAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PauseCommandParameters();
-        return await ExecuteCommandAsync(PauseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(PauseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<PauseCommandParameters, PauseResult> PauseCommand = new("Debugger.pause", JsonContext.PauseCommandParameters, JsonContext.PauseResult);
 
@@ -291,8 +328,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="parentStackTraceId">
     /// Debugger will pause when async call with given stack trace is started.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="PauseOnAsyncCallCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -302,10 +339,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, PauseOnAsyncCallCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PauseOnAsyncCallCommandParameters(ParentStackTraceId: parentStackTraceId);
-        return await ExecuteCommandAsync(PauseOnAsyncCallCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(PauseOnAsyncCallCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<PauseOnAsyncCallCommandParameters, PauseOnAsyncCallResult> PauseOnAsyncCallCommand = new("Debugger.pauseOnAsyncCall", JsonContext.PauseOnAsyncCallCommandParameters, JsonContext.PauseOnAsyncCallResult);
 
@@ -314,8 +351,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="breakpointId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveBreakpointCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -323,10 +360,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveBreakpointResult"/>.
     /// </returns>
-    public async Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, RemoveBreakpointCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveBreakpointCommandParameters(BreakpointId: breakpointId);
-        return await ExecuteCommandAsync(RemoveBreakpointCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveBreakpointCommandParameters, RemoveBreakpointResult> RemoveBreakpointCommand = new("Debugger.removeBreakpoint", JsonContext.RemoveBreakpointCommandParameters, JsonContext.RemoveBreakpointResult);
 
@@ -346,7 +383,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// once V8 pauses at the beginning of the restarted function.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Mode</b> - The <b>mode</b> parameter must be present and set to 'StepInto', otherwise <b>restartFrame</b> will error out.</description></item>
     /// </list>
@@ -354,8 +391,12 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="callFrameId">
     /// Call frame identifier to evaluate on.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RestartFrameCommandOptions"/>.
+    /// <param name="mode">
+    /// The <b>mode</b> parameter must be present and set to 'StepInto', otherwise
+    /// <b>restartFrame</b> will error out.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -363,10 +404,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RestartFrameResult"/>.
     /// </returns>
-    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, RestartFrameCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, string? mode = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new RestartFrameCommandParameters(CallFrameId: callFrameId, Mode: options?.Mode);
-        return await ExecuteCommandAsync(RestartFrameCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new RestartFrameCommandParameters(CallFrameId: callFrameId, Mode: mode);
+        return await ExecuteCommandAsync(RestartFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RestartFrameCommandParameters, RestartFrameResult> RestartFrameCommand = new("Debugger.restartFrame", JsonContext.RestartFrameCommandParameters, JsonContext.RestartFrameResult);
 
@@ -374,13 +415,20 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Resumes JavaScript execution.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>TerminateOnResume</b> - Set to true to terminate execution upon resuming execution. In contrast to Runtime.terminateExecution, this will allows to execute further JavaScript (i.e. via evaluation) until execution of the paused code is actually resumed, at which point termination is triggered. If execution is currently not paused, this parameter has no effect.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ResumeCommandOptions"/>.
+    /// <param name="terminateOnResume">
+    /// Set to true to terminate execution upon resuming execution. In contrast
+    /// to Runtime.terminateExecution, this will allows to execute further
+    /// JavaScript (i.e. via evaluation) until execution of the paused code
+    /// is actually resumed, at which point termination is triggered.
+    /// If execution is currently not paused, this parameter has no effect.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -388,10 +436,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResumeResult"/>.
     /// </returns>
-    public async Task<ResumeResult> ResumeAsync(ResumeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ResumeResult> ResumeAsync(bool? terminateOnResume = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ResumeCommandParameters(TerminateOnResume: options?.TerminateOnResume);
-        return await ExecuteCommandAsync(ResumeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ResumeCommandParameters(TerminateOnResume: terminateOnResume);
+        return await ExecuteCommandAsync(ResumeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ResumeCommandParameters, ResumeResult> ResumeCommand = new("Debugger.resume", JsonContext.ResumeCommandParameters, JsonContext.ResumeResult);
 
@@ -399,7 +447,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Searches for given string in script content.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>CaseSensitive</b> - If true, search is case sensitive.</description></item>
     /// <item><description><b>IsRegex</b> - If true, treats string parameter as regex.</description></item>
@@ -411,8 +459,14 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="query">
     /// String to search for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SearchInContentCommandOptions"/>.
+    /// <param name="caseSensitive">
+    /// If true, search is case sensitive.
+    /// </param>
+    /// <param name="isRegex">
+    /// If true, treats string parameter as regex.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -420,10 +474,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SearchInContentResult"/>.
     /// </returns>
-    public async Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, SearchInContentCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SearchInContentCommandParameters(ScriptId: scriptId, Query: query, CaseSensitive: options?.CaseSensitive, IsRegex: options?.IsRegex);
-        return await ExecuteCommandAsync(SearchInContentCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SearchInContentCommandParameters(ScriptId: scriptId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
+        return await ExecuteCommandAsync(SearchInContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SearchInContentCommandParameters, SearchInContentResult> SearchInContentCommand = new("Debugger.searchInContent", JsonContext.SearchInContentCommandParameters, JsonContext.SearchInContentResult);
 
@@ -434,8 +488,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Maximum depth of async call stacks. Setting to <b>0</b> will effectively disable collecting async
     /// call stacks (default).
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAsyncCallStackDepthCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -443,10 +497,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAsyncCallStackDepthResult"/>.
     /// </returns>
-    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, SetAsyncCallStackDepthCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
-        return await ExecuteCommandAsync(SetAsyncCallStackDepthCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetAsyncCallStackDepthCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult> SetAsyncCallStackDepthCommand = new("Debugger.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
 
@@ -458,8 +512,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="uniqueIds">
     /// Array of execution context unique ids for the debugger to ignore.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBlackboxExecutionContextsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -468,10 +522,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxExecutionContextsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, SetBlackboxExecutionContextsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxExecutionContextsCommandParameters(UniqueIds: uniqueIds);
-        return await ExecuteCommandAsync(SetBlackboxExecutionContextsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetBlackboxExecutionContextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBlackboxExecutionContextsCommandParameters, SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsCommand = new("Debugger.setBlackboxExecutionContexts", JsonContext.SetBlackboxExecutionContextsCommandParameters, JsonContext.SetBlackboxExecutionContextsResult);
 
@@ -481,7 +535,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>SkipAnonymous</b> - If true, also ignore scripts with no source url.</description></item>
     /// </list>
@@ -489,8 +543,11 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="patterns">
     /// Array of regexps that will be used to check script url for blackbox state.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBlackboxPatternsCommandOptions"/>.
+    /// <param name="skipAnonymous">
+    /// If true, also ignore scripts with no source url.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -499,10 +556,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxPatternsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, SetBlackboxPatternsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetBlackboxPatternsCommandParameters(Patterns: patterns, SkipAnonymous: options?.SkipAnonymous);
-        return await ExecuteCommandAsync(SetBlackboxPatternsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetBlackboxPatternsCommandParameters(Patterns: patterns, SkipAnonymous: skipAnonymous);
+        return await ExecuteCommandAsync(SetBlackboxPatternsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBlackboxPatternsCommandParameters, SetBlackboxPatternsResult> SetBlackboxPatternsCommand = new("Debugger.setBlackboxPatterns", JsonContext.SetBlackboxPatternsCommandParameters, JsonContext.SetBlackboxPatternsResult);
 
@@ -517,8 +574,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </param>
     /// <param name="positions">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBlackboxedRangesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -527,10 +584,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxedRangesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, SetBlackboxedRangesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxedRangesCommandParameters(ScriptId: scriptId, Positions: positions);
-        return await ExecuteCommandAsync(SetBlackboxedRangesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetBlackboxedRangesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBlackboxedRangesCommandParameters, SetBlackboxedRangesResult> SetBlackboxedRangesCommand = new("Debugger.setBlackboxedRanges", JsonContext.SetBlackboxedRangesCommandParameters, JsonContext.SetBlackboxedRangesResult);
 
@@ -538,7 +595,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Sets JavaScript breakpoint at a given location.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Condition</b> - Expression to use as a breakpoint condition. When specified, debugger will only stop on the breakpoint if this expression evaluates to true.</description></item>
     /// </list>
@@ -546,8 +603,12 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="location">
     /// Location to set breakpoint in.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBreakpointCommandOptions"/>.
+    /// <param name="condition">
+    /// Expression to use as a breakpoint condition. When specified, debugger will only stop on the
+    /// breakpoint if this expression evaluates to true.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -555,10 +616,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointResult"/>.
     /// </returns>
-    public async Task<SetBreakpointResult> SetBreakpointAsync(Location location, SetBreakpointCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetBreakpointCommandParameters(Location: location, Condition: options?.Condition);
-        return await ExecuteCommandAsync(SetBreakpointCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetBreakpointCommandParameters(Location: location, Condition: condition);
+        return await ExecuteCommandAsync(SetBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBreakpointCommandParameters, SetBreakpointResult> SetBreakpointCommand = new("Debugger.setBreakpoint", JsonContext.SetBreakpointCommandParameters, JsonContext.SetBreakpointResult);
 
@@ -568,8 +629,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="instrumentation">
     /// Instrumentation name.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetInstrumentationBreakpointCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -577,10 +638,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInstrumentationBreakpointResult"/>.
     /// </returns>
-    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string instrumentation, SetInstrumentationBreakpointCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string instrumentation, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInstrumentationBreakpointCommandParameters(Instrumentation: instrumentation);
-        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult> SetInstrumentationBreakpointCommand = new("Debugger.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
 
@@ -591,7 +652,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <b>breakpointResolved</b> events issued. This logical breakpoint will survive page reloads.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Url</b> - URL of the resources to set breakpoint on.</description></item>
     /// <item><description><b>UrlRegex</b> - Regex pattern for the URLs of the resources to set breakpoints on. Either <b>url</b> or <b>urlRegex</b> must be specified.</description></item>
@@ -603,8 +664,25 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="lineNumber">
     /// Line number to set breakpoint at.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBreakpointByUrlCommandOptions"/>.
+    /// <param name="url">
+    /// URL of the resources to set breakpoint on.
+    /// </param>
+    /// <param name="urlRegex">
+    /// Regex pattern for the URLs of the resources to set breakpoints on. Either <b>url</b> or
+    /// <b>urlRegex</b> must be specified.
+    /// </param>
+    /// <param name="scriptHash">
+    /// Script hash of the resources to set breakpoint on.
+    /// </param>
+    /// <param name="columnNumber">
+    /// Offset in the line to set breakpoint at.
+    /// </param>
+    /// <param name="condition">
+    /// Expression to use as a breakpoint condition. When specified, debugger will only stop on the
+    /// breakpoint if this expression evaluates to true.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -612,10 +690,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointByUrlResult"/>.
     /// </returns>
-    public async Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, SetBreakpointByUrlCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = default, string? urlRegex = default, string? scriptHash = default, long? columnNumber = default, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetBreakpointByUrlCommandParameters(LineNumber: lineNumber, Url: options?.Url, UrlRegex: options?.UrlRegex, ScriptHash: options?.ScriptHash, ColumnNumber: options?.ColumnNumber, Condition: options?.Condition);
-        return await ExecuteCommandAsync(SetBreakpointByUrlCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetBreakpointByUrlCommandParameters(LineNumber: lineNumber, Url: url, UrlRegex: urlRegex, ScriptHash: scriptHash, ColumnNumber: columnNumber, Condition: condition);
+        return await ExecuteCommandAsync(SetBreakpointByUrlCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBreakpointByUrlCommandParameters, SetBreakpointByUrlResult> SetBreakpointByUrlCommand = new("Debugger.setBreakpointByUrl", JsonContext.SetBreakpointByUrlCommandParameters, JsonContext.SetBreakpointByUrlResult);
 
@@ -625,7 +703,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// calling it will also trigger the breakpoint.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Condition</b> - Expression to use as a breakpoint condition. When specified, debugger will stop on the breakpoint if this expression evaluates to true.</description></item>
     /// </list>
@@ -633,8 +711,12 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="objectId">
     /// Function object id.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBreakpointOnFunctionCallCommandOptions"/>.
+    /// <param name="condition">
+    /// Expression to use as a breakpoint condition. When specified, debugger will
+    /// stop on the breakpoint if this expression evaluates to true.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -643,10 +725,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointOnFunctionCallResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, SetBreakpointOnFunctionCallCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetBreakpointOnFunctionCallCommandParameters(ObjectId: objectId, Condition: options?.Condition);
-        return await ExecuteCommandAsync(SetBreakpointOnFunctionCallCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetBreakpointOnFunctionCallCommandParameters(ObjectId: objectId, Condition: condition);
+        return await ExecuteCommandAsync(SetBreakpointOnFunctionCallCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBreakpointOnFunctionCallCommandParameters, SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallCommand = new("Debugger.setBreakpointOnFunctionCall", JsonContext.SetBreakpointOnFunctionCallCommandParameters, JsonContext.SetBreakpointOnFunctionCallResult);
 
@@ -656,8 +738,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="active">
     /// New value for breakpoints active state.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetBreakpointsActiveCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -665,10 +747,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointsActiveResult"/>.
     /// </returns>
-    public async Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, SetBreakpointsActiveCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBreakpointsActiveCommandParameters(Active: active);
-        return await ExecuteCommandAsync(SetBreakpointsActiveCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetBreakpointsActiveCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetBreakpointsActiveCommandParameters, SetBreakpointsActiveResult> SetBreakpointsActiveCommand = new("Debugger.setBreakpointsActive", JsonContext.SetBreakpointsActiveCommandParameters, JsonContext.SetBreakpointsActiveResult);
 
@@ -679,8 +761,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="state">
     /// Pause on exceptions mode.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetPauseOnExceptionsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -688,10 +770,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPauseOnExceptionsResult"/>.
     /// </returns>
-    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(string state, SetPauseOnExceptionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(string state, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPauseOnExceptionsCommandParameters(State: state);
-        return await ExecuteCommandAsync(SetPauseOnExceptionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetPauseOnExceptionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetPauseOnExceptionsCommandParameters, SetPauseOnExceptionsResult> SetPauseOnExceptionsCommand = new("Debugger.setPauseOnExceptions", JsonContext.SetPauseOnExceptionsCommandParameters, JsonContext.SetPauseOnExceptionsResult);
 
@@ -701,8 +783,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="newValue">
     /// New return value.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetReturnValueCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -711,10 +793,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetReturnValueResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, SetReturnValueCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetReturnValueCommandParameters(NewValue: newValue);
-        return await ExecuteCommandAsync(SetReturnValueCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetReturnValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetReturnValueCommandParameters, SetReturnValueResult> SetReturnValueCommand = new("Debugger.setReturnValue", JsonContext.SetReturnValueCommandParameters, JsonContext.SetReturnValueResult);
 
@@ -728,7 +810,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// top-most function is automatically triggered.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>DryRun</b> - If true the change will not actually be applied. Dry run may be used to get result description without actually modifying the code.</description></item>
     /// <item><description><b>AllowTopFrameEditing</b> - If true, then <b>scriptSource</b> is allowed to change the function on top of the stack as long as the top-most stack frame is the only activation of that function.</description></item>
@@ -740,8 +822,16 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="scriptSource">
     /// New content of the script.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetScriptSourceCommandOptions"/>.
+    /// <param name="dryRun">
+    /// If true the change will not actually be applied. Dry run may be used to get result
+    /// description without actually modifying the code.
+    /// </param>
+    /// <param name="allowTopFrameEditing">
+    /// If true, then <b>scriptSource</b> is allowed to change the function on top of the stack
+    /// as long as the top-most stack frame is the only activation of that function.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -749,10 +839,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScriptSourceResult"/>.
     /// </returns>
-    public async Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, SetScriptSourceCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetScriptSourceCommandParameters(ScriptId: scriptId, ScriptSource: scriptSource, DryRun: options?.DryRun, AllowTopFrameEditing: options?.AllowTopFrameEditing);
-        return await ExecuteCommandAsync(SetScriptSourceCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetScriptSourceCommandParameters(ScriptId: scriptId, ScriptSource: scriptSource, DryRun: dryRun, AllowTopFrameEditing: allowTopFrameEditing);
+        return await ExecuteCommandAsync(SetScriptSourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetScriptSourceCommandParameters, SetScriptSourceResult> SetScriptSourceCommand = new("Debugger.setScriptSource", JsonContext.SetScriptSourceCommandParameters, JsonContext.SetScriptSourceResult);
 
@@ -762,8 +852,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="skip">
     /// New value for skip pauses state.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetSkipAllPausesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -771,10 +861,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSkipAllPausesResult"/>.
     /// </returns>
-    public async Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, SetSkipAllPausesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSkipAllPausesCommandParameters(Skip: skip);
-        return await ExecuteCommandAsync(SetSkipAllPausesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetSkipAllPausesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetSkipAllPausesCommandParameters, SetSkipAllPausesResult> SetSkipAllPausesCommand = new("Debugger.setSkipAllPauses", JsonContext.SetSkipAllPausesCommandParameters, JsonContext.SetSkipAllPausesResult);
 
@@ -795,8 +885,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="callFrameId">
     /// Id of callframe that holds variable.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetVariableValueCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -804,10 +894,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetVariableValueResult"/>.
     /// </returns>
-    public async Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, SetVariableValueCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetVariableValueCommandParameters(ScopeNumber: scopeNumber, VariableName: variableName, NewValue: newValue, CallFrameId: callFrameId);
-        return await ExecuteCommandAsync(SetVariableValueCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetVariableValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetVariableValueCommandParameters, SetVariableValueResult> SetVariableValueCommand = new("Debugger.setVariableValue", JsonContext.SetVariableValueCommandParameters, JsonContext.SetVariableValueResult);
 
@@ -815,14 +905,21 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Steps into the function call.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>BreakOnAsyncCall</b> - Debugger will pause on the execution of the first async task which was scheduled before next pause.</description></item>
     /// <item><description><b>SkipList</b> - The skipList specifies location ranges that should be skipped on step into.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StepIntoCommandOptions"/>.
+    /// <param name="breakOnAsyncCall">
+    /// Debugger will pause on the execution of the first async task which was scheduled
+    /// before next pause.
+    /// </param>
+    /// <param name="skipList">
+    /// The skipList specifies location ranges that should be skipped on step into.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -830,18 +927,18 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepIntoResult"/>.
     /// </returns>
-    public async Task<StepIntoResult> StepIntoAsync(StepIntoCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = default, ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StepIntoCommandParameters(BreakOnAsyncCall: options?.BreakOnAsyncCall, SkipList: options?.SkipList);
-        return await ExecuteCommandAsync(StepIntoCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new StepIntoCommandParameters(BreakOnAsyncCall: breakOnAsyncCall, SkipList: skipList);
+        return await ExecuteCommandAsync(StepIntoCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StepIntoCommandParameters, StepIntoResult> StepIntoCommand = new("Debugger.stepInto", JsonContext.StepIntoCommandParameters, JsonContext.StepIntoResult);
 
     /// <summary>
     /// Steps out of the function call.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StepOutCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -849,10 +946,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepOutResult"/>.
     /// </returns>
-    public async Task<StepOutResult> StepOutAsync(StepOutCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StepOutResult> StepOutAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StepOutCommandParameters();
-        return await ExecuteCommandAsync(StepOutCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StepOutCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StepOutCommandParameters, StepOutResult> StepOutCommand = new("Debugger.stepOut", JsonContext.StepOutCommandParameters, JsonContext.StepOutResult);
 
@@ -860,13 +957,16 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Steps over the statement.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>SkipList</b> - The skipList specifies location ranges that should be skipped on step over.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StepOverCommandOptions"/>.
+    /// <param name="skipList">
+    /// The skipList specifies location ranges that should be skipped on step over.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -874,10 +974,10 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepOverResult"/>.
     /// </returns>
-    public async Task<StepOverResult> StepOverAsync(StepOverCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StepOverCommandParameters(SkipList: options?.SkipList);
-        return await ExecuteCommandAsync(StepOverCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new StepOverCommandParameters(SkipList: skipList);
+        return await ExecuteCommandAsync(StepOverCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StepOverCommandParameters, StepOverResult> StepOverCommand = new("Debugger.stepOver", JsonContext.StepOverCommandParameters, JsonContext.StepOverResult);
 
@@ -977,16 +1077,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record ContinueToLocationCommandParameters(Location Location, string? TargetCallFrames) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.ContinueToLocationAsync"/>.
-/// </summary>
-public sealed record ContinueToLocationCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public string? TargetCallFrames { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record ContinueToLocationResult() : EmptyResult;
 
@@ -994,30 +1084,11 @@ public sealed record ContinueToLocationResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters(double? MaxScriptsCacheSize) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The maximum size in bytes of collected scripts (not referenced by other heap objects)
-    /// the debugger can hold. Puts no limit if parameter is omitted.
-    /// </summary>
-    public double? MaxScriptsCacheSize { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1028,50 +1099,6 @@ public sealed record EnableResult(Runtime.UniqueDebuggerId DebuggerId) : EmptyRe
 
 
 internal sealed record EvaluateOnCallFrameCommandParameters(CallFrameId CallFrameId, string Expression, string? ObjectGroup, bool? IncludeCommandLineAPI, bool? Silent, bool? ReturnByValue, bool? GeneratePreview, bool? ThrowOnSideEffect, Runtime.TimeDelta? Timeout) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.EvaluateOnCallFrameAsync"/>.
-/// </summary>
-public sealed record EvaluateOnCallFrameCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// String object group name to put result into (allows rapid releasing resulting object handles
-    /// using <b>releaseObjectGroup</b>).
-    /// </summary>
-    public string? ObjectGroup { get; init; }
-
-    /// <summary>
-    /// Specifies whether command line API should be available to the evaluated expression, defaults
-    /// to false.
-    /// </summary>
-    public bool? IncludeCommandLineAPI { get; init; }
-
-    /// <summary>
-    /// In silent mode exceptions thrown during evaluation are not reported and do not pause
-    /// execution. Overrides <b>setPauseOnException</b> state.
-    /// </summary>
-    public bool? Silent { get; init; }
-
-    /// <summary>
-    /// Whether the result is expected to be a JSON object that should be sent by value.
-    /// </summary>
-    public bool? ReturnByValue { get; init; }
-
-    /// <summary>
-    /// Whether preview should be generated for the result.
-    /// </summary>
-    public bool? GeneratePreview { get; init; }
-
-    /// <summary>
-    /// Whether to throw an exception if side effect cannot be ruled out during evaluation.
-    /// </summary>
-    public bool? ThrowOnSideEffect { get; init; }
-
-    /// <summary>
-    /// Terminate execution after timing out (number of milliseconds).
-    /// </summary>
-    public new Runtime.TimeDelta? Timeout { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1087,23 +1114,6 @@ public sealed record EvaluateOnCallFrameResult(Runtime.RemoteObject Result, Runt
 internal sealed record GetPossibleBreakpointsCommandParameters(Location Start, Location? End, bool? RestrictToFunction) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.GetPossibleBreakpointsAsync"/>.
-/// </summary>
-public sealed record GetPossibleBreakpointsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// End of range to search possible breakpoint locations in (excluding). When not specified, end
-    /// of scripts is used as end of range.
-    /// </summary>
-    public Location? End { get; init; }
-
-    /// <summary>
-    /// Only consider locations which are in the same (non-nested) function as start.
-    /// </summary>
-    public bool? RestrictToFunction { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Locations">
 /// List of the possible breakpoint locations.
@@ -1112,13 +1122,6 @@ public sealed record GetPossibleBreakpointsResult(ImmutableArray<BreakLocation> 
 
 
 internal sealed record GetScriptSourceCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.GetScriptSourceAsync"/>.
-/// </summary>
-public sealed record GetScriptSourceCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1132,13 +1135,6 @@ public sealed record GetScriptSourceResult(string ScriptSource, string? Bytecode
 
 
 internal sealed record DisassembleWasmModuleCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.DisassembleWasmModuleAsync"/>.
-/// </summary>
-public sealed record DisassembleWasmModuleCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1162,13 +1158,6 @@ public sealed record DisassembleWasmModuleResult(string? StreamId, long TotalNum
 internal sealed record NextWasmDisassemblyChunkCommandParameters(string StreamId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.NextWasmDisassemblyChunkAsync"/>.
-/// </summary>
-public sealed record NextWasmDisassemblyChunkCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Chunk">
 /// The next chunk of disassembly.
@@ -1177,13 +1166,6 @@ public sealed record NextWasmDisassemblyChunkResult(WasmDisassemblyChunk Chunk) 
 
 
 internal sealed record GetWasmBytecodeCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.GetWasmBytecodeAsync"/>.
-/// </summary>
-public sealed record GetWasmBytecodeCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1196,13 +1178,6 @@ public sealed record GetWasmBytecodeResult(string Bytecode) : EmptyResult;
 internal sealed record GetStackTraceCommandParameters(Runtime.StackTraceId StackTraceId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.GetStackTraceAsync"/>.
-/// </summary>
-public sealed record GetStackTraceCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="StackTrace">
 /// </param>
@@ -1212,25 +1187,11 @@ public sealed record GetStackTraceResult(Runtime.StackTrace StackTrace) : EmptyR
 internal sealed record PauseCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.PauseAsync"/>.
-/// </summary>
-public sealed record PauseCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record PauseResult() : EmptyResult;
 
 
 internal sealed record PauseOnAsyncCallCommandParameters(Runtime.StackTraceId ParentStackTraceId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.PauseOnAsyncCallAsync"/>.
-/// </summary>
-public sealed record PauseOnAsyncCallCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1240,30 +1201,11 @@ public sealed record PauseOnAsyncCallResult() : EmptyResult;
 internal sealed record RemoveBreakpointCommandParameters(BreakpointId BreakpointId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.RemoveBreakpointAsync"/>.
-/// </summary>
-public sealed record RemoveBreakpointCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveBreakpointResult() : EmptyResult;
 
 
 internal sealed record RestartFrameCommandParameters(CallFrameId CallFrameId, string? Mode) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.RestartFrameAsync"/>.
-/// </summary>
-public sealed record RestartFrameCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The <b>mode</b> parameter must be present and set to 'StepInto', otherwise
-    /// <b>restartFrame</b> will error out.
-    /// </summary>
-    public string? Mode { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1282,42 +1224,11 @@ public sealed record RestartFrameResult(ImmutableArray<CallFrame> CallFrames, Ru
 internal sealed record ResumeCommandParameters(bool? TerminateOnResume) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.ResumeAsync"/>.
-/// </summary>
-public sealed record ResumeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Set to true to terminate execution upon resuming execution. In contrast
-    /// to Runtime.terminateExecution, this will allows to execute further
-    /// JavaScript (i.e. via evaluation) until execution of the paused code
-    /// is actually resumed, at which point termination is triggered.
-    /// If execution is currently not paused, this parameter has no effect.
-    /// </summary>
-    public bool? TerminateOnResume { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record ResumeResult() : EmptyResult;
 
 
 internal sealed record SearchInContentCommandParameters(Runtime.ScriptId ScriptId, string Query, bool? CaseSensitive, bool? IsRegex) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SearchInContentAsync"/>.
-/// </summary>
-public sealed record SearchInContentCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If true, search is case sensitive.
-    /// </summary>
-    public bool? CaseSensitive { get; init; }
-
-    /// <summary>
-    /// If true, treats string parameter as regex.
-    /// </summary>
-    public bool? IsRegex { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1330,25 +1241,11 @@ public sealed record SearchInContentResult(ImmutableArray<SearchMatch> Result) :
 internal sealed record SetAsyncCallStackDepthCommandParameters(long MaxDepth) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetAsyncCallStackDepthAsync"/>.
-/// </summary>
-public sealed record SetAsyncCallStackDepthCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetAsyncCallStackDepthResult() : EmptyResult;
 
 
 internal sealed record SetBlackboxExecutionContextsCommandParameters(ImmutableArray<string> UniqueIds) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetBlackboxExecutionContextsAsync"/>.
-/// </summary>
-public sealed record SetBlackboxExecutionContextsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1358,17 +1255,6 @@ public sealed record SetBlackboxExecutionContextsResult() : EmptyResult;
 internal sealed record SetBlackboxPatternsCommandParameters(ImmutableArray<string> Patterns, bool? SkipAnonymous) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetBlackboxPatternsAsync"/>.
-/// </summary>
-public sealed record SetBlackboxPatternsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If true, also ignore scripts with no source url.
-    /// </summary>
-    public bool? SkipAnonymous { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetBlackboxPatternsResult() : EmptyResult;
 
@@ -1376,30 +1262,11 @@ public sealed record SetBlackboxPatternsResult() : EmptyResult;
 internal sealed record SetBlackboxedRangesCommandParameters(Runtime.ScriptId ScriptId, ImmutableArray<ScriptPosition> Positions) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetBlackboxedRangesAsync"/>.
-/// </summary>
-public sealed record SetBlackboxedRangesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetBlackboxedRangesResult() : EmptyResult;
 
 
 internal sealed record SetBreakpointCommandParameters(Location Location, string? Condition) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetBreakpointAsync"/>.
-/// </summary>
-public sealed record SetBreakpointCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Expression to use as a breakpoint condition. When specified, debugger will only stop on the
-    /// breakpoint if this expression evaluates to true.
-    /// </summary>
-    public string? Condition { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1415,13 +1282,6 @@ public sealed record SetBreakpointResult(BreakpointId BreakpointId, Location Act
 internal sealed record SetInstrumentationBreakpointCommandParameters(string Instrumentation) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetInstrumentationBreakpointAsync"/>.
-/// </summary>
-public sealed record SetInstrumentationBreakpointCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="BreakpointId">
 /// Id of the created breakpoint for further reference.
@@ -1430,39 +1290,6 @@ public sealed record SetInstrumentationBreakpointResult(BreakpointId BreakpointI
 
 
 internal sealed record SetBreakpointByUrlCommandParameters(long LineNumber, string? Url, string? UrlRegex, string? ScriptHash, long? ColumnNumber, string? Condition) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetBreakpointByUrlAsync"/>.
-/// </summary>
-public sealed record SetBreakpointByUrlCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// URL of the resources to set breakpoint on.
-    /// </summary>
-    public string? Url { get; init; }
-
-    /// <summary>
-    /// Regex pattern for the URLs of the resources to set breakpoints on. Either <b>url</b> or
-    /// <b>urlRegex</b> must be specified.
-    /// </summary>
-    public string? UrlRegex { get; init; }
-
-    /// <summary>
-    /// Script hash of the resources to set breakpoint on.
-    /// </summary>
-    public string? ScriptHash { get; init; }
-
-    /// <summary>
-    /// Offset in the line to set breakpoint at.
-    /// </summary>
-    public long? ColumnNumber { get; init; }
-
-    /// <summary>
-    /// Expression to use as a breakpoint condition. When specified, debugger will only stop on the
-    /// breakpoint if this expression evaluates to true.
-    /// </summary>
-    public string? Condition { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1478,18 +1305,6 @@ public sealed record SetBreakpointByUrlResult(BreakpointId BreakpointId, Immutab
 internal sealed record SetBreakpointOnFunctionCallCommandParameters(Runtime.RemoteObjectId ObjectId, string? Condition) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetBreakpointOnFunctionCallAsync"/>.
-/// </summary>
-public sealed record SetBreakpointOnFunctionCallCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Expression to use as a breakpoint condition. When specified, debugger will
-    /// stop on the breakpoint if this expression evaluates to true.
-    /// </summary>
-    public string? Condition { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="BreakpointId">
 /// Id of the created breakpoint for further reference.
@@ -1500,25 +1315,11 @@ public sealed record SetBreakpointOnFunctionCallResult(BreakpointId BreakpointId
 internal sealed record SetBreakpointsActiveCommandParameters(bool Active) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetBreakpointsActiveAsync"/>.
-/// </summary>
-public sealed record SetBreakpointsActiveCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetBreakpointsActiveResult() : EmptyResult;
 
 
 internal sealed record SetPauseOnExceptionsCommandParameters(string State) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetPauseOnExceptionsAsync"/>.
-/// </summary>
-public sealed record SetPauseOnExceptionsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1528,36 +1329,11 @@ public sealed record SetPauseOnExceptionsResult() : EmptyResult;
 internal sealed record SetReturnValueCommandParameters(Runtime.CallArgument NewValue) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetReturnValueAsync"/>.
-/// </summary>
-public sealed record SetReturnValueCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetReturnValueResult() : EmptyResult;
 
 
 internal sealed record SetScriptSourceCommandParameters(Runtime.ScriptId ScriptId, string ScriptSource, bool? DryRun, bool? AllowTopFrameEditing) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetScriptSourceAsync"/>.
-/// </summary>
-public sealed record SetScriptSourceCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If true the change will not actually be applied. Dry run may be used to get result
-    /// description without actually modifying the code.
-    /// </summary>
-    public bool? DryRun { get; init; }
-
-    /// <summary>
-    /// If true, then <b>scriptSource</b> is allowed to change the function on top of the stack
-    /// as long as the top-most stack frame is the only activation of that function.
-    /// </summary>
-    public bool? AllowTopFrameEditing { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1587,25 +1363,11 @@ public sealed record SetScriptSourceResult(ImmutableArray<CallFrame>? CallFrames
 internal sealed record SetSkipAllPausesCommandParameters(bool Skip) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetSkipAllPausesAsync"/>.
-/// </summary>
-public sealed record SetSkipAllPausesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetSkipAllPausesResult() : EmptyResult;
 
 
 internal sealed record SetVariableValueCommandParameters(long ScopeNumber, string VariableName, Runtime.CallArgument NewValue, CallFrameId CallFrameId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.SetVariableValueAsync"/>.
-/// </summary>
-public sealed record SetVariableValueCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1615,23 +1377,6 @@ public sealed record SetVariableValueResult() : EmptyResult;
 internal sealed record StepIntoCommandParameters(bool? BreakOnAsyncCall, ImmutableArray<LocationRange>? SkipList) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.StepIntoAsync"/>.
-/// </summary>
-public sealed record StepIntoCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Debugger will pause on the execution of the first async task which was scheduled
-    /// before next pause.
-    /// </summary>
-    public bool? BreakOnAsyncCall { get; init; }
-
-    /// <summary>
-    /// The skipList specifies location ranges that should be skipped on step into.
-    /// </summary>
-    public ImmutableArray<LocationRange>? SkipList { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record StepIntoResult() : EmptyResult;
 
@@ -1639,29 +1384,11 @@ public sealed record StepIntoResult() : EmptyResult;
 internal sealed record StepOutCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.StepOutAsync"/>.
-/// </summary>
-public sealed record StepOutCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record StepOutResult() : EmptyResult;
 
 
 internal sealed record StepOverCommandParameters(ImmutableArray<LocationRange>? SkipList) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DebuggerDomain.StepOverAsync"/>.
-/// </summary>
-public sealed record StepOverCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The skipList specifies location ranges that should be skipped on step over.
-    /// </summary>
-    public ImmutableArray<LocationRange>? SkipList { get; init; }
-}
 
 /// <summary>
 /// </summary>

@@ -16,8 +16,8 @@ public sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Retrieves ad metrics for the current page.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetAdMetricsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,23 +25,16 @@ public sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAdMetricsResult"/>.
     /// </returns>
-    public async Task<GetAdMetricsResult> GetAdMetricsAsync(GetAdMetricsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdMetricsCommandParameters();
-        return await ExecuteCommandAsync(GetAdMetricsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetAdMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetAdMetricsCommandParameters, GetAdMetricsResult> GetAdMetricsCommand = new("Ads.getAdMetrics", JsonContext.GetAdMetricsCommandParameters, JsonContext.GetAdMetricsResult);
 
 }
 
 internal sealed record GetAdMetricsCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AdsDomain.GetAdMetricsAsync"/>.
-/// </summary>
-public sealed record GetAdMetricsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

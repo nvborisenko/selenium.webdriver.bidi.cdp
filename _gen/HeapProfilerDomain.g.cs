@@ -19,8 +19,8 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <param name="heapObjectId">
     /// Heap snapshot object id to be accessible by means of $x command line API.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AddInspectedHeapObjectCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -28,17 +28,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddInspectedHeapObjectResult"/>.
     /// </returns>
-    public async Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, AddInspectedHeapObjectCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddInspectedHeapObjectCommandParameters(HeapObjectId: heapObjectId);
-        return await ExecuteCommandAsync(AddInspectedHeapObjectCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(AddInspectedHeapObjectCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AddInspectedHeapObjectCommandParameters, AddInspectedHeapObjectResult> AddInspectedHeapObjectCommand = new("HeapProfiler.addInspectedHeapObject", JsonContext.AddInspectedHeapObjectCommandParameters, JsonContext.AddInspectedHeapObjectResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CollectGarbageCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -46,17 +46,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CollectGarbageResult"/>.
     /// </returns>
-    public async Task<CollectGarbageResult> CollectGarbageAsync(CollectGarbageCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CollectGarbageResult> CollectGarbageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectGarbageCommandParameters();
-        return await ExecuteCommandAsync(CollectGarbageCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CollectGarbageCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CollectGarbageCommandParameters, CollectGarbageResult> CollectGarbageCommand = new("HeapProfiler.collectGarbage", JsonContext.CollectGarbageCommandParameters, JsonContext.CollectGarbageResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -64,17 +64,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("HeapProfiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -82,10 +82,10 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("HeapProfiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -94,8 +94,8 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <param name="objectId">
     /// Identifier of the object to get heap object id for.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetHeapObjectIdCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -103,25 +103,28 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetHeapObjectIdResult"/>.
     /// </returns>
-    public async Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, GetHeapObjectIdCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHeapObjectIdCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(GetHeapObjectIdCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetHeapObjectIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetHeapObjectIdCommandParameters, GetHeapObjectIdResult> GetHeapObjectIdCommand = new("HeapProfiler.getHeapObjectId", JsonContext.GetHeapObjectIdCommandParameters, JsonContext.GetHeapObjectIdResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release multiple objects.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="objectId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetObjectByHeapObjectIdCommandOptions"/>.
+    /// <param name="objectGroup">
+    /// Symbolic group name that can be used to release multiple objects.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -129,17 +132,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetObjectByHeapObjectIdResult"/>.
     /// </returns>
-    public async Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, GetObjectByHeapObjectIdCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetObjectByHeapObjectIdCommandParameters(ObjectId: objectId, ObjectGroup: options?.ObjectGroup);
-        return await ExecuteCommandAsync(GetObjectByHeapObjectIdCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetObjectByHeapObjectIdCommandParameters(ObjectId: objectId, ObjectGroup: objectGroup);
+        return await ExecuteCommandAsync(GetObjectByHeapObjectIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetObjectByHeapObjectIdCommandParameters, GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdCommand = new("HeapProfiler.getObjectByHeapObjectId", JsonContext.GetObjectByHeapObjectIdCommandParameters, JsonContext.GetObjectByHeapObjectIdResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetSamplingProfileCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -147,17 +150,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSamplingProfileResult"/>.
     /// </returns>
-    public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(GetSamplingProfileCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSamplingProfileCommandParameters();
-        return await ExecuteCommandAsync(GetSamplingProfileCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetSamplingProfileCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetSamplingProfileCommandParameters, GetSamplingProfileResult> GetSamplingProfileCommand = new("HeapProfiler.getSamplingProfile", JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>SamplingInterval</b> - Average sample interval in bytes. Poisson distribution is used for the intervals. The default value is 32768 bytes.</description></item>
     /// <item><description><b>StackDepth</b> - Maximum stack depth. The default value is 128.</description></item>
@@ -165,8 +168,33 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <item><description><b>IncludeObjectsCollectedByMinorGC</b> - By default, the sampling heap profiler reports only objects which are still alive when the profile is returned via getSamplingProfile or stopSampling, which is useful for determining what functions contribute the most to steady-state memory usage. This flag instructs the sampling heap profiler to also include information about objects discarded by minor GC, which is useful when tuning a latency-sensitive application for minimal GC activity.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartSamplingCommandOptions"/>.
+    /// <param name="samplingInterval">
+    /// Average sample interval in bytes. Poisson distribution is used for the intervals. The
+    /// default value is 32768 bytes.
+    /// </param>
+    /// <param name="stackDepth">
+    /// Maximum stack depth. The default value is 128.
+    /// </param>
+    /// <param name="includeObjectsCollectedByMajorGC">
+    /// By default, the sampling heap profiler reports only objects which are
+    /// still alive when the profile is returned via getSamplingProfile or
+    /// stopSampling, which is useful for determining what functions contribute
+    /// the most to steady-state memory usage. This flag instructs the sampling
+    /// heap profiler to also include information about objects discarded by
+    /// major GC, which will show which functions cause large temporary memory
+    /// usage or long GC pauses.
+    /// </param>
+    /// <param name="includeObjectsCollectedByMinorGC">
+    /// By default, the sampling heap profiler reports only objects which are
+    /// still alive when the profile is returned via getSamplingProfile or
+    /// stopSampling, which is useful for determining what functions contribute
+    /// the most to steady-state memory usage. This flag instructs the sampling
+    /// heap profiler to also include information about objects discarded by
+    /// minor GC, which is useful when tuning a latency-sensitive application
+    /// for minimal GC activity.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -174,23 +202,25 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartSamplingResult"/>.
     /// </returns>
-    public async Task<StartSamplingResult> StartSamplingAsync(StartSamplingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartSamplingResult> StartSamplingAsync(double? samplingInterval = default, double? stackDepth = default, bool? includeObjectsCollectedByMajorGC = default, bool? includeObjectsCollectedByMinorGC = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StartSamplingCommandParameters(SamplingInterval: options?.SamplingInterval, StackDepth: options?.StackDepth, IncludeObjectsCollectedByMajorGC: options?.IncludeObjectsCollectedByMajorGC, IncludeObjectsCollectedByMinorGC: options?.IncludeObjectsCollectedByMinorGC);
-        return await ExecuteCommandAsync(StartSamplingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, StackDepth: stackDepth, IncludeObjectsCollectedByMajorGC: includeObjectsCollectedByMajorGC, IncludeObjectsCollectedByMinorGC: includeObjectsCollectedByMinorGC);
+        return await ExecuteCommandAsync(StartSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartSamplingCommandParameters, StartSamplingResult> StartSamplingCommand = new("HeapProfiler.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>TrackAllocations</b></description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartTrackingHeapObjectsCommandOptions"/>.
+    /// <param name="trackAllocations">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -198,17 +228,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartTrackingHeapObjectsResult"/>.
     /// </returns>
-    public async Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(StartTrackingHeapObjectsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(bool? trackAllocations = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StartTrackingHeapObjectsCommandParameters(TrackAllocations: options?.TrackAllocations);
-        return await ExecuteCommandAsync(StartTrackingHeapObjectsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new StartTrackingHeapObjectsCommandParameters(TrackAllocations: trackAllocations);
+        return await ExecuteCommandAsync(StartTrackingHeapObjectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartTrackingHeapObjectsCommandParameters, StartTrackingHeapObjectsResult> StartTrackingHeapObjectsCommand = new("HeapProfiler.startTrackingHeapObjects", JsonContext.StartTrackingHeapObjectsCommandParameters, JsonContext.StartTrackingHeapObjectsResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StopSamplingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -216,17 +246,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopSamplingResult"/>.
     /// </returns>
-    public async Task<StopSamplingResult> StopSamplingAsync(StopSamplingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopSamplingCommandParameters();
-        return await ExecuteCommandAsync(StopSamplingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StopSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StopSamplingCommandParameters, StopSamplingResult> StopSamplingCommand = new("HeapProfiler.stopSampling", JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ReportProgress</b> - If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken when the tracking is stopped.</description></item>
     /// <item><description><b>TreatGlobalObjectsAsRoots</b> - Deprecated in favor of <b>exposeInternals</b>.</description></item>
@@ -234,8 +264,21 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <item><description><b>ExposeInternals</b> - If true, exposes internals of the snapshot.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StopTrackingHeapObjectsCommandOptions"/>.
+    /// <param name="reportProgress">
+    /// If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
+    /// when the tracking is stopped.
+    /// </param>
+    /// <param name="treatGlobalObjectsAsRoots">
+    /// Deprecated in favor of <b>exposeInternals</b>.
+    /// </param>
+    /// <param name="captureNumericValue">
+    /// If true, numerical values are included in the snapshot
+    /// </param>
+    /// <param name="exposeInternals">
+    /// If true, exposes internals of the snapshot.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -243,17 +286,17 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopTrackingHeapObjectsResult"/>.
     /// </returns>
-    public async Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(StopTrackingHeapObjectsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StopTrackingHeapObjectsCommandParameters(ReportProgress: options?.ReportProgress, TreatGlobalObjectsAsRoots: options?.TreatGlobalObjectsAsRoots, CaptureNumericValue: options?.CaptureNumericValue, ExposeInternals: options?.ExposeInternals);
-        return await ExecuteCommandAsync(StopTrackingHeapObjectsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new StopTrackingHeapObjectsCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
+        return await ExecuteCommandAsync(StopTrackingHeapObjectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StopTrackingHeapObjectsCommandParameters, StopTrackingHeapObjectsResult> StopTrackingHeapObjectsCommand = new("HeapProfiler.stopTrackingHeapObjects", JsonContext.StopTrackingHeapObjectsCommandParameters, JsonContext.StopTrackingHeapObjectsResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ReportProgress</b> - If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken.</description></item>
     /// <item><description><b>TreatGlobalObjectsAsRoots</b> - If true, a raw snapshot without artificial roots will be generated. Deprecated in favor of <b>exposeInternals</b>.</description></item>
@@ -261,8 +304,21 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <item><description><b>ExposeInternals</b> - If true, exposes internals of the snapshot.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TakeHeapSnapshotCommandOptions"/>.
+    /// <param name="reportProgress">
+    /// If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken.
+    /// </param>
+    /// <param name="treatGlobalObjectsAsRoots">
+    /// If true, a raw snapshot without artificial roots will be generated.
+    /// Deprecated in favor of <b>exposeInternals</b>.
+    /// </param>
+    /// <param name="captureNumericValue">
+    /// If true, numerical values are included in the snapshot
+    /// </param>
+    /// <param name="exposeInternals">
+    /// If true, exposes internals of the snapshot.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -270,10 +326,10 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeHeapSnapshotResult"/>.
     /// </returns>
-    public async Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(TakeHeapSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new TakeHeapSnapshotCommandParameters(ReportProgress: options?.ReportProgress, TreatGlobalObjectsAsRoots: options?.TreatGlobalObjectsAsRoots, CaptureNumericValue: options?.CaptureNumericValue, ExposeInternals: options?.ExposeInternals);
-        return await ExecuteCommandAsync(TakeHeapSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new TakeHeapSnapshotCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
+        return await ExecuteCommandAsync(TakeHeapSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TakeHeapSnapshotCommandParameters, TakeHeapSnapshotResult> TakeHeapSnapshotCommand = new("HeapProfiler.takeHeapSnapshot", JsonContext.TakeHeapSnapshotCommandParameters, JsonContext.TakeHeapSnapshotResult);
 
@@ -331,25 +387,11 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
 internal sealed record AddInspectedHeapObjectCommandParameters(HeapSnapshotObjectId HeapObjectId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.AddInspectedHeapObjectAsync"/>.
-/// </summary>
-public sealed record AddInspectedHeapObjectCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record AddInspectedHeapObjectResult() : EmptyResult;
 
 
 internal sealed record CollectGarbageCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.CollectGarbageAsync"/>.
-/// </summary>
-public sealed record CollectGarbageCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -359,13 +401,6 @@ public sealed record CollectGarbageResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -373,25 +408,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record GetHeapObjectIdCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.GetHeapObjectIdAsync"/>.
-/// </summary>
-public sealed record GetHeapObjectIdCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -404,17 +425,6 @@ public sealed record GetHeapObjectIdResult(HeapSnapshotObjectId HeapSnapshotObje
 internal sealed record GetObjectByHeapObjectIdCommandParameters(HeapSnapshotObjectId ObjectId, string? ObjectGroup) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.GetObjectByHeapObjectIdAsync"/>.
-/// </summary>
-public sealed record GetObjectByHeapObjectIdCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Symbolic group name that can be used to release multiple objects.
-    /// </summary>
-    public string? ObjectGroup { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Result">
 /// Evaluation result.
@@ -423,13 +433,6 @@ public sealed record GetObjectByHeapObjectIdResult(Runtime.RemoteObject Result) 
 
 
 internal sealed record GetSamplingProfileCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.GetSamplingProfileAsync"/>.
-/// </summary>
-public sealed record GetSamplingProfileCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -442,45 +445,6 @@ public sealed record GetSamplingProfileResult(SamplingHeapProfile Profile) : Emp
 internal sealed record StartSamplingCommandParameters(double? SamplingInterval, double? StackDepth, bool? IncludeObjectsCollectedByMajorGC, bool? IncludeObjectsCollectedByMinorGC) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.StartSamplingAsync"/>.
-/// </summary>
-public sealed record StartSamplingCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Average sample interval in bytes. Poisson distribution is used for the intervals. The
-    /// default value is 32768 bytes.
-    /// </summary>
-    public double? SamplingInterval { get; init; }
-
-    /// <summary>
-    /// Maximum stack depth. The default value is 128.
-    /// </summary>
-    public double? StackDepth { get; init; }
-
-    /// <summary>
-    /// By default, the sampling heap profiler reports only objects which are
-    /// still alive when the profile is returned via getSamplingProfile or
-    /// stopSampling, which is useful for determining what functions contribute
-    /// the most to steady-state memory usage. This flag instructs the sampling
-    /// heap profiler to also include information about objects discarded by
-    /// major GC, which will show which functions cause large temporary memory
-    /// usage or long GC pauses.
-    /// </summary>
-    public bool? IncludeObjectsCollectedByMajorGC { get; init; }
-
-    /// <summary>
-    /// By default, the sampling heap profiler reports only objects which are
-    /// still alive when the profile is returned via getSamplingProfile or
-    /// stopSampling, which is useful for determining what functions contribute
-    /// the most to steady-state memory usage. This flag instructs the sampling
-    /// heap profiler to also include information about objects discarded by
-    /// minor GC, which is useful when tuning a latency-sensitive application
-    /// for minimal GC activity.
-    /// </summary>
-    public bool? IncludeObjectsCollectedByMinorGC { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record StartSamplingResult() : EmptyResult;
 
@@ -488,28 +452,11 @@ public sealed record StartSamplingResult() : EmptyResult;
 internal sealed record StartTrackingHeapObjectsCommandParameters(bool? TrackAllocations) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.StartTrackingHeapObjectsAsync"/>.
-/// </summary>
-public sealed record StartTrackingHeapObjectsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public bool? TrackAllocations { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record StartTrackingHeapObjectsResult() : EmptyResult;
 
 
 internal sealed record StopSamplingCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.StopSamplingAsync"/>.
-/// </summary>
-public sealed record StopSamplingCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -522,67 +469,11 @@ public sealed record StopSamplingResult(SamplingHeapProfile Profile) : EmptyResu
 internal sealed record StopTrackingHeapObjectsCommandParameters(bool? ReportProgress, bool? TreatGlobalObjectsAsRoots, bool? CaptureNumericValue, bool? ExposeInternals) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.StopTrackingHeapObjectsAsync"/>.
-/// </summary>
-public sealed record StopTrackingHeapObjectsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
-    /// when the tracking is stopped.
-    /// </summary>
-    public bool? ReportProgress { get; init; }
-
-    /// <summary>
-    /// Deprecated in favor of <b>exposeInternals</b>.
-    /// </summary>
-    [global::System.Obsolete]
-    public bool? TreatGlobalObjectsAsRoots { get; init; }
-
-    /// <summary>
-    /// If true, numerical values are included in the snapshot
-    /// </summary>
-    public bool? CaptureNumericValue { get; init; }
-
-    /// <summary>
-    /// If true, exposes internals of the snapshot.
-    /// </summary>
-    public bool? ExposeInternals { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record StopTrackingHeapObjectsResult() : EmptyResult;
 
 
 internal sealed record TakeHeapSnapshotCommandParameters(bool? ReportProgress, bool? TreatGlobalObjectsAsRoots, bool? CaptureNumericValue, bool? ExposeInternals) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="HeapProfilerDomain.TakeHeapSnapshotAsync"/>.
-/// </summary>
-public sealed record TakeHeapSnapshotCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken.
-    /// </summary>
-    public bool? ReportProgress { get; init; }
-
-    /// <summary>
-    /// If true, a raw snapshot without artificial roots will be generated.
-    /// Deprecated in favor of <b>exposeInternals</b>.
-    /// </summary>
-    [global::System.Obsolete]
-    public bool? TreatGlobalObjectsAsRoots { get; init; }
-
-    /// <summary>
-    /// If true, numerical values are included in the snapshot
-    /// </summary>
-    public bool? CaptureNumericValue { get; init; }
-
-    /// <summary>
-    /// If true, exposes internals of the snapshot.
-    /// </summary>
-    public bool? ExposeInternals { get; init; }
-}
 
 /// <summary>
 /// </summary>

@@ -20,7 +20,7 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// https://goo.gle/chrome-headless-rendering for more background.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>FrameTimeTicks</b> - Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set, the current time will be used.</description></item>
     /// <item><description><b>Interval</b> - The interval between BeginFrames that is reported to the compositor, in milliseconds. Defaults to a 60 frames/second interval, i.e. about 16.666 milliseconds.</description></item>
@@ -28,8 +28,26 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// <item><description><b>Screenshot</b> - If set, a screenshot of the frame will be captured and returned in the response. Otherwise, no screenshot will be captured. Note that capturing a screenshot can fail, for example, during renderer initialization. In such a case, no screenshot data will be returned.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="BeginFrameCommandOptions"/>.
+    /// <param name="frameTimeTicks">
+    /// Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set,
+    /// the current time will be used.
+    /// </param>
+    /// <param name="interval">
+    /// The interval between BeginFrames that is reported to the compositor, in milliseconds.
+    /// Defaults to a 60 frames/second interval, i.e. about 16.666 milliseconds.
+    /// </param>
+    /// <param name="noDisplayUpdates">
+    /// Whether updates should not be committed and drawn onto the display. False by default. If
+    /// true, only side effects of the BeginFrame will be run, such as layout and animations, but
+    /// any visual updates may not be visible on the display or in screenshots.
+    /// </param>
+    /// <param name="screenshot">
+    /// If set, a screenshot of the frame will be captured and returned in the response. Otherwise,
+    /// no screenshot will be captured. Note that capturing a screenshot can fail, for example,
+    /// during renderer initialization. In such a case, no screenshot data will be returned.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -37,18 +55,18 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BeginFrameResult"/>.
     /// </returns>
-    public async Task<BeginFrameResult> BeginFrameAsync(BeginFrameCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = default, double? interval = default, bool? noDisplayUpdates = default, ScreenshotParams? screenshot = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new BeginFrameCommandParameters(FrameTimeTicks: options?.FrameTimeTicks, Interval: options?.Interval, NoDisplayUpdates: options?.NoDisplayUpdates, Screenshot: options?.Screenshot);
-        return await ExecuteCommandAsync(BeginFrameCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new BeginFrameCommandParameters(FrameTimeTicks: frameTimeTicks, Interval: interval, NoDisplayUpdates: noDisplayUpdates, Screenshot: screenshot);
+        return await ExecuteCommandAsync(BeginFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<BeginFrameCommandParameters, BeginFrameResult> BeginFrameCommand = new("HeadlessExperimental.beginFrame", JsonContext.BeginFrameCommandParameters, JsonContext.BeginFrameResult);
 
     /// <summary>
     /// Disables headless events for the target.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -57,18 +75,18 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("HeadlessExperimental.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables headless events for the target.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -77,48 +95,16 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("HeadlessExperimental.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
 }
 
 internal sealed record BeginFrameCommandParameters(double? FrameTimeTicks, double? Interval, bool? NoDisplayUpdates, ScreenshotParams? Screenshot) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="HeadlessExperimentalDomain.BeginFrameAsync"/>.
-/// </summary>
-public sealed record BeginFrameCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set,
-    /// the current time will be used.
-    /// </summary>
-    public double? FrameTimeTicks { get; init; }
-
-    /// <summary>
-    /// The interval between BeginFrames that is reported to the compositor, in milliseconds.
-    /// Defaults to a 60 frames/second interval, i.e. about 16.666 milliseconds.
-    /// </summary>
-    public double? Interval { get; init; }
-
-    /// <summary>
-    /// Whether updates should not be committed and drawn onto the display. False by default. If
-    /// true, only side effects of the BeginFrame will be run, such as layout and animations, but
-    /// any visual updates may not be visible on the display or in screenshots.
-    /// </summary>
-    public bool? NoDisplayUpdates { get; init; }
-
-    /// <summary>
-    /// If set, a screenshot of the frame will be captured and returned in the response. Otherwise,
-    /// no screenshot will be captured. Note that capturing a screenshot can fail, for example,
-    /// during renderer initialization. In such a case, no screenshot data will be returned.
-    /// </summary>
-    public ScreenshotParams? Screenshot { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -135,25 +121,11 @@ public sealed record BeginFrameResult(bool HasDamage, string? ScreenshotData) : 
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="HeadlessExperimentalDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="HeadlessExperimentalDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

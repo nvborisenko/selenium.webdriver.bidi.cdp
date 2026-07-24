@@ -15,8 +15,8 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <summary>
     /// Disables the accessibility domain.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -24,10 +24,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Accessibility.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -35,8 +35,8 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Enables the accessibility domain which causes <b>AXNodeId</b>s to remain consistent between method calls.
     /// This turns on accessibility for the page, which can impact performance until accessibility is disabled.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -44,10 +44,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Accessibility.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -55,7 +55,7 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Fetches the accessibility node and partial accessibility tree for this DOM node, if it exists.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeId</b> - Identifier of the node to get the partial accessibility tree for.</description></item>
     /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to get the partial accessibility tree for.</description></item>
@@ -63,8 +63,20 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <item><description><b>FetchRelatives</b> - Whether to fetch this node's ancestors, siblings and children. Defaults to true.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetPartialAXTreeCommandOptions"/>.
+    /// <param name="nodeId">
+    /// Identifier of the node to get the partial accessibility tree for.
+    /// </param>
+    /// <param name="backendNodeId">
+    /// Identifier of the backend node to get the partial accessibility tree for.
+    /// </param>
+    /// <param name="objectId">
+    /// JavaScript object id of the node wrapper to get the partial accessibility tree for.
+    /// </param>
+    /// <param name="fetchRelatives">
+    /// Whether to fetch this node's ancestors, siblings and children. Defaults to true.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -72,10 +84,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPartialAXTreeResult"/>.
     /// </returns>
-    public async Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(GetPartialAXTreeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? fetchRelatives = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetPartialAXTreeCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId, FetchRelatives: options?.FetchRelatives);
-        return await ExecuteCommandAsync(GetPartialAXTreeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetPartialAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, FetchRelatives: fetchRelatives);
+        return await ExecuteCommandAsync(GetPartialAXTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetPartialAXTreeCommandParameters, GetPartialAXTreeResult> GetPartialAXTreeCommand = new("Accessibility.getPartialAXTree", JsonContext.GetPartialAXTreeCommandParameters, JsonContext.GetPartialAXTreeResult);
 
@@ -83,14 +95,22 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Fetches the entire accessibility tree for the root Document
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Depth</b> - The maximum depth at which descendants of the root node should be retrieved. If omitted, the full tree is returned.</description></item>
     /// <item><description><b>FrameId</b> - The frame for whose document the AX tree should be retrieved. If omitted, the root frame is used.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetFullAXTreeCommandOptions"/>.
+    /// <param name="depth">
+    /// The maximum depth at which descendants of the root node should be retrieved.
+    /// If omitted, the full tree is returned.
+    /// </param>
+    /// <param name="frameId">
+    /// The frame for whose document the AX tree should be retrieved.
+    /// If omitted, the root frame is used.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -98,10 +118,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetFullAXTreeResult"/>.
     /// </returns>
-    public async Task<GetFullAXTreeResult> GetFullAXTreeAsync(GetFullAXTreeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetFullAXTreeResult> GetFullAXTreeAsync(long? depth = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetFullAXTreeCommandParameters(Depth: options?.Depth, FrameId: options?.FrameId);
-        return await ExecuteCommandAsync(GetFullAXTreeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetFullAXTreeCommandParameters(Depth: depth, FrameId: frameId);
+        return await ExecuteCommandAsync(GetFullAXTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetFullAXTreeCommandParameters, GetFullAXTreeResult> GetFullAXTreeCommand = new("Accessibility.getFullAXTree", JsonContext.GetFullAXTreeCommandParameters, JsonContext.GetFullAXTreeResult);
 
@@ -110,13 +130,17 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Requires <b>enable()</b> to have been called previously.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>FrameId</b> - The frame in whose document the node resides. If omitted, the root frame is used.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetRootAXNodeCommandOptions"/>.
+    /// <param name="frameId">
+    /// The frame in whose document the node resides.
+    /// If omitted, the root frame is used.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -124,10 +148,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRootAXNodeResult"/>.
     /// </returns>
-    public async Task<GetRootAXNodeResult> GetRootAXNodeAsync(GetRootAXNodeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetRootAXNodeResult> GetRootAXNodeAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetRootAXNodeCommandParameters(FrameId: options?.FrameId);
-        return await ExecuteCommandAsync(GetRootAXNodeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetRootAXNodeCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetRootAXNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetRootAXNodeCommandParameters, GetRootAXNodeResult> GetRootAXNodeCommand = new("Accessibility.getRootAXNode", JsonContext.GetRootAXNodeCommandParameters, JsonContext.GetRootAXNodeResult);
 
@@ -136,15 +160,24 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Requires <b>enable()</b> to have been called previously.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeId</b> - Identifier of the node to get.</description></item>
     /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to get.</description></item>
     /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper to get.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetAXNodeAndAncestorsCommandOptions"/>.
+    /// <param name="nodeId">
+    /// Identifier of the node to get.
+    /// </param>
+    /// <param name="backendNodeId">
+    /// Identifier of the backend node to get.
+    /// </param>
+    /// <param name="objectId">
+    /// JavaScript object id of the node wrapper to get.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -152,10 +185,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAXNodeAndAncestorsResult"/>.
     /// </returns>
-    public async Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(GetAXNodeAndAncestorsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetAXNodeAndAncestorsCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
-        return await ExecuteCommandAsync(GetAXNodeAndAncestorsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetAXNodeAndAncestorsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
+        return await ExecuteCommandAsync(GetAXNodeAndAncestorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetAXNodeAndAncestorsCommandParameters, GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsCommand = new("Accessibility.getAXNodeAndAncestors", JsonContext.GetAXNodeAndAncestorsCommandParameters, JsonContext.GetAXNodeAndAncestorsResult);
 
@@ -164,15 +197,19 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Requires <b>enable()</b> to have been called previously.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>FrameId</b> - The frame in whose document the node resides. If omitted, the root frame is used.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="id">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetChildAXNodesCommandOptions"/>.
+    /// <param name="frameId">
+    /// The frame in whose document the node resides.
+    /// If omitted, the root frame is used.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -180,10 +217,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetChildAXNodesResult"/>.
     /// </returns>
-    public async Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, GetChildAXNodesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetChildAXNodesCommandParameters(Id: id, FrameId: options?.FrameId);
-        return await ExecuteCommandAsync(GetChildAXNodesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetChildAXNodesCommandParameters(Id: id, FrameId: frameId);
+        return await ExecuteCommandAsync(GetChildAXNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetChildAXNodesCommandParameters, GetChildAXNodesResult> GetChildAXNodesCommand = new("Accessibility.getChildAXNodes", JsonContext.GetChildAXNodesCommandParameters, JsonContext.GetChildAXNodesResult);
 
@@ -195,7 +232,7 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <b>accessibleName</b> or <b>role</b> is specified, it returns all the accessibility nodes in the subtree.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>NodeId</b> - Identifier of the node for the root to query.</description></item>
     /// <item><description><b>BackendNodeId</b> - Identifier of the backend node for the root to query.</description></item>
@@ -204,8 +241,23 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <item><description><b>Role</b> - Find nodes with this computed role.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="QueryAXTreeCommandOptions"/>.
+    /// <param name="nodeId">
+    /// Identifier of the node for the root to query.
+    /// </param>
+    /// <param name="backendNodeId">
+    /// Identifier of the backend node for the root to query.
+    /// </param>
+    /// <param name="objectId">
+    /// JavaScript object id of the node wrapper for the root to query.
+    /// </param>
+    /// <param name="accessibleName">
+    /// Find nodes with this computed name.
+    /// </param>
+    /// <param name="role">
+    /// Find nodes with this computed role.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -213,10 +265,10 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QueryAXTreeResult"/>.
     /// </returns>
-    public async Task<QueryAXTreeResult> QueryAXTreeAsync(QueryAXTreeCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<QueryAXTreeResult> QueryAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? accessibleName = default, string? role = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new QueryAXTreeCommandParameters(NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId, AccessibleName: options?.AccessibleName, Role: options?.Role);
-        return await ExecuteCommandAsync(QueryAXTreeCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new QueryAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, AccessibleName: accessibleName, Role: role);
+        return await ExecuteCommandAsync(QueryAXTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<QueryAXTreeCommandParameters, QueryAXTreeResult> QueryAXTreeCommand = new("Accessibility.queryAXTree", JsonContext.QueryAXTreeCommandParameters, JsonContext.QueryAXTreeResult);
 
@@ -246,13 +298,6 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -260,44 +305,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record GetPartialAXTreeCommandParameters(DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, bool? FetchRelatives) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.GetPartialAXTreeAsync"/>.
-/// </summary>
-public sealed record GetPartialAXTreeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Identifier of the node to get the partial accessibility tree for.
-    /// </summary>
-    public DOM.NodeId? NodeId { get; init; }
-
-    /// <summary>
-    /// Identifier of the backend node to get the partial accessibility tree for.
-    /// </summary>
-    public DOM.BackendNodeId? BackendNodeId { get; init; }
-
-    /// <summary>
-    /// JavaScript object id of the node wrapper to get the partial accessibility tree for.
-    /// </summary>
-    public Runtime.RemoteObjectId? ObjectId { get; init; }
-
-    /// <summary>
-    /// Whether to fetch this node's ancestors, siblings and children. Defaults to true.
-    /// </summary>
-    public bool? FetchRelatives { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -311,24 +323,6 @@ public sealed record GetPartialAXTreeResult(ImmutableArray<AXNode> Nodes) : Empt
 internal sealed record GetFullAXTreeCommandParameters(long? Depth, Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.GetFullAXTreeAsync"/>.
-/// </summary>
-public sealed record GetFullAXTreeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The maximum depth at which descendants of the root node should be retrieved.
-    /// If omitted, the full tree is returned.
-    /// </summary>
-    public long? Depth { get; init; }
-
-    /// <summary>
-    /// The frame for whose document the AX tree should be retrieved.
-    /// If omitted, the root frame is used.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Nodes">
 /// </param>
@@ -336,18 +330,6 @@ public sealed record GetFullAXTreeResult(ImmutableArray<AXNode> Nodes) : EmptyRe
 
 
 internal sealed record GetRootAXNodeCommandParameters(Page.FrameId? FrameId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.GetRootAXNodeAsync"/>.
-/// </summary>
-public sealed record GetRootAXNodeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The frame in whose document the node resides.
-    /// If omitted, the root frame is used.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -359,27 +341,6 @@ public sealed record GetRootAXNodeResult(AXNode Node) : EmptyResult;
 internal sealed record GetAXNodeAndAncestorsCommandParameters(DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.GetAXNodeAndAncestorsAsync"/>.
-/// </summary>
-public sealed record GetAXNodeAndAncestorsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Identifier of the node to get.
-    /// </summary>
-    public DOM.NodeId? NodeId { get; init; }
-
-    /// <summary>
-    /// Identifier of the backend node to get.
-    /// </summary>
-    public DOM.BackendNodeId? BackendNodeId { get; init; }
-
-    /// <summary>
-    /// JavaScript object id of the node wrapper to get.
-    /// </summary>
-    public Runtime.RemoteObjectId? ObjectId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Nodes">
 /// </param>
@@ -389,18 +350,6 @@ public sealed record GetAXNodeAndAncestorsResult(ImmutableArray<AXNode> Nodes) :
 internal sealed record GetChildAXNodesCommandParameters(AXNodeId Id, Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.GetChildAXNodesAsync"/>.
-/// </summary>
-public sealed record GetChildAXNodesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The frame in whose document the node resides.
-    /// If omitted, the root frame is used.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Nodes">
 /// </param>
@@ -408,37 +357,6 @@ public sealed record GetChildAXNodesResult(ImmutableArray<AXNode> Nodes) : Empty
 
 
 internal sealed record QueryAXTreeCommandParameters(DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, string? AccessibleName, string? Role) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AccessibilityDomain.QueryAXTreeAsync"/>.
-/// </summary>
-public sealed record QueryAXTreeCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Identifier of the node for the root to query.
-    /// </summary>
-    public DOM.NodeId? NodeId { get; init; }
-
-    /// <summary>
-    /// Identifier of the backend node for the root to query.
-    /// </summary>
-    public DOM.BackendNodeId? BackendNodeId { get; init; }
-
-    /// <summary>
-    /// JavaScript object id of the node wrapper for the root to query.
-    /// </summary>
-    public Runtime.RemoteObjectId? ObjectId { get; init; }
-
-    /// <summary>
-    /// Find nodes with this computed name.
-    /// </summary>
-    public string? AccessibleName { get; init; }
-
-    /// <summary>
-    /// Find nodes with this computed role.
-    /// </summary>
-    public string? Role { get; init; }
-}
 
 /// <summary>
 /// </summary>

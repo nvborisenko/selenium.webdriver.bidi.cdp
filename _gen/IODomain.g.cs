@@ -18,8 +18,8 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <param name="handle">
     /// Handle of the stream to close.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CloseCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -27,10 +27,10 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseResult"/>.
     /// </returns>
-    public async Task<CloseResult> CloseAsync(StreamHandle handle, CloseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CloseResult> CloseAsync(StreamHandle handle, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CloseCommandParameters(Handle: handle);
-        return await ExecuteCommandAsync(CloseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("IO.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
 
@@ -38,7 +38,7 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// Read a chunk of the stream
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Offset</b> - Seek to the specified offset before reading (if not specified, proceed with offset following the last read). Some types of streams may only support sequential reads.</description></item>
     /// <item><description><b>Size</b> - Maximum number of bytes to read (left upon the agent discretion if not specified).</description></item>
@@ -47,8 +47,15 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <param name="handle">
     /// Handle of the stream to read.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReadCommandOptions"/>.
+    /// <param name="offset">
+    /// Seek to the specified offset before reading (if not specified, proceed with offset
+    /// following the last read). Some types of streams may only support sequential reads.
+    /// </param>
+    /// <param name="size">
+    /// Maximum number of bytes to read (left upon the agent discretion if not specified).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -56,10 +63,10 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReadResult"/>.
     /// </returns>
-    public async Task<ReadResult> ReadAsync(StreamHandle handle, ReadCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = default, long? size = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ReadCommandParameters(Handle: handle, Offset: options?.Offset, Size: options?.Size);
-        return await ExecuteCommandAsync(ReadCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ReadCommandParameters(Handle: handle, Offset: offset, Size: size);
+        return await ExecuteCommandAsync(ReadCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReadCommandParameters, ReadResult> ReadCommand = new("IO.read", JsonContext.ReadCommandParameters, JsonContext.ReadResult);
 
@@ -69,8 +76,8 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <param name="objectId">
     /// Object id of a Blob object wrapper.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ResolveBlobCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -78,10 +85,10 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveBlobResult"/>.
     /// </returns>
-    public async Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, ResolveBlobCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveBlobCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(ResolveBlobCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ResolveBlobCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ResolveBlobCommandParameters, ResolveBlobResult> ResolveBlobCommand = new("IO.resolveBlob", JsonContext.ResolveBlobCommandParameters, JsonContext.ResolveBlobResult);
 
@@ -90,35 +97,11 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
 internal sealed record CloseCommandParameters(StreamHandle Handle) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="IODomain.CloseAsync"/>.
-/// </summary>
-public sealed record CloseCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record CloseResult() : EmptyResult;
 
 
 internal sealed record ReadCommandParameters(StreamHandle Handle, long? Offset, long? Size) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="IODomain.ReadAsync"/>.
-/// </summary>
-public sealed record ReadCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Seek to the specified offset before reading (if not specified, proceed with offset
-    /// following the last read). Some types of streams may only support sequential reads.
-    /// </summary>
-    public long? Offset { get; init; }
-
-    /// <summary>
-    /// Maximum number of bytes to read (left upon the agent discretion if not specified).
-    /// </summary>
-    public long? Size { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -135,13 +118,6 @@ public sealed record ReadResult(bool? Base64Encoded, string Data, bool Eof) : Em
 
 
 internal sealed record ResolveBlobCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="IODomain.ResolveBlobAsync"/>.
-/// </summary>
-public sealed record ResolveBlobCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

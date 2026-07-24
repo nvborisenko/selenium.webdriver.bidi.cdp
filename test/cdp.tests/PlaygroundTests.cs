@@ -28,7 +28,9 @@ public class PlaygroundTests
         await context.NavigateAsync("https://www.example.com");
 
         // Network
-        await cdp.Network.EnableAsync(new() { Session = sessionResult.Session, MaxResourceBufferSize = 999 });
+        await cdp.Network.EnableAsync(
+            maxResourceBufferSize: 999,
+            session: sessionResult.Session);
 
         await using var requestWillBeSentStream = await cdp.Network.RequestWillBeSent.StreamAsync();
 
@@ -42,7 +44,7 @@ public class PlaygroundTests
 
         for (int i = 0; i < 500; i++)
         {
-            await cdp.Network.SetBlockedURLsAsync(new() { UrlPatterns = [new Network.BlockPattern("https://www.example.com/*", Block: true)] });
+            await cdp.Network.SetBlockedURLsAsync(urlPatterns: [new Network.BlockPattern("https://www.example.com/*", Block: true)]);
         }
 
         System.Console.WriteLine($"Took {stopwatch.Elapsed}");

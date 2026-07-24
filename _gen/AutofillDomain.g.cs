@@ -18,7 +18,7 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// If the field and related form cannot be autofilled, returns an error.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>FrameId</b> - Identifies the frame that field belongs to.</description></item>
     /// <item><description><b>Card</b> - Credit card information to fill out the form. Credit card data is not saved.  Mutually exclusive with <b>address</b>.</description></item>
@@ -28,8 +28,17 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="fieldId">
     /// Identifies a field that serves as an anchor for autofill.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TriggerCommandOptions"/>.
+    /// <param name="frameId">
+    /// Identifies the frame that field belongs to.
+    /// </param>
+    /// <param name="card">
+    /// Credit card information to fill out the form. Credit card data is not saved.  Mutually exclusive with <b>address</b>.
+    /// </param>
+    /// <param name="address">
+    /// Address to fill out the form. Address data is not saved. Mutually exclusive with <b>card</b>.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -37,10 +46,10 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TriggerResult"/>.
     /// </returns>
-    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, TriggerCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: options?.FrameId, Card: options?.Card, Address: options?.Address);
-        return await ExecuteCommandAsync(TriggerCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: frameId, Card: card, Address: address);
+        return await ExecuteCommandAsync(TriggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TriggerCommandParameters, TriggerResult> TriggerCommand = new("Autofill.trigger", JsonContext.TriggerCommandParameters, JsonContext.TriggerResult);
 
@@ -49,8 +58,8 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="addresses">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAddressesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -58,18 +67,18 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAddressesResult"/>.
     /// </returns>
-    public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, SetAddressesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAddressesCommandParameters(Addresses: addresses);
-        return await ExecuteCommandAsync(SetAddressesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetAddressesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetAddressesCommandParameters, SetAddressesResult> SetAddressesCommand = new("Autofill.setAddresses", JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult);
 
     /// <summary>
     /// Disables autofill domain notifications.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -77,18 +86,18 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Autofill.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables autofill domain notifications.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -96,10 +105,10 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Autofill.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -119,39 +128,11 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record TriggerCommandParameters(DOM.BackendNodeId FieldId, Page.FrameId? FrameId, CreditCard? Card, Address? Address) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AutofillDomain.TriggerAsync"/>.
-/// </summary>
-public sealed record TriggerCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Identifies the frame that field belongs to.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
-
-    /// <summary>
-    /// Credit card information to fill out the form. Credit card data is not saved.  Mutually exclusive with <b>address</b>.
-    /// </summary>
-    public CreditCard? Card { get; init; }
-
-    /// <summary>
-    /// Address to fill out the form. Address data is not saved. Mutually exclusive with <b>card</b>.
-    /// </summary>
-    public Address? Address { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record TriggerResult() : EmptyResult;
 
 
 internal sealed record SetAddressesCommandParameters(ImmutableArray<Address> Addresses) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AutofillDomain.SetAddressesAsync"/>.
-/// </summary>
-public sealed record SetAddressesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -161,25 +142,11 @@ public sealed record SetAddressesResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AutofillDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AutofillDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

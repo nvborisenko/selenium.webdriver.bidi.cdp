@@ -23,8 +23,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <param name="leSupported">
     /// If the simulated central supports low-energy.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -32,10 +32,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(CentralState state, bool leSupported, EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(CentralState state, bool leSupported, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(State: state, LeSupported: leSupported);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("BluetoothEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -45,8 +45,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <param name="state">
     /// State of the simulated central.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetSimulatedCentralStateCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -54,18 +54,18 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSimulatedCentralStateResult"/>.
     /// </returns>
-    public async Task<SetSimulatedCentralStateResult> SetSimulatedCentralStateAsync(CentralState state, SetSimulatedCentralStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetSimulatedCentralStateResult> SetSimulatedCentralStateAsync(CentralState state, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSimulatedCentralStateCommandParameters(State: state);
-        return await ExecuteCommandAsync(SetSimulatedCentralStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetSimulatedCentralStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetSimulatedCentralStateCommandParameters, SetSimulatedCentralStateResult> SetSimulatedCentralStateCommand = new("BluetoothEmulation.setSimulatedCentralState", JsonContext.SetSimulatedCentralStateCommandParameters, JsonContext.SetSimulatedCentralStateResult);
 
     /// <summary>
     /// Disable the BluetoothEmulation domain.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -73,10 +73,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("BluetoothEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -92,8 +92,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="knownServiceUuids">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SimulatePreconnectedPeripheralCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -101,10 +101,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulatePreconnectedPeripheralResult"/>.
     /// </returns>
-    public async Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, SimulatePreconnectedPeripheralCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulatePreconnectedPeripheralCommandParameters(Address: address, Name: name, ManufacturerData: manufacturerData, KnownServiceUuids: knownServiceUuids);
-        return await ExecuteCommandAsync(SimulatePreconnectedPeripheralCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SimulatePreconnectedPeripheralCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SimulatePreconnectedPeripheralCommandParameters, SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralCommand = new("BluetoothEmulation.simulatePreconnectedPeripheral", JsonContext.SimulatePreconnectedPeripheralCommandParameters, JsonContext.SimulatePreconnectedPeripheralResult);
 
@@ -114,8 +114,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </summary>
     /// <param name="entry">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SimulateAdvertisementCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -123,10 +123,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateAdvertisementResult"/>.
     /// </returns>
-    public async Task<SimulateAdvertisementResult> SimulateAdvertisementAsync(ScanEntry entry, SimulateAdvertisementCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateAdvertisementResult> SimulateAdvertisementAsync(ScanEntry entry, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateAdvertisementCommandParameters(Entry: entry);
-        return await ExecuteCommandAsync(SimulateAdvertisementCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SimulateAdvertisementCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SimulateAdvertisementCommandParameters, SimulateAdvertisementResult> SimulateAdvertisementCommand = new("BluetoothEmulation.simulateAdvertisement", JsonContext.SimulateAdvertisementCommandParameters, JsonContext.SimulateAdvertisementResult);
 
@@ -141,8 +141,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="code">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SimulateGATTOperationResponseCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -150,10 +150,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateGATTOperationResponseResult"/>.
     /// </returns>
-    public async Task<SimulateGATTOperationResponseResult> SimulateGATTOperationResponseAsync(string address, GATTOperationType type, long code, SimulateGATTOperationResponseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateGATTOperationResponseResult> SimulateGATTOperationResponseAsync(string address, GATTOperationType type, long code, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateGATTOperationResponseCommandParameters(Address: address, Type: type, Code: code);
-        return await ExecuteCommandAsync(SimulateGATTOperationResponseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SimulateGATTOperationResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SimulateGATTOperationResponseCommandParameters, SimulateGATTOperationResponseResult> SimulateGATTOperationResponseCommand = new("BluetoothEmulation.simulateGATTOperationResponse", JsonContext.SimulateGATTOperationResponseCommandParameters, JsonContext.SimulateGATTOperationResponseResult);
 
@@ -165,7 +165,7 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// response.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Data</b></description></item>
     /// </list>
@@ -176,8 +176,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="code">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SimulateCharacteristicOperationResponseCommandOptions"/>.
+    /// <param name="data">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -185,10 +187,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateCharacteristicOperationResponseResult"/>.
     /// </returns>
-    public async Task<SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseAsync(string characteristicId, CharacteristicOperationType type, long code, SimulateCharacteristicOperationResponseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseAsync(string characteristicId, CharacteristicOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SimulateCharacteristicOperationResponseCommandParameters(CharacteristicId: characteristicId, Type: type, Code: code, Data: options?.Data);
-        return await ExecuteCommandAsync(SimulateCharacteristicOperationResponseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SimulateCharacteristicOperationResponseCommandParameters(CharacteristicId: characteristicId, Type: type, Code: code, Data: data);
+        return await ExecuteCommandAsync(SimulateCharacteristicOperationResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SimulateCharacteristicOperationResponseCommandParameters, SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseCommand = new("BluetoothEmulation.simulateCharacteristicOperationResponse", JsonContext.SimulateCharacteristicOperationResponseCommandParameters, JsonContext.SimulateCharacteristicOperationResponseResult);
 
@@ -200,7 +202,7 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// response.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Data</b></description></item>
     /// </list>
@@ -211,8 +213,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="code">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SimulateDescriptorOperationResponseCommandOptions"/>.
+    /// <param name="data">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -220,10 +224,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateDescriptorOperationResponseResult"/>.
     /// </returns>
-    public async Task<SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseAsync(string descriptorId, DescriptorOperationType type, long code, SimulateDescriptorOperationResponseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseAsync(string descriptorId, DescriptorOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SimulateDescriptorOperationResponseCommandParameters(DescriptorId: descriptorId, Type: type, Code: code, Data: options?.Data);
-        return await ExecuteCommandAsync(SimulateDescriptorOperationResponseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SimulateDescriptorOperationResponseCommandParameters(DescriptorId: descriptorId, Type: type, Code: code, Data: data);
+        return await ExecuteCommandAsync(SimulateDescriptorOperationResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SimulateDescriptorOperationResponseCommandParameters, SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseCommand = new("BluetoothEmulation.simulateDescriptorOperationResponse", JsonContext.SimulateDescriptorOperationResponseCommandParameters, JsonContext.SimulateDescriptorOperationResponseResult);
 
@@ -234,8 +238,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="serviceUuid">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AddServiceCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -243,10 +247,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddServiceResult"/>.
     /// </returns>
-    public async Task<AddServiceResult> AddServiceAsync(string address, string serviceUuid, AddServiceCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AddServiceResult> AddServiceAsync(string address, string serviceUuid, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddServiceCommandParameters(Address: address, ServiceUuid: serviceUuid);
-        return await ExecuteCommandAsync(AddServiceCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(AddServiceCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AddServiceCommandParameters, AddServiceResult> AddServiceCommand = new("BluetoothEmulation.addService", JsonContext.AddServiceCommandParameters, JsonContext.AddServiceResult);
 
@@ -255,8 +259,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </summary>
     /// <param name="serviceId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveServiceCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -264,10 +268,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveServiceResult"/>.
     /// </returns>
-    public async Task<RemoveServiceResult> RemoveServiceAsync(string serviceId, RemoveServiceCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveServiceResult> RemoveServiceAsync(string serviceId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveServiceCommandParameters(ServiceId: serviceId);
-        return await ExecuteCommandAsync(RemoveServiceCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveServiceCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveServiceCommandParameters, RemoveServiceResult> RemoveServiceCommand = new("BluetoothEmulation.removeService", JsonContext.RemoveServiceCommandParameters, JsonContext.RemoveServiceResult);
 
@@ -281,8 +285,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="properties">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AddCharacteristicCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -290,10 +294,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddCharacteristicResult"/>.
     /// </returns>
-    public async Task<AddCharacteristicResult> AddCharacteristicAsync(string serviceId, string characteristicUuid, CharacteristicProperties properties, AddCharacteristicCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AddCharacteristicResult> AddCharacteristicAsync(string serviceId, string characteristicUuid, CharacteristicProperties properties, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddCharacteristicCommandParameters(ServiceId: serviceId, CharacteristicUuid: characteristicUuid, Properties: properties);
-        return await ExecuteCommandAsync(AddCharacteristicCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(AddCharacteristicCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AddCharacteristicCommandParameters, AddCharacteristicResult> AddCharacteristicCommand = new("BluetoothEmulation.addCharacteristic", JsonContext.AddCharacteristicCommandParameters, JsonContext.AddCharacteristicResult);
 
@@ -303,8 +307,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </summary>
     /// <param name="characteristicId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveCharacteristicCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -312,10 +316,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveCharacteristicResult"/>.
     /// </returns>
-    public async Task<RemoveCharacteristicResult> RemoveCharacteristicAsync(string characteristicId, RemoveCharacteristicCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveCharacteristicResult> RemoveCharacteristicAsync(string characteristicId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveCharacteristicCommandParameters(CharacteristicId: characteristicId);
-        return await ExecuteCommandAsync(RemoveCharacteristicCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveCharacteristicCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveCharacteristicCommandParameters, RemoveCharacteristicResult> RemoveCharacteristicCommand = new("BluetoothEmulation.removeCharacteristic", JsonContext.RemoveCharacteristicCommandParameters, JsonContext.RemoveCharacteristicResult);
 
@@ -327,8 +331,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="descriptorUuid">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AddDescriptorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -336,10 +340,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddDescriptorResult"/>.
     /// </returns>
-    public async Task<AddDescriptorResult> AddDescriptorAsync(string characteristicId, string descriptorUuid, AddDescriptorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AddDescriptorResult> AddDescriptorAsync(string characteristicId, string descriptorUuid, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddDescriptorCommandParameters(CharacteristicId: characteristicId, DescriptorUuid: descriptorUuid);
-        return await ExecuteCommandAsync(AddDescriptorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(AddDescriptorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AddDescriptorCommandParameters, AddDescriptorResult> AddDescriptorCommand = new("BluetoothEmulation.addDescriptor", JsonContext.AddDescriptorCommandParameters, JsonContext.AddDescriptorResult);
 
@@ -348,8 +352,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </summary>
     /// <param name="descriptorId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveDescriptorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -357,10 +361,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveDescriptorResult"/>.
     /// </returns>
-    public async Task<RemoveDescriptorResult> RemoveDescriptorAsync(string descriptorId, RemoveDescriptorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveDescriptorResult> RemoveDescriptorAsync(string descriptorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDescriptorCommandParameters(DescriptorId: descriptorId);
-        return await ExecuteCommandAsync(RemoveDescriptorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveDescriptorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveDescriptorCommandParameters, RemoveDescriptorResult> RemoveDescriptorCommand = new("BluetoothEmulation.removeDescriptor", JsonContext.RemoveDescriptorCommandParameters, JsonContext.RemoveDescriptorResult);
 
@@ -369,8 +373,8 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </summary>
     /// <param name="address">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SimulateGATTDisconnectionCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -378,10 +382,10 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateGATTDisconnectionResult"/>.
     /// </returns>
-    public async Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, SimulateGATTDisconnectionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateGATTDisconnectionCommandParameters(Address: address);
-        return await ExecuteCommandAsync(SimulateGATTDisconnectionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SimulateGATTDisconnectionCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SimulateGATTDisconnectionCommandParameters, SimulateGATTDisconnectionResult> SimulateGATTDisconnectionCommand = new("BluetoothEmulation.simulateGATTDisconnection", JsonContext.SimulateGATTDisconnectionCommandParameters, JsonContext.SimulateGATTDisconnectionResult);
 
@@ -431,25 +435,11 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
 internal sealed record EnableCommandParameters(CentralState State, bool LeSupported) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record SetSimulatedCentralStateCommandParameters(CentralState State) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.SetSimulatedCentralStateAsync"/>.
-/// </summary>
-public sealed record SetSimulatedCentralStateCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -459,25 +449,11 @@ public sealed record SetSimulatedCentralStateResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record SimulatePreconnectedPeripheralCommandParameters(string Address, string Name, ImmutableArray<ManufacturerData> ManufacturerData, ImmutableArray<string> KnownServiceUuids) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.SimulatePreconnectedPeripheralAsync"/>.
-/// </summary>
-public sealed record SimulatePreconnectedPeripheralCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -487,25 +463,11 @@ public sealed record SimulatePreconnectedPeripheralResult() : EmptyResult;
 internal sealed record SimulateAdvertisementCommandParameters(ScanEntry Entry) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.SimulateAdvertisementAsync"/>.
-/// </summary>
-public sealed record SimulateAdvertisementCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SimulateAdvertisementResult() : EmptyResult;
 
 
 internal sealed record SimulateGATTOperationResponseCommandParameters(string Address, GATTOperationType Type, long Code) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.SimulateGATTOperationResponseAsync"/>.
-/// </summary>
-public sealed record SimulateGATTOperationResponseCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -515,16 +477,6 @@ public sealed record SimulateGATTOperationResponseResult() : EmptyResult;
 internal sealed record SimulateCharacteristicOperationResponseCommandParameters(string CharacteristicId, CharacteristicOperationType Type, long Code, string? Data) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.SimulateCharacteristicOperationResponseAsync"/>.
-/// </summary>
-public sealed record SimulateCharacteristicOperationResponseCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public string? Data { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SimulateCharacteristicOperationResponseResult() : EmptyResult;
 
@@ -532,28 +484,11 @@ public sealed record SimulateCharacteristicOperationResponseResult() : EmptyResu
 internal sealed record SimulateDescriptorOperationResponseCommandParameters(string DescriptorId, DescriptorOperationType Type, long Code, string? Data) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.SimulateDescriptorOperationResponseAsync"/>.
-/// </summary>
-public sealed record SimulateDescriptorOperationResponseCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public string? Data { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SimulateDescriptorOperationResponseResult() : EmptyResult;
 
 
 internal sealed record AddServiceCommandParameters(string Address, string ServiceUuid) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.AddServiceAsync"/>.
-/// </summary>
-public sealed record AddServiceCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -566,25 +501,11 @@ public sealed record AddServiceResult(string ServiceId) : EmptyResult;
 internal sealed record RemoveServiceCommandParameters(string ServiceId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.RemoveServiceAsync"/>.
-/// </summary>
-public sealed record RemoveServiceCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveServiceResult() : EmptyResult;
 
 
 internal sealed record AddCharacteristicCommandParameters(string ServiceId, string CharacteristicUuid, CharacteristicProperties Properties) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.AddCharacteristicAsync"/>.
-/// </summary>
-public sealed record AddCharacteristicCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -597,25 +518,11 @@ public sealed record AddCharacteristicResult(string CharacteristicId) : EmptyRes
 internal sealed record RemoveCharacteristicCommandParameters(string CharacteristicId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.RemoveCharacteristicAsync"/>.
-/// </summary>
-public sealed record RemoveCharacteristicCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveCharacteristicResult() : EmptyResult;
 
 
 internal sealed record AddDescriptorCommandParameters(string CharacteristicId, string DescriptorUuid) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.AddDescriptorAsync"/>.
-/// </summary>
-public sealed record AddDescriptorCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -628,25 +535,11 @@ public sealed record AddDescriptorResult(string DescriptorId) : EmptyResult;
 internal sealed record RemoveDescriptorCommandParameters(string DescriptorId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.RemoveDescriptorAsync"/>.
-/// </summary>
-public sealed record RemoveDescriptorCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveDescriptorResult() : EmptyResult;
 
 
 internal sealed record SimulateGATTDisconnectionCommandParameters(string Address) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="BluetoothEmulationDomain.SimulateGATTDisconnectionAsync"/>.
-/// </summary>
-public sealed record SimulateGATTDisconnectionCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

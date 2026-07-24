@@ -19,13 +19,20 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// retrieval with a virtual authenticator.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>EnableUI</b> - Whether to enable the WebAuthn user interface. Enabling the UI is recommended for debugging and demo purposes, as it is closer to the real experience. Disabling the UI is recommended for automated testing. Supported at the embedder's discretion if UI is available. Defaults to false.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="enableUI">
+    /// Whether to enable the WebAuthn user interface. Enabling the UI is
+    /// recommended for debugging and demo purposes, as it is closer to the real
+    /// experience. Disabling the UI is recommended for automated testing.
+    /// Supported at the embedder's discretion if UI is available.
+    /// Defaults to false.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -33,18 +40,18 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(bool? enableUI = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EnableCommandParameters(EnableUI: options?.EnableUI);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EnableCommandParameters(EnableUI: enableUI);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("WebAuthn.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     /// <summary>
     /// Disable the WebAuthn domain.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -52,10 +59,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("WebAuthn.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -64,8 +71,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="options">
     /// </param>
-    /// <param name="addVirtualAuthenticatorOptions">
-    /// Optional parameters. See <see cref="AddVirtualAuthenticatorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -73,10 +80,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddVirtualAuthenticatorResult"/>.
     /// </returns>
-    public async Task<AddVirtualAuthenticatorResult> AddVirtualAuthenticatorAsync(VirtualAuthenticatorOptions options, AddVirtualAuthenticatorCommandOptions? addVirtualAuthenticatorOptions = default, CancellationToken cancellationToken = default)
+    public async Task<AddVirtualAuthenticatorResult> AddVirtualAuthenticatorAsync(VirtualAuthenticatorOptions options, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddVirtualAuthenticatorCommandParameters(Options: options);
-        return await ExecuteCommandAsync(AddVirtualAuthenticatorCommand, @params, addVirtualAuthenticatorOptions, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(AddVirtualAuthenticatorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AddVirtualAuthenticatorCommandParameters, AddVirtualAuthenticatorResult> AddVirtualAuthenticatorCommand = new("WebAuthn.addVirtualAuthenticator", JsonContext.AddVirtualAuthenticatorCommandParameters, JsonContext.AddVirtualAuthenticatorResult);
 
@@ -84,7 +91,7 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Resets parameters isBogusSignature, isBadUV, isBadUP to false if they are not present.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>IsBogusSignature</b> - If isBogusSignature is set, overrides the signature in the authenticator response to be zero. Defaults to false.</description></item>
     /// <item><description><b>IsBadUV</b> - If isBadUV is set, overrides the UV bit in the flags in the authenticator response to be zero. Defaults to false.</description></item>
@@ -93,8 +100,20 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </remarks>
     /// <param name="authenticatorId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetResponseOverrideBitsCommandOptions"/>.
+    /// <param name="isBogusSignature">
+    /// If isBogusSignature is set, overrides the signature in the authenticator response to be zero.
+    /// Defaults to false.
+    /// </param>
+    /// <param name="isBadUV">
+    /// If isBadUV is set, overrides the UV bit in the flags in the authenticator response to
+    /// be zero. Defaults to false.
+    /// </param>
+    /// <param name="isBadUP">
+    /// If isBadUP is set, overrides the UP bit in the flags in the authenticator response to
+    /// be zero. Defaults to false.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -102,10 +121,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetResponseOverrideBitsResult"/>.
     /// </returns>
-    public async Task<SetResponseOverrideBitsResult> SetResponseOverrideBitsAsync(AuthenticatorId authenticatorId, SetResponseOverrideBitsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetResponseOverrideBitsResult> SetResponseOverrideBitsAsync(AuthenticatorId authenticatorId, bool? isBogusSignature = default, bool? isBadUV = default, bool? isBadUP = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetResponseOverrideBitsCommandParameters(AuthenticatorId: authenticatorId, IsBogusSignature: options?.IsBogusSignature, IsBadUV: options?.IsBadUV, IsBadUP: options?.IsBadUP);
-        return await ExecuteCommandAsync(SetResponseOverrideBitsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetResponseOverrideBitsCommandParameters(AuthenticatorId: authenticatorId, IsBogusSignature: isBogusSignature, IsBadUV: isBadUV, IsBadUP: isBadUP);
+        return await ExecuteCommandAsync(SetResponseOverrideBitsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetResponseOverrideBitsCommandParameters, SetResponseOverrideBitsResult> SetResponseOverrideBitsCommand = new("WebAuthn.setResponseOverrideBits", JsonContext.SetResponseOverrideBitsCommandParameters, JsonContext.SetResponseOverrideBitsResult);
 
@@ -114,8 +133,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="authenticatorId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveVirtualAuthenticatorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -123,10 +142,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveVirtualAuthenticatorResult"/>.
     /// </returns>
-    public async Task<RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorAsync(AuthenticatorId authenticatorId, RemoveVirtualAuthenticatorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveVirtualAuthenticatorCommandParameters(AuthenticatorId: authenticatorId);
-        return await ExecuteCommandAsync(RemoveVirtualAuthenticatorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveVirtualAuthenticatorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveVirtualAuthenticatorCommandParameters, RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorCommand = new("WebAuthn.removeVirtualAuthenticator", JsonContext.RemoveVirtualAuthenticatorCommandParameters, JsonContext.RemoveVirtualAuthenticatorResult);
 
@@ -137,8 +156,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </param>
     /// <param name="credential">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AddCredentialCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -146,10 +165,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddCredentialResult"/>.
     /// </returns>
-    public async Task<AddCredentialResult> AddCredentialAsync(AuthenticatorId authenticatorId, Credential credential, AddCredentialCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AddCredentialResult> AddCredentialAsync(AuthenticatorId authenticatorId, Credential credential, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddCredentialCommandParameters(AuthenticatorId: authenticatorId, Credential: credential);
-        return await ExecuteCommandAsync(AddCredentialCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(AddCredentialCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AddCredentialCommandParameters, AddCredentialResult> AddCredentialCommand = new("WebAuthn.addCredential", JsonContext.AddCredentialCommandParameters, JsonContext.AddCredentialResult);
 
@@ -161,8 +180,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </param>
     /// <param name="credentialId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetCredentialCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -170,10 +189,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCredentialResult"/>.
     /// </returns>
-    public async Task<GetCredentialResult> GetCredentialAsync(AuthenticatorId authenticatorId, string credentialId, GetCredentialCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetCredentialResult> GetCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCredentialCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId);
-        return await ExecuteCommandAsync(GetCredentialCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetCredentialCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetCredentialCommandParameters, GetCredentialResult> GetCredentialCommand = new("WebAuthn.getCredential", JsonContext.GetCredentialCommandParameters, JsonContext.GetCredentialResult);
 
@@ -182,8 +201,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="authenticatorId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetCredentialsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -191,10 +210,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCredentialsResult"/>.
     /// </returns>
-    public async Task<GetCredentialsResult> GetCredentialsAsync(AuthenticatorId authenticatorId, GetCredentialsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetCredentialsResult> GetCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCredentialsCommandParameters(AuthenticatorId: authenticatorId);
-        return await ExecuteCommandAsync(GetCredentialsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetCredentialsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetCredentialsCommandParameters, GetCredentialsResult> GetCredentialsCommand = new("WebAuthn.getCredentials", JsonContext.GetCredentialsCommandParameters, JsonContext.GetCredentialsResult);
 
@@ -205,8 +224,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </param>
     /// <param name="credentialId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveCredentialCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -214,10 +233,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveCredentialResult"/>.
     /// </returns>
-    public async Task<RemoveCredentialResult> RemoveCredentialAsync(AuthenticatorId authenticatorId, string credentialId, RemoveCredentialCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveCredentialResult> RemoveCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveCredentialCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId);
-        return await ExecuteCommandAsync(RemoveCredentialCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveCredentialCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveCredentialCommandParameters, RemoveCredentialResult> RemoveCredentialCommand = new("WebAuthn.removeCredential", JsonContext.RemoveCredentialCommandParameters, JsonContext.RemoveCredentialResult);
 
@@ -226,8 +245,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </summary>
     /// <param name="authenticatorId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearCredentialsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -235,10 +254,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearCredentialsResult"/>.
     /// </returns>
-    public async Task<ClearCredentialsResult> ClearCredentialsAsync(AuthenticatorId authenticatorId, ClearCredentialsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearCredentialsResult> ClearCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCredentialsCommandParameters(AuthenticatorId: authenticatorId);
-        return await ExecuteCommandAsync(ClearCredentialsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearCredentialsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearCredentialsCommandParameters, ClearCredentialsResult> ClearCredentialsCommand = new("WebAuthn.clearCredentials", JsonContext.ClearCredentialsCommandParameters, JsonContext.ClearCredentialsResult);
 
@@ -250,8 +269,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </param>
     /// <param name="isUserVerified">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetUserVerifiedCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -259,10 +278,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetUserVerifiedResult"/>.
     /// </returns>
-    public async Task<SetUserVerifiedResult> SetUserVerifiedAsync(AuthenticatorId authenticatorId, bool isUserVerified, SetUserVerifiedCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetUserVerifiedResult> SetUserVerifiedAsync(AuthenticatorId authenticatorId, bool isUserVerified, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserVerifiedCommandParameters(AuthenticatorId: authenticatorId, IsUserVerified: isUserVerified);
-        return await ExecuteCommandAsync(SetUserVerifiedCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetUserVerifiedCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetUserVerifiedCommandParameters, SetUserVerifiedResult> SetUserVerifiedCommand = new("WebAuthn.setUserVerified", JsonContext.SetUserVerifiedCommandParameters, JsonContext.SetUserVerifiedResult);
 
@@ -274,8 +293,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </param>
     /// <param name="enabled">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAutomaticPresenceSimulationCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -283,10 +302,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAutomaticPresenceSimulationResult"/>.
     /// </returns>
-    public async Task<SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationAsync(AuthenticatorId authenticatorId, bool enabled, SetAutomaticPresenceSimulationCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationAsync(AuthenticatorId authenticatorId, bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutomaticPresenceSimulationCommandParameters(AuthenticatorId: authenticatorId, Enabled: enabled);
-        return await ExecuteCommandAsync(SetAutomaticPresenceSimulationCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetAutomaticPresenceSimulationCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetAutomaticPresenceSimulationCommandParameters, SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationCommand = new("WebAuthn.setAutomaticPresenceSimulation", JsonContext.SetAutomaticPresenceSimulationCommandParameters, JsonContext.SetAutomaticPresenceSimulationResult);
 
@@ -295,7 +314,7 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>BackupEligibility</b></description></item>
     /// <item><description><b>BackupState</b></description></item>
@@ -307,8 +326,16 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </param>
     /// <param name="credentialId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetCredentialPropertiesCommandOptions"/>.
+    /// <param name="backupEligibility">
+    /// </param>
+    /// <param name="backupState">
+    /// </param>
+    /// <param name="activeCmtgKeyIndex">
+    /// </param>
+    /// <param name="generateCmtgKeyOnNextOperation">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -316,10 +343,10 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCredentialPropertiesResult"/>.
     /// </returns>
-    public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, SetCredentialPropertiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: options?.BackupEligibility, BackupState: options?.BackupState, ActiveCmtgKeyIndex: options?.ActiveCmtgKeyIndex, GenerateCmtgKeyOnNextOperation: options?.GenerateCmtgKeyOnNextOperation);
-        return await ExecuteCommandAsync(SetCredentialPropertiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: backupEligibility, BackupState: backupState, ActiveCmtgKeyIndex: activeCmtgKeyIndex, GenerateCmtgKeyOnNextOperation: generateCmtgKeyOnNextOperation);
+        return await ExecuteCommandAsync(SetCredentialPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCredentialPropertiesCommandParameters, SetCredentialPropertiesResult> SetCredentialPropertiesCommand = new("WebAuthn.setCredentialProperties", JsonContext.SetCredentialPropertiesCommandParameters, JsonContext.SetCredentialPropertiesResult);
 
@@ -374,21 +401,6 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record EnableCommandParameters(bool? EnableUI) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Whether to enable the WebAuthn user interface. Enabling the UI is
-    /// recommended for debugging and demo purposes, as it is closer to the real
-    /// experience. Disabling the UI is recommended for automated testing.
-    /// Supported at the embedder's discretion if UI is available.
-    /// Defaults to false.
-    /// </summary>
-    public bool? EnableUI { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -396,25 +408,11 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record AddVirtualAuthenticatorCommandParameters(VirtualAuthenticatorOptions Options) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.AddVirtualAuthenticatorAsync"/>.
-/// </summary>
-public sealed record AddVirtualAuthenticatorCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -426,42 +424,11 @@ public sealed record AddVirtualAuthenticatorResult(AuthenticatorId Authenticator
 internal sealed record SetResponseOverrideBitsCommandParameters(AuthenticatorId AuthenticatorId, bool? IsBogusSignature, bool? IsBadUV, bool? IsBadUP) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.SetResponseOverrideBitsAsync"/>.
-/// </summary>
-public sealed record SetResponseOverrideBitsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If isBogusSignature is set, overrides the signature in the authenticator response to be zero.
-    /// Defaults to false.
-    /// </summary>
-    public bool? IsBogusSignature { get; init; }
-
-    /// <summary>
-    /// If isBadUV is set, overrides the UV bit in the flags in the authenticator response to
-    /// be zero. Defaults to false.
-    /// </summary>
-    public bool? IsBadUV { get; init; }
-
-    /// <summary>
-    /// If isBadUP is set, overrides the UP bit in the flags in the authenticator response to
-    /// be zero. Defaults to false.
-    /// </summary>
-    public bool? IsBadUP { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetResponseOverrideBitsResult() : EmptyResult;
 
 
 internal sealed record RemoveVirtualAuthenticatorCommandParameters(AuthenticatorId AuthenticatorId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.RemoveVirtualAuthenticatorAsync"/>.
-/// </summary>
-public sealed record RemoveVirtualAuthenticatorCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -471,25 +438,11 @@ public sealed record RemoveVirtualAuthenticatorResult() : EmptyResult;
 internal sealed record AddCredentialCommandParameters(AuthenticatorId AuthenticatorId, Credential Credential) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.AddCredentialAsync"/>.
-/// </summary>
-public sealed record AddCredentialCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record AddCredentialResult() : EmptyResult;
 
 
 internal sealed record GetCredentialCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.GetCredentialAsync"/>.
-/// </summary>
-public sealed record GetCredentialCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -501,13 +454,6 @@ public sealed record GetCredentialResult(Credential Credential) : EmptyResult;
 internal sealed record GetCredentialsCommandParameters(AuthenticatorId AuthenticatorId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.GetCredentialsAsync"/>.
-/// </summary>
-public sealed record GetCredentialsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Credentials">
 /// </param>
@@ -517,25 +463,11 @@ public sealed record GetCredentialsResult(ImmutableArray<Credential> Credentials
 internal sealed record RemoveCredentialCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.RemoveCredentialAsync"/>.
-/// </summary>
-public sealed record RemoveCredentialCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveCredentialResult() : EmptyResult;
 
 
 internal sealed record ClearCredentialsCommandParameters(AuthenticatorId AuthenticatorId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.ClearCredentialsAsync"/>.
-/// </summary>
-public sealed record ClearCredentialsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -545,13 +477,6 @@ public sealed record ClearCredentialsResult() : EmptyResult;
 internal sealed record SetUserVerifiedCommandParameters(AuthenticatorId AuthenticatorId, bool IsUserVerified) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.SetUserVerifiedAsync"/>.
-/// </summary>
-public sealed record SetUserVerifiedCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetUserVerifiedResult() : EmptyResult;
 
@@ -559,40 +484,11 @@ public sealed record SetUserVerifiedResult() : EmptyResult;
 internal sealed record SetAutomaticPresenceSimulationCommandParameters(AuthenticatorId AuthenticatorId, bool Enabled) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.SetAutomaticPresenceSimulationAsync"/>.
-/// </summary>
-public sealed record SetAutomaticPresenceSimulationCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetAutomaticPresenceSimulationResult() : EmptyResult;
 
 
 internal sealed record SetCredentialPropertiesCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId, bool? BackupEligibility, bool? BackupState, long? ActiveCmtgKeyIndex, bool? GenerateCmtgKeyOnNextOperation) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="WebAuthnDomain.SetCredentialPropertiesAsync"/>.
-/// </summary>
-public sealed record SetCredentialPropertiesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public bool? BackupEligibility { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public bool? BackupState { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public long? ActiveCmtgKeyIndex { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public bool? GenerateCmtgKeyOnNextOperation { get; init; }
-}
 
 /// <summary>
 /// </summary>

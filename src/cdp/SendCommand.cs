@@ -6,17 +6,6 @@ namespace Selenium.WebDriver.BiDi.Cdp;
 internal sealed record SendCommandParameters(string Method, JsonElement Params, string? Session) : Parameters;
 
 /// <summary>
-/// Options for sending a CDP command.
-/// </summary>
-public record SendCommandOptions : CommandOptions
-{
-    /// <summary>
-    /// The CDP session identifier to use. If not specified, the default session is used.
-    /// </summary>
-    public string? Session { get; init; }
-}
-
-/// <summary>
 /// Result of a CDP send command operation.
 /// </summary>
 /// <param name="Result">The raw JSON result from the CDP command.</param>

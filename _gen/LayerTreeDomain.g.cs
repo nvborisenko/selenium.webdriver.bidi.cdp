@@ -18,8 +18,8 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="layerId">
     /// The id of the layer for which we want to get the reasons it was composited.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CompositingReasonsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -27,18 +27,18 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CompositingReasonsResult"/>.
     /// </returns>
-    public async Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, CompositingReasonsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CompositingReasonsCommandParameters(LayerId: layerId);
-        return await ExecuteCommandAsync(CompositingReasonsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CompositingReasonsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CompositingReasonsCommandParameters, CompositingReasonsResult> CompositingReasonsCommand = new("LayerTree.compositingReasons", JsonContext.CompositingReasonsCommandParameters, JsonContext.CompositingReasonsResult);
 
     /// <summary>
     /// Disables compositing tree inspection.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -46,18 +46,18 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("LayerTree.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables compositing tree inspection.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -65,10 +65,10 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("LayerTree.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -78,8 +78,8 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="tiles">
     /// An array of tiles composing the snapshot.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="LoadSnapshotCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -87,10 +87,10 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LoadSnapshotResult"/>.
     /// </returns>
-    public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, LoadSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LoadSnapshotCommandParameters(Tiles: tiles);
-        return await ExecuteCommandAsync(LoadSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(LoadSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<LoadSnapshotCommandParameters, LoadSnapshotResult> LoadSnapshotCommand = new("LayerTree.loadSnapshot", JsonContext.LoadSnapshotCommandParameters, JsonContext.LoadSnapshotResult);
 
@@ -100,8 +100,8 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="layerId">
     /// The id of the layer.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="MakeSnapshotCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -109,17 +109,17 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="MakeSnapshotResult"/>.
     /// </returns>
-    public async Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, MakeSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new MakeSnapshotCommandParameters(LayerId: layerId);
-        return await ExecuteCommandAsync(MakeSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(MakeSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<MakeSnapshotCommandParameters, MakeSnapshotResult> MakeSnapshotCommand = new("LayerTree.makeSnapshot", JsonContext.MakeSnapshotCommandParameters, JsonContext.MakeSnapshotResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>MinRepeatCount</b> - The maximum number of times to replay the snapshot (1, if not specified).</description></item>
     /// <item><description><b>MinDuration</b> - The minimum duration (in seconds) to replay the snapshot.</description></item>
@@ -129,8 +129,17 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="snapshotId">
     /// The id of the layer snapshot.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ProfileSnapshotCommandOptions"/>.
+    /// <param name="minRepeatCount">
+    /// The maximum number of times to replay the snapshot (1, if not specified).
+    /// </param>
+    /// <param name="minDuration">
+    /// The minimum duration (in seconds) to replay the snapshot.
+    /// </param>
+    /// <param name="clipRect">
+    /// The clip rectangle to apply when replaying the snapshot.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -138,10 +147,10 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ProfileSnapshotResult"/>.
     /// </returns>
-    public async Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, ProfileSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = default, double? minDuration = default, DOM.Rect? clipRect = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ProfileSnapshotCommandParameters(SnapshotId: snapshotId, MinRepeatCount: options?.MinRepeatCount, MinDuration: options?.MinDuration, ClipRect: options?.ClipRect);
-        return await ExecuteCommandAsync(ProfileSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ProfileSnapshotCommandParameters(SnapshotId: snapshotId, MinRepeatCount: minRepeatCount, MinDuration: minDuration, ClipRect: clipRect);
+        return await ExecuteCommandAsync(ProfileSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ProfileSnapshotCommandParameters, ProfileSnapshotResult> ProfileSnapshotCommand = new("LayerTree.profileSnapshot", JsonContext.ProfileSnapshotCommandParameters, JsonContext.ProfileSnapshotResult);
 
@@ -151,8 +160,8 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="snapshotId">
     /// The id of the layer snapshot.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReleaseSnapshotCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -160,10 +169,10 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseSnapshotResult"/>.
     /// </returns>
-    public async Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, ReleaseSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseSnapshotCommandParameters(SnapshotId: snapshotId);
-        return await ExecuteCommandAsync(ReleaseSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReleaseSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReleaseSnapshotCommandParameters, ReleaseSnapshotResult> ReleaseSnapshotCommand = new("LayerTree.releaseSnapshot", JsonContext.ReleaseSnapshotCommandParameters, JsonContext.ReleaseSnapshotResult);
 
@@ -171,7 +180,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// Replays the layer snapshot and returns the resulting bitmap.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>FromStep</b> - The first step to replay from (replay from the very start if not specified).</description></item>
     /// <item><description><b>ToStep</b> - The last step to replay to (replay till the end if not specified).</description></item>
@@ -181,8 +190,17 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="snapshotId">
     /// The id of the layer snapshot.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReplaySnapshotCommandOptions"/>.
+    /// <param name="fromStep">
+    /// The first step to replay from (replay from the very start if not specified).
+    /// </param>
+    /// <param name="toStep">
+    /// The last step to replay to (replay till the end if not specified).
+    /// </param>
+    /// <param name="scale">
+    /// The scale to apply while replaying (defaults to 1).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -190,10 +208,10 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReplaySnapshotResult"/>.
     /// </returns>
-    public async Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, ReplaySnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = default, long? toStep = default, double? scale = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ReplaySnapshotCommandParameters(SnapshotId: snapshotId, FromStep: options?.FromStep, ToStep: options?.ToStep, Scale: options?.Scale);
-        return await ExecuteCommandAsync(ReplaySnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ReplaySnapshotCommandParameters(SnapshotId: snapshotId, FromStep: fromStep, ToStep: toStep, Scale: scale);
+        return await ExecuteCommandAsync(ReplaySnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReplaySnapshotCommandParameters, ReplaySnapshotResult> ReplaySnapshotCommand = new("LayerTree.replaySnapshot", JsonContext.ReplaySnapshotCommandParameters, JsonContext.ReplaySnapshotResult);
 
@@ -203,8 +221,8 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <param name="snapshotId">
     /// The id of the layer snapshot.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SnapshotCommandLogCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -212,10 +230,10 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SnapshotCommandLogResult"/>.
     /// </returns>
-    public async Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, SnapshotCommandLogCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SnapshotCommandLogCommandParameters(SnapshotId: snapshotId);
-        return await ExecuteCommandAsync(SnapshotCommandLogCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SnapshotCommandLogCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SnapshotCommandLogCommandParameters, SnapshotCommandLogResult> SnapshotCommandLogCommand = new("LayerTree.snapshotCommandLog", JsonContext.SnapshotCommandLogCommandParameters, JsonContext.SnapshotCommandLogResult);
 
@@ -245,13 +263,6 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record CompositingReasonsCommandParameters(LayerId LayerId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.CompositingReasonsAsync"/>.
-/// </summary>
-public sealed record CompositingReasonsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="CompositingReasons">
 /// A list of strings specifying reasons for the given layer to become composited.
@@ -265,13 +276,6 @@ public sealed record CompositingReasonsResult(ImmutableArray<string> Compositing
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -279,25 +283,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record LoadSnapshotCommandParameters(ImmutableArray<PictureTile> Tiles) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.LoadSnapshotAsync"/>.
-/// </summary>
-public sealed record LoadSnapshotCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -310,13 +300,6 @@ public sealed record LoadSnapshotResult(SnapshotId SnapshotId) : EmptyResult;
 internal sealed record MakeSnapshotCommandParameters(LayerId LayerId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.MakeSnapshotAsync"/>.
-/// </summary>
-public sealed record MakeSnapshotCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="SnapshotId">
 /// The id of the layer snapshot.
@@ -325,27 +308,6 @@ public sealed record MakeSnapshotResult(SnapshotId SnapshotId) : EmptyResult;
 
 
 internal sealed record ProfileSnapshotCommandParameters(SnapshotId SnapshotId, long? MinRepeatCount, double? MinDuration, DOM.Rect? ClipRect) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.ProfileSnapshotAsync"/>.
-/// </summary>
-public sealed record ProfileSnapshotCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The maximum number of times to replay the snapshot (1, if not specified).
-    /// </summary>
-    public long? MinRepeatCount { get; init; }
-
-    /// <summary>
-    /// The minimum duration (in seconds) to replay the snapshot.
-    /// </summary>
-    public double? MinDuration { get; init; }
-
-    /// <summary>
-    /// The clip rectangle to apply when replaying the snapshot.
-    /// </summary>
-    public DOM.Rect? ClipRect { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -358,39 +320,11 @@ public sealed record ProfileSnapshotResult(ImmutableArray<ImmutableArray<double>
 internal sealed record ReleaseSnapshotCommandParameters(SnapshotId SnapshotId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.ReleaseSnapshotAsync"/>.
-/// </summary>
-public sealed record ReleaseSnapshotCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReleaseSnapshotResult() : EmptyResult;
 
 
 internal sealed record ReplaySnapshotCommandParameters(SnapshotId SnapshotId, long? FromStep, long? ToStep, double? Scale) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.ReplaySnapshotAsync"/>.
-/// </summary>
-public sealed record ReplaySnapshotCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The first step to replay from (replay from the very start if not specified).
-    /// </summary>
-    public long? FromStep { get; init; }
-
-    /// <summary>
-    /// The last step to replay to (replay till the end if not specified).
-    /// </summary>
-    public long? ToStep { get; init; }
-
-    /// <summary>
-    /// The scale to apply while replaying (defaults to 1).
-    /// </summary>
-    public double? Scale { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -401,13 +335,6 @@ public sealed record ReplaySnapshotResult(string DataURL) : EmptyResult;
 
 
 internal sealed record SnapshotCommandLogCommandParameters(SnapshotId SnapshotId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="LayerTreeDomain.SnapshotCommandLogAsync"/>.
-/// </summary>
-public sealed record SnapshotCommandLogCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

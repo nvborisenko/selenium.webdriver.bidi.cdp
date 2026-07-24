@@ -14,8 +14,8 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Disables tracking security state changes.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -23,18 +23,18 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Security.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables tracking security state changes.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -42,10 +42,10 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Security.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -55,8 +55,8 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="ignore">
     /// If true, all certificate errors will be ignored.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetIgnoreCertificateErrorsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -64,10 +64,10 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetIgnoreCertificateErrorsResult"/>.
     /// </returns>
-    public async Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, SetIgnoreCertificateErrorsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetIgnoreCertificateErrorsCommandParameters(Ignore: ignore);
-        return await ExecuteCommandAsync(SetIgnoreCertificateErrorsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetIgnoreCertificateErrorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetIgnoreCertificateErrorsCommandParameters, SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsCommand = new("Security.setIgnoreCertificateErrors", JsonContext.SetIgnoreCertificateErrorsCommandParameters, JsonContext.SetIgnoreCertificateErrorsResult);
 
@@ -80,8 +80,8 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="action">
     /// The action to take on the certificate error.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="HandleCertificateErrorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -90,10 +90,10 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="HandleCertificateErrorResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, HandleCertificateErrorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HandleCertificateErrorCommandParameters(EventId: eventId, Action: action);
-        return await ExecuteCommandAsync(HandleCertificateErrorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(HandleCertificateErrorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<HandleCertificateErrorCommandParameters, HandleCertificateErrorResult> HandleCertificateErrorCommand = new("Security.handleCertificateError", JsonContext.HandleCertificateErrorCommandParameters, JsonContext.HandleCertificateErrorResult);
 
@@ -104,8 +104,8 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="override">
     /// If true, certificate errors will be overridden.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetOverrideCertificateErrorsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -114,10 +114,10 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetOverrideCertificateErrorsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, SetOverrideCertificateErrorsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetOverrideCertificateErrorsCommandParameters(Override: @override);
-        return await ExecuteCommandAsync(SetOverrideCertificateErrorsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetOverrideCertificateErrorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetOverrideCertificateErrorsCommandParameters, SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsCommand = new("Security.setOverrideCertificateErrors", JsonContext.SetOverrideCertificateErrorsCommandParameters, JsonContext.SetOverrideCertificateErrorsResult);
 
@@ -168,25 +168,11 @@ public sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SecurityDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SecurityDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -196,13 +182,6 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record SetIgnoreCertificateErrorsCommandParameters(bool Ignore) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SecurityDomain.SetIgnoreCertificateErrorsAsync"/>.
-/// </summary>
-public sealed record SetIgnoreCertificateErrorsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetIgnoreCertificateErrorsResult() : EmptyResult;
 
@@ -210,25 +189,11 @@ public sealed record SetIgnoreCertificateErrorsResult() : EmptyResult;
 internal sealed record HandleCertificateErrorCommandParameters(long EventId, CertificateErrorAction Action) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SecurityDomain.HandleCertificateErrorAsync"/>.
-/// </summary>
-public sealed record HandleCertificateErrorCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record HandleCertificateErrorResult() : EmptyResult;
 
 
 internal sealed record SetOverrideCertificateErrorsCommandParameters(bool Override) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SecurityDomain.SetOverrideCertificateErrorsAsync"/>.
-/// </summary>
-public sealed record SetOverrideCertificateErrorsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

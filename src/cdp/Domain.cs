@@ -16,16 +16,16 @@ public abstract class Domain(CdpModule cdp)
     /// <typeparam name="TResult">The type of the command result.</typeparam>
     /// <param name="command">The CDP command descriptor.</param>
     /// <param name="parameters">The command parameters to serialize and send.</param>
-    /// <param name="options">Optional command options.</param>
+    /// <param name="session">Optional CDP session override.</param>
     /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
     /// <returns>The deserialized command result.</returns>
-    private protected async Task<TResult> ExecuteCommandAsync<TParameters, TResult>(CdpCommand<TParameters, TResult> command, TParameters parameters, CdpCommandOptions? options, CancellationToken cancellationToken)
+    private protected async Task<TResult> ExecuteCommandAsync<TParameters, TResult>(CdpCommand<TParameters, TResult> command, TParameters parameters, string? session, CancellationToken cancellationToken)
         where TParameters : Parameters
         where TResult : EmptyResult
     {
         var @params = SerializeParameters(parameters, command.ParametersTypeInfo);
 
-        var sendResult = await cdp.SendCommandAsync(command.Method, @params, options, cancellationToken);
+        var sendResult = await cdp.SendCommandAsync(command.Method, @params, session, cancellationToken);
 
         return sendResult.Result.Deserialize(command.ResultTypeInfo)!;
     }
@@ -57,8 +57,3 @@ public abstract class Domain(CdpModule cdp)
 internal readonly record struct CdpCommand<TParameters, TResult>(string Method, JsonTypeInfo<TParameters> ParametersTypeInfo, JsonTypeInfo<TResult> ResultTypeInfo)
     where TParameters : Parameters
     where TResult : EmptyResult;
-
-/// <summary>
-/// Options for CDP command execution.
-/// </summary>
-public record CdpCommandOptions : SendCommandOptions;

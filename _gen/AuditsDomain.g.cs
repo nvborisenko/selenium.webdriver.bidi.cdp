@@ -18,7 +18,7 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// applies to images.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Quality</b> - The quality of the encoding (0-1). (defaults to 1)</description></item>
     /// <item><description><b>SizeOnly</b> - Whether to only return the size information (defaults to false).</description></item>
@@ -30,8 +30,14 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <param name="encoding">
     /// The encoding to use.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetEncodedResponseCommandOptions"/>.
+    /// <param name="quality">
+    /// The quality of the encoding (0-1). (defaults to 1)
+    /// </param>
+    /// <param name="sizeOnly">
+    /// Whether to only return the size information (defaults to false).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -39,18 +45,18 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEncodedResponseResult"/>.
     /// </returns>
-    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, GetEncodedResponseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: options?.Quality, SizeOnly: options?.SizeOnly);
-        return await ExecuteCommandAsync(GetEncodedResponseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: quality, SizeOnly: sizeOnly);
+        return await ExecuteCommandAsync(GetEncodedResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetEncodedResponseCommandParameters, GetEncodedResponseResult> GetEncodedResponseCommand = new("Audits.getEncodedResponse", JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult);
 
     /// <summary>
     /// Disables issues domain, prevents further issues from being reported to the client.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -58,10 +64,10 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Audits.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -69,8 +75,8 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Enables issues domain, sends the issues collected so far to the client by means of the
     /// <b>issueAdded</b> event.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -78,10 +84,10 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Audits.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -89,8 +95,8 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Runs the form issues check for the target page. Found issues are reported
     /// using Audits.issueAdded event.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CheckFormsIssuesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -98,10 +104,10 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CheckFormsIssuesResult"/>.
     /// </returns>
-    public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(CheckFormsIssuesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CheckFormsIssuesCommandParameters();
-        return await ExecuteCommandAsync(CheckFormsIssuesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CheckFormsIssuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CheckFormsIssuesCommandParameters, CheckFormsIssuesResult> CheckFormsIssuesCommand = new("Audits.checkFormsIssues", JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult);
 
@@ -120,22 +126,6 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 internal sealed record GetEncodedResponseCommandParameters(Network.RequestId RequestId, string Encoding, double? Quality, bool? SizeOnly) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AuditsDomain.GetEncodedResponseAsync"/>.
-/// </summary>
-public sealed record GetEncodedResponseCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The quality of the encoding (0-1). (defaults to 1)
-    /// </summary>
-    public double? Quality { get; init; }
-
-    /// <summary>
-    /// Whether to only return the size information (defaults to false).
-    /// </summary>
-    public bool? SizeOnly { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Body">
 /// The encoded body as a base64 string. Omitted if sizeOnly is true. (Encoded as a base64 string when passed over JSON)
@@ -152,13 +142,6 @@ public sealed record GetEncodedResponseResult(string? Body, long OriginalSize, l
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AuditsDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -166,25 +149,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="AuditsDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record CheckFormsIssuesCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="AuditsDomain.CheckFormsIssuesAsync"/>.
-/// </summary>
-public sealed record CheckFormsIssuesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

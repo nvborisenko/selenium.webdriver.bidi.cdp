@@ -7,17 +7,17 @@ public class CookieTests : CdpTestFixture
     {
         await Cdp.Page.NavigateAsync("https://www.example.com");
 
-        var setResult = await Cdp.Network.SetCookieAsync("test_cookie", "test_value", new()
-        {
-            Domain = ".example.com",
-            Path = "/",
-            Secure = false,
-            HttpOnly = false
-        });
+        var setResult = await Cdp.Network.SetCookieAsync(
+            "test_cookie",
+            "test_value",
+            domain: ".example.com",
+            path: "/",
+            secure: false,
+            httpOnly: false);
 
         await Assert.That(setResult.Success).IsTrue();
 
-        var getResult = await Cdp.Network.GetCookiesAsync(new() { Urls = ["https://www.example.com"] });
+        var getResult = await Cdp.Network.GetCookiesAsync(urls: ["https://www.example.com"]);
 
         await Assert.That(getResult.Cookies.Count).IsGreaterThan(0);
 
@@ -31,25 +31,17 @@ public class CookieTests : CdpTestFixture
     {
         await Cdp.Page.NavigateAsync("https://www.example.com");
 
-        await Cdp.Network.SetCookieAsync("to_delete", "value", new()
-        {
-            Domain = ".example.com",
-            Path = "/"
-        });
+        await Cdp.Network.SetCookieAsync("to_delete", "value", domain: ".example.com", path: "/");
 
         // Verify it exists
-        var before = await Cdp.Network.GetCookiesAsync(new() { Urls = ["https://www.example.com"] });
+        var before = await Cdp.Network.GetCookiesAsync(urls: ["https://www.example.com"]);
         await Assert.That(before.Cookies.Any(c => c.Name == "to_delete")).IsTrue();
 
         // Delete it
-        await Cdp.Network.DeleteCookiesAsync("to_delete", new()
-        {
-            Domain = ".example.com",
-            Path = "/"
-        });
+        await Cdp.Network.DeleteCookiesAsync("to_delete", domain: ".example.com", path: "/");
 
         // Verify it's gone
-        var after = await Cdp.Network.GetCookiesAsync(new() { Urls = ["https://www.example.com"] });
+        var after = await Cdp.Network.GetCookiesAsync(urls: ["https://www.example.com"]);
         await Assert.That(after.Cookies.Any(c => c.Name == "to_delete")).IsFalse();
     }
 
@@ -58,12 +50,12 @@ public class CookieTests : CdpTestFixture
     {
         await Cdp.Page.NavigateAsync("https://www.example.com");
 
-        await Cdp.Network.SetCookieAsync("cookie1", "value1", new() { Domain = ".example.com" });
-        await Cdp.Network.SetCookieAsync("cookie2", "value2", new() { Domain = ".example.com" });
+        await Cdp.Network.SetCookieAsync("cookie1", "value1", domain: ".example.com");
+        await Cdp.Network.SetCookieAsync("cookie2", "value2", domain: ".example.com");
 
         await Cdp.Network.ClearBrowserCookiesAsync();
 
-        var result = await Cdp.Network.GetCookiesAsync(new() { Urls = ["https://www.example.com"] });
+        var result = await Cdp.Network.GetCookiesAsync(urls: ["https://www.example.com"]);
         await Assert.That(result.Cookies.Count).IsEqualTo(0);
     }
 
@@ -72,18 +64,18 @@ public class CookieTests : CdpTestFixture
     {
         await Cdp.Page.NavigateAsync("https://www.example.com");
 
-        var setResult = await Cdp.Network.SetCookieAsync("secure_cookie", "secret", new()
-        {
-            Domain = ".example.com",
-            Path = "/",
-            Secure = true,
-            HttpOnly = true,
-            SameSite = Network.CookieSameSite.Strict
-        });
+        var setResult = await Cdp.Network.SetCookieAsync(
+            "secure_cookie",
+            "secret",
+            domain: ".example.com",
+            path: "/",
+            secure: true,
+            httpOnly: true,
+            sameSite: Network.CookieSameSite.Strict);
 
         await Assert.That(setResult.Success).IsTrue();
 
-        var cookies = await Cdp.Network.GetCookiesAsync(new() { Urls = ["https://www.example.com"] });
+        var cookies = await Cdp.Network.GetCookiesAsync(urls: ["https://www.example.com"]);
         var cookie = cookies.Cookies.FirstOrDefault(c => c.Name == "secure_cookie");
 
         await Assert.That(cookie).IsNotNull();

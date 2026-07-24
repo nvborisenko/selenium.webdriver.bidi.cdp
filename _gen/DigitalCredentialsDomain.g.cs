@@ -18,7 +18,7 @@ public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.W
     /// issued from this frame.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Protocol</b> - The protocol identifier (e.g. "openid4vp"). Required when |action| is "respond", forbidden otherwise.</description></item>
     /// <item><description><b>Response</b> - The response data object returned by the wallet. Required when |action| is "respond", forbidden otherwise.</description></item>
@@ -28,8 +28,19 @@ public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.W
     /// <param name="action">
     /// The action of the virtual wallet.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetVirtualWalletBehaviorCommandOptions"/>.
+    /// <param name="protocol">
+    /// The protocol identifier (e.g. "openid4vp"). Required when |action| is
+    /// "respond", forbidden otherwise.
+    /// </param>
+    /// <param name="response">
+    /// The response data object returned by the wallet.
+    /// Required when |action| is "respond", forbidden otherwise.
+    /// </param>
+    /// <param name="frameId">
+    /// The frame to scope the virtual wallet behavior to.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -37,39 +48,16 @@ public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetVirtualWalletBehaviorResult"/>.
     /// </returns>
-    public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, SetVirtualWalletBehaviorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = default, global::System.Text.Json.JsonElement? response = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: options?.Protocol, Response: options?.Response, FrameId: options?.FrameId);
-        return await ExecuteCommandAsync(SetVirtualWalletBehaviorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: protocol, Response: response, FrameId: frameId);
+        return await ExecuteCommandAsync(SetVirtualWalletBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetVirtualWalletBehaviorCommandParameters, SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorCommand = new("DigitalCredentials.setVirtualWalletBehavior", JsonContext.SetVirtualWalletBehaviorCommandParameters, JsonContext.SetVirtualWalletBehaviorResult);
 
 }
 
 internal sealed record SetVirtualWalletBehaviorCommandParameters(VirtualWalletAction Action, string? Protocol, global::System.Text.Json.JsonElement? Response, Page.FrameId? FrameId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DigitalCredentialsDomain.SetVirtualWalletBehaviorAsync"/>.
-/// </summary>
-public sealed record SetVirtualWalletBehaviorCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The protocol identifier (e.g. "openid4vp"). Required when |action| is
-    /// "respond", forbidden otherwise.
-    /// </summary>
-    public string? Protocol { get; init; }
-
-    /// <summary>
-    /// The response data object returned by the wallet.
-    /// Required when |action| is "respond", forbidden otherwise.
-    /// </summary>
-    public global::System.Text.Json.JsonElement? Response { get; init; }
-
-    /// <summary>
-    /// The frame to scope the virtual wallet behavior to.
-    /// </summary>
-    public Page.FrameId? FrameId { get; init; }
-}
 
 /// <summary>
 /// </summary>

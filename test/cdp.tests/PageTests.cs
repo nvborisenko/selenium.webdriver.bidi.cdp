@@ -7,18 +7,16 @@ public class PageTests : CdpTestFixture
     {
         await NavigateAndWaitForLoadAsync("https://www.example.com");
 
-        var result = await Cdp.Page.PrintToPDFAsync(new()
-        {
-            Landscape = false,
-            PrintBackground = true,
-            Scale = 1.0,
-            PaperWidth = 8.5,
-            PaperHeight = 11,
-            MarginTop = 0.4,
-            MarginBottom = 0.4,
-            MarginLeft = 0.4,
-            MarginRight = 0.4
-        });
+        var result = await Cdp.Page.PrintToPDFAsync(
+            landscape: false,
+            printBackground: true,
+            scale: 1.0,
+            paperWidth: 8.5,
+            paperHeight: 11,
+            marginTop: 0.4,
+            marginBottom: 0.4,
+            marginLeft: 0.4,
+            marginRight: 0.4);
 
         await Assert.That(result.Data).IsNotNull();
 
@@ -36,12 +34,10 @@ public class PageTests : CdpTestFixture
     {
         await NavigateAndWaitForLoadAsync("https://www.example.com");
 
-        var result = await Cdp.Page.PrintToPDFAsync(new()
-        {
-            DisplayHeaderFooter = true,
-            HeaderTemplate = "<div style='font-size:10px; text-align:center; width:100%'>Custom Header</div>",
-            FooterTemplate = "<div style='font-size:10px; text-align:center; width:100%'>Page <span class='pageNumber'></span> of <span class='totalPages'></span></div>"
-        });
+        var result = await Cdp.Page.PrintToPDFAsync(
+            displayHeaderFooter: true,
+            headerTemplate: "<div style='font-size:10px; text-align:center; width:100%'>Custom Header</div>",
+            footerTemplate: "<div style='font-size:10px; text-align:center; width:100%'>Page <span class='pageNumber'></span> of <span class='totalPages'></span></div>");
 
         await Assert.That(result.Data).IsNotNull();
         var pdfBytes = Convert.FromBase64String(result.Data);
@@ -53,11 +49,9 @@ public class PageTests : CdpTestFixture
     {
         await NavigateAndWaitForLoadAsync("https://www.example.com");
 
-        var result = await Cdp.Page.CaptureScreenshotAsync(new()
-        {
-            Format = "png",
-            Clip = new Page.Viewport(0, 0, 800, 600, 1)
-        });
+        var result = await Cdp.Page.CaptureScreenshotAsync(
+            format: "png",
+            clip: new Page.Viewport(0, 0, 800, 600, 1));
 
         await Assert.That(result.Data).IsNotNull();
 
@@ -76,11 +70,9 @@ public class PageTests : CdpTestFixture
     {
         await NavigateAndWaitForLoadAsync("https://www.example.com");
 
-        var result = await Cdp.Page.CaptureScreenshotAsync(new()
-        {
-            Format = "jpeg",
-            Quality = 80
-        });
+        var result = await Cdp.Page.CaptureScreenshotAsync(
+            format: "jpeg",
+            quality: 80);
 
         await Assert.That(result.Data).IsNotNull();
 
@@ -100,18 +92,16 @@ public class PageTests : CdpTestFixture
         // Get full page dimensions
         var metrics = await Cdp.Runtime.EvaluateAsync(
             "JSON.stringify({ width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight })",
-            new() { ReturnByValue = true });
+            returnByValue: true);
 
         var dimensions = System.Text.Json.JsonDocument.Parse(metrics.Result.Value?.ToString()!).RootElement;
         var width = dimensions.GetProperty("width").GetDouble();
         var height = dimensions.GetProperty("height").GetDouble();
 
-        var result = await Cdp.Page.CaptureScreenshotAsync(new()
-        {
-            Format = "png",
-            Clip = new Page.Viewport(0, 0, width, height, 1),
-            CaptureBeyondViewport = true
-        });
+        var result = await Cdp.Page.CaptureScreenshotAsync(
+            format: "png",
+            clip: new Page.Viewport(0, 0, width, height, 1),
+            captureBeyondViewport: true);
 
         await Assert.That(result.Data).IsNotNull();
         var imageBytes = Convert.FromBase64String(result.Data);

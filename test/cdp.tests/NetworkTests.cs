@@ -9,7 +9,7 @@ public class NetworkTests : CdpTestFixture
     [Test]
     public async Task SendRequestWithUrlFiltersAndExtraHeadersAndVerifyRequests()
     {
-        await Cdp.Network.SetBlockedURLsAsync(new() { UrlPatterns = [new BlockPattern("*://*/*.gif", Block: true)] });
+        await Cdp.Network.SetBlockedURLsAsync(urlPatterns: [new BlockPattern("*://*/*.gif", Block: true)]);
 
         await Cdp.Network.SetExtraHTTPHeadersAsync(new Dictionary<string, string>
         {
@@ -38,7 +38,7 @@ public class NetworkTests : CdpTestFixture
             latency: 100,
             downloadThroughput: 1000,
             uploadThroughput: 2000,
-            new() { ConnectionType = ConnectionType.Cellular3g });
+            connectionType: ConnectionType.Cellular3g);
 #pragma warning restore CS0612
 
         await using var loadingFailedStream = await Cdp.Network.LoadingFailed.StreamAsync();
@@ -74,7 +74,7 @@ public class NetworkTests : CdpTestFixture
         var searchResponse = await Cdp.Network.SearchInResponseBodyAsync(
             responseReceived.RequestId,
             ".*",
-            new() { IsRegex = true });
+            isRegex: true);
 
         await Assert.That(searchResponse.Result.Count).IsGreaterThan(0);
     }

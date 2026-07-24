@@ -14,8 +14,8 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <summary>
     /// Disable collecting and reporting metrics.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -23,10 +23,10 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Performance.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -34,13 +34,16 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// Enable collecting and reporting metrics.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>TimeDomain</b> - Time domain to use for collecting and reporting duration metrics.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="timeDomain">
+    /// Time domain to use for collecting and reporting duration metrics.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -48,10 +51,10 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EnableCommandParameters(TimeDomain: options?.TimeDomain);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EnableCommandParameters(TimeDomain: timeDomain);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Performance.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -63,8 +66,8 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <param name="timeDomain">
     /// Time domain
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetTimeDomainCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -74,18 +77,18 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, SetTimeDomainCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
-        return await ExecuteCommandAsync(SetTimeDomainCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetTimeDomainCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetTimeDomainCommandParameters, SetTimeDomainResult> SetTimeDomainCommand = new("Performance.setTimeDomain", JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult);
 
     /// <summary>
     /// Retrieve current values of run-time metrics.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetMetricsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -93,10 +96,10 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMetricsResult"/>.
     /// </returns>
-    public async Task<GetMetricsResult> GetMetricsAsync(GetMetricsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMetricsCommandParameters();
-        return await ExecuteCommandAsync(GetMetricsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetMetricsCommandParameters, GetMetricsResult> GetMetricsCommand = new("Performance.getMetrics", JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult);
 
@@ -116,29 +119,11 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="PerformanceDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters(string? TimeDomain) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="PerformanceDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Time domain to use for collecting and reporting duration metrics.
-    /// </summary>
-    public string? TimeDomain { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -148,25 +133,11 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record SetTimeDomainCommandParameters(string TimeDomain) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="PerformanceDomain.SetTimeDomainAsync"/>.
-/// </summary>
-public sealed record SetTimeDomainCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetTimeDomainResult() : EmptyResult;
 
 
 internal sealed record GetMetricsCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="PerformanceDomain.GetMetricsAsync"/>.
-/// </summary>
-public sealed record GetMetricsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

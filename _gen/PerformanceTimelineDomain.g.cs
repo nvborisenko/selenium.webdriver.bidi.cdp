@@ -25,8 +25,8 @@ public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.
     /// filter disables recording.
     /// Note that not all types exposed to the web platform are currently supported.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -34,10 +34,10 @@ public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EventTypes: eventTypes);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("PerformanceTimeline.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -54,13 +54,6 @@ public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.
 }
 
 internal sealed record EnableCommandParameters(ImmutableArray<string> EventTypes) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="PerformanceTimelineDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

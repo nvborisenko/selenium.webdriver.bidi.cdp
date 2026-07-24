@@ -16,8 +16,8 @@ public sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Returns supported domains.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetDomainsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,23 +25,16 @@ public sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDomainsResult"/>.
     /// </returns>
-    public async Task<GetDomainsResult> GetDomainsAsync(GetDomainsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetDomainsResult> GetDomainsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDomainsCommandParameters();
-        return await ExecuteCommandAsync(GetDomainsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetDomainsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetDomainsCommandParameters, GetDomainsResult> GetDomainsCommand = new("Schema.getDomains", JsonContext.GetDomainsCommandParameters, JsonContext.GetDomainsResult);
 
 }
 
 internal sealed record GetDomainsCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SchemaDomain.GetDomainsAsync"/>.
-/// </summary>
-public sealed record GetDomainsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

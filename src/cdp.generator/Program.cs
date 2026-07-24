@@ -7,9 +7,6 @@ using Humanizer;
 var rootNamespace = "Selenium.WebDriver.BiDi.Cdp";
 var experimentalDiagnosticId = "BIDICDP001";
 
-// Properties defined in CdpCommandOptions base class hierarchy that need "new" when redeclared
-var CdpCommandOptionsBaseProperties = new HashSet<string> { "Timeout", "Session" };
-
 var outputDirectory = new DirectoryInfo("_gen");
 
 if (outputDirectory.Exists) outputDirectory.Delete(true);
@@ -90,13 +87,11 @@ foreach (var inputFile in inputFiles)
             foreach (var commandInfo in domainInfo.Commands)
             {
                 string returnType = $"<{commandInfo.Name.Dehumanize()}Result>";
+                var sessionArgName = "session";
 
-                // resolve options argument name collision early (needed for docs)
-                var commandOptionsArgName = "options";
-
-                if (commandInfo.Parameters?.FirstOrDefault(p => p.Optional is not true && p.Name == "options") is not null)
+                if (commandInfo.Parameters?.FirstOrDefault(p => p.Name == "session") is not null)
                 {
-                    commandOptionsArgName = $"{commandInfo.Name}Options";
+                    sessionArgName = "cdpSession";
                 }
 
                 domainBuilder.AppendLine("    /// <summary>");
@@ -112,7 +107,7 @@ foreach (var inputFile in inputFiles)
                 if (commandInfo.Parameters?.Where(p => p.Optional is true).ToList() is { Count: > 0 } optionalParams)
                 {
                     domainBuilder.AppendLine("    /// <remarks>");
-                    domainBuilder.AppendLine($"    /// Optional parameters (via <paramref name=\"{commandOptionsArgName}\"/>):");
+                    domainBuilder.AppendLine("    /// Optional parameters:");
                     domainBuilder.AppendLine("    /// <list type=\"bullet\">");
                     foreach (var parameterInfo in optionalParams)
                     {
@@ -143,8 +138,26 @@ foreach (var inputFile in inputFiles)
                     }
                 }
 
-                domainBuilder.AppendLine($"    /// <param name=\"{commandOptionsArgName}\">");
-                domainBuilder.AppendLine($"    /// Optional parameters. See <see cref=\"{commandInfo.Name.Dehumanize()}CommandOptions\"/>.");
+                if (commandInfo.Parameters is not null)
+                {
+                    var optionalParameters = commandInfo.Parameters.Where(p => p.Optional is true);
+
+                    foreach (var parameterInfo in optionalParameters)
+                    {
+                        domainBuilder.AppendLine($"    /// <param name=\"{parameterInfo.Name}\">");
+                        if (parameterInfo.Description is not null)
+                        {
+                            foreach (var line in GetNormalizedDescription(parameterInfo.Description))
+                            {
+                                domainBuilder.AppendLine($"    /// {line}");
+                            }
+                        }
+                        domainBuilder.AppendLine("    /// </param>");
+                    }
+                }
+
+                domainBuilder.AppendLine($"    /// <param name=\"{sessionArgName}\">");
+                domainBuilder.AppendLine("    /// Optional CDP session override.");
                 domainBuilder.AppendLine("    /// </param>");
                 domainBuilder.AppendLine("    /// <param name=\"cancellationToken\">");
                 domainBuilder.AppendLine("    /// A token to cancel the asynchronous operation.");
@@ -167,7 +180,10 @@ foreach (var inputFile in inputFiles)
 
                 if (commandInfo.Parameters is not null)
                 {
-                    foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is not true))
+                    var requiredParameters = commandInfo.Parameters.Where(p => p.Optional is not true);
+                    var optionalParameters = commandInfo.Parameters.Where(p => p.Optional is true);
+
+                    foreach (var parameterInfo in requiredParameters)
                     {
                         var parameterName = parameterInfo.Name;
 
@@ -180,9 +196,23 @@ foreach (var inputFile in inputFiles)
 
                         domainBuilder.Append(", ");
                     }
+
+                    foreach (var parameterInfo in optionalParameters)
+                    {
+                        var parameterName = parameterInfo.Name;
+
+                        if (parameterName == "override") // avoid using "override"
+                        {
+                            parameterName = "@override";
+                        }
+
+                        domainBuilder.Append($"{parameterInfo.AsCSharpType()} {parameterName} = default");
+
+                        domainBuilder.Append(", ");
+                    }
                 }
 
-                domainBuilder.Append($"{commandInfo.Name.Dehumanize()}CommandOptions? {commandOptionsArgName} = default");
+                domainBuilder.Append($"string? {sessionArgName} = default");
 
                 domainBuilder.Append(", CancellationToken cancellationToken = default");
 
@@ -196,21 +226,14 @@ foreach (var inputFile in inputFiles)
                     {
                         var parameterInfo = commandInfo.Parameters[i];
 
-                        if (parameterInfo.Optional is not true)
-                        {
-                            var parameterName = parameterInfo.Name;
+                        var parameterName = parameterInfo.Name;
 
-                            if (parameterName == "override")
-                            {
-                                parameterName = "@override";
-                            }
-
-                            domainBuilder.Append($"{parameterInfo.Name.Dehumanize()}: {parameterName}");
-                        }
-                        else
+                        if (parameterName == "override")
                         {
-                            domainBuilder.Append($"{parameterInfo.Name.Dehumanize()}: {commandOptionsArgName}?.{parameterInfo.Name.Dehumanize()}");
+                            parameterName = "@override";
                         }
+
+                        domainBuilder.Append($"{parameterInfo.Name.Dehumanize()}: {parameterName}");
 
                         if (i != commandInfo.Parameters.Count - 1)
                         {
@@ -221,7 +244,7 @@ foreach (var inputFile in inputFiles)
 
                 domainBuilder.AppendLine(");");
 
-                domainBuilder.AppendLine($"        return await ExecuteCommandAsync({commandInfo.Name.Dehumanize()}Command, @params, {commandOptionsArgName}, cancellationToken).ConfigureAwait(false);");
+                domainBuilder.AppendLine($"        return await ExecuteCommandAsync({commandInfo.Name.Dehumanize()}Command, @params, {sessionArgName}, cancellationToken).ConfigureAwait(false);");
                 domainBuilder.AppendLine("    }");
 
                 domainBuilder.AppendLine($"    private static readonly CdpCommand<{commandInfo.Name.Dehumanize()}CommandParameters, {commandInfo.Name.Dehumanize()}Result> {commandInfo.Name.Dehumanize()}Command = new(\"{domainInfo.Domain}.{commandInfo.Name}\", JsonContext.{commandInfo.Name.Dehumanize()}CommandParameters, JsonContext.{commandInfo.Name.Dehumanize()}Result);");
@@ -298,49 +321,6 @@ foreach (var inputFile in inputFiles)
                 }
 
                 domainBuilder.AppendLine(") : Parameters;");
-                domainBuilder.AppendLine();
-
-                // options
-                domainBuilder.AppendLine("/// <summary>");
-                domainBuilder.AppendLine($"/// Optional parameters for <see cref=\"{domainInfo.Domain}Domain.{commandInfo.Name.Dehumanize()}Async\"/>.");
-                domainBuilder.AppendLine("/// </summary>");
-                domainBuilder.AppendLine($"public sealed record {commandInfo.Name.Dehumanize()}CommandOptions : CdpCommandOptions");
-                domainBuilder.AppendLine("{");
-
-                if (commandInfo.Parameters is not null)
-                {
-                    var optionalParameters = commandInfo.Parameters.Where(p => p.Optional is true).ToList();
-
-                    for (int i = 0; i < optionalParameters.Count; i++)
-                    {
-                        var parameterInfo = optionalParameters[i];
-
-                        domainBuilder.AppendLine("    /// <summary>");
-                        if (parameterInfo.Description is not null)
-                        {
-                            foreach (var line in GetNormalizedDescription(parameterInfo.Description))
-                            {
-                                domainBuilder.AppendLine($"    /// {line}");
-                            }
-                        }
-                        domainBuilder.AppendLine("    /// </summary>");
-
-                        if (parameterInfo.Deprecated is true)
-                        {
-                            domainBuilder.AppendLine("    [global::System.Obsolete]");
-                        }
-
-                        var newModifier = CdpCommandOptionsBaseProperties.Contains(parameterInfo.Name.Dehumanize()) ? "new " : "";
-                        domainBuilder.AppendLine($"    public {newModifier}{parameterInfo.AsCSharpType()} {parameterInfo.Name.Dehumanize()} {{ get; init; }}");
-
-                        if (i != optionalParameters.Count - 1)
-                        {
-                            domainBuilder.AppendLine();
-                        }
-                    }
-                }
-
-                domainBuilder.AppendLine("}");
                 domainBuilder.AppendLine();
 
                 // result summary

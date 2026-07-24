@@ -16,8 +16,8 @@ public sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// </summary>
     /// <param name="bucketFileSystemLocator">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetDirectoryCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,23 +25,16 @@ public sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDirectoryResult"/>.
     /// </returns>
-    public async Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, GetDirectoryCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDirectoryCommandParameters(BucketFileSystemLocator: bucketFileSystemLocator);
-        return await ExecuteCommandAsync(GetDirectoryCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetDirectoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetDirectoryCommandParameters, GetDirectoryResult> GetDirectoryCommand = new("FileSystem.getDirectory", JsonContext.GetDirectoryCommandParameters, JsonContext.GetDirectoryResult);
 
 }
 
 internal sealed record GetDirectoryCommandParameters(BucketFileSystemLocator BucketFileSystemLocator) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="FileSystemDomain.GetDirectoryAsync"/>.
-/// </summary>
-public sealed record GetDirectoryCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

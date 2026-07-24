@@ -15,11 +15,16 @@ internal sealed class MyDomain(CdpModule cdp) : Domain(cdp)
     /// <summary>
     /// Enables network tracking.
     /// </summary>
-    public async Task<EnableResult> EnableAsync(EnableOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(
+        int? maxTotalBufferSize = default,
+        int? maxResourceBufferSize = default,
+        int? postDataSizeLimit = default,
+        string? session = default,
+        CancellationToken cancellationToken = default)
     {
-        var parameters = new EnableParameters(options?.MaxTotalBufferSize, options?.MaxResourceBufferSize, options?.PostDataSizeLimit);
+        var parameters = new EnableParameters(maxTotalBufferSize, maxResourceBufferSize, postDataSizeLimit);
 
-        return await ExecuteCommandAsync(EnableCommand, parameters, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, parameters, session, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -30,21 +35,6 @@ internal sealed class MyDomain(CdpModule cdp) : Domain(cdp)
 }
 
 internal record EnableParameters(int? MaxTotalBufferSize, int? MaxResourceBufferSize, int? PostDataSizeLimit) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="MyDomain.EnableAsync"/>.
-/// </summary>
-internal record EnableOptions : CdpCommandOptions
-{
-    /// <summary>Maximum total buffer size.</summary>
-    public int? MaxTotalBufferSize { get; set; }
-
-    /// <summary>Maximum resource buffer size.</summary>
-    public int? MaxResourceBufferSize { get; set; }
-
-    /// <summary>Post data size limit.</summary>
-    public int? PostDataSizeLimit { get; set; }
-}
 
 /// <summary>
 /// Result of <see cref="MyDomain.EnableAsync"/>.

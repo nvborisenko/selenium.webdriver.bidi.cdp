@@ -25,10 +25,7 @@ public class FetchTests : CdpTestFixture
     {
         await using var _ = await BlockBiDiNetworkPhasesAsync();
 
-        await Cdp.Fetch.EnableAsync(new()
-        {
-            Patterns = [new RequestPattern { UrlPattern = "*" }]
-        });
+        await Cdp.Fetch.EnableAsync(patterns: [new RequestPattern { UrlPattern = "*" }]);
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
@@ -45,11 +42,8 @@ public class FetchTests : CdpTestFixture
         await Cdp.Fetch.FulfillRequestAsync(
             requestPaused.RequestId,
             200,
-            new()
-            {
-                ResponseHeaders = [new HeaderEntry("Content-Type", "text/html")],
-                Body = mockBody
-            });
+            responseHeaders: [new HeaderEntry("Content-Type", "text/html")],
+            body: mockBody);
 
         await navigateTask;
 
@@ -63,10 +57,7 @@ public class FetchTests : CdpTestFixture
     {
         await using var _ = await BlockBiDiNetworkPhasesAsync();
 
-        await Cdp.Fetch.EnableAsync(new()
-        {
-            Patterns = [new RequestPattern { UrlPattern = "*://www.example.com/*" }]
-        });
+        await Cdp.Fetch.EnableAsync(patterns: [new RequestPattern { UrlPattern = "*://www.example.com/*" }]);
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
@@ -75,10 +66,7 @@ public class FetchTests : CdpTestFixture
         var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         // Redirect to a different URL
-        await Cdp.Fetch.ContinueRequestAsync(requestPaused.RequestId, new()
-        {
-            Url = "https://www.selenium.dev"
-        });
+        await Cdp.Fetch.ContinueRequestAsync(requestPaused.RequestId, url: "https://www.selenium.dev");
 
         await navigateTask;
 
@@ -91,14 +79,11 @@ public class FetchTests : CdpTestFixture
     {
         await using var _ = await BlockBiDiNetworkPhasesAsync();
 
-        await Cdp.Fetch.EnableAsync(new()
+        await Cdp.Fetch.EnableAsync(patterns: [new RequestPattern
         {
-            Patterns = [new RequestPattern
-            {
-                UrlPattern = "*.png",
-                ResourceType = Network.ResourceType.Image
-            }]
-        });
+            UrlPattern = "*.png",
+            ResourceType = Network.ResourceType.Image
+        }]);
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
@@ -122,15 +107,12 @@ public class FetchTests : CdpTestFixture
     {
         await using var _ = await BlockBiDiNetworkPhasesAsync();
 
-        await Cdp.Fetch.EnableAsync(new()
+        await Cdp.Fetch.EnableAsync(patterns: [new RequestPattern
         {
-            Patterns = [new RequestPattern
-            {
-                UrlPattern = "*",
-                ResourceType = Network.ResourceType.Document,
-                RequestStage = RequestStage.Request
-            }]
-        });
+            UrlPattern = "*",
+            ResourceType = Network.ResourceType.Document,
+            RequestStage = RequestStage.Request
+        }]);
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
@@ -150,10 +132,7 @@ public class FetchTests : CdpTestFixture
     {
         await using var _ = await BlockBiDiNetworkPhasesAsync();
 
-        await Cdp.Fetch.EnableAsync(new()
-        {
-            Patterns = [new RequestPattern { UrlPattern = "*" }]
-        });
+        await Cdp.Fetch.EnableAsync(patterns: [new RequestPattern { UrlPattern = "*" }]);
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
 
@@ -162,14 +141,13 @@ public class FetchTests : CdpTestFixture
         var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
         // Continue with an extra header
-        await Cdp.Fetch.ContinueRequestAsync(requestPaused.RequestId, new()
-        {
-            Headers =
+        await Cdp.Fetch.ContinueRequestAsync(
+            requestPaused.RequestId,
+            headers:
             [
                 new HeaderEntry("X-Custom-Auth", "Bearer test-token"),
                 new HeaderEntry("Accept", "text/html")
-            ]
-        });
+            ]);
 
         await navigateTask;
     }

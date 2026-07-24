@@ -13,8 +13,8 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -22,17 +22,17 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Profiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -40,10 +40,10 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Profiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -51,8 +51,8 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Collect coverage data for the current isolate. The coverage data may be incomplete due to
     /// garbage collection.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetBestEffortCoverageCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -60,10 +60,10 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBestEffortCoverageResult"/>.
     /// </returns>
-    public async Task<GetBestEffortCoverageResult> GetBestEffortCoverageAsync(GetBestEffortCoverageCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetBestEffortCoverageResult> GetBestEffortCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBestEffortCoverageCommandParameters();
-        return await ExecuteCommandAsync(GetBestEffortCoverageCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetBestEffortCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetBestEffortCoverageCommandParameters, GetBestEffortCoverageResult> GetBestEffortCoverageCommand = new("Profiler.getBestEffortCoverage", JsonContext.GetBestEffortCoverageCommandParameters, JsonContext.GetBestEffortCoverageResult);
 
@@ -73,8 +73,8 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <param name="interval">
     /// New sampling interval in microseconds.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetSamplingIntervalCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -82,17 +82,17 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSamplingIntervalResult"/>.
     /// </returns>
-    public async Task<SetSamplingIntervalResult> SetSamplingIntervalAsync(long interval, SetSamplingIntervalCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetSamplingIntervalResult> SetSamplingIntervalAsync(long interval, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSamplingIntervalCommandParameters(Interval: interval);
-        return await ExecuteCommandAsync(SetSamplingIntervalCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetSamplingIntervalCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetSamplingIntervalCommandParameters, SetSamplingIntervalResult> SetSamplingIntervalCommand = new("Profiler.setSamplingInterval", JsonContext.SetSamplingIntervalCommandParameters, JsonContext.SetSamplingIntervalResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -100,10 +100,10 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartResult"/>.
     /// </returns>
-    public async Task<StartResult> StartAsync(StartCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartResult> StartAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartCommandParameters();
-        return await ExecuteCommandAsync(StartCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StartCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartCommandParameters, StartResult> StartCommand = new("Profiler.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
 
@@ -113,15 +113,24 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// counters.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>CallCount</b> - Collect accurate call counts beyond simple 'covered' or 'not covered'.</description></item>
     /// <item><description><b>Detailed</b> - Collect block-based coverage.</description></item>
     /// <item><description><b>AllowTriggeredUpdates</b> - Allow the backend to send updates on its own initiative</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartPreciseCoverageCommandOptions"/>.
+    /// <param name="callCount">
+    /// Collect accurate call counts beyond simple 'covered' or 'not covered'.
+    /// </param>
+    /// <param name="detailed">
+    /// Collect block-based coverage.
+    /// </param>
+    /// <param name="allowTriggeredUpdates">
+    /// Allow the backend to send updates on its own initiative
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -129,17 +138,17 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartPreciseCoverageResult"/>.
     /// </returns>
-    public async Task<StartPreciseCoverageResult> StartPreciseCoverageAsync(StartPreciseCoverageCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartPreciseCoverageResult> StartPreciseCoverageAsync(bool? callCount = default, bool? detailed = default, bool? allowTriggeredUpdates = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StartPreciseCoverageCommandParameters(CallCount: options?.CallCount, Detailed: options?.Detailed, AllowTriggeredUpdates: options?.AllowTriggeredUpdates);
-        return await ExecuteCommandAsync(StartPreciseCoverageCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new StartPreciseCoverageCommandParameters(CallCount: callCount, Detailed: detailed, AllowTriggeredUpdates: allowTriggeredUpdates);
+        return await ExecuteCommandAsync(StartPreciseCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartPreciseCoverageCommandParameters, StartPreciseCoverageResult> StartPreciseCoverageCommand = new("Profiler.startPreciseCoverage", JsonContext.StartPreciseCoverageCommandParameters, JsonContext.StartPreciseCoverageResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StopCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -147,10 +156,10 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopResult"/>.
     /// </returns>
-    public async Task<StopResult> StopAsync(StopCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StopResult> StopAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopCommandParameters();
-        return await ExecuteCommandAsync(StopCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StopCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StopCommandParameters, StopResult> StopCommand = new("Profiler.stop", JsonContext.StopCommandParameters, JsonContext.StopResult);
 
@@ -158,8 +167,8 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Disable precise code coverage. Disabling releases unnecessary execution count records and allows
     /// executing optimized code.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StopPreciseCoverageCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -167,10 +176,10 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopPreciseCoverageResult"/>.
     /// </returns>
-    public async Task<StopPreciseCoverageResult> StopPreciseCoverageAsync(StopPreciseCoverageCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StopPreciseCoverageResult> StopPreciseCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopPreciseCoverageCommandParameters();
-        return await ExecuteCommandAsync(StopPreciseCoverageCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StopPreciseCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StopPreciseCoverageCommandParameters, StopPreciseCoverageResult> StopPreciseCoverageCommand = new("Profiler.stopPreciseCoverage", JsonContext.StopPreciseCoverageCommandParameters, JsonContext.StopPreciseCoverageResult);
 
@@ -178,8 +187,8 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Collect coverage data for the current isolate, and resets execution counters. Precise code
     /// coverage needs to have started.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="TakePreciseCoverageCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -187,10 +196,10 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakePreciseCoverageResult"/>.
     /// </returns>
-    public async Task<TakePreciseCoverageResult> TakePreciseCoverageAsync(TakePreciseCoverageCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TakePreciseCoverageResult> TakePreciseCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakePreciseCoverageCommandParameters();
-        return await ExecuteCommandAsync(TakePreciseCoverageCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(TakePreciseCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<TakePreciseCoverageCommandParameters, TakePreciseCoverageResult> TakePreciseCoverageCommand = new("Profiler.takePreciseCoverage", JsonContext.TakePreciseCoverageCommandParameters, JsonContext.TakePreciseCoverageResult);
 
@@ -240,13 +249,6 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -254,25 +256,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record GetBestEffortCoverageCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.GetBestEffortCoverageAsync"/>.
-/// </summary>
-public sealed record GetBestEffortCoverageCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -285,13 +273,6 @@ public sealed record GetBestEffortCoverageResult(ImmutableArray<ScriptCoverage> 
 internal sealed record SetSamplingIntervalCommandParameters(long Interval) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.SetSamplingIntervalAsync"/>.
-/// </summary>
-public sealed record SetSamplingIntervalCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetSamplingIntervalResult() : EmptyResult;
 
@@ -299,39 +280,11 @@ public sealed record SetSamplingIntervalResult() : EmptyResult;
 internal sealed record StartCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.StartAsync"/>.
-/// </summary>
-public sealed record StartCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record StartResult() : EmptyResult;
 
 
 internal sealed record StartPreciseCoverageCommandParameters(bool? CallCount, bool? Detailed, bool? AllowTriggeredUpdates) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.StartPreciseCoverageAsync"/>.
-/// </summary>
-public sealed record StartPreciseCoverageCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Collect accurate call counts beyond simple 'covered' or 'not covered'.
-    /// </summary>
-    public bool? CallCount { get; init; }
-
-    /// <summary>
-    /// Collect block-based coverage.
-    /// </summary>
-    public bool? Detailed { get; init; }
-
-    /// <summary>
-    /// Allow the backend to send updates on its own initiative
-    /// </summary>
-    public bool? AllowTriggeredUpdates { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -344,13 +297,6 @@ public sealed record StartPreciseCoverageResult(double Timestamp) : EmptyResult;
 internal sealed record StopCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.StopAsync"/>.
-/// </summary>
-public sealed record StopCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Profile">
 /// Recorded profile.
@@ -361,25 +307,11 @@ public sealed record StopResult(Profile Profile) : EmptyResult;
 internal sealed record StopPreciseCoverageCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.StopPreciseCoverageAsync"/>.
-/// </summary>
-public sealed record StopPreciseCoverageCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record StopPreciseCoverageResult() : EmptyResult;
 
 
 internal sealed record TakePreciseCoverageCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ProfilerDomain.TakePreciseCoverageAsync"/>.
-/// </summary>
-public sealed record TakePreciseCoverageCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

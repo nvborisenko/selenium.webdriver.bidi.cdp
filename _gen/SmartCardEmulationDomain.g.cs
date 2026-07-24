@@ -15,8 +15,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <summary>
     /// Enables the |SmartCardEmulation| domain.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -24,18 +24,18 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("SmartCardEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     /// <summary>
     /// Disables the |SmartCardEmulation| domain.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -43,10 +43,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("SmartCardEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -61,8 +61,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="contextId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportEstablishContextResultCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -70,10 +70,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportEstablishContextResultResult"/>.
     /// </returns>
-    public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, ReportEstablishContextResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportEstablishContextResultCommandParameters(RequestId: requestId, ContextId: contextId);
-        return await ExecuteCommandAsync(ReportEstablishContextResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportEstablishContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportEstablishContextResultCommandParameters, ReportEstablishContextResultResult> ReportEstablishContextResultCommand = new("SmartCardEmulation.reportEstablishContextResult", JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult);
 
@@ -86,8 +86,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </summary>
     /// <param name="requestId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportReleaseContextResultCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -95,10 +95,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportReleaseContextResultResult"/>.
     /// </returns>
-    public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, ReportReleaseContextResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportReleaseContextResultCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReportReleaseContextResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportReleaseContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportReleaseContextResultCommandParameters, ReportReleaseContextResultResult> ReportReleaseContextResultCommand = new("SmartCardEmulation.reportReleaseContextResult", JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult);
 
@@ -113,8 +113,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="readers">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportListReadersResultCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -122,10 +122,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportListReadersResultResult"/>.
     /// </returns>
-    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, ReportListReadersResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportListReadersResultCommandParameters(RequestId: requestId, Readers: readers);
-        return await ExecuteCommandAsync(ReportListReadersResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportListReadersResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportListReadersResultCommandParameters, ReportListReadersResultResult> ReportListReadersResultCommand = new("SmartCardEmulation.reportListReadersResult", JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult);
 
@@ -140,8 +140,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="readerStates">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportGetStatusChangeResultCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -149,10 +149,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportGetStatusChangeResultResult"/>.
     /// </returns>
-    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, ReportGetStatusChangeResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportGetStatusChangeResultCommandParameters(RequestId: requestId, ReaderStates: readerStates);
-        return await ExecuteCommandAsync(ReportGetStatusChangeResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportGetStatusChangeResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportGetStatusChangeResultCommandParameters, ReportGetStatusChangeResultResult> ReportGetStatusChangeResultCommand = new("SmartCardEmulation.reportGetStatusChangeResult", JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult);
 
@@ -168,8 +168,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="handle">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportBeginTransactionResultCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -177,10 +177,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportBeginTransactionResultResult"/>.
     /// </returns>
-    public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, ReportBeginTransactionResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportBeginTransactionResultCommandParameters(RequestId: requestId, Handle: handle);
-        return await ExecuteCommandAsync(ReportBeginTransactionResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportBeginTransactionResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportBeginTransactionResultCommandParameters, ReportBeginTransactionResultResult> ReportBeginTransactionResultCommand = new("SmartCardEmulation.reportBeginTransactionResult", JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult);
 
@@ -207,8 +207,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </summary>
     /// <param name="requestId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportPlainResultCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -216,10 +216,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportPlainResultResult"/>.
     /// </returns>
-    public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, ReportPlainResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportPlainResultCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReportPlainResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportPlainResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportPlainResultCommandParameters, ReportPlainResultResult> ReportPlainResultCommand = new("SmartCardEmulation.reportPlainResult", JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult);
 
@@ -231,7 +231,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardconnecta
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>ActiveProtocol</b></description></item>
     /// </list>
@@ -240,8 +240,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="handle">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportConnectResultCommandOptions"/>.
+    /// <param name="activeProtocol">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -249,10 +251,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportConnectResultResult"/>.
     /// </returns>
-    public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, ReportConnectResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ReportConnectResultCommandParameters(RequestId: requestId, Handle: handle, ActiveProtocol: options?.ActiveProtocol);
-        return await ExecuteCommandAsync(ReportConnectResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ReportConnectResultCommandParameters(RequestId: requestId, Handle: handle, ActiveProtocol: activeProtocol);
+        return await ExecuteCommandAsync(ReportConnectResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportConnectResultCommandParameters, ReportConnectResultResult> ReportConnectResultCommand = new("SmartCardEmulation.reportConnectResult", JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult);
 
@@ -277,8 +279,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="data">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportDataResultCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -286,10 +288,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportDataResultResult"/>.
     /// </returns>
-    public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, ReportDataResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportDataResultCommandParameters(RequestId: requestId, Data: data);
-        return await ExecuteCommandAsync(ReportDataResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportDataResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportDataResultCommandParameters, ReportDataResultResult> ReportDataResultCommand = new("SmartCardEmulation.reportDataResult", JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult);
 
@@ -301,7 +303,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardstatusa
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Protocol</b></description></item>
     /// </list>
@@ -314,8 +316,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="atr">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportStatusResultCommandOptions"/>.
+    /// <param name="protocol">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -323,10 +327,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportStatusResultResult"/>.
     /// </returns>
-    public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, ReportStatusResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ReportStatusResultCommandParameters(RequestId: requestId, ReaderName: readerName, State: state, Atr: atr, Protocol: options?.Protocol);
-        return await ExecuteCommandAsync(ReportStatusResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ReportStatusResultCommandParameters(RequestId: requestId, ReaderName: readerName, State: state, Atr: atr, Protocol: protocol);
+        return await ExecuteCommandAsync(ReportStatusResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportStatusResultCommandParameters, ReportStatusResultResult> ReportStatusResultCommand = new("SmartCardEmulation.reportStatusResult", JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult);
 
@@ -337,8 +341,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// </param>
     /// <param name="resultCode">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ReportErrorCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -346,10 +350,10 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportErrorResult"/>.
     /// </returns>
-    public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, ReportErrorCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportErrorCommandParameters(RequestId: requestId, ResultCode: resultCode);
-        return await ExecuteCommandAsync(ReportErrorCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ReportErrorCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ReportErrorCommandParameters, ReportErrorResult> ReportErrorCommand = new("SmartCardEmulation.reportError", JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult);
 
@@ -581,25 +585,11 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -609,25 +599,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record ReportEstablishContextResultCommandParameters(string RequestId, long ContextId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportEstablishContextResultAsync"/>.
-/// </summary>
-public sealed record ReportEstablishContextResultCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReportEstablishContextResultResult() : EmptyResult;
 
 
 internal sealed record ReportReleaseContextResultCommandParameters(string RequestId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportReleaseContextResultAsync"/>.
-/// </summary>
-public sealed record ReportReleaseContextResultCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -637,25 +613,11 @@ public sealed record ReportReleaseContextResultResult() : EmptyResult;
 internal sealed record ReportListReadersResultCommandParameters(string RequestId, ImmutableArray<string> Readers) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportListReadersResultAsync"/>.
-/// </summary>
-public sealed record ReportListReadersResultCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReportListReadersResultResult() : EmptyResult;
 
 
 internal sealed record ReportGetStatusChangeResultCommandParameters(string RequestId, ImmutableArray<ReaderStateOut> ReaderStates) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportGetStatusChangeResultAsync"/>.
-/// </summary>
-public sealed record ReportGetStatusChangeResultCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -665,25 +627,11 @@ public sealed record ReportGetStatusChangeResultResult() : EmptyResult;
 internal sealed record ReportBeginTransactionResultCommandParameters(string RequestId, long Handle) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportBeginTransactionResultAsync"/>.
-/// </summary>
-public sealed record ReportBeginTransactionResultCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReportBeginTransactionResultResult() : EmptyResult;
 
 
 internal sealed record ReportPlainResultCommandParameters(string RequestId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportPlainResultAsync"/>.
-/// </summary>
-public sealed record ReportPlainResultCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -693,28 +641,11 @@ public sealed record ReportPlainResultResult() : EmptyResult;
 internal sealed record ReportConnectResultCommandParameters(string RequestId, long Handle, Protocol? ActiveProtocol) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportConnectResultAsync"/>.
-/// </summary>
-public sealed record ReportConnectResultCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public Protocol? ActiveProtocol { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReportConnectResultResult() : EmptyResult;
 
 
 internal sealed record ReportDataResultCommandParameters(string RequestId, string Data) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportDataResultAsync"/>.
-/// </summary>
-public sealed record ReportDataResultCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -724,28 +655,11 @@ public sealed record ReportDataResultResult() : EmptyResult;
 internal sealed record ReportStatusResultCommandParameters(string RequestId, string ReaderName, ConnectionState State, string Atr, Protocol? Protocol) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportStatusResultAsync"/>.
-/// </summary>
-public sealed record ReportStatusResultCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public Protocol? Protocol { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record ReportStatusResultResult() : EmptyResult;
 
 
 internal sealed record ReportErrorCommandParameters(string RequestId, ResultCode ResultCode) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="SmartCardEmulationDomain.ReportErrorAsync"/>.
-/// </summary>
-public sealed record ReportErrorCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

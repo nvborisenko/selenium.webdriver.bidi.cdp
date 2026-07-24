@@ -21,8 +21,8 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// site installing the webapp. See
     /// https://web.dev/learn/pwa/web-app-manifest.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetOsAppStateCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -30,10 +30,10 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetOsAppStateResult"/>.
     /// </returns>
-    public async Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, GetOsAppStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetOsAppStateCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(GetOsAppStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetOsAppStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetOsAppStateCommandParameters, GetOsAppStateResult> GetOsAppStateCommand = new("PWA.getOsAppState", JsonContext.GetOsAppStateCommandParameters, JsonContext.GetOsAppStateResult);
 
@@ -66,15 +66,19 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// mode, the installation will fail, regardless of the state of the allowlist.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>InstallUrlOrBundleUrl</b> - The location of the app or bundle overriding the one derived from the manifestId.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="manifestId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="InstallCommandOptions"/>.
+    /// <param name="installUrlOrBundleUrl">
+    /// The location of the app or bundle overriding the one derived from the
+    /// manifestId.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -82,10 +86,10 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="InstallResult"/>.
     /// </returns>
-    public async Task<InstallResult> InstallAsync(string manifestId, InstallCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new InstallCommandParameters(ManifestId: manifestId, InstallUrlOrBundleUrl: options?.InstallUrlOrBundleUrl);
-        return await ExecuteCommandAsync(InstallCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new InstallCommandParameters(ManifestId: manifestId, InstallUrlOrBundleUrl: installUrlOrBundleUrl);
+        return await ExecuteCommandAsync(InstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<InstallCommandParameters, InstallResult> InstallCommand = new("PWA.install", JsonContext.InstallCommandParameters, JsonContext.InstallResult);
 
@@ -94,8 +98,8 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="manifestId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="UninstallCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -103,10 +107,10 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UninstallResult"/>.
     /// </returns>
-    public async Task<UninstallResult> UninstallAsync(string manifestId, UninstallCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<UninstallResult> UninstallAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UninstallCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(UninstallCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(UninstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<UninstallCommandParameters, UninstallResult> UninstallCommand = new("PWA.uninstall", JsonContext.UninstallCommandParameters, JsonContext.UninstallResult);
 
@@ -116,15 +120,17 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// can be used to attach to via Target.attachToTarget or similar APIs.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Url</b></description></item>
     /// </list>
     /// </remarks>
     /// <param name="manifestId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="LaunchCommandOptions"/>.
+    /// <param name="url">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -132,10 +138,10 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LaunchResult"/>.
     /// </returns>
-    public async Task<LaunchResult> LaunchAsync(string manifestId, LaunchCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<LaunchResult> LaunchAsync(string manifestId, string? url = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new LaunchCommandParameters(ManifestId: manifestId, Url: options?.Url);
-        return await ExecuteCommandAsync(LaunchCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new LaunchCommandParameters(ManifestId: manifestId, Url: url);
+        return await ExecuteCommandAsync(LaunchCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<LaunchCommandParameters, LaunchResult> LaunchCommand = new("PWA.launch", JsonContext.LaunchCommandParameters, JsonContext.LaunchResult);
 
@@ -158,8 +164,8 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </param>
     /// <param name="files">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="LaunchFilesInAppCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -167,10 +173,10 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LaunchFilesInAppResult"/>.
     /// </returns>
-    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, LaunchFilesInAppCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LaunchFilesInAppCommandParameters(ManifestId: manifestId, Files: files);
-        return await ExecuteCommandAsync(LaunchFilesInAppCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(LaunchFilesInAppCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<LaunchFilesInAppCommandParameters, LaunchFilesInAppResult> LaunchFilesInAppCommand = new("PWA.launchFilesInApp", JsonContext.LaunchFilesInAppCommandParameters, JsonContext.LaunchFilesInAppResult);
 
@@ -181,8 +187,8 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </summary>
     /// <param name="manifestId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="OpenCurrentPageInAppCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -190,10 +196,10 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OpenCurrentPageInAppResult"/>.
     /// </returns>
-    public async Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, OpenCurrentPageInAppCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OpenCurrentPageInAppCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(OpenCurrentPageInAppCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(OpenCurrentPageInAppCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<OpenCurrentPageInAppCommandParameters, OpenCurrentPageInAppResult> OpenCurrentPageInAppCommand = new("PWA.openCurrentPageInApp", JsonContext.OpenCurrentPageInAppCommandParameters, JsonContext.OpenCurrentPageInAppResult);
 
@@ -209,7 +215,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// See the comment of each parameter.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>LinkCapturing</b> - If user allows the links clicked on by the user in the app's scope, or extended scope if the manifest has scope extensions and the flags <b>DesktopPWAsLinkCapturingWithScopeExtensions</b> and <b>WebAppEnableScopeExtensions</b> are enabled.  Note, the API does not support resetting the linkCapturing to the initial value, uninstalling and installing the web app again will reset it.  TODO(crbug.com/339453269): Setting this value on ChromeOS is not supported yet.</description></item>
     /// <item><description><b>DisplayMode</b></description></item>
@@ -217,8 +223,23 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </remarks>
     /// <param name="manifestId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ChangeAppUserSettingsCommandOptions"/>.
+    /// <param name="linkCapturing">
+    /// If user allows the links clicked on by the user in the app's scope, or
+    /// extended scope if the manifest has scope extensions and the flags
+    /// <b>DesktopPWAsLinkCapturingWithScopeExtensions</b> and
+    /// <b>WebAppEnableScopeExtensions</b> are enabled.
+    /// 
+    /// Note, the API does not support resetting the linkCapturing to the
+    /// initial value, uninstalling and installing the web app again will reset
+    /// it.
+    /// 
+    /// TODO(crbug.com/339453269): Setting this value on ChromeOS is not
+    /// supported yet.
+    /// </param>
+    /// <param name="displayMode">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -226,23 +247,16 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ChangeAppUserSettingsResult"/>.
     /// </returns>
-    public async Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, ChangeAppUserSettingsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = default, DisplayMode? displayMode = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ChangeAppUserSettingsCommandParameters(ManifestId: manifestId, LinkCapturing: options?.LinkCapturing, DisplayMode: options?.DisplayMode);
-        return await ExecuteCommandAsync(ChangeAppUserSettingsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ChangeAppUserSettingsCommandParameters(ManifestId: manifestId, LinkCapturing: linkCapturing, DisplayMode: displayMode);
+        return await ExecuteCommandAsync(ChangeAppUserSettingsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ChangeAppUserSettingsCommandParameters, ChangeAppUserSettingsResult> ChangeAppUserSettingsCommand = new("PWA.changeAppUserSettings", JsonContext.ChangeAppUserSettingsCommandParameters, JsonContext.ChangeAppUserSettingsResult);
 
 }
 
 internal sealed record GetOsAppStateCommandParameters(string ManifestId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="PWADomain.GetOsAppStateAsync"/>.
-/// </summary>
-public sealed record GetOsAppStateCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -256,18 +270,6 @@ public sealed record GetOsAppStateResult(long BadgeCount, ImmutableArray<FileHan
 internal sealed record InstallCommandParameters(string ManifestId, string? InstallUrlOrBundleUrl) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="PWADomain.InstallAsync"/>.
-/// </summary>
-public sealed record InstallCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The location of the app or bundle overriding the one derived from the
-    /// manifestId.
-    /// </summary>
-    public string? InstallUrlOrBundleUrl { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record InstallResult() : EmptyResult;
 
@@ -275,28 +277,11 @@ public sealed record InstallResult() : EmptyResult;
 internal sealed record UninstallCommandParameters(string ManifestId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="PWADomain.UninstallAsync"/>.
-/// </summary>
-public sealed record UninstallCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record UninstallResult() : EmptyResult;
 
 
 internal sealed record LaunchCommandParameters(string ManifestId, string? Url) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="PWADomain.LaunchAsync"/>.
-/// </summary>
-public sealed record LaunchCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public string? Url { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -309,13 +294,6 @@ public sealed record LaunchResult(Target.TargetID TargetId) : EmptyResult;
 internal sealed record LaunchFilesInAppCommandParameters(string ManifestId, ImmutableArray<string> Files) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="PWADomain.LaunchFilesInAppAsync"/>.
-/// </summary>
-public sealed record LaunchFilesInAppCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="TargetIds">
 /// IDs of the tab targets created as the result.
@@ -326,43 +304,11 @@ public sealed record LaunchFilesInAppResult(ImmutableArray<Target.TargetID> Targ
 internal sealed record OpenCurrentPageInAppCommandParameters(string ManifestId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="PWADomain.OpenCurrentPageInAppAsync"/>.
-/// </summary>
-public sealed record OpenCurrentPageInAppCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record OpenCurrentPageInAppResult() : EmptyResult;
 
 
 internal sealed record ChangeAppUserSettingsCommandParameters(string ManifestId, bool? LinkCapturing, DisplayMode? DisplayMode) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="PWADomain.ChangeAppUserSettingsAsync"/>.
-/// </summary>
-public sealed record ChangeAppUserSettingsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If user allows the links clicked on by the user in the app's scope, or
-    /// extended scope if the manifest has scope extensions and the flags
-    /// <b>DesktopPWAsLinkCapturingWithScopeExtensions</b> and
-    /// <b>WebAppEnableScopeExtensions</b> are enabled.
-    /// 
-    /// Note, the API does not support resetting the linkCapturing to the
-    /// initial value, uninstalling and installing the web app again will reset
-    /// it.
-    /// 
-    /// TODO(crbug.com/339453269): Setting this value on ChromeOS is not
-    /// supported yet.
-    /// </summary>
-    public bool? LinkCapturing { get; init; }
-
-    /// <summary>
-    /// </summary>
-    public DisplayMode? DisplayMode { get; init; }
-}
 
 /// <summary>
 /// </summary>

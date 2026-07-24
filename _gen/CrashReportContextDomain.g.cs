@@ -16,8 +16,8 @@ public sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium.W
     /// <summary>
     /// Returns all entries in the CrashReportContext across all frames in the page.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetEntriesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,23 +25,16 @@ public sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEntriesResult"/>.
     /// </returns>
-    public async Task<GetEntriesResult> GetEntriesAsync(GetEntriesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetEntriesResult> GetEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEntriesCommandParameters();
-        return await ExecuteCommandAsync(GetEntriesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetEntriesCommandParameters, GetEntriesResult> GetEntriesCommand = new("CrashReportContext.getEntries", JsonContext.GetEntriesCommandParameters, JsonContext.GetEntriesResult);
 
 }
 
 internal sealed record GetEntriesCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CrashReportContextDomain.GetEntriesAsync"/>.
-/// </summary>
-public sealed record GetEntriesCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

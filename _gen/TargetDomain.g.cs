@@ -17,8 +17,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </summary>
     /// <param name="targetId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ActivateTargetCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -26,10 +26,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ActivateTargetResult"/>.
     /// </returns>
-    public async Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, ActivateTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ActivateTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(ActivateTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ActivateTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ActivateTargetCommandParameters, ActivateTargetResult> ActivateTargetCommand = new("Target.activateTarget", JsonContext.ActivateTargetCommandParameters, JsonContext.ActivateTargetResult);
 
@@ -37,15 +37,20 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Attaches to the target with given id.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Flatten</b> - Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.</description></item>
     /// </list>
     /// </remarks>
     /// <param name="targetId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AttachToTargetCommandOptions"/>.
+    /// <param name="flatten">
+    /// Enables "flat" access to the session via specifying sessionId attribute in the commands.
+    /// We plan to make this the default, deprecate non-flattened mode,
+    /// and eventually retire it. See crbug.com/991325.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -53,18 +58,18 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AttachToTargetResult"/>.
     /// </returns>
-    public async Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, AttachToTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new AttachToTargetCommandParameters(TargetId: targetId, Flatten: options?.Flatten);
-        return await ExecuteCommandAsync(AttachToTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new AttachToTargetCommandParameters(TargetId: targetId, Flatten: flatten);
+        return await ExecuteCommandAsync(AttachToTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AttachToTargetCommandParameters, AttachToTargetResult> AttachToTargetCommand = new("Target.attachToTarget", JsonContext.AttachToTargetCommandParameters, JsonContext.AttachToTargetResult);
 
     /// <summary>
     /// Attaches to the browser target, only uses flat sessionId mode.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AttachToBrowserTargetCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -73,10 +78,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="AttachToBrowserTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(AttachToBrowserTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AttachToBrowserTargetCommandParameters();
-        return await ExecuteCommandAsync(AttachToBrowserTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(AttachToBrowserTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AttachToBrowserTargetCommandParameters, AttachToBrowserTargetResult> AttachToBrowserTargetCommand = new("Target.attachToBrowserTarget", JsonContext.AttachToBrowserTargetCommandParameters, JsonContext.AttachToBrowserTargetResult);
 
@@ -85,8 +90,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </summary>
     /// <param name="targetId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CloseTargetCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -94,10 +99,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseTargetResult"/>.
     /// </returns>
-    public async Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, CloseTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CloseTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(CloseTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(CloseTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CloseTargetCommandParameters, CloseTargetResult> CloseTargetCommand = new("Target.closeTarget", JsonContext.CloseTargetCommandParameters, JsonContext.CloseTargetResult);
 
@@ -112,7 +117,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// - <b>binding.onmessage = json =&gt; handleMessage(json)</b> - a callback that will be called for the protocol notifications and command responses.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>BindingName</b> - Binding name, 'cdp' if not specified.</description></item>
     /// <item><description><b>InheritPermissions</b> - If true, inherits the current root session's permissions (default: false).</description></item>
@@ -120,8 +125,14 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </remarks>
     /// <param name="targetId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ExposeDevToolsProtocolCommandOptions"/>.
+    /// <param name="bindingName">
+    /// Binding name, 'cdp' if not specified.
+    /// </param>
+    /// <param name="inheritPermissions">
+    /// If true, inherits the current root session's permissions (default: false).
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -130,10 +141,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="ExposeDevToolsProtocolResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, ExposeDevToolsProtocolCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = default, bool? inheritPermissions = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new ExposeDevToolsProtocolCommandParameters(TargetId: targetId, BindingName: options?.BindingName, InheritPermissions: options?.InheritPermissions);
-        return await ExecuteCommandAsync(ExposeDevToolsProtocolCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new ExposeDevToolsProtocolCommandParameters(TargetId: targetId, BindingName: bindingName, InheritPermissions: inheritPermissions);
+        return await ExecuteCommandAsync(ExposeDevToolsProtocolCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ExposeDevToolsProtocolCommandParameters, ExposeDevToolsProtocolResult> ExposeDevToolsProtocolCommand = new("Target.exposeDevToolsProtocol", JsonContext.ExposeDevToolsProtocolCommandParameters, JsonContext.ExposeDevToolsProtocolResult);
 
@@ -142,7 +153,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// one.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>DisposeOnDetach</b> - If specified, disposes this context when debugging session disconnects.</description></item>
     /// <item><description><b>ProxyServer</b> - Proxy server, similar to the one passed to --proxy-server</description></item>
@@ -150,8 +161,21 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>OriginsWithUniversalNetworkAccess</b> - An optional list of origins to grant unlimited cross-origin access to. Parts of the URL other than those constituting origin are ignored.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CreateBrowserContextCommandOptions"/>.
+    /// <param name="disposeOnDetach">
+    /// If specified, disposes this context when debugging session disconnects.
+    /// </param>
+    /// <param name="proxyServer">
+    /// Proxy server, similar to the one passed to --proxy-server
+    /// </param>
+    /// <param name="proxyBypassList">
+    /// Proxy bypass list, similar to the one passed to --proxy-bypass-list
+    /// </param>
+    /// <param name="originsWithUniversalNetworkAccess">
+    /// An optional list of origins to grant unlimited cross-origin access to.
+    /// Parts of the URL other than those constituting origin are ignored.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -159,18 +183,18 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateBrowserContextResult"/>.
     /// </returns>
-    public async Task<CreateBrowserContextResult> CreateBrowserContextAsync(CreateBrowserContextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = default, string? proxyServer = default, string? proxyBypassList = default, ImmutableArray<string>? originsWithUniversalNetworkAccess = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new CreateBrowserContextCommandParameters(DisposeOnDetach: options?.DisposeOnDetach, ProxyServer: options?.ProxyServer, ProxyBypassList: options?.ProxyBypassList, OriginsWithUniversalNetworkAccess: options?.OriginsWithUniversalNetworkAccess);
-        return await ExecuteCommandAsync(CreateBrowserContextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new CreateBrowserContextCommandParameters(DisposeOnDetach: disposeOnDetach, ProxyServer: proxyServer, ProxyBypassList: proxyBypassList, OriginsWithUniversalNetworkAccess: originsWithUniversalNetworkAccess);
+        return await ExecuteCommandAsync(CreateBrowserContextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CreateBrowserContextCommandParameters, CreateBrowserContextResult> CreateBrowserContextCommand = new("Target.createBrowserContext", JsonContext.CreateBrowserContextCommandParameters, JsonContext.CreateBrowserContextResult);
 
     /// <summary>
     /// Returns all browser contexts created with <b>Target.createBrowserContext</b> method.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetBrowserContextsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -178,10 +202,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBrowserContextsResult"/>.
     /// </returns>
-    public async Task<GetBrowserContextsResult> GetBrowserContextsAsync(GetBrowserContextsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBrowserContextsCommandParameters();
-        return await ExecuteCommandAsync(GetBrowserContextsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetBrowserContextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetBrowserContextsCommandParameters, GetBrowserContextsResult> GetBrowserContextsCommand = new("Target.getBrowserContexts", JsonContext.GetBrowserContextsCommandParameters, JsonContext.GetBrowserContextsResult);
 
@@ -189,7 +213,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Creates a new page.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Left</b> - Frame left origin in DIP (requires newWindow to be true or headless shell).</description></item>
     /// <item><description><b>Top</b> - Frame top origin in DIP (requires newWindow to be true or headless shell).</description></item>
@@ -208,8 +232,53 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <param name="url">
     /// The initial URL the page will be navigated to. An empty string indicates about:blank.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="CreateTargetCommandOptions"/>.
+    /// <param name="left">
+    /// Frame left origin in DIP (requires newWindow to be true or headless shell).
+    /// </param>
+    /// <param name="top">
+    /// Frame top origin in DIP (requires newWindow to be true or headless shell).
+    /// </param>
+    /// <param name="width">
+    /// Frame width in DIP (requires newWindow to be true or headless shell).
+    /// </param>
+    /// <param name="height">
+    /// Frame height in DIP (requires newWindow to be true or headless shell).
+    /// </param>
+    /// <param name="windowState">
+    /// Frame window state (requires newWindow to be true or headless shell).
+    /// Default is normal.
+    /// </param>
+    /// <param name="browserContextId">
+    /// The browser context to create the page in.
+    /// </param>
+    /// <param name="enableBeginFrameControl">
+    /// Whether BeginFrames for this target will be controlled via DevTools (headless shell only,
+    /// not supported on MacOS yet, false by default).
+    /// </param>
+    /// <param name="newWindow">
+    /// Whether to create a new Window or Tab (false by default, not supported by headless shell).
+    /// </param>
+    /// <param name="background">
+    /// Whether to create the target in background or foreground (false by default, not supported
+    /// by headless shell).
+    /// </param>
+    /// <param name="forTab">
+    /// Whether to create the target of type "tab".
+    /// </param>
+    /// <param name="hidden">
+    /// Whether to create a hidden target. The hidden target is observable via protocol, but not
+    /// present in the tab UI strip. Cannot be created with <b>forTab: true</b>, <b>newWindow: true</b> or
+    /// <b>background: false</b>. The life-time of the tab is limited to the life-time of the session.
+    /// </param>
+    /// <param name="focus">
+    /// If specified, determines whether the new target should be focused.
+    /// By default, the focus behavior depends on the <b>background</b> parameter:
+    /// - If <b>background</b> is false (default) and <b>focus</b> is omitted, the new target is focused and the browser window is brought to the foreground.
+    /// - If <b>background</b> is false and <b>focus</b> is false, the target is opened but the browser window's focus remains unchanged (e.g., if the window was in the background, it stays there).
+    /// - If <b>background</b> is true, setting <b>focus</b> to true is not supported and will result in an error.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -217,10 +286,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateTargetResult"/>.
     /// </returns>
-    public async Task<CreateTargetResult> CreateTargetAsync(string url, CreateTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CreateTargetResult> CreateTargetAsync(string url, long? left = default, long? top = default, long? width = default, long? height = default, WindowState? windowState = default, Browser.BrowserContextID? browserContextId = default, bool? enableBeginFrameControl = default, bool? newWindow = default, bool? background = default, bool? forTab = default, bool? hidden = default, bool? focus = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new CreateTargetCommandParameters(Url: url, Left: options?.Left, Top: options?.Top, Width: options?.Width, Height: options?.Height, WindowState: options?.WindowState, BrowserContextId: options?.BrowserContextId, EnableBeginFrameControl: options?.EnableBeginFrameControl, NewWindow: options?.NewWindow, Background: options?.Background, ForTab: options?.ForTab, Hidden: options?.Hidden, Focus: options?.Focus);
-        return await ExecuteCommandAsync(CreateTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new CreateTargetCommandParameters(Url: url, Left: left, Top: top, Width: width, Height: height, WindowState: windowState, BrowserContextId: browserContextId, EnableBeginFrameControl: enableBeginFrameControl, NewWindow: newWindow, Background: background, ForTab: forTab, Hidden: hidden, Focus: focus);
+        return await ExecuteCommandAsync(CreateTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<CreateTargetCommandParameters, CreateTargetResult> CreateTargetCommand = new("Target.createTarget", JsonContext.CreateTargetCommandParameters, JsonContext.CreateTargetResult);
 
@@ -228,14 +297,20 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Detaches session with given id.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>SessionId</b> - Session to detach.</description></item>
     /// <item><description><b>TargetId</b> - Deprecated.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DetachFromTargetCommandOptions"/>.
+    /// <param name="sessionId">
+    /// Session to detach.
+    /// </param>
+    /// <param name="targetId">
+    /// Deprecated.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -243,10 +318,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DetachFromTargetResult"/>.
     /// </returns>
-    public async Task<DetachFromTargetResult> DetachFromTargetAsync(DetachFromTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new DetachFromTargetCommandParameters(SessionId: options?.SessionId, TargetId: options?.TargetId);
-        return await ExecuteCommandAsync(DetachFromTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new DetachFromTargetCommandParameters(SessionId: sessionId, TargetId: targetId);
+        return await ExecuteCommandAsync(DetachFromTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DetachFromTargetCommandParameters, DetachFromTargetResult> DetachFromTargetCommand = new("Target.detachFromTarget", JsonContext.DetachFromTargetCommandParameters, JsonContext.DetachFromTargetResult);
 
@@ -256,8 +331,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </summary>
     /// <param name="browserContextId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisposeBrowserContextCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -265,10 +340,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisposeBrowserContextResult"/>.
     /// </returns>
-    public async Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, DisposeBrowserContextCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisposeBrowserContextCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(DisposeBrowserContextCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisposeBrowserContextCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisposeBrowserContextCommandParameters, DisposeBrowserContextResult> DisposeBrowserContextCommand = new("Target.disposeBrowserContext", JsonContext.DisposeBrowserContextCommandParameters, JsonContext.DisposeBrowserContextResult);
 
@@ -276,13 +351,15 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Returns information about a target.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>TargetId</b></description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetTargetInfoCommandOptions"/>.
+    /// <param name="targetId">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -291,10 +368,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="GetTargetInfoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetTargetInfoResult> GetTargetInfoAsync(GetTargetInfoCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetTargetInfoCommandParameters(TargetId: options?.TargetId);
-        return await ExecuteCommandAsync(GetTargetInfoCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetTargetInfoCommandParameters(TargetId: targetId);
+        return await ExecuteCommandAsync(GetTargetInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetTargetInfoCommandParameters, GetTargetInfoResult> GetTargetInfoCommand = new("Target.getTargetInfo", JsonContext.GetTargetInfoCommandParameters, JsonContext.GetTargetInfoResult);
 
@@ -302,13 +379,18 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Retrieves a list of available targets.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Filter</b> - Only targets matching filter will be reported. If filter is not specified and target discovery is currently enabled, a filter used for target discovery is used for consistency.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetTargetsCommandOptions"/>.
+    /// <param name="filter">
+    /// Only targets matching filter will be reported. If filter is not specified
+    /// and target discovery is currently enabled, a filter used for target discovery
+    /// is used for consistency.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -316,10 +398,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetTargetsResult"/>.
     /// </returns>
-    public async Task<GetTargetsResult> GetTargetsAsync(GetTargetsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new GetTargetsCommandParameters(Filter: options?.Filter);
-        return await ExecuteCommandAsync(GetTargetsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new GetTargetsCommandParameters(Filter: filter);
+        return await ExecuteCommandAsync(GetTargetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetTargetsCommandParameters, GetTargetsResult> GetTargetsCommand = new("Target.getTargets", JsonContext.GetTargetsCommandParameters, JsonContext.GetTargetsResult);
 
@@ -329,7 +411,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// and crbug.com/991325.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>SessionId</b> - Identifier of the session.</description></item>
     /// <item><description><b>TargetId</b> - Deprecated.</description></item>
@@ -337,8 +419,14 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </remarks>
     /// <param name="message">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SendMessageToTargetCommandOptions"/>.
+    /// <param name="sessionId">
+    /// Identifier of the session.
+    /// </param>
+    /// <param name="targetId">
+    /// Deprecated.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -347,10 +435,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="SendMessageToTargetResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SendMessageToTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SendMessageToTargetCommandParameters(Message: message, SessionId: options?.SessionId, TargetId: options?.TargetId);
-        return await ExecuteCommandAsync(SendMessageToTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SendMessageToTargetCommandParameters(Message: message, SessionId: sessionId, TargetId: targetId);
+        return await ExecuteCommandAsync(SendMessageToTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SendMessageToTargetCommandParameters, SendMessageToTargetResult> SendMessageToTargetCommand = new("Target.sendMessageToTarget", JsonContext.SendMessageToTargetCommandParameters, JsonContext.SendMessageToTargetResult);
 
@@ -365,7 +453,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// to all available targets.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Flatten</b> - Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.</description></item>
     /// <item><description><b>Filter</b> - Only targets matching filter will be attached.</description></item>
@@ -378,8 +466,16 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Whether to pause new targets when attaching to them. Use <b>Runtime.runIfWaitingForDebugger</b>
     /// to run paused targets.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetAutoAttachCommandOptions"/>.
+    /// <param name="flatten">
+    /// Enables "flat" access to the session via specifying sessionId attribute in the commands.
+    /// We plan to make this the default, deprecate non-flattened mode,
+    /// and eventually retire it. See crbug.com/991325.
+    /// </param>
+    /// <param name="filter">
+    /// Only targets matching filter will be attached.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -387,10 +483,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAutoAttachResult"/>.
     /// </returns>
-    public async Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, SetAutoAttachCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = default, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetAutoAttachCommandParameters(AutoAttach: autoAttach, WaitForDebuggerOnStart: waitForDebuggerOnStart, Flatten: options?.Flatten, Filter: options?.Filter);
-        return await ExecuteCommandAsync(SetAutoAttachCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetAutoAttachCommandParameters(AutoAttach: autoAttach, WaitForDebuggerOnStart: waitForDebuggerOnStart, Flatten: flatten, Filter: filter);
+        return await ExecuteCommandAsync(SetAutoAttachCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetAutoAttachCommandParameters, SetAutoAttachResult> SetAutoAttachCommand = new("Target.setAutoAttach", JsonContext.SetAutoAttachCommandParameters, JsonContext.SetAutoAttachResult);
 
@@ -402,7 +498,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <b>setAutoAttach</b>. Only available at the Browser target.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Filter</b> - Only targets matching filter will be attached.</description></item>
     /// </list>
@@ -413,8 +509,11 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Whether to pause new targets when attaching to them. Use <b>Runtime.runIfWaitingForDebugger</b>
     /// to run paused targets.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="AutoAttachRelatedCommandOptions"/>.
+    /// <param name="filter">
+    /// Only targets matching filter will be attached.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -423,10 +522,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="AutoAttachRelatedResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, AutoAttachRelatedCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new AutoAttachRelatedCommandParameters(TargetId: targetId, WaitForDebuggerOnStart: waitForDebuggerOnStart, Filter: options?.Filter);
-        return await ExecuteCommandAsync(AutoAttachRelatedCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new AutoAttachRelatedCommandParameters(TargetId: targetId, WaitForDebuggerOnStart: waitForDebuggerOnStart, Filter: filter);
+        return await ExecuteCommandAsync(AutoAttachRelatedCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<AutoAttachRelatedCommandParameters, AutoAttachRelatedResult> AutoAttachRelatedCommand = new("Target.autoAttachRelated", JsonContext.AutoAttachRelatedCommandParameters, JsonContext.AutoAttachRelatedResult);
 
@@ -435,7 +534,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <b>targetCreated/targetInfoChanged/targetDestroyed</b> events.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>Filter</b> - Only targets matching filter will be attached. If <b>discover</b> is false, <b>filter</b> must be omitted or empty.</description></item>
     /// </list>
@@ -443,8 +542,12 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <param name="discover">
     /// Whether to discover available targets.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetDiscoverTargetsCommandOptions"/>.
+    /// <param name="filter">
+    /// Only targets matching filter will be attached. If <b>discover</b> is false,
+    /// <b>filter</b> must be omitted or empty.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -452,10 +555,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDiscoverTargetsResult"/>.
     /// </returns>
-    public async Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, SetDiscoverTargetsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetDiscoverTargetsCommandParameters(Discover: discover, Filter: options?.Filter);
-        return await ExecuteCommandAsync(SetDiscoverTargetsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new SetDiscoverTargetsCommandParameters(Discover: discover, Filter: filter);
+        return await ExecuteCommandAsync(SetDiscoverTargetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetDiscoverTargetsCommandParameters, SetDiscoverTargetsResult> SetDiscoverTargetsCommand = new("Target.setDiscoverTargets", JsonContext.SetDiscoverTargetsCommandParameters, JsonContext.SetDiscoverTargetsResult);
 
@@ -466,8 +569,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <param name="locations">
     /// List of remote locations.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetRemoteLocationsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -476,10 +579,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="SetRemoteLocationsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, SetRemoteLocationsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRemoteLocationsCommandParameters(Locations: locations);
-        return await ExecuteCommandAsync(SetRemoteLocationsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetRemoteLocationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetRemoteLocationsCommandParameters, SetRemoteLocationsResult> SetRemoteLocationsCommand = new("Target.setRemoteLocations", JsonContext.SetRemoteLocationsCommandParameters, JsonContext.SetRemoteLocationsResult);
 
@@ -490,8 +593,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <param name="targetId">
     /// Page or tab target ID.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetDevToolsTargetCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -500,10 +603,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="GetDevToolsTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, GetDevToolsTargetCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDevToolsTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(GetDevToolsTargetCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetDevToolsTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetDevToolsTargetCommandParameters, GetDevToolsTargetResult> GetDevToolsTargetCommand = new("Target.getDevToolsTarget", JsonContext.GetDevToolsTargetCommandParameters, JsonContext.GetDevToolsTargetResult);
 
@@ -511,7 +614,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Opens a DevTools window for the target.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>PanelId</b> - The id of the panel we want DevTools to open initially. Currently supported panels are elements, console, network, sources, resources, timeline, chrome-recorder, heap-profiler, lighthouse, and security.</description></item>
     /// </list>
@@ -519,8 +622,13 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <param name="targetId">
     /// This can be the page or tab target ID.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="OpenDevToolsCommandOptions"/>.
+    /// <param name="panelId">
+    /// The id of the panel we want DevTools to open initially. Currently
+    /// supported panels are elements, console, network, sources, resources,
+    /// timeline, chrome-recorder, heap-profiler, lighthouse, and security.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -529,10 +637,10 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="OpenDevToolsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, OpenDevToolsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new OpenDevToolsCommandParameters(TargetId: targetId, PanelId: options?.PanelId);
-        return await ExecuteCommandAsync(OpenDevToolsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new OpenDevToolsCommandParameters(TargetId: targetId, PanelId: panelId);
+        return await ExecuteCommandAsync(OpenDevToolsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<OpenDevToolsCommandParameters, OpenDevToolsResult> OpenDevToolsCommand = new("Target.openDevTools", JsonContext.OpenDevToolsCommandParameters, JsonContext.OpenDevToolsResult);
 
@@ -623,31 +731,11 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 internal sealed record ActivateTargetCommandParameters(TargetID TargetId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.ActivateTargetAsync"/>.
-/// </summary>
-public sealed record ActivateTargetCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ActivateTargetResult() : EmptyResult;
 
 
 internal sealed record AttachToTargetCommandParameters(TargetID TargetId, bool? Flatten) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.AttachToTargetAsync"/>.
-/// </summary>
-public sealed record AttachToTargetCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Enables "flat" access to the session via specifying sessionId attribute in the commands.
-    /// We plan to make this the default, deprecate non-flattened mode,
-    /// and eventually retire it. See crbug.com/991325.
-    /// </summary>
-    public bool? Flatten { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -660,13 +748,6 @@ public sealed record AttachToTargetResult(SessionID SessionId) : EmptyResult;
 internal sealed record AttachToBrowserTargetCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.AttachToBrowserTargetAsync"/>.
-/// </summary>
-public sealed record AttachToBrowserTargetCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="SessionId">
 /// Id assigned to the session.
@@ -675,13 +756,6 @@ public sealed record AttachToBrowserTargetResult(SessionID SessionId) : EmptyRes
 
 
 internal sealed record CloseTargetCommandParameters(TargetID TargetId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.CloseTargetAsync"/>.
-/// </summary>
-public sealed record CloseTargetCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -694,54 +768,11 @@ public sealed record CloseTargetResult(bool Success) : EmptyResult;
 internal sealed record ExposeDevToolsProtocolCommandParameters(TargetID TargetId, string? BindingName, bool? InheritPermissions) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.ExposeDevToolsProtocolAsync"/>.
-/// </summary>
-public sealed record ExposeDevToolsProtocolCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Binding name, 'cdp' if not specified.
-    /// </summary>
-    public string? BindingName { get; init; }
-
-    /// <summary>
-    /// If true, inherits the current root session's permissions (default: false).
-    /// </summary>
-    public bool? InheritPermissions { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record ExposeDevToolsProtocolResult() : EmptyResult;
 
 
 internal sealed record CreateBrowserContextCommandParameters(bool? DisposeOnDetach, string? ProxyServer, string? ProxyBypassList, ImmutableArray<string>? OriginsWithUniversalNetworkAccess) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.CreateBrowserContextAsync"/>.
-/// </summary>
-public sealed record CreateBrowserContextCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// If specified, disposes this context when debugging session disconnects.
-    /// </summary>
-    public bool? DisposeOnDetach { get; init; }
-
-    /// <summary>
-    /// Proxy server, similar to the one passed to --proxy-server
-    /// </summary>
-    public string? ProxyServer { get; init; }
-
-    /// <summary>
-    /// Proxy bypass list, similar to the one passed to --proxy-bypass-list
-    /// </summary>
-    public string? ProxyBypassList { get; init; }
-
-    /// <summary>
-    /// An optional list of origins to grant unlimited cross-origin access to.
-    /// Parts of the URL other than those constituting origin are ignored.
-    /// </summary>
-    public ImmutableArray<string>? OriginsWithUniversalNetworkAccess { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -752,13 +783,6 @@ public sealed record CreateBrowserContextResult(Browser.BrowserContextID Browser
 
 
 internal sealed record GetBrowserContextsCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.GetBrowserContextsAsync"/>.
-/// </summary>
-public sealed record GetBrowserContextsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -774,81 +798,6 @@ public sealed record GetBrowserContextsResult(ImmutableArray<Browser.BrowserCont
 internal sealed record CreateTargetCommandParameters(string Url, long? Left, long? Top, long? Width, long? Height, WindowState? WindowState, Browser.BrowserContextID? BrowserContextId, bool? EnableBeginFrameControl, bool? NewWindow, bool? Background, bool? ForTab, bool? Hidden, bool? Focus) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.CreateTargetAsync"/>.
-/// </summary>
-public sealed record CreateTargetCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Frame left origin in DIP (requires newWindow to be true or headless shell).
-    /// </summary>
-    public long? Left { get; init; }
-
-    /// <summary>
-    /// Frame top origin in DIP (requires newWindow to be true or headless shell).
-    /// </summary>
-    public long? Top { get; init; }
-
-    /// <summary>
-    /// Frame width in DIP (requires newWindow to be true or headless shell).
-    /// </summary>
-    public long? Width { get; init; }
-
-    /// <summary>
-    /// Frame height in DIP (requires newWindow to be true or headless shell).
-    /// </summary>
-    public long? Height { get; init; }
-
-    /// <summary>
-    /// Frame window state (requires newWindow to be true or headless shell).
-    /// Default is normal.
-    /// </summary>
-    public WindowState? WindowState { get; init; }
-
-    /// <summary>
-    /// The browser context to create the page in.
-    /// </summary>
-    public Browser.BrowserContextID? BrowserContextId { get; init; }
-
-    /// <summary>
-    /// Whether BeginFrames for this target will be controlled via DevTools (headless shell only,
-    /// not supported on MacOS yet, false by default).
-    /// </summary>
-    public bool? EnableBeginFrameControl { get; init; }
-
-    /// <summary>
-    /// Whether to create a new Window or Tab (false by default, not supported by headless shell).
-    /// </summary>
-    public bool? NewWindow { get; init; }
-
-    /// <summary>
-    /// Whether to create the target in background or foreground (false by default, not supported
-    /// by headless shell).
-    /// </summary>
-    public bool? Background { get; init; }
-
-    /// <summary>
-    /// Whether to create the target of type "tab".
-    /// </summary>
-    public bool? ForTab { get; init; }
-
-    /// <summary>
-    /// Whether to create a hidden target. The hidden target is observable via protocol, but not
-    /// present in the tab UI strip. Cannot be created with <b>forTab: true</b>, <b>newWindow: true</b> or
-    /// <b>background: false</b>. The life-time of the tab is limited to the life-time of the session.
-    /// </summary>
-    public bool? Hidden { get; init; }
-
-    /// <summary>
-    /// If specified, determines whether the new target should be focused.
-    /// By default, the focus behavior depends on the <b>background</b> parameter:
-    /// - If <b>background</b> is false (default) and <b>focus</b> is omitted, the new target is focused and the browser window is brought to the foreground.
-    /// - If <b>background</b> is false and <b>focus</b> is false, the target is opened but the browser window's focus remains unchanged (e.g., if the window was in the background, it stays there).
-    /// - If <b>background</b> is true, setting <b>focus</b> to true is not supported and will result in an error.
-    /// </summary>
-    public bool? Focus { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="TargetId">
 /// The id of the page opened.
@@ -859,35 +808,11 @@ public sealed record CreateTargetResult(TargetID TargetId) : EmptyResult;
 internal sealed record DetachFromTargetCommandParameters(SessionID? SessionId, TargetID? TargetId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.DetachFromTargetAsync"/>.
-/// </summary>
-public sealed record DetachFromTargetCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Session to detach.
-    /// </summary>
-    public SessionID? SessionId { get; init; }
-
-    /// <summary>
-    /// Deprecated.
-    /// </summary>
-    [global::System.Obsolete]
-    public TargetID? TargetId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record DetachFromTargetResult() : EmptyResult;
 
 
 internal sealed record DisposeBrowserContextCommandParameters(Browser.BrowserContextID BrowserContextId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.DisposeBrowserContextAsync"/>.
-/// </summary>
-public sealed record DisposeBrowserContextCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -897,16 +822,6 @@ public sealed record DisposeBrowserContextResult() : EmptyResult;
 internal sealed record GetTargetInfoCommandParameters(TargetID? TargetId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.GetTargetInfoAsync"/>.
-/// </summary>
-public sealed record GetTargetInfoCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public TargetID? TargetId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 /// <param name="TargetInfo">
 /// </param>
@@ -914,19 +829,6 @@ public sealed record GetTargetInfoResult(TargetInfo TargetInfo) : EmptyResult;
 
 
 internal sealed record GetTargetsCommandParameters(ImmutableArray<FilterEntry>? Filter) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.GetTargetsAsync"/>.
-/// </summary>
-public sealed record GetTargetsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Only targets matching filter will be reported. If filter is not specified
-    /// and target discovery is currently enabled, a filter used for target discovery
-    /// is used for consistency.
-    /// </summary>
-    public ImmutableArray<FilterEntry>? Filter { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -939,46 +841,11 @@ public sealed record GetTargetsResult(ImmutableArray<TargetInfo> TargetInfos) : 
 internal sealed record SendMessageToTargetCommandParameters(string Message, SessionID? SessionId, TargetID? TargetId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.SendMessageToTargetAsync"/>.
-/// </summary>
-public sealed record SendMessageToTargetCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Identifier of the session.
-    /// </summary>
-    public SessionID? SessionId { get; init; }
-
-    /// <summary>
-    /// Deprecated.
-    /// </summary>
-    [global::System.Obsolete]
-    public TargetID? TargetId { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record SendMessageToTargetResult() : EmptyResult;
 
 
 internal sealed record SetAutoAttachCommandParameters(bool AutoAttach, bool WaitForDebuggerOnStart, bool? Flatten, ImmutableArray<FilterEntry>? Filter) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.SetAutoAttachAsync"/>.
-/// </summary>
-public sealed record SetAutoAttachCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Enables "flat" access to the session via specifying sessionId attribute in the commands.
-    /// We plan to make this the default, deprecate non-flattened mode,
-    /// and eventually retire it. See crbug.com/991325.
-    /// </summary>
-    public bool? Flatten { get; init; }
-
-    /// <summary>
-    /// Only targets matching filter will be attached.
-    /// </summary>
-    public ImmutableArray<FilterEntry>? Filter { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -988,34 +855,11 @@ public sealed record SetAutoAttachResult() : EmptyResult;
 internal sealed record AutoAttachRelatedCommandParameters(TargetID TargetId, bool WaitForDebuggerOnStart, ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.AutoAttachRelatedAsync"/>.
-/// </summary>
-public sealed record AutoAttachRelatedCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Only targets matching filter will be attached.
-    /// </summary>
-    public ImmutableArray<FilterEntry>? Filter { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record AutoAttachRelatedResult() : EmptyResult;
 
 
 internal sealed record SetDiscoverTargetsCommandParameters(bool Discover, ImmutableArray<FilterEntry>? Filter) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.SetDiscoverTargetsAsync"/>.
-/// </summary>
-public sealed record SetDiscoverTargetsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Only targets matching filter will be attached. If <b>discover</b> is false,
-    /// <b>filter</b> must be omitted or empty.
-    /// </summary>
-    public ImmutableArray<FilterEntry>? Filter { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -1025,25 +869,11 @@ public sealed record SetDiscoverTargetsResult() : EmptyResult;
 internal sealed record SetRemoteLocationsCommandParameters(ImmutableArray<RemoteLocation> Locations) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="TargetDomain.SetRemoteLocationsAsync"/>.
-/// </summary>
-public sealed record SetRemoteLocationsCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetRemoteLocationsResult() : EmptyResult;
 
 
 internal sealed record GetDevToolsTargetCommandParameters(TargetID TargetId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.GetDevToolsTargetAsync"/>.
-/// </summary>
-public sealed record GetDevToolsTargetCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -1054,19 +884,6 @@ public sealed record GetDevToolsTargetResult(TargetID? TargetId) : EmptyResult;
 
 
 internal sealed record OpenDevToolsCommandParameters(TargetID TargetId, string? PanelId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="TargetDomain.OpenDevToolsAsync"/>.
-/// </summary>
-public sealed record OpenDevToolsCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// The id of the panel we want DevTools to open initially. Currently
-    /// supported panels are elements, console, network, sources, resources,
-    /// timeline, chrome-recorder, heap-profiler, lighthouse, and security.
-    /// </summary>
-    public string? PanelId { get; init; }
-}
 
 /// <summary>
 /// </summary>

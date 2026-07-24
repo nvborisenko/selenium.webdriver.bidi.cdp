@@ -18,8 +18,8 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <param name="cacheId">
     /// Id of cache for deletion.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DeleteCacheCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -27,10 +27,10 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteCacheResult"/>.
     /// </returns>
-    public async Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, DeleteCacheCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCacheCommandParameters(CacheId: cacheId);
-        return await ExecuteCommandAsync(DeleteCacheCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DeleteCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DeleteCacheCommandParameters, DeleteCacheResult> DeleteCacheCommand = new("CacheStorage.deleteCache", JsonContext.DeleteCacheCommandParameters, JsonContext.DeleteCacheResult);
 
@@ -43,8 +43,8 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <param name="request">
     /// URL spec of the request.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DeleteEntryCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -52,10 +52,10 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteEntryResult"/>.
     /// </returns>
-    public async Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, DeleteEntryCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteEntryCommandParameters(CacheId: cacheId, Request: request);
-        return await ExecuteCommandAsync(DeleteEntryCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DeleteEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DeleteEntryCommandParameters, DeleteEntryResult> DeleteEntryCommand = new("CacheStorage.deleteEntry", JsonContext.DeleteEntryCommandParameters, JsonContext.DeleteEntryResult);
 
@@ -63,15 +63,25 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// Requests cache names.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, storageBucket must be specified. Security origin.</description></item>
     /// <item><description><b>StorageKey</b> - Storage key.</description></item>
     /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RequestCacheNamesCommandOptions"/>.
+    /// <param name="securityOrigin">
+    /// At least and at most one of securityOrigin, storageKey, storageBucket must be specified.
+    /// Security origin.
+    /// </param>
+    /// <param name="storageKey">
+    /// Storage key.
+    /// </param>
+    /// <param name="storageBucket">
+    /// Storage bucket. If not specified, it uses the default bucket.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -79,10 +89,10 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestCacheNamesResult"/>.
     /// </returns>
-    public async Task<RequestCacheNamesResult> RequestCacheNamesAsync(RequestCacheNamesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new RequestCacheNamesCommandParameters(SecurityOrigin: options?.SecurityOrigin, StorageKey: options?.StorageKey, StorageBucket: options?.StorageBucket);
-        return await ExecuteCommandAsync(RequestCacheNamesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new RequestCacheNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);
+        return await ExecuteCommandAsync(RequestCacheNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RequestCacheNamesCommandParameters, RequestCacheNamesResult> RequestCacheNamesCommand = new("CacheStorage.requestCacheNames", JsonContext.RequestCacheNamesCommandParameters, JsonContext.RequestCacheNamesResult);
 
@@ -98,8 +108,8 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <param name="requestHeaders">
     /// headers of the request.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RequestCachedResponseCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -107,10 +117,10 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestCachedResponseResult"/>.
     /// </returns>
-    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, RequestCachedResponseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestCachedResponseCommandParameters(CacheId: cacheId, RequestURL: requestURL, RequestHeaders: requestHeaders);
-        return await ExecuteCommandAsync(RequestCachedResponseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RequestCachedResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RequestCachedResponseCommandParameters, RequestCachedResponseResult> RequestCachedResponseCommand = new("CacheStorage.requestCachedResponse", JsonContext.RequestCachedResponseCommandParameters, JsonContext.RequestCachedResponseResult);
 
@@ -118,7 +128,7 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// Requests data from cache.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>SkipCount</b> - Number of records to skip.</description></item>
     /// <item><description><b>PageSize</b> - Number of records to fetch.</description></item>
@@ -128,8 +138,17 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <param name="cacheId">
     /// ID of cache to get entries from.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RequestEntriesCommandOptions"/>.
+    /// <param name="skipCount">
+    /// Number of records to skip.
+    /// </param>
+    /// <param name="pageSize">
+    /// Number of records to fetch.
+    /// </param>
+    /// <param name="pathFilter">
+    /// If present, only return the entries containing this substring in the path
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -137,23 +156,16 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestEntriesResult"/>.
     /// </returns>
-    public async Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, RequestEntriesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = default, long? pageSize = default, string? pathFilter = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new RequestEntriesCommandParameters(CacheId: cacheId, SkipCount: options?.SkipCount, PageSize: options?.PageSize, PathFilter: options?.PathFilter);
-        return await ExecuteCommandAsync(RequestEntriesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new RequestEntriesCommandParameters(CacheId: cacheId, SkipCount: skipCount, PageSize: pageSize, PathFilter: pathFilter);
+        return await ExecuteCommandAsync(RequestEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RequestEntriesCommandParameters, RequestEntriesResult> RequestEntriesCommand = new("CacheStorage.requestEntries", JsonContext.RequestEntriesCommandParameters, JsonContext.RequestEntriesResult);
 
 }
 
 internal sealed record DeleteCacheCommandParameters(CacheId CacheId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CacheStorageDomain.DeleteCacheAsync"/>.
-/// </summary>
-public sealed record DeleteCacheCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -163,40 +175,11 @@ public sealed record DeleteCacheResult() : EmptyResult;
 internal sealed record DeleteEntryCommandParameters(CacheId CacheId, string Request) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CacheStorageDomain.DeleteEntryAsync"/>.
-/// </summary>
-public sealed record DeleteEntryCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DeleteEntryResult() : EmptyResult;
 
 
 internal sealed record RequestCacheNamesCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CacheStorageDomain.RequestCacheNamesAsync"/>.
-/// </summary>
-public sealed record RequestCacheNamesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// At least and at most one of securityOrigin, storageKey, storageBucket must be specified.
-    /// Security origin.
-    /// </summary>
-    public string? SecurityOrigin { get; init; }
-
-    /// <summary>
-    /// Storage key.
-    /// </summary>
-    public string? StorageKey { get; init; }
-
-    /// <summary>
-    /// Storage bucket. If not specified, it uses the default bucket.
-    /// </summary>
-    public Storage.StorageBucket? StorageBucket { get; init; }
-}
 
 /// <summary>
 /// </summary>
@@ -209,13 +192,6 @@ public sealed record RequestCacheNamesResult(ImmutableArray<Cache> Caches) : Emp
 internal sealed record RequestCachedResponseCommandParameters(CacheId CacheId, string RequestURL, ImmutableArray<Header> RequestHeaders) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CacheStorageDomain.RequestCachedResponseAsync"/>.
-/// </summary>
-public sealed record RequestCachedResponseCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 /// <param name="Response">
 /// Response read from the cache.
@@ -224,27 +200,6 @@ public sealed record RequestCachedResponseResult(CachedResponse Response) : Empt
 
 
 internal sealed record RequestEntriesCommandParameters(CacheId CacheId, long? SkipCount, long? PageSize, string? PathFilter) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CacheStorageDomain.RequestEntriesAsync"/>.
-/// </summary>
-public sealed record RequestEntriesCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Number of records to skip.
-    /// </summary>
-    public long? SkipCount { get; init; }
-
-    /// <summary>
-    /// Number of records to fetch.
-    /// </summary>
-    public long? PageSize { get; init; }
-
-    /// <summary>
-    /// If present, only return the entries containing this substring in the path
-    /// </summary>
-    public string? PathFilter { get; init; }
-}
 
 /// <summary>
 /// </summary>

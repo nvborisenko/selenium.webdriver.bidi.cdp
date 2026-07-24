@@ -17,8 +17,8 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// </summary>
     /// <param name="storageId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -26,18 +26,18 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearResult"/>.
     /// </returns>
-    public async Task<ClearResult> ClearAsync(StorageId storageId, ClearCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearResult> ClearAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCommandParameters(StorageId: storageId);
-        return await ExecuteCommandAsync(ClearCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearCommandParameters, ClearResult> ClearCommand = new("DOMStorage.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
 
     /// <summary>
     /// Disables storage tracking, prevents storage events from being sent to the client.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -45,18 +45,18 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOMStorage.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     /// <summary>
     /// Enables storage tracking, storage events will now be delivered to the client.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -64,10 +64,10 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOMStorage.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -75,8 +75,8 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// </summary>
     /// <param name="storageId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="GetDOMStorageItemsCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -84,10 +84,10 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDOMStorageItemsResult"/>.
     /// </returns>
-    public async Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, GetDOMStorageItemsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMStorageItemsCommandParameters(StorageId: storageId);
-        return await ExecuteCommandAsync(GetDOMStorageItemsCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(GetDOMStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<GetDOMStorageItemsCommandParameters, GetDOMStorageItemsResult> GetDOMStorageItemsCommand = new("DOMStorage.getDOMStorageItems", JsonContext.GetDOMStorageItemsCommandParameters, JsonContext.GetDOMStorageItemsResult);
 
@@ -97,8 +97,8 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// </param>
     /// <param name="key">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveDOMStorageItemCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -106,10 +106,10 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveDOMStorageItemResult"/>.
     /// </returns>
-    public async Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, RemoveDOMStorageItemCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDOMStorageItemCommandParameters(StorageId: storageId, Key: key);
-        return await ExecuteCommandAsync(RemoveDOMStorageItemCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveDOMStorageItemCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveDOMStorageItemCommandParameters, RemoveDOMStorageItemResult> RemoveDOMStorageItemCommand = new("DOMStorage.removeDOMStorageItem", JsonContext.RemoveDOMStorageItemCommandParameters, JsonContext.RemoveDOMStorageItemResult);
 
@@ -121,8 +121,8 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// </param>
     /// <param name="value">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetDOMStorageItemCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -130,10 +130,10 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDOMStorageItemResult"/>.
     /// </returns>
-    public async Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, SetDOMStorageItemCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDOMStorageItemCommandParameters(StorageId: storageId, Key: key, Value: value);
-        return await ExecuteCommandAsync(SetDOMStorageItemCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetDOMStorageItemCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetDOMStorageItemCommandParameters, SetDOMStorageItemResult> SetDOMStorageItemCommand = new("DOMStorage.setDOMStorageItem", JsonContext.SetDOMStorageItemCommandParameters, JsonContext.SetDOMStorageItemResult);
 
@@ -188,25 +188,11 @@ public sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver
 internal sealed record ClearCommandParameters(StorageId StorageId) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DOMStorageDomain.ClearAsync"/>.
-/// </summary>
-public sealed record ClearCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ClearResult() : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DOMStorageDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -216,25 +202,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DOMStorageDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record GetDOMStorageItemsCommandParameters(StorageId StorageId) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DOMStorageDomain.GetDOMStorageItemsAsync"/>.
-/// </summary>
-public sealed record GetDOMStorageItemsCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -246,25 +218,11 @@ public sealed record GetDOMStorageItemsResult(ImmutableArray<ImmutableArray<stri
 internal sealed record RemoveDOMStorageItemCommandParameters(StorageId StorageId, string Key) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="DOMStorageDomain.RemoveDOMStorageItemAsync"/>.
-/// </summary>
-public sealed record RemoveDOMStorageItemCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveDOMStorageItemResult() : EmptyResult;
 
 
 internal sealed record SetDOMStorageItemCommandParameters(StorageId StorageId, string Key, string Value) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="DOMStorageDomain.SetDOMStorageItemAsync"/>.
-/// </summary>
-public sealed record SetDOMStorageItemCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

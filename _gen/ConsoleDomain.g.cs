@@ -16,8 +16,8 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Does nothing.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClearMessagesCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -25,18 +25,18 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearMessagesResult"/>.
     /// </returns>
-    public async Task<ClearMessagesResult> ClearMessagesAsync(ClearMessagesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearMessagesCommandParameters();
-        return await ExecuteCommandAsync(ClearMessagesCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClearMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClearMessagesCommandParameters, ClearMessagesResult> ClearMessagesCommand = new("Console.clearMessages", JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult);
 
     /// <summary>
     /// Disables console domain, prevents further console messages from being reported to the client.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -44,10 +44,10 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Console.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -55,8 +55,8 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Enables console domain, sends the messages collected so far to the client by means of the
     /// <b>messageAdded</b> notification.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -64,10 +64,10 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Console.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
@@ -86,13 +86,6 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record ClearMessagesCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ConsoleDomain.ClearMessagesAsync"/>.
-/// </summary>
-public sealed record ClearMessagesCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record ClearMessagesResult() : EmptyResult;
 
@@ -100,25 +93,11 @@ public sealed record ClearMessagesResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="ConsoleDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
 
 internal sealed record EnableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="ConsoleDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

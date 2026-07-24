@@ -21,8 +21,8 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <param name="eventName">
     /// Instrumentation name to stop on.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetInstrumentationBreakpointCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -30,10 +30,10 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInstrumentationBreakpointResult"/>.
     /// </returns>
-    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, SetInstrumentationBreakpointCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInstrumentationBreakpointCommandParameters(EventName: eventName);
-        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult> SetInstrumentationBreakpointCommand = new("EventBreakpoints.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
 
@@ -43,8 +43,8 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <param name="eventName">
     /// Instrumentation name to stop on.
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="RemoveInstrumentationBreakpointCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -52,18 +52,18 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveInstrumentationBreakpointResult"/>.
     /// </returns>
-    public async Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, RemoveInstrumentationBreakpointCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveInstrumentationBreakpointCommandParameters(EventName: eventName);
-        return await ExecuteCommandAsync(RemoveInstrumentationBreakpointCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(RemoveInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<RemoveInstrumentationBreakpointCommandParameters, RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointCommand = new("EventBreakpoints.removeInstrumentationBreakpoint", JsonContext.RemoveInstrumentationBreakpointCommandParameters, JsonContext.RemoveInstrumentationBreakpointResult);
 
     /// <summary>
     /// Removes all breakpoints
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -71,23 +71,16 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("EventBreakpoints.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
 }
 
 internal sealed record SetInstrumentationBreakpointCommandParameters(string EventName) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="EventBreakpointsDomain.SetInstrumentationBreakpointAsync"/>.
-/// </summary>
-public sealed record SetInstrumentationBreakpointCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -97,25 +90,11 @@ public sealed record SetInstrumentationBreakpointResult() : EmptyResult;
 internal sealed record RemoveInstrumentationBreakpointCommandParameters(string EventName) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="EventBreakpointsDomain.RemoveInstrumentationBreakpointAsync"/>.
-/// </summary>
-public sealed record RemoveInstrumentationBreakpointCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record RemoveInstrumentationBreakpointResult() : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="EventBreakpointsDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

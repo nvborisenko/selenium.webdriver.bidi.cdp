@@ -16,13 +16,18 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>DisableRejectionDelay</b> - Allows callers to disable the promise rejection delay that would normally happen, if this is unimportant to what's being tested. (step 4 of https://fedidcg.github.io/FedCM/#browser-api-rp-sign-in)</description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="disableRejectionDelay">
+    /// Allows callers to disable the promise rejection delay that would
+    /// normally happen, if this is unimportant to what's being tested.
+    /// (step 4 of https://fedidcg.github.io/FedCM/#browser-api-rp-sign-in)
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -30,17 +35,17 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(bool? disableRejectionDelay = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EnableCommandParameters(DisableRejectionDelay: options?.DisableRejectionDelay);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EnableCommandParameters(DisableRejectionDelay: disableRejectionDelay);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("FedCm.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     /// <summary>
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -48,10 +53,10 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("FedCm.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -61,8 +66,8 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// </param>
     /// <param name="accountIndex">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SelectAccountCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -70,10 +75,10 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SelectAccountResult"/>.
     /// </returns>
-    public async Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, SelectAccountCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SelectAccountCommandParameters(DialogId: dialogId, AccountIndex: accountIndex);
-        return await ExecuteCommandAsync(SelectAccountCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SelectAccountCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SelectAccountCommandParameters, SelectAccountResult> SelectAccountCommand = new("FedCm.selectAccount", JsonContext.SelectAccountCommandParameters, JsonContext.SelectAccountResult);
 
@@ -83,8 +88,8 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// </param>
     /// <param name="dialogButton">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ClickDialogButtonCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -92,10 +97,10 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClickDialogButtonResult"/>.
     /// </returns>
-    public async Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, ClickDialogButtonCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClickDialogButtonCommandParameters(DialogId: dialogId, DialogButton: dialogButton);
-        return await ExecuteCommandAsync(ClickDialogButtonCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ClickDialogButtonCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ClickDialogButtonCommandParameters, ClickDialogButtonResult> ClickDialogButtonCommand = new("FedCm.clickDialogButton", JsonContext.ClickDialogButtonCommandParameters, JsonContext.ClickDialogButtonResult);
 
@@ -107,8 +112,8 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// </param>
     /// <param name="accountUrlType">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="OpenUrlCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -116,25 +121,27 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OpenUrlResult"/>.
     /// </returns>
-    public async Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, OpenUrlCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OpenUrlCommandParameters(DialogId: dialogId, AccountIndex: accountIndex, AccountUrlType: accountUrlType);
-        return await ExecuteCommandAsync(OpenUrlCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(OpenUrlCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<OpenUrlCommandParameters, OpenUrlResult> OpenUrlCommand = new("FedCm.openUrl", JsonContext.OpenUrlCommandParameters, JsonContext.OpenUrlResult);
 
     /// <summary>
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>TriggerCooldown</b></description></item>
     /// </list>
     /// </remarks>
     /// <param name="dialogId">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DismissDialogCommandOptions"/>.
+    /// <param name="triggerCooldown">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -142,10 +149,10 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DismissDialogResult"/>.
     /// </returns>
-    public async Task<DismissDialogResult> DismissDialogAsync(string dialogId, DismissDialogCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new DismissDialogCommandParameters(DialogId: dialogId, TriggerCooldown: options?.TriggerCooldown);
-        return await ExecuteCommandAsync(DismissDialogCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new DismissDialogCommandParameters(DialogId: dialogId, TriggerCooldown: triggerCooldown);
+        return await ExecuteCommandAsync(DismissDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DismissDialogCommandParameters, DismissDialogResult> DismissDialogCommand = new("FedCm.dismissDialog", JsonContext.DismissDialogCommandParameters, JsonContext.DismissDialogResult);
 
@@ -153,8 +160,8 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// Resets the cooldown time, if any, to allow the next FedCM call to show
     /// a dialog even if one was recently dismissed by the user.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="ResetCooldownCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -162,10 +169,10 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetCooldownResult"/>.
     /// </returns>
-    public async Task<ResetCooldownResult> ResetCooldownAsync(ResetCooldownCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ResetCooldownResult> ResetCooldownAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResetCooldownCommandParameters();
-        return await ExecuteCommandAsync(ResetCooldownCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(ResetCooldownCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<ResetCooldownCommandParameters, ResetCooldownResult> ResetCooldownCommand = new("FedCm.resetCooldown", JsonContext.ResetCooldownCommandParameters, JsonContext.ResetCooldownResult);
 
@@ -199,31 +206,11 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 internal sealed record EnableCommandParameters(bool? DisableRejectionDelay) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="FedCmDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// Allows callers to disable the promise rejection delay that would
-    /// normally happen, if this is unimportant to what's being tested.
-    /// (step 4 of https://fedidcg.github.io/FedCM/#browser-api-rp-sign-in)
-    /// </summary>
-    public bool? DisableRejectionDelay { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="FedCmDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -233,25 +220,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record SelectAccountCommandParameters(string DialogId, long AccountIndex) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="FedCmDomain.SelectAccountAsync"/>.
-/// </summary>
-public sealed record SelectAccountCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SelectAccountResult() : EmptyResult;
 
 
 internal sealed record ClickDialogButtonCommandParameters(string DialogId, DialogButton DialogButton) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="FedCmDomain.ClickDialogButtonAsync"/>.
-/// </summary>
-public sealed record ClickDialogButtonCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -261,13 +234,6 @@ public sealed record ClickDialogButtonResult() : EmptyResult;
 internal sealed record OpenUrlCommandParameters(string DialogId, long AccountIndex, AccountUrlType AccountUrlType) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="FedCmDomain.OpenUrlAsync"/>.
-/// </summary>
-public sealed record OpenUrlCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record OpenUrlResult() : EmptyResult;
 
@@ -275,28 +241,11 @@ public sealed record OpenUrlResult() : EmptyResult;
 internal sealed record DismissDialogCommandParameters(string DialogId, bool? TriggerCooldown) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="FedCmDomain.DismissDialogAsync"/>.
-/// </summary>
-public sealed record DismissDialogCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public bool? TriggerCooldown { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record DismissDialogResult() : EmptyResult;
 
 
 internal sealed record ResetCooldownCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="FedCmDomain.ResetCooldownAsync"/>.
-/// </summary>
-public sealed record ResetCooldownCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

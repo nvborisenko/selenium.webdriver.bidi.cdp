@@ -22,13 +22,15 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// an |issueUpdated| event is fired.
     /// </summary>
     /// <remarks>
-    /// Optional parameters (via <paramref name="options"/>):
+    /// Optional parameters:
     /// <list type="bullet">
     /// <item><description><b>PresentationUrl</b></description></item>
     /// </list>
     /// </remarks>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="EnableCommandOptions"/>.
+    /// <param name="presentationUrl">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -36,18 +38,18 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EnableCommandParameters(PresentationUrl: options?.PresentationUrl);
-        return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        var @params = new EnableCommandParameters(PresentationUrl: presentationUrl);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Cast.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     /// <summary>
     /// Stops observing for sinks and issues.
     /// </summary>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="DisableCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -55,10 +57,10 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(DisableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Cast.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
@@ -68,8 +70,8 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </summary>
     /// <param name="sinkName">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="SetSinkToUseCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -77,10 +79,10 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSinkToUseResult"/>.
     /// </returns>
-    public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, SetSinkToUseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSinkToUseCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(SetSinkToUseCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(SetSinkToUseCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetSinkToUseCommandParameters, SetSinkToUseResult> SetSinkToUseCommand = new("Cast.setSinkToUse", JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult);
 
@@ -89,8 +91,8 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </summary>
     /// <param name="sinkName">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartDesktopMirroringCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -98,10 +100,10 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartDesktopMirroringResult"/>.
     /// </returns>
-    public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, StartDesktopMirroringCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartDesktopMirroringCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StartDesktopMirroringCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StartDesktopMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartDesktopMirroringCommandParameters, StartDesktopMirroringResult> StartDesktopMirroringCommand = new("Cast.startDesktopMirroring", JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult);
 
@@ -110,8 +112,8 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </summary>
     /// <param name="sinkName">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StartTabMirroringCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -119,10 +121,10 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartTabMirroringResult"/>.
     /// </returns>
-    public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, StartTabMirroringCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartTabMirroringCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StartTabMirroringCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StartTabMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartTabMirroringCommandParameters, StartTabMirroringResult> StartTabMirroringCommand = new("Cast.startTabMirroring", JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult);
 
@@ -131,8 +133,8 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </summary>
     /// <param name="sinkName">
     /// </param>
-    /// <param name="options">
-    /// Optional parameters. See <see cref="StopCastingCommandOptions"/>.
+    /// <param name="session">
+    /// Optional CDP session override.
     /// </param>
     /// <param name="cancellationToken">
     /// A token to cancel the asynchronous operation.
@@ -140,10 +142,10 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopCastingResult"/>.
     /// </returns>
-    public async Task<StopCastingResult> StopCastingAsync(string sinkName, StopCastingCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopCastingCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StopCastingCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync(StopCastingCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StopCastingCommandParameters, StopCastingResult> StopCastingCommand = new("Cast.stopCasting", JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult);
 
@@ -174,28 +176,11 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
 internal sealed record EnableCommandParameters(string? PresentationUrl) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CastDomain.EnableAsync"/>.
-/// </summary>
-public sealed record EnableCommandOptions : CdpCommandOptions
-{
-    /// <summary>
-    /// </summary>
-    public string? PresentationUrl { get; init; }
-}
-
-/// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CastDomain.DisableAsync"/>.
-/// </summary>
-public sealed record DisableCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -205,25 +190,11 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record SetSinkToUseCommandParameters(string SinkName) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CastDomain.SetSinkToUseAsync"/>.
-/// </summary>
-public sealed record SetSinkToUseCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record SetSinkToUseResult() : EmptyResult;
 
 
 internal sealed record StartDesktopMirroringCommandParameters(string SinkName) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CastDomain.StartDesktopMirroringAsync"/>.
-/// </summary>
-public sealed record StartDesktopMirroringCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>
@@ -233,25 +204,11 @@ public sealed record StartDesktopMirroringResult() : EmptyResult;
 internal sealed record StartTabMirroringCommandParameters(string SinkName) : Parameters;
 
 /// <summary>
-/// Optional parameters for <see cref="CastDomain.StartTabMirroringAsync"/>.
-/// </summary>
-public sealed record StartTabMirroringCommandOptions : CdpCommandOptions
-{
-}
-
-/// <summary>
 /// </summary>
 public sealed record StartTabMirroringResult() : EmptyResult;
 
 
 internal sealed record StopCastingCommandParameters(string SinkName) : Parameters;
-
-/// <summary>
-/// Optional parameters for <see cref="CastDomain.StopCastingAsync"/>.
-/// </summary>
-public sealed record StopCastingCommandOptions : CdpCommandOptions
-{
-}
 
 /// <summary>
 /// </summary>

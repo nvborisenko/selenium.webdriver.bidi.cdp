@@ -17,7 +17,7 @@ public class DomTests : CdpTestFixture
 
         await Assert.That(pNode.NodeId).IsNotNull();
 
-        var outerHtml = await Cdp.DOM.GetOuterHTMLAsync(new() { NodeId = pNode.NodeId });
+        var outerHtml = await Cdp.DOM.GetOuterHTMLAsync(nodeId: pNode.NodeId);
 
         await Assert.That(outerHtml.OuterHTML).IsEqualTo("<p class=\"message\">Hello CDP</p>");
     }
@@ -44,7 +44,7 @@ public class DomTests : CdpTestFixture
 
         await Cdp.DOM.SetAttributeValueAsync(div.NodeId, "data-custom", "test-value");
 
-        var outerHtml = await Cdp.DOM.GetOuterHTMLAsync(new() { NodeId = div.NodeId });
+        var outerHtml = await Cdp.DOM.GetOuterHTMLAsync(nodeId: div.NodeId);
 
         await Assert.That(outerHtml.OuterHTML).Contains("data-custom=\"test-value\"");
     }
@@ -57,7 +57,7 @@ public class DomTests : CdpTestFixture
         var document = await Cdp.DOM.GetDocumentAsync();
         var div = await Cdp.DOM.QuerySelectorAsync(document.Root.NodeId, "#box");
 
-        var boxModel = await Cdp.DOM.GetBoxModelAsync(new() { NodeId = div.NodeId });
+        var boxModel = await Cdp.DOM.GetBoxModelAsync(nodeId: div.NodeId);
 
         await Assert.That(boxModel.Model).IsNotNull();
         await Assert.That(boxModel.Model.Width).IsGreaterThan(0);
@@ -69,7 +69,7 @@ public class DomTests : CdpTestFixture
     {
         await Cdp.Page.NavigateAsync("data:text/html,<html><body><div><span><a href='#'>Link</a></span></div></body></html>");
 
-        var document = await Cdp.DOM.GetDocumentAsync(new() { Depth = -1, Pierce = true });
+        var document = await Cdp.DOM.GetDocumentAsync(depth: -1, pierce: true);
 
         await Assert.That(document.Root).IsNotNull();
         await Assert.That(document.Root.Children).IsNotNull();
