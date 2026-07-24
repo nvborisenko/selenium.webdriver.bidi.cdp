@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Tethering;
 /// The Tethering domain defines methods and events for browser port binding.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ITethering
 {
-    private static TetheringJsonSerializerContext JsonContext = TetheringJsonSerializerContext.Default;
-
     /// <summary>
     /// Request browser port binding.
     /// </summary>
@@ -28,12 +26,7 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BindResult"/>.
     /// </returns>
-    public async Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new BindCommandParameters(Port: port);
-        return await ExecuteCommandAsync(BindCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<BindCommandParameters, BindResult> BindCommand = new("Tethering.bind", JsonContext.BindCommandParameters, JsonContext.BindResult);
+    Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Request browser port unbinding.
@@ -50,12 +43,7 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UnbindResult"/>.
     /// </returns>
-    public async Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new UnbindCommandParameters(Port: port);
-        return await ExecuteCommandAsync(UnbindCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<UnbindCommandParameters, UnbindResult> UnbindCommand = new("Tethering.unbind", JsonContext.UnbindCommandParameters, JsonContext.UnbindResult);
+    Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Informs that port was successfully bound and got a specified connection id.
@@ -67,6 +55,29 @@ public sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>ConnectionId</b> - Connection id to be used.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<AcceptedEventArgs> Accepted { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ITethering
+{
+    private static TetheringJsonSerializerContext JsonContext = TetheringJsonSerializerContext.Default;
+
+    public async Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new BindCommandParameters(Port: port);
+        return await ExecuteCommandAsync(BindCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<BindCommandParameters, BindResult> BindCommand = new("Tethering.bind", JsonContext.BindCommandParameters, JsonContext.BindResult);
+
+    public async Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UnbindCommandParameters(Port: port);
+        return await ExecuteCommandAsync(UnbindCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UnbindCommandParameters, UnbindResult> UnbindCommand = new("Tethering.unbind", JsonContext.UnbindCommandParameters, JsonContext.UnbindResult);
+
     public IEventSource<AcceptedEventArgs> Accepted => CreateCdpEventSource(TetheringDomainEvent.Accepted);
 }
 
@@ -106,7 +117,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class TetheringJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="TetheringDomain"/>.
+/// Provides static event descriptors for the <see cref="ITethering"/>.
 /// </summary>
 public static class TetheringDomainEvent
 {

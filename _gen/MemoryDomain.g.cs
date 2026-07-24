@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Memory;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IMemory
 {
-    private static MemoryJsonSerializerContext JsonContext = MemoryJsonSerializerContext.Default;
-
     /// <summary>
     /// Retruns current DOM object counters.
     /// </summary>
@@ -24,12 +22,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDOMCountersResult"/>.
     /// </returns>
-    public async Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetDOMCountersCommandParameters();
-        return await ExecuteCommandAsync(GetDOMCountersCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetDOMCountersCommandParameters, GetDOMCountersResult> GetDOMCountersCommand = new("Memory.getDOMCounters", JsonContext.GetDOMCountersCommandParameters, JsonContext.GetDOMCountersResult);
+    Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retruns DOM object counters after preparing renderer for leak detection.
@@ -43,12 +36,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDOMCountersForLeakDetectionResult"/>.
     /// </returns>
-    public async Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetDOMCountersForLeakDetectionCommandParameters();
-        return await ExecuteCommandAsync(GetDOMCountersForLeakDetectionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetDOMCountersForLeakDetectionCommandParameters, GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionCommand = new("Memory.getDOMCountersForLeakDetection", JsonContext.GetDOMCountersForLeakDetectionCommandParameters, JsonContext.GetDOMCountersForLeakDetectionResult);
+    Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Prepares for leak detection by terminating workers, stopping spellcheckers,
@@ -63,12 +51,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PrepareForLeakDetectionResult"/>.
     /// </returns>
-    public async Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new PrepareForLeakDetectionCommandParameters();
-        return await ExecuteCommandAsync(PrepareForLeakDetectionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<PrepareForLeakDetectionCommandParameters, PrepareForLeakDetectionResult> PrepareForLeakDetectionCommand = new("Memory.prepareForLeakDetection", JsonContext.PrepareForLeakDetectionCommandParameters, JsonContext.PrepareForLeakDetectionResult);
+    Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulate OomIntervention by purging V8 memory.
@@ -82,12 +65,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForciblyPurgeJavaScriptMemoryResult"/>.
     /// </returns>
-    public async Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ForciblyPurgeJavaScriptMemoryCommandParameters();
-        return await ExecuteCommandAsync(ForciblyPurgeJavaScriptMemoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ForciblyPurgeJavaScriptMemoryCommandParameters, ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryCommand = new("Memory.forciblyPurgeJavaScriptMemory", JsonContext.ForciblyPurgeJavaScriptMemoryCommandParameters, JsonContext.ForciblyPurgeJavaScriptMemoryResult);
+    Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable/disable suppressing memory pressure notifications in all processes.
@@ -104,12 +82,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPressureNotificationsSuppressedResult"/>.
     /// </returns>
-    public async Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPressureNotificationsSuppressedCommandParameters(Suppressed: suppressed);
-        return await ExecuteCommandAsync(SetPressureNotificationsSuppressedCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPressureNotificationsSuppressedCommandParameters, SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedCommand = new("Memory.setPressureNotificationsSuppressed", JsonContext.SetPressureNotificationsSuppressedCommandParameters, JsonContext.SetPressureNotificationsSuppressedResult);
+    Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulate a memory pressure notification in all processes.
@@ -126,12 +99,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulatePressureNotificationResult"/>.
     /// </returns>
-    public async Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SimulatePressureNotificationCommandParameters(Level: level);
-        return await ExecuteCommandAsync(SimulatePressureNotificationCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SimulatePressureNotificationCommandParameters, SimulatePressureNotificationResult> SimulatePressureNotificationCommand = new("Memory.simulatePressureNotification", JsonContext.SimulatePressureNotificationCommandParameters, JsonContext.SimulatePressureNotificationResult);
+    Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start collecting native memory profile.
@@ -151,12 +119,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartSamplingResult"/>.
     /// </returns>
-    public async Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = default, bool? suppressRandomness = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, SuppressRandomness: suppressRandomness);
-        return await ExecuteCommandAsync(StartSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StartSamplingCommandParameters, StartSamplingResult> StartSamplingCommand = new("Memory.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
+    Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = default, bool? suppressRandomness = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stop collecting native memory profile.
@@ -170,12 +133,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopSamplingResult"/>.
     /// </returns>
-    public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StopSamplingCommandParameters();
-        return await ExecuteCommandAsync(StopSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StopSamplingCommandParameters, StopSamplingResult> StopSamplingCommand = new("Memory.stopSampling", JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult);
+    Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve native memory allocations profile
@@ -190,12 +148,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAllTimeSamplingProfileResult"/>.
     /// </returns>
-    public async Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAllTimeSamplingProfileCommandParameters();
-        return await ExecuteCommandAsync(GetAllTimeSamplingProfileCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAllTimeSamplingProfileCommandParameters, GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileCommand = new("Memory.getAllTimeSamplingProfile", JsonContext.GetAllTimeSamplingProfileCommandParameters, JsonContext.GetAllTimeSamplingProfileResult);
+    Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve native memory allocations profile
@@ -210,12 +163,7 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBrowserSamplingProfileResult"/>.
     /// </returns>
-    public async Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetBrowserSamplingProfileCommandParameters();
-        return await ExecuteCommandAsync(GetBrowserSamplingProfileCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetBrowserSamplingProfileCommandParameters, GetBrowserSamplingProfileResult> GetBrowserSamplingProfileCommand = new("Memory.getBrowserSamplingProfile", JsonContext.GetBrowserSamplingProfileCommandParameters, JsonContext.GetBrowserSamplingProfileResult);
+    Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve native memory allocations profile collected since last
@@ -230,6 +178,85 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSamplingProfileResult"/>.
     /// </returns>
+    Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IMemory
+{
+    private static MemoryJsonSerializerContext JsonContext = MemoryJsonSerializerContext.Default;
+
+    public async Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDOMCountersCommandParameters();
+        return await ExecuteCommandAsync(GetDOMCountersCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDOMCountersCommandParameters, GetDOMCountersResult> GetDOMCountersCommand = new("Memory.getDOMCounters", JsonContext.GetDOMCountersCommandParameters, JsonContext.GetDOMCountersResult);
+
+    public async Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDOMCountersForLeakDetectionCommandParameters();
+        return await ExecuteCommandAsync(GetDOMCountersForLeakDetectionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDOMCountersForLeakDetectionCommandParameters, GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionCommand = new("Memory.getDOMCountersForLeakDetection", JsonContext.GetDOMCountersForLeakDetectionCommandParameters, JsonContext.GetDOMCountersForLeakDetectionResult);
+
+    public async Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PrepareForLeakDetectionCommandParameters();
+        return await ExecuteCommandAsync(PrepareForLeakDetectionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PrepareForLeakDetectionCommandParameters, PrepareForLeakDetectionResult> PrepareForLeakDetectionCommand = new("Memory.prepareForLeakDetection", JsonContext.PrepareForLeakDetectionCommandParameters, JsonContext.PrepareForLeakDetectionResult);
+
+    public async Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ForciblyPurgeJavaScriptMemoryCommandParameters();
+        return await ExecuteCommandAsync(ForciblyPurgeJavaScriptMemoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ForciblyPurgeJavaScriptMemoryCommandParameters, ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryCommand = new("Memory.forciblyPurgeJavaScriptMemory", JsonContext.ForciblyPurgeJavaScriptMemoryCommandParameters, JsonContext.ForciblyPurgeJavaScriptMemoryResult);
+
+    public async Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPressureNotificationsSuppressedCommandParameters(Suppressed: suppressed);
+        return await ExecuteCommandAsync(SetPressureNotificationsSuppressedCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPressureNotificationsSuppressedCommandParameters, SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedCommand = new("Memory.setPressureNotificationsSuppressed", JsonContext.SetPressureNotificationsSuppressedCommandParameters, JsonContext.SetPressureNotificationsSuppressedResult);
+
+    public async Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SimulatePressureNotificationCommandParameters(Level: level);
+        return await ExecuteCommandAsync(SimulatePressureNotificationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SimulatePressureNotificationCommandParameters, SimulatePressureNotificationResult> SimulatePressureNotificationCommand = new("Memory.simulatePressureNotification", JsonContext.SimulatePressureNotificationCommandParameters, JsonContext.SimulatePressureNotificationResult);
+
+    public async Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = default, bool? suppressRandomness = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, SuppressRandomness: suppressRandomness);
+        return await ExecuteCommandAsync(StartSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartSamplingCommandParameters, StartSamplingResult> StartSamplingCommand = new("Memory.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
+
+    public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopSamplingCommandParameters();
+        return await ExecuteCommandAsync(StopSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopSamplingCommandParameters, StopSamplingResult> StopSamplingCommand = new("Memory.stopSampling", JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult);
+
+    public async Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAllTimeSamplingProfileCommandParameters();
+        return await ExecuteCommandAsync(GetAllTimeSamplingProfileCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAllTimeSamplingProfileCommandParameters, GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileCommand = new("Memory.getAllTimeSamplingProfile", JsonContext.GetAllTimeSamplingProfileCommandParameters, JsonContext.GetAllTimeSamplingProfileResult);
+
+    public async Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetBrowserSamplingProfileCommandParameters();
+        return await ExecuteCommandAsync(GetBrowserSamplingProfileCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetBrowserSamplingProfileCommandParameters, GetBrowserSamplingProfileResult> GetBrowserSamplingProfileCommand = new("Memory.getBrowserSamplingProfile", JsonContext.GetBrowserSamplingProfileCommandParameters, JsonContext.GetBrowserSamplingProfileResult);
+
     public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSamplingProfileCommandParameters();

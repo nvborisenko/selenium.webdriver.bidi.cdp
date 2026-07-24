@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Overlay;
 /// This domain provides various functionality related to drawing atop the inspected page.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IOverlay
 {
-    private static OverlayJsonSerializerContext JsonContext = OverlayJsonSerializerContext.Default;
-
     /// <summary>
     /// Disables domain notifications.
     /// </summary>
@@ -25,12 +23,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Overlay.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables domain notifications.
@@ -44,12 +37,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Overlay.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// For testing.
@@ -78,12 +66,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetHighlightObjectForTestResult"/>.
     /// </returns>
-    public async Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = default, bool? includeStyle = default, ColorFormat? colorFormat = default, bool? showAccessibilityInfo = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetHighlightObjectForTestCommandParameters(NodeId: nodeId, IncludeDistance: includeDistance, IncludeStyle: includeStyle, ColorFormat: colorFormat, ShowAccessibilityInfo: showAccessibilityInfo);
-        return await ExecuteCommandAsync(GetHighlightObjectForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetHighlightObjectForTestCommandParameters, GetHighlightObjectForTestResult> GetHighlightObjectForTestCommand = new("Overlay.getHighlightObjectForTest", JsonContext.GetHighlightObjectForTestCommandParameters, JsonContext.GetHighlightObjectForTestResult);
+    Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = default, bool? includeStyle = default, ColorFormat? colorFormat = default, bool? showAccessibilityInfo = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// For Persistent Grid testing.
@@ -100,12 +83,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetGridHighlightObjectsForTestResult"/>.
     /// </returns>
-    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetGridHighlightObjectsForTestCommandParameters(NodeIds: nodeIds);
-        return await ExecuteCommandAsync(GetGridHighlightObjectsForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetGridHighlightObjectsForTestCommandParameters, GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestCommand = new("Overlay.getGridHighlightObjectsForTest", JsonContext.GetGridHighlightObjectsForTestCommandParameters, JsonContext.GetGridHighlightObjectsForTestResult);
+    Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// For Source Order Viewer testing.
@@ -122,12 +100,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSourceOrderHighlightObjectForTestResult"/>.
     /// </returns>
-    public async Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetSourceOrderHighlightObjectForTestCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetSourceOrderHighlightObjectForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetSourceOrderHighlightObjectForTestCommandParameters, GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestCommand = new("Overlay.getSourceOrderHighlightObjectForTest", JsonContext.GetSourceOrderHighlightObjectForTestCommandParameters, JsonContext.GetSourceOrderHighlightObjectForTestResult);
+    Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Hides any highlight.
@@ -141,12 +114,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HideHighlightResult"/>.
     /// </returns>
-    public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HideHighlightCommandParameters();
-        return await ExecuteCommandAsync(HideHighlightCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HideHighlightCommandParameters, HideHighlightResult> HideHighlightCommand = new("Overlay.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
+    Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights owner element of the frame with given id.
@@ -173,12 +141,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="HighlightFrameResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = default, DOM.RGBA? contentOutlineColor = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HighlightFrameCommandParameters(FrameId: frameId, ContentColor: contentColor, ContentOutlineColor: contentOutlineColor);
-        return await ExecuteCommandAsync(HighlightFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HighlightFrameCommandParameters, HighlightFrameResult> HighlightFrameCommand = new("Overlay.highlightFrame", JsonContext.HighlightFrameCommandParameters, JsonContext.HighlightFrameResult);
+    Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = default, DOM.RGBA? contentOutlineColor = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights DOM node with given id or with the given JavaScript object wrapper. Either nodeId or
@@ -208,12 +171,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightNodeResult"/>.
     /// </returns>
-    public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? selector = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HighlightNodeCommandParameters(HighlightConfig: highlightConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Selector: selector);
-        return await ExecuteCommandAsync(HighlightNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult> HighlightNodeCommand = new("Overlay.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
+    Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? selector = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights given quad. Coordinates are absolute with respect to the main frame viewport.
@@ -236,12 +194,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightQuadResult"/>.
     /// </returns>
-    public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HighlightQuadCommandParameters(Quad: quad, Color: color, OutlineColor: outlineColor);
-        return await ExecuteCommandAsync(HighlightQuadCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HighlightQuadCommandParameters, HighlightQuadResult> HighlightQuadCommand = new("Overlay.highlightQuad", JsonContext.HighlightQuadCommandParameters, JsonContext.HighlightQuadResult);
+    Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport.
@@ -276,12 +229,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightRectResult"/>.
     /// </returns>
-    public async Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HighlightRectCommandParameters(X: x, Y: y, Width: width, Height: height, Color: color, OutlineColor: outlineColor);
-        return await ExecuteCommandAsync(HighlightRectCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HighlightRectCommandParameters, HighlightRectResult> HighlightRectCommand = new("Overlay.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
+    Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights the source order of the children of the DOM node with given id or with the given
@@ -308,12 +256,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightSourceOrderResult"/>.
     /// </returns>
-    public async Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HighlightSourceOrderCommandParameters(SourceOrderConfig: sourceOrderConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(HighlightSourceOrderCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HighlightSourceOrderCommandParameters, HighlightSourceOrderResult> HighlightSourceOrderCommand = new("Overlay.highlightSourceOrder", JsonContext.HighlightSourceOrderCommandParameters, JsonContext.HighlightSourceOrderResult);
+    Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enters the 'inspect' mode. In this mode, elements that user is hovering over are highlighted.
@@ -335,12 +278,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInspectModeResult"/>.
     /// </returns>
-    public async Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInspectModeCommandParameters(Mode: mode, HighlightConfig: highlightConfig);
-        return await ExecuteCommandAsync(SetInspectModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInspectModeCommandParameters, SetInspectModeResult> SetInspectModeCommand = new("Overlay.setInspectMode", JsonContext.SetInspectModeCommandParameters, JsonContext.SetInspectModeResult);
+    Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights owner element of all frames detected to be ads.
@@ -357,12 +295,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowAdHighlightsResult"/>.
     /// </returns>
-    public async Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowAdHighlightsCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowAdHighlightsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowAdHighlightsCommandParameters, SetShowAdHighlightsResult> SetShowAdHighlightsCommand = new("Overlay.setShowAdHighlights", JsonContext.SetShowAdHighlightsCommandParameters, JsonContext.SetShowAdHighlightsResult);
+    Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -378,12 +311,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPausedInDebuggerMessageResult"/>.
     /// </returns>
-    public async Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPausedInDebuggerMessageCommandParameters(Message: message);
-        return await ExecuteCommandAsync(SetPausedInDebuggerMessageCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPausedInDebuggerMessageCommandParameters, SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageCommand = new("Overlay.setPausedInDebuggerMessage", JsonContext.SetPausedInDebuggerMessageCommandParameters, JsonContext.SetPausedInDebuggerMessageResult);
+    Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows debug borders on layers
@@ -400,12 +328,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowDebugBordersResult"/>.
     /// </returns>
-    public async Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowDebugBordersCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowDebugBordersCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowDebugBordersCommandParameters, SetShowDebugBordersResult> SetShowDebugBordersCommand = new("Overlay.setShowDebugBorders", JsonContext.SetShowDebugBordersCommandParameters, JsonContext.SetShowDebugBordersResult);
+    Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows the FPS counter
@@ -422,12 +345,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowFPSCounterResult"/>.
     /// </returns>
-    public async Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowFPSCounterCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowFPSCounterCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowFPSCounterCommandParameters, SetShowFPSCounterResult> SetShowFPSCounterCommand = new("Overlay.setShowFPSCounter", JsonContext.SetShowFPSCounterCommandParameters, JsonContext.SetShowFPSCounterResult);
+    Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlight multiple elements with the CSS Grid overlay.
@@ -444,12 +362,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowGridOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowGridOverlaysCommandParameters(GridNodeHighlightConfigs: gridNodeHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowGridOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowGridOverlaysCommandParameters, SetShowGridOverlaysResult> SetShowGridOverlaysCommand = new("Overlay.setShowGridOverlays", JsonContext.SetShowGridOverlaysCommandParameters, JsonContext.SetShowGridOverlaysResult);
+    Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -465,12 +378,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowFlexOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowFlexOverlaysCommandParameters(FlexNodeHighlightConfigs: flexNodeHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowFlexOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowFlexOverlaysCommandParameters, SetShowFlexOverlaysResult> SetShowFlexOverlaysCommand = new("Overlay.setShowFlexOverlays", JsonContext.SetShowFlexOverlaysCommandParameters, JsonContext.SetShowFlexOverlaysResult);
+    Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -486,12 +394,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowScrollSnapOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowScrollSnapOverlaysCommandParameters(ScrollSnapHighlightConfigs: scrollSnapHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowScrollSnapOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowScrollSnapOverlaysCommandParameters, SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysCommand = new("Overlay.setShowScrollSnapOverlays", JsonContext.SetShowScrollSnapOverlaysCommandParameters, JsonContext.SetShowScrollSnapOverlaysResult);
+    Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -507,12 +410,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowContainerQueryOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowContainerQueryOverlaysCommandParameters(ContainerQueryHighlightConfigs: containerQueryHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowContainerQueryOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowContainerQueryOverlaysCommandParameters, SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysCommand = new("Overlay.setShowContainerQueryOverlays", JsonContext.SetShowContainerQueryOverlaysCommandParameters, JsonContext.SetShowContainerQueryOverlaysResult);
+    Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -528,12 +426,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowInspectedElementAnchorResult"/>.
     /// </returns>
-    public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig: inspectedElementAnchorConfig);
-        return await ExecuteCommandAsync(SetShowInspectedElementAnchorCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowInspectedElementAnchorCommandParameters, SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorCommand = new("Overlay.setShowInspectedElementAnchor", JsonContext.SetShowInspectedElementAnchorCommandParameters, JsonContext.SetShowInspectedElementAnchorResult);
+    Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows paint rectangles
@@ -550,12 +443,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowPaintRectsResult"/>.
     /// </returns>
-    public async Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowPaintRectsCommandParameters(Result: result);
-        return await ExecuteCommandAsync(SetShowPaintRectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowPaintRectsCommandParameters, SetShowPaintRectsResult> SetShowPaintRectsCommand = new("Overlay.setShowPaintRects", JsonContext.SetShowPaintRectsCommandParameters, JsonContext.SetShowPaintRectsResult);
+    Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows layout shift regions
@@ -572,12 +460,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowLayoutShiftRegionsResult"/>.
     /// </returns>
-    public async Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowLayoutShiftRegionsCommandParameters(Result: result);
-        return await ExecuteCommandAsync(SetShowLayoutShiftRegionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowLayoutShiftRegionsCommandParameters, SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsCommand = new("Overlay.setShowLayoutShiftRegions", JsonContext.SetShowLayoutShiftRegionsCommandParameters, JsonContext.SetShowLayoutShiftRegionsResult);
+    Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows scroll bottleneck rects
@@ -594,12 +477,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowScrollBottleneckRectsResult"/>.
     /// </returns>
-    public async Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowScrollBottleneckRectsCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowScrollBottleneckRectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowScrollBottleneckRectsCommandParameters, SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsCommand = new("Overlay.setShowScrollBottleneckRects", JsonContext.SetShowScrollBottleneckRectsCommandParameters, JsonContext.SetShowScrollBottleneckRectsResult);
+    Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated, no longer has any effect.
@@ -617,12 +495,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetShowHitTestBordersResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowHitTestBordersCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowHitTestBordersCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowHitTestBordersCommandParameters, SetShowHitTestBordersResult> SetShowHitTestBordersCommand = new("Overlay.setShowHitTestBorders", JsonContext.SetShowHitTestBordersCommandParameters, JsonContext.SetShowHitTestBordersResult);
+    Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated, no longer has any effect.
@@ -639,12 +512,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetShowWebVitalsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowWebVitalsCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowWebVitalsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowWebVitalsCommandParameters, SetShowWebVitalsResult> SetShowWebVitalsCommand = new("Overlay.setShowWebVitals", JsonContext.SetShowWebVitalsCommandParameters, JsonContext.SetShowWebVitalsResult);
+    Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Paints viewport size upon main frame resize.
@@ -661,12 +529,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowViewportSizeOnResizeResult"/>.
     /// </returns>
-    public async Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowViewportSizeOnResizeCommandParameters(Show: show);
-        return await ExecuteCommandAsync(SetShowViewportSizeOnResizeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowViewportSizeOnResizeCommandParameters, SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeCommand = new("Overlay.setShowViewportSizeOnResize", JsonContext.SetShowViewportSizeOnResizeCommandParameters, JsonContext.SetShowViewportSizeOnResizeResult);
+    Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Add a dual screen device hinge
@@ -683,12 +546,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowHingeResult"/>.
     /// </returns>
-    public async Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowHingeCommandParameters(HingeConfig: hingeConfig);
-        return await ExecuteCommandAsync(SetShowHingeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowHingeCommandParameters, SetShowHingeResult> SetShowHingeCommand = new("Overlay.setShowHinge", JsonContext.SetShowHingeCommandParameters, JsonContext.SetShowHingeResult);
+    Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Add a display cutout overlay.
@@ -705,12 +563,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowDisplayCutoutResult"/>.
     /// </returns>
-    public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig: displayCutoutConfig);
-        return await ExecuteCommandAsync(SetShowDisplayCutoutCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowDisplayCutoutCommandParameters, SetShowDisplayCutoutResult> SetShowDisplayCutoutCommand = new("Overlay.setShowDisplayCutout", JsonContext.SetShowDisplayCutoutCommandParameters, JsonContext.SetShowDisplayCutoutResult);
+    Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Show elements in isolation mode with overlays.
@@ -727,12 +580,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowIsolatedElementsResult"/>.
     /// </returns>
-    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowIsolatedElementsCommandParameters(IsolatedElementHighlightConfigs: isolatedElementHighlightConfigs);
-        return await ExecuteCommandAsync(SetShowIsolatedElementsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowIsolatedElementsCommandParameters, SetShowIsolatedElementsResult> SetShowIsolatedElementsCommand = new("Overlay.setShowIsolatedElements", JsonContext.SetShowIsolatedElementsCommandParameters, JsonContext.SetShowIsolatedElementsResult);
+    Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Show Window Controls Overlay for PWA
@@ -749,12 +597,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowWindowControlsOverlayResult"/>.
     /// </returns>
-    public async Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig: windowControlsOverlayConfig);
-        return await ExecuteCommandAsync(SetShowWindowControlsOverlayCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetShowWindowControlsOverlayCommandParameters, SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayCommand = new("Overlay.setShowWindowControlsOverlay", JsonContext.SetShowWindowControlsOverlayCommandParameters, JsonContext.SetShowWindowControlsOverlayResult);
+    Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when the node should be inspected. This happens after call to <b>setInspectMode</b> or when
@@ -766,7 +609,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>BackendNodeId</b> - Id of the node to inspect.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<InspectNodeRequestedEventArgs> InspectNodeRequested => CreateCdpEventSource(OverlayDomainEvent.InspectNodeRequested);
+    IEventSource<InspectNodeRequestedEventArgs> InspectNodeRequested { get; }
+
     /// <summary>
     /// Fired when the node should be highlighted. This happens after call to <b>setInspectMode</b>.
     /// </summary>
@@ -776,7 +620,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>NodeId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<NodeHighlightRequestedEventArgs> NodeHighlightRequested => CreateCdpEventSource(OverlayDomainEvent.NodeHighlightRequested);
+    IEventSource<NodeHighlightRequestedEventArgs> NodeHighlightRequested { get; }
+
     /// <summary>
     /// Fired when user asks to capture screenshot of some area on the page.
     /// </summary>
@@ -786,7 +631,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Viewport</b> - Viewport to capture, in device independent pixels (dip).</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ScreenshotRequestedEventArgs> ScreenshotRequested => CreateCdpEventSource(OverlayDomainEvent.ScreenshotRequested);
+    IEventSource<ScreenshotRequestedEventArgs> ScreenshotRequested { get; }
+
     /// <summary>
     /// Fired when user asks to show the Inspect panel.
     /// </summary>
@@ -796,7 +642,8 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>BackendNodeId</b> - Id of the node to show in the panel.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<InspectPanelShowRequestedEventArgs> InspectPanelShowRequested => CreateCdpEventSource(OverlayDomainEvent.InspectPanelShowRequested);
+    IEventSource<InspectPanelShowRequestedEventArgs> InspectPanelShowRequested { get; }
+
     /// <summary>
     /// Fired when user asks to restore the Inspected Element floating window.
     /// </summary>
@@ -806,10 +653,245 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>BackendNodeId</b> - Id of the node to restore the floating window for.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<InspectedElementWindowRestoredEventArgs> InspectedElementWindowRestored => CreateCdpEventSource(OverlayDomainEvent.InspectedElementWindowRestored);
+    IEventSource<InspectedElementWindowRestoredEventArgs> InspectedElementWindowRestored { get; }
+
     /// <summary>
     /// Fired when user cancels the inspect mode.
     /// </summary>
+    IEventSource<InspectModeCanceledEventArgs> InspectModeCanceled { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IOverlay
+{
+    private static OverlayJsonSerializerContext JsonContext = OverlayJsonSerializerContext.Default;
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Overlay.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Overlay.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = default, bool? includeStyle = default, ColorFormat? colorFormat = default, bool? showAccessibilityInfo = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetHighlightObjectForTestCommandParameters(NodeId: nodeId, IncludeDistance: includeDistance, IncludeStyle: includeStyle, ColorFormat: colorFormat, ShowAccessibilityInfo: showAccessibilityInfo);
+        return await ExecuteCommandAsync(GetHighlightObjectForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetHighlightObjectForTestCommandParameters, GetHighlightObjectForTestResult> GetHighlightObjectForTestCommand = new("Overlay.getHighlightObjectForTest", JsonContext.GetHighlightObjectForTestCommandParameters, JsonContext.GetHighlightObjectForTestResult);
+
+    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetGridHighlightObjectsForTestCommandParameters(NodeIds: nodeIds);
+        return await ExecuteCommandAsync(GetGridHighlightObjectsForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetGridHighlightObjectsForTestCommandParameters, GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestCommand = new("Overlay.getGridHighlightObjectsForTest", JsonContext.GetGridHighlightObjectsForTestCommandParameters, JsonContext.GetGridHighlightObjectsForTestResult);
+
+    public async Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSourceOrderHighlightObjectForTestCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetSourceOrderHighlightObjectForTestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetSourceOrderHighlightObjectForTestCommandParameters, GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestCommand = new("Overlay.getSourceOrderHighlightObjectForTest", JsonContext.GetSourceOrderHighlightObjectForTestCommandParameters, JsonContext.GetSourceOrderHighlightObjectForTestResult);
+
+    public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HideHighlightCommandParameters();
+        return await ExecuteCommandAsync(HideHighlightCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HideHighlightCommandParameters, HideHighlightResult> HideHighlightCommand = new("Overlay.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
+
+    [global::System.Obsolete]
+    public async Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = default, DOM.RGBA? contentOutlineColor = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightFrameCommandParameters(FrameId: frameId, ContentColor: contentColor, ContentOutlineColor: contentOutlineColor);
+        return await ExecuteCommandAsync(HighlightFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightFrameCommandParameters, HighlightFrameResult> HighlightFrameCommand = new("Overlay.highlightFrame", JsonContext.HighlightFrameCommandParameters, JsonContext.HighlightFrameResult);
+
+    public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? selector = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightNodeCommandParameters(HighlightConfig: highlightConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Selector: selector);
+        return await ExecuteCommandAsync(HighlightNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult> HighlightNodeCommand = new("Overlay.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
+
+    public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightQuadCommandParameters(Quad: quad, Color: color, OutlineColor: outlineColor);
+        return await ExecuteCommandAsync(HighlightQuadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightQuadCommandParameters, HighlightQuadResult> HighlightQuadCommand = new("Overlay.highlightQuad", JsonContext.HighlightQuadCommandParameters, JsonContext.HighlightQuadResult);
+
+    public async Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightRectCommandParameters(X: x, Y: y, Width: width, Height: height, Color: color, OutlineColor: outlineColor);
+        return await ExecuteCommandAsync(HighlightRectCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightRectCommandParameters, HighlightRectResult> HighlightRectCommand = new("Overlay.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
+
+    public async Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightSourceOrderCommandParameters(SourceOrderConfig: sourceOrderConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
+        return await ExecuteCommandAsync(HighlightSourceOrderCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightSourceOrderCommandParameters, HighlightSourceOrderResult> HighlightSourceOrderCommand = new("Overlay.highlightSourceOrder", JsonContext.HighlightSourceOrderCommandParameters, JsonContext.HighlightSourceOrderResult);
+
+    public async Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInspectModeCommandParameters(Mode: mode, HighlightConfig: highlightConfig);
+        return await ExecuteCommandAsync(SetInspectModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetInspectModeCommandParameters, SetInspectModeResult> SetInspectModeCommand = new("Overlay.setInspectMode", JsonContext.SetInspectModeCommandParameters, JsonContext.SetInspectModeResult);
+
+    public async Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowAdHighlightsCommandParameters(Show: show);
+        return await ExecuteCommandAsync(SetShowAdHighlightsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowAdHighlightsCommandParameters, SetShowAdHighlightsResult> SetShowAdHighlightsCommand = new("Overlay.setShowAdHighlights", JsonContext.SetShowAdHighlightsCommandParameters, JsonContext.SetShowAdHighlightsResult);
+
+    public async Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPausedInDebuggerMessageCommandParameters(Message: message);
+        return await ExecuteCommandAsync(SetPausedInDebuggerMessageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPausedInDebuggerMessageCommandParameters, SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageCommand = new("Overlay.setPausedInDebuggerMessage", JsonContext.SetPausedInDebuggerMessageCommandParameters, JsonContext.SetPausedInDebuggerMessageResult);
+
+    public async Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowDebugBordersCommandParameters(Show: show);
+        return await ExecuteCommandAsync(SetShowDebugBordersCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowDebugBordersCommandParameters, SetShowDebugBordersResult> SetShowDebugBordersCommand = new("Overlay.setShowDebugBorders", JsonContext.SetShowDebugBordersCommandParameters, JsonContext.SetShowDebugBordersResult);
+
+    public async Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowFPSCounterCommandParameters(Show: show);
+        return await ExecuteCommandAsync(SetShowFPSCounterCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowFPSCounterCommandParameters, SetShowFPSCounterResult> SetShowFPSCounterCommand = new("Overlay.setShowFPSCounter", JsonContext.SetShowFPSCounterCommandParameters, JsonContext.SetShowFPSCounterResult);
+
+    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowGridOverlaysCommandParameters(GridNodeHighlightConfigs: gridNodeHighlightConfigs);
+        return await ExecuteCommandAsync(SetShowGridOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowGridOverlaysCommandParameters, SetShowGridOverlaysResult> SetShowGridOverlaysCommand = new("Overlay.setShowGridOverlays", JsonContext.SetShowGridOverlaysCommandParameters, JsonContext.SetShowGridOverlaysResult);
+
+    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowFlexOverlaysCommandParameters(FlexNodeHighlightConfigs: flexNodeHighlightConfigs);
+        return await ExecuteCommandAsync(SetShowFlexOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowFlexOverlaysCommandParameters, SetShowFlexOverlaysResult> SetShowFlexOverlaysCommand = new("Overlay.setShowFlexOverlays", JsonContext.SetShowFlexOverlaysCommandParameters, JsonContext.SetShowFlexOverlaysResult);
+
+    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowScrollSnapOverlaysCommandParameters(ScrollSnapHighlightConfigs: scrollSnapHighlightConfigs);
+        return await ExecuteCommandAsync(SetShowScrollSnapOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowScrollSnapOverlaysCommandParameters, SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysCommand = new("Overlay.setShowScrollSnapOverlays", JsonContext.SetShowScrollSnapOverlaysCommandParameters, JsonContext.SetShowScrollSnapOverlaysResult);
+
+    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowContainerQueryOverlaysCommandParameters(ContainerQueryHighlightConfigs: containerQueryHighlightConfigs);
+        return await ExecuteCommandAsync(SetShowContainerQueryOverlaysCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowContainerQueryOverlaysCommandParameters, SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysCommand = new("Overlay.setShowContainerQueryOverlays", JsonContext.SetShowContainerQueryOverlaysCommandParameters, JsonContext.SetShowContainerQueryOverlaysResult);
+
+    public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig: inspectedElementAnchorConfig);
+        return await ExecuteCommandAsync(SetShowInspectedElementAnchorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowInspectedElementAnchorCommandParameters, SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorCommand = new("Overlay.setShowInspectedElementAnchor", JsonContext.SetShowInspectedElementAnchorCommandParameters, JsonContext.SetShowInspectedElementAnchorResult);
+
+    public async Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowPaintRectsCommandParameters(Result: result);
+        return await ExecuteCommandAsync(SetShowPaintRectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowPaintRectsCommandParameters, SetShowPaintRectsResult> SetShowPaintRectsCommand = new("Overlay.setShowPaintRects", JsonContext.SetShowPaintRectsCommandParameters, JsonContext.SetShowPaintRectsResult);
+
+    public async Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowLayoutShiftRegionsCommandParameters(Result: result);
+        return await ExecuteCommandAsync(SetShowLayoutShiftRegionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowLayoutShiftRegionsCommandParameters, SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsCommand = new("Overlay.setShowLayoutShiftRegions", JsonContext.SetShowLayoutShiftRegionsCommandParameters, JsonContext.SetShowLayoutShiftRegionsResult);
+
+    public async Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowScrollBottleneckRectsCommandParameters(Show: show);
+        return await ExecuteCommandAsync(SetShowScrollBottleneckRectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowScrollBottleneckRectsCommandParameters, SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsCommand = new("Overlay.setShowScrollBottleneckRects", JsonContext.SetShowScrollBottleneckRectsCommandParameters, JsonContext.SetShowScrollBottleneckRectsResult);
+
+    [global::System.Obsolete]
+    public async Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowHitTestBordersCommandParameters(Show: show);
+        return await ExecuteCommandAsync(SetShowHitTestBordersCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowHitTestBordersCommandParameters, SetShowHitTestBordersResult> SetShowHitTestBordersCommand = new("Overlay.setShowHitTestBorders", JsonContext.SetShowHitTestBordersCommandParameters, JsonContext.SetShowHitTestBordersResult);
+
+    [global::System.Obsolete]
+    public async Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowWebVitalsCommandParameters(Show: show);
+        return await ExecuteCommandAsync(SetShowWebVitalsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowWebVitalsCommandParameters, SetShowWebVitalsResult> SetShowWebVitalsCommand = new("Overlay.setShowWebVitals", JsonContext.SetShowWebVitalsCommandParameters, JsonContext.SetShowWebVitalsResult);
+
+    public async Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowViewportSizeOnResizeCommandParameters(Show: show);
+        return await ExecuteCommandAsync(SetShowViewportSizeOnResizeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowViewportSizeOnResizeCommandParameters, SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeCommand = new("Overlay.setShowViewportSizeOnResize", JsonContext.SetShowViewportSizeOnResizeCommandParameters, JsonContext.SetShowViewportSizeOnResizeResult);
+
+    public async Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowHingeCommandParameters(HingeConfig: hingeConfig);
+        return await ExecuteCommandAsync(SetShowHingeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowHingeCommandParameters, SetShowHingeResult> SetShowHingeCommand = new("Overlay.setShowHinge", JsonContext.SetShowHingeCommandParameters, JsonContext.SetShowHingeResult);
+
+    public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig: displayCutoutConfig);
+        return await ExecuteCommandAsync(SetShowDisplayCutoutCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowDisplayCutoutCommandParameters, SetShowDisplayCutoutResult> SetShowDisplayCutoutCommand = new("Overlay.setShowDisplayCutout", JsonContext.SetShowDisplayCutoutCommandParameters, JsonContext.SetShowDisplayCutoutResult);
+
+    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowIsolatedElementsCommandParameters(IsolatedElementHighlightConfigs: isolatedElementHighlightConfigs);
+        return await ExecuteCommandAsync(SetShowIsolatedElementsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowIsolatedElementsCommandParameters, SetShowIsolatedElementsResult> SetShowIsolatedElementsCommand = new("Overlay.setShowIsolatedElements", JsonContext.SetShowIsolatedElementsCommandParameters, JsonContext.SetShowIsolatedElementsResult);
+
+    public async Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig: windowControlsOverlayConfig);
+        return await ExecuteCommandAsync(SetShowWindowControlsOverlayCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetShowWindowControlsOverlayCommandParameters, SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayCommand = new("Overlay.setShowWindowControlsOverlay", JsonContext.SetShowWindowControlsOverlayCommandParameters, JsonContext.SetShowWindowControlsOverlayResult);
+
+    public IEventSource<InspectNodeRequestedEventArgs> InspectNodeRequested => CreateCdpEventSource(OverlayDomainEvent.InspectNodeRequested);
+    public IEventSource<NodeHighlightRequestedEventArgs> NodeHighlightRequested => CreateCdpEventSource(OverlayDomainEvent.NodeHighlightRequested);
+    public IEventSource<ScreenshotRequestedEventArgs> ScreenshotRequested => CreateCdpEventSource(OverlayDomainEvent.ScreenshotRequested);
+    public IEventSource<InspectPanelShowRequestedEventArgs> InspectPanelShowRequested => CreateCdpEventSource(OverlayDomainEvent.InspectPanelShowRequested);
+    public IEventSource<InspectedElementWindowRestoredEventArgs> InspectedElementWindowRestored => CreateCdpEventSource(OverlayDomainEvent.InspectedElementWindowRestored);
     public IEventSource<InspectModeCanceledEventArgs> InspectModeCanceled => CreateCdpEventSource(OverlayDomainEvent.InspectModeCanceled);
 }
 
@@ -1815,7 +1897,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class OverlayJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="OverlayDomain"/>.
+/// Provides static event descriptors for the <see cref="IOverlay"/>.
 /// </summary>
 public static class OverlayDomainEvent
 {

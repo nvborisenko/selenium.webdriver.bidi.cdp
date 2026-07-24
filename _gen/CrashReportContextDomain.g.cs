@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.CrashReportContext;
 /// This domain exposes the current state of the CrashReportContext API.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ICrashReportContext
 {
-    private static CrashReportContextJsonSerializerContext JsonContext = CrashReportContextJsonSerializerContext.Default;
-
     /// <summary>
     /// Returns all entries in the CrashReportContext across all frames in the page.
     /// </summary>
@@ -25,6 +23,15 @@ public sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEntriesResult"/>.
     /// </returns>
+    Task<GetEntriesResult> GetEntriesAsync(string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ICrashReportContext
+{
+    private static CrashReportContextJsonSerializerContext JsonContext = CrashReportContextJsonSerializerContext.Default;
+
     public async Task<GetEntriesResult> GetEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEntriesCommandParameters();

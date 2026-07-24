@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.SmartCardEmulation;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ISmartCardEmulation
 {
-    private static SmartCardEmulationJsonSerializerContext JsonContext = SmartCardEmulationJsonSerializerContext.Default;
-
     /// <summary>
     /// Enables the |SmartCardEmulation| domain.
     /// </summary>
@@ -24,12 +22,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("SmartCardEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the |SmartCardEmulation| domain.
@@ -43,12 +36,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("SmartCardEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardEstablishContext| call.
@@ -70,12 +58,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportEstablishContextResultResult"/>.
     /// </returns>
-    public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportEstablishContextResultCommandParameters(RequestId: requestId, ContextId: contextId);
-        return await ExecuteCommandAsync(ReportEstablishContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportEstablishContextResultCommandParameters, ReportEstablishContextResultResult> ReportEstablishContextResultCommand = new("SmartCardEmulation.reportEstablishContextResult", JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult);
+    Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardReleaseContext| call.
@@ -95,12 +78,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportReleaseContextResultResult"/>.
     /// </returns>
-    public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportReleaseContextResultCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReportReleaseContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportReleaseContextResultCommandParameters, ReportReleaseContextResultResult> ReportReleaseContextResultCommand = new("SmartCardEmulation.reportReleaseContextResult", JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult);
+    Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardListReaders| call.
@@ -122,12 +100,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportListReadersResultResult"/>.
     /// </returns>
-    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportListReadersResultCommandParameters(RequestId: requestId, Readers: readers);
-        return await ExecuteCommandAsync(ReportListReadersResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportListReadersResultCommandParameters, ReportListReadersResultResult> ReportListReadersResultCommand = new("SmartCardEmulation.reportListReadersResult", JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult);
+    Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardGetStatusChange| call.
@@ -149,12 +122,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportGetStatusChangeResultResult"/>.
     /// </returns>
-    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportGetStatusChangeResultCommandParameters(RequestId: requestId, ReaderStates: readerStates);
-        return await ExecuteCommandAsync(ReportGetStatusChangeResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportGetStatusChangeResultCommandParameters, ReportGetStatusChangeResultResult> ReportGetStatusChangeResultCommand = new("SmartCardEmulation.reportGetStatusChangeResult", JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult);
+    Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the result of a |SCardBeginTransaction| call.
@@ -177,12 +145,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportBeginTransactionResultResult"/>.
     /// </returns>
-    public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportBeginTransactionResultCommandParameters(RequestId: requestId, Handle: handle);
-        return await ExecuteCommandAsync(ReportBeginTransactionResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportBeginTransactionResultCommandParameters, ReportBeginTransactionResultResult> ReportBeginTransactionResultCommand = new("SmartCardEmulation.reportBeginTransactionResult", JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult);
+    Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a call that returns only a result code.
@@ -216,12 +179,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportPlainResultResult"/>.
     /// </returns>
-    public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportPlainResultCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReportPlainResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportPlainResultCommandParameters, ReportPlainResultResult> ReportPlainResultCommand = new("SmartCardEmulation.reportPlainResult", JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult);
+    Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardConnect| call.
@@ -245,12 +203,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportConnectResultResult"/>.
     /// </returns>
-    public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportConnectResultCommandParameters(RequestId: requestId, Handle: handle, ActiveProtocol: activeProtocol);
-        return await ExecuteCommandAsync(ReportConnectResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportConnectResultCommandParameters, ReportConnectResultResult> ReportConnectResultCommand = new("SmartCardEmulation.reportConnectResult", JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult);
+    Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a call that sends back data on success.
@@ -282,12 +235,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportDataResultResult"/>.
     /// </returns>
-    public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportDataResultCommandParameters(RequestId: requestId, Data: data);
-        return await ExecuteCommandAsync(ReportDataResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportDataResultCommandParameters, ReportDataResultResult> ReportDataResultCommand = new("SmartCardEmulation.reportDataResult", JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult);
+    Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardStatus| call.
@@ -315,12 +263,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportStatusResultResult"/>.
     /// </returns>
-    public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportStatusResultCommandParameters(RequestId: requestId, ReaderName: readerName, State: state, Atr: atr, Protocol: protocol);
-        return await ExecuteCommandAsync(ReportStatusResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportStatusResultCommandParameters, ReportStatusResultResult> ReportStatusResultCommand = new("SmartCardEmulation.reportStatusResult", JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult);
+    Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports an error result for the given request.
@@ -338,12 +281,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportErrorResult"/>.
     /// </returns>
-    public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReportErrorCommandParameters(RequestId: requestId, ResultCode: resultCode);
-        return await ExecuteCommandAsync(ReportErrorCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReportErrorCommandParameters, ReportErrorResult> ReportErrorCommand = new("SmartCardEmulation.reportError", JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult);
+    Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when |SCardEstablishContext| is called.
@@ -358,7 +296,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>RequestId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<EstablishContextRequestedEventArgs> EstablishContextRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.EstablishContextRequested);
+    IEventSource<EstablishContextRequestedEventArgs> EstablishContextRequested { get; }
+
     /// <summary>
     /// Fired when |SCardReleaseContext| is called.
     /// 
@@ -373,7 +312,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>ContextId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ReleaseContextRequestedEventArgs> ReleaseContextRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ReleaseContextRequested);
+    IEventSource<ReleaseContextRequestedEventArgs> ReleaseContextRequested { get; }
+
     /// <summary>
     /// Fired when |SCardListReaders| is called.
     /// 
@@ -388,7 +328,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>ContextId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ListReadersRequestedEventArgs> ListReadersRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ListReadersRequested);
+    IEventSource<ListReadersRequestedEventArgs> ListReadersRequested { get; }
+
     /// <summary>
     /// Fired when |SCardGetStatusChange| is called. Timeout is specified in milliseconds.
     /// 
@@ -405,7 +346,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Timeout</b> - in milliseconds, if absent, it means "infinite"</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<GetStatusChangeRequestedEventArgs> GetStatusChangeRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.GetStatusChangeRequested);
+    IEventSource<GetStatusChangeRequestedEventArgs> GetStatusChangeRequested { get; }
+
     /// <summary>
     /// Fired when |SCardCancel| is called.
     /// 
@@ -420,7 +362,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>ContextId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<CancelRequestedEventArgs> CancelRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.CancelRequested);
+    IEventSource<CancelRequestedEventArgs> CancelRequested { get; }
+
     /// <summary>
     /// Fired when |SCardConnect| is called.
     /// 
@@ -438,7 +381,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>PreferredProtocols</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ConnectRequestedEventArgs> ConnectRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ConnectRequested);
+    IEventSource<ConnectRequestedEventArgs> ConnectRequested { get; }
+
     /// <summary>
     /// Fired when |SCardDisconnect| is called.
     /// 
@@ -454,7 +398,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Disposition</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<DisconnectRequestedEventArgs> DisconnectRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.DisconnectRequested);
+    IEventSource<DisconnectRequestedEventArgs> DisconnectRequested { get; }
+
     /// <summary>
     /// Fired when |SCardTransmit| is called.
     /// 
@@ -471,7 +416,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Protocol</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<TransmitRequestedEventArgs> TransmitRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.TransmitRequested);
+    IEventSource<TransmitRequestedEventArgs> TransmitRequested { get; }
+
     /// <summary>
     /// Fired when |SCardControl| is called.
     /// 
@@ -488,7 +434,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Data</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ControlRequestedEventArgs> ControlRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ControlRequested);
+    IEventSource<ControlRequestedEventArgs> ControlRequested { get; }
+
     /// <summary>
     /// Fired when |SCardGetAttrib| is called.
     /// 
@@ -504,7 +451,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>AttribId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<GetAttribRequestedEventArgs> GetAttribRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.GetAttribRequested);
+    IEventSource<GetAttribRequestedEventArgs> GetAttribRequested { get; }
+
     /// <summary>
     /// Fired when |SCardSetAttrib| is called.
     /// 
@@ -521,7 +469,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Data</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<SetAttribRequestedEventArgs> SetAttribRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.SetAttribRequested);
+    IEventSource<SetAttribRequestedEventArgs> SetAttribRequested { get; }
+
     /// <summary>
     /// Fired when |SCardStatus| is called.
     /// 
@@ -536,7 +485,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Handle</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<StatusRequestedEventArgs> StatusRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.StatusRequested);
+    IEventSource<StatusRequestedEventArgs> StatusRequested { get; }
+
     /// <summary>
     /// Fired when |SCardBeginTransaction| is called.
     /// 
@@ -551,7 +501,8 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Handle</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<BeginTransactionRequestedEventArgs> BeginTransactionRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.BeginTransactionRequested);
+    IEventSource<BeginTransactionRequestedEventArgs> BeginTransactionRequested { get; }
+
     /// <summary>
     /// Fired when |SCardEndTransaction| is called.
     /// 
@@ -567,6 +518,112 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <item><description><b>Disposition</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<EndTransactionRequestedEventArgs> EndTransactionRequested { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ISmartCardEmulation
+{
+    private static SmartCardEmulationJsonSerializerContext JsonContext = SmartCardEmulationJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("SmartCardEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("SmartCardEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportEstablishContextResultCommandParameters(RequestId: requestId, ContextId: contextId);
+        return await ExecuteCommandAsync(ReportEstablishContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportEstablishContextResultCommandParameters, ReportEstablishContextResultResult> ReportEstablishContextResultCommand = new("SmartCardEmulation.reportEstablishContextResult", JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult);
+
+    public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportReleaseContextResultCommandParameters(RequestId: requestId);
+        return await ExecuteCommandAsync(ReportReleaseContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportReleaseContextResultCommandParameters, ReportReleaseContextResultResult> ReportReleaseContextResultCommand = new("SmartCardEmulation.reportReleaseContextResult", JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult);
+
+    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportListReadersResultCommandParameters(RequestId: requestId, Readers: readers);
+        return await ExecuteCommandAsync(ReportListReadersResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportListReadersResultCommandParameters, ReportListReadersResultResult> ReportListReadersResultCommand = new("SmartCardEmulation.reportListReadersResult", JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult);
+
+    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportGetStatusChangeResultCommandParameters(RequestId: requestId, ReaderStates: readerStates);
+        return await ExecuteCommandAsync(ReportGetStatusChangeResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportGetStatusChangeResultCommandParameters, ReportGetStatusChangeResultResult> ReportGetStatusChangeResultCommand = new("SmartCardEmulation.reportGetStatusChangeResult", JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult);
+
+    public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportBeginTransactionResultCommandParameters(RequestId: requestId, Handle: handle);
+        return await ExecuteCommandAsync(ReportBeginTransactionResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportBeginTransactionResultCommandParameters, ReportBeginTransactionResultResult> ReportBeginTransactionResultCommand = new("SmartCardEmulation.reportBeginTransactionResult", JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult);
+
+    public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportPlainResultCommandParameters(RequestId: requestId);
+        return await ExecuteCommandAsync(ReportPlainResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportPlainResultCommandParameters, ReportPlainResultResult> ReportPlainResultCommand = new("SmartCardEmulation.reportPlainResult", JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult);
+
+    public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportConnectResultCommandParameters(RequestId: requestId, Handle: handle, ActiveProtocol: activeProtocol);
+        return await ExecuteCommandAsync(ReportConnectResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportConnectResultCommandParameters, ReportConnectResultResult> ReportConnectResultCommand = new("SmartCardEmulation.reportConnectResult", JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult);
+
+    public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportDataResultCommandParameters(RequestId: requestId, Data: data);
+        return await ExecuteCommandAsync(ReportDataResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportDataResultCommandParameters, ReportDataResultResult> ReportDataResultCommand = new("SmartCardEmulation.reportDataResult", JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult);
+
+    public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportStatusResultCommandParameters(RequestId: requestId, ReaderName: readerName, State: state, Atr: atr, Protocol: protocol);
+        return await ExecuteCommandAsync(ReportStatusResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportStatusResultCommandParameters, ReportStatusResultResult> ReportStatusResultCommand = new("SmartCardEmulation.reportStatusResult", JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult);
+
+    public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReportErrorCommandParameters(RequestId: requestId, ResultCode: resultCode);
+        return await ExecuteCommandAsync(ReportErrorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReportErrorCommandParameters, ReportErrorResult> ReportErrorCommand = new("SmartCardEmulation.reportError", JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult);
+
+    public IEventSource<EstablishContextRequestedEventArgs> EstablishContextRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.EstablishContextRequested);
+    public IEventSource<ReleaseContextRequestedEventArgs> ReleaseContextRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ReleaseContextRequested);
+    public IEventSource<ListReadersRequestedEventArgs> ListReadersRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ListReadersRequested);
+    public IEventSource<GetStatusChangeRequestedEventArgs> GetStatusChangeRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.GetStatusChangeRequested);
+    public IEventSource<CancelRequestedEventArgs> CancelRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.CancelRequested);
+    public IEventSource<ConnectRequestedEventArgs> ConnectRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ConnectRequested);
+    public IEventSource<DisconnectRequestedEventArgs> DisconnectRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.DisconnectRequested);
+    public IEventSource<TransmitRequestedEventArgs> TransmitRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.TransmitRequested);
+    public IEventSource<ControlRequestedEventArgs> ControlRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ControlRequested);
+    public IEventSource<GetAttribRequestedEventArgs> GetAttribRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.GetAttribRequested);
+    public IEventSource<SetAttribRequestedEventArgs> SetAttribRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.SetAttribRequested);
+    public IEventSource<StatusRequestedEventArgs> StatusRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.StatusRequested);
+    public IEventSource<BeginTransactionRequestedEventArgs> BeginTransactionRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.BeginTransactionRequested);
     public IEventSource<EndTransactionRequestedEventArgs> EndTransactionRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.EndTransactionRequested);
 }
 
@@ -1248,7 +1305,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class SmartCardEmulationJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="SmartCardEmulationDomain"/>.
+/// Provides static event descriptors for the <see cref="ISmartCardEmulation"/>.
 /// </summary>
 public static class SmartCardEmulationDomainEvent
 {

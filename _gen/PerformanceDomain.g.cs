@@ -7,10 +7,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Performance;
 
 /// <summary>
 /// </summary>
-public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IPerformance
 {
-    private static PerformanceJsonSerializerContext JsonContext = PerformanceJsonSerializerContext.Default;
-
     /// <summary>
     /// Disable collecting and reporting metrics.
     /// </summary>
@@ -23,12 +21,7 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Performance.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable collecting and reporting metrics.
@@ -45,12 +38,7 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(TimeDomain: timeDomain);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Performance.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets time domain to use for collecting and reporting duration metrics.
@@ -71,12 +59,7 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
-        return await ExecuteCommandAsync(SetTimeDomainCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetTimeDomainCommandParameters, SetTimeDomainResult> SetTimeDomainCommand = new("Performance.setTimeDomain", JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult);
+    Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve current values of run-time metrics.
@@ -90,12 +73,7 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMetricsResult"/>.
     /// </returns>
-    public async Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetMetricsCommandParameters();
-        return await ExecuteCommandAsync(GetMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetMetricsCommandParameters, GetMetricsResult> GetMetricsCommand = new("Performance.getMetrics", JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult);
+    Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Current values of the metrics.
@@ -107,6 +85,44 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <item><description><b>Title</b> - Timestamp title.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<MetricsEventArgs> Metrics { get; }
+
+}
+
+internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPerformance
+{
+    private static PerformanceJsonSerializerContext JsonContext = PerformanceJsonSerializerContext.Default;
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Performance.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(TimeDomain: timeDomain);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Performance.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
+        return await ExecuteCommandAsync(SetTimeDomainCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetTimeDomainCommandParameters, SetTimeDomainResult> SetTimeDomainCommand = new("Performance.setTimeDomain", JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult);
+
+    public async Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetMetricsCommandParameters();
+        return await ExecuteCommandAsync(GetMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetMetricsCommandParameters, GetMetricsResult> GetMetricsCommand = new("Performance.getMetrics", JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult);
+
     public IEventSource<MetricsEventArgs> Metrics => CreateCdpEventSource(PerformanceDomainEvent.Metrics);
 }
 
@@ -182,7 +198,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class PerformanceJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="PerformanceDomain"/>.
+/// Provides static event descriptors for the <see cref="IPerformance"/>.
 /// </summary>
 public static class PerformanceDomainEvent
 {

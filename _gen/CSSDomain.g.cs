@@ -14,10 +14,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.CSS;
 /// subsequently load the required stylesheet contents using the <b>getStyleSheet[Text]()</b> methods.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ICSS
 {
-    private static CSSJsonSerializerContext JsonContext = CSSJsonSerializerContext.Default;
-
     /// <summary>
     /// Inserts a new rule with the given <b>ruleText</b> in a stylesheet with given <b>styleSheetId</b>, at the
     /// position specified by <b>location</b>.
@@ -45,12 +43,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddRuleResult"/>.
     /// </returns>
-    public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddRuleCommandParameters(StyleSheetId: styleSheetId, RuleText: ruleText, Location: location, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
-        return await ExecuteCommandAsync(AddRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AddRuleCommandParameters, AddRuleResult> AddRuleCommand = new("CSS.addRule", JsonContext.AddRuleCommandParameters, JsonContext.AddRuleResult);
+    Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all class names from specified stylesheet.
@@ -66,12 +59,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CollectClassNamesResult"/>.
     /// </returns>
-    public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CollectClassNamesCommandParameters(StyleSheetId: styleSheetId);
-        return await ExecuteCommandAsync(CollectClassNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CollectClassNamesCommandParameters, CollectClassNamesResult> CollectClassNamesCommand = new("CSS.collectClassNames", JsonContext.CollectClassNamesCommandParameters, JsonContext.CollectClassNamesResult);
+    Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new special "via-inspector" stylesheet in the frame with given <b>frameId</b>.
@@ -94,12 +82,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateStyleSheetResult"/>.
     /// </returns>
-    public async Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CreateStyleSheetCommandParameters(FrameId: frameId, Force: force);
-        return await ExecuteCommandAsync(CreateStyleSheetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CreateStyleSheetCommandParameters, CreateStyleSheetResult> CreateStyleSheetCommand = new("CSS.createStyleSheet", JsonContext.CreateStyleSheetCommandParameters, JsonContext.CreateStyleSheetResult);
+    Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the CSS agent for the given page.
@@ -113,12 +96,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("CSS.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables the CSS agent for the given page. Clients should not assume that the CSS agent has been
@@ -133,12 +111,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("CSS.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Ensures that the given node will have specified pseudo-classes whenever its style is computed by
@@ -159,12 +132,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForcePseudoStateResult"/>.
     /// </returns>
-    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ForcePseudoStateCommandParameters(NodeId: nodeId, ForcedPseudoClasses: forcedPseudoClasses);
-        return await ExecuteCommandAsync(ForcePseudoStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ForcePseudoStateCommandParameters, ForcePseudoStateResult> ForcePseudoStateCommand = new("CSS.forcePseudoState", JsonContext.ForcePseudoStateCommandParameters, JsonContext.ForcePseudoStateResult);
+    Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Ensures that the given node is in its starting-style state.
@@ -184,12 +152,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForceStartingStyleResult"/>.
     /// </returns>
-    public async Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ForceStartingStyleCommandParameters(NodeId: nodeId, Forced: forced);
-        return await ExecuteCommandAsync(ForceStartingStyleCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ForceStartingStyleCommandParameters, ForceStartingStyleResult> ForceStartingStyleCommand = new("CSS.forceStartingStyle", JsonContext.ForceStartingStyleCommandParameters, JsonContext.ForceStartingStyleResult);
+    Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -205,12 +168,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBackgroundColorsResult"/>.
     /// </returns>
-    public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetBackgroundColorsCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetBackgroundColorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetBackgroundColorsCommandParameters, GetBackgroundColorsResult> GetBackgroundColorsCommand = new("CSS.getBackgroundColors", JsonContext.GetBackgroundColorsCommandParameters, JsonContext.GetBackgroundColorsResult);
+    Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the computed style for a DOM node identified by <b>nodeId</b>.
@@ -226,12 +184,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetComputedStyleForNodeResult"/>.
     /// </returns>
-    public async Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetComputedStyleForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetComputedStyleForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetComputedStyleForNodeCommandParameters, GetComputedStyleForNodeResult> GetComputedStyleForNodeCommand = new("CSS.getComputedStyleForNode", JsonContext.GetComputedStyleForNodeCommandParameters, JsonContext.GetComputedStyleForNodeResult);
+    Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resolve the specified values in the context of the provided element.
@@ -271,12 +224,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveValuesResult"/>.
     /// </returns>
-    public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = default, DOM.PseudoType? pseudoType = default, string? pseudoIdentifier = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResolveValuesCommandParameters(Values: values, NodeId: nodeId, PropertyName: propertyName, PseudoType: pseudoType, PseudoIdentifier: pseudoIdentifier);
-        return await ExecuteCommandAsync(ResolveValuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResolveValuesCommandParameters, ResolveValuesResult> ResolveValuesCommand = new("CSS.resolveValues", JsonContext.ResolveValuesCommandParameters, JsonContext.ResolveValuesResult);
+    Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = default, DOM.PseudoType? pseudoType = default, string? pseudoIdentifier = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -293,12 +241,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLonghandPropertiesResult"/>.
     /// </returns>
-    public async Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetLonghandPropertiesCommandParameters(ShorthandName: shorthandName, Value: value);
-        return await ExecuteCommandAsync(GetLonghandPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetLonghandPropertiesCommandParameters, GetLonghandPropertiesResult> GetLonghandPropertiesCommand = new("CSS.getLonghandProperties", JsonContext.GetLonghandPropertiesCommandParameters, JsonContext.GetLonghandPropertiesResult);
+    Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM
@@ -315,12 +258,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetInlineStylesForNodeResult"/>.
     /// </returns>
-    public async Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetInlineStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetInlineStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetInlineStylesForNodeCommandParameters, GetInlineStylesForNodeResult> GetInlineStylesForNodeCommand = new("CSS.getInlineStylesForNode", JsonContext.GetInlineStylesForNodeCommandParameters, JsonContext.GetInlineStylesForNodeResult);
+    Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the styles coming from animations &amp; transitions
@@ -337,12 +275,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAnimatedStylesForNodeResult"/>.
     /// </returns>
-    public async Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAnimatedStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetAnimatedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAnimatedStylesForNodeCommandParameters, GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeCommand = new("CSS.getAnimatedStylesForNode", JsonContext.GetAnimatedStylesForNodeCommandParameters, JsonContext.GetAnimatedStylesForNodeResult);
+    Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns requested styles for a DOM node identified by <b>nodeId</b>.
@@ -358,12 +291,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMatchedStylesForNodeResult"/>.
     /// </returns>
-    public async Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetMatchedStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetMatchedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetMatchedStylesForNodeCommandParameters, GetMatchedStylesForNodeResult> GetMatchedStylesForNodeCommand = new("CSS.getMatchedStylesForNode", JsonContext.GetMatchedStylesForNodeCommandParameters, JsonContext.GetMatchedStylesForNodeResult);
+    Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the values of the default UA-defined environment variables used in env()
@@ -377,12 +305,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEnvironmentVariablesResult"/>.
     /// </returns>
-    public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetEnvironmentVariablesCommandParameters();
-        return await ExecuteCommandAsync(GetEnvironmentVariablesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetEnvironmentVariablesCommandParameters, GetEnvironmentVariablesResult> GetEnvironmentVariablesCommand = new("CSS.getEnvironmentVariables", JsonContext.GetEnvironmentVariablesCommandParameters, JsonContext.GetEnvironmentVariablesResult);
+    Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all media queries parsed by the rendering engine.
@@ -396,12 +319,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMediaQueriesResult"/>.
     /// </returns>
-    public async Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetMediaQueriesCommandParameters();
-        return await ExecuteCommandAsync(GetMediaQueriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetMediaQueriesCommandParameters, GetMediaQueriesResult> GetMediaQueriesCommand = new("CSS.getMediaQueries", JsonContext.GetMediaQueriesCommandParameters, JsonContext.GetMediaQueriesResult);
+    Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests information about platform fonts which we used to render child TextNodes in the given
@@ -418,12 +336,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPlatformFontsForNodeResult"/>.
     /// </returns>
-    public async Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetPlatformFontsForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetPlatformFontsForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetPlatformFontsForNodeCommandParameters, GetPlatformFontsForNodeResult> GetPlatformFontsForNodeCommand = new("CSS.getPlatformFontsForNode", JsonContext.GetPlatformFontsForNodeCommandParameters, JsonContext.GetPlatformFontsForNodeResult);
+    Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the current textual content for a stylesheet.
@@ -439,12 +352,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStyleSheetTextResult"/>.
     /// </returns>
-    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId);
-        return await ExecuteCommandAsync(GetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetStyleSheetTextCommandParameters, GetStyleSheetTextResult> GetStyleSheetTextCommand = new("CSS.getStyleSheetText", JsonContext.GetStyleSheetTextCommandParameters, JsonContext.GetStyleSheetTextResult);
+    Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all layers parsed by the rendering engine for the tree scope of a node.
@@ -463,12 +371,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLayersForNodeResult"/>.
     /// </returns>
-    public async Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetLayersForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetLayersForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetLayersForNodeCommandParameters, GetLayersForNodeResult> GetLayersForNodeCommand = new("CSS.getLayersForNode", JsonContext.GetLayersForNodeCommandParameters, JsonContext.GetLayersForNodeResult);
+    Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Given a CSS selector text and a style sheet ID, getLocationForSelector
@@ -487,12 +390,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLocationForSelectorResult"/>.
     /// </returns>
-    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetLocationForSelectorCommandParameters(StyleSheetId: styleSheetId, SelectorText: selectorText);
-        return await ExecuteCommandAsync(GetLocationForSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetLocationForSelectorCommandParameters, GetLocationForSelectorResult> GetLocationForSelectorCommand = new("CSS.getLocationForSelector", JsonContext.GetLocationForSelectorCommandParameters, JsonContext.GetLocationForSelectorResult);
+    Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts tracking the given node for the computed style updates
@@ -513,12 +411,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackComputedStyleUpdatesForNodeResult"/>.
     /// </returns>
-    public async Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TrackComputedStyleUpdatesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(TrackComputedStyleUpdatesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TrackComputedStyleUpdatesForNodeCommandParameters, TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeCommand = new("CSS.trackComputedStyleUpdatesForNode", JsonContext.TrackComputedStyleUpdatesForNodeCommandParameters, JsonContext.TrackComputedStyleUpdatesForNodeResult);
+    Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts tracking the given computed styles for updates. The specified array of properties
@@ -539,12 +432,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackComputedStyleUpdatesResult"/>.
     /// </returns>
-    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TrackComputedStyleUpdatesCommandParameters(PropertiesToTrack: propertiesToTrack);
-        return await ExecuteCommandAsync(TrackComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TrackComputedStyleUpdatesCommandParameters, TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesCommand = new("CSS.trackComputedStyleUpdates", JsonContext.TrackComputedStyleUpdatesCommandParameters, JsonContext.TrackComputedStyleUpdatesResult);
+    Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Polls the next batch of computed style updates.
@@ -558,12 +446,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeComputedStyleUpdatesResult"/>.
     /// </returns>
-    public async Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TakeComputedStyleUpdatesCommandParameters();
-        return await ExecuteCommandAsync(TakeComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TakeComputedStyleUpdatesCommandParameters, TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesCommand = new("CSS.takeComputedStyleUpdates", JsonContext.TakeComputedStyleUpdatesCommandParameters, JsonContext.TakeComputedStyleUpdatesResult);
+    Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Find a rule with the given active property for the given node and set the new value for this
@@ -585,12 +468,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetEffectivePropertyValueForNodeResult"/>.
     /// </returns>
-    public async Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetEffectivePropertyValueForNodeCommandParameters(NodeId: nodeId, PropertyName: propertyName, Value: value);
-        return await ExecuteCommandAsync(SetEffectivePropertyValueForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetEffectivePropertyValueForNodeCommandParameters, SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeCommand = new("CSS.setEffectivePropertyValueForNode", JsonContext.SetEffectivePropertyValueForNodeCommandParameters, JsonContext.SetEffectivePropertyValueForNodeResult);
+    Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the property rule property name.
@@ -610,12 +488,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPropertyRulePropertyNameResult"/>.
     /// </returns>
-    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPropertyRulePropertyNameCommandParameters(StyleSheetId: styleSheetId, Range: range, PropertyName: propertyName);
-        return await ExecuteCommandAsync(SetPropertyRulePropertyNameCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPropertyRulePropertyNameCommandParameters, SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameCommand = new("CSS.setPropertyRulePropertyName", JsonContext.SetPropertyRulePropertyNameCommandParameters, JsonContext.SetPropertyRulePropertyNameResult);
+    Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the keyframe rule key text.
@@ -635,12 +508,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetKeyframeKeyResult"/>.
     /// </returns>
-    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetKeyframeKeyCommandParameters(StyleSheetId: styleSheetId, Range: range, KeyText: keyText);
-        return await ExecuteCommandAsync(SetKeyframeKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetKeyframeKeyCommandParameters, SetKeyframeKeyResult> SetKeyframeKeyCommand = new("CSS.setKeyframeKey", JsonContext.SetKeyframeKeyCommandParameters, JsonContext.SetKeyframeKeyResult);
+    Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the rule selector.
@@ -660,12 +528,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetMediaTextResult"/>.
     /// </returns>
-    public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetMediaTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetMediaTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetMediaTextCommandParameters, SetMediaTextResult> SetMediaTextCommand = new("CSS.setMediaText", JsonContext.SetMediaTextCommandParameters, JsonContext.SetMediaTextResult);
+    Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a container query.
@@ -687,12 +550,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryTextResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetContainerQueryTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetContainerQueryTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetContainerQueryTextCommandParameters, SetContainerQueryTextResult> SetContainerQueryTextCommand = new("CSS.setContainerQueryText", JsonContext.SetContainerQueryTextCommandParameters, JsonContext.SetContainerQueryTextResult);
+    Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -711,12 +569,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryConditionTextResult"/>.
     /// </returns>
-    public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetContainerQueryConditionTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetContainerQueryConditionTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetContainerQueryConditionTextCommandParameters, SetContainerQueryConditionTextResult> SetContainerQueryConditionTextCommand = new("CSS.setContainerQueryConditionText", JsonContext.SetContainerQueryConditionTextCommandParameters, JsonContext.SetContainerQueryConditionTextResult);
+    Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a supports at-rule.
@@ -736,12 +589,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSupportsTextResult"/>.
     /// </returns>
-    public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSupportsTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetSupportsTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSupportsTextCommandParameters, SetSupportsTextResult> SetSupportsTextCommand = new("CSS.setSupportsText", JsonContext.SetSupportsTextCommandParameters, JsonContext.SetSupportsTextResult);
+    Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a navigation at-rule.
@@ -761,12 +609,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetNavigationTextResult"/>.
     /// </returns>
-    public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetNavigationTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetNavigationTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetNavigationTextCommandParameters, SetNavigationTextResult> SetNavigationTextCommand = new("CSS.setNavigationText", JsonContext.SetNavigationTextCommandParameters, JsonContext.SetNavigationTextResult);
+    Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a scope at-rule.
@@ -786,12 +629,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScopeTextResult"/>.
     /// </returns>
-    public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetScopeTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetScopeTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetScopeTextCommandParameters, SetScopeTextResult> SetScopeTextCommand = new("CSS.setScopeText", JsonContext.SetScopeTextCommandParameters, JsonContext.SetScopeTextResult);
+    Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the rule selector.
@@ -811,12 +649,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetRuleSelectorResult"/>.
     /// </returns>
-    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetRuleSelectorCommandParameters(StyleSheetId: styleSheetId, Range: range, Selector: selector);
-        return await ExecuteCommandAsync(SetRuleSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetRuleSelectorCommandParameters, SetRuleSelectorResult> SetRuleSelectorCommand = new("CSS.setRuleSelector", JsonContext.SetRuleSelectorCommandParameters, JsonContext.SetRuleSelectorResult);
+    Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the new stylesheet text.
@@ -834,12 +667,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleSheetTextResult"/>.
     /// </returns>
-    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId, Text: text);
-        return await ExecuteCommandAsync(SetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetStyleSheetTextCommandParameters, SetStyleSheetTextResult> SetStyleSheetTextCommand = new("CSS.setStyleSheetText", JsonContext.SetStyleSheetTextCommandParameters, JsonContext.SetStyleSheetTextResult);
+    Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Applies specified style edits one after another in the given order.
@@ -860,12 +688,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleTextsResult"/>.
     /// </returns>
-    public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetStyleTextsCommandParameters(Edits: edits, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
-        return await ExecuteCommandAsync(SetStyleTextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetStyleTextsCommandParameters, SetStyleTextsResult> SetStyleTextsCommand = new("CSS.setStyleTexts", JsonContext.SetStyleTextsCommandParameters, JsonContext.SetStyleTextsResult);
+    Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables the selector recording.
@@ -879,12 +702,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartRuleUsageTrackingResult"/>.
     /// </returns>
-    public async Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StartRuleUsageTrackingCommandParameters();
-        return await ExecuteCommandAsync(StartRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StartRuleUsageTrackingCommandParameters, StartRuleUsageTrackingResult> StartRuleUsageTrackingCommand = new("CSS.startRuleUsageTracking", JsonContext.StartRuleUsageTrackingCommandParameters, JsonContext.StartRuleUsageTrackingResult);
+    Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stop tracking rule usage and return the list of rules that were used since last call to
@@ -899,12 +717,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopRuleUsageTrackingResult"/>.
     /// </returns>
-    public async Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StopRuleUsageTrackingCommandParameters();
-        return await ExecuteCommandAsync(StopRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StopRuleUsageTrackingCommandParameters, StopRuleUsageTrackingResult> StopRuleUsageTrackingCommand = new("CSS.stopRuleUsageTracking", JsonContext.StopRuleUsageTrackingCommandParameters, JsonContext.StopRuleUsageTrackingResult);
+    Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Obtain list of rules that became used since last call to this method (or since start of coverage
@@ -919,12 +732,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeCoverageDeltaResult"/>.
     /// </returns>
-    public async Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TakeCoverageDeltaCommandParameters();
-        return await ExecuteCommandAsync(TakeCoverageDeltaCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TakeCoverageDeltaCommandParameters, TakeCoverageDeltaResult> TakeCoverageDeltaCommand = new("CSS.takeCoverageDelta", JsonContext.TakeCoverageDeltaCommandParameters, JsonContext.TakeCoverageDeltaResult);
+    Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables/disables rendering of local CSS fonts (enabled by default).
@@ -941,12 +749,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetLocalFontsEnabledResult"/>.
     /// </returns>
-    public async Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetLocalFontsEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetLocalFontsEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetLocalFontsEnabledCommandParameters, SetLocalFontsEnabledResult> SetLocalFontsEnabledCommand = new("CSS.setLocalFontsEnabled", JsonContext.SetLocalFontsEnabledCommandParameters, JsonContext.SetLocalFontsEnabledResult);
+    Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
@@ -958,12 +761,14 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>Font</b> - The web font that has loaded.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<FontsUpdatedEventArgs> FontsUpdated => CreateCdpEventSource(CSSDomainEvent.FontsUpdated);
+    IEventSource<FontsUpdatedEventArgs> FontsUpdated { get; }
+
     /// <summary>
     /// Fires whenever a MediaQuery result changes (for example, after a browser window has been
     /// resized.) The current implementation considers only viewport-dependent media features.
     /// </summary>
-    public IEventSource<MediaQueryResultChangedEventArgs> MediaQueryResultChanged => CreateCdpEventSource(CSSDomainEvent.MediaQueryResultChanged);
+    IEventSource<MediaQueryResultChangedEventArgs> MediaQueryResultChanged { get; }
+
     /// <summary>
     /// Fired whenever an active document stylesheet is added.
     /// </summary>
@@ -973,7 +778,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>Header</b> - Added stylesheet metainfo.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<StyleSheetAddedEventArgs> StyleSheetAdded => CreateCdpEventSource(CSSDomainEvent.StyleSheetAdded);
+    IEventSource<StyleSheetAddedEventArgs> StyleSheetAdded { get; }
+
     /// <summary>
     /// Fired whenever a stylesheet is changed as a result of the client operation.
     /// </summary>
@@ -983,7 +789,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>StyleSheetId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<StyleSheetChangedEventArgs> StyleSheetChanged => CreateCdpEventSource(CSSDomainEvent.StyleSheetChanged);
+    IEventSource<StyleSheetChangedEventArgs> StyleSheetChanged { get; }
+
     /// <summary>
     /// Fired whenever an active document stylesheet is removed.
     /// </summary>
@@ -993,7 +800,8 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>StyleSheetId</b> - Identifier of the removed stylesheet.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<StyleSheetRemovedEventArgs> StyleSheetRemoved => CreateCdpEventSource(CSSDomainEvent.StyleSheetRemoved);
+    IEventSource<StyleSheetRemovedEventArgs> StyleSheetRemoved { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -1003,6 +811,294 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>NodeId</b> - The node id that has updated computed styles.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<ComputedStyleUpdatedEventArgs> ComputedStyleUpdated { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ICSS
+{
+    private static CSSJsonSerializerContext JsonContext = CSSJsonSerializerContext.Default;
+
+    public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddRuleCommandParameters(StyleSheetId: styleSheetId, RuleText: ruleText, Location: location, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
+        return await ExecuteCommandAsync(AddRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddRuleCommandParameters, AddRuleResult> AddRuleCommand = new("CSS.addRule", JsonContext.AddRuleCommandParameters, JsonContext.AddRuleResult);
+
+    public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CollectClassNamesCommandParameters(StyleSheetId: styleSheetId);
+        return await ExecuteCommandAsync(CollectClassNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CollectClassNamesCommandParameters, CollectClassNamesResult> CollectClassNamesCommand = new("CSS.collectClassNames", JsonContext.CollectClassNamesCommandParameters, JsonContext.CollectClassNamesResult);
+
+    public async Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CreateStyleSheetCommandParameters(FrameId: frameId, Force: force);
+        return await ExecuteCommandAsync(CreateStyleSheetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CreateStyleSheetCommandParameters, CreateStyleSheetResult> CreateStyleSheetCommand = new("CSS.createStyleSheet", JsonContext.CreateStyleSheetCommandParameters, JsonContext.CreateStyleSheetResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("CSS.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("CSS.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ForcePseudoStateCommandParameters(NodeId: nodeId, ForcedPseudoClasses: forcedPseudoClasses);
+        return await ExecuteCommandAsync(ForcePseudoStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ForcePseudoStateCommandParameters, ForcePseudoStateResult> ForcePseudoStateCommand = new("CSS.forcePseudoState", JsonContext.ForcePseudoStateCommandParameters, JsonContext.ForcePseudoStateResult);
+
+    public async Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ForceStartingStyleCommandParameters(NodeId: nodeId, Forced: forced);
+        return await ExecuteCommandAsync(ForceStartingStyleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ForceStartingStyleCommandParameters, ForceStartingStyleResult> ForceStartingStyleCommand = new("CSS.forceStartingStyle", JsonContext.ForceStartingStyleCommandParameters, JsonContext.ForceStartingStyleResult);
+
+    public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetBackgroundColorsCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetBackgroundColorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetBackgroundColorsCommandParameters, GetBackgroundColorsResult> GetBackgroundColorsCommand = new("CSS.getBackgroundColors", JsonContext.GetBackgroundColorsCommandParameters, JsonContext.GetBackgroundColorsResult);
+
+    public async Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetComputedStyleForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetComputedStyleForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetComputedStyleForNodeCommandParameters, GetComputedStyleForNodeResult> GetComputedStyleForNodeCommand = new("CSS.getComputedStyleForNode", JsonContext.GetComputedStyleForNodeCommandParameters, JsonContext.GetComputedStyleForNodeResult);
+
+    public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = default, DOM.PseudoType? pseudoType = default, string? pseudoIdentifier = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResolveValuesCommandParameters(Values: values, NodeId: nodeId, PropertyName: propertyName, PseudoType: pseudoType, PseudoIdentifier: pseudoIdentifier);
+        return await ExecuteCommandAsync(ResolveValuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResolveValuesCommandParameters, ResolveValuesResult> ResolveValuesCommand = new("CSS.resolveValues", JsonContext.ResolveValuesCommandParameters, JsonContext.ResolveValuesResult);
+
+    public async Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetLonghandPropertiesCommandParameters(ShorthandName: shorthandName, Value: value);
+        return await ExecuteCommandAsync(GetLonghandPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetLonghandPropertiesCommandParameters, GetLonghandPropertiesResult> GetLonghandPropertiesCommand = new("CSS.getLonghandProperties", JsonContext.GetLonghandPropertiesCommandParameters, JsonContext.GetLonghandPropertiesResult);
+
+    public async Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetInlineStylesForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetInlineStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetInlineStylesForNodeCommandParameters, GetInlineStylesForNodeResult> GetInlineStylesForNodeCommand = new("CSS.getInlineStylesForNode", JsonContext.GetInlineStylesForNodeCommandParameters, JsonContext.GetInlineStylesForNodeResult);
+
+    public async Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAnimatedStylesForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetAnimatedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAnimatedStylesForNodeCommandParameters, GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeCommand = new("CSS.getAnimatedStylesForNode", JsonContext.GetAnimatedStylesForNodeCommandParameters, JsonContext.GetAnimatedStylesForNodeResult);
+
+    public async Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetMatchedStylesForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetMatchedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetMatchedStylesForNodeCommandParameters, GetMatchedStylesForNodeResult> GetMatchedStylesForNodeCommand = new("CSS.getMatchedStylesForNode", JsonContext.GetMatchedStylesForNodeCommandParameters, JsonContext.GetMatchedStylesForNodeResult);
+
+    public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetEnvironmentVariablesCommandParameters();
+        return await ExecuteCommandAsync(GetEnvironmentVariablesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetEnvironmentVariablesCommandParameters, GetEnvironmentVariablesResult> GetEnvironmentVariablesCommand = new("CSS.getEnvironmentVariables", JsonContext.GetEnvironmentVariablesCommandParameters, JsonContext.GetEnvironmentVariablesResult);
+
+    public async Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetMediaQueriesCommandParameters();
+        return await ExecuteCommandAsync(GetMediaQueriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetMediaQueriesCommandParameters, GetMediaQueriesResult> GetMediaQueriesCommand = new("CSS.getMediaQueries", JsonContext.GetMediaQueriesCommandParameters, JsonContext.GetMediaQueriesResult);
+
+    public async Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetPlatformFontsForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetPlatformFontsForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetPlatformFontsForNodeCommandParameters, GetPlatformFontsForNodeResult> GetPlatformFontsForNodeCommand = new("CSS.getPlatformFontsForNode", JsonContext.GetPlatformFontsForNodeCommandParameters, JsonContext.GetPlatformFontsForNodeResult);
+
+    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId);
+        return await ExecuteCommandAsync(GetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetStyleSheetTextCommandParameters, GetStyleSheetTextResult> GetStyleSheetTextCommand = new("CSS.getStyleSheetText", JsonContext.GetStyleSheetTextCommandParameters, JsonContext.GetStyleSheetTextResult);
+
+    public async Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetLayersForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetLayersForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetLayersForNodeCommandParameters, GetLayersForNodeResult> GetLayersForNodeCommand = new("CSS.getLayersForNode", JsonContext.GetLayersForNodeCommandParameters, JsonContext.GetLayersForNodeResult);
+
+    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetLocationForSelectorCommandParameters(StyleSheetId: styleSheetId, SelectorText: selectorText);
+        return await ExecuteCommandAsync(GetLocationForSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetLocationForSelectorCommandParameters, GetLocationForSelectorResult> GetLocationForSelectorCommand = new("CSS.getLocationForSelector", JsonContext.GetLocationForSelectorCommandParameters, JsonContext.GetLocationForSelectorResult);
+
+    public async Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TrackComputedStyleUpdatesForNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(TrackComputedStyleUpdatesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TrackComputedStyleUpdatesForNodeCommandParameters, TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeCommand = new("CSS.trackComputedStyleUpdatesForNode", JsonContext.TrackComputedStyleUpdatesForNodeCommandParameters, JsonContext.TrackComputedStyleUpdatesForNodeResult);
+
+    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TrackComputedStyleUpdatesCommandParameters(PropertiesToTrack: propertiesToTrack);
+        return await ExecuteCommandAsync(TrackComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TrackComputedStyleUpdatesCommandParameters, TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesCommand = new("CSS.trackComputedStyleUpdates", JsonContext.TrackComputedStyleUpdatesCommandParameters, JsonContext.TrackComputedStyleUpdatesResult);
+
+    public async Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TakeComputedStyleUpdatesCommandParameters();
+        return await ExecuteCommandAsync(TakeComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TakeComputedStyleUpdatesCommandParameters, TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesCommand = new("CSS.takeComputedStyleUpdates", JsonContext.TakeComputedStyleUpdatesCommandParameters, JsonContext.TakeComputedStyleUpdatesResult);
+
+    public async Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetEffectivePropertyValueForNodeCommandParameters(NodeId: nodeId, PropertyName: propertyName, Value: value);
+        return await ExecuteCommandAsync(SetEffectivePropertyValueForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetEffectivePropertyValueForNodeCommandParameters, SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeCommand = new("CSS.setEffectivePropertyValueForNode", JsonContext.SetEffectivePropertyValueForNodeCommandParameters, JsonContext.SetEffectivePropertyValueForNodeResult);
+
+    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPropertyRulePropertyNameCommandParameters(StyleSheetId: styleSheetId, Range: range, PropertyName: propertyName);
+        return await ExecuteCommandAsync(SetPropertyRulePropertyNameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPropertyRulePropertyNameCommandParameters, SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameCommand = new("CSS.setPropertyRulePropertyName", JsonContext.SetPropertyRulePropertyNameCommandParameters, JsonContext.SetPropertyRulePropertyNameResult);
+
+    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetKeyframeKeyCommandParameters(StyleSheetId: styleSheetId, Range: range, KeyText: keyText);
+        return await ExecuteCommandAsync(SetKeyframeKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetKeyframeKeyCommandParameters, SetKeyframeKeyResult> SetKeyframeKeyCommand = new("CSS.setKeyframeKey", JsonContext.SetKeyframeKeyCommandParameters, JsonContext.SetKeyframeKeyResult);
+
+    public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetMediaTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetMediaTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetMediaTextCommandParameters, SetMediaTextResult> SetMediaTextCommand = new("CSS.setMediaText", JsonContext.SetMediaTextCommandParameters, JsonContext.SetMediaTextResult);
+
+    [global::System.Obsolete]
+    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetContainerQueryTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetContainerQueryTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetContainerQueryTextCommandParameters, SetContainerQueryTextResult> SetContainerQueryTextCommand = new("CSS.setContainerQueryText", JsonContext.SetContainerQueryTextCommandParameters, JsonContext.SetContainerQueryTextResult);
+
+    public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetContainerQueryConditionTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetContainerQueryConditionTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetContainerQueryConditionTextCommandParameters, SetContainerQueryConditionTextResult> SetContainerQueryConditionTextCommand = new("CSS.setContainerQueryConditionText", JsonContext.SetContainerQueryConditionTextCommandParameters, JsonContext.SetContainerQueryConditionTextResult);
+
+    public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetSupportsTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetSupportsTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetSupportsTextCommandParameters, SetSupportsTextResult> SetSupportsTextCommand = new("CSS.setSupportsText", JsonContext.SetSupportsTextCommandParameters, JsonContext.SetSupportsTextResult);
+
+    public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNavigationTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetNavigationTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNavigationTextCommandParameters, SetNavigationTextResult> SetNavigationTextCommand = new("CSS.setNavigationText", JsonContext.SetNavigationTextCommandParameters, JsonContext.SetNavigationTextResult);
+
+    public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetScopeTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
+        return await ExecuteCommandAsync(SetScopeTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetScopeTextCommandParameters, SetScopeTextResult> SetScopeTextCommand = new("CSS.setScopeText", JsonContext.SetScopeTextCommandParameters, JsonContext.SetScopeTextResult);
+
+    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetRuleSelectorCommandParameters(StyleSheetId: styleSheetId, Range: range, Selector: selector);
+        return await ExecuteCommandAsync(SetRuleSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetRuleSelectorCommandParameters, SetRuleSelectorResult> SetRuleSelectorCommand = new("CSS.setRuleSelector", JsonContext.SetRuleSelectorCommandParameters, JsonContext.SetRuleSelectorResult);
+
+    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId, Text: text);
+        return await ExecuteCommandAsync(SetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetStyleSheetTextCommandParameters, SetStyleSheetTextResult> SetStyleSheetTextCommand = new("CSS.setStyleSheetText", JsonContext.SetStyleSheetTextCommandParameters, JsonContext.SetStyleSheetTextResult);
+
+    public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetStyleTextsCommandParameters(Edits: edits, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
+        return await ExecuteCommandAsync(SetStyleTextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetStyleTextsCommandParameters, SetStyleTextsResult> SetStyleTextsCommand = new("CSS.setStyleTexts", JsonContext.SetStyleTextsCommandParameters, JsonContext.SetStyleTextsResult);
+
+    public async Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartRuleUsageTrackingCommandParameters();
+        return await ExecuteCommandAsync(StartRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartRuleUsageTrackingCommandParameters, StartRuleUsageTrackingResult> StartRuleUsageTrackingCommand = new("CSS.startRuleUsageTracking", JsonContext.StartRuleUsageTrackingCommandParameters, JsonContext.StartRuleUsageTrackingResult);
+
+    public async Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopRuleUsageTrackingCommandParameters();
+        return await ExecuteCommandAsync(StopRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopRuleUsageTrackingCommandParameters, StopRuleUsageTrackingResult> StopRuleUsageTrackingCommand = new("CSS.stopRuleUsageTracking", JsonContext.StopRuleUsageTrackingCommandParameters, JsonContext.StopRuleUsageTrackingResult);
+
+    public async Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TakeCoverageDeltaCommandParameters();
+        return await ExecuteCommandAsync(TakeCoverageDeltaCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TakeCoverageDeltaCommandParameters, TakeCoverageDeltaResult> TakeCoverageDeltaCommand = new("CSS.takeCoverageDelta", JsonContext.TakeCoverageDeltaCommandParameters, JsonContext.TakeCoverageDeltaResult);
+
+    public async Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetLocalFontsEnabledCommandParameters(Enabled: enabled);
+        return await ExecuteCommandAsync(SetLocalFontsEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetLocalFontsEnabledCommandParameters, SetLocalFontsEnabledResult> SetLocalFontsEnabledCommand = new("CSS.setLocalFontsEnabled", JsonContext.SetLocalFontsEnabledCommandParameters, JsonContext.SetLocalFontsEnabledResult);
+
+    public IEventSource<FontsUpdatedEventArgs> FontsUpdated => CreateCdpEventSource(CSSDomainEvent.FontsUpdated);
+    public IEventSource<MediaQueryResultChangedEventArgs> MediaQueryResultChanged => CreateCdpEventSource(CSSDomainEvent.MediaQueryResultChanged);
+    public IEventSource<StyleSheetAddedEventArgs> StyleSheetAdded => CreateCdpEventSource(CSSDomainEvent.StyleSheetAdded);
+    public IEventSource<StyleSheetChangedEventArgs> StyleSheetChanged => CreateCdpEventSource(CSSDomainEvent.StyleSheetChanged);
+    public IEventSource<StyleSheetRemovedEventArgs> StyleSheetRemoved => CreateCdpEventSource(CSSDomainEvent.StyleSheetRemoved);
     public IEventSource<ComputedStyleUpdatedEventArgs> ComputedStyleUpdated => CreateCdpEventSource(CSSDomainEvent.ComputedStyleUpdated);
 }
 
@@ -2757,7 +2853,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class CSSJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="CSSDomain"/>.
+/// Provides static event descriptors for the <see cref="ICSS"/>.
 /// </summary>
 public static class CSSDomainEvent
 {

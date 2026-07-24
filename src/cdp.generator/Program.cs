@@ -4,8 +4,8 @@ using Selenium.WebDriver.BiDi.Cdp.Generator;
 using Selenium.WebDriver.BiDi.Cdp.Generator.Protocol;
 using Humanizer;
 
-var rootNamespace = "Selenium.WebDriver.BiDi.Cdp";
-var experimentalDiagnosticId = "BIDICDP001";
+const string rootNamespace = "Selenium.WebDriver.BiDi.Cdp";
+const string experimentalDiagnosticId = "BIDICDP001";
 
 var outputDirectory = new DirectoryInfo("_gen");
 
@@ -54,27 +54,46 @@ foreach (var inputFile in inputFiles)
 
         domainBuilder.AppendLine();
 
-        domainBuilder.AppendLine("/// <summary>");
-        if (domainInfo.Description is not null)
+        AppendSummary(domainBuilder, domainInfo.Description);
+        AppendAvailabilityAttributes(domainBuilder, domainInfo.Experimental is true, domainInfo.Deprecated is true);
+
+        domainBuilder.AppendLine($"public interface I{domainInfo.Domain}");
+        domainBuilder.AppendLine("{");
+
+        if (domainInfo.Commands is not null)
         {
-            foreach (var line in GetNormalizedDescription(domainInfo.Description))
+            foreach (var commandInfo in domainInfo.Commands)
             {
-                domainBuilder.AppendLine($"/// {line}");
+                AppendCommandDocumentation(domainBuilder, commandInfo, "    ");
+                AppendAvailabilityAttributes(
+                    domainBuilder,
+                    commandInfo.Experimental is true && domainInfo.Experimental is not true,
+                    commandInfo.Deprecated is true,
+                    "    ");
+                domainBuilder.AppendLine($"    Task<{commandInfo.Name.Dehumanize()}Result> {commandInfo.Name.Dehumanize()}Async({GetCommandSignature(commandInfo, includeDefaultValues: true)});");
+                domainBuilder.AppendLine();
             }
         }
-        domainBuilder.AppendLine("/// </summary>");
 
-        if (domainInfo.Experimental is true)
+        if (domainInfo.Events is not null)
         {
-            domainBuilder.AppendLine($"[global::System.Diagnostics.CodeAnalysis.Experimental(\"{experimentalDiagnosticId}\")]");
+            foreach (var eventInfo in domainInfo.Events)
+            {
+                AppendEventDocumentation(domainBuilder, eventInfo, "    ");
+                AppendAvailabilityAttributes(
+                    domainBuilder,
+                    eventInfo.Experimental is true && domainInfo.Experimental is not true,
+                    eventInfo.Deprecated is true,
+                    "    ");
+                domainBuilder.AppendLine($"    IEventSource<{eventInfo.Name.Dehumanize()}EventArgs> {eventInfo.Name.Dehumanize()} {{ get; }}");
+                domainBuilder.AppendLine();
+            }
         }
 
-        if (domainInfo.Deprecated is true)
-        {
-            domainBuilder.AppendLine("[global::System.Obsolete]");
-        }
-
-        domainBuilder.AppendLine($"public sealed class {domainInfo.Domain}Domain(CdpModule cdp) : global::{rootNamespace}.Domain(cdp)");
+        domainBuilder.AppendLine("}");
+        domainBuilder.AppendLine();
+    AppendAvailabilityAttributes(domainBuilder, domainInfo.Experimental is true, domainInfo.Deprecated is true);
+        domainBuilder.AppendLine($"internal sealed class {domainInfo.Domain}Domain(CdpModule cdp) : global::{rootNamespace}.Domain(cdp), I{domainInfo.Domain}");
         domainBuilder.AppendLine("{");
 
         // JsonContext alias
@@ -86,145 +105,19 @@ foreach (var inputFile in inputFiles)
         {
             foreach (var commandInfo in domainInfo.Commands)
             {
-                string returnType = $"<{commandInfo.Name.Dehumanize()}Result>";
-                var sessionArgName = "session";
+                var sessionArgName = GetSessionArgumentName(commandInfo);
 
-                if (commandInfo.Parameters?.FirstOrDefault(p => p.Name == "session") is not null)
-                {
-                    sessionArgName = "cdpSession";
-                }
+                AppendAvailabilityAttributes(
+                    domainBuilder,
+                    commandInfo.Experimental is true && domainInfo.Experimental is not true,
+                    commandInfo.Deprecated is true,
+                    "    ");
 
-                domainBuilder.AppendLine("    /// <summary>");
-                if (commandInfo.Description is not null)
-                {
-                    foreach (var line in GetNormalizedDescription(commandInfo.Description))
-                    {
-                        domainBuilder.AppendLine($"    /// {line}");
-                    }
-                }
-                domainBuilder.AppendLine("    /// </summary>");
-
-                if (commandInfo.Parameters is not null)
-                {
-                    var requiredParameters = commandInfo.Parameters.Where(p => p.Optional is not true);
-
-                    foreach (var parameterInfo in requiredParameters)
-                    {
-                        domainBuilder.AppendLine($"    /// <param name=\"{parameterInfo.Name}\">");
-                        if (parameterInfo.Description is not null)
-                        {
-                            foreach (var line in GetNormalizedDescription(parameterInfo.Description))
-                            {
-                                domainBuilder.AppendLine($"    /// {line}");
-                            }
-                        }
-                        domainBuilder.AppendLine("    /// </param>");
-                    }
-                }
-
-                if (commandInfo.Parameters is not null)
-                {
-                    var optionalParameters = commandInfo.Parameters.Where(p => p.Optional is true);
-
-                    foreach (var parameterInfo in optionalParameters)
-                    {
-                        domainBuilder.AppendLine($"    /// <param name=\"{parameterInfo.Name}\">");
-                        if (parameterInfo.Description is not null)
-                        {
-                            foreach (var line in GetNormalizedDescription(parameterInfo.Description))
-                            {
-                                domainBuilder.AppendLine($"    /// {line}");
-                            }
-                        }
-                        domainBuilder.AppendLine("    /// </param>");
-                    }
-                }
-
-                domainBuilder.AppendLine($"    /// <param name=\"{sessionArgName}\">");
-                domainBuilder.AppendLine("    /// Optional CDP session override.");
-                domainBuilder.AppendLine("    /// </param>");
-                domainBuilder.AppendLine("    /// <param name=\"cancellationToken\">");
-                domainBuilder.AppendLine("    /// A token to cancel the asynchronous operation.");
-                domainBuilder.AppendLine("    /// </param>");
-                domainBuilder.AppendLine($"    /// <returns>");
-                domainBuilder.AppendLine($"    /// A task representing the asynchronous operation, containing a <see cref=\"{commandInfo.Name.Dehumanize()}Result\"/>.");
-                domainBuilder.AppendLine($"    /// </returns>");
-
-                if (commandInfo.Experimental is true && domainInfo.Experimental is not true)
-                {
-                    domainBuilder.AppendLine($"    [global::System.Diagnostics.CodeAnalysis.Experimental(\"{experimentalDiagnosticId}\")]");
-                }
-
-                if (commandInfo.Deprecated is true)
-                {
-                    domainBuilder.AppendLine("    [global::System.Obsolete]");
-                }
-
-                domainBuilder.Append($"    public async Task{returnType} {commandInfo.Name.Dehumanize()}Async(");
-
-                if (commandInfo.Parameters is not null)
-                {
-                    var requiredParameters = commandInfo.Parameters.Where(p => p.Optional is not true);
-                    var optionalParameters = commandInfo.Parameters.Where(p => p.Optional is true);
-
-                    foreach (var parameterInfo in requiredParameters)
-                    {
-                        var parameterName = parameterInfo.Name;
-
-                        if (parameterName == "override") // avoid using "override"
-                        {
-                            parameterName = "@override";
-                        }
-
-                        domainBuilder.Append($"{parameterInfo.AsCSharpType()} {parameterName}");
-
-                        domainBuilder.Append(", ");
-                    }
-
-                    foreach (var parameterInfo in optionalParameters)
-                    {
-                        var parameterName = parameterInfo.Name;
-
-                        if (parameterName == "override") // avoid using "override"
-                        {
-                            parameterName = "@override";
-                        }
-
-                        domainBuilder.Append($"{parameterInfo.AsCSharpType()} {parameterName} = default");
-
-                        domainBuilder.Append(", ");
-                    }
-                }
-
-                domainBuilder.Append($"string? {sessionArgName} = default");
-
-                domainBuilder.Append(", CancellationToken cancellationToken = default");
-
-                domainBuilder.AppendLine(")");
+                domainBuilder.AppendLine($"    public async Task<{commandInfo.Name.Dehumanize()}Result> {commandInfo.Name.Dehumanize()}Async({GetCommandSignature(commandInfo, includeDefaultValues: true)})");
                 domainBuilder.AppendLine("    {");
                 domainBuilder.Append($"        var @params = new {commandInfo.Name.Dehumanize()}CommandParameters(");
 
-                if (commandInfo.Parameters is not null)
-                {
-                    for (int i = 0; i < commandInfo.Parameters.Count; i++)
-                    {
-                        var parameterInfo = commandInfo.Parameters[i];
-
-                        var parameterName = parameterInfo.Name;
-
-                        if (parameterName == "override")
-                        {
-                            parameterName = "@override";
-                        }
-
-                        domainBuilder.Append($"{parameterInfo.Name.Dehumanize()}: {parameterName}");
-
-                        if (i != commandInfo.Parameters.Count - 1)
-                        {
-                            domainBuilder.Append(", ");
-                        }
-                    }
-                }
+                domainBuilder.Append(GetCommandParameterInitializer(commandInfo));
 
                 domainBuilder.AppendLine(");");
 
@@ -241,39 +134,11 @@ foreach (var inputFile in inputFiles)
         {
             foreach (var eventInfo in domainInfo.Events)
             {
-                domainBuilder.AppendLine("    /// <summary>");
-                foreach (var line in GetNormalizedDescription(eventInfo.Description ?? string.Empty))
-                {
-                    domainBuilder.AppendLine($"    /// {line}");
-                }
-                domainBuilder.AppendLine("    /// </summary>");
-
-                if (eventInfo.Parameters is { Count: > 0 })
-                {
-                    domainBuilder.AppendLine("    /// <remarks>");
-                    domainBuilder.AppendLine($"    /// Event args (<see cref=\"{eventInfo.Name.Dehumanize()}EventArgs\"/>):");
-                    domainBuilder.AppendLine("    /// <list type=\"bullet\">");
-                    foreach (var parameterInfo in eventInfo.Parameters)
-                    {
-                        var desc = parameterInfo.Description is not null
-                            ? " - " + string.Join(" ", GetNormalizedDescription(parameterInfo.Description))
-                            : "";
-                        domainBuilder.AppendLine($"    /// <item><description><b>{parameterInfo.Name.Dehumanize()}</b>{desc}</description></item>");
-                    }
-                    domainBuilder.AppendLine("    /// </list>");
-                    domainBuilder.AppendLine("    /// </remarks>");
-                }
-
-                if (eventInfo.Experimental is true && domainInfo.Experimental is not true)
-                {
-                    domainBuilder.AppendLine($"    [global::System.Diagnostics.CodeAnalysis.Experimental(\"{experimentalDiagnosticId}\")]");
-                }
-
-                if (eventInfo.Deprecated is true)
-                {
-                    domainBuilder.AppendLine("    [global::System.Obsolete]");
-                }
-
+                AppendAvailabilityAttributes(
+                    domainBuilder,
+                    eventInfo.Experimental is true && domainInfo.Experimental is not true,
+                    eventInfo.Deprecated is true,
+                    "    ");
                 domainBuilder.AppendLine($"    public IEventSource<{eventInfo.Name.Dehumanize()}EventArgs> {eventInfo.Name.Dehumanize()} => CreateCdpEventSource({domainInfo.Domain}DomainEvent.{eventInfo.Name.Dehumanize()});");
             }
         }
@@ -656,7 +521,7 @@ foreach (var inputFile in inputFiles)
         if (domainInfo.Events is not null)
         {
             domainBuilder.AppendLine("/// <summary>");
-            domainBuilder.AppendLine($"/// Provides static event descriptors for the <see cref=\"{domainInfo.Domain}Domain\"/>.");
+            domainBuilder.AppendLine($"/// Provides static event descriptors for the <see cref=\"I{domainInfo.Domain}\"/>.");
             domainBuilder.AppendLine("/// </summary>");
             domainBuilder.AppendLine($"public static class {domainInfo.Domain}DomainEvent");
             domainBuilder.AppendLine("{");
@@ -715,7 +580,7 @@ foreach (var (inputFile, domainInfo) in domainsToGenerate)
     var propertyNameCamelCase = domainInfo.Domain.Substring(0, 1).ToLower() + (domainInfo.Domain.Length > 1 ? domainInfo.Domain.Substring(1) : "");
     
     // Generate the backing field
-    cdpModuleBuilder.AppendLine($"    private {domainInfo.Domain}.{domainInfo.Domain}Domain? _{propertyNameCamelCase};");
+    cdpModuleBuilder.AppendLine($"    private {domainInfo.Domain}.I{domainInfo.Domain}? _{propertyNameCamelCase};");
     cdpModuleBuilder.AppendLine();
     
     // Generate the property documentation and attribute
@@ -740,7 +605,7 @@ foreach (var (inputFile, domainInfo) in domainsToGenerate)
     }
 
     // Generate the property
-    cdpModuleBuilder.AppendLine($"    public {domainInfo.Domain}.{domainInfo.Domain}Domain {domainInfo.Domain} => _{propertyNameCamelCase} ?? global::System.Threading.Interlocked.CompareExchange(ref _{propertyNameCamelCase}, new(this), null) ?? _{propertyNameCamelCase};");
+    cdpModuleBuilder.AppendLine($"    public {domainInfo.Domain}.I{domainInfo.Domain} {domainInfo.Domain} => _{propertyNameCamelCase} ?? global::System.Threading.Interlocked.CompareExchange(ref _{propertyNameCamelCase}, new {domainInfo.Domain}.{domainInfo.Domain}Domain(this), null) ?? _{propertyNameCamelCase};");
     cdpModuleBuilder.AppendLine();
 }
 
@@ -749,6 +614,141 @@ cdpModuleBuilder.AppendLine("#pragma warning restore CS0612");
 cdpModuleBuilder.AppendLine("}");
 
 File.WriteAllText($"{outputDirectory}/CdpModule.g.cs", cdpModuleBuilder.ToString());
+
+static void AppendSummary(StringBuilder builder, string? description, string indent = "")
+{
+    builder.AppendLine($"{indent}/// <summary>");
+    if (description is not null)
+    {
+        foreach (var line in GetNormalizedDescription(description))
+        {
+            builder.AppendLine($"{indent}/// {line}");
+        }
+    }
+    builder.AppendLine($"{indent}/// </summary>");
+}
+
+static void AppendAvailabilityAttributes(StringBuilder builder, bool isExperimental, bool isDeprecated, string indent = "")
+{
+    if (isExperimental)
+    {
+        builder.AppendLine($"{indent}[global::System.Diagnostics.CodeAnalysis.Experimental(\"{experimentalDiagnosticId}\")]");
+    }
+
+    if (isDeprecated)
+    {
+        builder.AppendLine($"{indent}[global::System.Obsolete]");
+    }
+}
+
+static void AppendCommandDocumentation(StringBuilder builder, CommandInfo commandInfo, string indent)
+{
+    AppendSummary(builder, commandInfo.Description, indent);
+
+    if (commandInfo.Parameters is not null)
+    {
+        foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is not true))
+        {
+            AppendParameterDocumentation(builder, parameterInfo.Name, parameterInfo.Description, indent);
+        }
+
+        foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is true))
+        {
+            AppendParameterDocumentation(builder, parameterInfo.Name, parameterInfo.Description, indent);
+        }
+    }
+
+    AppendParameterDocumentation(builder, GetSessionArgumentName(commandInfo), "Optional CDP session override.", indent);
+    AppendParameterDocumentation(builder, "cancellationToken", "A token to cancel the asynchronous operation.", indent);
+    builder.AppendLine($"{indent}/// <returns>");
+    builder.AppendLine($"{indent}/// A task representing the asynchronous operation, containing a <see cref=\"{commandInfo.Name.Dehumanize()}Result\"/>.");
+    builder.AppendLine($"{indent}/// </returns>");
+}
+
+static void AppendEventDocumentation(StringBuilder builder, EventInfo eventInfo, string indent)
+{
+    AppendSummary(builder, eventInfo.Description ?? string.Empty, indent);
+
+    if (eventInfo.Parameters is { Count: > 0 })
+    {
+        builder.AppendLine($"{indent}/// <remarks>");
+        builder.AppendLine($"{indent}/// Event args (<see cref=\"{eventInfo.Name.Dehumanize()}EventArgs\"/>):");
+        builder.AppendLine($"{indent}/// <list type=\"bullet\">");
+        foreach (var parameterInfo in eventInfo.Parameters)
+        {
+            var description = parameterInfo.Description is not null
+                ? " - " + string.Join(" ", GetNormalizedDescription(parameterInfo.Description))
+                : string.Empty;
+            builder.AppendLine($"{indent}/// <item><description><b>{parameterInfo.Name.Dehumanize()}</b>{description}</description></item>");
+        }
+        builder.AppendLine($"{indent}/// </list>");
+        builder.AppendLine($"{indent}/// </remarks>");
+    }
+}
+
+static void AppendParameterDocumentation(StringBuilder builder, string parameterName, string? description, string indent)
+{
+    builder.AppendLine($"{indent}/// <param name=\"{parameterName}\">");
+    if (description is not null)
+    {
+        foreach (var line in GetNormalizedDescription(description))
+        {
+            builder.AppendLine($"{indent}/// {line}");
+        }
+    }
+    builder.AppendLine($"{indent}/// </param>");
+}
+
+static string GetSessionArgumentName(CommandInfo commandInfo)
+{
+    return commandInfo.Parameters?.FirstOrDefault(p => p.Name == "session") is not null
+        ? "cdpSession"
+        : "session";
+}
+
+static string GetCommandSignature(CommandInfo commandInfo, bool includeDefaultValues)
+{
+    var parameters = new List<string>();
+
+    if (commandInfo.Parameters is not null)
+    {
+        foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is not true))
+        {
+            parameters.Add($"{parameterInfo.AsCSharpType()} {EscapeIdentifier(parameterInfo.Name)}");
+        }
+
+        foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is true))
+        {
+            var defaultValue = includeDefaultValues ? " = default" : string.Empty;
+            parameters.Add($"{parameterInfo.AsCSharpType()} {EscapeIdentifier(parameterInfo.Name)}{defaultValue}");
+        }
+    }
+
+    var sessionDefault = includeDefaultValues ? " = default" : string.Empty;
+    parameters.Add($"string? {GetSessionArgumentName(commandInfo)}{sessionDefault}");
+    parameters.Add(includeDefaultValues
+        ? "CancellationToken cancellationToken = default"
+        : "CancellationToken cancellationToken");
+
+    return string.Join(", ", parameters);
+}
+
+static string GetCommandParameterInitializer(CommandInfo commandInfo)
+{
+    if (commandInfo.Parameters is null)
+    {
+        return string.Empty;
+    }
+
+    return string.Join(", ", commandInfo.Parameters.Select(parameterInfo => $"{parameterInfo.Name.Dehumanize()}: {EscapeIdentifier(parameterInfo.Name)}"));
+}
+
+static string EscapeIdentifier(string identifier)
+{
+    return identifier == "override"
+        ? "@override"
+        : identifier;
+}
 
 static string[] GetNormalizedDescription(string description)
 {

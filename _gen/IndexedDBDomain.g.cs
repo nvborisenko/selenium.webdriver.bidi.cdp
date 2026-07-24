@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.IndexedDB;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IIndexedDB
 {
-    private static IndexedDBJsonSerializerContext JsonContext = IndexedDBJsonSerializerContext.Default;
-
     /// <summary>
     /// Clears all entries from an object store.
     /// </summary>
@@ -40,12 +38,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearObjectStoreResult"/>.
     /// </returns>
-    public async Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearObjectStoreCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
-        return await ExecuteCommandAsync(ClearObjectStoreCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearObjectStoreCommandParameters, ClearObjectStoreResult> ClearObjectStoreCommand = new("IndexedDB.clearObjectStore", JsonContext.ClearObjectStoreCommandParameters, JsonContext.ClearObjectStoreResult);
+    Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a database.
@@ -72,12 +65,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteDatabaseResult"/>.
     /// </returns>
-    public async Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
-        return await ExecuteCommandAsync(DeleteDatabaseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteDatabaseCommandParameters, DeleteDatabaseResult> DeleteDatabaseCommand = new("IndexedDB.deleteDatabase", JsonContext.DeleteDatabaseCommandParameters, JsonContext.DeleteDatabaseResult);
+    Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete a range of entries from an object store
@@ -108,12 +96,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteObjectStoreEntriesResult"/>.
     /// </returns>
-    public async Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteObjectStoreEntriesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, KeyRange: keyRange);
-        return await ExecuteCommandAsync(DeleteObjectStoreEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteObjectStoreEntriesCommandParameters, DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesCommand = new("IndexedDB.deleteObjectStoreEntries", JsonContext.DeleteObjectStoreEntriesCommandParameters, JsonContext.DeleteObjectStoreEntriesResult);
+    Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables events from backend.
@@ -127,12 +110,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("IndexedDB.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables events from backend.
@@ -146,12 +124,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("IndexedDB.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests data from object store or index.
@@ -193,12 +166,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestDataResult"/>.
     /// </returns>
-    public async Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? indexName = default, KeyRange? keyRange = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RequestDataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, IndexName: indexName, SkipCount: skipCount, PageSize: pageSize, KeyRange: keyRange);
-        return await ExecuteCommandAsync(RequestDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RequestDataCommandParameters, RequestDataResult> RequestDataCommand = new("IndexedDB.requestData", JsonContext.RequestDataCommandParameters, JsonContext.RequestDataResult);
+    Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? indexName = default, KeyRange? keyRange = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets metadata of an object store.
@@ -228,12 +196,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMetadataResult"/>.
     /// </returns>
-    public async Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetMetadataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
-        return await ExecuteCommandAsync(GetMetadataCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetMetadataCommandParameters, GetMetadataResult> GetMetadataCommand = new("IndexedDB.getMetadata", JsonContext.GetMetadataCommandParameters, JsonContext.GetMetadataResult);
+    Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests database with given name in given frame.
@@ -260,12 +223,7 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestDatabaseResult"/>.
     /// </returns>
-    public async Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RequestDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
-        return await ExecuteCommandAsync(RequestDatabaseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RequestDatabaseCommandParameters, RequestDatabaseResult> RequestDatabaseCommand = new("IndexedDB.requestDatabase", JsonContext.RequestDatabaseCommandParameters, JsonContext.RequestDatabaseResult);
+    Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests database names for given security origin.
@@ -289,6 +247,71 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestDatabaseNamesResult"/>.
     /// </returns>
+    Task<RequestDatabaseNamesResult> RequestDatabaseNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IIndexedDB
+{
+    private static IndexedDBJsonSerializerContext JsonContext = IndexedDBJsonSerializerContext.Default;
+
+    public async Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearObjectStoreCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
+        return await ExecuteCommandAsync(ClearObjectStoreCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearObjectStoreCommandParameters, ClearObjectStoreResult> ClearObjectStoreCommand = new("IndexedDB.clearObjectStore", JsonContext.ClearObjectStoreCommandParameters, JsonContext.ClearObjectStoreResult);
+
+    public async Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
+        return await ExecuteCommandAsync(DeleteDatabaseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteDatabaseCommandParameters, DeleteDatabaseResult> DeleteDatabaseCommand = new("IndexedDB.deleteDatabase", JsonContext.DeleteDatabaseCommandParameters, JsonContext.DeleteDatabaseResult);
+
+    public async Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteObjectStoreEntriesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, KeyRange: keyRange);
+        return await ExecuteCommandAsync(DeleteObjectStoreEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteObjectStoreEntriesCommandParameters, DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesCommand = new("IndexedDB.deleteObjectStoreEntries", JsonContext.DeleteObjectStoreEntriesCommandParameters, JsonContext.DeleteObjectStoreEntriesResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("IndexedDB.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("IndexedDB.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? indexName = default, KeyRange? keyRange = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestDataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, IndexName: indexName, SkipCount: skipCount, PageSize: pageSize, KeyRange: keyRange);
+        return await ExecuteCommandAsync(RequestDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestDataCommandParameters, RequestDataResult> RequestDataCommand = new("IndexedDB.requestData", JsonContext.RequestDataCommandParameters, JsonContext.RequestDataResult);
+
+    public async Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetMetadataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
+        return await ExecuteCommandAsync(GetMetadataCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetMetadataCommandParameters, GetMetadataResult> GetMetadataCommand = new("IndexedDB.getMetadata", JsonContext.GetMetadataCommandParameters, JsonContext.GetMetadataResult);
+
+    public async Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
+        return await ExecuteCommandAsync(RequestDatabaseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestDatabaseCommandParameters, RequestDatabaseResult> RequestDatabaseCommand = new("IndexedDB.requestDatabase", JsonContext.RequestDatabaseCommandParameters, JsonContext.RequestDatabaseResult);
+
     public async Task<RequestDatabaseNamesResult> RequestDatabaseNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestDatabaseNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);

@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Network;
 /// Network domain allows tracking network activities of the page. It exposes information about http,
 /// file, data and other requests and responses, their headers, bodies, timing, etc.
 /// </summary>
-public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface INetwork
 {
-    private static NetworkJsonSerializerContext JsonContext = NetworkJsonSerializerContext.Default;
-
     /// <summary>
     /// Sets a list of content encodings that will be accepted. Empty list means no encoding is accepted.
     /// </summary>
@@ -29,12 +27,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetAcceptedEncodingsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAcceptedEncodingsCommandParameters(Encodings: encodings);
-        return await ExecuteCommandAsync(SetAcceptedEncodingsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAcceptedEncodingsCommandParameters, SetAcceptedEncodingsResult> SetAcceptedEncodingsCommand = new("Network.setAcceptedEncodings", JsonContext.SetAcceptedEncodingsCommandParameters, JsonContext.SetAcceptedEncodingsResult);
+    Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears accepted encodings set by setAcceptedEncodings
@@ -49,12 +42,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="ClearAcceptedEncodingsOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearAcceptedEncodingsOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearAcceptedEncodingsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearAcceptedEncodingsOverrideCommandParameters, ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideCommand = new("Network.clearAcceptedEncodingsOverride", JsonContext.ClearAcceptedEncodingsOverrideCommandParameters, JsonContext.ClearAcceptedEncodingsOverrideResult);
+    Task<ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tells whether clearing browser cache is supported.
@@ -69,12 +57,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CanClearBrowserCacheResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CanClearBrowserCacheCommandParameters();
-        return await ExecuteCommandAsync(CanClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CanClearBrowserCacheCommandParameters, CanClearBrowserCacheResult> CanClearBrowserCacheCommand = new("Network.canClearBrowserCache", JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult);
+    Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tells whether clearing browser cookies is supported.
@@ -89,12 +72,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CanClearBrowserCookiesResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CanClearBrowserCookiesCommandParameters();
-        return await ExecuteCommandAsync(CanClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CanClearBrowserCookiesCommandParameters, CanClearBrowserCookiesResult> CanClearBrowserCookiesCommand = new("Network.canClearBrowserCookies", JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult);
+    Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tells whether emulation of network conditions is supported.
@@ -109,12 +87,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CanEmulateNetworkConditionsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CanEmulateNetworkConditionsCommandParameters();
-        return await ExecuteCommandAsync(CanEmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CanEmulateNetworkConditionsCommandParameters, CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsCommand = new("Network.canEmulateNetworkConditions", JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult);
+    Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears browser cache.
@@ -128,12 +101,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearBrowserCacheResult"/>.
     /// </returns>
-    public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearBrowserCacheCommandParameters();
-        return await ExecuteCommandAsync(ClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearBrowserCacheCommandParameters, ClearBrowserCacheResult> ClearBrowserCacheCommand = new("Network.clearBrowserCache", JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult);
+    Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears browser cookies.
@@ -147,12 +115,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearBrowserCookiesResult"/>.
     /// </returns>
-    public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearBrowserCookiesCommandParameters();
-        return await ExecuteCommandAsync(ClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearBrowserCookiesCommandParameters, ClearBrowserCookiesResult> ClearBrowserCookiesCommand = new("Network.clearBrowserCookies", JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult);
+    Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Response to Network.requestIntercepted which either modifies the request to continue with any
@@ -201,12 +164,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<ContinueInterceptedRequestResult> ContinueInterceptedRequestAsync(InterceptionId interceptionId, ErrorReason? errorReason = default, string? rawResponse = default, string? url = default, string? method = default, string? postData = default, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? headers = default, AuthChallengeResponse? authChallengeResponse = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ContinueInterceptedRequestCommandParameters(InterceptionId: interceptionId, ErrorReason: errorReason, RawResponse: rawResponse, Url: url, Method: method, PostData: postData, Headers: headers, AuthChallengeResponse: authChallengeResponse);
-        return await ExecuteCommandAsync(ContinueInterceptedRequestCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ContinueInterceptedRequestCommandParameters, ContinueInterceptedRequestResult> ContinueInterceptedRequestCommand = new("Network.continueInterceptedRequest", JsonContext.ContinueInterceptedRequestCommandParameters, JsonContext.ContinueInterceptedRequestResult);
+    Task<ContinueInterceptedRequestResult> ContinueInterceptedRequestAsync(InterceptionId interceptionId, ErrorReason? errorReason = default, string? rawResponse = default, string? url = default, string? method = default, string? postData = default, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? headers = default, AuthChallengeResponse? authChallengeResponse = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes browser cookies with matching name and url or domain/path/partitionKey pair.
@@ -237,12 +195,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteCookiesResult"/>.
     /// </returns>
-    public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteCookiesCommandParameters(Name: name, Url: url, Domain: domain, Path: path, PartitionKey: partitionKey);
-        return await ExecuteCommandAsync(DeleteCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteCookiesCommandParameters, DeleteCookiesResult> DeleteCookiesCommand = new("Network.deleteCookies", JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult);
+    Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables network tracking, prevents network events from being sent to the client.
@@ -256,12 +209,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Network.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Activates emulation of network conditions. This command is deprecated in favor of the emulateNetworkConditionsByRule
@@ -301,12 +249,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType, PacketLoss: packetLoss, PacketQueueLength: packetQueueLength, PacketReordering: packetReordering);
-        return await ExecuteCommandAsync(EmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EmulateNetworkConditionsCommandParameters, EmulateNetworkConditionsResult> EmulateNetworkConditionsCommand = new("Network.emulateNetworkConditions", JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult);
+    Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Activates emulation of network conditions for individual requests using URL match patterns. Unlike the deprecated
@@ -335,12 +278,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsByRuleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: offline, EmulateOfflineServiceWorker: emulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
-        return await ExecuteCommandAsync(EmulateNetworkConditionsByRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EmulateNetworkConditionsByRuleCommandParameters, EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleCommand = new("Network.emulateNetworkConditionsByRule", JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult);
+    Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Override the state of navigator.onLine and navigator.connection.
@@ -370,12 +308,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="OverrideNetworkStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType);
-        return await ExecuteCommandAsync(OverrideNetworkStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<OverrideNetworkStateCommandParameters, OverrideNetworkStateResult> OverrideNetworkStateCommand = new("Network.overrideNetworkState", JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult);
+    Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables network tracking, network events will now be delivered to the client.
@@ -410,12 +343,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize, MaxPostDataSize: maxPostDataSize, ReportDirectSocketTraffic: reportDirectSocketTraffic, EnableDurableMessages: enableDurableMessages);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Network.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Configures storing response bodies outside of renderer, so that these survive
@@ -438,12 +366,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="ConfigureDurableMessagesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize);
-        return await ExecuteCommandAsync(ConfigureDurableMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ConfigureDurableMessagesCommandParameters, ConfigureDurableMessagesResult> ConfigureDurableMessagesCommand = new("Network.configureDurableMessages", JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult);
+    Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser cookies. Depending on the backend support, will return detailed cookie
@@ -460,12 +383,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetAllCookiesResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAllCookiesCommandParameters();
-        return await ExecuteCommandAsync(GetAllCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAllCookiesCommandParameters, GetAllCookiesResult> GetAllCookiesCommand = new("Network.getAllCookies", JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult);
+    Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the DER-encoded certificate.
@@ -483,12 +401,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetCertificateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetCertificateCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(GetCertificateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetCertificateCommandParameters, GetCertificateResult> GetCertificateCommand = new("Network.getCertificate", JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult);
+    Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser cookies for the current URL. Depending on the backend support, will return
@@ -508,12 +421,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCookiesResult"/>.
     /// </returns>
-    public async Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetCookiesCommandParameters(Urls: urls);
-        return await ExecuteCommandAsync(GetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetCookiesCommandParameters, GetCookiesResult> GetCookiesCommand = new("Network.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
+    Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns content served for the given request.
@@ -530,12 +438,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetResponseBodyResult"/>.
     /// </returns>
-    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(GetResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult> GetResponseBodyCommand = new("Network.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
+    Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns post data sent with the request. Returns an error when no data was sent with the request.
@@ -552,12 +455,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRequestPostDataResult"/>.
     /// </returns>
-    public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetRequestPostDataCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(GetRequestPostDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetRequestPostDataCommandParameters, GetRequestPostDataResult> GetRequestPostDataCommand = new("Network.getRequestPostData", JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult);
+    Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns content served for the given currently intercepted request.
@@ -575,12 +473,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetResponseBodyForInterceptionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetResponseBodyForInterceptionCommandParameters(InterceptionId: interceptionId);
-        return await ExecuteCommandAsync(GetResponseBodyForInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetResponseBodyForInterceptionCommandParameters, GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionCommand = new("Network.getResponseBodyForInterception", JsonContext.GetResponseBodyForInterceptionCommandParameters, JsonContext.GetResponseBodyForInterceptionResult);
+    Task<GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a handle to the stream representing the response body. Note that after this command,
@@ -600,12 +493,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="TakeResponseBodyForInterceptionAsStreamResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TakeResponseBodyForInterceptionAsStreamCommandParameters(InterceptionId: interceptionId);
-        return await ExecuteCommandAsync(TakeResponseBodyForInterceptionAsStreamCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TakeResponseBodyForInterceptionAsStreamCommandParameters, TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamCommand = new("Network.takeResponseBodyForInterceptionAsStream", JsonContext.TakeResponseBodyForInterceptionAsStreamCommandParameters, JsonContext.TakeResponseBodyForInterceptionAsStreamResult);
+    Task<TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method sends a new XMLHttpRequest which is identical to the original one. The following
@@ -625,12 +513,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="ReplayXHRResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReplayXHRCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReplayXHRCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReplayXHRCommandParameters, ReplayXHRResult> ReplayXHRCommand = new("Network.replayXHR", JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult);
+    Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for given string in response content.
@@ -657,12 +540,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SearchInResponseBodyResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SearchInResponseBodyCommandParameters(RequestId: requestId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
-        return await ExecuteCommandAsync(SearchInResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SearchInResponseBodyCommandParameters, SearchInResponseBodyResult> SearchInResponseBodyCommand = new("Network.searchInResponseBody", JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult);
+    Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Blocks URLs from loading.
@@ -684,12 +562,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetBlockedURLsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBlockedURLsCommandParameters(UrlPatterns: urlPatterns, Urls: urls);
-        return await ExecuteCommandAsync(SetBlockedURLsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBlockedURLsCommandParameters, SetBlockedURLsResult> SetBlockedURLsCommand = new("Network.setBlockedURLs", JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult);
+    Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Toggles ignoring of service worker for each request.
@@ -706,12 +579,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBypassServiceWorkerResult"/>.
     /// </returns>
-    public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBypassServiceWorkerCommandParameters(Bypass: bypass);
-        return await ExecuteCommandAsync(SetBypassServiceWorkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBypassServiceWorkerCommandParameters, SetBypassServiceWorkerResult> SetBypassServiceWorkerCommand = new("Network.setBypassServiceWorker", JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult);
+    Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Toggles ignoring cache for each request. If <b>true</b>, cache will not be used.
@@ -728,12 +596,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCacheDisabledResult"/>.
     /// </returns>
-    public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetCacheDisabledCommandParameters(CacheDisabled: cacheDisabled);
-        return await ExecuteCommandAsync(SetCacheDisabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetCacheDisabledCommandParameters, SetCacheDisabledResult> SetCacheDisabledCommand = new("Network.setCacheDisabled", JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult);
+    Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
@@ -789,12 +652,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookieResult"/>.
     /// </returns>
-    public async Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: url, Domain: domain, Path: path, Secure: secure, HttpOnly: httpOnly, SameSite: sameSite, Expires: expires, Priority: priority, SourceScheme: sourceScheme, SourcePort: sourcePort, PartitionKey: partitionKey);
-        return await ExecuteCommandAsync(SetCookieCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetCookieCommandParameters, SetCookieResult> SetCookieCommand = new("Network.setCookie", JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult);
+    Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets given cookies.
@@ -811,12 +669,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookiesResult"/>.
     /// </returns>
-    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetCookiesCommandParameters(Cookies: cookies);
-        return await ExecuteCommandAsync(SetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetCookiesCommandParameters, SetCookiesResult> SetCookiesCommand = new("Network.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
+    Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Specifies whether to always send extra HTTP headers with the requests from this page.
@@ -833,12 +686,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetExtraHTTPHeadersResult"/>.
     /// </returns>
-    public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetExtraHTTPHeadersCommandParameters(Headers: headers);
-        return await ExecuteCommandAsync(SetExtraHTTPHeadersCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetExtraHTTPHeadersCommandParameters, SetExtraHTTPHeadersResult> SetExtraHTTPHeadersCommand = new("Network.setExtraHTTPHeaders", JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult);
+    Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Specifies whether to attach a page script stack id in requests
@@ -856,12 +704,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetAttachDebugStackResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAttachDebugStackCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAttachDebugStackCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAttachDebugStackCommandParameters, SetAttachDebugStackResult> SetAttachDebugStackCommand = new("Network.setAttachDebugStack", JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult);
+    Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the requests to intercept that match the provided patterns and optionally resource types.
@@ -882,12 +725,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetRequestInterceptionCommandParameters(Patterns: patterns);
-        return await ExecuteCommandAsync(SetRequestInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetRequestInterceptionCommandParameters, SetRequestInterceptionResult> SetRequestInterceptionCommand = new("Network.setRequestInterception", JsonContext.SetRequestInterceptionCommandParameters, JsonContext.SetRequestInterceptionResult);
+    Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows overriding user agent with the given string.
@@ -913,12 +751,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetUserAgentOverrideResult"/>.
     /// </returns>
-    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
-        return await ExecuteCommandAsync(SetUserAgentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult> SetUserAgentOverrideCommand = new("Network.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
+    Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables streaming of the response for the given requestId.
@@ -937,12 +770,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="StreamResourceContentResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StreamResourceContentCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(StreamResourceContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StreamResourceContentCommandParameters, StreamResourceContentResult> StreamResourceContentCommand = new("Network.streamResourceContent", JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult);
+    Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about the COEP/COOP isolation status.
@@ -960,12 +788,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetSecurityIsolationStatusResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetSecurityIsolationStatusCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetSecurityIsolationStatusCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetSecurityIsolationStatusCommandParameters, GetSecurityIsolationStatusResult> GetSecurityIsolationStatusCommand = new("Network.getSecurityIsolationStatus", JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult);
+    Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables tracking for the Reporting API, events generated by the Reporting API will now be delivered to the client.
@@ -984,12 +807,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EnableReportingApiResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableReportingApiCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(EnableReportingApiCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableReportingApiCommandParameters, EnableReportingApiResult> EnableReportingApiCommand = new("Network.enableReportingApi", JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult);
+    Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets up tracking device bound sessions and fetching of initial set of sessions.
@@ -1007,12 +825,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EnableDeviceBoundSessionsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableDeviceBoundSessionsCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(EnableDeviceBoundSessionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableDeviceBoundSessionsCommandParameters, EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsCommand = new("Network.enableDeviceBoundSessions", JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult);
+    Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a device bound session.
@@ -1029,12 +842,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="DeleteDeviceBoundSessionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteDeviceBoundSessionCommandParameters(Key: key);
-        return await ExecuteCommandAsync(DeleteDeviceBoundSessionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteDeviceBoundSessionCommandParameters, DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionCommand = new("Network.deleteDeviceBoundSession", JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult);
+    Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches the schemeful site for a specific origin.
@@ -1052,12 +860,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="FetchSchemefulSiteResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new FetchSchemefulSiteCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(FetchSchemefulSiteCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<FetchSchemefulSiteCommandParameters, FetchSchemefulSiteResult> FetchSchemefulSiteCommand = new("Network.fetchSchemefulSite", JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult);
+    Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches the resource and returns the content.
@@ -1082,12 +885,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="LoadNetworkResourceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new LoadNetworkResourceCommandParameters(FrameId: frameId, Url: url, Options: options);
-        return await ExecuteCommandAsync(LoadNetworkResourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<LoadNetworkResourceCommandParameters, LoadNetworkResourceResult> LoadNetworkResourceCommand = new("Network.loadNetworkResource", JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult);
+    Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets Controls for third-party cookie access
@@ -1106,12 +904,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetCookieControlsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction);
-        return await ExecuteCommandAsync(SetCookieControlsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetCookieControlsCommandParameters, SetCookieControlsResult> SetCookieControlsCommand = new("Network.setCookieControls", JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult);
+    Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when data chunk was received over the network.
@@ -1126,7 +919,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Data</b> - Data that was received. (Encoded as a base64 string when passed over JSON)</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<DataReceivedEventArgs> DataReceived => CreateCdpEventSource(NetworkDomainEvent.DataReceived);
+    IEventSource<DataReceivedEventArgs> DataReceived { get; }
+
     /// <summary>
     /// Fired when EventSource message is received.
     /// </summary>
@@ -1140,7 +934,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Data</b> - Message content.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<EventSourceMessageReceivedEventArgs> EventSourceMessageReceived => CreateCdpEventSource(NetworkDomainEvent.EventSourceMessageReceived);
+    IEventSource<EventSourceMessageReceivedEventArgs> EventSourceMessageReceived { get; }
+
     /// <summary>
     /// Fired when HTTP request has failed to load.
     /// </summary>
@@ -1156,7 +951,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>CorsErrorStatus</b> - The reason why loading was blocked by CORS, if any.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<LoadingFailedEventArgs> LoadingFailed => CreateCdpEventSource(NetworkDomainEvent.LoadingFailed);
+    IEventSource<LoadingFailedEventArgs> LoadingFailed { get; }
+
     /// <summary>
     /// Fired when HTTP request has finished loading.
     /// </summary>
@@ -1168,7 +964,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>EncodedDataLength</b> - Total number of bytes received for this request.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<LoadingFinishedEventArgs> LoadingFinished => CreateCdpEventSource(NetworkDomainEvent.LoadingFinished);
+    IEventSource<LoadingFinishedEventArgs> LoadingFinished { get; }
+
     /// <summary>
     /// Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
     /// mocked.
@@ -1193,7 +990,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public IEventSource<RequestInterceptedEventArgs> RequestIntercepted => CreateCdpEventSource(NetworkDomainEvent.RequestIntercepted);
+    IEventSource<RequestInterceptedEventArgs> RequestIntercepted { get; }
+
     /// <summary>
     /// Fired if request ended up loading from cache.
     /// </summary>
@@ -1203,7 +1001,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>RequestId</b> - Request identifier.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<RequestServedFromCacheEventArgs> RequestServedFromCache => CreateCdpEventSource(NetworkDomainEvent.RequestServedFromCache);
+    IEventSource<RequestServedFromCacheEventArgs> RequestServedFromCache { get; }
+
     /// <summary>
     /// Fired when page is about to send HTTP request.
     /// </summary>
@@ -1225,7 +1024,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>RenderBlockingBehavior</b> - The render-blocking behavior of the request.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<RequestWillBeSentEventArgs> RequestWillBeSent => CreateCdpEventSource(NetworkDomainEvent.RequestWillBeSent);
+    IEventSource<RequestWillBeSentEventArgs> RequestWillBeSent { get; }
+
     /// <summary>
     /// Fired when resource loading priority is changed
     /// </summary>
@@ -1238,7 +1038,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ResourceChangedPriorityEventArgs> ResourceChangedPriority => CreateCdpEventSource(NetworkDomainEvent.ResourceChangedPriority);
+    IEventSource<ResourceChangedPriorityEventArgs> ResourceChangedPriority { get; }
+
     /// <summary>
     /// Fired when a signed exchange was received over the network
     /// </summary>
@@ -1250,7 +1051,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<SignedExchangeReceivedEventArgs> SignedExchangeReceived => CreateCdpEventSource(NetworkDomainEvent.SignedExchangeReceived);
+    IEventSource<SignedExchangeReceivedEventArgs> SignedExchangeReceived { get; }
+
     /// <summary>
     /// Fired when HTTP response is available.
     /// </summary>
@@ -1266,7 +1068,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>FrameId</b> - Frame identifier.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ResponseReceivedEventArgs> ResponseReceived => CreateCdpEventSource(NetworkDomainEvent.ResponseReceived);
+    IEventSource<ResponseReceivedEventArgs> ResponseReceived { get; }
+
     /// <summary>
     /// Fired when WebSocket is closed.
     /// </summary>
@@ -1277,7 +1080,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Timestamp</b> - Timestamp.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebSocketClosedEventArgs> WebSocketClosed => CreateCdpEventSource(NetworkDomainEvent.WebSocketClosed);
+    IEventSource<WebSocketClosedEventArgs> WebSocketClosed { get; }
+
     /// <summary>
     /// Fired upon WebSocket creation.
     /// </summary>
@@ -1289,7 +1093,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Initiator</b> - Request initiator.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebSocketCreatedEventArgs> WebSocketCreated => CreateCdpEventSource(NetworkDomainEvent.WebSocketCreated);
+    IEventSource<WebSocketCreatedEventArgs> WebSocketCreated { get; }
+
     /// <summary>
     /// Fired when WebSocket message error occurs.
     /// </summary>
@@ -1301,7 +1106,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ErrorMessage</b> - WebSocket error message.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebSocketFrameErrorEventArgs> WebSocketFrameError => CreateCdpEventSource(NetworkDomainEvent.WebSocketFrameError);
+    IEventSource<WebSocketFrameErrorEventArgs> WebSocketFrameError { get; }
+
     /// <summary>
     /// Fired when WebSocket message is received.
     /// </summary>
@@ -1313,7 +1119,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Response</b> - WebSocket response data.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebSocketFrameReceivedEventArgs> WebSocketFrameReceived => CreateCdpEventSource(NetworkDomainEvent.WebSocketFrameReceived);
+    IEventSource<WebSocketFrameReceivedEventArgs> WebSocketFrameReceived { get; }
+
     /// <summary>
     /// Fired when WebSocket message is sent.
     /// </summary>
@@ -1325,7 +1132,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Response</b> - WebSocket response data.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebSocketFrameSentEventArgs> WebSocketFrameSent => CreateCdpEventSource(NetworkDomainEvent.WebSocketFrameSent);
+    IEventSource<WebSocketFrameSentEventArgs> WebSocketFrameSent { get; }
+
     /// <summary>
     /// Fired when WebSocket handshake response becomes available.
     /// </summary>
@@ -1337,7 +1145,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Response</b> - WebSocket response data.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebSocketHandshakeResponseReceivedEventArgs> WebSocketHandshakeResponseReceived => CreateCdpEventSource(NetworkDomainEvent.WebSocketHandshakeResponseReceived);
+    IEventSource<WebSocketHandshakeResponseReceivedEventArgs> WebSocketHandshakeResponseReceived { get; }
+
     /// <summary>
     /// Fired when WebSocket is about to initiate handshake.
     /// </summary>
@@ -1350,7 +1159,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Request</b> - WebSocket request data.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebSocketWillSendHandshakeRequestEventArgs> WebSocketWillSendHandshakeRequest => CreateCdpEventSource(NetworkDomainEvent.WebSocketWillSendHandshakeRequest);
+    IEventSource<WebSocketWillSendHandshakeRequestEventArgs> WebSocketWillSendHandshakeRequest { get; }
+
     /// <summary>
     /// Fired upon WebTransport creation.
     /// </summary>
@@ -1363,7 +1173,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Initiator</b> - Request initiator.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebTransportCreatedEventArgs> WebTransportCreated => CreateCdpEventSource(NetworkDomainEvent.WebTransportCreated);
+    IEventSource<WebTransportCreatedEventArgs> WebTransportCreated { get; }
+
     /// <summary>
     /// Fired when WebTransport handshake is finished.
     /// </summary>
@@ -1374,7 +1185,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Timestamp</b> - Timestamp.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebTransportConnectionEstablishedEventArgs> WebTransportConnectionEstablished => CreateCdpEventSource(NetworkDomainEvent.WebTransportConnectionEstablished);
+    IEventSource<WebTransportConnectionEstablishedEventArgs> WebTransportConnectionEstablished { get; }
+
     /// <summary>
     /// Fired when WebTransport is disposed.
     /// </summary>
@@ -1385,7 +1197,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Timestamp</b> - Timestamp.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WebTransportClosedEventArgs> WebTransportClosed => CreateCdpEventSource(NetworkDomainEvent.WebTransportClosed);
+    IEventSource<WebTransportClosedEventArgs> WebTransportClosed { get; }
+
     /// <summary>
     /// Fired upon direct_socket.TCPSocket creation.
     /// </summary>
@@ -1401,7 +1214,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectTCPSocketCreatedEventArgs> DirectTCPSocketCreated => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketCreated);
+    IEventSource<DirectTCPSocketCreatedEventArgs> DirectTCPSocketCreated { get; }
+
     /// <summary>
     /// Fired when direct_socket.TCPSocket connection is opened.
     /// </summary>
@@ -1417,7 +1231,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectTCPSocketOpenedEventArgs> DirectTCPSocketOpened => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketOpened);
+    IEventSource<DirectTCPSocketOpenedEventArgs> DirectTCPSocketOpened { get; }
+
     /// <summary>
     /// Fired when direct_socket.TCPSocket is aborted.
     /// </summary>
@@ -1430,7 +1245,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectTCPSocketAbortedEventArgs> DirectTCPSocketAborted => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketAborted);
+    IEventSource<DirectTCPSocketAbortedEventArgs> DirectTCPSocketAborted { get; }
+
     /// <summary>
     /// Fired when direct_socket.TCPSocket is closed.
     /// </summary>
@@ -1442,7 +1258,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectTCPSocketClosedEventArgs> DirectTCPSocketClosed => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketClosed);
+    IEventSource<DirectTCPSocketClosedEventArgs> DirectTCPSocketClosed { get; }
+
     /// <summary>
     /// Fired when data is sent to tcp direct socket stream.
     /// </summary>
@@ -1455,7 +1272,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectTCPSocketChunkSentEventArgs> DirectTCPSocketChunkSent => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketChunkSent);
+    IEventSource<DirectTCPSocketChunkSentEventArgs> DirectTCPSocketChunkSent { get; }
+
     /// <summary>
     /// Fired when data is received from tcp direct socket stream.
     /// </summary>
@@ -1468,7 +1286,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectTCPSocketChunkReceivedEventArgs> DirectTCPSocketChunkReceived => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketChunkReceived);
+    IEventSource<DirectTCPSocketChunkReceivedEventArgs> DirectTCPSocketChunkReceived { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -1480,7 +1299,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketJoinedMulticastGroupEventArgs> DirectUDPSocketJoinedMulticastGroup => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketJoinedMulticastGroup);
+    IEventSource<DirectUDPSocketJoinedMulticastGroupEventArgs> DirectUDPSocketJoinedMulticastGroup { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -1492,7 +1312,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketLeftMulticastGroupEventArgs> DirectUDPSocketLeftMulticastGroup => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketLeftMulticastGroup);
+    IEventSource<DirectUDPSocketLeftMulticastGroupEventArgs> DirectUDPSocketLeftMulticastGroup { get; }
+
     /// <summary>
     /// Fired upon direct_socket.UDPSocket creation.
     /// </summary>
@@ -1506,7 +1327,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketCreatedEventArgs> DirectUDPSocketCreated => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketCreated);
+    IEventSource<DirectUDPSocketCreatedEventArgs> DirectUDPSocketCreated { get; }
+
     /// <summary>
     /// Fired when direct_socket.UDPSocket connection is opened.
     /// </summary>
@@ -1522,7 +1344,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketOpenedEventArgs> DirectUDPSocketOpened => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketOpened);
+    IEventSource<DirectUDPSocketOpenedEventArgs> DirectUDPSocketOpened { get; }
+
     /// <summary>
     /// Fired when direct_socket.UDPSocket is aborted.
     /// </summary>
@@ -1535,7 +1358,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketAbortedEventArgs> DirectUDPSocketAborted => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketAborted);
+    IEventSource<DirectUDPSocketAbortedEventArgs> DirectUDPSocketAborted { get; }
+
     /// <summary>
     /// Fired when direct_socket.UDPSocket is closed.
     /// </summary>
@@ -1547,7 +1371,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketClosedEventArgs> DirectUDPSocketClosed => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketClosed);
+    IEventSource<DirectUDPSocketClosedEventArgs> DirectUDPSocketClosed { get; }
+
     /// <summary>
     /// Fired when message is sent to udp direct socket stream.
     /// </summary>
@@ -1560,7 +1385,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketChunkSentEventArgs> DirectUDPSocketChunkSent => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketChunkSent);
+    IEventSource<DirectUDPSocketChunkSentEventArgs> DirectUDPSocketChunkSent { get; }
+
     /// <summary>
     /// Fired when message is received from udp direct socket stream.
     /// </summary>
@@ -1573,7 +1399,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DirectUDPSocketChunkReceivedEventArgs> DirectUDPSocketChunkReceived => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketChunkReceived);
+    IEventSource<DirectUDPSocketChunkReceivedEventArgs> DirectUDPSocketChunkReceived { get; }
+
     /// <summary>
     /// Fired when additional information about a requestWillBeSent event is available from the
     /// network stack. Not every requestWillBeSent event will have an additional
@@ -1594,7 +1421,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<RequestWillBeSentExtraInfoEventArgs> RequestWillBeSentExtraInfo => CreateCdpEventSource(NetworkDomainEvent.RequestWillBeSentExtraInfo);
+    IEventSource<RequestWillBeSentExtraInfoEventArgs> RequestWillBeSentExtraInfo { get; }
+
     /// <summary>
     /// Fired when additional information about a responseReceived event is available from the network
     /// stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
@@ -1615,7 +1443,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ResponseReceivedExtraInfoEventArgs> ResponseReceivedExtraInfo => CreateCdpEventSource(NetworkDomainEvent.ResponseReceivedExtraInfo);
+    IEventSource<ResponseReceivedExtraInfoEventArgs> ResponseReceivedExtraInfo { get; }
+
     /// <summary>
     /// Fired when 103 Early Hints headers is received in addition to the common response.
     /// Not every responseReceived event will have an responseReceivedEarlyHints fired.
@@ -1629,7 +1458,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ResponseReceivedEarlyHintsEventArgs> ResponseReceivedEarlyHints => CreateCdpEventSource(NetworkDomainEvent.ResponseReceivedEarlyHints);
+    IEventSource<ResponseReceivedEarlyHintsEventArgs> ResponseReceivedEarlyHints { get; }
+
     /// <summary>
     /// Fired exactly once for each Trust Token operation. Depending on
     /// the type of the operation and whether the operation succeeded or
@@ -1648,12 +1478,14 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<TrustTokenOperationDoneEventArgs> TrustTokenOperationDone => CreateCdpEventSource(NetworkDomainEvent.TrustTokenOperationDone);
+    IEventSource<TrustTokenOperationDoneEventArgs> TrustTokenOperationDone { get; }
+
     /// <summary>
     /// Fired once security policy has been updated.
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<PolicyUpdatedEventArgs> PolicyUpdated => CreateCdpEventSource(NetworkDomainEvent.PolicyUpdated);
+    IEventSource<PolicyUpdatedEventArgs> PolicyUpdated { get; }
+
     /// <summary>
     /// Is sent whenever a new report is added.
     /// And after 'enableReportingApi' for all existing reports.
@@ -1665,7 +1497,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ReportingApiReportAddedEventArgs> ReportingApiReportAdded => CreateCdpEventSource(NetworkDomainEvent.ReportingApiReportAdded);
+    IEventSource<ReportingApiReportAddedEventArgs> ReportingApiReportAdded { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -1676,7 +1509,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ReportingApiReportUpdatedEventArgs> ReportingApiReportUpdated => CreateCdpEventSource(NetworkDomainEvent.ReportingApiReportUpdated);
+    IEventSource<ReportingApiReportUpdatedEventArgs> ReportingApiReportUpdated { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -1688,7 +1522,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ReportingApiEndpointsChangedForOriginEventArgs> ReportingApiEndpointsChangedForOrigin => CreateCdpEventSource(NetworkDomainEvent.ReportingApiEndpointsChangedForOrigin);
+    IEventSource<ReportingApiEndpointsChangedForOriginEventArgs> ReportingApiEndpointsChangedForOrigin { get; }
+
     /// <summary>
     /// Triggered when the initial set of device bound sessions is added.
     /// </summary>
@@ -1699,7 +1534,8 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DeviceBoundSessionsAddedEventArgs> DeviceBoundSessionsAdded => CreateCdpEventSource(NetworkDomainEvent.DeviceBoundSessionsAdded);
+    IEventSource<DeviceBoundSessionsAddedEventArgs> DeviceBoundSessionsAdded { get; }
+
     /// <summary>
     /// Triggered when a device bound session event occurs.
     /// </summary>
@@ -1716,6 +1552,401 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ChallengeEventDetails</b></description></item>
     /// </list>
     /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    IEventSource<DeviceBoundSessionEventOccurredEventArgs> DeviceBoundSessionEventOccurred { get; }
+
+}
+
+internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), INetwork
+{
+    private static NetworkJsonSerializerContext JsonContext = NetworkJsonSerializerContext.Default;
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAcceptedEncodingsCommandParameters(Encodings: encodings);
+        return await ExecuteCommandAsync(SetAcceptedEncodingsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAcceptedEncodingsCommandParameters, SetAcceptedEncodingsResult> SetAcceptedEncodingsCommand = new("Network.setAcceptedEncodings", JsonContext.SetAcceptedEncodingsCommandParameters, JsonContext.SetAcceptedEncodingsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearAcceptedEncodingsOverrideCommandParameters();
+        return await ExecuteCommandAsync(ClearAcceptedEncodingsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearAcceptedEncodingsOverrideCommandParameters, ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideCommand = new("Network.clearAcceptedEncodingsOverride", JsonContext.ClearAcceptedEncodingsOverrideCommandParameters, JsonContext.ClearAcceptedEncodingsOverrideResult);
+
+    [global::System.Obsolete]
+    public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CanClearBrowserCacheCommandParameters();
+        return await ExecuteCommandAsync(CanClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CanClearBrowserCacheCommandParameters, CanClearBrowserCacheResult> CanClearBrowserCacheCommand = new("Network.canClearBrowserCache", JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult);
+
+    [global::System.Obsolete]
+    public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CanClearBrowserCookiesCommandParameters();
+        return await ExecuteCommandAsync(CanClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CanClearBrowserCookiesCommandParameters, CanClearBrowserCookiesResult> CanClearBrowserCookiesCommand = new("Network.canClearBrowserCookies", JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult);
+
+    [global::System.Obsolete]
+    public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CanEmulateNetworkConditionsCommandParameters();
+        return await ExecuteCommandAsync(CanEmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CanEmulateNetworkConditionsCommandParameters, CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsCommand = new("Network.canEmulateNetworkConditions", JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult);
+
+    public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearBrowserCacheCommandParameters();
+        return await ExecuteCommandAsync(ClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearBrowserCacheCommandParameters, ClearBrowserCacheResult> ClearBrowserCacheCommand = new("Network.clearBrowserCache", JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult);
+
+    public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearBrowserCookiesCommandParameters();
+        return await ExecuteCommandAsync(ClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearBrowserCookiesCommandParameters, ClearBrowserCookiesResult> ClearBrowserCookiesCommand = new("Network.clearBrowserCookies", JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<ContinueInterceptedRequestResult> ContinueInterceptedRequestAsync(InterceptionId interceptionId, ErrorReason? errorReason = default, string? rawResponse = default, string? url = default, string? method = default, string? postData = default, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? headers = default, AuthChallengeResponse? authChallengeResponse = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ContinueInterceptedRequestCommandParameters(InterceptionId: interceptionId, ErrorReason: errorReason, RawResponse: rawResponse, Url: url, Method: method, PostData: postData, Headers: headers, AuthChallengeResponse: authChallengeResponse);
+        return await ExecuteCommandAsync(ContinueInterceptedRequestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ContinueInterceptedRequestCommandParameters, ContinueInterceptedRequestResult> ContinueInterceptedRequestCommand = new("Network.continueInterceptedRequest", JsonContext.ContinueInterceptedRequestCommandParameters, JsonContext.ContinueInterceptedRequestResult);
+
+    public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteCookiesCommandParameters(Name: name, Url: url, Domain: domain, Path: path, PartitionKey: partitionKey);
+        return await ExecuteCommandAsync(DeleteCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteCookiesCommandParameters, DeleteCookiesResult> DeleteCookiesCommand = new("Network.deleteCookies", JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Network.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    [global::System.Obsolete]
+    public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType, PacketLoss: packetLoss, PacketQueueLength: packetQueueLength, PacketReordering: packetReordering);
+        return await ExecuteCommandAsync(EmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EmulateNetworkConditionsCommandParameters, EmulateNetworkConditionsResult> EmulateNetworkConditionsCommand = new("Network.emulateNetworkConditions", JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: offline, EmulateOfflineServiceWorker: emulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
+        return await ExecuteCommandAsync(EmulateNetworkConditionsByRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EmulateNetworkConditionsByRuleCommandParameters, EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleCommand = new("Network.emulateNetworkConditionsByRule", JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType);
+        return await ExecuteCommandAsync(OverrideNetworkStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<OverrideNetworkStateCommandParameters, OverrideNetworkStateResult> OverrideNetworkStateCommand = new("Network.overrideNetworkState", JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult);
+
+    public async Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize, MaxPostDataSize: maxPostDataSize, ReportDirectSocketTraffic: reportDirectSocketTraffic, EnableDurableMessages: enableDurableMessages);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Network.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize);
+        return await ExecuteCommandAsync(ConfigureDurableMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ConfigureDurableMessagesCommandParameters, ConfigureDurableMessagesResult> ConfigureDurableMessagesCommand = new("Network.configureDurableMessages", JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult);
+
+    [global::System.Obsolete]
+    public async Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAllCookiesCommandParameters();
+        return await ExecuteCommandAsync(GetAllCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAllCookiesCommandParameters, GetAllCookiesResult> GetAllCookiesCommand = new("Network.getAllCookies", JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetCertificateCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(GetCertificateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetCertificateCommandParameters, GetCertificateResult> GetCertificateCommand = new("Network.getCertificate", JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult);
+
+    public async Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetCookiesCommandParameters(Urls: urls);
+        return await ExecuteCommandAsync(GetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetCookiesCommandParameters, GetCookiesResult> GetCookiesCommand = new("Network.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
+
+    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
+        return await ExecuteCommandAsync(GetResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult> GetResponseBodyCommand = new("Network.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
+
+    public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetRequestPostDataCommandParameters(RequestId: requestId);
+        return await ExecuteCommandAsync(GetRequestPostDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetRequestPostDataCommandParameters, GetRequestPostDataResult> GetRequestPostDataCommand = new("Network.getRequestPostData", JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetResponseBodyForInterceptionCommandParameters(InterceptionId: interceptionId);
+        return await ExecuteCommandAsync(GetResponseBodyForInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetResponseBodyForInterceptionCommandParameters, GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionCommand = new("Network.getResponseBodyForInterception", JsonContext.GetResponseBodyForInterceptionCommandParameters, JsonContext.GetResponseBodyForInterceptionResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TakeResponseBodyForInterceptionAsStreamCommandParameters(InterceptionId: interceptionId);
+        return await ExecuteCommandAsync(TakeResponseBodyForInterceptionAsStreamCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TakeResponseBodyForInterceptionAsStreamCommandParameters, TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamCommand = new("Network.takeResponseBodyForInterceptionAsStream", JsonContext.TakeResponseBodyForInterceptionAsStreamCommandParameters, JsonContext.TakeResponseBodyForInterceptionAsStreamResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReplayXHRCommandParameters(RequestId: requestId);
+        return await ExecuteCommandAsync(ReplayXHRCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReplayXHRCommandParameters, ReplayXHRResult> ReplayXHRCommand = new("Network.replayXHR", JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SearchInResponseBodyCommandParameters(RequestId: requestId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
+        return await ExecuteCommandAsync(SearchInResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SearchInResponseBodyCommandParameters, SearchInResponseBodyResult> SearchInResponseBodyCommand = new("Network.searchInResponseBody", JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBlockedURLsCommandParameters(UrlPatterns: urlPatterns, Urls: urls);
+        return await ExecuteCommandAsync(SetBlockedURLsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBlockedURLsCommandParameters, SetBlockedURLsResult> SetBlockedURLsCommand = new("Network.setBlockedURLs", JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult);
+
+    public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBypassServiceWorkerCommandParameters(Bypass: bypass);
+        return await ExecuteCommandAsync(SetBypassServiceWorkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBypassServiceWorkerCommandParameters, SetBypassServiceWorkerResult> SetBypassServiceWorkerCommand = new("Network.setBypassServiceWorker", JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult);
+
+    public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetCacheDisabledCommandParameters(CacheDisabled: cacheDisabled);
+        return await ExecuteCommandAsync(SetCacheDisabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetCacheDisabledCommandParameters, SetCacheDisabledResult> SetCacheDisabledCommand = new("Network.setCacheDisabled", JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult);
+
+    public async Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: url, Domain: domain, Path: path, Secure: secure, HttpOnly: httpOnly, SameSite: sameSite, Expires: expires, Priority: priority, SourceScheme: sourceScheme, SourcePort: sourcePort, PartitionKey: partitionKey);
+        return await ExecuteCommandAsync(SetCookieCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetCookieCommandParameters, SetCookieResult> SetCookieCommand = new("Network.setCookie", JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult);
+
+    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetCookiesCommandParameters(Cookies: cookies);
+        return await ExecuteCommandAsync(SetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetCookiesCommandParameters, SetCookiesResult> SetCookiesCommand = new("Network.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
+
+    public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetExtraHTTPHeadersCommandParameters(Headers: headers);
+        return await ExecuteCommandAsync(SetExtraHTTPHeadersCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetExtraHTTPHeadersCommandParameters, SetExtraHTTPHeadersResult> SetExtraHTTPHeadersCommand = new("Network.setExtraHTTPHeaders", JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAttachDebugStackCommandParameters(Enabled: enabled);
+        return await ExecuteCommandAsync(SetAttachDebugStackCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAttachDebugStackCommandParameters, SetAttachDebugStackResult> SetAttachDebugStackCommand = new("Network.setAttachDebugStack", JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetRequestInterceptionCommandParameters(Patterns: patterns);
+        return await ExecuteCommandAsync(SetRequestInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetRequestInterceptionCommandParameters, SetRequestInterceptionResult> SetRequestInterceptionCommand = new("Network.setRequestInterception", JsonContext.SetRequestInterceptionCommandParameters, JsonContext.SetRequestInterceptionResult);
+
+    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
+        return await ExecuteCommandAsync(SetUserAgentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult> SetUserAgentOverrideCommand = new("Network.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StreamResourceContentCommandParameters(RequestId: requestId);
+        return await ExecuteCommandAsync(StreamResourceContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StreamResourceContentCommandParameters, StreamResourceContentResult> StreamResourceContentCommand = new("Network.streamResourceContent", JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSecurityIsolationStatusCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetSecurityIsolationStatusCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetSecurityIsolationStatusCommandParameters, GetSecurityIsolationStatusResult> GetSecurityIsolationStatusCommand = new("Network.getSecurityIsolationStatus", JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableReportingApiCommandParameters(Enable: enable);
+        return await ExecuteCommandAsync(EnableReportingApiCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableReportingApiCommandParameters, EnableReportingApiResult> EnableReportingApiCommand = new("Network.enableReportingApi", JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableDeviceBoundSessionsCommandParameters(Enable: enable);
+        return await ExecuteCommandAsync(EnableDeviceBoundSessionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableDeviceBoundSessionsCommandParameters, EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsCommand = new("Network.enableDeviceBoundSessions", JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteDeviceBoundSessionCommandParameters(Key: key);
+        return await ExecuteCommandAsync(DeleteDeviceBoundSessionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteDeviceBoundSessionCommandParameters, DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionCommand = new("Network.deleteDeviceBoundSession", JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new FetchSchemefulSiteCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(FetchSchemefulSiteCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<FetchSchemefulSiteCommandParameters, FetchSchemefulSiteResult> FetchSchemefulSiteCommand = new("Network.fetchSchemefulSite", JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new LoadNetworkResourceCommandParameters(FrameId: frameId, Url: url, Options: options);
+        return await ExecuteCommandAsync(LoadNetworkResourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<LoadNetworkResourceCommandParameters, LoadNetworkResourceResult> LoadNetworkResourceCommand = new("Network.loadNetworkResource", JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction);
+        return await ExecuteCommandAsync(SetCookieControlsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetCookieControlsCommandParameters, SetCookieControlsResult> SetCookieControlsCommand = new("Network.setCookieControls", JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult);
+
+    public IEventSource<DataReceivedEventArgs> DataReceived => CreateCdpEventSource(NetworkDomainEvent.DataReceived);
+    public IEventSource<EventSourceMessageReceivedEventArgs> EventSourceMessageReceived => CreateCdpEventSource(NetworkDomainEvent.EventSourceMessageReceived);
+    public IEventSource<LoadingFailedEventArgs> LoadingFailed => CreateCdpEventSource(NetworkDomainEvent.LoadingFailed);
+    public IEventSource<LoadingFinishedEventArgs> LoadingFinished => CreateCdpEventSource(NetworkDomainEvent.LoadingFinished);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public IEventSource<RequestInterceptedEventArgs> RequestIntercepted => CreateCdpEventSource(NetworkDomainEvent.RequestIntercepted);
+    public IEventSource<RequestServedFromCacheEventArgs> RequestServedFromCache => CreateCdpEventSource(NetworkDomainEvent.RequestServedFromCache);
+    public IEventSource<RequestWillBeSentEventArgs> RequestWillBeSent => CreateCdpEventSource(NetworkDomainEvent.RequestWillBeSent);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ResourceChangedPriorityEventArgs> ResourceChangedPriority => CreateCdpEventSource(NetworkDomainEvent.ResourceChangedPriority);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<SignedExchangeReceivedEventArgs> SignedExchangeReceived => CreateCdpEventSource(NetworkDomainEvent.SignedExchangeReceived);
+    public IEventSource<ResponseReceivedEventArgs> ResponseReceived => CreateCdpEventSource(NetworkDomainEvent.ResponseReceived);
+    public IEventSource<WebSocketClosedEventArgs> WebSocketClosed => CreateCdpEventSource(NetworkDomainEvent.WebSocketClosed);
+    public IEventSource<WebSocketCreatedEventArgs> WebSocketCreated => CreateCdpEventSource(NetworkDomainEvent.WebSocketCreated);
+    public IEventSource<WebSocketFrameErrorEventArgs> WebSocketFrameError => CreateCdpEventSource(NetworkDomainEvent.WebSocketFrameError);
+    public IEventSource<WebSocketFrameReceivedEventArgs> WebSocketFrameReceived => CreateCdpEventSource(NetworkDomainEvent.WebSocketFrameReceived);
+    public IEventSource<WebSocketFrameSentEventArgs> WebSocketFrameSent => CreateCdpEventSource(NetworkDomainEvent.WebSocketFrameSent);
+    public IEventSource<WebSocketHandshakeResponseReceivedEventArgs> WebSocketHandshakeResponseReceived => CreateCdpEventSource(NetworkDomainEvent.WebSocketHandshakeResponseReceived);
+    public IEventSource<WebSocketWillSendHandshakeRequestEventArgs> WebSocketWillSendHandshakeRequest => CreateCdpEventSource(NetworkDomainEvent.WebSocketWillSendHandshakeRequest);
+    public IEventSource<WebTransportCreatedEventArgs> WebTransportCreated => CreateCdpEventSource(NetworkDomainEvent.WebTransportCreated);
+    public IEventSource<WebTransportConnectionEstablishedEventArgs> WebTransportConnectionEstablished => CreateCdpEventSource(NetworkDomainEvent.WebTransportConnectionEstablished);
+    public IEventSource<WebTransportClosedEventArgs> WebTransportClosed => CreateCdpEventSource(NetworkDomainEvent.WebTransportClosed);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectTCPSocketCreatedEventArgs> DirectTCPSocketCreated => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketCreated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectTCPSocketOpenedEventArgs> DirectTCPSocketOpened => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketOpened);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectTCPSocketAbortedEventArgs> DirectTCPSocketAborted => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketAborted);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectTCPSocketClosedEventArgs> DirectTCPSocketClosed => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketClosed);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectTCPSocketChunkSentEventArgs> DirectTCPSocketChunkSent => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketChunkSent);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectTCPSocketChunkReceivedEventArgs> DirectTCPSocketChunkReceived => CreateCdpEventSource(NetworkDomainEvent.DirectTCPSocketChunkReceived);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketJoinedMulticastGroupEventArgs> DirectUDPSocketJoinedMulticastGroup => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketJoinedMulticastGroup);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketLeftMulticastGroupEventArgs> DirectUDPSocketLeftMulticastGroup => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketLeftMulticastGroup);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketCreatedEventArgs> DirectUDPSocketCreated => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketCreated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketOpenedEventArgs> DirectUDPSocketOpened => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketOpened);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketAbortedEventArgs> DirectUDPSocketAborted => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketAborted);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketClosedEventArgs> DirectUDPSocketClosed => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketClosed);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketChunkSentEventArgs> DirectUDPSocketChunkSent => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketChunkSent);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DirectUDPSocketChunkReceivedEventArgs> DirectUDPSocketChunkReceived => CreateCdpEventSource(NetworkDomainEvent.DirectUDPSocketChunkReceived);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<RequestWillBeSentExtraInfoEventArgs> RequestWillBeSentExtraInfo => CreateCdpEventSource(NetworkDomainEvent.RequestWillBeSentExtraInfo);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ResponseReceivedExtraInfoEventArgs> ResponseReceivedExtraInfo => CreateCdpEventSource(NetworkDomainEvent.ResponseReceivedExtraInfo);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ResponseReceivedEarlyHintsEventArgs> ResponseReceivedEarlyHints => CreateCdpEventSource(NetworkDomainEvent.ResponseReceivedEarlyHints);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<TrustTokenOperationDoneEventArgs> TrustTokenOperationDone => CreateCdpEventSource(NetworkDomainEvent.TrustTokenOperationDone);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<PolicyUpdatedEventArgs> PolicyUpdated => CreateCdpEventSource(NetworkDomainEvent.PolicyUpdated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ReportingApiReportAddedEventArgs> ReportingApiReportAdded => CreateCdpEventSource(NetworkDomainEvent.ReportingApiReportAdded);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ReportingApiReportUpdatedEventArgs> ReportingApiReportUpdated => CreateCdpEventSource(NetworkDomainEvent.ReportingApiReportUpdated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ReportingApiEndpointsChangedForOriginEventArgs> ReportingApiEndpointsChangedForOrigin => CreateCdpEventSource(NetworkDomainEvent.ReportingApiEndpointsChangedForOrigin);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DeviceBoundSessionsAddedEventArgs> DeviceBoundSessionsAdded => CreateCdpEventSource(NetworkDomainEvent.DeviceBoundSessionsAdded);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DeviceBoundSessionEventOccurredEventArgs> DeviceBoundSessionEventOccurred => CreateCdpEventSource(NetworkDomainEvent.DeviceBoundSessionEventOccurred);
 }
@@ -5995,7 +6226,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class NetworkJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="NetworkDomain"/>.
+/// Provides static event descriptors for the <see cref="INetwork"/>.
 /// </summary>
 public static class NetworkDomainEvent
 {

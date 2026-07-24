@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.WebMCP;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IWebMCP
 {
-    private static WebMCPJsonSerializerContext JsonContext = WebMCPJsonSerializerContext.Default;
-
     /// <summary>
     /// Enables the WebMCP domain, allowing events to be sent. Enabling the domain will trigger a toolsAdded event for
     /// all currently registered tools.
@@ -25,12 +23,7 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("WebMCP.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the WebMCP domain.
@@ -44,12 +37,7 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("WebMCP.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Invokes a registered tool.
@@ -72,12 +60,7 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="InvokeToolResult"/>.
     /// </returns>
-    public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new InvokeToolCommandParameters(FrameId: frameId, ToolName: toolName, Input: input);
-        return await ExecuteCommandAsync(InvokeToolCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<InvokeToolCommandParameters, InvokeToolResult> InvokeToolCommand = new("WebMCP.invokeTool", JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult);
+    Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancels a pending tool invocation.
@@ -94,12 +77,7 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CancelInvocationResult"/>.
     /// </returns>
-    public async Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CancelInvocationCommandParameters(InvocationId: invocationId);
-        return await ExecuteCommandAsync(CancelInvocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CancelInvocationCommandParameters, CancelInvocationResult> CancelInvocationCommand = new("WebMCP.cancelInvocation", JsonContext.CancelInvocationCommandParameters, JsonContext.CancelInvocationResult);
+    Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Event fired when new tools are added.
@@ -110,7 +88,8 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>Tools</b> - Array of tools that were added.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ToolsAddedEventArgs> ToolsAdded => CreateCdpEventSource(WebMCPDomainEvent.ToolsAdded);
+    IEventSource<ToolsAddedEventArgs> ToolsAdded { get; }
+
     /// <summary>
     /// Event fired when tools are removed.
     /// </summary>
@@ -120,7 +99,8 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>Tools</b> - Array of tools that were removed.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ToolsRemovedEventArgs> ToolsRemoved => CreateCdpEventSource(WebMCPDomainEvent.ToolsRemoved);
+    IEventSource<ToolsRemovedEventArgs> ToolsRemoved { get; }
+
     /// <summary>
     /// Event fired when a tool invocation starts.
     /// </summary>
@@ -133,7 +113,8 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>Input</b> - The input parameters used for the invocation.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ToolInvokedEventArgs> ToolInvoked => CreateCdpEventSource(WebMCPDomainEvent.ToolInvoked);
+    IEventSource<ToolInvokedEventArgs> ToolInvoked { get; }
+
     /// <summary>
     /// Event fired when a tool invocation completes or fails.
     /// </summary>
@@ -147,6 +128,46 @@ public sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>Exception</b> - The exception object, if the javascript tool threw an error&gt;</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<ToolRespondedEventArgs> ToolResponded { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IWebMCP
+{
+    private static WebMCPJsonSerializerContext JsonContext = WebMCPJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("WebMCP.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("WebMCP.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new InvokeToolCommandParameters(FrameId: frameId, ToolName: toolName, Input: input);
+        return await ExecuteCommandAsync(InvokeToolCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<InvokeToolCommandParameters, InvokeToolResult> InvokeToolCommand = new("WebMCP.invokeTool", JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult);
+
+    public async Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CancelInvocationCommandParameters(InvocationId: invocationId);
+        return await ExecuteCommandAsync(CancelInvocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CancelInvocationCommandParameters, CancelInvocationResult> CancelInvocationCommand = new("WebMCP.cancelInvocation", JsonContext.CancelInvocationCommandParameters, JsonContext.CancelInvocationResult);
+
+    public IEventSource<ToolsAddedEventArgs> ToolsAdded => CreateCdpEventSource(WebMCPDomainEvent.ToolsAdded);
+    public IEventSource<ToolsRemovedEventArgs> ToolsRemoved => CreateCdpEventSource(WebMCPDomainEvent.ToolsRemoved);
+    public IEventSource<ToolInvokedEventArgs> ToolInvoked => CreateCdpEventSource(WebMCPDomainEvent.ToolInvoked);
     public IEventSource<ToolRespondedEventArgs> ToolResponded => CreateCdpEventSource(WebMCPDomainEvent.ToolResponded);
 }
 
@@ -348,7 +369,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class WebMCPJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="WebMCPDomain"/>.
+/// Provides static event descriptors for the <see cref="IWebMCP"/>.
 /// </summary>
 public static class WebMCPDomainEvent
 {

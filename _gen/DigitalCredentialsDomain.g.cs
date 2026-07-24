@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.DigitalCredentials;
 /// This domain allows interacting with the Digital Credentials API for automation.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IDigitalCredentials
 {
-    private static DigitalCredentialsJsonSerializerContext JsonContext = DigitalCredentialsJsonSerializerContext.Default;
-
     /// <summary>
     /// Sets the behavior of the virtual wallet for digital credential requests
     /// issued from this frame.
@@ -40,6 +38,15 @@ public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetVirtualWalletBehaviorResult"/>.
     /// </returns>
+    Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = default, global::System.Text.Json.JsonElement? response = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDigitalCredentials
+{
+    private static DigitalCredentialsJsonSerializerContext JsonContext = DigitalCredentialsJsonSerializerContext.Default;
+
     public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = default, global::System.Text.Json.JsonElement? response = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: protocol, Response: response, FrameId: frameId);

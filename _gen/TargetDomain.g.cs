@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Target;
 /// <summary>
 /// Supports additional targets discovery and allows to attach to them.
 /// </summary>
-public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ITarget
 {
-    private static TargetJsonSerializerContext JsonContext = TargetJsonSerializerContext.Default;
-
     /// <summary>
     /// Activates (focuses) the target.
     /// </summary>
@@ -26,12 +24,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ActivateTargetResult"/>.
     /// </returns>
-    public async Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ActivateTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(ActivateTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ActivateTargetCommandParameters, ActivateTargetResult> ActivateTargetCommand = new("Target.activateTarget", JsonContext.ActivateTargetCommandParameters, JsonContext.ActivateTargetResult);
+    Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Attaches to the target with given id.
@@ -52,12 +45,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AttachToTargetResult"/>.
     /// </returns>
-    public async Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AttachToTargetCommandParameters(TargetId: targetId, Flatten: flatten);
-        return await ExecuteCommandAsync(AttachToTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AttachToTargetCommandParameters, AttachToTargetResult> AttachToTargetCommand = new("Target.attachToTarget", JsonContext.AttachToTargetCommandParameters, JsonContext.AttachToTargetResult);
+    Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Attaches to the browser target, only uses flat sessionId mode.
@@ -72,12 +60,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="AttachToBrowserTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AttachToBrowserTargetCommandParameters();
-        return await ExecuteCommandAsync(AttachToBrowserTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AttachToBrowserTargetCommandParameters, AttachToBrowserTargetResult> AttachToBrowserTargetCommand = new("Target.attachToBrowserTarget", JsonContext.AttachToBrowserTargetCommandParameters, JsonContext.AttachToBrowserTargetResult);
+    Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Closes the target. If the target is a page that gets closed too.
@@ -93,12 +76,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseTargetResult"/>.
     /// </returns>
-    public async Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CloseTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(CloseTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CloseTargetCommandParameters, CloseTargetResult> CloseTargetCommand = new("Target.closeTarget", JsonContext.CloseTargetCommandParameters, JsonContext.CloseTargetResult);
+    Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Inject object to the target's main frame that provides a communication
@@ -128,12 +106,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="ExposeDevToolsProtocolResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = default, bool? inheritPermissions = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ExposeDevToolsProtocolCommandParameters(TargetId: targetId, BindingName: bindingName, InheritPermissions: inheritPermissions);
-        return await ExecuteCommandAsync(ExposeDevToolsProtocolCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ExposeDevToolsProtocolCommandParameters, ExposeDevToolsProtocolResult> ExposeDevToolsProtocolCommand = new("Target.exposeDevToolsProtocol", JsonContext.ExposeDevToolsProtocolCommandParameters, JsonContext.ExposeDevToolsProtocolResult);
+    Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = default, bool? inheritPermissions = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new empty BrowserContext. Similar to an incognito profile but you can have more than
@@ -161,12 +134,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateBrowserContextResult"/>.
     /// </returns>
-    public async Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = default, string? proxyServer = default, string? proxyBypassList = default, ImmutableArray<string>? originsWithUniversalNetworkAccess = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CreateBrowserContextCommandParameters(DisposeOnDetach: disposeOnDetach, ProxyServer: proxyServer, ProxyBypassList: proxyBypassList, OriginsWithUniversalNetworkAccess: originsWithUniversalNetworkAccess);
-        return await ExecuteCommandAsync(CreateBrowserContextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CreateBrowserContextCommandParameters, CreateBrowserContextResult> CreateBrowserContextCommand = new("Target.createBrowserContext", JsonContext.CreateBrowserContextCommandParameters, JsonContext.CreateBrowserContextResult);
+    Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = default, string? proxyServer = default, string? proxyBypassList = default, ImmutableArray<string>? originsWithUniversalNetworkAccess = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser contexts created with <b>Target.createBrowserContext</b> method.
@@ -180,12 +148,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBrowserContextsResult"/>.
     /// </returns>
-    public async Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetBrowserContextsCommandParameters();
-        return await ExecuteCommandAsync(GetBrowserContextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetBrowserContextsCommandParameters, GetBrowserContextsResult> GetBrowserContextsCommand = new("Target.getBrowserContexts", JsonContext.GetBrowserContextsCommandParameters, JsonContext.GetBrowserContextsResult);
+    Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new page.
@@ -247,12 +210,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateTargetResult"/>.
     /// </returns>
-    public async Task<CreateTargetResult> CreateTargetAsync(string url, long? left = default, long? top = default, long? width = default, long? height = default, WindowState? windowState = default, Browser.BrowserContextID? browserContextId = default, bool? enableBeginFrameControl = default, bool? newWindow = default, bool? background = default, bool? forTab = default, bool? hidden = default, bool? focus = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CreateTargetCommandParameters(Url: url, Left: left, Top: top, Width: width, Height: height, WindowState: windowState, BrowserContextId: browserContextId, EnableBeginFrameControl: enableBeginFrameControl, NewWindow: newWindow, Background: background, ForTab: forTab, Hidden: hidden, Focus: focus);
-        return await ExecuteCommandAsync(CreateTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CreateTargetCommandParameters, CreateTargetResult> CreateTargetCommand = new("Target.createTarget", JsonContext.CreateTargetCommandParameters, JsonContext.CreateTargetResult);
+    Task<CreateTargetResult> CreateTargetAsync(string url, long? left = default, long? top = default, long? width = default, long? height = default, WindowState? windowState = default, Browser.BrowserContextID? browserContextId = default, bool? enableBeginFrameControl = default, bool? newWindow = default, bool? background = default, bool? forTab = default, bool? hidden = default, bool? focus = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Detaches session with given id.
@@ -272,12 +230,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DetachFromTargetResult"/>.
     /// </returns>
-    public async Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DetachFromTargetCommandParameters(SessionId: sessionId, TargetId: targetId);
-        return await ExecuteCommandAsync(DetachFromTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DetachFromTargetCommandParameters, DetachFromTargetResult> DetachFromTargetCommand = new("Target.detachFromTarget", JsonContext.DetachFromTargetCommandParameters, JsonContext.DetachFromTargetResult);
+    Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a BrowserContext. All the belonging pages will be closed without calling their
@@ -294,12 +247,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisposeBrowserContextResult"/>.
     /// </returns>
-    public async Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisposeBrowserContextCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(DisposeBrowserContextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisposeBrowserContextCommandParameters, DisposeBrowserContextResult> DisposeBrowserContextCommand = new("Target.disposeBrowserContext", JsonContext.DisposeBrowserContextCommandParameters, JsonContext.DisposeBrowserContextResult);
+    Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about a target.
@@ -316,12 +264,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="GetTargetInfoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetTargetInfoCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(GetTargetInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetTargetInfoCommandParameters, GetTargetInfoResult> GetTargetInfoCommand = new("Target.getTargetInfo", JsonContext.GetTargetInfoCommandParameters, JsonContext.GetTargetInfoResult);
+    Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a list of available targets.
@@ -340,12 +283,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetTargetsResult"/>.
     /// </returns>
-    public async Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetTargetsCommandParameters(Filter: filter);
-        return await ExecuteCommandAsync(GetTargetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetTargetsCommandParameters, GetTargetsResult> GetTargetsCommand = new("Target.getTargets", JsonContext.GetTargetsCommandParameters, JsonContext.GetTargetsResult);
+    Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sends protocol message over session with given id.
@@ -370,12 +308,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="SendMessageToTargetResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SendMessageToTargetCommandParameters(Message: message, SessionId: sessionId, TargetId: targetId);
-        return await ExecuteCommandAsync(SendMessageToTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SendMessageToTargetCommandParameters, SendMessageToTargetResult> SendMessageToTargetCommand = new("Target.sendMessageToTarget", JsonContext.SendMessageToTargetCommandParameters, JsonContext.SendMessageToTargetResult);
+    Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Controls whether to automatically attach to new targets which are considered
@@ -411,12 +344,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAutoAttachResult"/>.
     /// </returns>
-    public async Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = default, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAutoAttachCommandParameters(AutoAttach: autoAttach, WaitForDebuggerOnStart: waitForDebuggerOnStart, Flatten: flatten, Filter: filter);
-        return await ExecuteCommandAsync(SetAutoAttachCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAutoAttachCommandParameters, SetAutoAttachResult> SetAutoAttachCommand = new("Target.setAutoAttach", JsonContext.SetAutoAttachCommandParameters, JsonContext.SetAutoAttachResult);
+    Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = default, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Adds the specified target to the list of targets that will be monitored for any related target
@@ -444,12 +372,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="AutoAttachRelatedResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AutoAttachRelatedCommandParameters(TargetId: targetId, WaitForDebuggerOnStart: waitForDebuggerOnStart, Filter: filter);
-        return await ExecuteCommandAsync(AutoAttachRelatedCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AutoAttachRelatedCommandParameters, AutoAttachRelatedResult> AutoAttachRelatedCommand = new("Target.autoAttachRelated", JsonContext.AutoAttachRelatedCommandParameters, JsonContext.AutoAttachRelatedResult);
+    Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Controls whether to discover available targets and notify via
@@ -471,12 +394,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDiscoverTargetsResult"/>.
     /// </returns>
-    public async Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetDiscoverTargetsCommandParameters(Discover: discover, Filter: filter);
-        return await ExecuteCommandAsync(SetDiscoverTargetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetDiscoverTargetsCommandParameters, SetDiscoverTargetsResult> SetDiscoverTargetsCommand = new("Target.setDiscoverTargets", JsonContext.SetDiscoverTargetsCommandParameters, JsonContext.SetDiscoverTargetsResult);
+    Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables target discovery for the specified locations, when <b>setDiscoverTargets</b> was set to
@@ -495,12 +413,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="SetRemoteLocationsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetRemoteLocationsCommandParameters(Locations: locations);
-        return await ExecuteCommandAsync(SetRemoteLocationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetRemoteLocationsCommandParameters, SetRemoteLocationsResult> SetRemoteLocationsCommand = new("Target.setRemoteLocations", JsonContext.SetRemoteLocationsCommandParameters, JsonContext.SetRemoteLocationsResult);
+    Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the targetId of the DevTools page target opened for the given target
@@ -519,12 +432,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="GetDevToolsTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetDevToolsTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(GetDevToolsTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetDevToolsTargetCommandParameters, GetDevToolsTargetResult> GetDevToolsTargetCommand = new("Target.getDevToolsTarget", JsonContext.GetDevToolsTargetCommandParameters, JsonContext.GetDevToolsTargetResult);
+    Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Opens a DevTools window for the target.
@@ -547,12 +455,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="OpenDevToolsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new OpenDevToolsCommandParameters(TargetId: targetId, PanelId: panelId);
-        return await ExecuteCommandAsync(OpenDevToolsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<OpenDevToolsCommandParameters, OpenDevToolsResult> OpenDevToolsCommand = new("Target.openDevTools", JsonContext.OpenDevToolsCommandParameters, JsonContext.OpenDevToolsResult);
+    Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Issued when attached to target because of auto-attach or <b>attachToTarget</b> command.
@@ -566,7 +469,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<AttachedToTargetEventArgs> AttachedToTarget => CreateCdpEventSource(TargetDomainEvent.AttachedToTarget);
+    IEventSource<AttachedToTargetEventArgs> AttachedToTarget { get; }
+
     /// <summary>
     /// Issued when detached from target for any reason (including <b>detachFromTarget</b> command). Can be
     /// issued multiple times per target if multiple sessions have been attached to it.
@@ -579,7 +483,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DetachedFromTargetEventArgs> DetachedFromTarget => CreateCdpEventSource(TargetDomainEvent.DetachedFromTarget);
+    IEventSource<DetachedFromTargetEventArgs> DetachedFromTarget { get; }
+
     /// <summary>
     /// Notifies about a new protocol message received from the session (as reported in
     /// <b>attachedToTarget</b> event).
@@ -592,7 +497,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>TargetId</b> - Deprecated.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ReceivedMessageFromTargetEventArgs> ReceivedMessageFromTarget => CreateCdpEventSource(TargetDomainEvent.ReceivedMessageFromTarget);
+    IEventSource<ReceivedMessageFromTargetEventArgs> ReceivedMessageFromTarget { get; }
+
     /// <summary>
     /// Issued when a possible inspection target is created.
     /// </summary>
@@ -602,7 +508,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>TargetInfo</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<TargetCreatedEventArgs> TargetCreated => CreateCdpEventSource(TargetDomainEvent.TargetCreated);
+    IEventSource<TargetCreatedEventArgs> TargetCreated { get; }
+
     /// <summary>
     /// Issued when a target is destroyed.
     /// </summary>
@@ -612,7 +519,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>TargetId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<TargetDestroyedEventArgs> TargetDestroyed => CreateCdpEventSource(TargetDomainEvent.TargetDestroyed);
+    IEventSource<TargetDestroyedEventArgs> TargetDestroyed { get; }
+
     /// <summary>
     /// Issued when a target has crashed.
     /// </summary>
@@ -624,7 +532,8 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>ErrorCode</b> - Termination error code.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<TargetCrashedEventArgs> TargetCrashed => CreateCdpEventSource(TargetDomainEvent.TargetCrashed);
+    IEventSource<TargetCrashedEventArgs> TargetCrashed { get; }
+
     /// <summary>
     /// Issued when some information about a target has changed. This only happens between
     /// <b>targetCreated</b> and <b>targetDestroyed</b>.
@@ -635,6 +544,163 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>TargetInfo</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<TargetInfoChangedEventArgs> TargetInfoChanged { get; }
+
+}
+
+internal sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ITarget
+{
+    private static TargetJsonSerializerContext JsonContext = TargetJsonSerializerContext.Default;
+
+    public async Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ActivateTargetCommandParameters(TargetId: targetId);
+        return await ExecuteCommandAsync(ActivateTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ActivateTargetCommandParameters, ActivateTargetResult> ActivateTargetCommand = new("Target.activateTarget", JsonContext.ActivateTargetCommandParameters, JsonContext.ActivateTargetResult);
+
+    public async Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AttachToTargetCommandParameters(TargetId: targetId, Flatten: flatten);
+        return await ExecuteCommandAsync(AttachToTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AttachToTargetCommandParameters, AttachToTargetResult> AttachToTargetCommand = new("Target.attachToTarget", JsonContext.AttachToTargetCommandParameters, JsonContext.AttachToTargetResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AttachToBrowserTargetCommandParameters();
+        return await ExecuteCommandAsync(AttachToBrowserTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AttachToBrowserTargetCommandParameters, AttachToBrowserTargetResult> AttachToBrowserTargetCommand = new("Target.attachToBrowserTarget", JsonContext.AttachToBrowserTargetCommandParameters, JsonContext.AttachToBrowserTargetResult);
+
+    public async Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CloseTargetCommandParameters(TargetId: targetId);
+        return await ExecuteCommandAsync(CloseTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CloseTargetCommandParameters, CloseTargetResult> CloseTargetCommand = new("Target.closeTarget", JsonContext.CloseTargetCommandParameters, JsonContext.CloseTargetResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = default, bool? inheritPermissions = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ExposeDevToolsProtocolCommandParameters(TargetId: targetId, BindingName: bindingName, InheritPermissions: inheritPermissions);
+        return await ExecuteCommandAsync(ExposeDevToolsProtocolCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ExposeDevToolsProtocolCommandParameters, ExposeDevToolsProtocolResult> ExposeDevToolsProtocolCommand = new("Target.exposeDevToolsProtocol", JsonContext.ExposeDevToolsProtocolCommandParameters, JsonContext.ExposeDevToolsProtocolResult);
+
+    public async Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = default, string? proxyServer = default, string? proxyBypassList = default, ImmutableArray<string>? originsWithUniversalNetworkAccess = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CreateBrowserContextCommandParameters(DisposeOnDetach: disposeOnDetach, ProxyServer: proxyServer, ProxyBypassList: proxyBypassList, OriginsWithUniversalNetworkAccess: originsWithUniversalNetworkAccess);
+        return await ExecuteCommandAsync(CreateBrowserContextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CreateBrowserContextCommandParameters, CreateBrowserContextResult> CreateBrowserContextCommand = new("Target.createBrowserContext", JsonContext.CreateBrowserContextCommandParameters, JsonContext.CreateBrowserContextResult);
+
+    public async Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetBrowserContextsCommandParameters();
+        return await ExecuteCommandAsync(GetBrowserContextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetBrowserContextsCommandParameters, GetBrowserContextsResult> GetBrowserContextsCommand = new("Target.getBrowserContexts", JsonContext.GetBrowserContextsCommandParameters, JsonContext.GetBrowserContextsResult);
+
+    public async Task<CreateTargetResult> CreateTargetAsync(string url, long? left = default, long? top = default, long? width = default, long? height = default, WindowState? windowState = default, Browser.BrowserContextID? browserContextId = default, bool? enableBeginFrameControl = default, bool? newWindow = default, bool? background = default, bool? forTab = default, bool? hidden = default, bool? focus = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CreateTargetCommandParameters(Url: url, Left: left, Top: top, Width: width, Height: height, WindowState: windowState, BrowserContextId: browserContextId, EnableBeginFrameControl: enableBeginFrameControl, NewWindow: newWindow, Background: background, ForTab: forTab, Hidden: hidden, Focus: focus);
+        return await ExecuteCommandAsync(CreateTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CreateTargetCommandParameters, CreateTargetResult> CreateTargetCommand = new("Target.createTarget", JsonContext.CreateTargetCommandParameters, JsonContext.CreateTargetResult);
+
+    public async Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DetachFromTargetCommandParameters(SessionId: sessionId, TargetId: targetId);
+        return await ExecuteCommandAsync(DetachFromTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DetachFromTargetCommandParameters, DetachFromTargetResult> DetachFromTargetCommand = new("Target.detachFromTarget", JsonContext.DetachFromTargetCommandParameters, JsonContext.DetachFromTargetResult);
+
+    public async Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisposeBrowserContextCommandParameters(BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(DisposeBrowserContextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisposeBrowserContextCommandParameters, DisposeBrowserContextResult> DisposeBrowserContextCommand = new("Target.disposeBrowserContext", JsonContext.DisposeBrowserContextCommandParameters, JsonContext.DisposeBrowserContextResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetTargetInfoCommandParameters(TargetId: targetId);
+        return await ExecuteCommandAsync(GetTargetInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetTargetInfoCommandParameters, GetTargetInfoResult> GetTargetInfoCommand = new("Target.getTargetInfo", JsonContext.GetTargetInfoCommandParameters, JsonContext.GetTargetInfoResult);
+
+    public async Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetTargetsCommandParameters(Filter: filter);
+        return await ExecuteCommandAsync(GetTargetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetTargetsCommandParameters, GetTargetsResult> GetTargetsCommand = new("Target.getTargets", JsonContext.GetTargetsCommandParameters, JsonContext.GetTargetsResult);
+
+    [global::System.Obsolete]
+    public async Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SendMessageToTargetCommandParameters(Message: message, SessionId: sessionId, TargetId: targetId);
+        return await ExecuteCommandAsync(SendMessageToTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SendMessageToTargetCommandParameters, SendMessageToTargetResult> SendMessageToTargetCommand = new("Target.sendMessageToTarget", JsonContext.SendMessageToTargetCommandParameters, JsonContext.SendMessageToTargetResult);
+
+    public async Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = default, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAutoAttachCommandParameters(AutoAttach: autoAttach, WaitForDebuggerOnStart: waitForDebuggerOnStart, Flatten: flatten, Filter: filter);
+        return await ExecuteCommandAsync(SetAutoAttachCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAutoAttachCommandParameters, SetAutoAttachResult> SetAutoAttachCommand = new("Target.setAutoAttach", JsonContext.SetAutoAttachCommandParameters, JsonContext.SetAutoAttachResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AutoAttachRelatedCommandParameters(TargetId: targetId, WaitForDebuggerOnStart: waitForDebuggerOnStart, Filter: filter);
+        return await ExecuteCommandAsync(AutoAttachRelatedCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AutoAttachRelatedCommandParameters, AutoAttachRelatedResult> AutoAttachRelatedCommand = new("Target.autoAttachRelated", JsonContext.AutoAttachRelatedCommandParameters, JsonContext.AutoAttachRelatedResult);
+
+    public async Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDiscoverTargetsCommandParameters(Discover: discover, Filter: filter);
+        return await ExecuteCommandAsync(SetDiscoverTargetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDiscoverTargetsCommandParameters, SetDiscoverTargetsResult> SetDiscoverTargetsCommand = new("Target.setDiscoverTargets", JsonContext.SetDiscoverTargetsCommandParameters, JsonContext.SetDiscoverTargetsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetRemoteLocationsCommandParameters(Locations: locations);
+        return await ExecuteCommandAsync(SetRemoteLocationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetRemoteLocationsCommandParameters, SetRemoteLocationsResult> SetRemoteLocationsCommand = new("Target.setRemoteLocations", JsonContext.SetRemoteLocationsCommandParameters, JsonContext.SetRemoteLocationsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDevToolsTargetCommandParameters(TargetId: targetId);
+        return await ExecuteCommandAsync(GetDevToolsTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDevToolsTargetCommandParameters, GetDevToolsTargetResult> GetDevToolsTargetCommand = new("Target.getDevToolsTarget", JsonContext.GetDevToolsTargetCommandParameters, JsonContext.GetDevToolsTargetResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new OpenDevToolsCommandParameters(TargetId: targetId, PanelId: panelId);
+        return await ExecuteCommandAsync(OpenDevToolsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<OpenDevToolsCommandParameters, OpenDevToolsResult> OpenDevToolsCommand = new("Target.openDevTools", JsonContext.OpenDevToolsCommandParameters, JsonContext.OpenDevToolsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<AttachedToTargetEventArgs> AttachedToTarget => CreateCdpEventSource(TargetDomainEvent.AttachedToTarget);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DetachedFromTargetEventArgs> DetachedFromTarget => CreateCdpEventSource(TargetDomainEvent.DetachedFromTarget);
+    public IEventSource<ReceivedMessageFromTargetEventArgs> ReceivedMessageFromTarget => CreateCdpEventSource(TargetDomainEvent.ReceivedMessageFromTarget);
+    public IEventSource<TargetCreatedEventArgs> TargetCreated => CreateCdpEventSource(TargetDomainEvent.TargetCreated);
+    public IEventSource<TargetDestroyedEventArgs> TargetDestroyed => CreateCdpEventSource(TargetDomainEvent.TargetDestroyed);
+    public IEventSource<TargetCrashedEventArgs> TargetCrashed => CreateCdpEventSource(TargetDomainEvent.TargetCrashed);
     public IEventSource<TargetInfoChangedEventArgs> TargetInfoChanged => CreateCdpEventSource(TargetDomainEvent.TargetInfoChanged);
 }
 
@@ -1069,7 +1135,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class TargetJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="TargetDomain"/>.
+/// Provides static event descriptors for the <see cref="ITarget"/>.
 /// </summary>
 public static class TargetDomainEvent
 {

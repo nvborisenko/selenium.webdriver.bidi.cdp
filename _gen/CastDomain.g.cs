@@ -10,10 +10,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Cast;
 /// functionalities.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ICast
 {
-    private static CastJsonSerializerContext JsonContext = CastJsonSerializerContext.Default;
-
     /// <summary>
     /// Starts observing for sinks that can be used for tab mirroring, and if set,
     /// sinks compatible with |presentationUrl| as well. When sinks are found, a
@@ -32,12 +30,7 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(PresentationUrl: presentationUrl);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Cast.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops observing for sinks and issues.
@@ -51,12 +44,7 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Cast.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets a sink to be used when the web page requests the browser to choose a
@@ -73,12 +61,7 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSinkToUseResult"/>.
     /// </returns>
-    public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSinkToUseCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(SetSinkToUseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSinkToUseCommandParameters, SetSinkToUseResult> SetSinkToUseCommand = new("Cast.setSinkToUse", JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult);
+    Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts mirroring the desktop to the sink.
@@ -94,12 +77,7 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartDesktopMirroringResult"/>.
     /// </returns>
-    public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StartDesktopMirroringCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StartDesktopMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StartDesktopMirroringCommandParameters, StartDesktopMirroringResult> StartDesktopMirroringCommand = new("Cast.startDesktopMirroring", JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult);
+    Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts mirroring the tab to the sink.
@@ -115,12 +93,7 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartTabMirroringResult"/>.
     /// </returns>
-    public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StartTabMirroringCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StartTabMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StartTabMirroringCommandParameters, StartTabMirroringResult> StartTabMirroringCommand = new("Cast.startTabMirroring", JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult);
+    Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops the active Cast session on the sink.
@@ -136,12 +109,7 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopCastingResult"/>.
     /// </returns>
-    public async Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StopCastingCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StopCastingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StopCastingCommandParameters, StopCastingResult> StopCastingCommand = new("Cast.stopCasting", JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult);
+    Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This is fired whenever the list of available sinks changes. A sink is a
@@ -153,7 +121,8 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Sinks</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<SinksUpdatedEventArgs> SinksUpdated => CreateCdpEventSource(CastDomainEvent.SinksUpdated);
+    IEventSource<SinksUpdatedEventArgs> SinksUpdated { get; }
+
     /// <summary>
     /// This is fired whenever the outstanding issue/error message changes.
     /// |issueMessage| is empty if there is no issue.
@@ -164,6 +133,58 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>IssueMessage</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<IssueUpdatedEventArgs> IssueUpdated { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ICast
+{
+    private static CastJsonSerializerContext JsonContext = CastJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(PresentationUrl: presentationUrl);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Cast.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Cast.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetSinkToUseCommandParameters(SinkName: sinkName);
+        return await ExecuteCommandAsync(SetSinkToUseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetSinkToUseCommandParameters, SetSinkToUseResult> SetSinkToUseCommand = new("Cast.setSinkToUse", JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult);
+
+    public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartDesktopMirroringCommandParameters(SinkName: sinkName);
+        return await ExecuteCommandAsync(StartDesktopMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartDesktopMirroringCommandParameters, StartDesktopMirroringResult> StartDesktopMirroringCommand = new("Cast.startDesktopMirroring", JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult);
+
+    public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartTabMirroringCommandParameters(SinkName: sinkName);
+        return await ExecuteCommandAsync(StartTabMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartTabMirroringCommandParameters, StartTabMirroringResult> StartTabMirroringCommand = new("Cast.startTabMirroring", JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult);
+
+    public async Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopCastingCommandParameters(SinkName: sinkName);
+        return await ExecuteCommandAsync(StopCastingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopCastingCommandParameters, StopCastingResult> StopCastingCommand = new("Cast.stopCasting", JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult);
+
+    public IEventSource<SinksUpdatedEventArgs> SinksUpdated => CreateCdpEventSource(CastDomainEvent.SinksUpdated);
     public IEventSource<IssueUpdatedEventArgs> IssueUpdated => CreateCdpEventSource(CastDomainEvent.IssueUpdated);
 }
 
@@ -262,7 +283,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class CastJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="CastDomain"/>.
+/// Provides static event descriptors for the <see cref="ICast"/>.
 /// </summary>
 public static class CastDomainEvent
 {

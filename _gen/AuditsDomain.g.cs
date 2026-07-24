@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Audits;
 /// Audits domain allows investigation of page violations and possible improvements.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IAudits
 {
-    private static AuditsJsonSerializerContext JsonContext = AuditsJsonSerializerContext.Default;
-
     /// <summary>
     /// Returns the response body and size if it were re-encoded with the specified settings. Only
     /// applies to images.
@@ -38,12 +36,7 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEncodedResponseResult"/>.
     /// </returns>
-    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: quality, SizeOnly: sizeOnly);
-        return await ExecuteCommandAsync(GetEncodedResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetEncodedResponseCommandParameters, GetEncodedResponseResult> GetEncodedResponseCommand = new("Audits.getEncodedResponse", JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult);
+    Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables issues domain, prevents further issues from being reported to the client.
@@ -57,12 +50,7 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Audits.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables issues domain, sends the issues collected so far to the client by means of the
@@ -77,12 +65,7 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Audits.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Runs the form issues check for the target page. Found issues are reported
@@ -97,12 +80,7 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CheckFormsIssuesResult"/>.
     /// </returns>
-    public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CheckFormsIssuesCommandParameters();
-        return await ExecuteCommandAsync(CheckFormsIssuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CheckFormsIssuesCommandParameters, CheckFormsIssuesResult> CheckFormsIssuesCommand = new("Audits.checkFormsIssues", JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult);
+    Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -113,6 +91,43 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <item><description><b>Issue</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<IssueAddedEventArgs> IssueAdded { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAudits
+{
+    private static AuditsJsonSerializerContext JsonContext = AuditsJsonSerializerContext.Default;
+
+    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: quality, SizeOnly: sizeOnly);
+        return await ExecuteCommandAsync(GetEncodedResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetEncodedResponseCommandParameters, GetEncodedResponseResult> GetEncodedResponseCommand = new("Audits.getEncodedResponse", JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Audits.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Audits.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CheckFormsIssuesCommandParameters();
+        return await ExecuteCommandAsync(CheckFormsIssuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CheckFormsIssuesCommandParameters, CheckFormsIssuesResult> CheckFormsIssuesCommand = new("Audits.checkFormsIssues", JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult);
+
     public IEventSource<IssueAddedEventArgs> IssueAdded => CreateCdpEventSource(AuditsDomainEvent.IssueAdded);
 }
 
@@ -2607,7 +2622,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class AuditsJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="AuditsDomain"/>.
+/// Provides static event descriptors for the <see cref="IAudits"/>.
 /// </summary>
 public static class AuditsDomainEvent
 {

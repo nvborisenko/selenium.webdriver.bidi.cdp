@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Page;
 /// <summary>
 /// Actions and events related to the inspected page belong to the page domain.
 /// </summary>
-public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IPage
 {
-    private static PageJsonSerializerContext JsonContext = PageJsonSerializerContext.Default;
-
     /// <summary>
     /// Deprecated, please use addScriptToEvaluateOnNewDocument instead.
     /// </summary>
@@ -28,12 +26,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddScriptToEvaluateOnLoadCommandParameters(ScriptSource: scriptSource);
-        return await ExecuteCommandAsync(AddScriptToEvaluateOnLoadCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AddScriptToEvaluateOnLoadCommandParameters, AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadCommand = new("Page.addScriptToEvaluateOnLoad", JsonContext.AddScriptToEvaluateOnLoadCommandParameters, JsonContext.AddScriptToEvaluateOnLoadResult);
+    Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Evaluates given script in every frame upon creation (before loading frame's scripts).
@@ -62,12 +55,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddScriptToEvaluateOnNewDocumentResult"/>.
     /// </returns>
-    public async Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = default, bool? includeCommandLineAPI = default, bool? runImmediately = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddScriptToEvaluateOnNewDocumentCommandParameters(Source: source, WorldName: worldName, IncludeCommandLineAPI: includeCommandLineAPI, RunImmediately: runImmediately);
-        return await ExecuteCommandAsync(AddScriptToEvaluateOnNewDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AddScriptToEvaluateOnNewDocumentCommandParameters, AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentCommand = new("Page.addScriptToEvaluateOnNewDocument", JsonContext.AddScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.AddScriptToEvaluateOnNewDocumentResult);
+    Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = default, bool? includeCommandLineAPI = default, bool? runImmediately = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Brings page to front (activates tab).
@@ -81,12 +69,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BringToFrontResult"/>.
     /// </returns>
-    public async Task<BringToFrontResult> BringToFrontAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new BringToFrontCommandParameters();
-        return await ExecuteCommandAsync(BringToFrontCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<BringToFrontCommandParameters, BringToFrontResult> BringToFrontCommand = new("Page.bringToFront", JsonContext.BringToFrontCommandParameters, JsonContext.BringToFrontResult);
+    Task<BringToFrontResult> BringToFrontAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Capture page screenshot.
@@ -118,12 +101,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CaptureScreenshotResult"/>.
     /// </returns>
-    public async Task<CaptureScreenshotResult> CaptureScreenshotAsync(string? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CaptureScreenshotCommandParameters(Format: format, Quality: quality, Clip: clip, FromSurface: fromSurface, CaptureBeyondViewport: captureBeyondViewport, OptimizeForSpeed: optimizeForSpeed);
-        return await ExecuteCommandAsync(CaptureScreenshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CaptureScreenshotCommandParameters, CaptureScreenshotResult> CaptureScreenshotCommand = new("Page.captureScreenshot", JsonContext.CaptureScreenshotCommandParameters, JsonContext.CaptureScreenshotResult);
+    Task<CaptureScreenshotResult> CaptureScreenshotAsync(string? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a snapshot of the page as a string. For MHTML format, the serialization includes
@@ -142,12 +120,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="CaptureSnapshotResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(string? format = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CaptureSnapshotCommandParameters(Format: format);
-        return await ExecuteCommandAsync(CaptureSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult> CaptureSnapshotCommand = new("Page.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
+    Task<CaptureSnapshotResult> CaptureSnapshotAsync(string? format = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden device metrics.
@@ -163,12 +136,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearDeviceMetricsOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearDeviceMetricsOverrideCommandParameters, ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideCommand = new("Page.clearDeviceMetricsOverride", JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult);
+    Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden Device Orientation.
@@ -184,12 +152,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearDeviceOrientationOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearDeviceOrientationOverrideCommandParameters, ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideCommand = new("Page.clearDeviceOrientationOverride", JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult);
+    Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden Geolocation Position and Error.
@@ -204,12 +167,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="ClearGeolocationOverrideResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearGeolocationOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearGeolocationOverrideCommandParameters, ClearGeolocationOverrideResult> ClearGeolocationOverrideCommand = new("Page.clearGeolocationOverride", JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult);
+    Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates an isolated world for the given frame.
@@ -241,12 +199,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateIsolatedWorldResult"/>.
     /// </returns>
-    public async Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = default, bool? grantUniveralAccess = default, string? contentSecurityPolicy = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CreateIsolatedWorldCommandParameters(FrameId: frameId, WorldName: worldName, GrantUniveralAccess: grantUniveralAccess, ContentSecurityPolicy: contentSecurityPolicy);
-        return await ExecuteCommandAsync(CreateIsolatedWorldCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CreateIsolatedWorldCommandParameters, CreateIsolatedWorldResult> CreateIsolatedWorldCommand = new("Page.createIsolatedWorld", JsonContext.CreateIsolatedWorldCommandParameters, JsonContext.CreateIsolatedWorldResult);
+    Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = default, bool? grantUniveralAccess = default, string? contentSecurityPolicy = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes browser cookie with given name, domain and path.
@@ -268,12 +221,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteCookieCommandParameters(CookieName: cookieName, Url: url);
-        return await ExecuteCommandAsync(DeleteCookieCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteCookieCommandParameters, DeleteCookieResult> DeleteCookieCommand = new("Page.deleteCookie", JsonContext.DeleteCookieCommandParameters, JsonContext.DeleteCookieResult);
+    Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables page domain notifications.
@@ -287,12 +235,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Page.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables page domain notifications.
@@ -310,12 +253,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(EnableFileChooserOpenedEvent: enableFileChooserOpenedEvent);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Page.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the processed manifest for this current document.
@@ -335,12 +273,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAppManifestResult"/>.
     /// </returns>
-    public async Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAppManifestCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(GetAppManifestCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAppManifestCommandParameters, GetAppManifestResult> GetAppManifestCommand = new("Page.getAppManifest", JsonContext.GetAppManifestCommandParameters, JsonContext.GetAppManifestResult);
+    Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -354,12 +287,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetInstallabilityErrorsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetInstallabilityErrorsCommandParameters();
-        return await ExecuteCommandAsync(GetInstallabilityErrorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetInstallabilityErrorsCommandParameters, GetInstallabilityErrorsResult> GetInstallabilityErrorsCommand = new("Page.getInstallabilityErrors", JsonContext.GetInstallabilityErrorsCommandParameters, JsonContext.GetInstallabilityErrorsResult);
+    Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated because it's not guaranteed that the returned icon is in fact the one used for PWA installation.
@@ -375,12 +303,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetManifestIconsCommandParameters();
-        return await ExecuteCommandAsync(GetManifestIconsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetManifestIconsCommandParameters, GetManifestIconsResult> GetManifestIconsCommand = new("Page.getManifestIcons", JsonContext.GetManifestIconsCommandParameters, JsonContext.GetManifestIconsResult);
+    Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the unique (PWA) app id.
@@ -396,12 +319,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetAppIdResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAppIdResult> GetAppIdAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAppIdCommandParameters();
-        return await ExecuteCommandAsync(GetAppIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAppIdCommandParameters, GetAppIdResult> GetAppIdCommand = new("Page.getAppId", JsonContext.GetAppIdCommandParameters, JsonContext.GetAppIdResult);
+    Task<GetAppIdResult> GetAppIdAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -417,12 +335,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetAdScriptAncestryResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAdScriptAncestryCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetAdScriptAncestryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAdScriptAncestryCommandParameters, GetAdScriptAncestryResult> GetAdScriptAncestryCommand = new("Page.getAdScriptAncestry", JsonContext.GetAdScriptAncestryCommandParameters, JsonContext.GetAdScriptAncestryResult);
+    Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns present frame tree structure.
@@ -436,12 +349,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetFrameTreeResult"/>.
     /// </returns>
-    public async Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetFrameTreeCommandParameters();
-        return await ExecuteCommandAsync(GetFrameTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetFrameTreeCommandParameters, GetFrameTreeResult> GetFrameTreeCommand = new("Page.getFrameTree", JsonContext.GetFrameTreeCommandParameters, JsonContext.GetFrameTreeResult);
+    Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns metrics relating to the layouting of the page, such as viewport bounds/scale.
@@ -455,12 +363,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLayoutMetricsResult"/>.
     /// </returns>
-    public async Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetLayoutMetricsCommandParameters();
-        return await ExecuteCommandAsync(GetLayoutMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetLayoutMetricsCommandParameters, GetLayoutMetricsResult> GetLayoutMetricsCommand = new("Page.getLayoutMetrics", JsonContext.GetLayoutMetricsCommandParameters, JsonContext.GetLayoutMetricsResult);
+    Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns navigation history for the current page.
@@ -474,12 +377,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetNavigationHistoryResult"/>.
     /// </returns>
-    public async Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetNavigationHistoryCommandParameters();
-        return await ExecuteCommandAsync(GetNavigationHistoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetNavigationHistoryCommandParameters, GetNavigationHistoryResult> GetNavigationHistoryCommand = new("Page.getNavigationHistory", JsonContext.GetNavigationHistoryCommandParameters, JsonContext.GetNavigationHistoryResult);
+    Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resets navigation history for the current page.
@@ -493,12 +391,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetNavigationHistoryResult"/>.
     /// </returns>
-    public async Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResetNavigationHistoryCommandParameters();
-        return await ExecuteCommandAsync(ResetNavigationHistoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResetNavigationHistoryCommandParameters, ResetNavigationHistoryResult> ResetNavigationHistoryCommand = new("Page.resetNavigationHistory", JsonContext.ResetNavigationHistoryCommandParameters, JsonContext.ResetNavigationHistoryResult);
+    Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns content of the given resource.
@@ -519,12 +412,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetResourceContentResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetResourceContentCommandParameters(FrameId: frameId, Url: url);
-        return await ExecuteCommandAsync(GetResourceContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetResourceContentCommandParameters, GetResourceContentResult> GetResourceContentCommand = new("Page.getResourceContent", JsonContext.GetResourceContentCommandParameters, JsonContext.GetResourceContentResult);
+    Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns present frame / resource tree structure.
@@ -539,12 +427,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetResourceTreeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetResourceTreeCommandParameters();
-        return await ExecuteCommandAsync(GetResourceTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetResourceTreeCommandParameters, GetResourceTreeResult> GetResourceTreeCommand = new("Page.getResourceTree", JsonContext.GetResourceTreeCommandParameters, JsonContext.GetResourceTreeResult);
+    Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Accepts or dismisses a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload).
@@ -565,12 +448,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HandleJavaScriptDialogResult"/>.
     /// </returns>
-    public async Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HandleJavaScriptDialogCommandParameters(Accept: accept, PromptText: promptText);
-        return await ExecuteCommandAsync(HandleJavaScriptDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HandleJavaScriptDialogCommandParameters, HandleJavaScriptDialogResult> HandleJavaScriptDialogCommand = new("Page.handleJavaScriptDialog", JsonContext.HandleJavaScriptDialogCommandParameters, JsonContext.HandleJavaScriptDialogResult);
+    Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Navigates current page to the given URL.
@@ -599,12 +477,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="NavigateResult"/>.
     /// </returns>
-    public async Task<NavigateResult> NavigateAsync(string url, string? referrer = default, TransitionType? transitionType = default, FrameId? frameId = default, ReferrerPolicy? referrerPolicy = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new NavigateCommandParameters(Url: url, Referrer: referrer, TransitionType: transitionType, FrameId: frameId, ReferrerPolicy: referrerPolicy);
-        return await ExecuteCommandAsync(NavigateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<NavigateCommandParameters, NavigateResult> NavigateCommand = new("Page.navigate", JsonContext.NavigateCommandParameters, JsonContext.NavigateResult);
+    Task<NavigateResult> NavigateAsync(string url, string? referrer = default, TransitionType? transitionType = default, FrameId? frameId = default, ReferrerPolicy? referrerPolicy = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Navigates current page to the given history entry.
@@ -621,12 +494,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="NavigateToHistoryEntryResult"/>.
     /// </returns>
-    public async Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new NavigateToHistoryEntryCommandParameters(EntryId: entryId);
-        return await ExecuteCommandAsync(NavigateToHistoryEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<NavigateToHistoryEntryCommandParameters, NavigateToHistoryEntryResult> NavigateToHistoryEntryCommand = new("Page.navigateToHistoryEntry", JsonContext.NavigateToHistoryEntryCommandParameters, JsonContext.NavigateToHistoryEntryResult);
+    Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Print page as PDF.
@@ -707,12 +575,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PrintToPDFResult"/>.
     /// </returns>
-    public async Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, string? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new PrintToPDFCommandParameters(Landscape: landscape, DisplayHeaderFooter: displayHeaderFooter, PrintBackground: printBackground, Scale: scale, PaperWidth: paperWidth, PaperHeight: paperHeight, MarginTop: marginTop, MarginBottom: marginBottom, MarginLeft: marginLeft, MarginRight: marginRight, PageRanges: pageRanges, HeaderTemplate: headerTemplate, FooterTemplate: footerTemplate, PreferCSSPageSize: preferCSSPageSize, TransferMode: transferMode, GenerateTaggedPDF: generateTaggedPDF, GenerateDocumentOutline: generateDocumentOutline);
-        return await ExecuteCommandAsync(PrintToPDFCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<PrintToPDFCommandParameters, PrintToPDFResult> PrintToPDFCommand = new("Page.printToPDF", JsonContext.PrintToPDFCommandParameters, JsonContext.PrintToPDFResult);
+    Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, string? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reloads given page optionally ignoring the cache.
@@ -738,12 +601,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReloadResult"/>.
     /// </returns>
-    public async Task<ReloadResult> ReloadAsync(bool? ignoreCache = default, string? scriptToEvaluateOnLoad = default, Network.LoaderId? loaderId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReloadCommandParameters(IgnoreCache: ignoreCache, ScriptToEvaluateOnLoad: scriptToEvaluateOnLoad, LoaderId: loaderId);
-        return await ExecuteCommandAsync(ReloadCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReloadCommandParameters, ReloadResult> ReloadCommand = new("Page.reload", JsonContext.ReloadCommandParameters, JsonContext.ReloadResult);
+    Task<ReloadResult> ReloadAsync(bool? ignoreCache = default, string? scriptToEvaluateOnLoad = default, Network.LoaderId? loaderId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated, please use removeScriptToEvaluateOnNewDocument instead.
@@ -761,12 +619,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RemoveScriptToEvaluateOnLoadCommandParameters(Identifier: identifier);
-        return await ExecuteCommandAsync(RemoveScriptToEvaluateOnLoadCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RemoveScriptToEvaluateOnLoadCommandParameters, RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadCommand = new("Page.removeScriptToEvaluateOnLoad", JsonContext.RemoveScriptToEvaluateOnLoadCommandParameters, JsonContext.RemoveScriptToEvaluateOnLoadResult);
+    Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes given script from the list.
@@ -782,12 +635,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveScriptToEvaluateOnNewDocumentResult"/>.
     /// </returns>
-    public async Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RemoveScriptToEvaluateOnNewDocumentCommandParameters(Identifier: identifier);
-        return await ExecuteCommandAsync(RemoveScriptToEvaluateOnNewDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RemoveScriptToEvaluateOnNewDocumentCommandParameters, RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentCommand = new("Page.removeScriptToEvaluateOnNewDocument", JsonContext.RemoveScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.RemoveScriptToEvaluateOnNewDocumentResult);
+    Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Acknowledges that a screencast frame has been received by the frontend.
@@ -805,12 +653,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="ScreencastFrameAckResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ScreencastFrameAckCommandParameters(SessionId: sessionId);
-        return await ExecuteCommandAsync(ScreencastFrameAckCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ScreencastFrameAckCommandParameters, ScreencastFrameAckResult> ScreencastFrameAckCommand = new("Page.screencastFrameAck", JsonContext.ScreencastFrameAckCommandParameters, JsonContext.ScreencastFrameAckResult);
+    Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for given string in resource content.
@@ -840,12 +683,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SearchInResourceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SearchInResourceCommandParameters(FrameId: frameId, Url: url, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
-        return await ExecuteCommandAsync(SearchInResourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SearchInResourceCommandParameters, SearchInResourceResult> SearchInResourceCommand = new("Page.searchInResource", JsonContext.SearchInResourceCommandParameters, JsonContext.SearchInResourceResult);
+    Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable Chrome's experimental ad filter on all sites.
@@ -863,12 +701,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetAdBlockingEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAdBlockingEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAdBlockingEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAdBlockingEnabledCommandParameters, SetAdBlockingEnabledResult> SetAdBlockingEnabledCommand = new("Page.setAdBlockingEnabled", JsonContext.SetAdBlockingEnabledCommandParameters, JsonContext.SetAdBlockingEnabledResult);
+    Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable page Content Security Policy by-passing.
@@ -885,12 +718,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBypassCSPResult"/>.
     /// </returns>
-    public async Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBypassCSPCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetBypassCSPCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBypassCSPCommandParameters, SetBypassCSPResult> SetBypassCSPCommand = new("Page.setBypassCSP", JsonContext.SetBypassCSPCommandParameters, JsonContext.SetBypassCSPResult);
+    Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get Permissions Policy state on given frame.
@@ -907,12 +735,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetPermissionsPolicyStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetPermissionsPolicyStateCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetPermissionsPolicyStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetPermissionsPolicyStateCommandParameters, GetPermissionsPolicyStateResult> GetPermissionsPolicyStateCommand = new("Page.getPermissionsPolicyState", JsonContext.GetPermissionsPolicyStateCommandParameters, JsonContext.GetPermissionsPolicyStateResult);
+    Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get Origin Trials on given frame.
@@ -929,12 +752,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetOriginTrialsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetOriginTrialsCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetOriginTrialsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetOriginTrialsCommandParameters, GetOriginTrialsResult> GetOriginTrialsCommand = new("Page.getOriginTrials", JsonContext.GetOriginTrialsCommandParameters, JsonContext.GetOriginTrialsResult);
+    Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
@@ -989,12 +807,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, Emulation.ScreenOrientation? screenOrientation = default, Viewport? viewport = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport);
-        return await ExecuteCommandAsync(SetDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideCommand = new("Page.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
+    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, Emulation.ScreenOrientation? screenOrientation = default, Viewport? viewport = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Device Orientation.
@@ -1019,12 +832,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetDeviceOrientationOverrideCommandParameters(Alpha: alpha, Beta: beta, Gamma: gamma);
-        return await ExecuteCommandAsync(SetDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetDeviceOrientationOverrideCommandParameters, SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideCommand = new("Page.setDeviceOrientationOverride", JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult);
+    Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set generic font families.
@@ -1045,12 +853,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetFontFamiliesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetFontFamiliesCommandParameters(FontFamilies: fontFamilies, ForScripts: forScripts);
-        return await ExecuteCommandAsync(SetFontFamiliesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetFontFamiliesCommandParameters, SetFontFamiliesResult> SetFontFamiliesCommand = new("Page.setFontFamilies", JsonContext.SetFontFamiliesCommandParameters, JsonContext.SetFontFamiliesResult);
+    Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set default font sizes.
@@ -1068,12 +871,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetFontSizesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetFontSizesCommandParameters(FontSizes: fontSizes);
-        return await ExecuteCommandAsync(SetFontSizesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetFontSizesCommandParameters, SetFontSizesResult> SetFontSizesCommand = new("Page.setFontSizes", JsonContext.SetFontSizesCommandParameters, JsonContext.SetFontSizesResult);
+    Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets given markup as the document's HTML.
@@ -1093,12 +891,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDocumentContentResult"/>.
     /// </returns>
-    public async Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetDocumentContentCommandParameters(FrameId: frameId, Html: html);
-        return await ExecuteCommandAsync(SetDocumentContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetDocumentContentCommandParameters, SetDocumentContentResult> SetDocumentContentCommand = new("Page.setDocumentContent", JsonContext.SetDocumentContentCommandParameters, JsonContext.SetDocumentContentResult);
+    Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set the behavior when downloading a file.
@@ -1121,12 +914,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, DownloadPath: downloadPath);
-        return await ExecuteCommandAsync(SetDownloadBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult> SetDownloadBehaviorCommand = new("Page.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
+    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
@@ -1151,12 +939,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetGeolocationOverrideResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetGeolocationOverrideCommandParameters(Latitude: latitude, Longitude: longitude, Accuracy: accuracy);
-        return await ExecuteCommandAsync(SetGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetGeolocationOverrideCommandParameters, SetGeolocationOverrideResult> SetGeolocationOverrideCommand = new("Page.setGeolocationOverride", JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult);
+    Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Controls whether page will emit lifecycle events.
@@ -1173,12 +956,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetLifecycleEventsEnabledResult"/>.
     /// </returns>
-    public async Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetLifecycleEventsEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetLifecycleEventsEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetLifecycleEventsEnabledCommandParameters, SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledCommand = new("Page.setLifecycleEventsEnabled", JsonContext.SetLifecycleEventsEnabledCommandParameters, JsonContext.SetLifecycleEventsEnabledResult);
+    Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Toggles mouse event-based touch event emulation.
@@ -1200,12 +978,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetTouchEmulationEnabledCommandParameters(Enabled: enabled, Configuration: configuration);
-        return await ExecuteCommandAsync(SetTouchEmulationEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetTouchEmulationEnabledCommandParameters, SetTouchEmulationEnabledResult> SetTouchEmulationEnabledCommand = new("Page.setTouchEmulationEnabled", JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult);
+    Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts sending each frame using the <b>screencastFrame</b> event.
@@ -1235,12 +1008,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="StartScreencastResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StartScreencastCommandParameters(Format: format, Quality: quality, MaxWidth: maxWidth, MaxHeight: maxHeight, EveryNthFrame: everyNthFrame);
-        return await ExecuteCommandAsync(StartScreencastCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StartScreencastCommandParameters, StartScreencastResult> StartScreencastCommand = new("Page.startScreencast", JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult);
+    Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Force the page stop all navigations and pending resource fetches.
@@ -1254,12 +1022,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopLoadingResult"/>.
     /// </returns>
-    public async Task<StopLoadingResult> StopLoadingAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StopLoadingCommandParameters();
-        return await ExecuteCommandAsync(StopLoadingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StopLoadingCommandParameters, StopLoadingResult> StopLoadingCommand = new("Page.stopLoading", JsonContext.StopLoadingCommandParameters, JsonContext.StopLoadingResult);
+    Task<StopLoadingResult> StopLoadingAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Crashes renderer on the IO thread, generates minidumps.
@@ -1274,12 +1037,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="CrashResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CrashCommandParameters();
-        return await ExecuteCommandAsync(CrashCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CrashCommandParameters, CrashResult> CrashCommand = new("Page.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
+    Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tries to close page, running its beforeunload hooks, if any.
@@ -1293,12 +1051,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseResult"/>.
     /// </returns>
-    public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CloseCommandParameters();
-        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("Page.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+    Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tries to update the web lifecycle state of the page.
@@ -1318,12 +1071,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetWebLifecycleStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(string state, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetWebLifecycleStateCommandParameters(State: state);
-        return await ExecuteCommandAsync(SetWebLifecycleStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetWebLifecycleStateCommandParameters, SetWebLifecycleStateResult> SetWebLifecycleStateCommand = new("Page.setWebLifecycleState", JsonContext.SetWebLifecycleStateCommandParameters, JsonContext.SetWebLifecycleStateResult);
+    Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(string state, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops sending each frame in the <b>screencastFrame</b>.
@@ -1338,12 +1086,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="StopScreencastResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StopScreencastResult> StopScreencastAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StopScreencastCommandParameters();
-        return await ExecuteCommandAsync(StopScreencastCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StopScreencastCommandParameters, StopScreencastResult> StopScreencastCommand = new("Page.stopScreencast", JsonContext.StopScreencastCommandParameters, JsonContext.StopScreencastResult);
+    Task<StopScreencastResult> StopScreencastAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests backend to produce compilation cache for the specified scripts.
@@ -1365,12 +1108,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="ProduceCompilationCacheResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ProduceCompilationCacheCommandParameters(Scripts: scripts);
-        return await ExecuteCommandAsync(ProduceCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ProduceCompilationCacheCommandParameters, ProduceCompilationCacheResult> ProduceCompilationCacheCommand = new("Page.produceCompilationCache", JsonContext.ProduceCompilationCacheCommandParameters, JsonContext.ProduceCompilationCacheResult);
+    Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Seeds compilation cache for given url. Compilation cache does not survive
@@ -1391,12 +1129,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="AddCompilationCacheResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddCompilationCacheCommandParameters(Url: url, Data: data);
-        return await ExecuteCommandAsync(AddCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AddCompilationCacheCommandParameters, AddCompilationCacheResult> AddCompilationCacheCommand = new("Page.addCompilationCache", JsonContext.AddCompilationCacheCommandParameters, JsonContext.AddCompilationCacheResult);
+    Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears seeded compilation cache.
@@ -1411,12 +1144,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="ClearCompilationCacheResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearCompilationCacheCommandParameters();
-        return await ExecuteCommandAsync(ClearCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearCompilationCacheCommandParameters, ClearCompilationCacheResult> ClearCompilationCacheCommand = new("Page.clearCompilationCache", JsonContext.ClearCompilationCacheCommandParameters, JsonContext.ClearCompilationCacheResult);
+    Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the Secure Payment Confirmation transaction mode.
@@ -1434,12 +1162,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetSPCTransactionModeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSPCTransactionModeCommandParameters(Mode: mode);
-        return await ExecuteCommandAsync(SetSPCTransactionModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSPCTransactionModeCommandParameters, SetSPCTransactionModeResult> SetSPCTransactionModeCommand = new("Page.setSPCTransactionMode", JsonContext.SetSPCTransactionModeCommandParameters, JsonContext.SetSPCTransactionModeResult);
+    Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Extensions for Custom Handlers API:
@@ -1457,12 +1180,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetRPHRegistrationModeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetRPHRegistrationModeCommandParameters(Mode: mode);
-        return await ExecuteCommandAsync(SetRPHRegistrationModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetRPHRegistrationModeCommandParameters, SetRPHRegistrationModeResult> SetRPHRegistrationModeCommand = new("Page.setRPHRegistrationMode", JsonContext.SetRPHRegistrationModeCommandParameters, JsonContext.SetRPHRegistrationModeResult);
+    Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Generates a report for testing.
@@ -1483,12 +1201,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GenerateTestReportResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GenerateTestReportCommandParameters(Message: message, Group: group);
-        return await ExecuteCommandAsync(GenerateTestReportCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GenerateTestReportCommandParameters, GenerateTestReportResult> GenerateTestReportCommand = new("Page.generateTestReport", JsonContext.GenerateTestReportCommandParameters, JsonContext.GenerateTestReportResult);
+    Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Pauses page execution. Can be resumed using generic Runtime.runIfWaitingForDebugger.
@@ -1503,12 +1216,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="WaitForDebuggerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new WaitForDebuggerCommandParameters();
-        return await ExecuteCommandAsync(WaitForDebuggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<WaitForDebuggerCommandParameters, WaitForDebuggerResult> WaitForDebuggerCommand = new("Page.waitForDebugger", JsonContext.WaitForDebuggerCommandParameters, JsonContext.WaitForDebuggerResult);
+    Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Intercept file chooser requests and transfer control to protocol clients.
@@ -1531,12 +1239,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInterceptFileChooserDialogResult"/>.
     /// </returns>
-    public async Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInterceptFileChooserDialogCommandParameters(Enabled: enabled, Cancel: cancel);
-        return await ExecuteCommandAsync(SetInterceptFileChooserDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInterceptFileChooserDialogCommandParameters, SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogCommand = new("Page.setInterceptFileChooserDialog", JsonContext.SetInterceptFileChooserDialogCommandParameters, JsonContext.SetInterceptFileChooserDialogResult);
+    Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable/disable prerendering manually.
@@ -1559,12 +1262,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="SetPrerenderingAllowedResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPrerenderingAllowedCommandParameters(IsAllowed: isAllowed);
-        return await ExecuteCommandAsync(SetPrerenderingAllowedCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPrerenderingAllowedCommandParameters, SetPrerenderingAllowedResult> SetPrerenderingAllowedCommand = new("Page.setPrerenderingAllowed", JsonContext.SetPrerenderingAllowedCommandParameters, JsonContext.SetPrerenderingAllowedResult);
+    Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get the annotated page content for the main frame.
@@ -1583,12 +1281,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="GetAnnotatedPageContentResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAnnotatedPageContentCommandParameters(IncludeActionableInformation: includeActionableInformation);
-        return await ExecuteCommandAsync(GetAnnotatedPageContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAnnotatedPageContentCommandParameters, GetAnnotatedPageContentResult> GetAnnotatedPageContentCommand = new("Page.getAnnotatedPageContent", JsonContext.GetAnnotatedPageContentCommandParameters, JsonContext.GetAnnotatedPageContentResult);
+    Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -1599,7 +1292,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Timestamp</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<DomContentEventFiredEventArgs> DomContentEventFired => CreateCdpEventSource(PageDomainEvent.DomContentEventFired);
+    IEventSource<DomContentEventFiredEventArgs> DomContentEventFired { get; }
+
     /// <summary>
     /// Emitted only when <b>page.interceptFileChooser</b> is enabled.
     /// </summary>
@@ -1611,7 +1305,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>BackendNodeId</b> - Input node id. Only present for file choosers opened via an <b>&lt;input type="file"&gt;</b> element.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<FileChooserOpenedEventArgs> FileChooserOpened => CreateCdpEventSource(PageDomainEvent.FileChooserOpened);
+    IEventSource<FileChooserOpenedEventArgs> FileChooserOpened { get; }
+
     /// <summary>
     /// Fired when frame has been attached to its parent.
     /// </summary>
@@ -1623,7 +1318,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Stack</b> - JavaScript stack trace of when frame was attached, only set if frame initiated from script.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<FrameAttachedEventArgs> FrameAttached => CreateCdpEventSource(PageDomainEvent.FrameAttached);
+    IEventSource<FrameAttachedEventArgs> FrameAttached { get; }
+
     /// <summary>
     /// Fired when frame no longer has a scheduled navigation.
     /// </summary>
@@ -1634,7 +1330,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Obsolete]
-    public IEventSource<FrameClearedScheduledNavigationEventArgs> FrameClearedScheduledNavigation => CreateCdpEventSource(PageDomainEvent.FrameClearedScheduledNavigation);
+    IEventSource<FrameClearedScheduledNavigationEventArgs> FrameClearedScheduledNavigation { get; }
+
     /// <summary>
     /// Fired when frame has been detached from its parent.
     /// </summary>
@@ -1645,7 +1342,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Reason</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<FrameDetachedEventArgs> FrameDetached => CreateCdpEventSource(PageDomainEvent.FrameDetached);
+    IEventSource<FrameDetachedEventArgs> FrameDetached { get; }
+
     /// <summary>
     /// Fired before frame subtree is detached. Emitted before any frame of the
     /// subtree is actually detached.
@@ -1657,7 +1355,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<FrameSubtreeWillBeDetachedEventArgs> FrameSubtreeWillBeDetached => CreateCdpEventSource(PageDomainEvent.FrameSubtreeWillBeDetached);
+    IEventSource<FrameSubtreeWillBeDetachedEventArgs> FrameSubtreeWillBeDetached { get; }
+
     /// <summary>
     /// Fired once navigation of the frame has completed. Frame is now associated with the new loader.
     /// </summary>
@@ -1668,7 +1367,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Type</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<FrameNavigatedEventArgs> FrameNavigated => CreateCdpEventSource(PageDomainEvent.FrameNavigated);
+    IEventSource<FrameNavigatedEventArgs> FrameNavigated { get; }
+
     /// <summary>
     /// Fired when opening document to write to.
     /// </summary>
@@ -1679,12 +1379,14 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DocumentOpenedEventArgs> DocumentOpened => CreateCdpEventSource(PageDomainEvent.DocumentOpened);
+    IEventSource<DocumentOpenedEventArgs> DocumentOpened { get; }
+
     /// <summary>
     /// 
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<FrameResizedEventArgs> FrameResized => CreateCdpEventSource(PageDomainEvent.FrameResized);
+    IEventSource<FrameResizedEventArgs> FrameResized { get; }
+
     /// <summary>
     /// Fired when a navigation starts. This event is fired for both
     /// renderer-initiated and browser-initiated navigations. For renderer-initiated
@@ -1704,7 +1406,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<FrameStartedNavigatingEventArgs> FrameStartedNavigating => CreateCdpEventSource(PageDomainEvent.FrameStartedNavigating);
+    IEventSource<FrameStartedNavigatingEventArgs> FrameStartedNavigating { get; }
+
     /// <summary>
     /// Fired when a renderer-initiated navigation is requested.
     /// Navigation may still be cancelled after the event is issued.
@@ -1719,7 +1422,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<FrameRequestedNavigationEventArgs> FrameRequestedNavigation => CreateCdpEventSource(PageDomainEvent.FrameRequestedNavigation);
+    IEventSource<FrameRequestedNavigationEventArgs> FrameRequestedNavigation { get; }
+
     /// <summary>
     /// Fired when frame schedules a potential navigation.
     /// </summary>
@@ -1733,7 +1437,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Obsolete]
-    public IEventSource<FrameScheduledNavigationEventArgs> FrameScheduledNavigation => CreateCdpEventSource(PageDomainEvent.FrameScheduledNavigation);
+    IEventSource<FrameScheduledNavigationEventArgs> FrameScheduledNavigation { get; }
+
     /// <summary>
     /// Fired when frame has started loading.
     /// </summary>
@@ -1744,7 +1449,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<FrameStartedLoadingEventArgs> FrameStartedLoading => CreateCdpEventSource(PageDomainEvent.FrameStartedLoading);
+    IEventSource<FrameStartedLoadingEventArgs> FrameStartedLoading { get; }
+
     /// <summary>
     /// Fired when frame has stopped loading.
     /// </summary>
@@ -1755,7 +1461,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<FrameStoppedLoadingEventArgs> FrameStoppedLoading => CreateCdpEventSource(PageDomainEvent.FrameStoppedLoading);
+    IEventSource<FrameStoppedLoadingEventArgs> FrameStoppedLoading { get; }
+
     /// <summary>
     /// Fired when page is about to start a download.
     /// Deprecated. Use Browser.downloadWillBegin instead.
@@ -1771,7 +1478,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin => CreateCdpEventSource(PageDomainEvent.DownloadWillBegin);
+    IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin { get; }
+
     /// <summary>
     /// Fired when download makes progress. Last call has |done| == true.
     /// Deprecated. Use Browser.downloadProgress instead.
@@ -1787,15 +1495,18 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public IEventSource<DownloadProgressEventArgs> DownloadProgress => CreateCdpEventSource(PageDomainEvent.DownloadProgress);
+    IEventSource<DownloadProgressEventArgs> DownloadProgress { get; }
+
     /// <summary>
     /// Fired when interstitial page was hidden
     /// </summary>
-    public IEventSource<InterstitialHiddenEventArgs> InterstitialHidden => CreateCdpEventSource(PageDomainEvent.InterstitialHidden);
+    IEventSource<InterstitialHiddenEventArgs> InterstitialHidden { get; }
+
     /// <summary>
     /// Fired when interstitial page was shown
     /// </summary>
-    public IEventSource<InterstitialShownEventArgs> InterstitialShown => CreateCdpEventSource(PageDomainEvent.InterstitialShown);
+    IEventSource<InterstitialShownEventArgs> InterstitialShown { get; }
+
     /// <summary>
     /// Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
     /// closed.
@@ -1808,7 +1519,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>UserInput</b> - User input in case of prompt.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<JavascriptDialogClosedEventArgs> JavascriptDialogClosed => CreateCdpEventSource(PageDomainEvent.JavascriptDialogClosed);
+    IEventSource<JavascriptDialogClosedEventArgs> JavascriptDialogClosed { get; }
+
     /// <summary>
     /// Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
     /// open.
@@ -1824,7 +1536,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>DefaultPrompt</b> - Default dialog prompt.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<JavascriptDialogOpeningEventArgs> JavascriptDialogOpening => CreateCdpEventSource(PageDomainEvent.JavascriptDialogOpening);
+    IEventSource<JavascriptDialogOpeningEventArgs> JavascriptDialogOpening { get; }
+
     /// <summary>
     /// Fired for lifecycle events (navigation, load, paint, etc) in the current
     /// target (including local frames).
@@ -1838,7 +1551,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Timestamp</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<LifecycleEventEventArgs> LifecycleEvent => CreateCdpEventSource(PageDomainEvent.LifecycleEvent);
+    IEventSource<LifecycleEventEventArgs> LifecycleEvent { get; }
+
     /// <summary>
     /// Fired for failed bfcache history navigations if BackForwardCache feature is enabled. Do
     /// not assume any ordering with the Page.frameNavigated event. This event is fired only for
@@ -1855,7 +1569,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<BackForwardCacheNotUsedEventArgs> BackForwardCacheNotUsed => CreateCdpEventSource(PageDomainEvent.BackForwardCacheNotUsed);
+    IEventSource<BackForwardCacheNotUsedEventArgs> BackForwardCacheNotUsed { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -1865,7 +1580,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Timestamp</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<LoadEventFiredEventArgs> LoadEventFired => CreateCdpEventSource(PageDomainEvent.LoadEventFired);
+    IEventSource<LoadEventFiredEventArgs> LoadEventFired { get; }
+
     /// <summary>
     /// Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation.
     /// </summary>
@@ -1878,7 +1594,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<NavigatedWithinDocumentEventArgs> NavigatedWithinDocument => CreateCdpEventSource(PageDomainEvent.NavigatedWithinDocument);
+    IEventSource<NavigatedWithinDocumentEventArgs> NavigatedWithinDocument { get; }
+
     /// <summary>
     /// Compressed image data requested by the <b>startScreencast</b>.
     /// </summary>
@@ -1891,7 +1608,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ScreencastFrameEventArgs> ScreencastFrame => CreateCdpEventSource(PageDomainEvent.ScreencastFrame);
+    IEventSource<ScreencastFrameEventArgs> ScreencastFrame { get; }
+
     /// <summary>
     /// Fired when the page with currently enabled screencast was shown or hidden `.
     /// </summary>
@@ -1902,7 +1620,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ScreencastVisibilityChangedEventArgs> ScreencastVisibilityChanged => CreateCdpEventSource(PageDomainEvent.ScreencastVisibilityChanged);
+    IEventSource<ScreencastVisibilityChangedEventArgs> ScreencastVisibilityChanged { get; }
+
     /// <summary>
     /// Fired when a new window is going to be opened, via window.open(), link click, form submission,
     /// etc.
@@ -1916,7 +1635,8 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>UserGesture</b> - Whether or not it was triggered by user gesture.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<WindowOpenEventArgs> WindowOpen => CreateCdpEventSource(PageDomainEvent.WindowOpen);
+    IEventSource<WindowOpenEventArgs> WindowOpen { get; }
+
     /// <summary>
     /// Issued for every compilation cache generated.
     /// </summary>
@@ -1927,6 +1647,534 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <item><description><b>Data</b> - Base64-encoded data (Encoded as a base64 string when passed over JSON)</description></item>
     /// </list>
     /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    IEventSource<CompilationCacheProducedEventArgs> CompilationCacheProduced { get; }
+
+}
+
+internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPage
+{
+    private static PageJsonSerializerContext JsonContext = PageJsonSerializerContext.Default;
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddScriptToEvaluateOnLoadCommandParameters(ScriptSource: scriptSource);
+        return await ExecuteCommandAsync(AddScriptToEvaluateOnLoadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddScriptToEvaluateOnLoadCommandParameters, AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadCommand = new("Page.addScriptToEvaluateOnLoad", JsonContext.AddScriptToEvaluateOnLoadCommandParameters, JsonContext.AddScriptToEvaluateOnLoadResult);
+
+    public async Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = default, bool? includeCommandLineAPI = default, bool? runImmediately = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddScriptToEvaluateOnNewDocumentCommandParameters(Source: source, WorldName: worldName, IncludeCommandLineAPI: includeCommandLineAPI, RunImmediately: runImmediately);
+        return await ExecuteCommandAsync(AddScriptToEvaluateOnNewDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddScriptToEvaluateOnNewDocumentCommandParameters, AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentCommand = new("Page.addScriptToEvaluateOnNewDocument", JsonContext.AddScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.AddScriptToEvaluateOnNewDocumentResult);
+
+    public async Task<BringToFrontResult> BringToFrontAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new BringToFrontCommandParameters();
+        return await ExecuteCommandAsync(BringToFrontCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<BringToFrontCommandParameters, BringToFrontResult> BringToFrontCommand = new("Page.bringToFront", JsonContext.BringToFrontCommandParameters, JsonContext.BringToFrontResult);
+
+    public async Task<CaptureScreenshotResult> CaptureScreenshotAsync(string? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CaptureScreenshotCommandParameters(Format: format, Quality: quality, Clip: clip, FromSurface: fromSurface, CaptureBeyondViewport: captureBeyondViewport, OptimizeForSpeed: optimizeForSpeed);
+        return await ExecuteCommandAsync(CaptureScreenshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CaptureScreenshotCommandParameters, CaptureScreenshotResult> CaptureScreenshotCommand = new("Page.captureScreenshot", JsonContext.CaptureScreenshotCommandParameters, JsonContext.CaptureScreenshotResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(string? format = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CaptureSnapshotCommandParameters(Format: format);
+        return await ExecuteCommandAsync(CaptureSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult> CaptureSnapshotCommand = new("Page.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearDeviceMetricsOverrideCommandParameters();
+        return await ExecuteCommandAsync(ClearDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearDeviceMetricsOverrideCommandParameters, ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideCommand = new("Page.clearDeviceMetricsOverride", JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearDeviceOrientationOverrideCommandParameters();
+        return await ExecuteCommandAsync(ClearDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearDeviceOrientationOverrideCommandParameters, ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideCommand = new("Page.clearDeviceOrientationOverride", JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult);
+
+    [global::System.Obsolete]
+    public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearGeolocationOverrideCommandParameters();
+        return await ExecuteCommandAsync(ClearGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearGeolocationOverrideCommandParameters, ClearGeolocationOverrideResult> ClearGeolocationOverrideCommand = new("Page.clearGeolocationOverride", JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult);
+
+    public async Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = default, bool? grantUniveralAccess = default, string? contentSecurityPolicy = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CreateIsolatedWorldCommandParameters(FrameId: frameId, WorldName: worldName, GrantUniveralAccess: grantUniveralAccess, ContentSecurityPolicy: contentSecurityPolicy);
+        return await ExecuteCommandAsync(CreateIsolatedWorldCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CreateIsolatedWorldCommandParameters, CreateIsolatedWorldResult> CreateIsolatedWorldCommand = new("Page.createIsolatedWorld", JsonContext.CreateIsolatedWorldCommandParameters, JsonContext.CreateIsolatedWorldResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteCookieCommandParameters(CookieName: cookieName, Url: url);
+        return await ExecuteCommandAsync(DeleteCookieCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteCookieCommandParameters, DeleteCookieResult> DeleteCookieCommand = new("Page.deleteCookie", JsonContext.DeleteCookieCommandParameters, JsonContext.DeleteCookieResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Page.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(EnableFileChooserOpenedEvent: enableFileChooserOpenedEvent);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Page.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAppManifestCommandParameters(ManifestId: manifestId);
+        return await ExecuteCommandAsync(GetAppManifestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAppManifestCommandParameters, GetAppManifestResult> GetAppManifestCommand = new("Page.getAppManifest", JsonContext.GetAppManifestCommandParameters, JsonContext.GetAppManifestResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetInstallabilityErrorsCommandParameters();
+        return await ExecuteCommandAsync(GetInstallabilityErrorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetInstallabilityErrorsCommandParameters, GetInstallabilityErrorsResult> GetInstallabilityErrorsCommand = new("Page.getInstallabilityErrors", JsonContext.GetInstallabilityErrorsCommandParameters, JsonContext.GetInstallabilityErrorsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetManifestIconsCommandParameters();
+        return await ExecuteCommandAsync(GetManifestIconsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetManifestIconsCommandParameters, GetManifestIconsResult> GetManifestIconsCommand = new("Page.getManifestIcons", JsonContext.GetManifestIconsCommandParameters, JsonContext.GetManifestIconsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetAppIdResult> GetAppIdAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAppIdCommandParameters();
+        return await ExecuteCommandAsync(GetAppIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAppIdCommandParameters, GetAppIdResult> GetAppIdCommand = new("Page.getAppId", JsonContext.GetAppIdCommandParameters, JsonContext.GetAppIdResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAdScriptAncestryCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetAdScriptAncestryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAdScriptAncestryCommandParameters, GetAdScriptAncestryResult> GetAdScriptAncestryCommand = new("Page.getAdScriptAncestry", JsonContext.GetAdScriptAncestryCommandParameters, JsonContext.GetAdScriptAncestryResult);
+
+    public async Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFrameTreeCommandParameters();
+        return await ExecuteCommandAsync(GetFrameTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFrameTreeCommandParameters, GetFrameTreeResult> GetFrameTreeCommand = new("Page.getFrameTree", JsonContext.GetFrameTreeCommandParameters, JsonContext.GetFrameTreeResult);
+
+    public async Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetLayoutMetricsCommandParameters();
+        return await ExecuteCommandAsync(GetLayoutMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetLayoutMetricsCommandParameters, GetLayoutMetricsResult> GetLayoutMetricsCommand = new("Page.getLayoutMetrics", JsonContext.GetLayoutMetricsCommandParameters, JsonContext.GetLayoutMetricsResult);
+
+    public async Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetNavigationHistoryCommandParameters();
+        return await ExecuteCommandAsync(GetNavigationHistoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetNavigationHistoryCommandParameters, GetNavigationHistoryResult> GetNavigationHistoryCommand = new("Page.getNavigationHistory", JsonContext.GetNavigationHistoryCommandParameters, JsonContext.GetNavigationHistoryResult);
+
+    public async Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResetNavigationHistoryCommandParameters();
+        return await ExecuteCommandAsync(ResetNavigationHistoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResetNavigationHistoryCommandParameters, ResetNavigationHistoryResult> ResetNavigationHistoryCommand = new("Page.resetNavigationHistory", JsonContext.ResetNavigationHistoryCommandParameters, JsonContext.ResetNavigationHistoryResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetResourceContentCommandParameters(FrameId: frameId, Url: url);
+        return await ExecuteCommandAsync(GetResourceContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetResourceContentCommandParameters, GetResourceContentResult> GetResourceContentCommand = new("Page.getResourceContent", JsonContext.GetResourceContentCommandParameters, JsonContext.GetResourceContentResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetResourceTreeCommandParameters();
+        return await ExecuteCommandAsync(GetResourceTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetResourceTreeCommandParameters, GetResourceTreeResult> GetResourceTreeCommand = new("Page.getResourceTree", JsonContext.GetResourceTreeCommandParameters, JsonContext.GetResourceTreeResult);
+
+    public async Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HandleJavaScriptDialogCommandParameters(Accept: accept, PromptText: promptText);
+        return await ExecuteCommandAsync(HandleJavaScriptDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HandleJavaScriptDialogCommandParameters, HandleJavaScriptDialogResult> HandleJavaScriptDialogCommand = new("Page.handleJavaScriptDialog", JsonContext.HandleJavaScriptDialogCommandParameters, JsonContext.HandleJavaScriptDialogResult);
+
+    public async Task<NavigateResult> NavigateAsync(string url, string? referrer = default, TransitionType? transitionType = default, FrameId? frameId = default, ReferrerPolicy? referrerPolicy = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new NavigateCommandParameters(Url: url, Referrer: referrer, TransitionType: transitionType, FrameId: frameId, ReferrerPolicy: referrerPolicy);
+        return await ExecuteCommandAsync(NavigateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<NavigateCommandParameters, NavigateResult> NavigateCommand = new("Page.navigate", JsonContext.NavigateCommandParameters, JsonContext.NavigateResult);
+
+    public async Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new NavigateToHistoryEntryCommandParameters(EntryId: entryId);
+        return await ExecuteCommandAsync(NavigateToHistoryEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<NavigateToHistoryEntryCommandParameters, NavigateToHistoryEntryResult> NavigateToHistoryEntryCommand = new("Page.navigateToHistoryEntry", JsonContext.NavigateToHistoryEntryCommandParameters, JsonContext.NavigateToHistoryEntryResult);
+
+    public async Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, string? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PrintToPDFCommandParameters(Landscape: landscape, DisplayHeaderFooter: displayHeaderFooter, PrintBackground: printBackground, Scale: scale, PaperWidth: paperWidth, PaperHeight: paperHeight, MarginTop: marginTop, MarginBottom: marginBottom, MarginLeft: marginLeft, MarginRight: marginRight, PageRanges: pageRanges, HeaderTemplate: headerTemplate, FooterTemplate: footerTemplate, PreferCSSPageSize: preferCSSPageSize, TransferMode: transferMode, GenerateTaggedPDF: generateTaggedPDF, GenerateDocumentOutline: generateDocumentOutline);
+        return await ExecuteCommandAsync(PrintToPDFCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PrintToPDFCommandParameters, PrintToPDFResult> PrintToPDFCommand = new("Page.printToPDF", JsonContext.PrintToPDFCommandParameters, JsonContext.PrintToPDFResult);
+
+    public async Task<ReloadResult> ReloadAsync(bool? ignoreCache = default, string? scriptToEvaluateOnLoad = default, Network.LoaderId? loaderId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReloadCommandParameters(IgnoreCache: ignoreCache, ScriptToEvaluateOnLoad: scriptToEvaluateOnLoad, LoaderId: loaderId);
+        return await ExecuteCommandAsync(ReloadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReloadCommandParameters, ReloadResult> ReloadCommand = new("Page.reload", JsonContext.ReloadCommandParameters, JsonContext.ReloadResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveScriptToEvaluateOnLoadCommandParameters(Identifier: identifier);
+        return await ExecuteCommandAsync(RemoveScriptToEvaluateOnLoadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveScriptToEvaluateOnLoadCommandParameters, RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadCommand = new("Page.removeScriptToEvaluateOnLoad", JsonContext.RemoveScriptToEvaluateOnLoadCommandParameters, JsonContext.RemoveScriptToEvaluateOnLoadResult);
+
+    public async Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveScriptToEvaluateOnNewDocumentCommandParameters(Identifier: identifier);
+        return await ExecuteCommandAsync(RemoveScriptToEvaluateOnNewDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveScriptToEvaluateOnNewDocumentCommandParameters, RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentCommand = new("Page.removeScriptToEvaluateOnNewDocument", JsonContext.RemoveScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.RemoveScriptToEvaluateOnNewDocumentResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ScreencastFrameAckCommandParameters(SessionId: sessionId);
+        return await ExecuteCommandAsync(ScreencastFrameAckCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ScreencastFrameAckCommandParameters, ScreencastFrameAckResult> ScreencastFrameAckCommand = new("Page.screencastFrameAck", JsonContext.ScreencastFrameAckCommandParameters, JsonContext.ScreencastFrameAckResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SearchInResourceCommandParameters(FrameId: frameId, Url: url, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
+        return await ExecuteCommandAsync(SearchInResourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SearchInResourceCommandParameters, SearchInResourceResult> SearchInResourceCommand = new("Page.searchInResource", JsonContext.SearchInResourceCommandParameters, JsonContext.SearchInResourceResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAdBlockingEnabledCommandParameters(Enabled: enabled);
+        return await ExecuteCommandAsync(SetAdBlockingEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAdBlockingEnabledCommandParameters, SetAdBlockingEnabledResult> SetAdBlockingEnabledCommand = new("Page.setAdBlockingEnabled", JsonContext.SetAdBlockingEnabledCommandParameters, JsonContext.SetAdBlockingEnabledResult);
+
+    public async Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBypassCSPCommandParameters(Enabled: enabled);
+        return await ExecuteCommandAsync(SetBypassCSPCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBypassCSPCommandParameters, SetBypassCSPResult> SetBypassCSPCommand = new("Page.setBypassCSP", JsonContext.SetBypassCSPCommandParameters, JsonContext.SetBypassCSPResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetPermissionsPolicyStateCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetPermissionsPolicyStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetPermissionsPolicyStateCommandParameters, GetPermissionsPolicyStateResult> GetPermissionsPolicyStateCommand = new("Page.getPermissionsPolicyState", JsonContext.GetPermissionsPolicyStateCommandParameters, JsonContext.GetPermissionsPolicyStateResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetOriginTrialsCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetOriginTrialsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetOriginTrialsCommandParameters, GetOriginTrialsResult> GetOriginTrialsCommand = new("Page.getOriginTrials", JsonContext.GetOriginTrialsCommandParameters, JsonContext.GetOriginTrialsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, Emulation.ScreenOrientation? screenOrientation = default, Viewport? viewport = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport);
+        return await ExecuteCommandAsync(SetDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideCommand = new("Page.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDeviceOrientationOverrideCommandParameters(Alpha: alpha, Beta: beta, Gamma: gamma);
+        return await ExecuteCommandAsync(SetDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDeviceOrientationOverrideCommandParameters, SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideCommand = new("Page.setDeviceOrientationOverride", JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetFontFamiliesCommandParameters(FontFamilies: fontFamilies, ForScripts: forScripts);
+        return await ExecuteCommandAsync(SetFontFamiliesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetFontFamiliesCommandParameters, SetFontFamiliesResult> SetFontFamiliesCommand = new("Page.setFontFamilies", JsonContext.SetFontFamiliesCommandParameters, JsonContext.SetFontFamiliesResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetFontSizesCommandParameters(FontSizes: fontSizes);
+        return await ExecuteCommandAsync(SetFontSizesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetFontSizesCommandParameters, SetFontSizesResult> SetFontSizesCommand = new("Page.setFontSizes", JsonContext.SetFontSizesCommandParameters, JsonContext.SetFontSizesResult);
+
+    public async Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDocumentContentCommandParameters(FrameId: frameId, Html: html);
+        return await ExecuteCommandAsync(SetDocumentContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDocumentContentCommandParameters, SetDocumentContentResult> SetDocumentContentCommand = new("Page.setDocumentContent", JsonContext.SetDocumentContentCommandParameters, JsonContext.SetDocumentContentResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, DownloadPath: downloadPath);
+        return await ExecuteCommandAsync(SetDownloadBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult> SetDownloadBehaviorCommand = new("Page.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
+
+    [global::System.Obsolete]
+    public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetGeolocationOverrideCommandParameters(Latitude: latitude, Longitude: longitude, Accuracy: accuracy);
+        return await ExecuteCommandAsync(SetGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetGeolocationOverrideCommandParameters, SetGeolocationOverrideResult> SetGeolocationOverrideCommand = new("Page.setGeolocationOverride", JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult);
+
+    public async Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetLifecycleEventsEnabledCommandParameters(Enabled: enabled);
+        return await ExecuteCommandAsync(SetLifecycleEventsEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetLifecycleEventsEnabledCommandParameters, SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledCommand = new("Page.setLifecycleEventsEnabled", JsonContext.SetLifecycleEventsEnabledCommandParameters, JsonContext.SetLifecycleEventsEnabledResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetTouchEmulationEnabledCommandParameters(Enabled: enabled, Configuration: configuration);
+        return await ExecuteCommandAsync(SetTouchEmulationEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetTouchEmulationEnabledCommandParameters, SetTouchEmulationEnabledResult> SetTouchEmulationEnabledCommand = new("Page.setTouchEmulationEnabled", JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartScreencastCommandParameters(Format: format, Quality: quality, MaxWidth: maxWidth, MaxHeight: maxHeight, EveryNthFrame: everyNthFrame);
+        return await ExecuteCommandAsync(StartScreencastCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartScreencastCommandParameters, StartScreencastResult> StartScreencastCommand = new("Page.startScreencast", JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult);
+
+    public async Task<StopLoadingResult> StopLoadingAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopLoadingCommandParameters();
+        return await ExecuteCommandAsync(StopLoadingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopLoadingCommandParameters, StopLoadingResult> StopLoadingCommand = new("Page.stopLoading", JsonContext.StopLoadingCommandParameters, JsonContext.StopLoadingResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CrashCommandParameters();
+        return await ExecuteCommandAsync(CrashCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CrashCommandParameters, CrashResult> CrashCommand = new("Page.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
+
+    public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CloseCommandParameters();
+        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("Page.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(string state, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetWebLifecycleStateCommandParameters(State: state);
+        return await ExecuteCommandAsync(SetWebLifecycleStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetWebLifecycleStateCommandParameters, SetWebLifecycleStateResult> SetWebLifecycleStateCommand = new("Page.setWebLifecycleState", JsonContext.SetWebLifecycleStateCommandParameters, JsonContext.SetWebLifecycleStateResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<StopScreencastResult> StopScreencastAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopScreencastCommandParameters();
+        return await ExecuteCommandAsync(StopScreencastCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopScreencastCommandParameters, StopScreencastResult> StopScreencastCommand = new("Page.stopScreencast", JsonContext.StopScreencastCommandParameters, JsonContext.StopScreencastResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ProduceCompilationCacheCommandParameters(Scripts: scripts);
+        return await ExecuteCommandAsync(ProduceCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ProduceCompilationCacheCommandParameters, ProduceCompilationCacheResult> ProduceCompilationCacheCommand = new("Page.produceCompilationCache", JsonContext.ProduceCompilationCacheCommandParameters, JsonContext.ProduceCompilationCacheResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddCompilationCacheCommandParameters(Url: url, Data: data);
+        return await ExecuteCommandAsync(AddCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddCompilationCacheCommandParameters, AddCompilationCacheResult> AddCompilationCacheCommand = new("Page.addCompilationCache", JsonContext.AddCompilationCacheCommandParameters, JsonContext.AddCompilationCacheResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearCompilationCacheCommandParameters();
+        return await ExecuteCommandAsync(ClearCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearCompilationCacheCommandParameters, ClearCompilationCacheResult> ClearCompilationCacheCommand = new("Page.clearCompilationCache", JsonContext.ClearCompilationCacheCommandParameters, JsonContext.ClearCompilationCacheResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetSPCTransactionModeCommandParameters(Mode: mode);
+        return await ExecuteCommandAsync(SetSPCTransactionModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetSPCTransactionModeCommandParameters, SetSPCTransactionModeResult> SetSPCTransactionModeCommand = new("Page.setSPCTransactionMode", JsonContext.SetSPCTransactionModeCommandParameters, JsonContext.SetSPCTransactionModeResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetRPHRegistrationModeCommandParameters(Mode: mode);
+        return await ExecuteCommandAsync(SetRPHRegistrationModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetRPHRegistrationModeCommandParameters, SetRPHRegistrationModeResult> SetRPHRegistrationModeCommand = new("Page.setRPHRegistrationMode", JsonContext.SetRPHRegistrationModeCommandParameters, JsonContext.SetRPHRegistrationModeResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GenerateTestReportCommandParameters(Message: message, Group: group);
+        return await ExecuteCommandAsync(GenerateTestReportCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GenerateTestReportCommandParameters, GenerateTestReportResult> GenerateTestReportCommand = new("Page.generateTestReport", JsonContext.GenerateTestReportCommandParameters, JsonContext.GenerateTestReportResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new WaitForDebuggerCommandParameters();
+        return await ExecuteCommandAsync(WaitForDebuggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<WaitForDebuggerCommandParameters, WaitForDebuggerResult> WaitForDebuggerCommand = new("Page.waitForDebugger", JsonContext.WaitForDebuggerCommandParameters, JsonContext.WaitForDebuggerResult);
+
+    public async Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInterceptFileChooserDialogCommandParameters(Enabled: enabled, Cancel: cancel);
+        return await ExecuteCommandAsync(SetInterceptFileChooserDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetInterceptFileChooserDialogCommandParameters, SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogCommand = new("Page.setInterceptFileChooserDialog", JsonContext.SetInterceptFileChooserDialogCommandParameters, JsonContext.SetInterceptFileChooserDialogResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPrerenderingAllowedCommandParameters(IsAllowed: isAllowed);
+        return await ExecuteCommandAsync(SetPrerenderingAllowedCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPrerenderingAllowedCommandParameters, SetPrerenderingAllowedResult> SetPrerenderingAllowedCommand = new("Page.setPrerenderingAllowed", JsonContext.SetPrerenderingAllowedCommandParameters, JsonContext.SetPrerenderingAllowedResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAnnotatedPageContentCommandParameters(IncludeActionableInformation: includeActionableInformation);
+        return await ExecuteCommandAsync(GetAnnotatedPageContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAnnotatedPageContentCommandParameters, GetAnnotatedPageContentResult> GetAnnotatedPageContentCommand = new("Page.getAnnotatedPageContent", JsonContext.GetAnnotatedPageContentCommandParameters, JsonContext.GetAnnotatedPageContentResult);
+
+    public IEventSource<DomContentEventFiredEventArgs> DomContentEventFired => CreateCdpEventSource(PageDomainEvent.DomContentEventFired);
+    public IEventSource<FileChooserOpenedEventArgs> FileChooserOpened => CreateCdpEventSource(PageDomainEvent.FileChooserOpened);
+    public IEventSource<FrameAttachedEventArgs> FrameAttached => CreateCdpEventSource(PageDomainEvent.FrameAttached);
+    [global::System.Obsolete]
+    public IEventSource<FrameClearedScheduledNavigationEventArgs> FrameClearedScheduledNavigation => CreateCdpEventSource(PageDomainEvent.FrameClearedScheduledNavigation);
+    public IEventSource<FrameDetachedEventArgs> FrameDetached => CreateCdpEventSource(PageDomainEvent.FrameDetached);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<FrameSubtreeWillBeDetachedEventArgs> FrameSubtreeWillBeDetached => CreateCdpEventSource(PageDomainEvent.FrameSubtreeWillBeDetached);
+    public IEventSource<FrameNavigatedEventArgs> FrameNavigated => CreateCdpEventSource(PageDomainEvent.FrameNavigated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DocumentOpenedEventArgs> DocumentOpened => CreateCdpEventSource(PageDomainEvent.DocumentOpened);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<FrameResizedEventArgs> FrameResized => CreateCdpEventSource(PageDomainEvent.FrameResized);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<FrameStartedNavigatingEventArgs> FrameStartedNavigating => CreateCdpEventSource(PageDomainEvent.FrameStartedNavigating);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<FrameRequestedNavigationEventArgs> FrameRequestedNavigation => CreateCdpEventSource(PageDomainEvent.FrameRequestedNavigation);
+    [global::System.Obsolete]
+    public IEventSource<FrameScheduledNavigationEventArgs> FrameScheduledNavigation => CreateCdpEventSource(PageDomainEvent.FrameScheduledNavigation);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<FrameStartedLoadingEventArgs> FrameStartedLoading => CreateCdpEventSource(PageDomainEvent.FrameStartedLoading);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<FrameStoppedLoadingEventArgs> FrameStoppedLoading => CreateCdpEventSource(PageDomainEvent.FrameStoppedLoading);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin => CreateCdpEventSource(PageDomainEvent.DownloadWillBegin);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public IEventSource<DownloadProgressEventArgs> DownloadProgress => CreateCdpEventSource(PageDomainEvent.DownloadProgress);
+    public IEventSource<InterstitialHiddenEventArgs> InterstitialHidden => CreateCdpEventSource(PageDomainEvent.InterstitialHidden);
+    public IEventSource<InterstitialShownEventArgs> InterstitialShown => CreateCdpEventSource(PageDomainEvent.InterstitialShown);
+    public IEventSource<JavascriptDialogClosedEventArgs> JavascriptDialogClosed => CreateCdpEventSource(PageDomainEvent.JavascriptDialogClosed);
+    public IEventSource<JavascriptDialogOpeningEventArgs> JavascriptDialogOpening => CreateCdpEventSource(PageDomainEvent.JavascriptDialogOpening);
+    public IEventSource<LifecycleEventEventArgs> LifecycleEvent => CreateCdpEventSource(PageDomainEvent.LifecycleEvent);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<BackForwardCacheNotUsedEventArgs> BackForwardCacheNotUsed => CreateCdpEventSource(PageDomainEvent.BackForwardCacheNotUsed);
+    public IEventSource<LoadEventFiredEventArgs> LoadEventFired => CreateCdpEventSource(PageDomainEvent.LoadEventFired);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<NavigatedWithinDocumentEventArgs> NavigatedWithinDocument => CreateCdpEventSource(PageDomainEvent.NavigatedWithinDocument);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ScreencastFrameEventArgs> ScreencastFrame => CreateCdpEventSource(PageDomainEvent.ScreencastFrame);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ScreencastVisibilityChangedEventArgs> ScreencastVisibilityChanged => CreateCdpEventSource(PageDomainEvent.ScreencastVisibilityChanged);
+    public IEventSource<WindowOpenEventArgs> WindowOpen => CreateCdpEventSource(PageDomainEvent.WindowOpen);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<CompilationCacheProducedEventArgs> CompilationCacheProduced => CreateCdpEventSource(PageDomainEvent.CompilationCacheProduced);
 }
@@ -5380,7 +5628,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class PageJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="PageDomain"/>.
+/// Provides static event descriptors for the <see cref="IPage"/>.
 /// </summary>
 public static class PageDomainEvent
 {

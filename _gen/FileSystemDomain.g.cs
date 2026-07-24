@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.FileSystem;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IFileSystem
 {
-    private static FileSystemJsonSerializerContext JsonContext = FileSystemJsonSerializerContext.Default;
-
     /// <summary>
     /// </summary>
     /// <param name="bucketFileSystemLocator">
@@ -25,6 +23,15 @@ public sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDirectoryResult"/>.
     /// </returns>
+    Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IFileSystem
+{
+    private static FileSystemJsonSerializerContext JsonContext = FileSystemJsonSerializerContext.Default;
+
     public async Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDirectoryCommandParameters(BucketFileSystemLocator: bucketFileSystemLocator);

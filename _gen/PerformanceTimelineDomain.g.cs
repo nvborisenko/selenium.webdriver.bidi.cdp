@@ -10,10 +10,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.PerformanceTimeline;
 /// https://w3c.github.io/performance-timeline/#dom-performanceobserver.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IPerformanceTimeline
 {
-    private static PerformanceTimelineJsonSerializerContext JsonContext = PerformanceTimelineJsonSerializerContext.Default;
-
     /// <summary>
     /// Previously buffered events would be reported before method returns.
     /// See also: timelineEventAdded
@@ -34,12 +32,7 @@ public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(EventTypes: eventTypes);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("PerformanceTimeline.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sent when a performance timeline event is added. See reportPerformanceTimeline method.
@@ -50,6 +43,22 @@ public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.
     /// <item><description><b>Event</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<TimelineEventAddedEventArgs> TimelineEventAdded { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPerformanceTimeline
+{
+    private static PerformanceTimelineJsonSerializerContext JsonContext = PerformanceTimelineJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(EventTypes: eventTypes);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("PerformanceTimeline.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
     public IEventSource<TimelineEventAddedEventArgs> TimelineEventAdded => CreateCdpEventSource(PerformanceTimelineDomainEvent.TimelineEventAdded);
 }
 
@@ -168,7 +177,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class PerformanceTimelineJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="PerformanceTimelineDomain"/>.
+/// Provides static event descriptors for the <see cref="IPerformanceTimeline"/>.
 /// </summary>
 public static class PerformanceTimelineDomainEvent
 {

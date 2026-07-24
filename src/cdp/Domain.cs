@@ -7,7 +7,7 @@ namespace Selenium.WebDriver.BiDi.Cdp;
 /// <summary>
 /// Base class for CDP domain implementations, providing infrastructure for executing commands and subscribing to events.
 /// </summary>
-public abstract class Domain(CdpModule cdp)
+internal abstract class Domain(CdpModule cdp)
 {
     /// <summary>
     /// Executes a CDP command with the specified parameters and returns the result.

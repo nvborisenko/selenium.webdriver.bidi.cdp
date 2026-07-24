@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Inspector;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class InspectorDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IInspector
 {
-    private static InspectorJsonSerializerContext JsonContext = InspectorJsonSerializerContext.Default;
-
     /// <summary>
     /// Disables inspector domain notifications.
     /// </summary>
@@ -24,12 +22,7 @@ public sealed class InspectorDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Inspector.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables inspector domain notifications.
@@ -43,12 +36,7 @@ public sealed class InspectorDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Inspector.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when remote debugging connection is about to be terminated. Contains detach reason.
@@ -59,18 +47,47 @@ public sealed class InspectorDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Reason</b> - The reason why connection has been terminated.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<DetachedEventArgs> Detached => CreateCdpEventSource(InspectorDomainEvent.Detached);
+    IEventSource<DetachedEventArgs> Detached { get; }
+
     /// <summary>
     /// Fired when debugging target has crashed
     /// </summary>
-    public IEventSource<TargetCrashedEventArgs> TargetCrashed => CreateCdpEventSource(InspectorDomainEvent.TargetCrashed);
+    IEventSource<TargetCrashedEventArgs> TargetCrashed { get; }
+
     /// <summary>
     /// Fired when debugging target has reloaded after crash
     /// </summary>
-    public IEventSource<TargetReloadedAfterCrashEventArgs> TargetReloadedAfterCrash => CreateCdpEventSource(InspectorDomainEvent.TargetReloadedAfterCrash);
+    IEventSource<TargetReloadedAfterCrashEventArgs> TargetReloadedAfterCrash { get; }
+
     /// <summary>
     /// Fired on worker targets when main worker script and any imported scripts have been evaluated.
     /// </summary>
+    IEventSource<WorkerScriptLoadedEventArgs> WorkerScriptLoaded { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class InspectorDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IInspector
+{
+    private static InspectorJsonSerializerContext JsonContext = InspectorJsonSerializerContext.Default;
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Inspector.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Inspector.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public IEventSource<DetachedEventArgs> Detached => CreateCdpEventSource(InspectorDomainEvent.Detached);
+    public IEventSource<TargetCrashedEventArgs> TargetCrashed => CreateCdpEventSource(InspectorDomainEvent.TargetCrashed);
+    public IEventSource<TargetReloadedAfterCrashEventArgs> TargetReloadedAfterCrash => CreateCdpEventSource(InspectorDomainEvent.TargetReloadedAfterCrash);
     public IEventSource<WorkerScriptLoadedEventArgs> WorkerScriptLoaded => CreateCdpEventSource(InspectorDomainEvent.WorkerScriptLoaded);
 }
 
@@ -125,7 +142,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class InspectorJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="InspectorDomain"/>.
+/// Provides static event descriptors for the <see cref="IInspector"/>.
 /// </summary>
 public static class InspectorDomainEvent
 {

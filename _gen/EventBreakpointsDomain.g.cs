@@ -11,10 +11,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.EventBreakpoints;
 /// reported through Debugger domain, similarly to regular breakpoints being hit.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IEventBreakpoints
 {
-    private static EventBreakpointsJsonSerializerContext JsonContext = EventBreakpointsJsonSerializerContext.Default;
-
     /// <summary>
     /// Sets breakpoint on particular native event.
     /// </summary>
@@ -30,12 +28,7 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInstrumentationBreakpointResult"/>.
     /// </returns>
-    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInstrumentationBreakpointCommandParameters(EventName: eventName);
-        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult> SetInstrumentationBreakpointCommand = new("EventBreakpoints.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
+    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes breakpoint on particular native event.
@@ -52,12 +45,7 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveInstrumentationBreakpointResult"/>.
     /// </returns>
-    public async Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RemoveInstrumentationBreakpointCommandParameters(EventName: eventName);
-        return await ExecuteCommandAsync(RemoveInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RemoveInstrumentationBreakpointCommandParameters, RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointCommand = new("EventBreakpoints.removeInstrumentationBreakpoint", JsonContext.RemoveInstrumentationBreakpointCommandParameters, JsonContext.RemoveInstrumentationBreakpointResult);
+    Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes all breakpoints
@@ -71,6 +59,29 @@ public sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.Web
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IEventBreakpoints
+{
+    private static EventBreakpointsJsonSerializerContext JsonContext = EventBreakpointsJsonSerializerContext.Default;
+
+    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInstrumentationBreakpointCommandParameters(EventName: eventName);
+        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult> SetInstrumentationBreakpointCommand = new("EventBreakpoints.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
+
+    public async Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveInstrumentationBreakpointCommandParameters(EventName: eventName);
+        return await ExecuteCommandAsync(RemoveInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveInstrumentationBreakpointCommandParameters, RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointCommand = new("EventBreakpoints.removeInstrumentationBreakpoint", JsonContext.RemoveInstrumentationBreakpointCommandParameters, JsonContext.RemoveInstrumentationBreakpointResult);
+
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();

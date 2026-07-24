@@ -14,10 +14,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.DOM;
 /// the nodes that were sent to the client. Note that <b>iframe</b> owner elements will return
 /// corresponding document elements as their child nodes.
 /// </summary>
-public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IDOM
 {
-    private static DOMJsonSerializerContext JsonContext = DOMJsonSerializerContext.Default;
-
     /// <summary>
     /// Collects class names for the node with given id and all of it's child nodes.
     /// </summary>
@@ -34,12 +32,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="CollectClassNamesFromSubtreeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CollectClassNamesFromSubtreeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(CollectClassNamesFromSubtreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CollectClassNamesFromSubtreeCommandParameters, CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeCommand = new("DOM.collectClassNamesFromSubtree", JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult);
+    Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a deep copy of the specified node and places it into the target container before the
@@ -65,12 +58,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="CopyToResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CopyToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
-        return await ExecuteCommandAsync(CopyToCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CopyToCommandParameters, CopyToResult> CopyToCommand = new("DOM.copyTo", JsonContext.CopyToCommandParameters, JsonContext.CopyToResult);
+    Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Describes node given its id, does not require domain to be enabled. Does not start tracking any
@@ -102,12 +90,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DescribeNodeResult"/>.
     /// </returns>
-    public async Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DescribeNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(DescribeNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DescribeNodeCommandParameters, DescribeNodeResult> DescribeNodeCommand = new("DOM.describeNode", JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult);
+    Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Scrolls the specified rect of the given node into view if not already visible.
@@ -136,12 +119,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ScrollIntoViewIfNeededResult"/>.
     /// </returns>
-    public async Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, Rect? rect = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ScrollIntoViewIfNeededCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Rect: rect);
-        return await ExecuteCommandAsync(ScrollIntoViewIfNeededCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ScrollIntoViewIfNeededCommandParameters, ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededCommand = new("DOM.scrollIntoViewIfNeeded", JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult);
+    Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, Rect? rect = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables DOM agent for the given page.
@@ -155,12 +133,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOM.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Discards search results from the session with the given id. <b>getSearchResults</b> should no longer
@@ -179,12 +152,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="DiscardSearchResultsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DiscardSearchResultsCommandParameters(SearchId: searchId);
-        return await ExecuteCommandAsync(DiscardSearchResultsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DiscardSearchResultsCommandParameters, DiscardSearchResultsResult> DiscardSearchResultsCommand = new("DOM.discardSearchResults", JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult);
+    Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables DOM agent for the given page.
@@ -201,12 +169,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(IncludeWhitespace: includeWhitespace);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOM.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Focuses the given element.
@@ -229,12 +192,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="FocusResult"/>.
     /// </returns>
-    public async Task<FocusResult> FocusAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new FocusCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(FocusCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<FocusCommandParameters, FocusResult> FocusCommand = new("DOM.focus", JsonContext.FocusCommandParameters, JsonContext.FocusResult);
+    Task<FocusResult> FocusAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns attributes for the specified node.
@@ -251,12 +209,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAttributesResult"/>.
     /// </returns>
-    public async Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAttributesCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetAttributesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAttributesCommandParameters, GetAttributesResult> GetAttributesCommand = new("DOM.getAttributes", JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult);
+    Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns boxes for the given node.
@@ -279,12 +232,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBoxModelResult"/>.
     /// </returns>
-    public async Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetBoxModelCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(GetBoxModelCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetBoxModelCommandParameters, GetBoxModelResult> GetBoxModelCommand = new("DOM.getBoxModel", JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult);
+    Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns quads that describe node position on the page. This method
@@ -309,12 +257,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetContentQuadsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetContentQuadsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(GetContentQuadsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetContentQuadsCommandParameters, GetContentQuadsResult> GetContentQuadsCommand = new("DOM.getContentQuads", JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult);
+    Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the root DOM node (and optionally the subtree) to the caller.
@@ -337,12 +280,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDocumentResult"/>.
     /// </returns>
-    public async Task<GetDocumentResult> GetDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetDocumentCommandParameters(Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(GetDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetDocumentCommandParameters, GetDocumentResult> GetDocumentCommand = new("DOM.getDocument", JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult);
+    Task<GetDocumentResult> GetDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the root DOM node (and optionally the subtree) to the caller.
@@ -367,12 +305,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetFlattenedDocumentResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetFlattenedDocumentCommandParameters(Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(GetFlattenedDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetFlattenedDocumentCommandParameters, GetFlattenedDocumentResult> GetFlattenedDocumentCommand = new("DOM.getFlattenedDocument", JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult);
+    Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds nodes with a given computed style in a subtree.
@@ -397,12 +330,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetNodesForSubtreeByStyleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetNodesForSubtreeByStyleCommandParameters(NodeId: nodeId, ComputedStyles: computedStyles, Pierce: pierce);
-        return await ExecuteCommandAsync(GetNodesForSubtreeByStyleCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetNodesForSubtreeByStyleCommandParameters, GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleCommand = new("DOM.getNodesForSubtreeByStyle", JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult);
+    Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is
@@ -429,12 +357,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetNodeForLocationResult"/>.
     /// </returns>
-    public async Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = default, bool? ignorePointerEventsNone = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetNodeForLocationCommandParameters(X: x, Y: y, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM, IgnorePointerEventsNone: ignorePointerEventsNone);
-        return await ExecuteCommandAsync(GetNodeForLocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetNodeForLocationCommandParameters, GetNodeForLocationResult> GetNodeForLocationCommand = new("DOM.getNodeForLocation", JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult);
+    Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = default, bool? ignorePointerEventsNone = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns node's HTML markup.
@@ -460,12 +383,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetOuterHTMLResult"/>.
     /// </returns>
-    public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? includeShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetOuterHTMLCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, IncludeShadowDOM: includeShadowDOM);
-        return await ExecuteCommandAsync(GetOuterHTMLCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetOuterHTMLCommandParameters, GetOuterHTMLResult> GetOuterHTMLCommand = new("DOM.getOuterHTML", JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult);
+    Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? includeShadowDOM = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the id of the nearest ancestor that is a relayout boundary.
@@ -483,12 +401,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetRelayoutBoundaryResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetRelayoutBoundaryCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetRelayoutBoundaryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetRelayoutBoundaryCommandParameters, GetRelayoutBoundaryResult> GetRelayoutBoundaryCommand = new("DOM.getRelayoutBoundary", JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult);
+    Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns search results from given <b>fromIndex</b> to given <b>toIndex</b> from the search with the given
@@ -513,12 +426,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetSearchResultsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetSearchResultsCommandParameters(SearchId: searchId, FromIndex: fromIndex, ToIndex: toIndex);
-        return await ExecuteCommandAsync(GetSearchResultsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetSearchResultsCommandParameters, GetSearchResultsResult> GetSearchResultsCommand = new("DOM.getSearchResults", JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult);
+    Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Hides any highlight.
@@ -532,12 +440,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HideHighlightResult"/>.
     /// </returns>
-    public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HideHighlightCommandParameters();
-        return await ExecuteCommandAsync(HideHighlightCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HideHighlightCommandParameters, HideHighlightResult> HideHighlightCommand = new("DOM.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
+    Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights DOM node.
@@ -551,12 +454,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightNodeResult"/>.
     /// </returns>
-    public async Task<HighlightNodeResult> HighlightNodeAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HighlightNodeCommandParameters();
-        return await ExecuteCommandAsync(HighlightNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult> HighlightNodeCommand = new("DOM.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
+    Task<HighlightNodeResult> HighlightNodeAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights given rectangle.
@@ -570,12 +468,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightRectResult"/>.
     /// </returns>
-    public async Task<HighlightRectResult> HighlightRectAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new HighlightRectCommandParameters();
-        return await ExecuteCommandAsync(HighlightRectCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<HighlightRectCommandParameters, HighlightRectResult> HighlightRectCommand = new("DOM.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
+    Task<HighlightRectResult> HighlightRectAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Marks last undoable state.
@@ -590,12 +483,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="MarkUndoableStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new MarkUndoableStateCommandParameters();
-        return await ExecuteCommandAsync(MarkUndoableStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<MarkUndoableStateCommandParameters, MarkUndoableStateResult> MarkUndoableStateCommand = new("DOM.markUndoableState", JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult);
+    Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Moves node into the new container, places it before the given anchor.
@@ -619,12 +507,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="MoveToResult"/>.
     /// </returns>
-    public async Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new MoveToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
-        return await ExecuteCommandAsync(MoveToCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<MoveToCommandParameters, MoveToResult> MoveToCommand = new("DOM.moveTo", JsonContext.MoveToCommandParameters, JsonContext.MoveToResult);
+    Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for a given string in the DOM tree. Use <b>getSearchResults</b> to access search results or
@@ -646,12 +529,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="PerformSearchResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new PerformSearchCommandParameters(Query: query, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM);
-        return await ExecuteCommandAsync(PerformSearchCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<PerformSearchCommandParameters, PerformSearchResult> PerformSearchCommand = new("DOM.performSearch", JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult);
+    Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that the node is sent to the caller given its path. // FIXME, use XPath
@@ -669,12 +547,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="PushNodeByPathToFrontendResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new PushNodeByPathToFrontendCommandParameters(Path: path);
-        return await ExecuteCommandAsync(PushNodeByPathToFrontendCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<PushNodeByPathToFrontendCommandParameters, PushNodeByPathToFrontendResult> PushNodeByPathToFrontendCommand = new("DOM.pushNodeByPathToFrontend", JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult);
+    Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that a batch of nodes is sent to the caller given their backend node ids.
@@ -692,12 +565,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="PushNodesByBackendIdsToFrontendResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new PushNodesByBackendIdsToFrontendCommandParameters(BackendNodeIds: backendNodeIds);
-        return await ExecuteCommandAsync(PushNodesByBackendIdsToFrontendCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<PushNodesByBackendIdsToFrontendCommandParameters, PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendCommand = new("DOM.pushNodesByBackendIdsToFrontend", JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult);
+    Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Executes <b>querySelector</b> on a given node.
@@ -717,12 +585,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QuerySelectorResult"/>.
     /// </returns>
-    public async Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new QuerySelectorCommandParameters(NodeId: nodeId, Selector: selector);
-        return await ExecuteCommandAsync(QuerySelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<QuerySelectorCommandParameters, QuerySelectorResult> QuerySelectorCommand = new("DOM.querySelector", JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult);
+    Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Executes <b>querySelectorAll</b> on a given node.
@@ -742,12 +605,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QuerySelectorAllResult"/>.
     /// </returns>
-    public async Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new QuerySelectorAllCommandParameters(NodeId: nodeId, Selector: selector);
-        return await ExecuteCommandAsync(QuerySelectorAllCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<QuerySelectorAllCommandParameters, QuerySelectorAllResult> QuerySelectorAllCommand = new("DOM.querySelectorAll", JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult);
+    Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns NodeIds of current top layer elements.
@@ -764,12 +622,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetTopLayerElementsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetTopLayerElementsCommandParameters();
-        return await ExecuteCommandAsync(GetTopLayerElementsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetTopLayerElementsCommandParameters, GetTopLayerElementsResult> GetTopLayerElementsCommand = new("DOM.getTopLayerElements", JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult);
+    Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the NodeId of the matched element according to certain relations.
@@ -790,12 +643,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetElementByRelationResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetElementByRelationCommandParameters(NodeId: nodeId, Relation: relation);
-        return await ExecuteCommandAsync(GetElementByRelationCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetElementByRelationCommandParameters, GetElementByRelationResult> GetElementByRelationCommand = new("DOM.getElementByRelation", JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult);
+    Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Re-does the last undone action.
@@ -810,12 +658,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="RedoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<RedoResult> RedoAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RedoCommandParameters();
-        return await ExecuteCommandAsync(RedoCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RedoCommandParameters, RedoResult> RedoCommand = new("DOM.redo", JsonContext.RedoCommandParameters, JsonContext.RedoResult);
+    Task<RedoResult> RedoAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes attribute with given name from an element with given id.
@@ -835,12 +678,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveAttributeResult"/>.
     /// </returns>
-    public async Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RemoveAttributeCommandParameters(NodeId: nodeId, Name: name);
-        return await ExecuteCommandAsync(RemoveAttributeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RemoveAttributeCommandParameters, RemoveAttributeResult> RemoveAttributeCommand = new("DOM.removeAttribute", JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult);
+    Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes node with given id.
@@ -857,12 +695,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveNodeResult"/>.
     /// </returns>
-    public async Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RemoveNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(RemoveNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RemoveNodeCommandParameters, RemoveNodeResult> RemoveNodeCommand = new("DOM.removeNode", JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult);
+    Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that children of the node with given id are returned to the caller in form of
@@ -889,12 +722,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestChildNodesResult"/>.
     /// </returns>
-    public async Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RequestChildNodesCommandParameters(NodeId: nodeId, Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(RequestChildNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RequestChildNodesCommandParameters, RequestChildNodesResult> RequestChildNodesCommand = new("DOM.requestChildNodes", JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult);
+    Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that the node is sent to the caller given the JavaScript node object reference. All
@@ -913,12 +741,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestNodeResult"/>.
     /// </returns>
-    public async Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RequestNodeCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(RequestNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RequestNodeCommandParameters, RequestNodeResult> RequestNodeCommand = new("DOM.requestNode", JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult);
+    Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resolves the JavaScript node object for a given NodeId or BackendNodeId.
@@ -944,12 +767,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveNodeResult"/>.
     /// </returns>
-    public async Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, string? objectGroup = default, Runtime.ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResolveNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectGroup: objectGroup, ExecutionContextId: executionContextId);
-        return await ExecuteCommandAsync(ResolveNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResolveNodeCommandParameters, ResolveNodeResult> ResolveNodeCommand = new("DOM.resolveNode", JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult);
+    Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, string? objectGroup = default, Runtime.ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets attribute for an element with given id.
@@ -972,12 +790,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAttributeValueResult"/>.
     /// </returns>
-    public async Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAttributeValueCommandParameters(NodeId: nodeId, Name: name, Value: value);
-        return await ExecuteCommandAsync(SetAttributeValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAttributeValueCommandParameters, SetAttributeValueResult> SetAttributeValueCommand = new("DOM.setAttributeValue", JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult);
+    Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets attributes on element with given id. This method is useful when user edits some existing
@@ -1002,12 +815,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAttributesAsTextResult"/>.
     /// </returns>
-    public async Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAttributesAsTextCommandParameters(NodeId: nodeId, Text: text, Name: name);
-        return await ExecuteCommandAsync(SetAttributesAsTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAttributesAsTextCommandParameters, SetAttributesAsTextResult> SetAttributesAsTextCommand = new("DOM.setAttributesAsText", JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult);
+    Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets files for the given file input element.
@@ -1033,12 +841,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetFileInputFilesResult"/>.
     /// </returns>
-    public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetFileInputFilesCommandParameters(Files: files, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(SetFileInputFilesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetFileInputFilesCommandParameters, SetFileInputFilesResult> SetFileInputFilesCommand = new("DOM.setFileInputFiles", JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult);
+    Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets if stack traces should be captured for Nodes. See <b>Node.getNodeStackTraces</b>. Default is disabled.
@@ -1056,12 +859,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="SetNodeStackTracesEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetNodeStackTracesEnabledCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(SetNodeStackTracesEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetNodeStackTracesEnabledCommandParameters, SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledCommand = new("DOM.setNodeStackTracesEnabled", JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult);
+    Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets stack traces associated with a Node. As of now, only provides stack trace for Node creation.
@@ -1079,12 +877,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetNodeStackTracesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetNodeStackTracesCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetNodeStackTracesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetNodeStackTracesCommandParameters, GetNodeStackTracesResult> GetNodeStackTracesCommand = new("DOM.getNodeStackTraces", JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult);
+    Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns file information for the given
@@ -1103,12 +896,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetFileInfoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetFileInfoCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(GetFileInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetFileInfoCommandParameters, GetFileInfoResult> GetFileInfoCommand = new("DOM.getFileInfo", JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult);
+    Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns list of detached nodes
@@ -1123,12 +911,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetDetachedDomNodesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetDetachedDomNodesCommandParameters();
-        return await ExecuteCommandAsync(GetDetachedDomNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetDetachedDomNodesCommandParameters, GetDetachedDomNodesResult> GetDetachedDomNodesCommand = new("DOM.getDetachedDomNodes", JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult);
+    Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables console to refer to the node with given id via $x (see Command Line API for more details
@@ -1147,12 +930,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="SetInspectedNodeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInspectedNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(SetInspectedNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInspectedNodeCommandParameters, SetInspectedNodeResult> SetInspectedNodeCommand = new("DOM.setInspectedNode", JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult);
+    Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets node name for a node with given id.
@@ -1172,12 +950,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetNodeNameResult"/>.
     /// </returns>
-    public async Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetNodeNameCommandParameters(NodeId: nodeId, Name: name);
-        return await ExecuteCommandAsync(SetNodeNameCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetNodeNameCommandParameters, SetNodeNameResult> SetNodeNameCommand = new("DOM.setNodeName", JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult);
+    Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets node value for a node with given id.
@@ -1197,12 +970,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetNodeValueResult"/>.
     /// </returns>
-    public async Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetNodeValueCommandParameters(NodeId: nodeId, Value: value);
-        return await ExecuteCommandAsync(SetNodeValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetNodeValueCommandParameters, SetNodeValueResult> SetNodeValueCommand = new("DOM.setNodeValue", JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult);
+    Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets node HTML markup, returns new node id.
@@ -1222,12 +990,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetOuterHTMLResult"/>.
     /// </returns>
-    public async Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetOuterHTMLCommandParameters(NodeId: nodeId, OuterHTML: outerHTML);
-        return await ExecuteCommandAsync(SetOuterHTMLCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetOuterHTMLCommandParameters, SetOuterHTMLResult> SetOuterHTMLCommand = new("DOM.setOuterHTML", JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult);
+    Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Undoes the last performed action.
@@ -1242,12 +1005,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="UndoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<UndoResult> UndoAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new UndoCommandParameters();
-        return await ExecuteCommandAsync(UndoCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<UndoCommandParameters, UndoResult> UndoCommand = new("DOM.undo", JsonContext.UndoCommandParameters, JsonContext.UndoResult);
+    Task<UndoResult> UndoAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns iframe node that owns iframe with the given domain.
@@ -1264,12 +1022,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetFrameOwnerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetFrameOwnerCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetFrameOwnerCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetFrameOwnerCommandParameters, GetFrameOwnerResult> GetFrameOwnerCommand = new("DOM.getFrameOwner", JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult);
+    Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the query container of the given node based on container query
@@ -1300,12 +1053,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetContainerForNodeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = default, PhysicalAxes? physicalAxes = default, LogicalAxes? logicalAxes = default, bool? queriesScrollState = default, bool? queriesAnchored = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: containerName, PhysicalAxes: physicalAxes, LogicalAxes: logicalAxes, QueriesScrollState: queriesScrollState, QueriesAnchored: queriesAnchored);
-        return await ExecuteCommandAsync(GetContainerForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetContainerForNodeCommandParameters, GetContainerForNodeResult> GetContainerForNodeCommand = new("DOM.getContainerForNode", JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult);
+    Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = default, PhysicalAxes? physicalAxes = default, LogicalAxes? logicalAxes = default, bool? queriesScrollState = default, bool? queriesAnchored = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the descendants of a container query container that have
@@ -1324,12 +1072,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetQueryingDescendantsForContainerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetQueryingDescendantsForContainerCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetQueryingDescendantsForContainerCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetQueryingDescendantsForContainerCommandParameters, GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerCommand = new("DOM.getQueryingDescendantsForContainer", JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult);
+    Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the target anchor element of the given anchor query according to
@@ -1354,12 +1097,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetAnchorElementResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetAnchorElementCommandParameters(NodeId: nodeId, AnchorSpecifier: anchorSpecifier);
-        return await ExecuteCommandAsync(GetAnchorElementCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetAnchorElementCommandParameters, GetAnchorElementResult> GetAnchorElementCommand = new("DOM.getAnchorElement", JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult);
+    Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// When enabling, this API force-opens the popover identified by nodeId
@@ -1388,12 +1126,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="ForceShowPopoverResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ForceShowPopoverCommandParameters(NodeId: nodeId, Enable: enable, InvokerNodeId: invokerNodeId);
-        return await ExecuteCommandAsync(ForceShowPopoverCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ForceShowPopoverCommandParameters, ForceShowPopoverResult> ForceShowPopoverCommand = new("DOM.forceShowPopover", JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult);
+    Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when <b>Element</b>'s attribute is modified.
@@ -1406,7 +1139,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>Value</b> - Attribute value.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);
+    IEventSource<AttributeModifiedEventArgs> AttributeModified { get; }
+
     /// <summary>
     /// Fired when <b>Element</b>'s adoptedStyleSheets are modified.
     /// </summary>
@@ -1418,7 +1152,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<AdoptedStyleSheetsModifiedEventArgs> AdoptedStyleSheetsModified => CreateCdpEventSource(DOMDomainEvent.AdoptedStyleSheetsModified);
+    IEventSource<AdoptedStyleSheetsModifiedEventArgs> AdoptedStyleSheetsModified { get; }
+
     /// <summary>
     /// Fired when <b>Element</b>'s attribute is removed.
     /// </summary>
@@ -1429,7 +1164,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>Name</b> - A ttribute name.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AttributeRemovedEventArgs> AttributeRemoved => CreateCdpEventSource(DOMDomainEvent.AttributeRemoved);
+    IEventSource<AttributeRemovedEventArgs> AttributeRemoved { get; }
+
     /// <summary>
     /// Mirrors <b>DOMCharacterDataModified</b> event.
     /// </summary>
@@ -1440,7 +1176,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>CharacterData</b> - New text value.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<CharacterDataModifiedEventArgs> CharacterDataModified => CreateCdpEventSource(DOMDomainEvent.CharacterDataModified);
+    IEventSource<CharacterDataModifiedEventArgs> CharacterDataModified { get; }
+
     /// <summary>
     /// Fired when <b>Container</b>'s child node count has changed.
     /// </summary>
@@ -1451,7 +1188,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>ChildNodeCount</b> - New node count.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ChildNodeCountUpdatedEventArgs> ChildNodeCountUpdated => CreateCdpEventSource(DOMDomainEvent.ChildNodeCountUpdated);
+    IEventSource<ChildNodeCountUpdatedEventArgs> ChildNodeCountUpdated { get; }
+
     /// <summary>
     /// Mirrors <b>DOMNodeInserted</b> event.
     /// </summary>
@@ -1463,7 +1201,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>Node</b> - Inserted node data.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ChildNodeInsertedEventArgs> ChildNodeInserted => CreateCdpEventSource(DOMDomainEvent.ChildNodeInserted);
+    IEventSource<ChildNodeInsertedEventArgs> ChildNodeInserted { get; }
+
     /// <summary>
     /// Mirrors <b>DOMNodeRemoved</b> event.
     /// </summary>
@@ -1474,7 +1213,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>NodeId</b> - Id of the node that has been removed.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ChildNodeRemovedEventArgs> ChildNodeRemoved => CreateCdpEventSource(DOMDomainEvent.ChildNodeRemoved);
+    IEventSource<ChildNodeRemovedEventArgs> ChildNodeRemoved { get; }
+
     /// <summary>
     /// Called when distribution is changed.
     /// </summary>
@@ -1486,11 +1226,13 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DistributedNodesUpdatedEventArgs> DistributedNodesUpdated => CreateCdpEventSource(DOMDomainEvent.DistributedNodesUpdated);
+    IEventSource<DistributedNodesUpdatedEventArgs> DistributedNodesUpdated { get; }
+
     /// <summary>
     /// Fired when <b>Document</b> has been totally updated. Node ids are no longer valid.
     /// </summary>
-    public IEventSource<DocumentUpdatedEventArgs> DocumentUpdated => CreateCdpEventSource(DOMDomainEvent.DocumentUpdated);
+    IEventSource<DocumentUpdatedEventArgs> DocumentUpdated { get; }
+
     /// <summary>
     /// Fired when <b>Element</b>'s inline style is modified via a CSS property modification.
     /// </summary>
@@ -1501,7 +1243,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<InlineStyleInvalidatedEventArgs> InlineStyleInvalidated => CreateCdpEventSource(DOMDomainEvent.InlineStyleInvalidated);
+    IEventSource<InlineStyleInvalidatedEventArgs> InlineStyleInvalidated { get; }
+
     /// <summary>
     /// Called when a pseudo element is added to an element.
     /// </summary>
@@ -1513,12 +1256,14 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<PseudoElementAddedEventArgs> PseudoElementAdded => CreateCdpEventSource(DOMDomainEvent.PseudoElementAdded);
+    IEventSource<PseudoElementAddedEventArgs> PseudoElementAdded { get; }
+
     /// <summary>
     /// Called when top layer elements are changed.
     /// </summary>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<TopLayerElementsUpdatedEventArgs> TopLayerElementsUpdated => CreateCdpEventSource(DOMDomainEvent.TopLayerElementsUpdated);
+    IEventSource<TopLayerElementsUpdatedEventArgs> TopLayerElementsUpdated { get; }
+
     /// <summary>
     /// Fired when a node's scrollability state changes.
     /// </summary>
@@ -1530,7 +1275,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ScrollableFlagUpdatedEventArgs> ScrollableFlagUpdated => CreateCdpEventSource(DOMDomainEvent.ScrollableFlagUpdated);
+    IEventSource<ScrollableFlagUpdatedEventArgs> ScrollableFlagUpdated { get; }
+
     /// <summary>
     /// Fired when a node's ad related state changes.
     /// </summary>
@@ -1542,7 +1288,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<AdRelatedStateUpdatedEventArgs> AdRelatedStateUpdated => CreateCdpEventSource(DOMDomainEvent.AdRelatedStateUpdated);
+    IEventSource<AdRelatedStateUpdatedEventArgs> AdRelatedStateUpdated { get; }
+
     /// <summary>
     /// Fired when a node's starting styles changes.
     /// </summary>
@@ -1554,7 +1301,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<AffectedByStartingStylesFlagUpdatedEventArgs> AffectedByStartingStylesFlagUpdated => CreateCdpEventSource(DOMDomainEvent.AffectedByStartingStylesFlagUpdated);
+    IEventSource<AffectedByStartingStylesFlagUpdatedEventArgs> AffectedByStartingStylesFlagUpdated { get; }
+
     /// <summary>
     /// Called when a pseudo element is removed from an element.
     /// </summary>
@@ -1566,7 +1314,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<PseudoElementRemovedEventArgs> PseudoElementRemoved => CreateCdpEventSource(DOMDomainEvent.PseudoElementRemoved);
+    IEventSource<PseudoElementRemovedEventArgs> PseudoElementRemoved { get; }
+
     /// <summary>
     /// Fired when backend wants to provide client with the missing DOM structure. This happens upon
     /// most of the calls requesting node ids.
@@ -1578,7 +1327,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>Nodes</b> - Child nodes array.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<SetChildNodesEventArgs> SetChildNodes => CreateCdpEventSource(DOMDomainEvent.SetChildNodes);
+    IEventSource<SetChildNodesEventArgs> SetChildNodes { get; }
+
     /// <summary>
     /// Called when shadow root is popped from the element.
     /// </summary>
@@ -1590,7 +1340,8 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<ShadowRootPoppedEventArgs> ShadowRootPopped => CreateCdpEventSource(DOMDomainEvent.ShadowRootPopped);
+    IEventSource<ShadowRootPoppedEventArgs> ShadowRootPopped { get; }
+
     /// <summary>
     /// Called when shadow root is pushed into the element.
     /// </summary>
@@ -1601,6 +1352,440 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <item><description><b>Root</b> - Shadow root.</description></item>
     /// </list>
     /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    IEventSource<ShadowRootPushedEventArgs> ShadowRootPushed { get; }
+
+}
+
+internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDOM
+{
+    private static DOMJsonSerializerContext JsonContext = DOMJsonSerializerContext.Default;
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CollectClassNamesFromSubtreeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(CollectClassNamesFromSubtreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CollectClassNamesFromSubtreeCommandParameters, CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeCommand = new("DOM.collectClassNamesFromSubtree", JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CopyToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
+        return await ExecuteCommandAsync(CopyToCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CopyToCommandParameters, CopyToResult> CopyToCommand = new("DOM.copyTo", JsonContext.CopyToCommandParameters, JsonContext.CopyToResult);
+
+    public async Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DescribeNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Depth: depth, Pierce: pierce);
+        return await ExecuteCommandAsync(DescribeNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DescribeNodeCommandParameters, DescribeNodeResult> DescribeNodeCommand = new("DOM.describeNode", JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult);
+
+    public async Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, Rect? rect = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ScrollIntoViewIfNeededCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Rect: rect);
+        return await ExecuteCommandAsync(ScrollIntoViewIfNeededCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ScrollIntoViewIfNeededCommandParameters, ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededCommand = new("DOM.scrollIntoViewIfNeeded", JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOM.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DiscardSearchResultsCommandParameters(SearchId: searchId);
+        return await ExecuteCommandAsync(DiscardSearchResultsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DiscardSearchResultsCommandParameters, DiscardSearchResultsResult> DiscardSearchResultsCommand = new("DOM.discardSearchResults", JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult);
+
+    public async Task<EnableResult> EnableAsync(string? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(IncludeWhitespace: includeWhitespace);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOM.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<FocusResult> FocusAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new FocusCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
+        return await ExecuteCommandAsync(FocusCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<FocusCommandParameters, FocusResult> FocusCommand = new("DOM.focus", JsonContext.FocusCommandParameters, JsonContext.FocusResult);
+
+    public async Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAttributesCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetAttributesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAttributesCommandParameters, GetAttributesResult> GetAttributesCommand = new("DOM.getAttributes", JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult);
+
+    public async Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetBoxModelCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
+        return await ExecuteCommandAsync(GetBoxModelCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetBoxModelCommandParameters, GetBoxModelResult> GetBoxModelCommand = new("DOM.getBoxModel", JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetContentQuadsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
+        return await ExecuteCommandAsync(GetContentQuadsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetContentQuadsCommandParameters, GetContentQuadsResult> GetContentQuadsCommand = new("DOM.getContentQuads", JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult);
+
+    public async Task<GetDocumentResult> GetDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDocumentCommandParameters(Depth: depth, Pierce: pierce);
+        return await ExecuteCommandAsync(GetDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDocumentCommandParameters, GetDocumentResult> GetDocumentCommand = new("DOM.getDocument", JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult);
+
+    [global::System.Obsolete]
+    public async Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFlattenedDocumentCommandParameters(Depth: depth, Pierce: pierce);
+        return await ExecuteCommandAsync(GetFlattenedDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFlattenedDocumentCommandParameters, GetFlattenedDocumentResult> GetFlattenedDocumentCommand = new("DOM.getFlattenedDocument", JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetNodesForSubtreeByStyleCommandParameters(NodeId: nodeId, ComputedStyles: computedStyles, Pierce: pierce);
+        return await ExecuteCommandAsync(GetNodesForSubtreeByStyleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetNodesForSubtreeByStyleCommandParameters, GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleCommand = new("DOM.getNodesForSubtreeByStyle", JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult);
+
+    public async Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = default, bool? ignorePointerEventsNone = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetNodeForLocationCommandParameters(X: x, Y: y, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM, IgnorePointerEventsNone: ignorePointerEventsNone);
+        return await ExecuteCommandAsync(GetNodeForLocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetNodeForLocationCommandParameters, GetNodeForLocationResult> GetNodeForLocationCommand = new("DOM.getNodeForLocation", JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult);
+
+    public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? includeShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetOuterHTMLCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, IncludeShadowDOM: includeShadowDOM);
+        return await ExecuteCommandAsync(GetOuterHTMLCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetOuterHTMLCommandParameters, GetOuterHTMLResult> GetOuterHTMLCommand = new("DOM.getOuterHTML", JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetRelayoutBoundaryCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetRelayoutBoundaryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetRelayoutBoundaryCommandParameters, GetRelayoutBoundaryResult> GetRelayoutBoundaryCommand = new("DOM.getRelayoutBoundary", JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSearchResultsCommandParameters(SearchId: searchId, FromIndex: fromIndex, ToIndex: toIndex);
+        return await ExecuteCommandAsync(GetSearchResultsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetSearchResultsCommandParameters, GetSearchResultsResult> GetSearchResultsCommand = new("DOM.getSearchResults", JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult);
+
+    public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HideHighlightCommandParameters();
+        return await ExecuteCommandAsync(HideHighlightCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HideHighlightCommandParameters, HideHighlightResult> HideHighlightCommand = new("DOM.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
+
+    public async Task<HighlightNodeResult> HighlightNodeAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightNodeCommandParameters();
+        return await ExecuteCommandAsync(HighlightNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult> HighlightNodeCommand = new("DOM.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
+
+    public async Task<HighlightRectResult> HighlightRectAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new HighlightRectCommandParameters();
+        return await ExecuteCommandAsync(HighlightRectCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<HighlightRectCommandParameters, HighlightRectResult> HighlightRectCommand = new("DOM.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new MarkUndoableStateCommandParameters();
+        return await ExecuteCommandAsync(MarkUndoableStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<MarkUndoableStateCommandParameters, MarkUndoableStateResult> MarkUndoableStateCommand = new("DOM.markUndoableState", JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult);
+
+    public async Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new MoveToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
+        return await ExecuteCommandAsync(MoveToCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<MoveToCommandParameters, MoveToResult> MoveToCommand = new("DOM.moveTo", JsonContext.MoveToCommandParameters, JsonContext.MoveToResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PerformSearchCommandParameters(Query: query, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM);
+        return await ExecuteCommandAsync(PerformSearchCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PerformSearchCommandParameters, PerformSearchResult> PerformSearchCommand = new("DOM.performSearch", JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PushNodeByPathToFrontendCommandParameters(Path: path);
+        return await ExecuteCommandAsync(PushNodeByPathToFrontendCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PushNodeByPathToFrontendCommandParameters, PushNodeByPathToFrontendResult> PushNodeByPathToFrontendCommand = new("DOM.pushNodeByPathToFrontend", JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PushNodesByBackendIdsToFrontendCommandParameters(BackendNodeIds: backendNodeIds);
+        return await ExecuteCommandAsync(PushNodesByBackendIdsToFrontendCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PushNodesByBackendIdsToFrontendCommandParameters, PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendCommand = new("DOM.pushNodesByBackendIdsToFrontend", JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult);
+
+    public async Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new QuerySelectorCommandParameters(NodeId: nodeId, Selector: selector);
+        return await ExecuteCommandAsync(QuerySelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<QuerySelectorCommandParameters, QuerySelectorResult> QuerySelectorCommand = new("DOM.querySelector", JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult);
+
+    public async Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new QuerySelectorAllCommandParameters(NodeId: nodeId, Selector: selector);
+        return await ExecuteCommandAsync(QuerySelectorAllCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<QuerySelectorAllCommandParameters, QuerySelectorAllResult> QuerySelectorAllCommand = new("DOM.querySelectorAll", JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetTopLayerElementsCommandParameters();
+        return await ExecuteCommandAsync(GetTopLayerElementsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetTopLayerElementsCommandParameters, GetTopLayerElementsResult> GetTopLayerElementsCommand = new("DOM.getTopLayerElements", JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetElementByRelationCommandParameters(NodeId: nodeId, Relation: relation);
+        return await ExecuteCommandAsync(GetElementByRelationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetElementByRelationCommandParameters, GetElementByRelationResult> GetElementByRelationCommand = new("DOM.getElementByRelation", JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<RedoResult> RedoAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RedoCommandParameters();
+        return await ExecuteCommandAsync(RedoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RedoCommandParameters, RedoResult> RedoCommand = new("DOM.redo", JsonContext.RedoCommandParameters, JsonContext.RedoResult);
+
+    public async Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveAttributeCommandParameters(NodeId: nodeId, Name: name);
+        return await ExecuteCommandAsync(RemoveAttributeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveAttributeCommandParameters, RemoveAttributeResult> RemoveAttributeCommand = new("DOM.removeAttribute", JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult);
+
+    public async Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(RemoveNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveNodeCommandParameters, RemoveNodeResult> RemoveNodeCommand = new("DOM.removeNode", JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult);
+
+    public async Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestChildNodesCommandParameters(NodeId: nodeId, Depth: depth, Pierce: pierce);
+        return await ExecuteCommandAsync(RequestChildNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestChildNodesCommandParameters, RequestChildNodesResult> RequestChildNodesCommand = new("DOM.requestChildNodes", JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult);
+
+    public async Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestNodeCommandParameters(ObjectId: objectId);
+        return await ExecuteCommandAsync(RequestNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestNodeCommandParameters, RequestNodeResult> RequestNodeCommand = new("DOM.requestNode", JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult);
+
+    public async Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, string? objectGroup = default, Runtime.ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResolveNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectGroup: objectGroup, ExecutionContextId: executionContextId);
+        return await ExecuteCommandAsync(ResolveNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResolveNodeCommandParameters, ResolveNodeResult> ResolveNodeCommand = new("DOM.resolveNode", JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult);
+
+    public async Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAttributeValueCommandParameters(NodeId: nodeId, Name: name, Value: value);
+        return await ExecuteCommandAsync(SetAttributeValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAttributeValueCommandParameters, SetAttributeValueResult> SetAttributeValueCommand = new("DOM.setAttributeValue", JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult);
+
+    public async Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAttributesAsTextCommandParameters(NodeId: nodeId, Text: text, Name: name);
+        return await ExecuteCommandAsync(SetAttributesAsTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAttributesAsTextCommandParameters, SetAttributesAsTextResult> SetAttributesAsTextCommand = new("DOM.setAttributesAsText", JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult);
+
+    public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetFileInputFilesCommandParameters(Files: files, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
+        return await ExecuteCommandAsync(SetFileInputFilesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetFileInputFilesCommandParameters, SetFileInputFilesResult> SetFileInputFilesCommand = new("DOM.setFileInputFiles", JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNodeStackTracesEnabledCommandParameters(Enable: enable);
+        return await ExecuteCommandAsync(SetNodeStackTracesEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNodeStackTracesEnabledCommandParameters, SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledCommand = new("DOM.setNodeStackTracesEnabled", JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetNodeStackTracesCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetNodeStackTracesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetNodeStackTracesCommandParameters, GetNodeStackTracesResult> GetNodeStackTracesCommand = new("DOM.getNodeStackTraces", JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFileInfoCommandParameters(ObjectId: objectId);
+        return await ExecuteCommandAsync(GetFileInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFileInfoCommandParameters, GetFileInfoResult> GetFileInfoCommand = new("DOM.getFileInfo", JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetDetachedDomNodesCommandParameters();
+        return await ExecuteCommandAsync(GetDetachedDomNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetDetachedDomNodesCommandParameters, GetDetachedDomNodesResult> GetDetachedDomNodesCommand = new("DOM.getDetachedDomNodes", JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInspectedNodeCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(SetInspectedNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetInspectedNodeCommandParameters, SetInspectedNodeResult> SetInspectedNodeCommand = new("DOM.setInspectedNode", JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult);
+
+    public async Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNodeNameCommandParameters(NodeId: nodeId, Name: name);
+        return await ExecuteCommandAsync(SetNodeNameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNodeNameCommandParameters, SetNodeNameResult> SetNodeNameCommand = new("DOM.setNodeName", JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult);
+
+    public async Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetNodeValueCommandParameters(NodeId: nodeId, Value: value);
+        return await ExecuteCommandAsync(SetNodeValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetNodeValueCommandParameters, SetNodeValueResult> SetNodeValueCommand = new("DOM.setNodeValue", JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult);
+
+    public async Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetOuterHTMLCommandParameters(NodeId: nodeId, OuterHTML: outerHTML);
+        return await ExecuteCommandAsync(SetOuterHTMLCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetOuterHTMLCommandParameters, SetOuterHTMLResult> SetOuterHTMLCommand = new("DOM.setOuterHTML", JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<UndoResult> UndoAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UndoCommandParameters();
+        return await ExecuteCommandAsync(UndoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UndoCommandParameters, UndoResult> UndoCommand = new("DOM.undo", JsonContext.UndoCommandParameters, JsonContext.UndoResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFrameOwnerCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetFrameOwnerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFrameOwnerCommandParameters, GetFrameOwnerResult> GetFrameOwnerCommand = new("DOM.getFrameOwner", JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = default, PhysicalAxes? physicalAxes = default, LogicalAxes? logicalAxes = default, bool? queriesScrollState = default, bool? queriesAnchored = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: containerName, PhysicalAxes: physicalAxes, LogicalAxes: logicalAxes, QueriesScrollState: queriesScrollState, QueriesAnchored: queriesAnchored);
+        return await ExecuteCommandAsync(GetContainerForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetContainerForNodeCommandParameters, GetContainerForNodeResult> GetContainerForNodeCommand = new("DOM.getContainerForNode", JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetQueryingDescendantsForContainerCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync(GetQueryingDescendantsForContainerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetQueryingDescendantsForContainerCommandParameters, GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerCommand = new("DOM.getQueryingDescendantsForContainer", JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAnchorElementCommandParameters(NodeId: nodeId, AnchorSpecifier: anchorSpecifier);
+        return await ExecuteCommandAsync(GetAnchorElementCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAnchorElementCommandParameters, GetAnchorElementResult> GetAnchorElementCommand = new("DOM.getAnchorElement", JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ForceShowPopoverCommandParameters(NodeId: nodeId, Enable: enable, InvokerNodeId: invokerNodeId);
+        return await ExecuteCommandAsync(ForceShowPopoverCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ForceShowPopoverCommandParameters, ForceShowPopoverResult> ForceShowPopoverCommand = new("DOM.forceShowPopover", JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult);
+
+    public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<AdoptedStyleSheetsModifiedEventArgs> AdoptedStyleSheetsModified => CreateCdpEventSource(DOMDomainEvent.AdoptedStyleSheetsModified);
+    public IEventSource<AttributeRemovedEventArgs> AttributeRemoved => CreateCdpEventSource(DOMDomainEvent.AttributeRemoved);
+    public IEventSource<CharacterDataModifiedEventArgs> CharacterDataModified => CreateCdpEventSource(DOMDomainEvent.CharacterDataModified);
+    public IEventSource<ChildNodeCountUpdatedEventArgs> ChildNodeCountUpdated => CreateCdpEventSource(DOMDomainEvent.ChildNodeCountUpdated);
+    public IEventSource<ChildNodeInsertedEventArgs> ChildNodeInserted => CreateCdpEventSource(DOMDomainEvent.ChildNodeInserted);
+    public IEventSource<ChildNodeRemovedEventArgs> ChildNodeRemoved => CreateCdpEventSource(DOMDomainEvent.ChildNodeRemoved);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DistributedNodesUpdatedEventArgs> DistributedNodesUpdated => CreateCdpEventSource(DOMDomainEvent.DistributedNodesUpdated);
+    public IEventSource<DocumentUpdatedEventArgs> DocumentUpdated => CreateCdpEventSource(DOMDomainEvent.DocumentUpdated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<InlineStyleInvalidatedEventArgs> InlineStyleInvalidated => CreateCdpEventSource(DOMDomainEvent.InlineStyleInvalidated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<PseudoElementAddedEventArgs> PseudoElementAdded => CreateCdpEventSource(DOMDomainEvent.PseudoElementAdded);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<TopLayerElementsUpdatedEventArgs> TopLayerElementsUpdated => CreateCdpEventSource(DOMDomainEvent.TopLayerElementsUpdated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ScrollableFlagUpdatedEventArgs> ScrollableFlagUpdated => CreateCdpEventSource(DOMDomainEvent.ScrollableFlagUpdated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<AdRelatedStateUpdatedEventArgs> AdRelatedStateUpdated => CreateCdpEventSource(DOMDomainEvent.AdRelatedStateUpdated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<AffectedByStartingStylesFlagUpdatedEventArgs> AffectedByStartingStylesFlagUpdated => CreateCdpEventSource(DOMDomainEvent.AffectedByStartingStylesFlagUpdated);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<PseudoElementRemovedEventArgs> PseudoElementRemoved => CreateCdpEventSource(DOMDomainEvent.PseudoElementRemoved);
+    public IEventSource<SetChildNodesEventArgs> SetChildNodes => CreateCdpEventSource(DOMDomainEvent.SetChildNodes);
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<ShadowRootPoppedEventArgs> ShadowRootPopped => CreateCdpEventSource(DOMDomainEvent.ShadowRootPopped);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<ShadowRootPushedEventArgs> ShadowRootPushed => CreateCdpEventSource(DOMDomainEvent.ShadowRootPushed);
 }
@@ -3044,7 +3229,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class DOMJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="DOMDomain"/>.
+/// Provides static event descriptors for the <see cref="IDOM"/>.
 /// </summary>
 public static class DOMDomainEvent
 {

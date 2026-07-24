@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.HeadlessExperimental;
 /// This domain provides experimental commands only supported in headless mode.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IHeadlessExperimental
 {
-    private static HeadlessExperimentalJsonSerializerContext JsonContext = HeadlessExperimentalJsonSerializerContext.Default;
-
     /// <summary>
     /// Sends a BeginFrame to the target and returns when the frame was completed. Optionally captures a
     /// screenshot from the resulting frame. Requires that the target was created with enabled
@@ -46,12 +44,7 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BeginFrameResult"/>.
     /// </returns>
-    public async Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = default, double? interval = default, bool? noDisplayUpdates = default, ScreenshotParams? screenshot = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new BeginFrameCommandParameters(FrameTimeTicks: frameTimeTicks, Interval: interval, NoDisplayUpdates: noDisplayUpdates, Screenshot: screenshot);
-        return await ExecuteCommandAsync(BeginFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<BeginFrameCommandParameters, BeginFrameResult> BeginFrameCommand = new("HeadlessExperimental.beginFrame", JsonContext.BeginFrameCommandParameters, JsonContext.BeginFrameResult);
+    Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = default, double? interval = default, bool? noDisplayUpdates = default, ScreenshotParams? screenshot = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables headless events for the target.
@@ -66,12 +59,7 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("HeadlessExperimental.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables headless events for the target.
@@ -85,6 +73,31 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
+    [global::System.Obsolete]
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IHeadlessExperimental
+{
+    private static HeadlessExperimentalJsonSerializerContext JsonContext = HeadlessExperimentalJsonSerializerContext.Default;
+
+    public async Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = default, double? interval = default, bool? noDisplayUpdates = default, ScreenshotParams? screenshot = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new BeginFrameCommandParameters(FrameTimeTicks: frameTimeTicks, Interval: interval, NoDisplayUpdates: noDisplayUpdates, Screenshot: screenshot);
+        return await ExecuteCommandAsync(BeginFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<BeginFrameCommandParameters, BeginFrameResult> BeginFrameCommand = new("HeadlessExperimental.beginFrame", JsonContext.BeginFrameCommandParameters, JsonContext.BeginFrameResult);
+
+    [global::System.Obsolete]
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("HeadlessExperimental.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
     [global::System.Obsolete]
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {

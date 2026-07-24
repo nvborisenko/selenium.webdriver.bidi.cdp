@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Debugger;
 /// Debugger domain exposes JavaScript debugging capabilities. It allows setting and removing
 /// breakpoints, stepping through execution, exploring stack traces, etc.
 /// </summary>
-public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IDebugger
 {
-    private static DebuggerJsonSerializerContext JsonContext = DebuggerJsonSerializerContext.Default;
-
     /// <summary>
     /// Continues execution until specific location is reached.
     /// </summary>
@@ -30,12 +28,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ContinueToLocationResult"/>.
     /// </returns>
-    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, string? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ContinueToLocationCommandParameters(Location: location, TargetCallFrames: targetCallFrames);
-        return await ExecuteCommandAsync(ContinueToLocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ContinueToLocationCommandParameters, ContinueToLocationResult> ContinueToLocationCommand = new("Debugger.continueToLocation", JsonContext.ContinueToLocationCommandParameters, JsonContext.ContinueToLocationResult);
+    Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, string? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables debugger for given page.
@@ -49,12 +42,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Debugger.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables debugger for the given page. Clients should not assume that the debugging has been
@@ -73,12 +61,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(MaxScriptsCacheSize: maxScriptsCacheSize);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Debugger.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Evaluates expression on a given call frame.
@@ -122,12 +105,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EvaluateOnCallFrameResult"/>.
     /// </returns>
-    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EvaluateOnCallFrameCommandParameters(CallFrameId: callFrameId, Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout);
-        return await ExecuteCommandAsync(EvaluateOnCallFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EvaluateOnCallFrameCommandParameters, EvaluateOnCallFrameResult> EvaluateOnCallFrameCommand = new("Debugger.evaluateOnCallFrame", JsonContext.EvaluateOnCallFrameCommandParameters, JsonContext.EvaluateOnCallFrameResult);
+    Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns possible locations for breakpoint. scriptId in start and end range locations should be
@@ -152,12 +130,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPossibleBreakpointsResult"/>.
     /// </returns>
-    public async Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = default, bool? restrictToFunction = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetPossibleBreakpointsCommandParameters(Start: start, End: end, RestrictToFunction: restrictToFunction);
-        return await ExecuteCommandAsync(GetPossibleBreakpointsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetPossibleBreakpointsCommandParameters, GetPossibleBreakpointsResult> GetPossibleBreakpointsCommand = new("Debugger.getPossibleBreakpoints", JsonContext.GetPossibleBreakpointsCommandParameters, JsonContext.GetPossibleBreakpointsResult);
+    Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = default, bool? restrictToFunction = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns source for the script with given id.
@@ -174,12 +147,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetScriptSourceResult"/>.
     /// </returns>
-    public async Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetScriptSourceCommandParameters(ScriptId: scriptId);
-        return await ExecuteCommandAsync(GetScriptSourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetScriptSourceCommandParameters, GetScriptSourceResult> GetScriptSourceCommand = new("Debugger.getScriptSource", JsonContext.GetScriptSourceCommandParameters, JsonContext.GetScriptSourceResult);
+    Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -196,12 +164,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="DisassembleWasmModuleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisassembleWasmModuleCommandParameters(ScriptId: scriptId);
-        return await ExecuteCommandAsync(DisassembleWasmModuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisassembleWasmModuleCommandParameters, DisassembleWasmModuleResult> DisassembleWasmModuleCommand = new("Debugger.disassembleWasmModule", JsonContext.DisassembleWasmModuleCommandParameters, JsonContext.DisassembleWasmModuleResult);
+    Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disassemble the next chunk of lines for the module corresponding to the
@@ -221,12 +184,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="NextWasmDisassemblyChunkResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new NextWasmDisassemblyChunkCommandParameters(StreamId: streamId);
-        return await ExecuteCommandAsync(NextWasmDisassemblyChunkCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<NextWasmDisassemblyChunkCommandParameters, NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkCommand = new("Debugger.nextWasmDisassemblyChunk", JsonContext.NextWasmDisassemblyChunkCommandParameters, JsonContext.NextWasmDisassemblyChunkResult);
+    Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This command is deprecated. Use getScriptSource instead.
@@ -244,12 +202,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="GetWasmBytecodeResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetWasmBytecodeCommandParameters(ScriptId: scriptId);
-        return await ExecuteCommandAsync(GetWasmBytecodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetWasmBytecodeCommandParameters, GetWasmBytecodeResult> GetWasmBytecodeCommand = new("Debugger.getWasmBytecode", JsonContext.GetWasmBytecodeCommandParameters, JsonContext.GetWasmBytecodeResult);
+    Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns stack trace with given <b>stackTraceId</b>.
@@ -266,12 +219,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="GetStackTraceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetStackTraceCommandParameters(StackTraceId: stackTraceId);
-        return await ExecuteCommandAsync(GetStackTraceCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetStackTraceCommandParameters, GetStackTraceResult> GetStackTraceCommand = new("Debugger.getStackTrace", JsonContext.GetStackTraceCommandParameters, JsonContext.GetStackTraceResult);
+    Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops on the next JavaScript statement.
@@ -285,12 +233,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PauseResult"/>.
     /// </returns>
-    public async Task<PauseResult> PauseAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new PauseCommandParameters();
-        return await ExecuteCommandAsync(PauseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<PauseCommandParameters, PauseResult> PauseCommand = new("Debugger.pause", JsonContext.PauseCommandParameters, JsonContext.PauseResult);
+    Task<PauseResult> PauseAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -308,12 +251,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new PauseOnAsyncCallCommandParameters(ParentStackTraceId: parentStackTraceId);
-        return await ExecuteCommandAsync(PauseOnAsyncCallCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<PauseOnAsyncCallCommandParameters, PauseOnAsyncCallResult> PauseOnAsyncCallCommand = new("Debugger.pauseOnAsyncCall", JsonContext.PauseOnAsyncCallCommandParameters, JsonContext.PauseOnAsyncCallResult);
+    Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes JavaScript breakpoint.
@@ -329,12 +267,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveBreakpointResult"/>.
     /// </returns>
-    public async Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RemoveBreakpointCommandParameters(BreakpointId: breakpointId);
-        return await ExecuteCommandAsync(RemoveBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RemoveBreakpointCommandParameters, RemoveBreakpointResult> RemoveBreakpointCommand = new("Debugger.removeBreakpoint", JsonContext.RemoveBreakpointCommandParameters, JsonContext.RemoveBreakpointResult);
+    Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Restarts particular call frame from the beginning. The old, deprecated
@@ -367,12 +300,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RestartFrameResult"/>.
     /// </returns>
-    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, string? mode = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RestartFrameCommandParameters(CallFrameId: callFrameId, Mode: mode);
-        return await ExecuteCommandAsync(RestartFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RestartFrameCommandParameters, RestartFrameResult> RestartFrameCommand = new("Debugger.restartFrame", JsonContext.RestartFrameCommandParameters, JsonContext.RestartFrameResult);
+    Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, string? mode = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resumes JavaScript execution.
@@ -393,12 +321,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResumeResult"/>.
     /// </returns>
-    public async Task<ResumeResult> ResumeAsync(bool? terminateOnResume = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResumeCommandParameters(TerminateOnResume: terminateOnResume);
-        return await ExecuteCommandAsync(ResumeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResumeCommandParameters, ResumeResult> ResumeCommand = new("Debugger.resume", JsonContext.ResumeCommandParameters, JsonContext.ResumeResult);
+    Task<ResumeResult> ResumeAsync(bool? terminateOnResume = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for given string in script content.
@@ -424,12 +347,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SearchInContentResult"/>.
     /// </returns>
-    public async Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SearchInContentCommandParameters(ScriptId: scriptId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
-        return await ExecuteCommandAsync(SearchInContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SearchInContentCommandParameters, SearchInContentResult> SearchInContentCommand = new("Debugger.searchInContent", JsonContext.SearchInContentCommandParameters, JsonContext.SearchInContentResult);
+    Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables or disables async call stacks tracking.
@@ -447,12 +365,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAsyncCallStackDepthResult"/>.
     /// </returns>
-    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
-        return await ExecuteCommandAsync(SetAsyncCallStackDepthCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult> SetAsyncCallStackDepthCommand = new("Debugger.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
+    Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replace previous blackbox execution contexts with passed ones. Forces backend to skip
@@ -472,12 +385,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxExecutionContextsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBlackboxExecutionContextsCommandParameters(UniqueIds: uniqueIds);
-        return await ExecuteCommandAsync(SetBlackboxExecutionContextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBlackboxExecutionContextsCommandParameters, SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsCommand = new("Debugger.setBlackboxExecutionContexts", JsonContext.SetBlackboxExecutionContextsCommandParameters, JsonContext.SetBlackboxExecutionContextsResult);
+    Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
@@ -500,12 +408,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxPatternsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBlackboxPatternsCommandParameters(Patterns: patterns, SkipAnonymous: skipAnonymous);
-        return await ExecuteCommandAsync(SetBlackboxPatternsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBlackboxPatternsCommandParameters, SetBlackboxPatternsResult> SetBlackboxPatternsCommand = new("Debugger.setBlackboxPatterns", JsonContext.SetBlackboxPatternsCommandParameters, JsonContext.SetBlackboxPatternsResult);
+    Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted
@@ -528,12 +431,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxedRangesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBlackboxedRangesCommandParameters(ScriptId: scriptId, Positions: positions);
-        return await ExecuteCommandAsync(SetBlackboxedRangesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBlackboxedRangesCommandParameters, SetBlackboxedRangesResult> SetBlackboxedRangesCommand = new("Debugger.setBlackboxedRanges", JsonContext.SetBlackboxedRangesCommandParameters, JsonContext.SetBlackboxedRangesResult);
+    Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets JavaScript breakpoint at a given location.
@@ -554,12 +452,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointResult"/>.
     /// </returns>
-    public async Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBreakpointCommandParameters(Location: location, Condition: condition);
-        return await ExecuteCommandAsync(SetBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBreakpointCommandParameters, SetBreakpointResult> SetBreakpointCommand = new("Debugger.setBreakpoint", JsonContext.SetBreakpointCommandParameters, JsonContext.SetBreakpointResult);
+    Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets instrumentation breakpoint.
@@ -576,12 +469,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInstrumentationBreakpointResult"/>.
     /// </returns>
-    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string instrumentation, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInstrumentationBreakpointCommandParameters(Instrumentation: instrumentation);
-        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult> SetInstrumentationBreakpointCommand = new("Debugger.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
+    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string instrumentation, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
@@ -618,12 +506,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointByUrlResult"/>.
     /// </returns>
-    public async Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = default, string? urlRegex = default, string? scriptHash = default, long? columnNumber = default, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBreakpointByUrlCommandParameters(LineNumber: lineNumber, Url: url, UrlRegex: urlRegex, ScriptHash: scriptHash, ColumnNumber: columnNumber, Condition: condition);
-        return await ExecuteCommandAsync(SetBreakpointByUrlCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBreakpointByUrlCommandParameters, SetBreakpointByUrlResult> SetBreakpointByUrlCommand = new("Debugger.setBreakpointByUrl", JsonContext.SetBreakpointByUrlCommandParameters, JsonContext.SetBreakpointByUrlResult);
+    Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = default, string? urlRegex = default, string? scriptHash = default, long? columnNumber = default, string? condition = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets JavaScript breakpoint before each call to the given function.
@@ -647,12 +530,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointOnFunctionCallResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBreakpointOnFunctionCallCommandParameters(ObjectId: objectId, Condition: condition);
-        return await ExecuteCommandAsync(SetBreakpointOnFunctionCallCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBreakpointOnFunctionCallCommandParameters, SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallCommand = new("Debugger.setBreakpointOnFunctionCall", JsonContext.SetBreakpointOnFunctionCallCommandParameters, JsonContext.SetBreakpointOnFunctionCallResult);
+    Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Activates / deactivates all breakpoints on the page.
@@ -669,12 +547,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointsActiveResult"/>.
     /// </returns>
-    public async Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetBreakpointsActiveCommandParameters(Active: active);
-        return await ExecuteCommandAsync(SetBreakpointsActiveCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetBreakpointsActiveCommandParameters, SetBreakpointsActiveResult> SetBreakpointsActiveCommand = new("Debugger.setBreakpointsActive", JsonContext.SetBreakpointsActiveCommandParameters, JsonContext.SetBreakpointsActiveResult);
+    Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions,
@@ -692,12 +565,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPauseOnExceptionsResult"/>.
     /// </returns>
-    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(string state, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPauseOnExceptionsCommandParameters(State: state);
-        return await ExecuteCommandAsync(SetPauseOnExceptionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPauseOnExceptionsCommandParameters, SetPauseOnExceptionsResult> SetPauseOnExceptionsCommand = new("Debugger.setPauseOnExceptions", JsonContext.SetPauseOnExceptionsCommandParameters, JsonContext.SetPauseOnExceptionsResult);
+    Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(string state, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Changes return value in top frame. Available only at return break position.
@@ -715,12 +583,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetReturnValueResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetReturnValueCommandParameters(NewValue: newValue);
-        return await ExecuteCommandAsync(SetReturnValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetReturnValueCommandParameters, SetReturnValueResult> SetReturnValueCommand = new("Debugger.setReturnValue", JsonContext.SetReturnValueCommandParameters, JsonContext.SetReturnValueResult);
+    Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Edits JavaScript source live.
@@ -754,12 +617,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScriptSourceResult"/>.
     /// </returns>
-    public async Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetScriptSourceCommandParameters(ScriptId: scriptId, ScriptSource: scriptSource, DryRun: dryRun, AllowTopFrameEditing: allowTopFrameEditing);
-        return await ExecuteCommandAsync(SetScriptSourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetScriptSourceCommandParameters, SetScriptSourceResult> SetScriptSourceCommand = new("Debugger.setScriptSource", JsonContext.SetScriptSourceCommandParameters, JsonContext.SetScriptSourceResult);
+    Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Makes page not interrupt on any pauses (breakpoint, exception, dom exception etc).
@@ -776,12 +634,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSkipAllPausesResult"/>.
     /// </returns>
-    public async Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSkipAllPausesCommandParameters(Skip: skip);
-        return await ExecuteCommandAsync(SetSkipAllPausesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSkipAllPausesCommandParameters, SetSkipAllPausesResult> SetSkipAllPausesCommand = new("Debugger.setSkipAllPauses", JsonContext.SetSkipAllPausesCommandParameters, JsonContext.SetSkipAllPausesResult);
+    Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Changes value of variable in a callframe. Object-based scopes are not supported and must be
@@ -809,12 +662,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetVariableValueResult"/>.
     /// </returns>
-    public async Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetVariableValueCommandParameters(ScopeNumber: scopeNumber, VariableName: variableName, NewValue: newValue, CallFrameId: callFrameId);
-        return await ExecuteCommandAsync(SetVariableValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetVariableValueCommandParameters, SetVariableValueResult> SetVariableValueCommand = new("Debugger.setVariableValue", JsonContext.SetVariableValueCommandParameters, JsonContext.SetVariableValueResult);
+    Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Steps into the function call.
@@ -835,12 +683,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepIntoResult"/>.
     /// </returns>
-    public async Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = default, ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StepIntoCommandParameters(BreakOnAsyncCall: breakOnAsyncCall, SkipList: skipList);
-        return await ExecuteCommandAsync(StepIntoCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StepIntoCommandParameters, StepIntoResult> StepIntoCommand = new("Debugger.stepInto", JsonContext.StepIntoCommandParameters, JsonContext.StepIntoResult);
+    Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = default, ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Steps out of the function call.
@@ -854,12 +697,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepOutResult"/>.
     /// </returns>
-    public async Task<StepOutResult> StepOutAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StepOutCommandParameters();
-        return await ExecuteCommandAsync(StepOutCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StepOutCommandParameters, StepOutResult> StepOutCommand = new("Debugger.stepOut", JsonContext.StepOutCommandParameters, JsonContext.StepOutResult);
+    Task<StepOutResult> StepOutAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Steps over the statement.
@@ -876,12 +714,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepOverResult"/>.
     /// </returns>
-    public async Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StepOverCommandParameters(SkipList: skipList);
-        return await ExecuteCommandAsync(StepOverCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StepOverCommandParameters, StepOverResult> StepOverCommand = new("Debugger.stepOver", JsonContext.StepOverCommandParameters, JsonContext.StepOverResult);
+    Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when breakpoint is resolved to an actual script and location.
@@ -895,7 +728,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </list>
     /// </remarks>
     [global::System.Obsolete]
-    public IEventSource<BreakpointResolvedEventArgs> BreakpointResolved => CreateCdpEventSource(DebuggerDomainEvent.BreakpointResolved);
+    IEventSource<BreakpointResolvedEventArgs> BreakpointResolved { get; }
+
     /// <summary>
     /// Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria.
     /// </summary>
@@ -911,11 +745,13 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>AsyncCallStackTraceId</b> - Never present, will be removed.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PausedEventArgs> Paused => CreateCdpEventSource(DebuggerDomainEvent.Paused);
+    IEventSource<PausedEventArgs> Paused { get; }
+
     /// <summary>
     /// Fired when the virtual machine resumed execution.
     /// </summary>
-    public IEventSource<ResumedEventArgs> Resumed => CreateCdpEventSource(DebuggerDomainEvent.Resumed);
+    IEventSource<ResumedEventArgs> Resumed { get; }
+
     /// <summary>
     /// Fired when virtual machine fails to parse the script.
     /// </summary>
@@ -942,7 +778,8 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>EmbedderName</b> - The name the embedder supplied for this script.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ScriptFailedToParseEventArgs> ScriptFailedToParse => CreateCdpEventSource(DebuggerDomainEvent.ScriptFailedToParse);
+    IEventSource<ScriptFailedToParseEventArgs> ScriptFailedToParse { get; }
+
     /// <summary>
     /// Fired when virtual machine parses script. This event is also fired for all known and uncollected
     /// scripts upon enabling debugger.
@@ -973,6 +810,261 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>ResolvedBreakpoints</b> - The list of set breakpoints in this script if calls to <b>setBreakpointByUrl</b> matches this script's URL or hash. Clients that use this list can ignore the <b>breakpointResolved</b> event. They are equivalent.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<ScriptParsedEventArgs> ScriptParsed { get; }
+
+}
+
+internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDebugger
+{
+    private static DebuggerJsonSerializerContext JsonContext = DebuggerJsonSerializerContext.Default;
+
+    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, string? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ContinueToLocationCommandParameters(Location: location, TargetCallFrames: targetCallFrames);
+        return await ExecuteCommandAsync(ContinueToLocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ContinueToLocationCommandParameters, ContinueToLocationResult> ContinueToLocationCommand = new("Debugger.continueToLocation", JsonContext.ContinueToLocationCommandParameters, JsonContext.ContinueToLocationResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Debugger.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(MaxScriptsCacheSize: maxScriptsCacheSize);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Debugger.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EvaluateOnCallFrameCommandParameters(CallFrameId: callFrameId, Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout);
+        return await ExecuteCommandAsync(EvaluateOnCallFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EvaluateOnCallFrameCommandParameters, EvaluateOnCallFrameResult> EvaluateOnCallFrameCommand = new("Debugger.evaluateOnCallFrame", JsonContext.EvaluateOnCallFrameCommandParameters, JsonContext.EvaluateOnCallFrameResult);
+
+    public async Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = default, bool? restrictToFunction = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetPossibleBreakpointsCommandParameters(Start: start, End: end, RestrictToFunction: restrictToFunction);
+        return await ExecuteCommandAsync(GetPossibleBreakpointsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetPossibleBreakpointsCommandParameters, GetPossibleBreakpointsResult> GetPossibleBreakpointsCommand = new("Debugger.getPossibleBreakpoints", JsonContext.GetPossibleBreakpointsCommandParameters, JsonContext.GetPossibleBreakpointsResult);
+
+    public async Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetScriptSourceCommandParameters(ScriptId: scriptId);
+        return await ExecuteCommandAsync(GetScriptSourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetScriptSourceCommandParameters, GetScriptSourceResult> GetScriptSourceCommand = new("Debugger.getScriptSource", JsonContext.GetScriptSourceCommandParameters, JsonContext.GetScriptSourceResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisassembleWasmModuleCommandParameters(ScriptId: scriptId);
+        return await ExecuteCommandAsync(DisassembleWasmModuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisassembleWasmModuleCommandParameters, DisassembleWasmModuleResult> DisassembleWasmModuleCommand = new("Debugger.disassembleWasmModule", JsonContext.DisassembleWasmModuleCommandParameters, JsonContext.DisassembleWasmModuleResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new NextWasmDisassemblyChunkCommandParameters(StreamId: streamId);
+        return await ExecuteCommandAsync(NextWasmDisassemblyChunkCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<NextWasmDisassemblyChunkCommandParameters, NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkCommand = new("Debugger.nextWasmDisassemblyChunk", JsonContext.NextWasmDisassemblyChunkCommandParameters, JsonContext.NextWasmDisassemblyChunkResult);
+
+    [global::System.Obsolete]
+    public async Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetWasmBytecodeCommandParameters(ScriptId: scriptId);
+        return await ExecuteCommandAsync(GetWasmBytecodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetWasmBytecodeCommandParameters, GetWasmBytecodeResult> GetWasmBytecodeCommand = new("Debugger.getWasmBytecode", JsonContext.GetWasmBytecodeCommandParameters, JsonContext.GetWasmBytecodeResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetStackTraceCommandParameters(StackTraceId: stackTraceId);
+        return await ExecuteCommandAsync(GetStackTraceCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetStackTraceCommandParameters, GetStackTraceResult> GetStackTraceCommand = new("Debugger.getStackTrace", JsonContext.GetStackTraceCommandParameters, JsonContext.GetStackTraceResult);
+
+    public async Task<PauseResult> PauseAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PauseCommandParameters();
+        return await ExecuteCommandAsync(PauseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PauseCommandParameters, PauseResult> PauseCommand = new("Debugger.pause", JsonContext.PauseCommandParameters, JsonContext.PauseResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new PauseOnAsyncCallCommandParameters(ParentStackTraceId: parentStackTraceId);
+        return await ExecuteCommandAsync(PauseOnAsyncCallCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<PauseOnAsyncCallCommandParameters, PauseOnAsyncCallResult> PauseOnAsyncCallCommand = new("Debugger.pauseOnAsyncCall", JsonContext.PauseOnAsyncCallCommandParameters, JsonContext.PauseOnAsyncCallResult);
+
+    public async Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveBreakpointCommandParameters(BreakpointId: breakpointId);
+        return await ExecuteCommandAsync(RemoveBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveBreakpointCommandParameters, RemoveBreakpointResult> RemoveBreakpointCommand = new("Debugger.removeBreakpoint", JsonContext.RemoveBreakpointCommandParameters, JsonContext.RemoveBreakpointResult);
+
+    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, string? mode = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RestartFrameCommandParameters(CallFrameId: callFrameId, Mode: mode);
+        return await ExecuteCommandAsync(RestartFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RestartFrameCommandParameters, RestartFrameResult> RestartFrameCommand = new("Debugger.restartFrame", JsonContext.RestartFrameCommandParameters, JsonContext.RestartFrameResult);
+
+    public async Task<ResumeResult> ResumeAsync(bool? terminateOnResume = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResumeCommandParameters(TerminateOnResume: terminateOnResume);
+        return await ExecuteCommandAsync(ResumeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResumeCommandParameters, ResumeResult> ResumeCommand = new("Debugger.resume", JsonContext.ResumeCommandParameters, JsonContext.ResumeResult);
+
+    public async Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SearchInContentCommandParameters(ScriptId: scriptId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
+        return await ExecuteCommandAsync(SearchInContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SearchInContentCommandParameters, SearchInContentResult> SearchInContentCommand = new("Debugger.searchInContent", JsonContext.SearchInContentCommandParameters, JsonContext.SearchInContentResult);
+
+    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
+        return await ExecuteCommandAsync(SetAsyncCallStackDepthCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult> SetAsyncCallStackDepthCommand = new("Debugger.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBlackboxExecutionContextsCommandParameters(UniqueIds: uniqueIds);
+        return await ExecuteCommandAsync(SetBlackboxExecutionContextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBlackboxExecutionContextsCommandParameters, SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsCommand = new("Debugger.setBlackboxExecutionContexts", JsonContext.SetBlackboxExecutionContextsCommandParameters, JsonContext.SetBlackboxExecutionContextsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBlackboxPatternsCommandParameters(Patterns: patterns, SkipAnonymous: skipAnonymous);
+        return await ExecuteCommandAsync(SetBlackboxPatternsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBlackboxPatternsCommandParameters, SetBlackboxPatternsResult> SetBlackboxPatternsCommand = new("Debugger.setBlackboxPatterns", JsonContext.SetBlackboxPatternsCommandParameters, JsonContext.SetBlackboxPatternsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBlackboxedRangesCommandParameters(ScriptId: scriptId, Positions: positions);
+        return await ExecuteCommandAsync(SetBlackboxedRangesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBlackboxedRangesCommandParameters, SetBlackboxedRangesResult> SetBlackboxedRangesCommand = new("Debugger.setBlackboxedRanges", JsonContext.SetBlackboxedRangesCommandParameters, JsonContext.SetBlackboxedRangesResult);
+
+    public async Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBreakpointCommandParameters(Location: location, Condition: condition);
+        return await ExecuteCommandAsync(SetBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBreakpointCommandParameters, SetBreakpointResult> SetBreakpointCommand = new("Debugger.setBreakpoint", JsonContext.SetBreakpointCommandParameters, JsonContext.SetBreakpointResult);
+
+    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string instrumentation, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInstrumentationBreakpointCommandParameters(Instrumentation: instrumentation);
+        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult> SetInstrumentationBreakpointCommand = new("Debugger.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
+
+    public async Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = default, string? urlRegex = default, string? scriptHash = default, long? columnNumber = default, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBreakpointByUrlCommandParameters(LineNumber: lineNumber, Url: url, UrlRegex: urlRegex, ScriptHash: scriptHash, ColumnNumber: columnNumber, Condition: condition);
+        return await ExecuteCommandAsync(SetBreakpointByUrlCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBreakpointByUrlCommandParameters, SetBreakpointByUrlResult> SetBreakpointByUrlCommand = new("Debugger.setBreakpointByUrl", JsonContext.SetBreakpointByUrlCommandParameters, JsonContext.SetBreakpointByUrlResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBreakpointOnFunctionCallCommandParameters(ObjectId: objectId, Condition: condition);
+        return await ExecuteCommandAsync(SetBreakpointOnFunctionCallCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBreakpointOnFunctionCallCommandParameters, SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallCommand = new("Debugger.setBreakpointOnFunctionCall", JsonContext.SetBreakpointOnFunctionCallCommandParameters, JsonContext.SetBreakpointOnFunctionCallResult);
+
+    public async Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetBreakpointsActiveCommandParameters(Active: active);
+        return await ExecuteCommandAsync(SetBreakpointsActiveCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetBreakpointsActiveCommandParameters, SetBreakpointsActiveResult> SetBreakpointsActiveCommand = new("Debugger.setBreakpointsActive", JsonContext.SetBreakpointsActiveCommandParameters, JsonContext.SetBreakpointsActiveResult);
+
+    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(string state, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPauseOnExceptionsCommandParameters(State: state);
+        return await ExecuteCommandAsync(SetPauseOnExceptionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPauseOnExceptionsCommandParameters, SetPauseOnExceptionsResult> SetPauseOnExceptionsCommand = new("Debugger.setPauseOnExceptions", JsonContext.SetPauseOnExceptionsCommandParameters, JsonContext.SetPauseOnExceptionsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetReturnValueCommandParameters(NewValue: newValue);
+        return await ExecuteCommandAsync(SetReturnValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetReturnValueCommandParameters, SetReturnValueResult> SetReturnValueCommand = new("Debugger.setReturnValue", JsonContext.SetReturnValueCommandParameters, JsonContext.SetReturnValueResult);
+
+    public async Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetScriptSourceCommandParameters(ScriptId: scriptId, ScriptSource: scriptSource, DryRun: dryRun, AllowTopFrameEditing: allowTopFrameEditing);
+        return await ExecuteCommandAsync(SetScriptSourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetScriptSourceCommandParameters, SetScriptSourceResult> SetScriptSourceCommand = new("Debugger.setScriptSource", JsonContext.SetScriptSourceCommandParameters, JsonContext.SetScriptSourceResult);
+
+    public async Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetSkipAllPausesCommandParameters(Skip: skip);
+        return await ExecuteCommandAsync(SetSkipAllPausesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetSkipAllPausesCommandParameters, SetSkipAllPausesResult> SetSkipAllPausesCommand = new("Debugger.setSkipAllPauses", JsonContext.SetSkipAllPausesCommandParameters, JsonContext.SetSkipAllPausesResult);
+
+    public async Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetVariableValueCommandParameters(ScopeNumber: scopeNumber, VariableName: variableName, NewValue: newValue, CallFrameId: callFrameId);
+        return await ExecuteCommandAsync(SetVariableValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetVariableValueCommandParameters, SetVariableValueResult> SetVariableValueCommand = new("Debugger.setVariableValue", JsonContext.SetVariableValueCommandParameters, JsonContext.SetVariableValueResult);
+
+    public async Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = default, ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StepIntoCommandParameters(BreakOnAsyncCall: breakOnAsyncCall, SkipList: skipList);
+        return await ExecuteCommandAsync(StepIntoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StepIntoCommandParameters, StepIntoResult> StepIntoCommand = new("Debugger.stepInto", JsonContext.StepIntoCommandParameters, JsonContext.StepIntoResult);
+
+    public async Task<StepOutResult> StepOutAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StepOutCommandParameters();
+        return await ExecuteCommandAsync(StepOutCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StepOutCommandParameters, StepOutResult> StepOutCommand = new("Debugger.stepOut", JsonContext.StepOutCommandParameters, JsonContext.StepOutResult);
+
+    public async Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StepOverCommandParameters(SkipList: skipList);
+        return await ExecuteCommandAsync(StepOverCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StepOverCommandParameters, StepOverResult> StepOverCommand = new("Debugger.stepOver", JsonContext.StepOverCommandParameters, JsonContext.StepOverResult);
+
+    [global::System.Obsolete]
+    public IEventSource<BreakpointResolvedEventArgs> BreakpointResolved => CreateCdpEventSource(DebuggerDomainEvent.BreakpointResolved);
+    public IEventSource<PausedEventArgs> Paused => CreateCdpEventSource(DebuggerDomainEvent.Paused);
+    public IEventSource<ResumedEventArgs> Resumed => CreateCdpEventSource(DebuggerDomainEvent.Resumed);
+    public IEventSource<ScriptFailedToParseEventArgs> ScriptFailedToParse => CreateCdpEventSource(DebuggerDomainEvent.ScriptFailedToParse);
     public IEventSource<ScriptParsedEventArgs> ScriptParsed => CreateCdpEventSource(DebuggerDomainEvent.ScriptParsed);
 }
 
@@ -1787,7 +1879,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class DebuggerJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="DebuggerDomain"/>.
+/// Provides static event descriptors for the <see cref="IDebugger"/>.
 /// </summary>
 public static class DebuggerDomainEvent
 {

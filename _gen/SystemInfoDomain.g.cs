@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.SystemInfo;
 /// The SystemInfo domain defines methods and events for querying low-level system information.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ISystemInfo
 {
-    private static SystemInfoJsonSerializerContext JsonContext = SystemInfoJsonSerializerContext.Default;
-
     /// <summary>
     /// Returns information about the system.
     /// </summary>
@@ -25,12 +23,7 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetInfoResult"/>.
     /// </returns>
-    public async Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetInfoCommandParameters();
-        return await ExecuteCommandAsync(GetInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetInfoCommandParameters, GetInfoResult> GetInfoCommand = new("SystemInfo.getInfo", JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult);
+    Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about the feature state.
@@ -46,12 +39,7 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetFeatureStateResult"/>.
     /// </returns>
-    public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetFeatureStateCommandParameters(FeatureState: featureState);
-        return await ExecuteCommandAsync(GetFeatureStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetFeatureStateCommandParameters, GetFeatureStateResult> GetFeatureStateCommand = new("SystemInfo.getFeatureState", JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult);
+    Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about all running processes.
@@ -65,6 +53,29 @@ public sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetProcessInfoResult"/>.
     /// </returns>
+    Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ISystemInfo
+{
+    private static SystemInfoJsonSerializerContext JsonContext = SystemInfoJsonSerializerContext.Default;
+
+    public async Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetInfoCommandParameters();
+        return await ExecuteCommandAsync(GetInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetInfoCommandParameters, GetInfoResult> GetInfoCommand = new("SystemInfo.getInfo", JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult);
+
+    public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetFeatureStateCommandParameters(FeatureState: featureState);
+        return await ExecuteCommandAsync(GetFeatureStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetFeatureStateCommandParameters, GetFeatureStateResult> GetFeatureStateCommand = new("SystemInfo.getFeatureState", JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult);
+
     public async Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetProcessInfoCommandParameters();

@@ -10,10 +10,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.WebAudio;
 /// https://webaudio.github.io/web-audio-api/
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IWebAudio
 {
-    private static WebAudioJsonSerializerContext JsonContext = WebAudioJsonSerializerContext.Default;
-
     /// <summary>
     /// Enables the WebAudio domain and starts sending context lifetime events.
     /// </summary>
@@ -26,12 +24,7 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("WebAudio.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the WebAudio domain.
@@ -45,12 +38,7 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("WebAudio.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetch the realtime data from the registered contexts.
@@ -66,12 +54,7 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRealtimeDataResult"/>.
     /// </returns>
-    public async Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetRealtimeDataCommandParameters(ContextId: contextId);
-        return await ExecuteCommandAsync(GetRealtimeDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetRealtimeDataCommandParameters, GetRealtimeDataResult> GetRealtimeDataCommand = new("WebAudio.getRealtimeData", JsonContext.GetRealtimeDataCommandParameters, JsonContext.GetRealtimeDataResult);
+    Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Notifies that a new BaseAudioContext has been created.
@@ -82,7 +65,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>Context</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ContextCreatedEventArgs> ContextCreated => CreateCdpEventSource(WebAudioDomainEvent.ContextCreated);
+    IEventSource<ContextCreatedEventArgs> ContextCreated { get; }
+
     /// <summary>
     /// Notifies that an existing BaseAudioContext will be destroyed.
     /// </summary>
@@ -92,7 +76,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>ContextId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ContextWillBeDestroyedEventArgs> ContextWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.ContextWillBeDestroyed);
+    IEventSource<ContextWillBeDestroyedEventArgs> ContextWillBeDestroyed { get; }
+
     /// <summary>
     /// Notifies that existing BaseAudioContext has changed some properties (id stays the same)..
     /// </summary>
@@ -102,7 +87,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>Context</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ContextChangedEventArgs> ContextChanged => CreateCdpEventSource(WebAudioDomainEvent.ContextChanged);
+    IEventSource<ContextChangedEventArgs> ContextChanged { get; }
+
     /// <summary>
     /// Notifies that the construction of an AudioListener has finished.
     /// </summary>
@@ -112,7 +98,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>Listener</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AudioListenerCreatedEventArgs> AudioListenerCreated => CreateCdpEventSource(WebAudioDomainEvent.AudioListenerCreated);
+    IEventSource<AudioListenerCreatedEventArgs> AudioListenerCreated { get; }
+
     /// <summary>
     /// Notifies that a new AudioListener has been created.
     /// </summary>
@@ -123,7 +110,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>ListenerId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AudioListenerWillBeDestroyedEventArgs> AudioListenerWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.AudioListenerWillBeDestroyed);
+    IEventSource<AudioListenerWillBeDestroyedEventArgs> AudioListenerWillBeDestroyed { get; }
+
     /// <summary>
     /// Notifies that a new AudioNode has been created.
     /// </summary>
@@ -133,7 +121,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>Node</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AudioNodeCreatedEventArgs> AudioNodeCreated => CreateCdpEventSource(WebAudioDomainEvent.AudioNodeCreated);
+    IEventSource<AudioNodeCreatedEventArgs> AudioNodeCreated { get; }
+
     /// <summary>
     /// Notifies that an existing AudioNode has been destroyed.
     /// </summary>
@@ -144,7 +133,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>NodeId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AudioNodeWillBeDestroyedEventArgs> AudioNodeWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.AudioNodeWillBeDestroyed);
+    IEventSource<AudioNodeWillBeDestroyedEventArgs> AudioNodeWillBeDestroyed { get; }
+
     /// <summary>
     /// Notifies that a new AudioParam has been created.
     /// </summary>
@@ -154,7 +144,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>Param</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AudioParamCreatedEventArgs> AudioParamCreated => CreateCdpEventSource(WebAudioDomainEvent.AudioParamCreated);
+    IEventSource<AudioParamCreatedEventArgs> AudioParamCreated { get; }
+
     /// <summary>
     /// Notifies that an existing AudioParam has been destroyed.
     /// </summary>
@@ -166,7 +157,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>ParamId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AudioParamWillBeDestroyedEventArgs> AudioParamWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.AudioParamWillBeDestroyed);
+    IEventSource<AudioParamWillBeDestroyedEventArgs> AudioParamWillBeDestroyed { get; }
+
     /// <summary>
     /// Notifies that two AudioNodes are connected.
     /// </summary>
@@ -180,7 +172,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>DestinationInputIndex</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<NodesConnectedEventArgs> NodesConnected => CreateCdpEventSource(WebAudioDomainEvent.NodesConnected);
+    IEventSource<NodesConnectedEventArgs> NodesConnected { get; }
+
     /// <summary>
     /// Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected.
     /// </summary>
@@ -194,7 +187,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>DestinationInputIndex</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<NodesDisconnectedEventArgs> NodesDisconnected => CreateCdpEventSource(WebAudioDomainEvent.NodesDisconnected);
+    IEventSource<NodesDisconnectedEventArgs> NodesDisconnected { get; }
+
     /// <summary>
     /// Notifies that an AudioNode is connected to an AudioParam.
     /// </summary>
@@ -207,7 +201,8 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>SourceOutputIndex</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<NodeParamConnectedEventArgs> NodeParamConnected => CreateCdpEventSource(WebAudioDomainEvent.NodeParamConnected);
+    IEventSource<NodeParamConnectedEventArgs> NodeParamConnected { get; }
+
     /// <summary>
     /// Notifies that an AudioNode is disconnected to an AudioParam.
     /// </summary>
@@ -220,6 +215,48 @@ public sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>SourceOutputIndex</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<NodeParamDisconnectedEventArgs> NodeParamDisconnected { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IWebAudio
+{
+    private static WebAudioJsonSerializerContext JsonContext = WebAudioJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("WebAudio.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("WebAudio.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetRealtimeDataCommandParameters(ContextId: contextId);
+        return await ExecuteCommandAsync(GetRealtimeDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetRealtimeDataCommandParameters, GetRealtimeDataResult> GetRealtimeDataCommand = new("WebAudio.getRealtimeData", JsonContext.GetRealtimeDataCommandParameters, JsonContext.GetRealtimeDataResult);
+
+    public IEventSource<ContextCreatedEventArgs> ContextCreated => CreateCdpEventSource(WebAudioDomainEvent.ContextCreated);
+    public IEventSource<ContextWillBeDestroyedEventArgs> ContextWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.ContextWillBeDestroyed);
+    public IEventSource<ContextChangedEventArgs> ContextChanged => CreateCdpEventSource(WebAudioDomainEvent.ContextChanged);
+    public IEventSource<AudioListenerCreatedEventArgs> AudioListenerCreated => CreateCdpEventSource(WebAudioDomainEvent.AudioListenerCreated);
+    public IEventSource<AudioListenerWillBeDestroyedEventArgs> AudioListenerWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.AudioListenerWillBeDestroyed);
+    public IEventSource<AudioNodeCreatedEventArgs> AudioNodeCreated => CreateCdpEventSource(WebAudioDomainEvent.AudioNodeCreated);
+    public IEventSource<AudioNodeWillBeDestroyedEventArgs> AudioNodeWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.AudioNodeWillBeDestroyed);
+    public IEventSource<AudioParamCreatedEventArgs> AudioParamCreated => CreateCdpEventSource(WebAudioDomainEvent.AudioParamCreated);
+    public IEventSource<AudioParamWillBeDestroyedEventArgs> AudioParamWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.AudioParamWillBeDestroyed);
+    public IEventSource<NodesConnectedEventArgs> NodesConnected => CreateCdpEventSource(WebAudioDomainEvent.NodesConnected);
+    public IEventSource<NodesDisconnectedEventArgs> NodesDisconnected => CreateCdpEventSource(WebAudioDomainEvent.NodesDisconnected);
+    public IEventSource<NodeParamConnectedEventArgs> NodeParamConnected => CreateCdpEventSource(WebAudioDomainEvent.NodeParamConnected);
     public IEventSource<NodeParamDisconnectedEventArgs> NodeParamDisconnected => CreateCdpEventSource(WebAudioDomainEvent.NodeParamDisconnected);
 }
 
@@ -633,7 +670,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class WebAudioJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="WebAudioDomain"/>.
+/// Provides static event descriptors for the <see cref="IWebAudio"/>.
 /// </summary>
 public static class WebAudioDomainEvent
 {

@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Preload;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IPreload
 {
-    private static PreloadJsonSerializerContext JsonContext = PreloadJsonSerializerContext.Default;
-
     /// <summary>
     /// </summary>
     /// <param name="session">
@@ -23,12 +21,7 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Preload.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -41,12 +34,7 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Preload.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Upsert. Currently, it is only emitted when a rule set added.
@@ -57,7 +45,8 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>RuleSet</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<RuleSetUpdatedEventArgs> RuleSetUpdated => CreateCdpEventSource(PreloadDomainEvent.RuleSetUpdated);
+    IEventSource<RuleSetUpdatedEventArgs> RuleSetUpdated { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -67,7 +56,8 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Id</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<RuleSetRemovedEventArgs> RuleSetRemoved => CreateCdpEventSource(PreloadDomainEvent.RuleSetRemoved);
+    IEventSource<RuleSetRemovedEventArgs> RuleSetRemoved { get; }
+
     /// <summary>
     /// Fired when a preload enabled state is updated.
     /// </summary>
@@ -81,7 +71,8 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>DisabledByHoldbackPrerenderSpeculationRules</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PreloadEnabledStateUpdatedEventArgs> PreloadEnabledStateUpdated => CreateCdpEventSource(PreloadDomainEvent.PreloadEnabledStateUpdated);
+    IEventSource<PreloadEnabledStateUpdatedEventArgs> PreloadEnabledStateUpdated { get; }
+
     /// <summary>
     /// Fired when a prefetch attempt is updated.
     /// </summary>
@@ -97,7 +88,8 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>RequestId</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PrefetchStatusUpdatedEventArgs> PrefetchStatusUpdated => CreateCdpEventSource(PreloadDomainEvent.PrefetchStatusUpdated);
+    IEventSource<PrefetchStatusUpdatedEventArgs> PrefetchStatusUpdated { get; }
+
     /// <summary>
     /// Fired when a prerender attempt is updated.
     /// </summary>
@@ -112,7 +104,8 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>MismatchedHeaders</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PrerenderStatusUpdatedEventArgs> PrerenderStatusUpdated => CreateCdpEventSource(PreloadDomainEvent.PrerenderStatusUpdated);
+    IEventSource<PrerenderStatusUpdatedEventArgs> PrerenderStatusUpdated { get; }
+
     /// <summary>
     /// Send a list of sources for all preloading attempts in a document.
     /// </summary>
@@ -123,6 +116,34 @@ public sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>PreloadingAttemptSources</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<PreloadingAttemptSourcesUpdatedEventArgs> PreloadingAttemptSourcesUpdated { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPreload
+{
+    private static PreloadJsonSerializerContext JsonContext = PreloadJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Preload.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Preload.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public IEventSource<RuleSetUpdatedEventArgs> RuleSetUpdated => CreateCdpEventSource(PreloadDomainEvent.RuleSetUpdated);
+    public IEventSource<RuleSetRemovedEventArgs> RuleSetRemoved => CreateCdpEventSource(PreloadDomainEvent.RuleSetRemoved);
+    public IEventSource<PreloadEnabledStateUpdatedEventArgs> PreloadEnabledStateUpdated => CreateCdpEventSource(PreloadDomainEvent.PreloadEnabledStateUpdated);
+    public IEventSource<PrefetchStatusUpdatedEventArgs> PrefetchStatusUpdated => CreateCdpEventSource(PreloadDomainEvent.PrefetchStatusUpdated);
+    public IEventSource<PrerenderStatusUpdatedEventArgs> PrerenderStatusUpdated => CreateCdpEventSource(PreloadDomainEvent.PrerenderStatusUpdated);
     public IEventSource<PreloadingAttemptSourcesUpdatedEventArgs> PreloadingAttemptSourcesUpdated => CreateCdpEventSource(PreloadDomainEvent.PreloadingAttemptSourcesUpdated);
 }
 
@@ -946,7 +967,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class PreloadJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="PreloadDomain"/>.
+/// Provides static event descriptors for the <see cref="IPreload"/>.
 /// </summary>
 public static class PreloadDomainEvent
 {

@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.FedCm;
 /// This domain allows interacting with the FedCM dialog.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IFedCm
 {
-    private static FedCmJsonSerializerContext JsonContext = FedCmJsonSerializerContext.Default;
-
     /// <summary>
     /// </summary>
     /// <param name="disableRejectionDelay">
@@ -29,12 +27,7 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(bool? disableRejectionDelay = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters(DisableRejectionDelay: disableRejectionDelay);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("FedCm.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(bool? disableRejectionDelay = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -47,12 +40,7 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("FedCm.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -69,12 +57,7 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SelectAccountResult"/>.
     /// </returns>
-    public async Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SelectAccountCommandParameters(DialogId: dialogId, AccountIndex: accountIndex);
-        return await ExecuteCommandAsync(SelectAccountCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SelectAccountCommandParameters, SelectAccountResult> SelectAccountCommand = new("FedCm.selectAccount", JsonContext.SelectAccountCommandParameters, JsonContext.SelectAccountResult);
+    Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -91,12 +74,7 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClickDialogButtonResult"/>.
     /// </returns>
-    public async Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClickDialogButtonCommandParameters(DialogId: dialogId, DialogButton: dialogButton);
-        return await ExecuteCommandAsync(ClickDialogButtonCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClickDialogButtonCommandParameters, ClickDialogButtonResult> ClickDialogButtonCommand = new("FedCm.clickDialogButton", JsonContext.ClickDialogButtonCommandParameters, JsonContext.ClickDialogButtonResult);
+    Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -115,12 +93,7 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OpenUrlResult"/>.
     /// </returns>
-    public async Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new OpenUrlCommandParameters(DialogId: dialogId, AccountIndex: accountIndex, AccountUrlType: accountUrlType);
-        return await ExecuteCommandAsync(OpenUrlCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<OpenUrlCommandParameters, OpenUrlResult> OpenUrlCommand = new("FedCm.openUrl", JsonContext.OpenUrlCommandParameters, JsonContext.OpenUrlResult);
+    Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -137,12 +110,7 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DismissDialogResult"/>.
     /// </returns>
-    public async Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DismissDialogCommandParameters(DialogId: dialogId, TriggerCooldown: triggerCooldown);
-        return await ExecuteCommandAsync(DismissDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DismissDialogCommandParameters, DismissDialogResult> DismissDialogCommand = new("FedCm.dismissDialog", JsonContext.DismissDialogCommandParameters, JsonContext.DismissDialogResult);
+    Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resets the cooldown time, if any, to allow the next FedCM call to show
@@ -157,12 +125,7 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetCooldownResult"/>.
     /// </returns>
-    public async Task<ResetCooldownResult> ResetCooldownAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResetCooldownCommandParameters();
-        return await ExecuteCommandAsync(ResetCooldownCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResetCooldownCommandParameters, ResetCooldownResult> ResetCooldownCommand = new("FedCm.resetCooldown", JsonContext.ResetCooldownCommandParameters, JsonContext.ResetCooldownResult);
+    Task<ResetCooldownResult> ResetCooldownAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -177,7 +140,8 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>Subtitle</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<DialogShownEventArgs> DialogShown => CreateCdpEventSource(FedCmDomainEvent.DialogShown);
+    IEventSource<DialogShownEventArgs> DialogShown { get; }
+
     /// <summary>
     /// Triggered when a dialog is closed, either by user action, JS abort,
     /// or a command below.
@@ -188,6 +152,65 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>DialogId</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<DialogClosedEventArgs> DialogClosed { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IFedCm
+{
+    private static FedCmJsonSerializerContext JsonContext = FedCmJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(bool? disableRejectionDelay = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters(DisableRejectionDelay: disableRejectionDelay);
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("FedCm.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("FedCm.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SelectAccountCommandParameters(DialogId: dialogId, AccountIndex: accountIndex);
+        return await ExecuteCommandAsync(SelectAccountCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SelectAccountCommandParameters, SelectAccountResult> SelectAccountCommand = new("FedCm.selectAccount", JsonContext.SelectAccountCommandParameters, JsonContext.SelectAccountResult);
+
+    public async Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClickDialogButtonCommandParameters(DialogId: dialogId, DialogButton: dialogButton);
+        return await ExecuteCommandAsync(ClickDialogButtonCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClickDialogButtonCommandParameters, ClickDialogButtonResult> ClickDialogButtonCommand = new("FedCm.clickDialogButton", JsonContext.ClickDialogButtonCommandParameters, JsonContext.ClickDialogButtonResult);
+
+    public async Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new OpenUrlCommandParameters(DialogId: dialogId, AccountIndex: accountIndex, AccountUrlType: accountUrlType);
+        return await ExecuteCommandAsync(OpenUrlCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<OpenUrlCommandParameters, OpenUrlResult> OpenUrlCommand = new("FedCm.openUrl", JsonContext.OpenUrlCommandParameters, JsonContext.OpenUrlResult);
+
+    public async Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DismissDialogCommandParameters(DialogId: dialogId, TriggerCooldown: triggerCooldown);
+        return await ExecuteCommandAsync(DismissDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DismissDialogCommandParameters, DismissDialogResult> DismissDialogCommand = new("FedCm.dismissDialog", JsonContext.DismissDialogCommandParameters, JsonContext.DismissDialogResult);
+
+    public async Task<ResetCooldownResult> ResetCooldownAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResetCooldownCommandParameters();
+        return await ExecuteCommandAsync(ResetCooldownCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResetCooldownCommandParameters, ResetCooldownResult> ResetCooldownCommand = new("FedCm.resetCooldown", JsonContext.ResetCooldownCommandParameters, JsonContext.ResetCooldownResult);
+
+    public IEventSource<DialogShownEventArgs> DialogShown => CreateCdpEventSource(FedCmDomainEvent.DialogShown);
     public IEventSource<DialogClosedEventArgs> DialogClosed => CreateCdpEventSource(FedCmDomainEvent.DialogClosed);
 }
 
@@ -400,7 +423,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class FedCmJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="FedCmDomain"/>.
+/// Provides static event descriptors for the <see cref="IFedCm"/>.
 /// </summary>
 public static class FedCmDomainEvent
 {

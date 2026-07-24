@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.LayerTree;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ILayerTree
 {
-    private static LayerTreeJsonSerializerContext JsonContext = LayerTreeJsonSerializerContext.Default;
-
     /// <summary>
     /// Provides the reasons why the given layer was composited.
     /// </summary>
@@ -27,12 +25,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CompositingReasonsResult"/>.
     /// </returns>
-    public async Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CompositingReasonsCommandParameters(LayerId: layerId);
-        return await ExecuteCommandAsync(CompositingReasonsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CompositingReasonsCommandParameters, CompositingReasonsResult> CompositingReasonsCommand = new("LayerTree.compositingReasons", JsonContext.CompositingReasonsCommandParameters, JsonContext.CompositingReasonsResult);
+    Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables compositing tree inspection.
@@ -46,12 +39,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("LayerTree.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables compositing tree inspection.
@@ -65,12 +53,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("LayerTree.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the snapshot identifier.
@@ -87,12 +70,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LoadSnapshotResult"/>.
     /// </returns>
-    public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new LoadSnapshotCommandParameters(Tiles: tiles);
-        return await ExecuteCommandAsync(LoadSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<LoadSnapshotCommandParameters, LoadSnapshotResult> LoadSnapshotCommand = new("LayerTree.loadSnapshot", JsonContext.LoadSnapshotCommandParameters, JsonContext.LoadSnapshotResult);
+    Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the layer snapshot identifier.
@@ -109,12 +87,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="MakeSnapshotResult"/>.
     /// </returns>
-    public async Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new MakeSnapshotCommandParameters(LayerId: layerId);
-        return await ExecuteCommandAsync(MakeSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<MakeSnapshotCommandParameters, MakeSnapshotResult> MakeSnapshotCommand = new("LayerTree.makeSnapshot", JsonContext.MakeSnapshotCommandParameters, JsonContext.MakeSnapshotResult);
+    Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -139,12 +112,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ProfileSnapshotResult"/>.
     /// </returns>
-    public async Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = default, double? minDuration = default, DOM.Rect? clipRect = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ProfileSnapshotCommandParameters(SnapshotId: snapshotId, MinRepeatCount: minRepeatCount, MinDuration: minDuration, ClipRect: clipRect);
-        return await ExecuteCommandAsync(ProfileSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ProfileSnapshotCommandParameters, ProfileSnapshotResult> ProfileSnapshotCommand = new("LayerTree.profileSnapshot", JsonContext.ProfileSnapshotCommandParameters, JsonContext.ProfileSnapshotResult);
+    Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = default, double? minDuration = default, DOM.Rect? clipRect = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases layer snapshot captured by the back-end.
@@ -161,12 +129,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseSnapshotResult"/>.
     /// </returns>
-    public async Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReleaseSnapshotCommandParameters(SnapshotId: snapshotId);
-        return await ExecuteCommandAsync(ReleaseSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReleaseSnapshotCommandParameters, ReleaseSnapshotResult> ReleaseSnapshotCommand = new("LayerTree.releaseSnapshot", JsonContext.ReleaseSnapshotCommandParameters, JsonContext.ReleaseSnapshotResult);
+    Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replays the layer snapshot and returns the resulting bitmap.
@@ -192,12 +155,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReplaySnapshotResult"/>.
     /// </returns>
-    public async Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = default, long? toStep = default, double? scale = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReplaySnapshotCommandParameters(SnapshotId: snapshotId, FromStep: fromStep, ToStep: toStep, Scale: scale);
-        return await ExecuteCommandAsync(ReplaySnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReplaySnapshotCommandParameters, ReplaySnapshotResult> ReplaySnapshotCommand = new("LayerTree.replaySnapshot", JsonContext.ReplaySnapshotCommandParameters, JsonContext.ReplaySnapshotResult);
+    Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = default, long? toStep = default, double? scale = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replays the layer snapshot and returns canvas log.
@@ -214,12 +172,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SnapshotCommandLogResult"/>.
     /// </returns>
-    public async Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SnapshotCommandLogCommandParameters(SnapshotId: snapshotId);
-        return await ExecuteCommandAsync(SnapshotCommandLogCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SnapshotCommandLogCommandParameters, SnapshotCommandLogResult> SnapshotCommandLogCommand = new("LayerTree.snapshotCommandLog", JsonContext.SnapshotCommandLogCommandParameters, JsonContext.SnapshotCommandLogResult);
+    Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -231,7 +184,8 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Clip</b> - Clip rectangle.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<LayerPaintedEventArgs> LayerPainted => CreateCdpEventSource(LayerTreeDomainEvent.LayerPainted);
+    IEventSource<LayerPaintedEventArgs> LayerPainted { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -241,6 +195,79 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Layers</b> - Layer tree, absent if not in the compositing mode.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<LayerTreeDidChangeEventArgs> LayerTreeDidChange { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ILayerTree
+{
+    private static LayerTreeJsonSerializerContext JsonContext = LayerTreeJsonSerializerContext.Default;
+
+    public async Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CompositingReasonsCommandParameters(LayerId: layerId);
+        return await ExecuteCommandAsync(CompositingReasonsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CompositingReasonsCommandParameters, CompositingReasonsResult> CompositingReasonsCommand = new("LayerTree.compositingReasons", JsonContext.CompositingReasonsCommandParameters, JsonContext.CompositingReasonsResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("LayerTree.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("LayerTree.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new LoadSnapshotCommandParameters(Tiles: tiles);
+        return await ExecuteCommandAsync(LoadSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<LoadSnapshotCommandParameters, LoadSnapshotResult> LoadSnapshotCommand = new("LayerTree.loadSnapshot", JsonContext.LoadSnapshotCommandParameters, JsonContext.LoadSnapshotResult);
+
+    public async Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new MakeSnapshotCommandParameters(LayerId: layerId);
+        return await ExecuteCommandAsync(MakeSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<MakeSnapshotCommandParameters, MakeSnapshotResult> MakeSnapshotCommand = new("LayerTree.makeSnapshot", JsonContext.MakeSnapshotCommandParameters, JsonContext.MakeSnapshotResult);
+
+    public async Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = default, double? minDuration = default, DOM.Rect? clipRect = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ProfileSnapshotCommandParameters(SnapshotId: snapshotId, MinRepeatCount: minRepeatCount, MinDuration: minDuration, ClipRect: clipRect);
+        return await ExecuteCommandAsync(ProfileSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ProfileSnapshotCommandParameters, ProfileSnapshotResult> ProfileSnapshotCommand = new("LayerTree.profileSnapshot", JsonContext.ProfileSnapshotCommandParameters, JsonContext.ProfileSnapshotResult);
+
+    public async Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReleaseSnapshotCommandParameters(SnapshotId: snapshotId);
+        return await ExecuteCommandAsync(ReleaseSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReleaseSnapshotCommandParameters, ReleaseSnapshotResult> ReleaseSnapshotCommand = new("LayerTree.releaseSnapshot", JsonContext.ReleaseSnapshotCommandParameters, JsonContext.ReleaseSnapshotResult);
+
+    public async Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = default, long? toStep = default, double? scale = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReplaySnapshotCommandParameters(SnapshotId: snapshotId, FromStep: fromStep, ToStep: toStep, Scale: scale);
+        return await ExecuteCommandAsync(ReplaySnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReplaySnapshotCommandParameters, ReplaySnapshotResult> ReplaySnapshotCommand = new("LayerTree.replaySnapshot", JsonContext.ReplaySnapshotCommandParameters, JsonContext.ReplaySnapshotResult);
+
+    public async Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SnapshotCommandLogCommandParameters(SnapshotId: snapshotId);
+        return await ExecuteCommandAsync(SnapshotCommandLogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SnapshotCommandLogCommandParameters, SnapshotCommandLogResult> SnapshotCommandLogCommand = new("LayerTree.snapshotCommandLog", JsonContext.SnapshotCommandLogCommandParameters, JsonContext.SnapshotCommandLogResult);
+
+    public IEventSource<LayerPaintedEventArgs> LayerPainted => CreateCdpEventSource(LayerTreeDomainEvent.LayerPainted);
     public IEventSource<LayerTreeDidChangeEventArgs> LayerTreeDidChange => CreateCdpEventSource(LayerTreeDomainEvent.LayerTreeDidChange);
 }
 
@@ -526,7 +553,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class LayerTreeJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="LayerTreeDomain"/>.
+/// Provides static event descriptors for the <see cref="ILayerTree"/>.
 /// </summary>
 public static class LayerTreeDomainEvent
 {

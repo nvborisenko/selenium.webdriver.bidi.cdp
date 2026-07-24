@@ -7,10 +7,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Input;
 
 /// <summary>
 /// </summary>
-public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IInput
 {
-    private static InputJsonSerializerContext JsonContext = InputJsonSerializerContext.Default;
-
     /// <summary>
     /// Dispatches a drag event into the page.
     /// </summary>
@@ -40,12 +38,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="DispatchDragEventResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DispatchDragEventResult> DispatchDragEventAsync(string type, double x, double y, DragData data, long? modifiers = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DispatchDragEventCommandParameters(Type: type, X: x, Y: y, Data: data, Modifiers: modifiers);
-        return await ExecuteCommandAsync(DispatchDragEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DispatchDragEventCommandParameters, DispatchDragEventResult> DispatchDragEventCommand = new("Input.dispatchDragEvent", JsonContext.DispatchDragEventCommandParameters, JsonContext.DispatchDragEventResult);
+    Task<DispatchDragEventResult> DispatchDragEventAsync(string type, double x, double y, DragData data, long? modifiers = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Dispatches a key event to the page.
@@ -111,12 +104,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchKeyEventResult"/>.
     /// </returns>
-    public async Task<DispatchKeyEventResult> DispatchKeyEventAsync(string type, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? text = default, string? unmodifiedText = default, string? keyIdentifier = default, string? code = default, string? key = default, long? windowsVirtualKeyCode = default, long? nativeVirtualKeyCode = default, bool? autoRepeat = default, bool? isKeypad = default, bool? isSystemKey = default, long? location = default, ImmutableArray<string>? commands = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DispatchKeyEventCommandParameters(Type: type, Modifiers: modifiers, Timestamp: timestamp, Text: text, UnmodifiedText: unmodifiedText, KeyIdentifier: keyIdentifier, Code: code, Key: key, WindowsVirtualKeyCode: windowsVirtualKeyCode, NativeVirtualKeyCode: nativeVirtualKeyCode, AutoRepeat: autoRepeat, IsKeypad: isKeypad, IsSystemKey: isSystemKey, Location: location, Commands: commands);
-        return await ExecuteCommandAsync(DispatchKeyEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DispatchKeyEventCommandParameters, DispatchKeyEventResult> DispatchKeyEventCommand = new("Input.dispatchKeyEvent", JsonContext.DispatchKeyEventCommandParameters, JsonContext.DispatchKeyEventResult);
+    Task<DispatchKeyEventResult> DispatchKeyEventAsync(string type, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? text = default, string? unmodifiedText = default, string? keyIdentifier = default, string? code = default, string? key = default, long? windowsVirtualKeyCode = default, long? nativeVirtualKeyCode = default, bool? autoRepeat = default, bool? isKeypad = default, bool? isSystemKey = default, long? location = default, ImmutableArray<string>? commands = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method emulates inserting text that doesn't come from a key press,
@@ -135,12 +123,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="InsertTextResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<InsertTextResult> InsertTextAsync(string text, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new InsertTextCommandParameters(Text: text);
-        return await ExecuteCommandAsync(InsertTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<InsertTextCommandParameters, InsertTextResult> InsertTextCommand = new("Input.insertText", JsonContext.InsertTextCommandParameters, JsonContext.InsertTextResult);
+    Task<InsertTextResult> InsertTextAsync(string text, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method sets the current candidate text for IME.
@@ -172,12 +155,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="ImeSetCompositionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ImeSetCompositionResult> ImeSetCompositionAsync(string text, long selectionStart, long selectionEnd, long? replacementStart = default, long? replacementEnd = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ImeSetCompositionCommandParameters(Text: text, SelectionStart: selectionStart, SelectionEnd: selectionEnd, ReplacementStart: replacementStart, ReplacementEnd: replacementEnd);
-        return await ExecuteCommandAsync(ImeSetCompositionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ImeSetCompositionCommandParameters, ImeSetCompositionResult> ImeSetCompositionCommand = new("Input.imeSetComposition", JsonContext.ImeSetCompositionCommandParameters, JsonContext.ImeSetCompositionResult);
+    Task<ImeSetCompositionResult> ImeSetCompositionAsync(string text, long selectionStart, long selectionEnd, long? replacementStart = default, long? replacementEnd = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Dispatches a mouse event to the page.
@@ -242,12 +220,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchMouseEventResult"/>.
     /// </returns>
-    public async Task<DispatchMouseEventResult> DispatchMouseEventAsync(string type, double x, double y, long? modifiers = default, TimeSinceEpoch? timestamp = default, MouseButton? button = default, long? buttons = default, long? clickCount = default, double? force = default, double? tangentialPressure = default, double? tiltX = default, double? tiltY = default, long? twist = default, double? deltaX = default, double? deltaY = default, string? pointerType = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DispatchMouseEventCommandParameters(Type: type, X: x, Y: y, Modifiers: modifiers, Timestamp: timestamp, Button: button, Buttons: buttons, ClickCount: clickCount, Force: force, TangentialPressure: tangentialPressure, TiltX: tiltX, TiltY: tiltY, Twist: twist, DeltaX: deltaX, DeltaY: deltaY, PointerType: pointerType);
-        return await ExecuteCommandAsync(DispatchMouseEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DispatchMouseEventCommandParameters, DispatchMouseEventResult> DispatchMouseEventCommand = new("Input.dispatchMouseEvent", JsonContext.DispatchMouseEventCommandParameters, JsonContext.DispatchMouseEventResult);
+    Task<DispatchMouseEventResult> DispatchMouseEventAsync(string type, double x, double y, long? modifiers = default, TimeSinceEpoch? timestamp = default, MouseButton? button = default, long? buttons = default, long? clickCount = default, double? force = default, double? tangentialPressure = default, double? tiltX = default, double? tiltY = default, long? twist = default, double? deltaX = default, double? deltaY = default, string? pointerType = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Dispatches a touch event to the page.
@@ -277,12 +250,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchTouchEventResult"/>.
     /// </returns>
-    public async Task<DispatchTouchEventResult> DispatchTouchEventAsync(string type, ImmutableArray<TouchPoint> touchPoints, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DispatchTouchEventCommandParameters(Type: type, TouchPoints: touchPoints, Modifiers: modifiers, Timestamp: timestamp);
-        return await ExecuteCommandAsync(DispatchTouchEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DispatchTouchEventCommandParameters, DispatchTouchEventResult> DispatchTouchEventCommand = new("Input.dispatchTouchEvent", JsonContext.DispatchTouchEventCommandParameters, JsonContext.DispatchTouchEventResult);
+    Task<DispatchTouchEventResult> DispatchTouchEventAsync(string type, ImmutableArray<TouchPoint> touchPoints, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancels any active dragging in the page.
@@ -296,12 +264,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CancelDraggingResult"/>.
     /// </returns>
-    public async Task<CancelDraggingResult> CancelDraggingAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CancelDraggingCommandParameters();
-        return await ExecuteCommandAsync(CancelDraggingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CancelDraggingCommandParameters, CancelDraggingResult> CancelDraggingCommand = new("Input.cancelDragging", JsonContext.CancelDraggingCommandParameters, JsonContext.CancelDraggingResult);
+    Task<CancelDraggingResult> CancelDraggingAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emulates touch event from the mouse event parameters.
@@ -344,12 +307,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="EmulateTouchFromMouseEventResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventAsync(string type, long x, long y, MouseButton button, TimeSinceEpoch? timestamp = default, double? deltaX = default, double? deltaY = default, long? modifiers = default, long? clickCount = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EmulateTouchFromMouseEventCommandParameters(Type: type, X: x, Y: y, Button: button, Timestamp: timestamp, DeltaX: deltaX, DeltaY: deltaY, Modifiers: modifiers, ClickCount: clickCount);
-        return await ExecuteCommandAsync(EmulateTouchFromMouseEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EmulateTouchFromMouseEventCommandParameters, EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventCommand = new("Input.emulateTouchFromMouseEvent", JsonContext.EmulateTouchFromMouseEventCommandParameters, JsonContext.EmulateTouchFromMouseEventResult);
+    Task<EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventAsync(string type, long x, long y, MouseButton button, TimeSinceEpoch? timestamp = default, double? deltaX = default, double? deltaY = default, long? modifiers = default, long? clickCount = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Ignores input events (useful while auditing page).
@@ -366,12 +324,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetIgnoreInputEventsResult"/>.
     /// </returns>
-    public async Task<SetIgnoreInputEventsResult> SetIgnoreInputEventsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetIgnoreInputEventsCommandParameters(Ignore: ignore);
-        return await ExecuteCommandAsync(SetIgnoreInputEventsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetIgnoreInputEventsCommandParameters, SetIgnoreInputEventsResult> SetIgnoreInputEventsCommand = new("Input.setIgnoreInputEvents", JsonContext.SetIgnoreInputEventsCommandParameters, JsonContext.SetIgnoreInputEventsResult);
+    Task<SetIgnoreInputEventsResult> SetIgnoreInputEventsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Prevents default drag and drop behavior and instead emits <b>Input.dragIntercepted</b> events.
@@ -389,12 +342,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="SetInterceptDragsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetInterceptDragsResult> SetInterceptDragsAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetInterceptDragsCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetInterceptDragsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetInterceptDragsCommandParameters, SetInterceptDragsResult> SetInterceptDragsCommand = new("Input.setInterceptDrags", JsonContext.SetInterceptDragsCommandParameters, JsonContext.SetInterceptDragsResult);
+    Task<SetInterceptDragsResult> SetInterceptDragsAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Synthesizes a pinch gesture over a time period by issuing appropriate touch events.
@@ -425,12 +373,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="SynthesizePinchGestureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SynthesizePinchGestureResult> SynthesizePinchGestureAsync(double x, double y, double scaleFactor, long? relativeSpeed = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SynthesizePinchGestureCommandParameters(X: x, Y: y, ScaleFactor: scaleFactor, RelativeSpeed: relativeSpeed, GestureSourceType: gestureSourceType);
-        return await ExecuteCommandAsync(SynthesizePinchGestureCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SynthesizePinchGestureCommandParameters, SynthesizePinchGestureResult> SynthesizePinchGestureCommand = new("Input.synthesizePinchGesture", JsonContext.SynthesizePinchGestureCommandParameters, JsonContext.SynthesizePinchGestureResult);
+    Task<SynthesizePinchGestureResult> SynthesizePinchGestureAsync(double x, double y, double scaleFactor, long? relativeSpeed = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Synthesizes a scroll gesture over a time period by issuing appropriate touch events.
@@ -484,12 +427,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="SynthesizeScrollGestureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SynthesizeScrollGestureResult> SynthesizeScrollGestureAsync(double x, double y, double? xDistance = default, double? yDistance = default, double? xOverscroll = default, double? yOverscroll = default, bool? preventFling = default, long? speed = default, GestureSourceType? gestureSourceType = default, long? repeatCount = default, long? repeatDelayMs = default, string? interactionMarkerName = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SynthesizeScrollGestureCommandParameters(X: x, Y: y, XDistance: xDistance, YDistance: yDistance, XOverscroll: xOverscroll, YOverscroll: yOverscroll, PreventFling: preventFling, Speed: speed, GestureSourceType: gestureSourceType, RepeatCount: repeatCount, RepeatDelayMs: repeatDelayMs, InteractionMarkerName: interactionMarkerName);
-        return await ExecuteCommandAsync(SynthesizeScrollGestureCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SynthesizeScrollGestureCommandParameters, SynthesizeScrollGestureResult> SynthesizeScrollGestureCommand = new("Input.synthesizeScrollGesture", JsonContext.SynthesizeScrollGestureCommandParameters, JsonContext.SynthesizeScrollGestureResult);
+    Task<SynthesizeScrollGestureResult> SynthesizeScrollGestureAsync(double x, double y, double? xDistance = default, double? yDistance = default, double? xOverscroll = default, double? yOverscroll = default, bool? preventFling = default, long? speed = default, GestureSourceType? gestureSourceType = default, long? repeatCount = default, long? repeatDelayMs = default, string? interactionMarkerName = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Synthesizes a tap gesture over a time period by issuing appropriate touch events.
@@ -520,12 +458,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// A task representing the asynchronous operation, containing a <see cref="SynthesizeTapGestureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SynthesizeTapGestureResult> SynthesizeTapGestureAsync(double x, double y, long? duration = default, long? tapCount = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SynthesizeTapGestureCommandParameters(X: x, Y: y, Duration: duration, TapCount: tapCount, GestureSourceType: gestureSourceType);
-        return await ExecuteCommandAsync(SynthesizeTapGestureCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SynthesizeTapGestureCommandParameters, SynthesizeTapGestureResult> SynthesizeTapGestureCommand = new("Input.synthesizeTapGesture", JsonContext.SynthesizeTapGestureCommandParameters, JsonContext.SynthesizeTapGestureResult);
+    Task<SynthesizeTapGestureResult> SynthesizeTapGestureAsync(double x, double y, long? duration = default, long? tapCount = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emitted only when <b>Input.setInterceptDrags</b> is enabled. Use this data with <b>Input.dispatchDragEvent</b> to
@@ -537,6 +470,114 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>Data</b></description></item>
     /// </list>
     /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    IEventSource<DragInterceptedEventArgs> DragIntercepted { get; }
+
+}
+
+internal sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IInput
+{
+    private static InputJsonSerializerContext JsonContext = InputJsonSerializerContext.Default;
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<DispatchDragEventResult> DispatchDragEventAsync(string type, double x, double y, DragData data, long? modifiers = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DispatchDragEventCommandParameters(Type: type, X: x, Y: y, Data: data, Modifiers: modifiers);
+        return await ExecuteCommandAsync(DispatchDragEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DispatchDragEventCommandParameters, DispatchDragEventResult> DispatchDragEventCommand = new("Input.dispatchDragEvent", JsonContext.DispatchDragEventCommandParameters, JsonContext.DispatchDragEventResult);
+
+    public async Task<DispatchKeyEventResult> DispatchKeyEventAsync(string type, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? text = default, string? unmodifiedText = default, string? keyIdentifier = default, string? code = default, string? key = default, long? windowsVirtualKeyCode = default, long? nativeVirtualKeyCode = default, bool? autoRepeat = default, bool? isKeypad = default, bool? isSystemKey = default, long? location = default, ImmutableArray<string>? commands = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DispatchKeyEventCommandParameters(Type: type, Modifiers: modifiers, Timestamp: timestamp, Text: text, UnmodifiedText: unmodifiedText, KeyIdentifier: keyIdentifier, Code: code, Key: key, WindowsVirtualKeyCode: windowsVirtualKeyCode, NativeVirtualKeyCode: nativeVirtualKeyCode, AutoRepeat: autoRepeat, IsKeypad: isKeypad, IsSystemKey: isSystemKey, Location: location, Commands: commands);
+        return await ExecuteCommandAsync(DispatchKeyEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DispatchKeyEventCommandParameters, DispatchKeyEventResult> DispatchKeyEventCommand = new("Input.dispatchKeyEvent", JsonContext.DispatchKeyEventCommandParameters, JsonContext.DispatchKeyEventResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<InsertTextResult> InsertTextAsync(string text, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new InsertTextCommandParameters(Text: text);
+        return await ExecuteCommandAsync(InsertTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<InsertTextCommandParameters, InsertTextResult> InsertTextCommand = new("Input.insertText", JsonContext.InsertTextCommandParameters, JsonContext.InsertTextResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ImeSetCompositionResult> ImeSetCompositionAsync(string text, long selectionStart, long selectionEnd, long? replacementStart = default, long? replacementEnd = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ImeSetCompositionCommandParameters(Text: text, SelectionStart: selectionStart, SelectionEnd: selectionEnd, ReplacementStart: replacementStart, ReplacementEnd: replacementEnd);
+        return await ExecuteCommandAsync(ImeSetCompositionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ImeSetCompositionCommandParameters, ImeSetCompositionResult> ImeSetCompositionCommand = new("Input.imeSetComposition", JsonContext.ImeSetCompositionCommandParameters, JsonContext.ImeSetCompositionResult);
+
+    public async Task<DispatchMouseEventResult> DispatchMouseEventAsync(string type, double x, double y, long? modifiers = default, TimeSinceEpoch? timestamp = default, MouseButton? button = default, long? buttons = default, long? clickCount = default, double? force = default, double? tangentialPressure = default, double? tiltX = default, double? tiltY = default, long? twist = default, double? deltaX = default, double? deltaY = default, string? pointerType = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DispatchMouseEventCommandParameters(Type: type, X: x, Y: y, Modifiers: modifiers, Timestamp: timestamp, Button: button, Buttons: buttons, ClickCount: clickCount, Force: force, TangentialPressure: tangentialPressure, TiltX: tiltX, TiltY: tiltY, Twist: twist, DeltaX: deltaX, DeltaY: deltaY, PointerType: pointerType);
+        return await ExecuteCommandAsync(DispatchMouseEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DispatchMouseEventCommandParameters, DispatchMouseEventResult> DispatchMouseEventCommand = new("Input.dispatchMouseEvent", JsonContext.DispatchMouseEventCommandParameters, JsonContext.DispatchMouseEventResult);
+
+    public async Task<DispatchTouchEventResult> DispatchTouchEventAsync(string type, ImmutableArray<TouchPoint> touchPoints, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DispatchTouchEventCommandParameters(Type: type, TouchPoints: touchPoints, Modifiers: modifiers, Timestamp: timestamp);
+        return await ExecuteCommandAsync(DispatchTouchEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DispatchTouchEventCommandParameters, DispatchTouchEventResult> DispatchTouchEventCommand = new("Input.dispatchTouchEvent", JsonContext.DispatchTouchEventCommandParameters, JsonContext.DispatchTouchEventResult);
+
+    public async Task<CancelDraggingResult> CancelDraggingAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CancelDraggingCommandParameters();
+        return await ExecuteCommandAsync(CancelDraggingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CancelDraggingCommandParameters, CancelDraggingResult> CancelDraggingCommand = new("Input.cancelDragging", JsonContext.CancelDraggingCommandParameters, JsonContext.CancelDraggingResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventAsync(string type, long x, long y, MouseButton button, TimeSinceEpoch? timestamp = default, double? deltaX = default, double? deltaY = default, long? modifiers = default, long? clickCount = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EmulateTouchFromMouseEventCommandParameters(Type: type, X: x, Y: y, Button: button, Timestamp: timestamp, DeltaX: deltaX, DeltaY: deltaY, Modifiers: modifiers, ClickCount: clickCount);
+        return await ExecuteCommandAsync(EmulateTouchFromMouseEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EmulateTouchFromMouseEventCommandParameters, EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventCommand = new("Input.emulateTouchFromMouseEvent", JsonContext.EmulateTouchFromMouseEventCommandParameters, JsonContext.EmulateTouchFromMouseEventResult);
+
+    public async Task<SetIgnoreInputEventsResult> SetIgnoreInputEventsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetIgnoreInputEventsCommandParameters(Ignore: ignore);
+        return await ExecuteCommandAsync(SetIgnoreInputEventsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetIgnoreInputEventsCommandParameters, SetIgnoreInputEventsResult> SetIgnoreInputEventsCommand = new("Input.setIgnoreInputEvents", JsonContext.SetIgnoreInputEventsCommandParameters, JsonContext.SetIgnoreInputEventsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetInterceptDragsResult> SetInterceptDragsAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInterceptDragsCommandParameters(Enabled: enabled);
+        return await ExecuteCommandAsync(SetInterceptDragsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetInterceptDragsCommandParameters, SetInterceptDragsResult> SetInterceptDragsCommand = new("Input.setInterceptDrags", JsonContext.SetInterceptDragsCommandParameters, JsonContext.SetInterceptDragsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SynthesizePinchGestureResult> SynthesizePinchGestureAsync(double x, double y, double scaleFactor, long? relativeSpeed = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SynthesizePinchGestureCommandParameters(X: x, Y: y, ScaleFactor: scaleFactor, RelativeSpeed: relativeSpeed, GestureSourceType: gestureSourceType);
+        return await ExecuteCommandAsync(SynthesizePinchGestureCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SynthesizePinchGestureCommandParameters, SynthesizePinchGestureResult> SynthesizePinchGestureCommand = new("Input.synthesizePinchGesture", JsonContext.SynthesizePinchGestureCommandParameters, JsonContext.SynthesizePinchGestureResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SynthesizeScrollGestureResult> SynthesizeScrollGestureAsync(double x, double y, double? xDistance = default, double? yDistance = default, double? xOverscroll = default, double? yOverscroll = default, bool? preventFling = default, long? speed = default, GestureSourceType? gestureSourceType = default, long? repeatCount = default, long? repeatDelayMs = default, string? interactionMarkerName = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SynthesizeScrollGestureCommandParameters(X: x, Y: y, XDistance: xDistance, YDistance: yDistance, XOverscroll: xOverscroll, YOverscroll: yOverscroll, PreventFling: preventFling, Speed: speed, GestureSourceType: gestureSourceType, RepeatCount: repeatCount, RepeatDelayMs: repeatDelayMs, InteractionMarkerName: interactionMarkerName);
+        return await ExecuteCommandAsync(SynthesizeScrollGestureCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SynthesizeScrollGestureCommandParameters, SynthesizeScrollGestureResult> SynthesizeScrollGestureCommand = new("Input.synthesizeScrollGesture", JsonContext.SynthesizeScrollGestureCommandParameters, JsonContext.SynthesizeScrollGestureResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SynthesizeTapGestureResult> SynthesizeTapGestureAsync(double x, double y, long? duration = default, long? tapCount = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SynthesizeTapGestureCommandParameters(X: x, Y: y, Duration: duration, TapCount: tapCount, GestureSourceType: gestureSourceType);
+        return await ExecuteCommandAsync(SynthesizeTapGestureCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SynthesizeTapGestureCommandParameters, SynthesizeTapGestureResult> SynthesizeTapGestureCommand = new("Input.synthesizeTapGesture", JsonContext.SynthesizeTapGestureCommandParameters, JsonContext.SynthesizeTapGestureResult);
+
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DragInterceptedEventArgs> DragIntercepted => CreateCdpEventSource(InputDomainEvent.DragIntercepted);
 }
@@ -835,7 +876,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class InputJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="InputDomain"/>.
+/// Provides static event descriptors for the <see cref="IInput"/>.
 /// </summary>
 public static class InputDomainEvent
 {

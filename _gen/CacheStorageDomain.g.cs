@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.CacheStorage;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ICacheStorage
 {
-    private static CacheStorageJsonSerializerContext JsonContext = CacheStorageJsonSerializerContext.Default;
-
     /// <summary>
     /// Deletes a cache.
     /// </summary>
@@ -27,12 +25,7 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteCacheResult"/>.
     /// </returns>
-    public async Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteCacheCommandParameters(CacheId: cacheId);
-        return await ExecuteCommandAsync(DeleteCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteCacheCommandParameters, DeleteCacheResult> DeleteCacheCommand = new("CacheStorage.deleteCache", JsonContext.DeleteCacheCommandParameters, JsonContext.DeleteCacheResult);
+    Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a cache entry.
@@ -52,12 +45,7 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteEntryResult"/>.
     /// </returns>
-    public async Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteEntryCommandParameters(CacheId: cacheId, Request: request);
-        return await ExecuteCommandAsync(DeleteEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteEntryCommandParameters, DeleteEntryResult> DeleteEntryCommand = new("CacheStorage.deleteEntry", JsonContext.DeleteEntryCommandParameters, JsonContext.DeleteEntryResult);
+    Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests cache names.
@@ -81,12 +69,7 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestCacheNamesResult"/>.
     /// </returns>
-    public async Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RequestCacheNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);
-        return await ExecuteCommandAsync(RequestCacheNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RequestCacheNamesCommandParameters, RequestCacheNamesResult> RequestCacheNamesCommand = new("CacheStorage.requestCacheNames", JsonContext.RequestCacheNamesCommandParameters, JsonContext.RequestCacheNamesResult);
+    Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches cache entry.
@@ -109,12 +92,7 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestCachedResponseResult"/>.
     /// </returns>
-    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RequestCachedResponseCommandParameters(CacheId: cacheId, RequestURL: requestURL, RequestHeaders: requestHeaders);
-        return await ExecuteCommandAsync(RequestCachedResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RequestCachedResponseCommandParameters, RequestCachedResponseResult> RequestCachedResponseCommand = new("CacheStorage.requestCachedResponse", JsonContext.RequestCachedResponseCommandParameters, JsonContext.RequestCachedResponseResult);
+    Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests data from cache.
@@ -140,6 +118,43 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestEntriesResult"/>.
     /// </returns>
+    Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = default, long? pageSize = default, string? pathFilter = default, string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ICacheStorage
+{
+    private static CacheStorageJsonSerializerContext JsonContext = CacheStorageJsonSerializerContext.Default;
+
+    public async Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteCacheCommandParameters(CacheId: cacheId);
+        return await ExecuteCommandAsync(DeleteCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteCacheCommandParameters, DeleteCacheResult> DeleteCacheCommand = new("CacheStorage.deleteCache", JsonContext.DeleteCacheCommandParameters, JsonContext.DeleteCacheResult);
+
+    public async Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteEntryCommandParameters(CacheId: cacheId, Request: request);
+        return await ExecuteCommandAsync(DeleteEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteEntryCommandParameters, DeleteEntryResult> DeleteEntryCommand = new("CacheStorage.deleteEntry", JsonContext.DeleteEntryCommandParameters, JsonContext.DeleteEntryResult);
+
+    public async Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestCacheNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);
+        return await ExecuteCommandAsync(RequestCacheNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestCacheNamesCommandParameters, RequestCacheNamesResult> RequestCacheNamesCommand = new("CacheStorage.requestCacheNames", JsonContext.RequestCacheNamesCommandParameters, JsonContext.RequestCacheNamesResult);
+
+    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RequestCachedResponseCommandParameters(CacheId: cacheId, RequestURL: requestURL, RequestHeaders: requestHeaders);
+        return await ExecuteCommandAsync(RequestCachedResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RequestCachedResponseCommandParameters, RequestCachedResponseResult> RequestCachedResponseCommand = new("CacheStorage.requestCachedResponse", JsonContext.RequestCachedResponseCommandParameters, JsonContext.RequestCachedResponseResult);
+
     public async Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = default, long? pageSize = default, string? pathFilter = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestEntriesCommandParameters(CacheId: cacheId, SkipCount: skipCount, PageSize: pageSize, PathFilter: pathFilter);

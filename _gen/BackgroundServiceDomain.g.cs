@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.BackgroundService;
 /// Defines events for background web platform features.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IBackgroundService
 {
-    private static BackgroundServiceJsonSerializerContext JsonContext = BackgroundServiceJsonSerializerContext.Default;
-
     /// <summary>
     /// Enables event updates for the service.
     /// </summary>
@@ -27,12 +25,7 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartObservingResult"/>.
     /// </returns>
-    public async Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StartObservingCommandParameters(Service: service);
-        return await ExecuteCommandAsync(StartObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StartObservingCommandParameters, StartObservingResult> StartObservingCommand = new("BackgroundService.startObserving", JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult);
+    Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables event updates for the service.
@@ -48,12 +41,7 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopObservingResult"/>.
     /// </returns>
-    public async Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new StopObservingCommandParameters(Service: service);
-        return await ExecuteCommandAsync(StopObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<StopObservingCommandParameters, StopObservingResult> StopObservingCommand = new("BackgroundService.stopObserving", JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult);
+    Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set the recording state for the service.
@@ -71,12 +59,7 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetRecordingResult"/>.
     /// </returns>
-    public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetRecordingCommandParameters(ShouldRecord: shouldRecord, Service: service);
-        return await ExecuteCommandAsync(SetRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetRecordingCommandParameters, SetRecordingResult> SetRecordingCommand = new("BackgroundService.setRecording", JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult);
+    Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears all stored data for the service.
@@ -92,12 +75,7 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearEventsResult"/>.
     /// </returns>
-    public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearEventsCommandParameters(Service: service);
-        return await ExecuteCommandAsync(ClearEventsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearEventsCommandParameters, ClearEventsResult> ClearEventsCommand = new("BackgroundService.clearEvents", JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult);
+    Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Called when the recording state for the service has been updated.
@@ -109,7 +87,8 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <item><description><b>Service</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<RecordingStateChangedEventArgs> RecordingStateChanged => CreateCdpEventSource(BackgroundServiceDomainEvent.RecordingStateChanged);
+    IEventSource<RecordingStateChangedEventArgs> RecordingStateChanged { get; }
+
     /// <summary>
     /// Called with all existing backgroundServiceEvents when enabled, and all new
     /// events afterwards if enabled and recording.
@@ -120,6 +99,44 @@ public sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.We
     /// <item><description><b>BackgroundServiceEvent</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<BackgroundServiceEventReceivedEventArgs> BackgroundServiceEventReceived { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IBackgroundService
+{
+    private static BackgroundServiceJsonSerializerContext JsonContext = BackgroundServiceJsonSerializerContext.Default;
+
+    public async Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartObservingCommandParameters(Service: service);
+        return await ExecuteCommandAsync(StartObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartObservingCommandParameters, StartObservingResult> StartObservingCommand = new("BackgroundService.startObserving", JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult);
+
+    public async Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopObservingCommandParameters(Service: service);
+        return await ExecuteCommandAsync(StopObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopObservingCommandParameters, StopObservingResult> StopObservingCommand = new("BackgroundService.stopObserving", JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult);
+
+    public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetRecordingCommandParameters(ShouldRecord: shouldRecord, Service: service);
+        return await ExecuteCommandAsync(SetRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetRecordingCommandParameters, SetRecordingResult> SetRecordingCommand = new("BackgroundService.setRecording", JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult);
+
+    public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearEventsCommandParameters(Service: service);
+        return await ExecuteCommandAsync(ClearEventsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearEventsCommandParameters, ClearEventsResult> ClearEventsCommand = new("BackgroundService.clearEvents", JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult);
+
+    public IEventSource<RecordingStateChangedEventArgs> RecordingStateChanged => CreateCdpEventSource(BackgroundServiceDomainEvent.RecordingStateChanged);
     public IEventSource<BackgroundServiceEventReceivedEventArgs> BackgroundServiceEventReceived => CreateCdpEventSource(BackgroundServiceDomainEvent.BackgroundServiceEventReceived);
 }
 
@@ -263,7 +280,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class BackgroundServiceJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="BackgroundServiceDomain"/>.
+/// Provides static event descriptors for the <see cref="IBackgroundService"/>.
 /// </summary>
 public static class BackgroundServiceDomainEvent
 {

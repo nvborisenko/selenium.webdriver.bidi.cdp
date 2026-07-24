@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.DeviceOrientation;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class DeviceOrientationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IDeviceOrientation
 {
-    private static DeviceOrientationJsonSerializerContext JsonContext = DeviceOrientationJsonSerializerContext.Default;
-
     /// <summary>
     /// Clears the overridden Device Orientation.
     /// </summary>
@@ -24,12 +22,7 @@ public sealed class DeviceOrientationDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearDeviceOrientationOverrideResult"/>.
     /// </returns>
-    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearDeviceOrientationOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearDeviceOrientationOverrideCommandParameters, ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideCommand = new("DeviceOrientation.clearDeviceOrientationOverride", JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult);
+    Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Device Orientation.
@@ -52,6 +45,22 @@ public sealed class DeviceOrientationDomain(CdpModule cdp) : global::Selenium.We
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDeviceOrientationOverrideResult"/>.
     /// </returns>
+    Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class DeviceOrientationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDeviceOrientation
+{
+    private static DeviceOrientationJsonSerializerContext JsonContext = DeviceOrientationJsonSerializerContext.Default;
+
+    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearDeviceOrientationOverrideCommandParameters();
+        return await ExecuteCommandAsync(ClearDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearDeviceOrientationOverrideCommandParameters, ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideCommand = new("DeviceOrientation.clearDeviceOrientationOverride", JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult);
+
     public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceOrientationOverrideCommandParameters(Alpha: alpha, Beta: beta, Gamma: gamma);

@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Schema;
 /// This domain is deprecated.
 /// </summary>
 [global::System.Obsolete]
-public sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface ISchema
 {
-    private static SchemaJsonSerializerContext JsonContext = SchemaJsonSerializerContext.Default;
-
     /// <summary>
     /// Returns supported domains.
     /// </summary>
@@ -25,6 +23,15 @@ public sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDomainsResult"/>.
     /// </returns>
+    Task<GetDomainsResult> GetDomainsAsync(string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Obsolete]
+internal sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ISchema
+{
+    private static SchemaJsonSerializerContext JsonContext = SchemaJsonSerializerContext.Default;
+
     public async Task<GetDomainsResult> GetDomainsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDomainsCommandParameters();

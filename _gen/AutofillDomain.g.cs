@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Autofill;
 /// Defines commands and events for Autofill.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IAutofill
 {
-    private static AutofillJsonSerializerContext JsonContext = AutofillJsonSerializerContext.Default;
-
     /// <summary>
     /// Trigger autofill on a form identified by the fieldId.
     /// If the field and related form cannot be autofilled, returns an error.
@@ -38,12 +36,7 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TriggerResult"/>.
     /// </returns>
-    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: frameId, Card: card, Address: address);
-        return await ExecuteCommandAsync(TriggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TriggerCommandParameters, TriggerResult> TriggerCommand = new("Autofill.trigger", JsonContext.TriggerCommandParameters, JsonContext.TriggerResult);
+    Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set addresses so that developers can verify their forms implementation.
@@ -59,12 +52,7 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAddressesResult"/>.
     /// </returns>
-    public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAddressesCommandParameters(Addresses: addresses);
-        return await ExecuteCommandAsync(SetAddressesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAddressesCommandParameters, SetAddressesResult> SetAddressesCommand = new("Autofill.setAddresses", JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult);
+    Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables autofill domain notifications.
@@ -78,12 +66,7 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Autofill.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables autofill domain notifications.
@@ -97,12 +80,7 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Autofill.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emitted when an address form is filled.
@@ -114,6 +92,43 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <item><description><b>AddressUi</b> - An UI representation of the address used to fill the form. Consists of a 2D array where each child represents an address/profile line.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<AddressFormFilledEventArgs> AddressFormFilled { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAutofill
+{
+    private static AutofillJsonSerializerContext JsonContext = AutofillJsonSerializerContext.Default;
+
+    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: frameId, Card: card, Address: address);
+        return await ExecuteCommandAsync(TriggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TriggerCommandParameters, TriggerResult> TriggerCommand = new("Autofill.trigger", JsonContext.TriggerCommandParameters, JsonContext.TriggerResult);
+
+    public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAddressesCommandParameters(Addresses: addresses);
+        return await ExecuteCommandAsync(SetAddressesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAddressesCommandParameters, SetAddressesResult> SetAddressesCommand = new("Autofill.setAddresses", JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Autofill.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Autofill.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
     public IEventSource<AddressFormFilledEventArgs> AddressFormFilled => CreateCdpEventSource(AutofillDomainEvent.AddressFormFilled);
 }
 
@@ -298,7 +313,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class AutofillJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="AutofillDomain"/>.
+/// Provides static event descriptors for the <see cref="IAutofill"/>.
 /// </summary>
 public static class AutofillDomainEvent
 {

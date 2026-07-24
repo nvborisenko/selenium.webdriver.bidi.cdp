@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.DeviceAccess;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IDeviceAccess
 {
-    private static DeviceAccessJsonSerializerContext JsonContext = DeviceAccessJsonSerializerContext.Default;
-
     /// <summary>
     /// Enable events in this domain.
     /// </summary>
@@ -24,12 +22,7 @@ public sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DeviceAccess.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disable events in this domain.
@@ -43,12 +36,7 @@ public sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DeviceAccess.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Select a device in response to a DeviceAccess.deviceRequestPrompted event.
@@ -66,12 +54,7 @@ public sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SelectPromptResult"/>.
     /// </returns>
-    public async Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SelectPromptCommandParameters(Id: id, DeviceId: deviceId);
-        return await ExecuteCommandAsync(SelectPromptCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SelectPromptCommandParameters, SelectPromptResult> SelectPromptCommand = new("DeviceAccess.selectPrompt", JsonContext.SelectPromptCommandParameters, JsonContext.SelectPromptResult);
+    Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event.
@@ -87,12 +70,7 @@ public sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CancelPromptResult"/>.
     /// </returns>
-    public async Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CancelPromptCommandParameters(Id: id);
-        return await ExecuteCommandAsync(CancelPromptCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CancelPromptCommandParameters, CancelPromptResult> CancelPromptCommand = new("DeviceAccess.cancelPrompt", JsonContext.CancelPromptCommandParameters, JsonContext.CancelPromptResult);
+    Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// A device request opened a user prompt to select a device. Respond with the
@@ -105,6 +83,43 @@ public sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <item><description><b>Devices</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<DeviceRequestPromptedEventArgs> DeviceRequestPrompted { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDeviceAccess
+{
+    private static DeviceAccessJsonSerializerContext JsonContext = DeviceAccessJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DeviceAccess.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DeviceAccess.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SelectPromptCommandParameters(Id: id, DeviceId: deviceId);
+        return await ExecuteCommandAsync(SelectPromptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SelectPromptCommandParameters, SelectPromptResult> SelectPromptCommand = new("DeviceAccess.selectPrompt", JsonContext.SelectPromptCommandParameters, JsonContext.SelectPromptResult);
+
+    public async Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CancelPromptCommandParameters(Id: id);
+        return await ExecuteCommandAsync(CancelPromptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CancelPromptCommandParameters, CancelPromptResult> CancelPromptCommand = new("DeviceAccess.cancelPrompt", JsonContext.CancelPromptCommandParameters, JsonContext.CancelPromptResult);
+
     public IEventSource<DeviceRequestPromptedEventArgs> DeviceRequestPrompted => CreateCdpEventSource(DeviceAccessDomainEvent.DeviceRequestPrompted);
 }
 
@@ -195,7 +210,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class DeviceAccessJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="DeviceAccessDomain"/>.
+/// Provides static event descriptors for the <see cref="IDeviceAccess"/>.
 /// </summary>
 public static class DeviceAccessDomainEvent
 {

@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Storage;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IStorage
 {
-    private static StorageJsonSerializerContext JsonContext = StorageJsonSerializerContext.Default;
-
     /// <summary>
     /// Returns a storage key given a frame id.
     /// Deprecated. Please use Storage.getStorageKey instead.
@@ -28,12 +26,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetStorageKeyForFrameResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetStorageKeyForFrameCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetStorageKeyForFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetStorageKeyForFrameCommandParameters, GetStorageKeyForFrameResult> GetStorageKeyForFrameCommand = new("Storage.getStorageKeyForFrame", JsonContext.GetStorageKeyForFrameCommandParameters, JsonContext.GetStorageKeyForFrameResult);
+    Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns storage key for the given frame. If no frame ID is provided,
@@ -50,12 +43,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStorageKeyResult"/>.
     /// </returns>
-    public async Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetStorageKeyCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetStorageKeyCommandParameters, GetStorageKeyResult> GetStorageKeyCommand = new("Storage.getStorageKey", JsonContext.GetStorageKeyCommandParameters, JsonContext.GetStorageKeyResult);
+    Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears storage for origin.
@@ -75,12 +63,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearDataForOriginResult"/>.
     /// </returns>
-    public async Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearDataForOriginCommandParameters(Origin: origin, StorageTypes: storageTypes);
-        return await ExecuteCommandAsync(ClearDataForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearDataForOriginCommandParameters, ClearDataForOriginResult> ClearDataForOriginCommand = new("Storage.clearDataForOrigin", JsonContext.ClearDataForOriginCommandParameters, JsonContext.ClearDataForOriginResult);
+    Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears storage for storage key.
@@ -100,12 +83,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearDataForStorageKeyResult"/>.
     /// </returns>
-    public async Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearDataForStorageKeyCommandParameters(StorageKey: storageKey, StorageTypes: storageTypes);
-        return await ExecuteCommandAsync(ClearDataForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearDataForStorageKeyCommandParameters, ClearDataForStorageKeyResult> ClearDataForStorageKeyCommand = new("Storage.clearDataForStorageKey", JsonContext.ClearDataForStorageKeyCommandParameters, JsonContext.ClearDataForStorageKeyResult);
+    Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser cookies.
@@ -122,12 +100,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCookiesResult"/>.
     /// </returns>
-    public async Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetCookiesCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(GetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetCookiesCommandParameters, GetCookiesResult> GetCookiesCommand = new("Storage.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
+    Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets given cookies.
@@ -147,12 +120,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookiesResult"/>.
     /// </returns>
-    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetCookiesCommandParameters(Cookies: cookies, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(SetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetCookiesCommandParameters, SetCookiesResult> SetCookiesCommand = new("Storage.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
+    Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears cookies.
@@ -169,12 +137,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearCookiesResult"/>.
     /// </returns>
-    public async Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearCookiesCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(ClearCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearCookiesCommandParameters, ClearCookiesResult> ClearCookiesCommand = new("Storage.clearCookies", JsonContext.ClearCookiesCommandParameters, JsonContext.ClearCookiesResult);
+    Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns usage and quota in bytes.
@@ -191,12 +154,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetUsageAndQuotaResult"/>.
     /// </returns>
-    public async Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetUsageAndQuotaCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(GetUsageAndQuotaCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetUsageAndQuotaCommandParameters, GetUsageAndQuotaResult> GetUsageAndQuotaCommand = new("Storage.getUsageAndQuota", JsonContext.GetUsageAndQuotaCommandParameters, JsonContext.GetUsageAndQuotaResult);
+    Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Override quota for the specified origin
@@ -222,12 +180,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OverrideQuotaForOriginResult"/>.
     /// </returns>
-    public async Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new OverrideQuotaForOriginCommandParameters(Origin: origin, QuotaSize: quotaSize);
-        return await ExecuteCommandAsync(OverrideQuotaForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<OverrideQuotaForOriginCommandParameters, OverrideQuotaForOriginResult> OverrideQuotaForOriginCommand = new("Storage.overrideQuotaForOrigin", JsonContext.OverrideQuotaForOriginCommandParameters, JsonContext.OverrideQuotaForOriginResult);
+    Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers origin to be notified when an update occurs to its cache storage list.
@@ -244,12 +197,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackCacheStorageForOriginResult"/>.
     /// </returns>
-    public async Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TrackCacheStorageForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(TrackCacheStorageForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TrackCacheStorageForOriginCommandParameters, TrackCacheStorageForOriginResult> TrackCacheStorageForOriginCommand = new("Storage.trackCacheStorageForOrigin", JsonContext.TrackCacheStorageForOriginCommandParameters, JsonContext.TrackCacheStorageForOriginResult);
+    Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers storage key to be notified when an update occurs to its cache storage list.
@@ -266,12 +214,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackCacheStorageForStorageKeyResult"/>.
     /// </returns>
-    public async Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(TrackCacheStorageForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TrackCacheStorageForStorageKeyCommandParameters, TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyCommand = new("Storage.trackCacheStorageForStorageKey", JsonContext.TrackCacheStorageForStorageKeyCommandParameters, JsonContext.TrackCacheStorageForStorageKeyResult);
+    Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers origin to be notified when an update occurs to its IndexedDB.
@@ -288,12 +231,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackIndexedDBForOriginResult"/>.
     /// </returns>
-    public async Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TrackIndexedDBForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(TrackIndexedDBForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TrackIndexedDBForOriginCommandParameters, TrackIndexedDBForOriginResult> TrackIndexedDBForOriginCommand = new("Storage.trackIndexedDBForOrigin", JsonContext.TrackIndexedDBForOriginCommandParameters, JsonContext.TrackIndexedDBForOriginResult);
+    Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers storage key to be notified when an update occurs to its IndexedDB.
@@ -310,12 +248,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackIndexedDBForStorageKeyResult"/>.
     /// </returns>
-    public async Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(TrackIndexedDBForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TrackIndexedDBForStorageKeyCommandParameters, TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyCommand = new("Storage.trackIndexedDBForStorageKey", JsonContext.TrackIndexedDBForStorageKeyCommandParameters, JsonContext.TrackIndexedDBForStorageKeyResult);
+    Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters origin from receiving notifications for cache storage.
@@ -332,12 +265,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackCacheStorageForOriginResult"/>.
     /// </returns>
-    public async Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new UntrackCacheStorageForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(UntrackCacheStorageForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<UntrackCacheStorageForOriginCommandParameters, UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginCommand = new("Storage.untrackCacheStorageForOrigin", JsonContext.UntrackCacheStorageForOriginCommandParameters, JsonContext.UntrackCacheStorageForOriginResult);
+    Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters storage key from receiving notifications for cache storage.
@@ -354,12 +282,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackCacheStorageForStorageKeyResult"/>.
     /// </returns>
-    public async Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new UntrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(UntrackCacheStorageForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<UntrackCacheStorageForStorageKeyCommandParameters, UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyCommand = new("Storage.untrackCacheStorageForStorageKey", JsonContext.UntrackCacheStorageForStorageKeyCommandParameters, JsonContext.UntrackCacheStorageForStorageKeyResult);
+    Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters origin from receiving notifications for IndexedDB.
@@ -376,12 +299,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackIndexedDBForOriginResult"/>.
     /// </returns>
-    public async Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new UntrackIndexedDBForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(UntrackIndexedDBForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<UntrackIndexedDBForOriginCommandParameters, UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginCommand = new("Storage.untrackIndexedDBForOrigin", JsonContext.UntrackIndexedDBForOriginCommandParameters, JsonContext.UntrackIndexedDBForOriginResult);
+    Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters storage key from receiving notifications for IndexedDB.
@@ -398,12 +316,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackIndexedDBForStorageKeyResult"/>.
     /// </returns>
-    public async Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new UntrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(UntrackIndexedDBForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<UntrackIndexedDBForStorageKeyCommandParameters, UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyCommand = new("Storage.untrackIndexedDBForStorageKey", JsonContext.UntrackIndexedDBForStorageKeyCommandParameters, JsonContext.UntrackIndexedDBForStorageKeyResult);
+    Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the number of stored Trust Tokens per issuer for the
@@ -418,12 +331,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetTrustTokensResult"/>.
     /// </returns>
-    public async Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetTrustTokensCommandParameters();
-        return await ExecuteCommandAsync(GetTrustTokensCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetTrustTokensCommandParameters, GetTrustTokensResult> GetTrustTokensCommand = new("Storage.getTrustTokens", JsonContext.GetTrustTokensCommandParameters, JsonContext.GetTrustTokensResult);
+    Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes all Trust Tokens issued by the provided issuerOrigin.
@@ -440,12 +348,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearTrustTokensResult"/>.
     /// </returns>
-    public async Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearTrustTokensCommandParameters(IssuerOrigin: issuerOrigin);
-        return await ExecuteCommandAsync(ClearTrustTokensCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearTrustTokensCommandParameters, ClearTrustTokensResult> ClearTrustTokensCommand = new("Storage.clearTrustTokens", JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult);
+    Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets metadata for an origin's shared storage.
@@ -461,12 +364,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSharedStorageMetadataResult"/>.
     /// </returns>
-    public async Task<GetSharedStorageMetadataResult> GetSharedStorageMetadataAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetSharedStorageMetadataCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(GetSharedStorageMetadataCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetSharedStorageMetadataCommandParameters, GetSharedStorageMetadataResult> GetSharedStorageMetadataCommand = new("Storage.getSharedStorageMetadata", JsonContext.GetSharedStorageMetadataCommandParameters, JsonContext.GetSharedStorageMetadataResult);
+    Task<GetSharedStorageMetadataResult> GetSharedStorageMetadataAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the entries in an given origin's shared storage.
@@ -482,12 +380,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSharedStorageEntriesResult"/>.
     /// </returns>
-    public async Task<GetSharedStorageEntriesResult> GetSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetSharedStorageEntriesCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(GetSharedStorageEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetSharedStorageEntriesCommandParameters, GetSharedStorageEntriesResult> GetSharedStorageEntriesCommand = new("Storage.getSharedStorageEntries", JsonContext.GetSharedStorageEntriesCommandParameters, JsonContext.GetSharedStorageEntriesResult);
+    Task<GetSharedStorageEntriesResult> GetSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets entry with <b>key</b> and <b>value</b> for a given origin's shared storage.
@@ -511,12 +404,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSharedStorageEntryResult"/>.
     /// </returns>
-    public async Task<SetSharedStorageEntryResult> SetSharedStorageEntryAsync(string ownerOrigin, string key, string value, bool? ignoreIfPresent = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSharedStorageEntryCommandParameters(OwnerOrigin: ownerOrigin, Key: key, Value: value, IgnoreIfPresent: ignoreIfPresent);
-        return await ExecuteCommandAsync(SetSharedStorageEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSharedStorageEntryCommandParameters, SetSharedStorageEntryResult> SetSharedStorageEntryCommand = new("Storage.setSharedStorageEntry", JsonContext.SetSharedStorageEntryCommandParameters, JsonContext.SetSharedStorageEntryResult);
+    Task<SetSharedStorageEntryResult> SetSharedStorageEntryAsync(string ownerOrigin, string key, string value, bool? ignoreIfPresent = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes entry for <b>key</b> (if it exists) for a given origin's shared storage.
@@ -534,12 +422,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteSharedStorageEntryResult"/>.
     /// </returns>
-    public async Task<DeleteSharedStorageEntryResult> DeleteSharedStorageEntryAsync(string ownerOrigin, string key, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteSharedStorageEntryCommandParameters(OwnerOrigin: ownerOrigin, Key: key);
-        return await ExecuteCommandAsync(DeleteSharedStorageEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteSharedStorageEntryCommandParameters, DeleteSharedStorageEntryResult> DeleteSharedStorageEntryCommand = new("Storage.deleteSharedStorageEntry", JsonContext.DeleteSharedStorageEntryCommandParameters, JsonContext.DeleteSharedStorageEntryResult);
+    Task<DeleteSharedStorageEntryResult> DeleteSharedStorageEntryAsync(string ownerOrigin, string key, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears all entries for a given origin's shared storage.
@@ -555,12 +438,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearSharedStorageEntriesResult"/>.
     /// </returns>
-    public async Task<ClearSharedStorageEntriesResult> ClearSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearSharedStorageEntriesCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(ClearSharedStorageEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearSharedStorageEntriesCommandParameters, ClearSharedStorageEntriesResult> ClearSharedStorageEntriesCommand = new("Storage.clearSharedStorageEntries", JsonContext.ClearSharedStorageEntriesCommandParameters, JsonContext.ClearSharedStorageEntriesResult);
+    Task<ClearSharedStorageEntriesResult> ClearSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resets the budget for <b>ownerOrigin</b> by clearing all budget withdrawals.
@@ -576,12 +454,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetSharedStorageBudgetResult"/>.
     /// </returns>
-    public async Task<ResetSharedStorageBudgetResult> ResetSharedStorageBudgetAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResetSharedStorageBudgetCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(ResetSharedStorageBudgetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResetSharedStorageBudgetCommandParameters, ResetSharedStorageBudgetResult> ResetSharedStorageBudgetCommand = new("Storage.resetSharedStorageBudget", JsonContext.ResetSharedStorageBudgetCommandParameters, JsonContext.ResetSharedStorageBudgetResult);
+    Task<ResetSharedStorageBudgetResult> ResetSharedStorageBudgetAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables/disables issuing of sharedStorageAccessed events.
@@ -597,12 +470,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSharedStorageTrackingResult"/>.
     /// </returns>
-    public async Task<SetSharedStorageTrackingResult> SetSharedStorageTrackingAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSharedStorageTrackingCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(SetSharedStorageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSharedStorageTrackingCommandParameters, SetSharedStorageTrackingResult> SetSharedStorageTrackingCommand = new("Storage.setSharedStorageTracking", JsonContext.SetSharedStorageTrackingCommandParameters, JsonContext.SetSharedStorageTrackingResult);
+    Task<SetSharedStorageTrackingResult> SetSharedStorageTrackingAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set tracking for a storage key's buckets.
@@ -620,12 +488,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStorageBucketTrackingResult"/>.
     /// </returns>
-    public async Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetStorageBucketTrackingCommandParameters(StorageKey: storageKey, Enable: enable);
-        return await ExecuteCommandAsync(SetStorageBucketTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetStorageBucketTrackingCommandParameters, SetStorageBucketTrackingResult> SetStorageBucketTrackingCommand = new("Storage.setStorageBucketTracking", JsonContext.SetStorageBucketTrackingCommandParameters, JsonContext.SetStorageBucketTrackingResult);
+    Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes the Storage Bucket with the given storage key and bucket name.
@@ -641,12 +504,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteStorageBucketResult"/>.
     /// </returns>
-    public async Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteStorageBucketCommandParameters(Bucket: bucket);
-        return await ExecuteCommandAsync(DeleteStorageBucketCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteStorageBucketCommandParameters, DeleteStorageBucketResult> DeleteStorageBucketCommand = new("Storage.deleteStorageBucket", JsonContext.DeleteStorageBucketCommandParameters, JsonContext.DeleteStorageBucketResult);
+    Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes state for sites identified as potential bounce trackers, immediately.
@@ -660,12 +518,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RunBounceTrackingMitigationsResult"/>.
     /// </returns>
-    public async Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RunBounceTrackingMitigationsCommandParameters();
-        return await ExecuteCommandAsync(RunBounceTrackingMitigationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RunBounceTrackingMitigationsCommandParameters, RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsCommand = new("Storage.runBounceTrackingMitigations", JsonContext.RunBounceTrackingMitigationsCommandParameters, JsonContext.RunBounceTrackingMitigationsResult);
+    Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the effective Related Website Sets in use by this profile for the browser
@@ -680,12 +533,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRelatedWebsiteSetsResult"/>.
     /// </returns>
-    public async Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetRelatedWebsiteSetsCommandParameters();
-        return await ExecuteCommandAsync(GetRelatedWebsiteSetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetRelatedWebsiteSetsCommandParameters, GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsCommand = new("Storage.getRelatedWebsiteSets", JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult);
+    Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// A cache's contents have been modified.
@@ -699,7 +547,8 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>CacheName</b> - Name of cache in origin.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<CacheStorageContentUpdatedEventArgs> CacheStorageContentUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageContentUpdated);
+    IEventSource<CacheStorageContentUpdatedEventArgs> CacheStorageContentUpdated { get; }
+
     /// <summary>
     /// A cache has been added/deleted.
     /// </summary>
@@ -711,7 +560,8 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>BucketId</b> - Storage bucket to update.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<CacheStorageListUpdatedEventArgs> CacheStorageListUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageListUpdated);
+    IEventSource<CacheStorageListUpdatedEventArgs> CacheStorageListUpdated { get; }
+
     /// <summary>
     /// The origin's IndexedDB object store has been modified.
     /// </summary>
@@ -725,7 +575,8 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ObjectStoreName</b> - ObjectStore to update.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<IndexedDBContentUpdatedEventArgs> IndexedDBContentUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBContentUpdated);
+    IEventSource<IndexedDBContentUpdatedEventArgs> IndexedDBContentUpdated { get; }
+
     /// <summary>
     /// The origin's IndexedDB database list has been modified.
     /// </summary>
@@ -737,7 +588,8 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>BucketId</b> - Storage bucket to update.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<IndexedDBListUpdatedEventArgs> IndexedDBListUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBListUpdated);
+    IEventSource<IndexedDBListUpdatedEventArgs> IndexedDBListUpdated { get; }
+
     /// <summary>
     /// Shared storage was accessed by the associated page.
     /// The following parameters are included in all events.
@@ -754,7 +606,8 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Params</b> - The sub-parameters wrapped by <b>params</b> are all optional and their presence/absence depends on <b>type</b>.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<SharedStorageAccessedEventArgs> SharedStorageAccessed => CreateCdpEventSource(StorageDomainEvent.SharedStorageAccessed);
+    IEventSource<SharedStorageAccessedEventArgs> SharedStorageAccessed { get; }
+
     /// <summary>
     /// A shared storage run or selectURL operation finished its execution.
     /// The following parameters are included in all events.
@@ -771,7 +624,8 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>OwnerOrigin</b> - Serialization of the origin owning the Shared Storage data.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<SharedStorageWorkletOperationExecutionFinishedEventArgs> SharedStorageWorkletOperationExecutionFinished => CreateCdpEventSource(StorageDomainEvent.SharedStorageWorkletOperationExecutionFinished);
+    IEventSource<SharedStorageWorkletOperationExecutionFinishedEventArgs> SharedStorageWorkletOperationExecutionFinished { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -781,7 +635,8 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>BucketInfo</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<StorageBucketCreatedOrUpdatedEventArgs> StorageBucketCreatedOrUpdated => CreateCdpEventSource(StorageDomainEvent.StorageBucketCreatedOrUpdated);
+    IEventSource<StorageBucketCreatedOrUpdatedEventArgs> StorageBucketCreatedOrUpdated { get; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -791,6 +646,233 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>BucketId</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<StorageBucketDeletedEventArgs> StorageBucketDeleted { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IStorage
+{
+    private static StorageJsonSerializerContext JsonContext = StorageJsonSerializerContext.Default;
+
+    [global::System.Obsolete]
+    public async Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetStorageKeyForFrameCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetStorageKeyForFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetStorageKeyForFrameCommandParameters, GetStorageKeyForFrameResult> GetStorageKeyForFrameCommand = new("Storage.getStorageKeyForFrame", JsonContext.GetStorageKeyForFrameCommandParameters, JsonContext.GetStorageKeyForFrameResult);
+
+    public async Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetStorageKeyCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync(GetStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetStorageKeyCommandParameters, GetStorageKeyResult> GetStorageKeyCommand = new("Storage.getStorageKey", JsonContext.GetStorageKeyCommandParameters, JsonContext.GetStorageKeyResult);
+
+    public async Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearDataForOriginCommandParameters(Origin: origin, StorageTypes: storageTypes);
+        return await ExecuteCommandAsync(ClearDataForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearDataForOriginCommandParameters, ClearDataForOriginResult> ClearDataForOriginCommand = new("Storage.clearDataForOrigin", JsonContext.ClearDataForOriginCommandParameters, JsonContext.ClearDataForOriginResult);
+
+    public async Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearDataForStorageKeyCommandParameters(StorageKey: storageKey, StorageTypes: storageTypes);
+        return await ExecuteCommandAsync(ClearDataForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearDataForStorageKeyCommandParameters, ClearDataForStorageKeyResult> ClearDataForStorageKeyCommand = new("Storage.clearDataForStorageKey", JsonContext.ClearDataForStorageKeyCommandParameters, JsonContext.ClearDataForStorageKeyResult);
+
+    public async Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetCookiesCommandParameters(BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(GetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetCookiesCommandParameters, GetCookiesResult> GetCookiesCommand = new("Storage.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
+
+    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetCookiesCommandParameters(Cookies: cookies, BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(SetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetCookiesCommandParameters, SetCookiesResult> SetCookiesCommand = new("Storage.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
+
+    public async Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearCookiesCommandParameters(BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(ClearCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearCookiesCommandParameters, ClearCookiesResult> ClearCookiesCommand = new("Storage.clearCookies", JsonContext.ClearCookiesCommandParameters, JsonContext.ClearCookiesResult);
+
+    public async Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetUsageAndQuotaCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(GetUsageAndQuotaCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetUsageAndQuotaCommandParameters, GetUsageAndQuotaResult> GetUsageAndQuotaCommand = new("Storage.getUsageAndQuota", JsonContext.GetUsageAndQuotaCommandParameters, JsonContext.GetUsageAndQuotaResult);
+
+    public async Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new OverrideQuotaForOriginCommandParameters(Origin: origin, QuotaSize: quotaSize);
+        return await ExecuteCommandAsync(OverrideQuotaForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<OverrideQuotaForOriginCommandParameters, OverrideQuotaForOriginResult> OverrideQuotaForOriginCommand = new("Storage.overrideQuotaForOrigin", JsonContext.OverrideQuotaForOriginCommandParameters, JsonContext.OverrideQuotaForOriginResult);
+
+    public async Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TrackCacheStorageForOriginCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(TrackCacheStorageForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TrackCacheStorageForOriginCommandParameters, TrackCacheStorageForOriginResult> TrackCacheStorageForOriginCommand = new("Storage.trackCacheStorageForOrigin", JsonContext.TrackCacheStorageForOriginCommandParameters, JsonContext.TrackCacheStorageForOriginResult);
+
+    public async Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
+        return await ExecuteCommandAsync(TrackCacheStorageForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TrackCacheStorageForStorageKeyCommandParameters, TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyCommand = new("Storage.trackCacheStorageForStorageKey", JsonContext.TrackCacheStorageForStorageKeyCommandParameters, JsonContext.TrackCacheStorageForStorageKeyResult);
+
+    public async Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TrackIndexedDBForOriginCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(TrackIndexedDBForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TrackIndexedDBForOriginCommandParameters, TrackIndexedDBForOriginResult> TrackIndexedDBForOriginCommand = new("Storage.trackIndexedDBForOrigin", JsonContext.TrackIndexedDBForOriginCommandParameters, JsonContext.TrackIndexedDBForOriginResult);
+
+    public async Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
+        return await ExecuteCommandAsync(TrackIndexedDBForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TrackIndexedDBForStorageKeyCommandParameters, TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyCommand = new("Storage.trackIndexedDBForStorageKey", JsonContext.TrackIndexedDBForStorageKeyCommandParameters, JsonContext.TrackIndexedDBForStorageKeyResult);
+
+    public async Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UntrackCacheStorageForOriginCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(UntrackCacheStorageForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UntrackCacheStorageForOriginCommandParameters, UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginCommand = new("Storage.untrackCacheStorageForOrigin", JsonContext.UntrackCacheStorageForOriginCommandParameters, JsonContext.UntrackCacheStorageForOriginResult);
+
+    public async Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UntrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
+        return await ExecuteCommandAsync(UntrackCacheStorageForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UntrackCacheStorageForStorageKeyCommandParameters, UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyCommand = new("Storage.untrackCacheStorageForStorageKey", JsonContext.UntrackCacheStorageForStorageKeyCommandParameters, JsonContext.UntrackCacheStorageForStorageKeyResult);
+
+    public async Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UntrackIndexedDBForOriginCommandParameters(Origin: origin);
+        return await ExecuteCommandAsync(UntrackIndexedDBForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UntrackIndexedDBForOriginCommandParameters, UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginCommand = new("Storage.untrackIndexedDBForOrigin", JsonContext.UntrackIndexedDBForOriginCommandParameters, JsonContext.UntrackIndexedDBForOriginResult);
+
+    public async Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UntrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
+        return await ExecuteCommandAsync(UntrackIndexedDBForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UntrackIndexedDBForStorageKeyCommandParameters, UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyCommand = new("Storage.untrackIndexedDBForStorageKey", JsonContext.UntrackIndexedDBForStorageKeyCommandParameters, JsonContext.UntrackIndexedDBForStorageKeyResult);
+
+    public async Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetTrustTokensCommandParameters();
+        return await ExecuteCommandAsync(GetTrustTokensCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetTrustTokensCommandParameters, GetTrustTokensResult> GetTrustTokensCommand = new("Storage.getTrustTokens", JsonContext.GetTrustTokensCommandParameters, JsonContext.GetTrustTokensResult);
+
+    public async Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearTrustTokensCommandParameters(IssuerOrigin: issuerOrigin);
+        return await ExecuteCommandAsync(ClearTrustTokensCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearTrustTokensCommandParameters, ClearTrustTokensResult> ClearTrustTokensCommand = new("Storage.clearTrustTokens", JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult);
+
+    public async Task<GetSharedStorageMetadataResult> GetSharedStorageMetadataAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSharedStorageMetadataCommandParameters(OwnerOrigin: ownerOrigin);
+        return await ExecuteCommandAsync(GetSharedStorageMetadataCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetSharedStorageMetadataCommandParameters, GetSharedStorageMetadataResult> GetSharedStorageMetadataCommand = new("Storage.getSharedStorageMetadata", JsonContext.GetSharedStorageMetadataCommandParameters, JsonContext.GetSharedStorageMetadataResult);
+
+    public async Task<GetSharedStorageEntriesResult> GetSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSharedStorageEntriesCommandParameters(OwnerOrigin: ownerOrigin);
+        return await ExecuteCommandAsync(GetSharedStorageEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetSharedStorageEntriesCommandParameters, GetSharedStorageEntriesResult> GetSharedStorageEntriesCommand = new("Storage.getSharedStorageEntries", JsonContext.GetSharedStorageEntriesCommandParameters, JsonContext.GetSharedStorageEntriesResult);
+
+    public async Task<SetSharedStorageEntryResult> SetSharedStorageEntryAsync(string ownerOrigin, string key, string value, bool? ignoreIfPresent = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetSharedStorageEntryCommandParameters(OwnerOrigin: ownerOrigin, Key: key, Value: value, IgnoreIfPresent: ignoreIfPresent);
+        return await ExecuteCommandAsync(SetSharedStorageEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetSharedStorageEntryCommandParameters, SetSharedStorageEntryResult> SetSharedStorageEntryCommand = new("Storage.setSharedStorageEntry", JsonContext.SetSharedStorageEntryCommandParameters, JsonContext.SetSharedStorageEntryResult);
+
+    public async Task<DeleteSharedStorageEntryResult> DeleteSharedStorageEntryAsync(string ownerOrigin, string key, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteSharedStorageEntryCommandParameters(OwnerOrigin: ownerOrigin, Key: key);
+        return await ExecuteCommandAsync(DeleteSharedStorageEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteSharedStorageEntryCommandParameters, DeleteSharedStorageEntryResult> DeleteSharedStorageEntryCommand = new("Storage.deleteSharedStorageEntry", JsonContext.DeleteSharedStorageEntryCommandParameters, JsonContext.DeleteSharedStorageEntryResult);
+
+    public async Task<ClearSharedStorageEntriesResult> ClearSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearSharedStorageEntriesCommandParameters(OwnerOrigin: ownerOrigin);
+        return await ExecuteCommandAsync(ClearSharedStorageEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearSharedStorageEntriesCommandParameters, ClearSharedStorageEntriesResult> ClearSharedStorageEntriesCommand = new("Storage.clearSharedStorageEntries", JsonContext.ClearSharedStorageEntriesCommandParameters, JsonContext.ClearSharedStorageEntriesResult);
+
+    public async Task<ResetSharedStorageBudgetResult> ResetSharedStorageBudgetAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResetSharedStorageBudgetCommandParameters(OwnerOrigin: ownerOrigin);
+        return await ExecuteCommandAsync(ResetSharedStorageBudgetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResetSharedStorageBudgetCommandParameters, ResetSharedStorageBudgetResult> ResetSharedStorageBudgetCommand = new("Storage.resetSharedStorageBudget", JsonContext.ResetSharedStorageBudgetCommandParameters, JsonContext.ResetSharedStorageBudgetResult);
+
+    public async Task<SetSharedStorageTrackingResult> SetSharedStorageTrackingAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetSharedStorageTrackingCommandParameters(Enable: enable);
+        return await ExecuteCommandAsync(SetSharedStorageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetSharedStorageTrackingCommandParameters, SetSharedStorageTrackingResult> SetSharedStorageTrackingCommand = new("Storage.setSharedStorageTracking", JsonContext.SetSharedStorageTrackingCommandParameters, JsonContext.SetSharedStorageTrackingResult);
+
+    public async Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetStorageBucketTrackingCommandParameters(StorageKey: storageKey, Enable: enable);
+        return await ExecuteCommandAsync(SetStorageBucketTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetStorageBucketTrackingCommandParameters, SetStorageBucketTrackingResult> SetStorageBucketTrackingCommand = new("Storage.setStorageBucketTracking", JsonContext.SetStorageBucketTrackingCommandParameters, JsonContext.SetStorageBucketTrackingResult);
+
+    public async Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeleteStorageBucketCommandParameters(Bucket: bucket);
+        return await ExecuteCommandAsync(DeleteStorageBucketCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DeleteStorageBucketCommandParameters, DeleteStorageBucketResult> DeleteStorageBucketCommand = new("Storage.deleteStorageBucket", JsonContext.DeleteStorageBucketCommandParameters, JsonContext.DeleteStorageBucketResult);
+
+    public async Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RunBounceTrackingMitigationsCommandParameters();
+        return await ExecuteCommandAsync(RunBounceTrackingMitigationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RunBounceTrackingMitigationsCommandParameters, RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsCommand = new("Storage.runBounceTrackingMitigations", JsonContext.RunBounceTrackingMitigationsCommandParameters, JsonContext.RunBounceTrackingMitigationsResult);
+
+    public async Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetRelatedWebsiteSetsCommandParameters();
+        return await ExecuteCommandAsync(GetRelatedWebsiteSetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetRelatedWebsiteSetsCommandParameters, GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsCommand = new("Storage.getRelatedWebsiteSets", JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult);
+
+    public IEventSource<CacheStorageContentUpdatedEventArgs> CacheStorageContentUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageContentUpdated);
+    public IEventSource<CacheStorageListUpdatedEventArgs> CacheStorageListUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageListUpdated);
+    public IEventSource<IndexedDBContentUpdatedEventArgs> IndexedDBContentUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBContentUpdated);
+    public IEventSource<IndexedDBListUpdatedEventArgs> IndexedDBListUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBListUpdated);
+    public IEventSource<SharedStorageAccessedEventArgs> SharedStorageAccessed => CreateCdpEventSource(StorageDomainEvent.SharedStorageAccessed);
+    public IEventSource<SharedStorageWorkletOperationExecutionFinishedEventArgs> SharedStorageWorkletOperationExecutionFinished => CreateCdpEventSource(StorageDomainEvent.SharedStorageWorkletOperationExecutionFinished);
+    public IEventSource<StorageBucketCreatedOrUpdatedEventArgs> StorageBucketCreatedOrUpdated => CreateCdpEventSource(StorageDomainEvent.StorageBucketCreatedOrUpdated);
     public IEventSource<StorageBucketDeletedEventArgs> StorageBucketDeleted => CreateCdpEventSource(StorageDomainEvent.StorageBucketDeleted);
 }
 
@@ -1709,7 +1791,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class StorageJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="StorageDomain"/>.
+/// Provides static event descriptors for the <see cref="IStorage"/>.
 /// </summary>
 public static class StorageDomainEvent
 {

@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Animation;
 /// <summary>
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IAnimation
 {
-    private static AnimationJsonSerializerContext JsonContext = AnimationJsonSerializerContext.Default;
-
     /// <summary>
     /// Disables animation domain notifications.
     /// </summary>
@@ -24,12 +22,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Animation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables animation domain notifications.
@@ -43,12 +36,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Animation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the current time of the an animation.
@@ -65,12 +53,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCurrentTimeResult"/>.
     /// </returns>
-    public async Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetCurrentTimeCommandParameters(Id: id);
-        return await ExecuteCommandAsync(GetCurrentTimeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetCurrentTimeCommandParameters, GetCurrentTimeResult> GetCurrentTimeCommand = new("Animation.getCurrentTime", JsonContext.GetCurrentTimeCommandParameters, JsonContext.GetCurrentTimeResult);
+    Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the playback rate of the document timeline.
@@ -84,12 +67,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPlaybackRateResult"/>.
     /// </returns>
-    public async Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetPlaybackRateCommandParameters();
-        return await ExecuteCommandAsync(GetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetPlaybackRateCommandParameters, GetPlaybackRateResult> GetPlaybackRateCommand = new("Animation.getPlaybackRate", JsonContext.GetPlaybackRateCommandParameters, JsonContext.GetPlaybackRateResult);
+    Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases a set of animations to no longer be manipulated.
@@ -106,12 +84,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseAnimationsResult"/>.
     /// </returns>
-    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReleaseAnimationsCommandParameters(Animations: animations);
-        return await ExecuteCommandAsync(ReleaseAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReleaseAnimationsCommandParameters, ReleaseAnimationsResult> ReleaseAnimationsCommand = new("Animation.releaseAnimations", JsonContext.ReleaseAnimationsCommandParameters, JsonContext.ReleaseAnimationsResult);
+    Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the remote object of the Animation.
@@ -128,12 +101,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveAnimationResult"/>.
     /// </returns>
-    public async Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResolveAnimationCommandParameters(AnimationId: animationId);
-        return await ExecuteCommandAsync(ResolveAnimationCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResolveAnimationCommandParameters, ResolveAnimationResult> ResolveAnimationCommand = new("Animation.resolveAnimation", JsonContext.ResolveAnimationCommandParameters, JsonContext.ResolveAnimationResult);
+    Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Seek a set of animations to a particular time within each animation.
@@ -153,12 +121,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SeekAnimationsResult"/>.
     /// </returns>
-    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime);
-        return await ExecuteCommandAsync(SeekAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SeekAnimationsCommandParameters, SeekAnimationsResult> SeekAnimationsCommand = new("Animation.seekAnimations", JsonContext.SeekAnimationsCommandParameters, JsonContext.SeekAnimationsResult);
+    Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the paused state of a set of animations.
@@ -178,12 +141,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPausedResult"/>.
     /// </returns>
-    public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPausedCommandParameters(Animations: animations, Paused: paused);
-        return await ExecuteCommandAsync(SetPausedCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPausedCommandParameters, SetPausedResult> SetPausedCommand = new("Animation.setPaused", JsonContext.SetPausedCommandParameters, JsonContext.SetPausedResult);
+    Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the playback rate of the document timeline.
@@ -200,12 +158,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPlaybackRateResult"/>.
     /// </returns>
-    public async Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPlaybackRateCommandParameters(PlaybackRate: playbackRate);
-        return await ExecuteCommandAsync(SetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPlaybackRateCommandParameters, SetPlaybackRateResult> SetPlaybackRateCommand = new("Animation.setPlaybackRate", JsonContext.SetPlaybackRateCommandParameters, JsonContext.SetPlaybackRateResult);
+    Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the timing of an animation node.
@@ -228,12 +181,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetTimingResult"/>.
     /// </returns>
-    public async Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetTimingCommandParameters(AnimationId: animationId, Duration: duration, Delay: delay);
-        return await ExecuteCommandAsync(SetTimingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetTimingCommandParameters, SetTimingResult> SetTimingCommand = new("Animation.setTiming", JsonContext.SetTimingCommandParameters, JsonContext.SetTimingResult);
+    Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Event for when an animation has been cancelled.
@@ -244,7 +192,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Id</b> - Id of the animation that was cancelled.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AnimationCanceledEventArgs> AnimationCanceled => CreateCdpEventSource(AnimationDomainEvent.AnimationCanceled);
+    IEventSource<AnimationCanceledEventArgs> AnimationCanceled { get; }
+
     /// <summary>
     /// Event for each animation that has been created.
     /// </summary>
@@ -254,7 +203,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Id</b> - Id of the animation that was created.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AnimationCreatedEventArgs> AnimationCreated => CreateCdpEventSource(AnimationDomainEvent.AnimationCreated);
+    IEventSource<AnimationCreatedEventArgs> AnimationCreated { get; }
+
     /// <summary>
     /// Event for animation that has been started.
     /// </summary>
@@ -264,7 +214,8 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Animation</b> - Animation that was started.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<AnimationStartedEventArgs> AnimationStarted => CreateCdpEventSource(AnimationDomainEvent.AnimationStarted);
+    IEventSource<AnimationStartedEventArgs> AnimationStarted { get; }
+
     /// <summary>
     /// Event for animation that has been updated.
     /// </summary>
@@ -274,6 +225,88 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <item><description><b>Animation</b> - Animation that was updated.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<AnimationUpdatedEventArgs> AnimationUpdated { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAnimation
+{
+    private static AnimationJsonSerializerContext JsonContext = AnimationJsonSerializerContext.Default;
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Animation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Animation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetCurrentTimeCommandParameters(Id: id);
+        return await ExecuteCommandAsync(GetCurrentTimeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetCurrentTimeCommandParameters, GetCurrentTimeResult> GetCurrentTimeCommand = new("Animation.getCurrentTime", JsonContext.GetCurrentTimeCommandParameters, JsonContext.GetCurrentTimeResult);
+
+    public async Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetPlaybackRateCommandParameters();
+        return await ExecuteCommandAsync(GetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetPlaybackRateCommandParameters, GetPlaybackRateResult> GetPlaybackRateCommand = new("Animation.getPlaybackRate", JsonContext.GetPlaybackRateCommandParameters, JsonContext.GetPlaybackRateResult);
+
+    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReleaseAnimationsCommandParameters(Animations: animations);
+        return await ExecuteCommandAsync(ReleaseAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReleaseAnimationsCommandParameters, ReleaseAnimationsResult> ReleaseAnimationsCommand = new("Animation.releaseAnimations", JsonContext.ReleaseAnimationsCommandParameters, JsonContext.ReleaseAnimationsResult);
+
+    public async Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResolveAnimationCommandParameters(AnimationId: animationId);
+        return await ExecuteCommandAsync(ResolveAnimationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResolveAnimationCommandParameters, ResolveAnimationResult> ResolveAnimationCommand = new("Animation.resolveAnimation", JsonContext.ResolveAnimationCommandParameters, JsonContext.ResolveAnimationResult);
+
+    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime);
+        return await ExecuteCommandAsync(SeekAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SeekAnimationsCommandParameters, SeekAnimationsResult> SeekAnimationsCommand = new("Animation.seekAnimations", JsonContext.SeekAnimationsCommandParameters, JsonContext.SeekAnimationsResult);
+
+    public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPausedCommandParameters(Animations: animations, Paused: paused);
+        return await ExecuteCommandAsync(SetPausedCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPausedCommandParameters, SetPausedResult> SetPausedCommand = new("Animation.setPaused", JsonContext.SetPausedCommandParameters, JsonContext.SetPausedResult);
+
+    public async Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPlaybackRateCommandParameters(PlaybackRate: playbackRate);
+        return await ExecuteCommandAsync(SetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPlaybackRateCommandParameters, SetPlaybackRateResult> SetPlaybackRateCommand = new("Animation.setPlaybackRate", JsonContext.SetPlaybackRateCommandParameters, JsonContext.SetPlaybackRateResult);
+
+    public async Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetTimingCommandParameters(AnimationId: animationId, Duration: duration, Delay: delay);
+        return await ExecuteCommandAsync(SetTimingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetTimingCommandParameters, SetTimingResult> SetTimingCommand = new("Animation.setTiming", JsonContext.SetTimingCommandParameters, JsonContext.SetTimingResult);
+
+    public IEventSource<AnimationCanceledEventArgs> AnimationCanceled => CreateCdpEventSource(AnimationDomainEvent.AnimationCanceled);
+    public IEventSource<AnimationCreatedEventArgs> AnimationCreated => CreateCdpEventSource(AnimationDomainEvent.AnimationCreated);
+    public IEventSource<AnimationStartedEventArgs> AnimationStarted => CreateCdpEventSource(AnimationDomainEvent.AnimationStarted);
     public IEventSource<AnimationUpdatedEventArgs> AnimationUpdated => CreateCdpEventSource(AnimationDomainEvent.AnimationUpdated);
 }
 
@@ -578,7 +611,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class AnimationJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="AnimationDomain"/>.
+/// Provides static event descriptors for the <see cref="IAnimation"/>.
 /// </summary>
 public static class AnimationDomainEvent
 {

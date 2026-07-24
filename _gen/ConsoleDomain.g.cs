@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Console;
 /// This domain is deprecated - use Runtime or Log instead.
 /// </summary>
 [global::System.Obsolete]
-public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IConsole
 {
-    private static ConsoleJsonSerializerContext JsonContext = ConsoleJsonSerializerContext.Default;
-
     /// <summary>
     /// Does nothing.
     /// </summary>
@@ -25,12 +23,7 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearMessagesResult"/>.
     /// </returns>
-    public async Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearMessagesCommandParameters();
-        return await ExecuteCommandAsync(ClearMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearMessagesCommandParameters, ClearMessagesResult> ClearMessagesCommand = new("Console.clearMessages", JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult);
+    Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables console domain, prevents further console messages from being reported to the client.
@@ -44,12 +37,7 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Console.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables console domain, sends the messages collected so far to the client by means of the
@@ -64,12 +52,7 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Console.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Issued when new console message is added.
@@ -80,6 +63,36 @@ public sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Message</b> - Console message that has been added.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<MessageAddedEventArgs> MessageAdded { get; }
+
+}
+
+[global::System.Obsolete]
+internal sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IConsole
+{
+    private static ConsoleJsonSerializerContext JsonContext = ConsoleJsonSerializerContext.Default;
+
+    public async Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearMessagesCommandParameters();
+        return await ExecuteCommandAsync(ClearMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ClearMessagesCommandParameters, ClearMessagesResult> ClearMessagesCommand = new("Console.clearMessages", JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Console.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Console.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
     public IEventSource<MessageAddedEventArgs> MessageAdded => CreateCdpEventSource(ConsoleDomainEvent.MessageAdded);
 }
 
@@ -156,7 +169,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class ConsoleJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="ConsoleDomain"/>.
+/// Provides static event descriptors for the <see cref="IConsole"/>.
 /// </summary>
 public static class ConsoleDomainEvent
 {

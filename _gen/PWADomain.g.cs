@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.PWA;
 /// This domain allows interacting with the browser to control PWAs.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IPWA
 {
-    private static PWAJsonSerializerContext JsonContext = PWAJsonSerializerContext.Default;
-
     /// <summary>
     /// Returns the following OS state for the given manifest id.
     /// </summary>
@@ -30,12 +28,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetOsAppStateResult"/>.
     /// </returns>
-    public async Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetOsAppStateCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(GetOsAppStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetOsAppStateCommandParameters, GetOsAppStateResult> GetOsAppStateCommand = new("PWA.getOsAppState", JsonContext.GetOsAppStateCommandParameters, JsonContext.GetOsAppStateResult);
+    Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Installs the given manifest identity, optionally using the given installUrlOrBundleUrl
@@ -80,12 +73,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="InstallResult"/>.
     /// </returns>
-    public async Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new InstallCommandParameters(ManifestId: manifestId, InstallUrlOrBundleUrl: installUrlOrBundleUrl);
-        return await ExecuteCommandAsync(InstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<InstallCommandParameters, InstallResult> InstallCommand = new("PWA.install", JsonContext.InstallCommandParameters, JsonContext.InstallResult);
+    Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Uninstalls the given manifest_id and closes any opened app windows.
@@ -101,12 +89,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UninstallResult"/>.
     /// </returns>
-    public async Task<UninstallResult> UninstallAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new UninstallCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(UninstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<UninstallCommandParameters, UninstallResult> UninstallCommand = new("PWA.uninstall", JsonContext.UninstallCommandParameters, JsonContext.UninstallResult);
+    Task<UninstallResult> UninstallAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Launches the installed web app, or an url in the same web app instead of the
@@ -126,12 +109,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LaunchResult"/>.
     /// </returns>
-    public async Task<LaunchResult> LaunchAsync(string manifestId, string? url = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new LaunchCommandParameters(ManifestId: manifestId, Url: url);
-        return await ExecuteCommandAsync(LaunchCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<LaunchCommandParameters, LaunchResult> LaunchCommand = new("PWA.launch", JsonContext.LaunchCommandParameters, JsonContext.LaunchResult);
+    Task<LaunchResult> LaunchAsync(string manifestId, string? url = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Opens one or more local files from an installed web app identified by its
@@ -161,12 +139,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LaunchFilesInAppResult"/>.
     /// </returns>
-    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new LaunchFilesInAppCommandParameters(ManifestId: manifestId, Files: files);
-        return await ExecuteCommandAsync(LaunchFilesInAppCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<LaunchFilesInAppCommandParameters, LaunchFilesInAppResult> LaunchFilesInAppCommand = new("PWA.launchFilesInApp", JsonContext.LaunchFilesInAppCommandParameters, JsonContext.LaunchFilesInAppResult);
+    Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Opens the current page in its web app identified by the manifest id, needs
@@ -184,12 +157,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OpenCurrentPageInAppResult"/>.
     /// </returns>
-    public async Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new OpenCurrentPageInAppCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(OpenCurrentPageInAppCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<OpenCurrentPageInAppCommandParameters, OpenCurrentPageInAppResult> OpenCurrentPageInAppCommand = new("PWA.openCurrentPageInApp", JsonContext.OpenCurrentPageInAppCommandParameters, JsonContext.OpenCurrentPageInAppResult);
+    Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Changes user settings of the web app identified by its manifestId. If the
@@ -228,6 +196,57 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ChangeAppUserSettingsResult"/>.
     /// </returns>
+    Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = default, DisplayMode? displayMode = default, string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPWA
+{
+    private static PWAJsonSerializerContext JsonContext = PWAJsonSerializerContext.Default;
+
+    public async Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetOsAppStateCommandParameters(ManifestId: manifestId);
+        return await ExecuteCommandAsync(GetOsAppStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetOsAppStateCommandParameters, GetOsAppStateResult> GetOsAppStateCommand = new("PWA.getOsAppState", JsonContext.GetOsAppStateCommandParameters, JsonContext.GetOsAppStateResult);
+
+    public async Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new InstallCommandParameters(ManifestId: manifestId, InstallUrlOrBundleUrl: installUrlOrBundleUrl);
+        return await ExecuteCommandAsync(InstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<InstallCommandParameters, InstallResult> InstallCommand = new("PWA.install", JsonContext.InstallCommandParameters, JsonContext.InstallResult);
+
+    public async Task<UninstallResult> UninstallAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new UninstallCommandParameters(ManifestId: manifestId);
+        return await ExecuteCommandAsync(UninstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<UninstallCommandParameters, UninstallResult> UninstallCommand = new("PWA.uninstall", JsonContext.UninstallCommandParameters, JsonContext.UninstallResult);
+
+    public async Task<LaunchResult> LaunchAsync(string manifestId, string? url = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new LaunchCommandParameters(ManifestId: manifestId, Url: url);
+        return await ExecuteCommandAsync(LaunchCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<LaunchCommandParameters, LaunchResult> LaunchCommand = new("PWA.launch", JsonContext.LaunchCommandParameters, JsonContext.LaunchResult);
+
+    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new LaunchFilesInAppCommandParameters(ManifestId: manifestId, Files: files);
+        return await ExecuteCommandAsync(LaunchFilesInAppCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<LaunchFilesInAppCommandParameters, LaunchFilesInAppResult> LaunchFilesInAppCommand = new("PWA.launchFilesInApp", JsonContext.LaunchFilesInAppCommandParameters, JsonContext.LaunchFilesInAppResult);
+
+    public async Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new OpenCurrentPageInAppCommandParameters(ManifestId: manifestId);
+        return await ExecuteCommandAsync(OpenCurrentPageInAppCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<OpenCurrentPageInAppCommandParameters, OpenCurrentPageInAppResult> OpenCurrentPageInAppCommand = new("PWA.openCurrentPageInApp", JsonContext.OpenCurrentPageInAppCommandParameters, JsonContext.OpenCurrentPageInAppResult);
+
     public async Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = default, DisplayMode? displayMode = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ChangeAppUserSettingsCommandParameters(ManifestId: manifestId, LinkCapturing: linkCapturing, DisplayMode: displayMode);

@@ -12,10 +12,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Runtime;
 /// maintained in memory unless they are either explicitly released or are released along with the
 /// other objects in their object group.
 /// </summary>
-public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IRuntime
 {
-    private static RuntimeJsonSerializerContext JsonContext = RuntimeJsonSerializerContext.Default;
-
     /// <summary>
     /// Add handler to promise with given promise object id.
     /// </summary>
@@ -37,12 +35,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AwaitPromiseResult"/>.
     /// </returns>
-    public async Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = default, bool? generatePreview = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AwaitPromiseCommandParameters(PromiseObjectId: promiseObjectId, ReturnByValue: returnByValue, GeneratePreview: generatePreview);
-        return await ExecuteCommandAsync(AwaitPromiseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AwaitPromiseCommandParameters, AwaitPromiseResult> AwaitPromiseCommand = new("Runtime.awaitPromise", JsonContext.AwaitPromiseCommandParameters, JsonContext.AwaitPromiseResult);
+    Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = default, bool? generatePreview = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Calls function with given declaration on the given object. Object group of the result is
@@ -109,12 +102,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CallFunctionOnResult"/>.
     /// </returns>
-    public async Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = default, ImmutableArray<CallArgument>? arguments = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? throwOnSideEffect = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CallFunctionOnCommandParameters(FunctionDeclaration: functionDeclaration, ObjectId: objectId, Arguments: arguments, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, ThrowOnSideEffect: throwOnSideEffect, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
-        return await ExecuteCommandAsync(CallFunctionOnCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CallFunctionOnCommandParameters, CallFunctionOnResult> CallFunctionOnCommand = new("Runtime.callFunctionOn", JsonContext.CallFunctionOnCommandParameters, JsonContext.CallFunctionOnResult);
+    Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = default, ImmutableArray<CallArgument>? arguments = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? throwOnSideEffect = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Compiles expression.
@@ -141,12 +129,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CompileScriptResult"/>.
     /// </returns>
-    public async Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CompileScriptCommandParameters(Expression: expression, SourceURL: sourceURL, PersistScript: persistScript, ExecutionContextId: executionContextId);
-        return await ExecuteCommandAsync(CompileScriptCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CompileScriptCommandParameters, CompileScriptResult> CompileScriptCommand = new("Runtime.compileScript", JsonContext.CompileScriptCommandParameters, JsonContext.CompileScriptResult);
+    Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables reporting of execution contexts creation.
@@ -160,12 +143,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Runtime.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Discards collected exceptions and console API calls.
@@ -179,12 +157,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DiscardConsoleEntriesResult"/>.
     /// </returns>
-    public async Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DiscardConsoleEntriesCommandParameters();
-        return await ExecuteCommandAsync(DiscardConsoleEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DiscardConsoleEntriesCommandParameters, DiscardConsoleEntriesResult> DiscardConsoleEntriesCommand = new("Runtime.discardConsoleEntries", JsonContext.DiscardConsoleEntriesCommandParameters, JsonContext.DiscardConsoleEntriesResult);
+    Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables reporting of execution contexts creation by means of <b>executionContextCreated</b> event.
@@ -200,12 +173,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Runtime.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Evaluates expression on global object.
@@ -285,12 +253,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EvaluateResult"/>.
     /// </returns>
-    public async Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, ExecutionContextId? contextId = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, bool? throwOnSideEffect = default, TimeDelta? timeout = default, bool? disableBreaks = default, bool? replMode = default, bool? allowUnsafeEvalBlockedByCSP = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EvaluateCommandParameters(Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ContextId: contextId, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout, DisableBreaks: disableBreaks, ReplMode: replMode, AllowUnsafeEvalBlockedByCSP: allowUnsafeEvalBlockedByCSP, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
-        return await ExecuteCommandAsync(EvaluateCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EvaluateCommandParameters, EvaluateResult> EvaluateCommand = new("Runtime.evaluate", JsonContext.EvaluateCommandParameters, JsonContext.EvaluateResult);
+    Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, ExecutionContextId? contextId = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, bool? throwOnSideEffect = default, TimeDelta? timeout = default, bool? disableBreaks = default, bool? replMode = default, bool? allowUnsafeEvalBlockedByCSP = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the isolate id.
@@ -305,12 +268,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetIsolateIdResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetIsolateIdCommandParameters();
-        return await ExecuteCommandAsync(GetIsolateIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetIsolateIdCommandParameters, GetIsolateIdResult> GetIsolateIdCommand = new("Runtime.getIsolateId", JsonContext.GetIsolateIdCommandParameters, JsonContext.GetIsolateIdResult);
+    Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the JavaScript heap usage.
@@ -326,12 +284,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetHeapUsageResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetHeapUsageCommandParameters();
-        return await ExecuteCommandAsync(GetHeapUsageCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetHeapUsageCommandParameters, GetHeapUsageResult> GetHeapUsageCommand = new("Runtime.getHeapUsage", JsonContext.GetHeapUsageCommandParameters, JsonContext.GetHeapUsageResult);
+    Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns properties of a given object. Object group of the result is inherited from the target
@@ -363,12 +316,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPropertiesResult"/>.
     /// </returns>
-    public async Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = default, bool? accessorPropertiesOnly = default, bool? generatePreview = default, bool? nonIndexedPropertiesOnly = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetPropertiesCommandParameters(ObjectId: objectId, OwnProperties: ownProperties, AccessorPropertiesOnly: accessorPropertiesOnly, GeneratePreview: generatePreview, NonIndexedPropertiesOnly: nonIndexedPropertiesOnly);
-        return await ExecuteCommandAsync(GetPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetPropertiesCommandParameters, GetPropertiesResult> GetPropertiesCommand = new("Runtime.getProperties", JsonContext.GetPropertiesCommandParameters, JsonContext.GetPropertiesResult);
+    Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = default, bool? accessorPropertiesOnly = default, bool? generatePreview = default, bool? nonIndexedPropertiesOnly = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all let, const and class variables from global scope.
@@ -385,12 +333,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GlobalLexicalScopeNamesResult"/>.
     /// </returns>
-    public async Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GlobalLexicalScopeNamesCommandParameters(ExecutionContextId: executionContextId);
-        return await ExecuteCommandAsync(GlobalLexicalScopeNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GlobalLexicalScopeNamesCommandParameters, GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesCommand = new("Runtime.globalLexicalScopeNames", JsonContext.GlobalLexicalScopeNamesCommandParameters, JsonContext.GlobalLexicalScopeNamesResult);
+    Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -409,12 +352,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QueryObjectsResult"/>.
     /// </returns>
-    public async Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new QueryObjectsCommandParameters(PrototypeObjectId: prototypeObjectId, ObjectGroup: objectGroup);
-        return await ExecuteCommandAsync(QueryObjectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<QueryObjectsCommandParameters, QueryObjectsResult> QueryObjectsCommand = new("Runtime.queryObjects", JsonContext.QueryObjectsCommandParameters, JsonContext.QueryObjectsResult);
+    Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases remote object with given id.
@@ -431,12 +369,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseObjectResult"/>.
     /// </returns>
-    public async Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReleaseObjectCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(ReleaseObjectCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReleaseObjectCommandParameters, ReleaseObjectResult> ReleaseObjectCommand = new("Runtime.releaseObject", JsonContext.ReleaseObjectCommandParameters, JsonContext.ReleaseObjectResult);
+    Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases all remote objects that belong to a given group.
@@ -453,12 +386,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseObjectGroupResult"/>.
     /// </returns>
-    public async Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReleaseObjectGroupCommandParameters(ObjectGroup: objectGroup);
-        return await ExecuteCommandAsync(ReleaseObjectGroupCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReleaseObjectGroupCommandParameters, ReleaseObjectGroupResult> ReleaseObjectGroupCommand = new("Runtime.releaseObjectGroup", JsonContext.ReleaseObjectGroupCommandParameters, JsonContext.ReleaseObjectGroupResult);
+    Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tells inspected instance to run if it was waiting for debugger to attach.
@@ -472,12 +400,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RunIfWaitingForDebuggerResult"/>.
     /// </returns>
-    public async Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RunIfWaitingForDebuggerCommandParameters();
-        return await ExecuteCommandAsync(RunIfWaitingForDebuggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RunIfWaitingForDebuggerCommandParameters, RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerCommand = new("Runtime.runIfWaitingForDebugger", JsonContext.RunIfWaitingForDebuggerCommandParameters, JsonContext.RunIfWaitingForDebuggerResult);
+    Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Runs script with given id in a given context.
@@ -518,12 +441,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RunScriptResult"/>.
     /// </returns>
-    public async Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? silent = default, bool? includeCommandLineAPI = default, bool? returnByValue = default, bool? generatePreview = default, bool? awaitPromise = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RunScriptCommandParameters(ScriptId: scriptId, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, Silent: silent, IncludeCommandLineAPI: includeCommandLineAPI, ReturnByValue: returnByValue, GeneratePreview: generatePreview, AwaitPromise: awaitPromise);
-        return await ExecuteCommandAsync(RunScriptCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RunScriptCommandParameters, RunScriptResult> RunScriptCommand = new("Runtime.runScript", JsonContext.RunScriptCommandParameters, JsonContext.RunScriptResult);
+    Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? silent = default, bool? includeCommandLineAPI = default, bool? returnByValue = default, bool? generatePreview = default, bool? awaitPromise = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables or disables async call stacks tracking.
@@ -541,12 +459,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAsyncCallStackDepthResult"/>.
     /// </returns>
-    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
-        return await ExecuteCommandAsync(SetAsyncCallStackDepthCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult> SetAsyncCallStackDepthCommand = new("Runtime.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
+    Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -562,12 +475,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetCustomObjectFormatterEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetCustomObjectFormatterEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetCustomObjectFormatterEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetCustomObjectFormatterEnabledCommandParameters, SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledCommand = new("Runtime.setCustomObjectFormatterEnabled", JsonContext.SetCustomObjectFormatterEnabledCommandParameters, JsonContext.SetCustomObjectFormatterEnabledResult);
+    Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -583,12 +491,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetMaxCallStackSizeToCaptureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetMaxCallStackSizeToCaptureCommandParameters(Size: size);
-        return await ExecuteCommandAsync(SetMaxCallStackSizeToCaptureCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetMaxCallStackSizeToCaptureCommandParameters, SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureCommand = new("Runtime.setMaxCallStackSizeToCapture", JsonContext.SetMaxCallStackSizeToCaptureCommandParameters, JsonContext.SetMaxCallStackSizeToCaptureResult);
+    Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Terminate current or next JavaScript execution.
@@ -604,12 +507,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="TerminateExecutionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TerminateExecutionCommandParameters();
-        return await ExecuteCommandAsync(TerminateExecutionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TerminateExecutionCommandParameters, TerminateExecutionResult> TerminateExecutionCommand = new("Runtime.terminateExecution", JsonContext.TerminateExecutionCommandParameters, JsonContext.TerminateExecutionResult);
+    Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// If executionContextId is empty, adds binding with the given name on the
@@ -646,12 +544,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddBindingResult"/>.
     /// </returns>
-    public async Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = default, string? executionContextName = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddBindingCommandParameters(Name: name, ExecutionContextId: executionContextId, ExecutionContextName: executionContextName);
-        return await ExecuteCommandAsync(AddBindingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AddBindingCommandParameters, AddBindingResult> AddBindingCommand = new("Runtime.addBinding", JsonContext.AddBindingCommandParameters, JsonContext.AddBindingResult);
+    Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = default, string? executionContextName = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method does not remove binding function from global object but
@@ -668,12 +561,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveBindingResult"/>.
     /// </returns>
-    public async Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new RemoveBindingCommandParameters(Name: name);
-        return await ExecuteCommandAsync(RemoveBindingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<RemoveBindingCommandParameters, RemoveBindingResult> RemoveBindingCommand = new("Runtime.removeBinding", JsonContext.RemoveBindingCommandParameters, JsonContext.RemoveBindingResult);
+    Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method tries to lookup and populate exception details for a
@@ -695,12 +583,7 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetExceptionDetailsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetExceptionDetailsCommandParameters(ErrorObjectId: errorObjectId);
-        return await ExecuteCommandAsync(GetExceptionDetailsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetExceptionDetailsCommandParameters, GetExceptionDetailsResult> GetExceptionDetailsCommand = new("Runtime.getExceptionDetails", JsonContext.GetExceptionDetailsCommandParameters, JsonContext.GetExceptionDetailsResult);
+    Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Notification is issued every time when binding is called.
@@ -714,7 +597,8 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<BindingCalledEventArgs> BindingCalled => CreateCdpEventSource(RuntimeDomainEvent.BindingCalled);
+    IEventSource<BindingCalledEventArgs> BindingCalled { get; }
+
     /// <summary>
     /// Issued when console API was called.
     /// </summary>
@@ -729,7 +613,8 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Context</b> - Console context descriptor for calls on non-default console context (not console.*): 'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call on named context.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ConsoleAPICalledEventArgs> ConsoleAPICalled => CreateCdpEventSource(RuntimeDomainEvent.ConsoleAPICalled);
+    IEventSource<ConsoleAPICalledEventArgs> ConsoleAPICalled { get; }
+
     /// <summary>
     /// Issued when unhandled exception was revoked.
     /// </summary>
@@ -740,7 +625,8 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ExceptionId</b> - The id of revoked exception, as reported in <b>exceptionThrown</b>.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ExceptionRevokedEventArgs> ExceptionRevoked => CreateCdpEventSource(RuntimeDomainEvent.ExceptionRevoked);
+    IEventSource<ExceptionRevokedEventArgs> ExceptionRevoked { get; }
+
     /// <summary>
     /// Issued when exception was thrown and unhandled.
     /// </summary>
@@ -751,7 +637,8 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ExceptionDetails</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ExceptionThrownEventArgs> ExceptionThrown => CreateCdpEventSource(RuntimeDomainEvent.ExceptionThrown);
+    IEventSource<ExceptionThrownEventArgs> ExceptionThrown { get; }
+
     /// <summary>
     /// Issued when new execution context is created.
     /// </summary>
@@ -761,7 +648,8 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>Context</b> - A newly created execution context.</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ExecutionContextCreatedEventArgs> ExecutionContextCreated => CreateCdpEventSource(RuntimeDomainEvent.ExecutionContextCreated);
+    IEventSource<ExecutionContextCreatedEventArgs> ExecutionContextCreated { get; }
+
     /// <summary>
     /// Issued when execution context is destroyed.
     /// </summary>
@@ -772,11 +660,13 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ExecutionContextUniqueId</b> - Unique Id of the destroyed context</description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<ExecutionContextDestroyedEventArgs> ExecutionContextDestroyed => CreateCdpEventSource(RuntimeDomainEvent.ExecutionContextDestroyed);
+    IEventSource<ExecutionContextDestroyedEventArgs> ExecutionContextDestroyed { get; }
+
     /// <summary>
     /// Issued when all executionContexts were cleared in browser
     /// </summary>
-    public IEventSource<ExecutionContextsClearedEventArgs> ExecutionContextsCleared => CreateCdpEventSource(RuntimeDomainEvent.ExecutionContextsCleared);
+    IEventSource<ExecutionContextsClearedEventArgs> ExecutionContextsCleared { get; }
+
     /// <summary>
     /// Issued when object should be inspected (for example, as a result of inspect() command line API
     /// call).
@@ -789,6 +679,189 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>ExecutionContextId</b> - Identifier of the context where the call was made.</description></item>
     /// </list>
     /// </remarks>
+    IEventSource<InspectRequestedEventArgs> InspectRequested { get; }
+
+}
+
+internal sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IRuntime
+{
+    private static RuntimeJsonSerializerContext JsonContext = RuntimeJsonSerializerContext.Default;
+
+    public async Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = default, bool? generatePreview = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AwaitPromiseCommandParameters(PromiseObjectId: promiseObjectId, ReturnByValue: returnByValue, GeneratePreview: generatePreview);
+        return await ExecuteCommandAsync(AwaitPromiseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AwaitPromiseCommandParameters, AwaitPromiseResult> AwaitPromiseCommand = new("Runtime.awaitPromise", JsonContext.AwaitPromiseCommandParameters, JsonContext.AwaitPromiseResult);
+
+    public async Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = default, ImmutableArray<CallArgument>? arguments = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? throwOnSideEffect = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CallFunctionOnCommandParameters(FunctionDeclaration: functionDeclaration, ObjectId: objectId, Arguments: arguments, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, ThrowOnSideEffect: throwOnSideEffect, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
+        return await ExecuteCommandAsync(CallFunctionOnCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CallFunctionOnCommandParameters, CallFunctionOnResult> CallFunctionOnCommand = new("Runtime.callFunctionOn", JsonContext.CallFunctionOnCommandParameters, JsonContext.CallFunctionOnResult);
+
+    public async Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CompileScriptCommandParameters(Expression: expression, SourceURL: sourceURL, PersistScript: persistScript, ExecutionContextId: executionContextId);
+        return await ExecuteCommandAsync(CompileScriptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CompileScriptCommandParameters, CompileScriptResult> CompileScriptCommand = new("Runtime.compileScript", JsonContext.CompileScriptCommandParameters, JsonContext.CompileScriptResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Runtime.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public async Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DiscardConsoleEntriesCommandParameters();
+        return await ExecuteCommandAsync(DiscardConsoleEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DiscardConsoleEntriesCommandParameters, DiscardConsoleEntriesResult> DiscardConsoleEntriesCommand = new("Runtime.discardConsoleEntries", JsonContext.DiscardConsoleEntriesCommandParameters, JsonContext.DiscardConsoleEntriesResult);
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Runtime.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, ExecutionContextId? contextId = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, bool? throwOnSideEffect = default, TimeDelta? timeout = default, bool? disableBreaks = default, bool? replMode = default, bool? allowUnsafeEvalBlockedByCSP = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EvaluateCommandParameters(Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ContextId: contextId, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout, DisableBreaks: disableBreaks, ReplMode: replMode, AllowUnsafeEvalBlockedByCSP: allowUnsafeEvalBlockedByCSP, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
+        return await ExecuteCommandAsync(EvaluateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EvaluateCommandParameters, EvaluateResult> EvaluateCommand = new("Runtime.evaluate", JsonContext.EvaluateCommandParameters, JsonContext.EvaluateResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetIsolateIdCommandParameters();
+        return await ExecuteCommandAsync(GetIsolateIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetIsolateIdCommandParameters, GetIsolateIdResult> GetIsolateIdCommand = new("Runtime.getIsolateId", JsonContext.GetIsolateIdCommandParameters, JsonContext.GetIsolateIdResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetHeapUsageCommandParameters();
+        return await ExecuteCommandAsync(GetHeapUsageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetHeapUsageCommandParameters, GetHeapUsageResult> GetHeapUsageCommand = new("Runtime.getHeapUsage", JsonContext.GetHeapUsageCommandParameters, JsonContext.GetHeapUsageResult);
+
+    public async Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = default, bool? accessorPropertiesOnly = default, bool? generatePreview = default, bool? nonIndexedPropertiesOnly = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetPropertiesCommandParameters(ObjectId: objectId, OwnProperties: ownProperties, AccessorPropertiesOnly: accessorPropertiesOnly, GeneratePreview: generatePreview, NonIndexedPropertiesOnly: nonIndexedPropertiesOnly);
+        return await ExecuteCommandAsync(GetPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetPropertiesCommandParameters, GetPropertiesResult> GetPropertiesCommand = new("Runtime.getProperties", JsonContext.GetPropertiesCommandParameters, JsonContext.GetPropertiesResult);
+
+    public async Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GlobalLexicalScopeNamesCommandParameters(ExecutionContextId: executionContextId);
+        return await ExecuteCommandAsync(GlobalLexicalScopeNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GlobalLexicalScopeNamesCommandParameters, GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesCommand = new("Runtime.globalLexicalScopeNames", JsonContext.GlobalLexicalScopeNamesCommandParameters, JsonContext.GlobalLexicalScopeNamesResult);
+
+    public async Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new QueryObjectsCommandParameters(PrototypeObjectId: prototypeObjectId, ObjectGroup: objectGroup);
+        return await ExecuteCommandAsync(QueryObjectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<QueryObjectsCommandParameters, QueryObjectsResult> QueryObjectsCommand = new("Runtime.queryObjects", JsonContext.QueryObjectsCommandParameters, JsonContext.QueryObjectsResult);
+
+    public async Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReleaseObjectCommandParameters(ObjectId: objectId);
+        return await ExecuteCommandAsync(ReleaseObjectCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReleaseObjectCommandParameters, ReleaseObjectResult> ReleaseObjectCommand = new("Runtime.releaseObject", JsonContext.ReleaseObjectCommandParameters, JsonContext.ReleaseObjectResult);
+
+    public async Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReleaseObjectGroupCommandParameters(ObjectGroup: objectGroup);
+        return await ExecuteCommandAsync(ReleaseObjectGroupCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReleaseObjectGroupCommandParameters, ReleaseObjectGroupResult> ReleaseObjectGroupCommand = new("Runtime.releaseObjectGroup", JsonContext.ReleaseObjectGroupCommandParameters, JsonContext.ReleaseObjectGroupResult);
+
+    public async Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RunIfWaitingForDebuggerCommandParameters();
+        return await ExecuteCommandAsync(RunIfWaitingForDebuggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RunIfWaitingForDebuggerCommandParameters, RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerCommand = new("Runtime.runIfWaitingForDebugger", JsonContext.RunIfWaitingForDebuggerCommandParameters, JsonContext.RunIfWaitingForDebuggerResult);
+
+    public async Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? silent = default, bool? includeCommandLineAPI = default, bool? returnByValue = default, bool? generatePreview = default, bool? awaitPromise = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RunScriptCommandParameters(ScriptId: scriptId, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, Silent: silent, IncludeCommandLineAPI: includeCommandLineAPI, ReturnByValue: returnByValue, GeneratePreview: generatePreview, AwaitPromise: awaitPromise);
+        return await ExecuteCommandAsync(RunScriptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RunScriptCommandParameters, RunScriptResult> RunScriptCommand = new("Runtime.runScript", JsonContext.RunScriptCommandParameters, JsonContext.RunScriptResult);
+
+    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
+        return await ExecuteCommandAsync(SetAsyncCallStackDepthCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult> SetAsyncCallStackDepthCommand = new("Runtime.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetCustomObjectFormatterEnabledCommandParameters(Enabled: enabled);
+        return await ExecuteCommandAsync(SetCustomObjectFormatterEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetCustomObjectFormatterEnabledCommandParameters, SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledCommand = new("Runtime.setCustomObjectFormatterEnabled", JsonContext.SetCustomObjectFormatterEnabledCommandParameters, JsonContext.SetCustomObjectFormatterEnabledResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetMaxCallStackSizeToCaptureCommandParameters(Size: size);
+        return await ExecuteCommandAsync(SetMaxCallStackSizeToCaptureCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetMaxCallStackSizeToCaptureCommandParameters, SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureCommand = new("Runtime.setMaxCallStackSizeToCapture", JsonContext.SetMaxCallStackSizeToCaptureCommandParameters, JsonContext.SetMaxCallStackSizeToCaptureResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new TerminateExecutionCommandParameters();
+        return await ExecuteCommandAsync(TerminateExecutionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<TerminateExecutionCommandParameters, TerminateExecutionResult> TerminateExecutionCommand = new("Runtime.terminateExecution", JsonContext.TerminateExecutionCommandParameters, JsonContext.TerminateExecutionResult);
+
+    public async Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = default, string? executionContextName = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddBindingCommandParameters(Name: name, ExecutionContextId: executionContextId, ExecutionContextName: executionContextName);
+        return await ExecuteCommandAsync(AddBindingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddBindingCommandParameters, AddBindingResult> AddBindingCommand = new("Runtime.addBinding", JsonContext.AddBindingCommandParameters, JsonContext.AddBindingResult);
+
+    public async Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new RemoveBindingCommandParameters(Name: name);
+        return await ExecuteCommandAsync(RemoveBindingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<RemoveBindingCommandParameters, RemoveBindingResult> RemoveBindingCommand = new("Runtime.removeBinding", JsonContext.RemoveBindingCommandParameters, JsonContext.RemoveBindingResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetExceptionDetailsCommandParameters(ErrorObjectId: errorObjectId);
+        return await ExecuteCommandAsync(GetExceptionDetailsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetExceptionDetailsCommandParameters, GetExceptionDetailsResult> GetExceptionDetailsCommand = new("Runtime.getExceptionDetails", JsonContext.GetExceptionDetailsCommandParameters, JsonContext.GetExceptionDetailsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<BindingCalledEventArgs> BindingCalled => CreateCdpEventSource(RuntimeDomainEvent.BindingCalled);
+    public IEventSource<ConsoleAPICalledEventArgs> ConsoleAPICalled => CreateCdpEventSource(RuntimeDomainEvent.ConsoleAPICalled);
+    public IEventSource<ExceptionRevokedEventArgs> ExceptionRevoked => CreateCdpEventSource(RuntimeDomainEvent.ExceptionRevoked);
+    public IEventSource<ExceptionThrownEventArgs> ExceptionThrown => CreateCdpEventSource(RuntimeDomainEvent.ExceptionThrown);
+    public IEventSource<ExecutionContextCreatedEventArgs> ExecutionContextCreated => CreateCdpEventSource(RuntimeDomainEvent.ExecutionContextCreated);
+    public IEventSource<ExecutionContextDestroyedEventArgs> ExecutionContextDestroyed => CreateCdpEventSource(RuntimeDomainEvent.ExecutionContextDestroyed);
+    public IEventSource<ExecutionContextsClearedEventArgs> ExecutionContextsCleared => CreateCdpEventSource(RuntimeDomainEvent.ExecutionContextsCleared);
     public IEventSource<InspectRequestedEventArgs> InspectRequested => CreateCdpEventSource(RuntimeDomainEvent.InspectRequested);
 }
 
@@ -1706,7 +1779,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class RuntimeJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="RuntimeDomain"/>.
+/// Provides static event descriptors for the <see cref="IRuntime"/>.
 /// </summary>
 public static class RuntimeDomainEvent
 {

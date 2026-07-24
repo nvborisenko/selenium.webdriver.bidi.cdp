@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.IO;
 /// <summary>
 /// Input/Output operations for streams produced by DevTools.
 /// </summary>
-public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IIO
 {
-    private static IOJsonSerializerContext JsonContext = IOJsonSerializerContext.Default;
-
     /// <summary>
     /// Close the stream, discard any temporary backing storage.
     /// </summary>
@@ -27,12 +25,7 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseResult"/>.
     /// </returns>
-    public async Task<CloseResult> CloseAsync(StreamHandle handle, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CloseCommandParameters(Handle: handle);
-        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("IO.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+    Task<CloseResult> CloseAsync(StreamHandle handle, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Read a chunk of the stream
@@ -56,12 +49,7 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReadResult"/>.
     /// </returns>
-    public async Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = default, long? size = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ReadCommandParameters(Handle: handle, Offset: offset, Size: size);
-        return await ExecuteCommandAsync(ReadCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ReadCommandParameters, ReadResult> ReadCommand = new("IO.read", JsonContext.ReadCommandParameters, JsonContext.ReadResult);
+    Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = default, long? size = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Return UUID of Blob object specified by a remote object id.
@@ -78,6 +66,28 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveBlobResult"/>.
     /// </returns>
+    Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+internal sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IIO
+{
+    private static IOJsonSerializerContext JsonContext = IOJsonSerializerContext.Default;
+
+    public async Task<CloseResult> CloseAsync(StreamHandle handle, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CloseCommandParameters(Handle: handle);
+        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("IO.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+
+    public async Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = default, long? size = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ReadCommandParameters(Handle: handle, Offset: offset, Size: size);
+        return await ExecuteCommandAsync(ReadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ReadCommandParameters, ReadResult> ReadCommand = new("IO.read", JsonContext.ReadCommandParameters, JsonContext.ReadResult);
+
     public async Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveBlobCommandParameters(ObjectId: objectId);

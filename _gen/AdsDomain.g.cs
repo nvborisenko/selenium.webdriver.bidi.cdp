@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Ads;
 /// A domain for ad-related metrics and data.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IAds
 {
-    private static AdsJsonSerializerContext JsonContext = AdsJsonSerializerContext.Default;
-
     /// <summary>
     /// Retrieves ad metrics for the current page.
     /// </summary>
@@ -25,6 +23,15 @@ public sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAdMetricsResult"/>.
     /// </returns>
+    Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = default, CancellationToken cancellationToken = default);
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAds
+{
+    private static AdsJsonSerializerContext JsonContext = AdsJsonSerializerContext.Default;
+
     public async Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdMetricsCommandParameters();

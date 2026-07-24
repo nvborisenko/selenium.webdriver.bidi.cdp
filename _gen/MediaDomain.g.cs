@@ -9,10 +9,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Media;
 /// This domain allows detailed inspection of media elements.
 /// </summary>
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IMedia
 {
-    private static MediaJsonSerializerContext JsonContext = MediaJsonSerializerContext.Default;
-
     /// <summary>
     /// Enables the Media domain
     /// </summary>
@@ -25,12 +23,7 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Media.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the Media domain.
@@ -44,12 +37,7 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Media.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This can be called multiple times, and can be used to set / override /
@@ -62,7 +50,8 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>Properties</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PlayerPropertiesChangedEventArgs> PlayerPropertiesChanged => CreateCdpEventSource(MediaDomainEvent.PlayerPropertiesChanged);
+    IEventSource<PlayerPropertiesChangedEventArgs> PlayerPropertiesChanged { get; }
+
     /// <summary>
     /// Send events as a list, allowing them to be batched on the browser for less
     /// congestion. If batched, events must ALWAYS be in chronological order.
@@ -74,7 +63,8 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>Events</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PlayerEventsAddedEventArgs> PlayerEventsAdded => CreateCdpEventSource(MediaDomainEvent.PlayerEventsAdded);
+    IEventSource<PlayerEventsAddedEventArgs> PlayerEventsAdded { get; }
+
     /// <summary>
     /// Send a list of any messages that need to be delivered.
     /// </summary>
@@ -85,7 +75,8 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>Messages</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PlayerMessagesLoggedEventArgs> PlayerMessagesLogged => CreateCdpEventSource(MediaDomainEvent.PlayerMessagesLogged);
+    IEventSource<PlayerMessagesLoggedEventArgs> PlayerMessagesLogged { get; }
+
     /// <summary>
     /// Send a list of any errors that need to be delivered.
     /// </summary>
@@ -96,7 +87,8 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>Errors</b></description></item>
     /// </list>
     /// </remarks>
-    public IEventSource<PlayerErrorsRaisedEventArgs> PlayerErrorsRaised => CreateCdpEventSource(MediaDomainEvent.PlayerErrorsRaised);
+    IEventSource<PlayerErrorsRaisedEventArgs> PlayerErrorsRaised { get; }
+
     /// <summary>
     /// Called whenever a player is created, or when a new agent joins and receives
     /// a list of active players. If an agent is restored, it will receive one
@@ -108,6 +100,33 @@ public sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <item><description><b>Player</b></description></item>
     /// </list>
     /// </remarks>
+    IEventSource<PlayerCreatedEventArgs> PlayerCreated { get; }
+
+}
+
+[global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+internal sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IMedia
+{
+    private static MediaJsonSerializerContext JsonContext = MediaJsonSerializerContext.Default;
+
+    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new EnableCommandParameters();
+        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Media.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+
+    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new DisableCommandParameters();
+        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Media.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+
+    public IEventSource<PlayerPropertiesChangedEventArgs> PlayerPropertiesChanged => CreateCdpEventSource(MediaDomainEvent.PlayerPropertiesChanged);
+    public IEventSource<PlayerEventsAddedEventArgs> PlayerEventsAdded => CreateCdpEventSource(MediaDomainEvent.PlayerEventsAdded);
+    public IEventSource<PlayerMessagesLoggedEventArgs> PlayerMessagesLogged => CreateCdpEventSource(MediaDomainEvent.PlayerMessagesLogged);
+    public IEventSource<PlayerErrorsRaisedEventArgs> PlayerErrorsRaised => CreateCdpEventSource(MediaDomainEvent.PlayerErrorsRaised);
     public IEventSource<PlayerCreatedEventArgs> PlayerCreated => CreateCdpEventSource(MediaDomainEvent.PlayerCreated);
 }
 
@@ -306,7 +325,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class MediaJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="MediaDomain"/>.
+/// Provides static event descriptors for the <see cref="IMedia"/>.
 /// </summary>
 public static class MediaDomainEvent
 {

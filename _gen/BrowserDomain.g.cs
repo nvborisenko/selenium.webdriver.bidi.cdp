@@ -8,10 +8,8 @@ namespace Selenium.WebDriver.BiDi.Cdp.Browser;
 /// <summary>
 /// The Browser domain defines methods and events for browser managing.
 /// </summary>
-public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp)
+public interface IBrowser
 {
-    private static BrowserJsonSerializerContext JsonContext = BrowserJsonSerializerContext.Default;
-
     /// <summary>
     /// Set permission settings for given embedding and embedded origins.
     /// </summary>
@@ -42,12 +40,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetPermissionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = default, string? embeddedOrigin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetPermissionCommandParameters(Permission: permission, Setting: setting, Origin: origin, EmbeddedOrigin: embeddedOrigin, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(SetPermissionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetPermissionCommandParameters, SetPermissionResult> SetPermissionCommand = new("Browser.setPermission", JsonContext.SetPermissionCommandParameters, JsonContext.SetPermissionResult);
+    Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = default, string? embeddedOrigin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Grant specific permissions to the given origin and reject all others. Deprecated. Use
@@ -72,12 +65,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GrantPermissionsCommandParameters(Permissions: permissions, Origin: origin, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(GrantPermissionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GrantPermissionsCommandParameters, GrantPermissionsResult> GrantPermissionsCommand = new("Browser.grantPermissions", JsonContext.GrantPermissionsCommandParameters, JsonContext.GrantPermissionsResult);
+    Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reset all permission management for all origins.
@@ -94,12 +82,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetPermissionsResult"/>.
     /// </returns>
-    public async Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResetPermissionsCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(ResetPermissionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResetPermissionsCommandParameters, ResetPermissionsResult> ResetPermissionsCommand = new("Browser.resetPermissions", JsonContext.ResetPermissionsCommandParameters, JsonContext.ResetPermissionsResult);
+    Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set the behavior when downloading a file.
@@ -129,12 +112,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetDownloadBehaviorResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, BrowserContextId: browserContextId, DownloadPath: downloadPath, EventsEnabled: eventsEnabled);
-        return await ExecuteCommandAsync(SetDownloadBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult> SetDownloadBehaviorCommand = new("Browser.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
+    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancel a download if in progress
@@ -155,12 +133,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CancelDownloadResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CancelDownloadCommandParameters(Guid: guid, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(CancelDownloadCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CancelDownloadCommandParameters, CancelDownloadResult> CancelDownloadCommand = new("Browser.cancelDownload", JsonContext.CancelDownloadCommandParameters, JsonContext.CancelDownloadResult);
+    Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Close browser gracefully.
@@ -174,12 +147,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseResult"/>.
     /// </returns>
-    public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CloseCommandParameters();
-        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("Browser.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+    Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Crashes browser on the main thread.
@@ -194,12 +162,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CrashResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CrashCommandParameters();
-        return await ExecuteCommandAsync(CrashCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CrashCommandParameters, CrashResult> CrashCommand = new("Browser.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
+    Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Crashes GPU process.
@@ -214,12 +177,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="CrashGpuProcessResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new CrashGpuProcessCommandParameters();
-        return await ExecuteCommandAsync(CrashGpuProcessCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<CrashGpuProcessCommandParameters, CrashGpuProcessResult> CrashGpuProcessCommand = new("Browser.crashGpuProcess", JsonContext.CrashGpuProcessCommandParameters, JsonContext.CrashGpuProcessResult);
+    Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns version information.
@@ -233,12 +191,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetVersionResult"/>.
     /// </returns>
-    public async Task<GetVersionResult> GetVersionAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetVersionCommandParameters();
-        return await ExecuteCommandAsync(GetVersionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetVersionCommandParameters, GetVersionResult> GetVersionCommand = new("Browser.getVersion", JsonContext.GetVersionCommandParameters, JsonContext.GetVersionResult);
+    Task<GetVersionResult> GetVersionAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the command line switches for the browser process if, and only if
@@ -254,12 +207,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetBrowserCommandLineResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetBrowserCommandLineCommandParameters();
-        return await ExecuteCommandAsync(GetBrowserCommandLineCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetBrowserCommandLineCommandParameters, GetBrowserCommandLineResult> GetBrowserCommandLineCommand = new("Browser.getBrowserCommandLine", JsonContext.GetBrowserCommandLineCommandParameters, JsonContext.GetBrowserCommandLineResult);
+    Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get Chrome histograms.
@@ -282,12 +230,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetHistogramsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetHistogramsResult> GetHistogramsAsync(string? query = default, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetHistogramsCommandParameters(Query: query, Delta: delta);
-        return await ExecuteCommandAsync(GetHistogramsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetHistogramsCommandParameters, GetHistogramsResult> GetHistogramsCommand = new("Browser.getHistograms", JsonContext.GetHistogramsCommandParameters, JsonContext.GetHistogramsResult);
+    Task<GetHistogramsResult> GetHistogramsAsync(string? query = default, bool? delta = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get a Chrome histogram by name.
@@ -308,12 +251,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetHistogramResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetHistogramCommandParameters(Name: name, Delta: delta);
-        return await ExecuteCommandAsync(GetHistogramCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetHistogramCommandParameters, GetHistogramResult> GetHistogramCommand = new("Browser.getHistogram", JsonContext.GetHistogramCommandParameters, JsonContext.GetHistogramResult);
+    Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get position and size of the browser window.
@@ -331,12 +269,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetWindowBoundsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetWindowBoundsCommandParameters(WindowId: windowId);
-        return await ExecuteCommandAsync(GetWindowBoundsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetWindowBoundsCommandParameters, GetWindowBoundsResult> GetWindowBoundsCommand = new("Browser.getWindowBounds", JsonContext.GetWindowBoundsCommandParameters, JsonContext.GetWindowBoundsResult);
+    Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get the browser window that contains the devtools target.
@@ -354,12 +287,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="GetWindowForTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetWindowForTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(GetWindowForTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetWindowForTargetCommandParameters, GetWindowForTargetResult> GetWindowForTargetCommand = new("Browser.getWindowForTarget", JsonContext.GetWindowForTargetCommandParameters, JsonContext.GetWindowForTargetResult);
+    Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set position and/or size of the browser window.
@@ -381,12 +309,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetWindowBoundsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetWindowBoundsCommandParameters(WindowId: windowId, Bounds: bounds);
-        return await ExecuteCommandAsync(SetWindowBoundsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetWindowBoundsCommandParameters, SetWindowBoundsResult> SetWindowBoundsCommand = new("Browser.setWindowBounds", JsonContext.SetWindowBoundsCommandParameters, JsonContext.SetWindowBoundsResult);
+    Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set size of the browser contents resizing browser window as necessary.
@@ -412,12 +335,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetContentsSizeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = default, long? height = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetContentsSizeCommandParameters(WindowId: windowId, Width: width, Height: height);
-        return await ExecuteCommandAsync(SetContentsSizeCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetContentsSizeCommandParameters, SetContentsSizeResult> SetContentsSizeCommand = new("Browser.setContentsSize", JsonContext.SetContentsSizeCommandParameters, JsonContext.SetContentsSizeResult);
+    Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = default, long? height = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set dock tile details, platform-specific.
@@ -437,12 +355,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetDockTileResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = default, string? image = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetDockTileCommandParameters(BadgeLabel: badgeLabel, Image: image);
-        return await ExecuteCommandAsync(SetDockTileCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetDockTileCommandParameters, SetDockTileResult> SetDockTileCommand = new("Browser.setDockTile", JsonContext.SetDockTileCommandParameters, JsonContext.SetDockTileResult);
+    Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = default, string? image = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Invoke custom browser commands used by telemetry.
@@ -459,12 +372,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="ExecuteBrowserCommandResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ExecuteBrowserCommandCommandParameters(CommandId: commandId);
-        return await ExecuteCommandAsync(ExecuteBrowserCommandCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ExecuteBrowserCommandCommandParameters, ExecuteBrowserCommandResult> ExecuteBrowserCommandCommand = new("Browser.executeBrowserCommand", JsonContext.ExecuteBrowserCommandCommandParameters, JsonContext.ExecuteBrowserCommandResult);
+    Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows a site to use privacy sandbox features that require enrollment
@@ -481,12 +389,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddPrivacySandboxEnrollmentOverrideResult"/>.
     /// </returns>
-    public async Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddPrivacySandboxEnrollmentOverrideCommandParameters(Url: url);
-        return await ExecuteCommandAsync(AddPrivacySandboxEnrollmentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<AddPrivacySandboxEnrollmentOverrideCommandParameters, AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideCommand = new("Browser.addPrivacySandboxEnrollmentOverride", JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult);
+    Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when page is about to start a download.
@@ -501,7 +404,8 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin => CreateCdpEventSource(BrowserDomainEvent.DownloadWillBegin);
+    IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin { get; }
+
     /// <summary>
     /// Fired when download makes progress. Last call has |done| == true.
     /// </summary>
@@ -515,6 +419,166 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <item><description><b>FilePath</b> - If download is "completed", provides the path of the downloaded file. Depending on the platform, it is not guaranteed to be set, nor the file is guaranteed to exist.</description></item>
     /// </list>
     /// </remarks>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    IEventSource<DownloadProgressEventArgs> DownloadProgress { get; }
+
+}
+
+internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IBrowser
+{
+    private static BrowserJsonSerializerContext JsonContext = BrowserJsonSerializerContext.Default;
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = default, string? embeddedOrigin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPermissionCommandParameters(Permission: permission, Setting: setting, Origin: origin, EmbeddedOrigin: embeddedOrigin, BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(SetPermissionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetPermissionCommandParameters, SetPermissionResult> SetPermissionCommand = new("Browser.setPermission", JsonContext.SetPermissionCommandParameters, JsonContext.SetPermissionResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    [global::System.Obsolete]
+    public async Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GrantPermissionsCommandParameters(Permissions: permissions, Origin: origin, BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(GrantPermissionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GrantPermissionsCommandParameters, GrantPermissionsResult> GrantPermissionsCommand = new("Browser.grantPermissions", JsonContext.GrantPermissionsCommandParameters, JsonContext.GrantPermissionsResult);
+
+    public async Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ResetPermissionsCommandParameters(BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(ResetPermissionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ResetPermissionsCommandParameters, ResetPermissionsResult> ResetPermissionsCommand = new("Browser.resetPermissions", JsonContext.ResetPermissionsCommandParameters, JsonContext.ResetPermissionsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, BrowserContextId: browserContextId, DownloadPath: downloadPath, EventsEnabled: eventsEnabled);
+        return await ExecuteCommandAsync(SetDownloadBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult> SetDownloadBehaviorCommand = new("Browser.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CancelDownloadCommandParameters(Guid: guid, BrowserContextId: browserContextId);
+        return await ExecuteCommandAsync(CancelDownloadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CancelDownloadCommandParameters, CancelDownloadResult> CancelDownloadCommand = new("Browser.cancelDownload", JsonContext.CancelDownloadCommandParameters, JsonContext.CancelDownloadResult);
+
+    public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CloseCommandParameters();
+        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("Browser.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CrashCommandParameters();
+        return await ExecuteCommandAsync(CrashCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CrashCommandParameters, CrashResult> CrashCommand = new("Browser.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new CrashGpuProcessCommandParameters();
+        return await ExecuteCommandAsync(CrashGpuProcessCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<CrashGpuProcessCommandParameters, CrashGpuProcessResult> CrashGpuProcessCommand = new("Browser.crashGpuProcess", JsonContext.CrashGpuProcessCommandParameters, JsonContext.CrashGpuProcessResult);
+
+    public async Task<GetVersionResult> GetVersionAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetVersionCommandParameters();
+        return await ExecuteCommandAsync(GetVersionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetVersionCommandParameters, GetVersionResult> GetVersionCommand = new("Browser.getVersion", JsonContext.GetVersionCommandParameters, JsonContext.GetVersionResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetBrowserCommandLineCommandParameters();
+        return await ExecuteCommandAsync(GetBrowserCommandLineCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetBrowserCommandLineCommandParameters, GetBrowserCommandLineResult> GetBrowserCommandLineCommand = new("Browser.getBrowserCommandLine", JsonContext.GetBrowserCommandLineCommandParameters, JsonContext.GetBrowserCommandLineResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetHistogramsResult> GetHistogramsAsync(string? query = default, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetHistogramsCommandParameters(Query: query, Delta: delta);
+        return await ExecuteCommandAsync(GetHistogramsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetHistogramsCommandParameters, GetHistogramsResult> GetHistogramsCommand = new("Browser.getHistograms", JsonContext.GetHistogramsCommandParameters, JsonContext.GetHistogramsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetHistogramCommandParameters(Name: name, Delta: delta);
+        return await ExecuteCommandAsync(GetHistogramCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetHistogramCommandParameters, GetHistogramResult> GetHistogramCommand = new("Browser.getHistogram", JsonContext.GetHistogramCommandParameters, JsonContext.GetHistogramResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetWindowBoundsCommandParameters(WindowId: windowId);
+        return await ExecuteCommandAsync(GetWindowBoundsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetWindowBoundsCommandParameters, GetWindowBoundsResult> GetWindowBoundsCommand = new("Browser.getWindowBounds", JsonContext.GetWindowBoundsCommandParameters, JsonContext.GetWindowBoundsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetWindowForTargetCommandParameters(TargetId: targetId);
+        return await ExecuteCommandAsync(GetWindowForTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetWindowForTargetCommandParameters, GetWindowForTargetResult> GetWindowForTargetCommand = new("Browser.getWindowForTarget", JsonContext.GetWindowForTargetCommandParameters, JsonContext.GetWindowForTargetResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetWindowBoundsCommandParameters(WindowId: windowId, Bounds: bounds);
+        return await ExecuteCommandAsync(SetWindowBoundsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetWindowBoundsCommandParameters, SetWindowBoundsResult> SetWindowBoundsCommand = new("Browser.setWindowBounds", JsonContext.SetWindowBoundsCommandParameters, JsonContext.SetWindowBoundsResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = default, long? height = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetContentsSizeCommandParameters(WindowId: windowId, Width: width, Height: height);
+        return await ExecuteCommandAsync(SetContentsSizeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetContentsSizeCommandParameters, SetContentsSizeResult> SetContentsSizeCommand = new("Browser.setContentsSize", JsonContext.SetContentsSizeCommandParameters, JsonContext.SetContentsSizeResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = default, string? image = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetDockTileCommandParameters(BadgeLabel: badgeLabel, Image: image);
+        return await ExecuteCommandAsync(SetDockTileCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetDockTileCommandParameters, SetDockTileResult> SetDockTileCommand = new("Browser.setDockTile", JsonContext.SetDockTileCommandParameters, JsonContext.SetDockTileResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ExecuteBrowserCommandCommandParameters(CommandId: commandId);
+        return await ExecuteCommandAsync(ExecuteBrowserCommandCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ExecuteBrowserCommandCommandParameters, ExecuteBrowserCommandResult> ExecuteBrowserCommandCommand = new("Browser.executeBrowserCommand", JsonContext.ExecuteBrowserCommandCommandParameters, JsonContext.ExecuteBrowserCommandResult);
+
+    public async Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddPrivacySandboxEnrollmentOverrideCommandParameters(Url: url);
+        return await ExecuteCommandAsync(AddPrivacySandboxEnrollmentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddPrivacySandboxEnrollmentOverrideCommandParameters, AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideCommand = new("Browser.addPrivacySandboxEnrollmentOverride", JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin => CreateCdpEventSource(BrowserDomainEvent.DownloadWillBegin);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DownloadProgressEventArgs> DownloadProgress => CreateCdpEventSource(BrowserDomainEvent.DownloadProgress);
 }
@@ -1130,7 +1194,7 @@ DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
 partial class BrowserJsonSerializerContext : JsonSerializerContext;
 
 /// <summary>
-/// Provides static event descriptors for the <see cref="BrowserDomain"/>.
+/// Provides static event descriptors for the <see cref="IBrowser"/>.
 /// </summary>
 public static class BrowserDomainEvent
 {
