@@ -30,12 +30,14 @@ jobs:
       - name: Create tag if missing
         run: |
           set -euo pipefail
-          version=$(sed -nE 's#.*<ProtocolVersion>([0-9]+)</ProtocolVersion>.*#\1#p' Directory.Build.props)
-          if [ -z "$version" ]; then
-            echo "Could not read ProtocolVersion from Directory.Build.props" >&2
+          major_version=$(sed -nE 's#.*<MajorVersion>([0-9]+)</MajorVersion>.*#\1#p' Directory.Build.props)
+          minor_version=$(sed -nE 's#.*<MinorVersion>([0-9]+)</MinorVersion>.*#\1#p' Directory.Build.props)
+          protocol_version=$(sed -nE 's#.*<ProtocolVersion>([0-9]+)</ProtocolVersion>.*#\1#p' Directory.Build.props)
+          if [ -z "$major_version" ] || [ -z "$minor_version" ] || [ -z "$protocol_version" ]; then
+            echo "Could not read MajorVersion, MinorVersion, or ProtocolVersion from Directory.Build.props" >&2
             exit 1
           fi
-          tag="v0.0.$version"
+          tag="v${major_version}.${minor_version}.${protocol_version}"
           if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
             echo "Tag $tag already exists. Nothing to do."
             exit 0

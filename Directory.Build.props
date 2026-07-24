@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <MajorVersion>0</MajorVersion>
+    <MinorVersion>0</MinorVersion>
     <ProtocolVersion>1666840</ProtocolVersion>
-    <VersionPrefix>$(MajorVersion).0.$(ProtocolVersion)</VersionPrefix>
+    <VersionPrefix>$(MajorVersion).$(MinorVersion).$(ProtocolVersion)</VersionPrefix>
     <AssemblyVersion>$(MajorVersion).0.0.0</AssemblyVersion>
     <FileVersion>$(MajorVersion).0.0.0</FileVersion>
   </PropertyGroup>
