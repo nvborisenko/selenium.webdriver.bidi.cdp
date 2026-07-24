@@ -16,7 +16,9 @@ if (outputDirectory.Exists) outputDirectory.Delete(true);
 
 outputDirectory.Create();
 
-var inputFiles = Directory.GetFiles("spec", "*.json");
+var inputFiles = Directory.GetFiles("spec", "*.json")
+    .OrderBy(Path.GetFileName, StringComparer.Ordinal)
+    .ToArray();
 
 // Collect dictionary types (object without properties) across all protocols
 foreach (var inputFile in inputFiles)
