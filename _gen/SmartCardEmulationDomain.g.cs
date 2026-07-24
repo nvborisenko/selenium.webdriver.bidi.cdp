@@ -1338,8 +1338,8 @@ public sealed record ReaderStateOut(string Reader, ReaderStateFlags EventState, 
 [JsonSerializable(typeof(Protocol), TypeInfoPropertyName = "SmartCardEmulationProtocol")]
 [JsonSerializable(typeof(ReaderStateIn), TypeInfoPropertyName = "SmartCardEmulationReaderStateIn")]
 [JsonSerializable(typeof(ReaderStateOut), TypeInfoPropertyName = "SmartCardEmulationReaderStateOut")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ReaderStateOut>), TypeInfoPropertyName = "IReadOnlyListSmartCardEmulationReaderStateOut")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ReaderStateIn>), TypeInfoPropertyName = "IReadOnlyListSmartCardEmulationReaderStateIn")]
+[JsonSerializable(typeof(ImmutableArray<ReaderStateOut>), TypeInfoPropertyName = "ImmutableArraySmartCardEmulationReaderStateOut")]
+[JsonSerializable(typeof(ImmutableArray<ReaderStateIn>), TypeInfoPropertyName = "ImmutableArraySmartCardEmulationReaderStateIn")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

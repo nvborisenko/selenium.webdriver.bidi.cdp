@@ -305,7 +305,7 @@ public sealed record GetPartialAXTreeCommandOptions : CdpCommandOptions
 /// The <b>Accessibility.AXNode</b> for this DOM node, if it exists, plus its ancestors, siblings and
 /// children, if requested.
 /// </param>
-public sealed record GetPartialAXTreeResult(IReadOnlyList<AXNode> Nodes) : EmptyResult;
+public sealed record GetPartialAXTreeResult(ImmutableArray<AXNode> Nodes) : EmptyResult;
 
 
 internal sealed record GetFullAXTreeCommandParameters(long? Depth, Page.FrameId? FrameId) : Parameters;
@@ -332,7 +332,7 @@ public sealed record GetFullAXTreeCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Nodes">
 /// </param>
-public sealed record GetFullAXTreeResult(IReadOnlyList<AXNode> Nodes) : EmptyResult;
+public sealed record GetFullAXTreeResult(ImmutableArray<AXNode> Nodes) : EmptyResult;
 
 
 internal sealed record GetRootAXNodeCommandParameters(Page.FrameId? FrameId) : Parameters;
@@ -383,7 +383,7 @@ public sealed record GetAXNodeAndAncestorsCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Nodes">
 /// </param>
-public sealed record GetAXNodeAndAncestorsResult(IReadOnlyList<AXNode> Nodes) : EmptyResult;
+public sealed record GetAXNodeAndAncestorsResult(ImmutableArray<AXNode> Nodes) : EmptyResult;
 
 
 internal sealed record GetChildAXNodesCommandParameters(AXNodeId Id, Page.FrameId? FrameId) : Parameters;
@@ -404,7 +404,7 @@ public sealed record GetChildAXNodesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Nodes">
 /// </param>
-public sealed record GetChildAXNodesResult(IReadOnlyList<AXNode> Nodes) : EmptyResult;
+public sealed record GetChildAXNodesResult(ImmutableArray<AXNode> Nodes) : EmptyResult;
 
 
 internal sealed record QueryAXTreeCommandParameters(DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, string? AccessibleName, string? Role) : Parameters;
@@ -446,7 +446,7 @@ public sealed record QueryAXTreeCommandOptions : CdpCommandOptions
 /// A list of <b>Accessibility.AXNode</b> matching the specified attributes,
 /// including nodes that are ignored for accessibility.
 /// </param>
-public sealed record QueryAXTreeResult(IReadOnlyList<AXNode> Nodes) : EmptyResult;
+public sealed record QueryAXTreeResult(ImmutableArray<AXNode> Nodes) : EmptyResult;
 
 
 /// <summary>
@@ -726,12 +726,12 @@ public sealed record AXValue(AXValueType Type)
     /// <summary>
     /// One or more related nodes, if applicable.
     /// </summary>
-    public IReadOnlyList<AXRelatedNode>? RelatedNodes { get; init; }
+    public ImmutableArray<AXRelatedNode>? RelatedNodes { get; init; }
 
     /// <summary>
     /// The sources which contributed to the computation of this property.
     /// </summary>
-    public IReadOnlyList<AXValueSource>? Sources { get; init; }
+    public ImmutableArray<AXValueSource>? Sources { get; init; }
 }
 
 /// <summary>
@@ -994,7 +994,7 @@ public sealed record AXNode(AXNodeId NodeId, bool Ignored)
     /// <summary>
     /// Collection of reasons why this node is hidden.
     /// </summary>
-    public IReadOnlyList<AXProperty>? IgnoredReasons { get; init; }
+    public ImmutableArray<AXProperty>? IgnoredReasons { get; init; }
 
     /// <summary>
     /// This <b>Node</b>'s role, whether explicit or implicit.
@@ -1024,7 +1024,7 @@ public sealed record AXNode(AXNodeId NodeId, bool Ignored)
     /// <summary>
     /// All other properties
     /// </summary>
-    public IReadOnlyList<AXProperty>? Properties { get; init; }
+    public ImmutableArray<AXProperty>? Properties { get; init; }
 
     /// <summary>
     /// ID for this node's parent.
@@ -1034,7 +1034,7 @@ public sealed record AXNode(AXNodeId NodeId, bool Ignored)
     /// <summary>
     /// IDs for each of this node's child nodes.
     /// </summary>
-    public IReadOnlyList<AXNodeId>? ChildIds { get; init; }
+    public ImmutableArray<AXNodeId>? ChildIds { get; init; }
 
     /// <summary>
     /// The backend ID for the associated DOM node, if any.
@@ -1075,11 +1075,11 @@ public sealed record AXNode(AXNodeId NodeId, bool Ignored)
 [JsonSerializable(typeof(AXValue), TypeInfoPropertyName = "AccessibilityAXValue")]
 [JsonSerializable(typeof(AXPropertyName), TypeInfoPropertyName = "AccessibilityAXPropertyName")]
 [JsonSerializable(typeof(AXNode), TypeInfoPropertyName = "AccessibilityAXNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AXNode>), TypeInfoPropertyName = "IReadOnlyListAccessibilityAXNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AXRelatedNode>), TypeInfoPropertyName = "IReadOnlyListAccessibilityAXRelatedNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AXValueSource>), TypeInfoPropertyName = "IReadOnlyListAccessibilityAXValueSource")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AXProperty>), TypeInfoPropertyName = "IReadOnlyListAccessibilityAXProperty")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AXNodeId>), TypeInfoPropertyName = "IReadOnlyListAccessibilityAXNodeId")]
+[JsonSerializable(typeof(ImmutableArray<AXNode>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXNode")]
+[JsonSerializable(typeof(ImmutableArray<AXRelatedNode>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXRelatedNode")]
+[JsonSerializable(typeof(ImmutableArray<AXValueSource>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXValueSource")]
+[JsonSerializable(typeof(ImmutableArray<AXProperty>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXProperty")]
+[JsonSerializable(typeof(ImmutableArray<AXNodeId>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

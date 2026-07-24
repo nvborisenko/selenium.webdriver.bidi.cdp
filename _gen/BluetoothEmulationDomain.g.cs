@@ -813,7 +813,7 @@ public sealed record ScanRecord()
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<string>? Uuids { get; init; }
+    public ImmutableArray<string>? Uuids { get; init; }
 
     /// <summary>
     /// Stores the external appearance description of the device.
@@ -829,7 +829,7 @@ public sealed record ScanRecord()
     /// Key is the company identifier and the value is an array of bytes of
     /// manufacturer specific data.
     /// </summary>
-    public IReadOnlyList<ManufacturerData>? ManufacturerData { get; init; }
+    public ImmutableArray<ManufacturerData>? ManufacturerData { get; init; }
 }
 
 /// <summary>
@@ -926,7 +926,7 @@ public sealed record CharacteristicProperties()
 [JsonSerializable(typeof(ScanRecord), TypeInfoPropertyName = "BluetoothEmulationScanRecord")]
 [JsonSerializable(typeof(ScanEntry), TypeInfoPropertyName = "BluetoothEmulationScanEntry")]
 [JsonSerializable(typeof(CharacteristicProperties), TypeInfoPropertyName = "BluetoothEmulationCharacteristicProperties")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ManufacturerData>), TypeInfoPropertyName = "IReadOnlyListBluetoothEmulationManufacturerData")]
+[JsonSerializable(typeof(ImmutableArray<ManufacturerData>), TypeInfoPropertyName = "ImmutableArrayBluetoothEmulationManufacturerData")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

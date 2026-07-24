@@ -250,7 +250,7 @@ public sealed record GetOsAppStateCommandOptions : CdpCommandOptions
 /// </param>
 /// <param name="FileHandlers">
 /// </param>
-public sealed record GetOsAppStateResult(long BadgeCount, IReadOnlyList<FileHandler> FileHandlers) : EmptyResult;
+public sealed record GetOsAppStateResult(long BadgeCount, ImmutableArray<FileHandler> FileHandlers) : EmptyResult;
 
 
 internal sealed record InstallCommandParameters(string ManifestId, string? InstallUrlOrBundleUrl) : Parameters;
@@ -320,7 +320,7 @@ public sealed record LaunchFilesInAppCommandOptions : CdpCommandOptions
 /// <param name="TargetIds">
 /// IDs of the tab targets created as the result.
 /// </param>
-public sealed record LaunchFilesInAppResult(IReadOnlyList<Target.TargetID> TargetIds) : EmptyResult;
+public sealed record LaunchFilesInAppResult(ImmutableArray<Target.TargetID> TargetIds) : EmptyResult;
 
 
 internal sealed record OpenCurrentPageInAppCommandParameters(string ManifestId) : Parameters;
@@ -379,7 +379,7 @@ public sealed record ChangeAppUserSettingsResult() : EmptyResult;
 /// </param>
 /// <param name="FileExtensions">
 /// </param>
-public sealed record FileHandlerAccept(string MediaType, IReadOnlyList<string> FileExtensions)
+public sealed record FileHandlerAccept(string MediaType, ImmutableArray<string> FileExtensions)
 {
 }
 
@@ -391,7 +391,7 @@ public sealed record FileHandlerAccept(string MediaType, IReadOnlyList<string> F
 /// </param>
 /// <param name="DisplayName">
 /// </param>
-public sealed record FileHandler(string Action, IReadOnlyList<FileHandlerAccept> Accepts, string DisplayName)
+public sealed record FileHandler(string Action, ImmutableArray<FileHandlerAccept> Accepts, string DisplayName)
 {
 }
 
@@ -428,9 +428,9 @@ public enum DisplayMode
 [JsonSerializable(typeof(FileHandlerAccept), TypeInfoPropertyName = "PWAFileHandlerAccept")]
 [JsonSerializable(typeof(FileHandler), TypeInfoPropertyName = "PWAFileHandler")]
 [JsonSerializable(typeof(DisplayMode), TypeInfoPropertyName = "PWADisplayMode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FileHandler>), TypeInfoPropertyName = "IReadOnlyListPWAFileHandler")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Target.TargetID>), TypeInfoPropertyName = "IReadOnlyListTargetTargetID")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FileHandlerAccept>), TypeInfoPropertyName = "IReadOnlyListPWAFileHandlerAccept")]
+[JsonSerializable(typeof(ImmutableArray<FileHandler>), TypeInfoPropertyName = "ImmutableArrayPWAFileHandler")]
+[JsonSerializable(typeof(ImmutableArray<Target.TargetID>), TypeInfoPropertyName = "ImmutableArrayTargetTargetID")]
+[JsonSerializable(typeof(ImmutableArray<FileHandlerAccept>), TypeInfoPropertyName = "ImmutableArrayPWAFileHandlerAccept")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -1610,7 +1610,7 @@ public sealed record CollectClassNamesFromSubtreeCommandOptions : CdpCommandOpti
 /// <param name="ClassNames">
 /// Class name list.
 /// </param>
-public sealed record CollectClassNamesFromSubtreeResult(IReadOnlyList<string> ClassNames) : EmptyResult;
+public sealed record CollectClassNamesFromSubtreeResult(ImmutableArray<string> ClassNames) : EmptyResult;
 
 
 internal sealed record CopyToCommandParameters(NodeId NodeId, NodeId TargetNodeId, NodeId? InsertBeforeNodeId) : Parameters;
@@ -1800,7 +1800,7 @@ public sealed record GetAttributesCommandOptions : CdpCommandOptions
 /// <param name="Attributes">
 /// An interleaved array of node attribute names and values.
 /// </param>
-public sealed record GetAttributesResult(IReadOnlyList<string> Attributes) : EmptyResult;
+public sealed record GetAttributesResult(ImmutableArray<string> Attributes) : EmptyResult;
 
 
 internal sealed record GetBoxModelCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
@@ -1862,7 +1862,7 @@ public sealed record GetContentQuadsCommandOptions : CdpCommandOptions
 /// <param name="Quads">
 /// Quads that describe node layout relative to viewport.
 /// </param>
-public sealed record GetContentQuadsResult(IReadOnlyList<IReadOnlyList<double>> Quads) : EmptyResult;
+public sealed record GetContentQuadsResult(ImmutableArray<ImmutableArray<double>> Quads) : EmptyResult;
 
 
 internal sealed record GetDocumentCommandParameters(long? Depth, bool? Pierce) : Parameters;
@@ -1918,7 +1918,7 @@ public sealed record GetFlattenedDocumentCommandOptions : CdpCommandOptions
 /// <param name="Nodes">
 /// Resulting node.
 /// </param>
-public sealed record GetFlattenedDocumentResult(IReadOnlyList<Node> Nodes) : EmptyResult;
+public sealed record GetFlattenedDocumentResult(ImmutableArray<Node> Nodes) : EmptyResult;
 
 
 internal sealed record GetNodesForSubtreeByStyleCommandParameters(NodeId NodeId, ImmutableArray<CSSComputedStyleProperty> ComputedStyles, bool? Pierce) : Parameters;
@@ -1940,7 +1940,7 @@ public sealed record GetNodesForSubtreeByStyleCommandOptions : CdpCommandOptions
 /// <param name="NodeIds">
 /// Resulting nodes.
 /// </param>
-public sealed record GetNodesForSubtreeByStyleResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+public sealed record GetNodesForSubtreeByStyleResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
 internal sealed record GetNodeForLocationCommandParameters(long X, long Y, bool? IncludeUserAgentShadowDOM, bool? IgnorePointerEventsNone) : Parameters;
@@ -2042,7 +2042,7 @@ public sealed record GetSearchResultsCommandOptions : CdpCommandOptions
 /// <param name="NodeIds">
 /// Ids of the search result nodes.
 /// </param>
-public sealed record GetSearchResultsResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+public sealed record GetSearchResultsResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
 internal sealed record HideHighlightCommandParameters() : Parameters;
@@ -2179,7 +2179,7 @@ public sealed record PushNodesByBackendIdsToFrontendCommandOptions : CdpCommandO
 /// The array of ids of pushed nodes that correspond to the backend ids specified in
 /// backendNodeIds.
 /// </param>
-public sealed record PushNodesByBackendIdsToFrontendResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+public sealed record PushNodesByBackendIdsToFrontendResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
 internal sealed record QuerySelectorCommandParameters(NodeId NodeId, string Selector) : Parameters;
@@ -2213,7 +2213,7 @@ public sealed record QuerySelectorAllCommandOptions : CdpCommandOptions
 /// <param name="NodeIds">
 /// Query selector result.
 /// </param>
-public sealed record QuerySelectorAllResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+public sealed record QuerySelectorAllResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
 internal sealed record GetTopLayerElementsCommandParameters() : Parameters;
@@ -2230,7 +2230,7 @@ public sealed record GetTopLayerElementsCommandOptions : CdpCommandOptions
 /// <param name="NodeIds">
 /// NodeIds of top layer elements
 /// </param>
-public sealed record GetTopLayerElementsResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+public sealed record GetTopLayerElementsResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
 internal sealed record GetElementByRelationCommandParameters(NodeId NodeId, string Relation) : Parameters;
@@ -2492,7 +2492,7 @@ public sealed record GetDetachedDomNodesCommandOptions : CdpCommandOptions
 /// <param name="DetachedNodes">
 /// The list of detached nodes
 /// </param>
-public sealed record GetDetachedDomNodesResult(IReadOnlyList<DetachedElementInfo> DetachedNodes) : EmptyResult;
+public sealed record GetDetachedDomNodesResult(ImmutableArray<DetachedElementInfo> DetachedNodes) : EmptyResult;
 
 
 internal sealed record SetInspectedNodeCommandParameters(NodeId NodeId) : Parameters;
@@ -2638,7 +2638,7 @@ public sealed record GetQueryingDescendantsForContainerCommandOptions : CdpComma
 /// <param name="NodeIds">
 /// Descendant nodes with container queries against the given container.
 /// </param>
-public sealed record GetQueryingDescendantsForContainerResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+public sealed record GetQueryingDescendantsForContainerResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
 internal sealed record GetAnchorElementCommandParameters(NodeId NodeId, string? AnchorSpecifier) : Parameters;
@@ -2686,7 +2686,7 @@ public sealed record ForceShowPopoverCommandOptions : CdpCommandOptions
 /// <param name="NodeIds">
 /// List of popovers that were closed in order to respect popover stacking order.
 /// </param>
-public sealed record ForceShowPopoverResult(IReadOnlyList<NodeId> NodeIds) : EmptyResult;
+public sealed record ForceShowPopoverResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
 /// <summary>
@@ -3252,12 +3252,12 @@ public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeT
     /// <summary>
     /// Child nodes of this node when requested with children.
     /// </summary>
-    public IReadOnlyList<Node>? Children { get; init; }
+    public ImmutableArray<Node>? Children { get; init; }
 
     /// <summary>
     /// Attributes of the <b>Element</b> node in the form of flat array <b>[name1, value1, name2, value2]</b>.
     /// </summary>
-    public IReadOnlyList<string>? Attributes { get; init; }
+    public ImmutableArray<string>? Attributes { get; init; }
 
     /// <summary>
     /// Document URL that <b>Document</b> or <b>FrameOwner</b> node points to.
@@ -3328,7 +3328,7 @@ public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeT
     /// <summary>
     /// Shadow root list for given element host.
     /// </summary>
-    public IReadOnlyList<Node>? ShadowRoots { get; init; }
+    public ImmutableArray<Node>? ShadowRoots { get; init; }
 
     /// <summary>
     /// Content document fragment for template elements.
@@ -3338,7 +3338,7 @@ public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeT
     /// <summary>
     /// Pseudo elements associated with this node.
     /// </summary>
-    public IReadOnlyList<Node>? PseudoElements { get; init; }
+    public ImmutableArray<Node>? PseudoElements { get; init; }
 
     /// <summary>
     /// Deprecated, as the HTML Imports API has been removed (crbug.com/937746).
@@ -3351,7 +3351,7 @@ public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeT
     /// <summary>
     /// Distributed nodes for given insertion point.
     /// </summary>
-    public IReadOnlyList<BackendNode>? DistributedNodes { get; init; }
+    public ImmutableArray<BackendNode>? DistributedNodes { get; init; }
 
     /// <summary>
     /// Whether the node is SVG.
@@ -3376,7 +3376,7 @@ public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeT
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<StyleSheetId>? AdoptedStyleSheets { get; init; }
+    public ImmutableArray<StyleSheetId>? AdoptedStyleSheets { get; init; }
 
     /// <summary>
     /// </summary>
@@ -3390,7 +3390,7 @@ public sealed record Node(NodeId NodeId, BackendNodeId BackendNodeId, long NodeT
 /// </param>
 /// <param name="RetainedNodeIds">
 /// </param>
-public sealed record DetachedElementInfo(Node TreeNode, IReadOnlyList<NodeId> RetainedNodeIds)
+public sealed record DetachedElementInfo(Node TreeNode, ImmutableArray<NodeId> RetainedNodeIds)
 {
 }
 
@@ -3439,7 +3439,7 @@ public sealed record RGBA(long R, long G, long B)
 /// <param name="Height">
 /// Node height
 /// </param>
-public sealed record BoxModel(IReadOnlyList<double> Content, IReadOnlyList<double> Padding, IReadOnlyList<double> Border, IReadOnlyList<double> Margin, long Width, long Height)
+public sealed record BoxModel(ImmutableArray<double> Content, ImmutableArray<double> Padding, ImmutableArray<double> Border, ImmutableArray<double> Margin, long Width, long Height)
 {
     /// <summary>
     /// Shape outside coordinates
@@ -3459,7 +3459,7 @@ public sealed record BoxModel(IReadOnlyList<double> Content, IReadOnlyList<doubl
 /// <param name="MarginShape">
 /// Margin shape bounds
 /// </param>
-public sealed record ShapeOutsideInfo(IReadOnlyList<double> Bounds, IReadOnlyList<global::System.Text.Json.JsonElement> Shape, IReadOnlyList<global::System.Text.Json.JsonElement> MarginShape)
+public sealed record ShapeOutsideInfo(ImmutableArray<double> Bounds, ImmutableArray<global::System.Text.Json.JsonElement> Shape, ImmutableArray<global::System.Text.Json.JsonElement> MarginShape)
 {
 }
 
@@ -3636,13 +3636,13 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 [JsonSerializable(typeof(ShapeOutsideInfo), TypeInfoPropertyName = "DOMShapeOutsideInfo")]
 [JsonSerializable(typeof(Rect), TypeInfoPropertyName = "DOMRect")]
 [JsonSerializable(typeof(CSSComputedStyleProperty), TypeInfoPropertyName = "DOMCSSComputedStyleProperty")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Node>), TypeInfoPropertyName = "IReadOnlyListDOMNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSComputedStyleProperty>), TypeInfoPropertyName = "IReadOnlyListDOMCSSComputedStyleProperty")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<NodeId>), TypeInfoPropertyName = "IReadOnlyListDOMNodeId")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackendNodeId>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNodeId")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DetachedElementInfo>), TypeInfoPropertyName = "IReadOnlyListDOMDetachedElementInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<StyleSheetId>), TypeInfoPropertyName = "IReadOnlyListDOMStyleSheetId")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackendNode>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNode")]
+[JsonSerializable(typeof(ImmutableArray<Node>), TypeInfoPropertyName = "ImmutableArrayDOMNode")]
+[JsonSerializable(typeof(ImmutableArray<CSSComputedStyleProperty>), TypeInfoPropertyName = "ImmutableArrayDOMCSSComputedStyleProperty")]
+[JsonSerializable(typeof(ImmutableArray<NodeId>), TypeInfoPropertyName = "ImmutableArrayDOMNodeId")]
+[JsonSerializable(typeof(ImmutableArray<BackendNodeId>), TypeInfoPropertyName = "ImmutableArrayDOMBackendNodeId")]
+[JsonSerializable(typeof(ImmutableArray<DetachedElementInfo>), TypeInfoPropertyName = "ImmutableArrayDOMDetachedElementInfo")]
+[JsonSerializable(typeof(ImmutableArray<StyleSheetId>), TypeInfoPropertyName = "ImmutableArrayDOMStyleSheetId")]
+[JsonSerializable(typeof(ImmutableArray<BackendNode>), TypeInfoPropertyName = "ImmutableArrayDOMBackendNode")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

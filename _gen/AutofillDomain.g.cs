@@ -238,7 +238,7 @@ public sealed record AddressField(string Name, string Value)
 /// </summary>
 /// <param name="Fields">
 /// </param>
-public sealed record AddressFields(IReadOnlyList<AddressField> Fields)
+public sealed record AddressFields(ImmutableArray<AddressField> Fields)
 {
 }
 
@@ -247,7 +247,7 @@ public sealed record AddressFields(IReadOnlyList<AddressField> Fields)
 /// <param name="Fields">
 /// fields and values defining an address.
 /// </param>
-public sealed record Address(IReadOnlyList<AddressField> Fields)
+public sealed record Address(ImmutableArray<AddressField> Fields)
 {
 }
 
@@ -263,7 +263,7 @@ public sealed record Address(IReadOnlyList<AddressField> Fields)
 /// <param name="AddressFields">
 /// A two dimension array containing the representation of values from an address profile.
 /// </param>
-public sealed record AddressUI(IReadOnlyList<AddressFields> AddressFields)
+public sealed record AddressUI(ImmutableArray<AddressFields> AddressFields)
 {
 }
 
@@ -329,10 +329,10 @@ public sealed record FilledField(string HtmlType, string Id, string Name, string
 [JsonSerializable(typeof(AddressUI), TypeInfoPropertyName = "AutofillAddressUI")]
 [JsonSerializable(typeof(FillingStrategy), TypeInfoPropertyName = "AutofillFillingStrategy")]
 [JsonSerializable(typeof(FilledField), TypeInfoPropertyName = "AutofillFilledField")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Address>), TypeInfoPropertyName = "IReadOnlyListAutofillAddress")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FilledField>), TypeInfoPropertyName = "IReadOnlyListAutofillFilledField")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AddressField>), TypeInfoPropertyName = "IReadOnlyListAutofillAddressField")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AddressFields>), TypeInfoPropertyName = "IReadOnlyListAutofillAddressFields")]
+[JsonSerializable(typeof(ImmutableArray<Address>), TypeInfoPropertyName = "ImmutableArrayAutofillAddress")]
+[JsonSerializable(typeof(ImmutableArray<FilledField>), TypeInfoPropertyName = "ImmutableArrayAutofillFilledField")]
+[JsonSerializable(typeof(ImmutableArray<AddressField>), TypeInfoPropertyName = "ImmutableArrayAutofillAddressField")]
+[JsonSerializable(typeof(ImmutableArray<AddressFields>), TypeInfoPropertyName = "ImmutableArrayAutofillAddressFields")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

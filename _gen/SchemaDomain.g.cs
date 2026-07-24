@@ -48,7 +48,7 @@ public sealed record GetDomainsCommandOptions : CdpCommandOptions
 /// <param name="Domains">
 /// List of supported domains.
 /// </param>
-public sealed record GetDomainsResult(IReadOnlyList<Domain> Domains) : EmptyResult;
+public sealed record GetDomainsResult(ImmutableArray<Domain> Domains) : EmptyResult;
 
 
 /// <summary>
@@ -67,7 +67,7 @@ public sealed record Domain(string Name, string Version)
 [JsonSerializable(typeof(GetDomainsCommandParameters), TypeInfoPropertyName = "GetDomainsCommandParameters")]
 [JsonSerializable(typeof(GetDomainsResult), TypeInfoPropertyName = "GetDomainsResult")]
 [JsonSerializable(typeof(Domain), TypeInfoPropertyName = "SchemaDomain")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Domain>), TypeInfoPropertyName = "IReadOnlyListSchemaDomain")]
+[JsonSerializable(typeof(ImmutableArray<Domain>), TypeInfoPropertyName = "ImmutableArraySchemaDomain")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

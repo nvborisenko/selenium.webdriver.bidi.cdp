@@ -1069,12 +1069,12 @@ public sealed record DragDataItem(string MimeType, string Data)
 /// <param name="DragOperationsMask">
 /// Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16
 /// </param>
-public sealed record DragData(IReadOnlyList<DragDataItem> Items, long DragOperationsMask)
+public sealed record DragData(ImmutableArray<DragDataItem> Items, long DragOperationsMask)
 {
     /// <summary>
     /// List of filenames that should be included when dropping
     /// </summary>
-    public IReadOnlyList<string>? Files { get; init; }
+    public ImmutableArray<string>? Files { get; init; }
 }
 
 [JsonSerializable(typeof(DispatchDragEventCommandParameters), TypeInfoPropertyName = "DispatchDragEventCommandParameters")]
@@ -1110,8 +1110,8 @@ public sealed record DragData(IReadOnlyList<DragDataItem> Items, long DragOperat
 [JsonSerializable(typeof(TimeSinceEpoch), TypeInfoPropertyName = "InputTimeSinceEpoch")]
 [JsonSerializable(typeof(DragDataItem), TypeInfoPropertyName = "InputDragDataItem")]
 [JsonSerializable(typeof(DragData), TypeInfoPropertyName = "InputDragData")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<TouchPoint>), TypeInfoPropertyName = "IReadOnlyListInputTouchPoint")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DragDataItem>), TypeInfoPropertyName = "IReadOnlyListInputDragDataItem")]
+[JsonSerializable(typeof(ImmutableArray<TouchPoint>), TypeInfoPropertyName = "ImmutableArrayInputTouchPoint")]
+[JsonSerializable(typeof(ImmutableArray<DragDataItem>), TypeInfoPropertyName = "ImmutableArrayInputDragDataItem")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

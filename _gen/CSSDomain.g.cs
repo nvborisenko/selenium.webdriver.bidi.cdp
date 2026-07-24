@@ -1047,7 +1047,7 @@ public sealed record CollectClassNamesCommandOptions : CdpCommandOptions
 /// <param name="ClassNames">
 /// Class name list.
 /// </param>
-public sealed record CollectClassNamesResult(IReadOnlyList<string> ClassNames) : EmptyResult;
+public sealed record CollectClassNamesResult(ImmutableArray<string> ClassNames) : EmptyResult;
 
 
 internal sealed record CreateStyleSheetCommandParameters(Page.FrameId FrameId, bool? Force) : Parameters;
@@ -1155,7 +1155,7 @@ public sealed record GetBackgroundColorsCommandOptions : CdpCommandOptions
 /// The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or
 /// '100').
 /// </param>
-public sealed record GetBackgroundColorsResult(IReadOnlyList<string>? BackgroundColors, string? ComputedFontSize, string? ComputedFontWeight) : EmptyResult;
+public sealed record GetBackgroundColorsResult(ImmutableArray<string>? BackgroundColors, string? ComputedFontSize, string? ComputedFontWeight) : EmptyResult;
 
 
 internal sealed record GetComputedStyleForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
@@ -1176,7 +1176,7 @@ public sealed record GetComputedStyleForNodeCommandOptions : CdpCommandOptions
 /// A list of non-standard "extra fields" which blink stores alongside each
 /// computed style.
 /// </param>
-public sealed record GetComputedStyleForNodeResult(IReadOnlyList<CSSComputedStyleProperty> ComputedStyle, ComputedStyleExtraFields ExtraFields) : EmptyResult;
+public sealed record GetComputedStyleForNodeResult(ImmutableArray<CSSComputedStyleProperty> ComputedStyle, ComputedStyleExtraFields ExtraFields) : EmptyResult;
 
 
 internal sealed record ResolveValuesCommandParameters(ImmutableArray<string> Values, DOM.NodeId NodeId, string? PropertyName, DOM.PseudoType? PseudoType, string? PseudoIdentifier) : Parameters;
@@ -1207,7 +1207,7 @@ public sealed record ResolveValuesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Results">
 /// </param>
-public sealed record ResolveValuesResult(IReadOnlyList<string> Results) : EmptyResult;
+public sealed record ResolveValuesResult(ImmutableArray<string> Results) : EmptyResult;
 
 
 internal sealed record GetLonghandPropertiesCommandParameters(string ShorthandName, string Value) : Parameters;
@@ -1223,7 +1223,7 @@ public sealed record GetLonghandPropertiesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="LonghandProperties">
 /// </param>
-public sealed record GetLonghandPropertiesResult(IReadOnlyList<CSSProperty> LonghandProperties) : EmptyResult;
+public sealed record GetLonghandPropertiesResult(ImmutableArray<CSSProperty> LonghandProperties) : EmptyResult;
 
 
 internal sealed record GetInlineStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
@@ -1267,7 +1267,7 @@ public sealed record GetAnimatedStylesForNodeCommandOptions : CdpCommandOptions
 /// Inherited style entries for animationsStyle and transitionsStyle from
 /// the inheritance chain of the element.
 /// </param>
-public sealed record GetAnimatedStylesForNodeResult(IReadOnlyList<CSSAnimationStyle>? AnimationStyles, CSSStyle? TransitionsStyle, IReadOnlyList<InheritedAnimatedStyleEntry>? Inherited) : EmptyResult;
+public sealed record GetAnimatedStylesForNodeResult(ImmutableArray<CSSAnimationStyle>? AnimationStyles, CSSStyle? TransitionsStyle, ImmutableArray<InheritedAnimatedStyleEntry>? Inherited) : EmptyResult;
 
 
 internal sealed record GetMatchedStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
@@ -1324,7 +1324,7 @@ public sealed record GetMatchedStylesForNodeCommandOptions : CdpCommandOptions
 /// <param name="CssFunctionRules">
 /// A list of CSS at-function rules referenced by styles of this node.
 /// </param>
-public sealed record GetMatchedStylesForNodeResult(CSSStyle? InlineStyle, CSSStyle? AttributesStyle, IReadOnlyList<RuleMatch>? MatchedCSSRules, IReadOnlyList<PseudoElementMatches>? PseudoElements, IReadOnlyList<InheritedStyleEntry>? Inherited, IReadOnlyList<InheritedPseudoElementMatches>? InheritedPseudoElements, IReadOnlyList<CSSKeyframesRule>? CssKeyframesRules, IReadOnlyList<CSSPositionTryRule>? CssPositionTryRules, long? ActivePositionFallbackIndex, IReadOnlyList<CSSPropertyRule>? CssPropertyRules, IReadOnlyList<CSSPropertyRegistration>? CssPropertyRegistrations, IReadOnlyList<CSSAtRule>? CssAtRules, DOM.NodeId? ParentLayoutNodeId, IReadOnlyList<CSSFunctionRule>? CssFunctionRules) : EmptyResult;
+public sealed record GetMatchedStylesForNodeResult(CSSStyle? InlineStyle, CSSStyle? AttributesStyle, ImmutableArray<RuleMatch>? MatchedCSSRules, ImmutableArray<PseudoElementMatches>? PseudoElements, ImmutableArray<InheritedStyleEntry>? Inherited, ImmutableArray<InheritedPseudoElementMatches>? InheritedPseudoElements, ImmutableArray<CSSKeyframesRule>? CssKeyframesRules, ImmutableArray<CSSPositionTryRule>? CssPositionTryRules, long? ActivePositionFallbackIndex, ImmutableArray<CSSPropertyRule>? CssPropertyRules, ImmutableArray<CSSPropertyRegistration>? CssPropertyRegistrations, ImmutableArray<CSSAtRule>? CssAtRules, DOM.NodeId? ParentLayoutNodeId, ImmutableArray<CSSFunctionRule>? CssFunctionRules) : EmptyResult;
 
 
 internal sealed record GetEnvironmentVariablesCommandParameters() : Parameters;
@@ -1356,7 +1356,7 @@ public sealed record GetMediaQueriesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Medias">
 /// </param>
-public sealed record GetMediaQueriesResult(IReadOnlyList<CSSMedia> Medias) : EmptyResult;
+public sealed record GetMediaQueriesResult(ImmutableArray<CSSMedia> Medias) : EmptyResult;
 
 
 internal sealed record GetPlatformFontsForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
@@ -1373,7 +1373,7 @@ public sealed record GetPlatformFontsForNodeCommandOptions : CdpCommandOptions
 /// <param name="Fonts">
 /// Usage statistics for every employed platform font.
 /// </param>
-public sealed record GetPlatformFontsForNodeResult(IReadOnlyList<PlatformFontUsage> Fonts) : EmptyResult;
+public sealed record GetPlatformFontsForNodeResult(ImmutableArray<PlatformFontUsage> Fonts) : EmptyResult;
 
 
 internal sealed record GetStyleSheetTextCommandParameters(DOM.StyleSheetId StyleSheetId) : Parameters;
@@ -1422,7 +1422,7 @@ public sealed record GetLocationForSelectorCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Ranges">
 /// </param>
-public sealed record GetLocationForSelectorResult(IReadOnlyList<SourceRange> Ranges) : EmptyResult;
+public sealed record GetLocationForSelectorResult(ImmutableArray<SourceRange> Ranges) : EmptyResult;
 
 
 internal sealed record TrackComputedStyleUpdatesForNodeCommandParameters(DOM.NodeId? NodeId) : Parameters;
@@ -1470,7 +1470,7 @@ public sealed record TakeComputedStyleUpdatesCommandOptions : CdpCommandOptions
 /// <param name="NodeIds">
 /// The list of node Ids that have their tracked computed styles updated.
 /// </param>
-public sealed record TakeComputedStyleUpdatesResult(IReadOnlyList<DOM.NodeId> NodeIds) : EmptyResult;
+public sealed record TakeComputedStyleUpdatesResult(ImmutableArray<DOM.NodeId> NodeIds) : EmptyResult;
 
 
 internal sealed record SetEffectivePropertyValueForNodeCommandParameters(DOM.NodeId NodeId, string PropertyName, string Value) : Parameters;
@@ -1677,7 +1677,7 @@ public sealed record SetStyleTextsCommandOptions : CdpCommandOptions
 /// <param name="Styles">
 /// The resulting styles after modification.
 /// </param>
-public sealed record SetStyleTextsResult(IReadOnlyList<CSSStyle> Styles) : EmptyResult;
+public sealed record SetStyleTextsResult(ImmutableArray<CSSStyle> Styles) : EmptyResult;
 
 
 internal sealed record StartRuleUsageTrackingCommandParameters() : Parameters;
@@ -1707,7 +1707,7 @@ public sealed record StopRuleUsageTrackingCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="RuleUsage">
 /// </param>
-public sealed record StopRuleUsageTrackingResult(IReadOnlyList<RuleUsage> RuleUsage) : EmptyResult;
+public sealed record StopRuleUsageTrackingResult(ImmutableArray<RuleUsage> RuleUsage) : EmptyResult;
 
 
 internal sealed record TakeCoverageDeltaCommandParameters() : Parameters;
@@ -1726,7 +1726,7 @@ public sealed record TakeCoverageDeltaCommandOptions : CdpCommandOptions
 /// <param name="Timestamp">
 /// Monotonically increasing time, in seconds.
 /// </param>
-public sealed record TakeCoverageDeltaResult(IReadOnlyList<RuleUsage> Coverage, double Timestamp) : EmptyResult;
+public sealed record TakeCoverageDeltaResult(ImmutableArray<RuleUsage> Coverage, double Timestamp) : EmptyResult;
 
 
 internal sealed record SetLocalFontsEnabledCommandParameters(bool Enabled) : Parameters;
@@ -1823,7 +1823,7 @@ public enum StyleSheetOrigin
 /// <param name="Matches">
 /// Matches of CSS rules applicable to the pseudo style.
 /// </param>
-public sealed record PseudoElementMatches(DOM.PseudoType PseudoType, IReadOnlyList<RuleMatch> Matches)
+public sealed record PseudoElementMatches(DOM.PseudoType PseudoType, ImmutableArray<RuleMatch> Matches)
 {
     /// <summary>
     /// Pseudo element custom ident.
@@ -1851,7 +1851,7 @@ public sealed record CSSAnimationStyle(CSSStyle Style)
 /// <param name="MatchedCSSRules">
 /// Matches of CSS rules matching the ancestor node in the style inheritance chain.
 /// </param>
-public sealed record InheritedStyleEntry(IReadOnlyList<RuleMatch> MatchedCSSRules)
+public sealed record InheritedStyleEntry(ImmutableArray<RuleMatch> MatchedCSSRules)
 {
     /// <summary>
     /// The ancestor node's inline style, if any, in the style inheritance chain.
@@ -1867,7 +1867,7 @@ public sealed record InheritedAnimatedStyleEntry()
     /// <summary>
     /// Styles coming from the animations of the ancestor, if any, in the style inheritance chain.
     /// </summary>
-    public IReadOnlyList<CSSAnimationStyle>? AnimationStyles { get; init; }
+    public ImmutableArray<CSSAnimationStyle>? AnimationStyles { get; init; }
 
     /// <summary>
     /// The style coming from the transitions of the ancestor, if any, in the style inheritance chain.
@@ -1881,7 +1881,7 @@ public sealed record InheritedAnimatedStyleEntry()
 /// <param name="PseudoElements">
 /// Matches of pseudo styles from the pseudos of an ancestor node.
 /// </param>
-public sealed record InheritedPseudoElementMatches(IReadOnlyList<PseudoElementMatches> PseudoElements)
+public sealed record InheritedPseudoElementMatches(ImmutableArray<PseudoElementMatches> PseudoElements)
 {
 }
 
@@ -1894,7 +1894,7 @@ public sealed record InheritedPseudoElementMatches(IReadOnlyList<PseudoElementMa
 /// <param name="MatchingSelectors">
 /// Matching selector indices in the rule's selectorList selectors (0-based).
 /// </param>
-public sealed record RuleMatch(CSSRule Rule, IReadOnlyList<long> MatchingSelectors)
+public sealed record RuleMatch(CSSRule Rule, ImmutableArray<long> MatchingSelectors)
 {
 }
 
@@ -1955,7 +1955,7 @@ public sealed record Specificity(long A, long B, long C)
     /// <summary>
     /// Per-simple-selector contributions used to explain this specificity.
     /// </summary>
-    public IReadOnlyList<SpecificityComponent>? Components { get; init; }
+    public ImmutableArray<SpecificityComponent>? Components { get; init; }
 }
 
 /// <summary>
@@ -1967,7 +1967,7 @@ public sealed record Specificity(long A, long B, long C)
 /// <param name="Text">
 /// Rule selector text.
 /// </param>
-public sealed record SelectorList(IReadOnlyList<Value> Selectors, string Text)
+public sealed record SelectorList(ImmutableArray<Value> Selectors, string Text)
 {
 }
 
@@ -2069,7 +2069,7 @@ public sealed record CSSRule(SelectorList SelectorList, StyleSheetOrigin Origin,
     /// <summary>
     /// Array of selectors from ancestor style rules, sorted by distance from the current rule.
     /// </summary>
-    public IReadOnlyList<string>? NestingSelectors { get; init; }
+    public ImmutableArray<string>? NestingSelectors { get; init; }
 
     /// <summary>
     /// The BackendNodeId of the DOM node that constitutes the origin tree scope of this rule.
@@ -2080,48 +2080,48 @@ public sealed record CSSRule(SelectorList SelectorList, StyleSheetOrigin Origin,
     /// Media list array (for rules involving media queries). The array enumerates media queries
     /// starting with the innermost one, going outwards.
     /// </summary>
-    public IReadOnlyList<CSSMedia>? Media { get; init; }
+    public ImmutableArray<CSSMedia>? Media { get; init; }
 
     /// <summary>
     /// Container query list array (for rules involving container queries).
     /// The array enumerates container queries starting with the innermost one, going outwards.
     /// </summary>
-    public IReadOnlyList<CSSContainerQuery>? ContainerQueries { get; init; }
+    public ImmutableArray<CSSContainerQuery>? ContainerQueries { get; init; }
 
     /// <summary>
     /// @supports CSS at-rule array.
     /// The array enumerates @supports at-rules starting with the innermost one, going outwards.
     /// </summary>
-    public IReadOnlyList<CSSSupports>? Supports { get; init; }
+    public ImmutableArray<CSSSupports>? Supports { get; init; }
 
     /// <summary>
     /// Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
     /// with the innermost layer and going outwards.
     /// </summary>
-    public IReadOnlyList<CSSLayer>? Layers { get; init; }
+    public ImmutableArray<CSSLayer>? Layers { get; init; }
 
     /// <summary>
     /// @scope CSS at-rule array.
     /// The array enumerates @scope at-rules starting with the innermost one, going outwards.
     /// </summary>
-    public IReadOnlyList<CSSScope>? Scopes { get; init; }
+    public ImmutableArray<CSSScope>? Scopes { get; init; }
 
     /// <summary>
     /// The array keeps the types of ancestor CSSRules from the innermost going outwards.
     /// </summary>
-    public IReadOnlyList<CSSRuleType>? RuleTypes { get; init; }
+    public ImmutableArray<CSSRuleType>? RuleTypes { get; init; }
 
     /// <summary>
     /// @starting-style CSS at-rule array.
     /// The array enumerates @starting-style at-rules starting with the innermost one, going outwards.
     /// </summary>
-    public IReadOnlyList<CSSStartingStyle>? StartingStyles { get; init; }
+    public ImmutableArray<CSSStartingStyle>? StartingStyles { get; init; }
 
     /// <summary>
     /// @navigation CSS at-rule array.
     /// The array enumerates @navigation at-rules starting with the innermost one, going outwards.
     /// </summary>
-    public IReadOnlyList<CSSNavigation>? Navigations { get; init; }
+    public ImmutableArray<CSSNavigation>? Navigations { get; init; }
 }
 
 /// <summary>
@@ -2252,7 +2252,7 @@ public sealed record ComputedStyleExtraFields(bool IsAppearanceBase)
 /// <param name="ShorthandEntries">
 /// Computed values for all shorthands found in the style.
 /// </param>
-public sealed record CSSStyle(IReadOnlyList<CSSProperty> CssProperties, IReadOnlyList<ShorthandEntry> ShorthandEntries)
+public sealed record CSSStyle(ImmutableArray<CSSProperty> CssProperties, ImmutableArray<ShorthandEntry> ShorthandEntries)
 {
     /// <summary>
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
@@ -2316,7 +2316,7 @@ public sealed record CSSProperty(string Name, string Value)
     /// Parsed longhand components of this property if it is a shorthand.
     /// This field will be empty if the given property is not a shorthand.
     /// </summary>
-    public IReadOnlyList<CSSProperty>? LonghandProperties { get; init; }
+    public ImmutableArray<CSSProperty>? LonghandProperties { get; init; }
 }
 
 /// <summary>
@@ -2352,7 +2352,7 @@ public sealed record CSSMedia(string Text, string Source)
     /// <summary>
     /// Array of media queries.
     /// </summary>
-    public IReadOnlyList<MediaQuery>? MediaList { get; init; }
+    public ImmutableArray<MediaQuery>? MediaList { get; init; }
 }
 
 /// <summary>
@@ -2364,7 +2364,7 @@ public sealed record CSSMedia(string Text, string Source)
 /// <param name="Active">
 /// Whether the media query condition is satisfied.
 /// </param>
-public sealed record MediaQuery(IReadOnlyList<MediaQueryExpression> Expressions, bool Active)
+public sealed record MediaQuery(ImmutableArray<MediaQueryExpression> Expressions, bool Active)
 {
 }
 
@@ -2564,7 +2564,7 @@ public sealed record CSSLayerData(string Name, double Order)
     /// <summary>
     /// Direct sub-layers
     /// </summary>
-    public IReadOnlyList<CSSLayerData>? SubLayers { get; init; }
+    public ImmutableArray<CSSLayerData>? SubLayers { get; init; }
 }
 
 /// <summary>
@@ -2644,7 +2644,7 @@ public sealed record FontFace(string FontFamily, string FontStyle, string FontVa
     /// <summary>
     /// Available variation settings (a.k.a. "axes").
     /// </summary>
-    public IReadOnlyList<FontVariationAxis>? FontVariationAxes { get; init; }
+    public ImmutableArray<FontVariationAxis>? FontVariationAxes { get; init; }
 }
 
 /// <summary>
@@ -2697,7 +2697,7 @@ public sealed record CSSPositionTryRule(Value Name, StyleSheetOrigin Origin, CSS
 /// <param name="Keyframes">
 /// List of keyframes.
 /// </param>
-public sealed record CSSKeyframesRule(Value AnimationName, IReadOnlyList<CSSKeyframeRule> Keyframes)
+public sealed record CSSKeyframesRule(Value AnimationName, ImmutableArray<CSSKeyframeRule> Keyframes)
 {
 }
 
@@ -2792,7 +2792,7 @@ public sealed record CSSFunctionParameter(string Name, string Type)
 /// <param name="ConditionText">
 /// The condition text.
 /// </param>
-public sealed record CSSFunctionConditionNode(IReadOnlyList<CSSFunctionNode> Children, string ConditionText)
+public sealed record CSSFunctionConditionNode(ImmutableArray<CSSFunctionNode> Children, string ConditionText)
 {
     /// <summary>
     /// Media query for this conditional block. Only one type of condition should be set.
@@ -2846,7 +2846,7 @@ public sealed record CSSFunctionNode()
 /// <param name="Children">
 /// Function body.
 /// </param>
-public sealed record CSSFunctionRule(Value Name, StyleSheetOrigin Origin, IReadOnlyList<CSSFunctionParameter> Parameters, IReadOnlyList<CSSFunctionNode> Children)
+public sealed record CSSFunctionRule(Value Name, StyleSheetOrigin Origin, ImmutableArray<CSSFunctionParameter> Parameters, ImmutableArray<CSSFunctionNode> Children)
 {
     /// <summary>
     /// The css style sheet identifier (absent for user agent stylesheet and user-specified
@@ -3027,44 +3027,44 @@ public sealed record StyleDeclarationEdit(DOM.StyleSheetId StyleSheetId, SourceR
 [JsonSerializable(typeof(CSSFunctionRule), TypeInfoPropertyName = "CSSCSSFunctionRule")]
 [JsonSerializable(typeof(CSSKeyframeRule), TypeInfoPropertyName = "CSSCSSKeyframeRule")]
 [JsonSerializable(typeof(StyleDeclarationEdit), TypeInfoPropertyName = "CSSStyleDeclarationEdit")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSComputedStyleProperty>), TypeInfoPropertyName = "IReadOnlyListCSSCSSComputedStyleProperty")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSProperty>), TypeInfoPropertyName = "IReadOnlyListCSSCSSProperty")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSAnimationStyle>), TypeInfoPropertyName = "IReadOnlyListCSSCSSAnimationStyle")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InheritedAnimatedStyleEntry>), TypeInfoPropertyName = "IReadOnlyListCSSInheritedAnimatedStyleEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RuleMatch>), TypeInfoPropertyName = "IReadOnlyListCSSRuleMatch")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PseudoElementMatches>), TypeInfoPropertyName = "IReadOnlyListCSSPseudoElementMatches")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InheritedStyleEntry>), TypeInfoPropertyName = "IReadOnlyListCSSInheritedStyleEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InheritedPseudoElementMatches>), TypeInfoPropertyName = "IReadOnlyListCSSInheritedPseudoElementMatches")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSKeyframesRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSKeyframesRule")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSPositionTryRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSPositionTryRule")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSPropertyRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSPropertyRule")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSPropertyRegistration>), TypeInfoPropertyName = "IReadOnlyListCSSCSSPropertyRegistration")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSAtRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSAtRule")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSFunctionRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSFunctionRule")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSMedia>), TypeInfoPropertyName = "IReadOnlyListCSSCSSMedia")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlatformFontUsage>), TypeInfoPropertyName = "IReadOnlyListCSSPlatformFontUsage")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SourceRange>), TypeInfoPropertyName = "IReadOnlyListCSSSourceRange")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOM.NodeId>), TypeInfoPropertyName = "IReadOnlyListDOMNodeId")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<StyleDeclarationEdit>), TypeInfoPropertyName = "IReadOnlyListCSSStyleDeclarationEdit")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSStyle>), TypeInfoPropertyName = "IReadOnlyListCSSCSSStyle")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RuleUsage>), TypeInfoPropertyName = "IReadOnlyListCSSRuleUsage")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SpecificityComponent>), TypeInfoPropertyName = "IReadOnlyListCSSSpecificityComponent")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Value>), TypeInfoPropertyName = "IReadOnlyListCSSValue")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSContainerQuery>), TypeInfoPropertyName = "IReadOnlyListCSSCSSContainerQuery")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSSupports>), TypeInfoPropertyName = "IReadOnlyListCSSCSSSupports")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSLayer>), TypeInfoPropertyName = "IReadOnlyListCSSCSSLayer")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSScope>), TypeInfoPropertyName = "IReadOnlyListCSSCSSScope")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSRuleType>), TypeInfoPropertyName = "IReadOnlyListCSSCSSRuleType")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSStartingStyle>), TypeInfoPropertyName = "IReadOnlyListCSSCSSStartingStyle")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSNavigation>), TypeInfoPropertyName = "IReadOnlyListCSSCSSNavigation")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ShorthandEntry>), TypeInfoPropertyName = "IReadOnlyListCSSShorthandEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<MediaQuery>), TypeInfoPropertyName = "IReadOnlyListCSSMediaQuery")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<MediaQueryExpression>), TypeInfoPropertyName = "IReadOnlyListCSSMediaQueryExpression")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSLayerData>), TypeInfoPropertyName = "IReadOnlyListCSSCSSLayerData")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FontVariationAxis>), TypeInfoPropertyName = "IReadOnlyListCSSFontVariationAxis")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSKeyframeRule>), TypeInfoPropertyName = "IReadOnlyListCSSCSSKeyframeRule")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSFunctionNode>), TypeInfoPropertyName = "IReadOnlyListCSSCSSFunctionNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSSFunctionParameter>), TypeInfoPropertyName = "IReadOnlyListCSSCSSFunctionParameter")]
+[JsonSerializable(typeof(ImmutableArray<CSSComputedStyleProperty>), TypeInfoPropertyName = "ImmutableArrayCSSCSSComputedStyleProperty")]
+[JsonSerializable(typeof(ImmutableArray<CSSProperty>), TypeInfoPropertyName = "ImmutableArrayCSSCSSProperty")]
+[JsonSerializable(typeof(ImmutableArray<CSSAnimationStyle>), TypeInfoPropertyName = "ImmutableArrayCSSCSSAnimationStyle")]
+[JsonSerializable(typeof(ImmutableArray<InheritedAnimatedStyleEntry>), TypeInfoPropertyName = "ImmutableArrayCSSInheritedAnimatedStyleEntry")]
+[JsonSerializable(typeof(ImmutableArray<RuleMatch>), TypeInfoPropertyName = "ImmutableArrayCSSRuleMatch")]
+[JsonSerializable(typeof(ImmutableArray<PseudoElementMatches>), TypeInfoPropertyName = "ImmutableArrayCSSPseudoElementMatches")]
+[JsonSerializable(typeof(ImmutableArray<InheritedStyleEntry>), TypeInfoPropertyName = "ImmutableArrayCSSInheritedStyleEntry")]
+[JsonSerializable(typeof(ImmutableArray<InheritedPseudoElementMatches>), TypeInfoPropertyName = "ImmutableArrayCSSInheritedPseudoElementMatches")]
+[JsonSerializable(typeof(ImmutableArray<CSSKeyframesRule>), TypeInfoPropertyName = "ImmutableArrayCSSCSSKeyframesRule")]
+[JsonSerializable(typeof(ImmutableArray<CSSPositionTryRule>), TypeInfoPropertyName = "ImmutableArrayCSSCSSPositionTryRule")]
+[JsonSerializable(typeof(ImmutableArray<CSSPropertyRule>), TypeInfoPropertyName = "ImmutableArrayCSSCSSPropertyRule")]
+[JsonSerializable(typeof(ImmutableArray<CSSPropertyRegistration>), TypeInfoPropertyName = "ImmutableArrayCSSCSSPropertyRegistration")]
+[JsonSerializable(typeof(ImmutableArray<CSSAtRule>), TypeInfoPropertyName = "ImmutableArrayCSSCSSAtRule")]
+[JsonSerializable(typeof(ImmutableArray<CSSFunctionRule>), TypeInfoPropertyName = "ImmutableArrayCSSCSSFunctionRule")]
+[JsonSerializable(typeof(ImmutableArray<CSSMedia>), TypeInfoPropertyName = "ImmutableArrayCSSCSSMedia")]
+[JsonSerializable(typeof(ImmutableArray<PlatformFontUsage>), TypeInfoPropertyName = "ImmutableArrayCSSPlatformFontUsage")]
+[JsonSerializable(typeof(ImmutableArray<SourceRange>), TypeInfoPropertyName = "ImmutableArrayCSSSourceRange")]
+[JsonSerializable(typeof(ImmutableArray<DOM.NodeId>), TypeInfoPropertyName = "ImmutableArrayDOMNodeId")]
+[JsonSerializable(typeof(ImmutableArray<StyleDeclarationEdit>), TypeInfoPropertyName = "ImmutableArrayCSSStyleDeclarationEdit")]
+[JsonSerializable(typeof(ImmutableArray<CSSStyle>), TypeInfoPropertyName = "ImmutableArrayCSSCSSStyle")]
+[JsonSerializable(typeof(ImmutableArray<RuleUsage>), TypeInfoPropertyName = "ImmutableArrayCSSRuleUsage")]
+[JsonSerializable(typeof(ImmutableArray<SpecificityComponent>), TypeInfoPropertyName = "ImmutableArrayCSSSpecificityComponent")]
+[JsonSerializable(typeof(ImmutableArray<Value>), TypeInfoPropertyName = "ImmutableArrayCSSValue")]
+[JsonSerializable(typeof(ImmutableArray<CSSContainerQuery>), TypeInfoPropertyName = "ImmutableArrayCSSCSSContainerQuery")]
+[JsonSerializable(typeof(ImmutableArray<CSSSupports>), TypeInfoPropertyName = "ImmutableArrayCSSCSSSupports")]
+[JsonSerializable(typeof(ImmutableArray<CSSLayer>), TypeInfoPropertyName = "ImmutableArrayCSSCSSLayer")]
+[JsonSerializable(typeof(ImmutableArray<CSSScope>), TypeInfoPropertyName = "ImmutableArrayCSSCSSScope")]
+[JsonSerializable(typeof(ImmutableArray<CSSRuleType>), TypeInfoPropertyName = "ImmutableArrayCSSCSSRuleType")]
+[JsonSerializable(typeof(ImmutableArray<CSSStartingStyle>), TypeInfoPropertyName = "ImmutableArrayCSSCSSStartingStyle")]
+[JsonSerializable(typeof(ImmutableArray<CSSNavigation>), TypeInfoPropertyName = "ImmutableArrayCSSCSSNavigation")]
+[JsonSerializable(typeof(ImmutableArray<ShorthandEntry>), TypeInfoPropertyName = "ImmutableArrayCSSShorthandEntry")]
+[JsonSerializable(typeof(ImmutableArray<MediaQuery>), TypeInfoPropertyName = "ImmutableArrayCSSMediaQuery")]
+[JsonSerializable(typeof(ImmutableArray<MediaQueryExpression>), TypeInfoPropertyName = "ImmutableArrayCSSMediaQueryExpression")]
+[JsonSerializable(typeof(ImmutableArray<CSSLayerData>), TypeInfoPropertyName = "ImmutableArrayCSSCSSLayerData")]
+[JsonSerializable(typeof(ImmutableArray<FontVariationAxis>), TypeInfoPropertyName = "ImmutableArrayCSSFontVariationAxis")]
+[JsonSerializable(typeof(ImmutableArray<CSSKeyframeRule>), TypeInfoPropertyName = "ImmutableArrayCSSCSSKeyframeRule")]
+[JsonSerializable(typeof(ImmutableArray<CSSFunctionNode>), TypeInfoPropertyName = "ImmutableArrayCSSCSSFunctionNode")]
+[JsonSerializable(typeof(ImmutableArray<CSSFunctionParameter>), TypeInfoPropertyName = "ImmutableArrayCSSCSSFunctionParameter")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

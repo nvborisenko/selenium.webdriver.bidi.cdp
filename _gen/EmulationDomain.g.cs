@@ -2028,7 +2028,7 @@ public sealed record GetScreenInfosCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="ScreenInfos">
 /// </param>
-public sealed record GetScreenInfosResult(IReadOnlyList<ScreenInfo> ScreenInfos) : EmptyResult;
+public sealed record GetScreenInfosResult(ImmutableArray<ScreenInfo> ScreenInfos) : EmptyResult;
 
 
 internal sealed record AddScreenCommandParameters(long Left, long Top, long Width, long Height, WorkAreaInsets? WorkAreaInsets, double? DevicePixelRatio, long? Rotation, long? ColorDepth, string? Label, bool? IsInternal) : Parameters;
@@ -2335,12 +2335,12 @@ public sealed record UserAgentMetadata(string Platform, string PlatformVersion, 
     /// <summary>
     /// Brands appearing in Sec-CH-UA.
     /// </summary>
-    public IReadOnlyList<UserAgentBrandVersion>? Brands { get; init; }
+    public ImmutableArray<UserAgentBrandVersion>? Brands { get; init; }
 
     /// <summary>
     /// Brands appearing in Sec-CH-UA-Full-Version-List.
     /// </summary>
-    public IReadOnlyList<UserAgentBrandVersion>? FullVersionList { get; init; }
+    public ImmutableArray<UserAgentBrandVersion>? FullVersionList { get; init; }
 
     /// <summary>
     /// </summary>
@@ -2359,7 +2359,7 @@ public sealed record UserAgentMetadata(string Platform, string PlatformVersion, 
     /// Used to specify User Agent form-factor values.
     /// See https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factors
     /// </summary>
-    public IReadOnlyList<string>? FormFactors { get; init; }
+    public ImmutableArray<string>? FormFactors { get; init; }
 }
 
 /// <summary>
@@ -2740,11 +2740,11 @@ public enum DisabledImageType
 [JsonSerializable(typeof(ScreenId), TypeInfoPropertyName = "EmulationScreenId")]
 [JsonSerializable(typeof(ScreenInfo), TypeInfoPropertyName = "EmulationScreenInfo")]
 [JsonSerializable(typeof(DisabledImageType), TypeInfoPropertyName = "EmulationDisabledImageType")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DisplayFeature>), TypeInfoPropertyName = "IReadOnlyListEmulationDisplayFeature")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<MediaFeature>), TypeInfoPropertyName = "IReadOnlyListEmulationMediaFeature")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DisabledImageType>), TypeInfoPropertyName = "IReadOnlyListEmulationDisabledImageType")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScreenInfo>), TypeInfoPropertyName = "IReadOnlyListEmulationScreenInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<UserAgentBrandVersion>), TypeInfoPropertyName = "IReadOnlyListEmulationUserAgentBrandVersion")]
+[JsonSerializable(typeof(ImmutableArray<DisplayFeature>), TypeInfoPropertyName = "ImmutableArrayEmulationDisplayFeature")]
+[JsonSerializable(typeof(ImmutableArray<MediaFeature>), TypeInfoPropertyName = "ImmutableArrayEmulationMediaFeature")]
+[JsonSerializable(typeof(ImmutableArray<DisabledImageType>), TypeInfoPropertyName = "ImmutableArrayEmulationDisabledImageType")]
+[JsonSerializable(typeof(ImmutableArray<ScreenInfo>), TypeInfoPropertyName = "ImmutableArrayEmulationScreenInfo")]
+[JsonSerializable(typeof(ImmutableArray<UserAgentBrandVersion>), TypeInfoPropertyName = "ImmutableArrayEmulationUserAgentBrandVersion")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

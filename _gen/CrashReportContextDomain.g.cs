@@ -47,7 +47,7 @@ public sealed record GetEntriesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Entries">
 /// </param>
-public sealed record GetEntriesResult(IReadOnlyList<CrashReportContextEntry> Entries) : EmptyResult;
+public sealed record GetEntriesResult(ImmutableArray<CrashReportContextEntry> Entries) : EmptyResult;
 
 
 /// <summary>
@@ -67,7 +67,7 @@ public sealed record CrashReportContextEntry(string Key, string Value, Page.Fram
 [JsonSerializable(typeof(GetEntriesCommandParameters), TypeInfoPropertyName = "GetEntriesCommandParameters")]
 [JsonSerializable(typeof(GetEntriesResult), TypeInfoPropertyName = "GetEntriesResult")]
 [JsonSerializable(typeof(CrashReportContextEntry), TypeInfoPropertyName = "CrashReportContextCrashReportContextEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CrashReportContextEntry>), TypeInfoPropertyName = "IReadOnlyListCrashReportContextCrashReportContextEntry")]
+[JsonSerializable(typeof(ImmutableArray<CrashReportContextEntry>), TypeInfoPropertyName = "ImmutableArrayCrashReportContextCrashReportContextEntry")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

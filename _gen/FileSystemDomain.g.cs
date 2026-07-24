@@ -76,7 +76,7 @@ public sealed record File(string Name, Network.TimeSinceEpoch LastModified, doub
 /// <param name="NestedFiles">
 /// Files that are directly nested under this directory.
 /// </param>
-public sealed record Directory(string Name, IReadOnlyList<string> NestedDirectories, IReadOnlyList<File> NestedFiles)
+public sealed record Directory(string Name, ImmutableArray<string> NestedDirectories, ImmutableArray<File> NestedFiles)
 {
 }
 
@@ -88,7 +88,7 @@ public sealed record Directory(string Name, IReadOnlyList<string> NestedDirector
 /// <param name="PathComponents">
 /// Path to the directory using each path component as an array item.
 /// </param>
-public sealed record BucketFileSystemLocator(Storage.SerializedStorageKey StorageKey, IReadOnlyList<string> PathComponents)
+public sealed record BucketFileSystemLocator(Storage.SerializedStorageKey StorageKey, ImmutableArray<string> PathComponents)
 {
     /// <summary>
     /// Bucket name. Not passing a <b>bucketName</b> will retrieve the default Bucket. (https://developer.mozilla.org/en-US/docs/Web/API/Storage_API#storage_buckets)
@@ -101,7 +101,7 @@ public sealed record BucketFileSystemLocator(Storage.SerializedStorageKey Storag
 [JsonSerializable(typeof(File), TypeInfoPropertyName = "FileSystemFile")]
 [JsonSerializable(typeof(Directory), TypeInfoPropertyName = "FileSystemDirectory")]
 [JsonSerializable(typeof(BucketFileSystemLocator), TypeInfoPropertyName = "FileSystemBucketFileSystemLocator")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<File>), TypeInfoPropertyName = "IReadOnlyListFileSystemFile")]
+[JsonSerializable(typeof(ImmutableArray<File>), TypeInfoPropertyName = "ImmutableArrayFileSystemFile")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

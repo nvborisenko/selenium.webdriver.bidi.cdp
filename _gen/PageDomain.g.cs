@@ -2157,7 +2157,7 @@ public sealed record GetAppManifestCommandOptions : CdpCommandOptions
 /// </param>
 /// <param name="Manifest">
 /// </param>
-public sealed record GetAppManifestResult(string Url, IReadOnlyList<AppManifestError> Errors, string? Data, AppManifestParsedProperties? Parsed, WebAppManifest Manifest) : EmptyResult;
+public sealed record GetAppManifestResult(string Url, ImmutableArray<AppManifestError> Errors, string? Data, AppManifestParsedProperties? Parsed, WebAppManifest Manifest) : EmptyResult;
 
 
 internal sealed record GetInstallabilityErrorsCommandParameters() : Parameters;
@@ -2173,7 +2173,7 @@ public sealed record GetInstallabilityErrorsCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="InstallabilityErrors">
 /// </param>
-public sealed record GetInstallabilityErrorsResult(IReadOnlyList<InstallabilityError> InstallabilityErrors) : EmptyResult;
+public sealed record GetInstallabilityErrorsResult(ImmutableArray<InstallabilityError> InstallabilityErrors) : EmptyResult;
 
 
 internal sealed record GetManifestIconsCommandParameters() : Parameters;
@@ -2299,7 +2299,7 @@ public sealed record GetNavigationHistoryCommandOptions : CdpCommandOptions
 /// <param name="Entries">
 /// Array of navigation history entries.
 /// </param>
-public sealed record GetNavigationHistoryResult(long CurrentIndex, IReadOnlyList<NavigationEntry> Entries) : EmptyResult;
+public sealed record GetNavigationHistoryResult(long CurrentIndex, ImmutableArray<NavigationEntry> Entries) : EmptyResult;
 
 
 internal sealed record ResetNavigationHistoryCommandParameters() : Parameters;
@@ -2648,7 +2648,7 @@ public sealed record SearchInResourceCommandOptions : CdpCommandOptions
 /// <param name="Result">
 /// List of search matches.
 /// </param>
-public sealed record SearchInResourceResult(IReadOnlyList<Debugger.SearchMatch> Result) : EmptyResult;
+public sealed record SearchInResourceResult(ImmutableArray<Debugger.SearchMatch> Result) : EmptyResult;
 
 
 internal sealed record SetAdBlockingEnabledCommandParameters(bool Enabled) : Parameters;
@@ -2692,7 +2692,7 @@ public sealed record GetPermissionsPolicyStateCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="States">
 /// </param>
-public sealed record GetPermissionsPolicyStateResult(IReadOnlyList<PermissionsPolicyFeatureState> States) : EmptyResult;
+public sealed record GetPermissionsPolicyStateResult(ImmutableArray<PermissionsPolicyFeatureState> States) : EmptyResult;
 
 
 internal sealed record GetOriginTrialsCommandParameters(FrameId FrameId) : Parameters;
@@ -2708,7 +2708,7 @@ public sealed record GetOriginTrialsCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="OriginTrials">
 /// </param>
-public sealed record GetOriginTrialsResult(IReadOnlyList<OriginTrial> OriginTrials) : EmptyResult;
+public sealed record GetOriginTrialsResult(ImmutableArray<OriginTrial> OriginTrials) : EmptyResult;
 
 
 internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, Emulation.ScreenOrientation? ScreenOrientation, Viewport? Viewport) : Parameters;
@@ -3579,7 +3579,7 @@ public sealed record AdFrameStatus(AdFrameType AdFrameType)
 {
     /// <summary>
     /// </summary>
-    public IReadOnlyList<AdFrameExplanation>? Explanations { get; init; }
+    public ImmutableArray<AdFrameExplanation>? Explanations { get; init; }
 }
 
 /// <summary>
@@ -4279,7 +4279,7 @@ public sealed record OriginTrialTokenWithStatus(string RawTokenText, OriginTrial
 /// </param>
 /// <param name="TokensWithStatus">
 /// </param>
-public sealed record OriginTrial(string TrialName, OriginTrialStatus Status, IReadOnlyList<OriginTrialTokenWithStatus> TokensWithStatus)
+public sealed record OriginTrial(string TrialName, OriginTrialStatus Status, ImmutableArray<OriginTrialTokenWithStatus> TokensWithStatus)
 {
 }
 
@@ -4328,7 +4328,7 @@ public sealed record SecurityOriginDetails(bool IsLocalhost)
 /// <param name="GatedAPIFeatures">
 /// Indicated which gated APIs / features are available.
 /// </param>
-public sealed record Frame(FrameId Id, Network.LoaderId LoaderId, string Url, string DomainAndRegistry, string SecurityOrigin, string MimeType, SecureContextType SecureContextType, CrossOriginIsolatedContextType CrossOriginIsolatedContextType, IReadOnlyList<GatedAPIFeatures> GatedAPIFeatures)
+public sealed record Frame(FrameId Id, Network.LoaderId LoaderId, string Url, string DomainAndRegistry, string SecurityOrigin, string MimeType, SecureContextType SecureContextType, CrossOriginIsolatedContextType CrossOriginIsolatedContextType, ImmutableArray<GatedAPIFeatures> GatedAPIFeatures)
 {
     /// <summary>
     /// Parent frame identifier.
@@ -4405,12 +4405,12 @@ public sealed record FrameResource(string Url, Network.ResourceType Type, string
 /// <param name="Resources">
 /// Information about frame resources.
 /// </param>
-public sealed record FrameResourceTree(Frame Frame, IReadOnlyList<FrameResource> Resources)
+public sealed record FrameResourceTree(Frame Frame, ImmutableArray<FrameResource> Resources)
 {
     /// <summary>
     /// Child frames.
     /// </summary>
-    public IReadOnlyList<FrameResourceTree>? ChildFrames { get; init; }
+    public ImmutableArray<FrameResourceTree>? ChildFrames { get; init; }
 }
 
 /// <summary>
@@ -4424,7 +4424,7 @@ public sealed record FrameTree(Frame Frame)
     /// <summary>
     /// Child frames.
     /// </summary>
-    public IReadOnlyList<FrameTree>? ChildFrames { get; init; }
+    public ImmutableArray<FrameTree>? ChildFrames { get; init; }
 }
 
 /// <summary>
@@ -4834,7 +4834,7 @@ public sealed record InstallabilityErrorArgument(string Name, string Value)
 /// <param name="ErrorArguments">
 /// The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}).
 /// </param>
-public sealed record InstallabilityError(string ErrorId, IReadOnlyList<InstallabilityErrorArgument> ErrorArguments)
+public sealed record InstallabilityError(string ErrorId, ImmutableArray<InstallabilityErrorArgument> ErrorArguments)
 {
 }
 
@@ -4903,7 +4903,7 @@ public sealed record FileFilter()
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<string>? Accepts { get; init; }
+    public ImmutableArray<string>? Accepts { get; init; }
 }
 
 /// <summary>
@@ -4920,12 +4920,12 @@ public sealed record FileHandler(string Action, string Name, string LaunchType)
 {
     /// <summary>
     /// </summary>
-    public IReadOnlyList<ImageResource>? Icons { get; init; }
+    public ImmutableArray<ImageResource>? Icons { get; init; }
 
     /// <summary>
     /// Mimic a map, name is the key, accepts is the value.
     /// </summary>
-    public IReadOnlyList<FileFilter>? Accepts { get; init; }
+    public ImmutableArray<FileFilter>? Accepts { get; init; }
 }
 
 /// <summary>
@@ -5025,7 +5025,7 @@ public sealed record ShareTarget(string Action, string Method, string Enctype)
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<FileFilter>? Files { get; init; }
+    public ImmutableArray<FileFilter>? Files { get; init; }
 }
 
 /// <summary>
@@ -5062,16 +5062,16 @@ public sealed record WebAppManifest()
     /// <summary>
     /// The overrided display mode controlled by the user.
     /// </summary>
-    public IReadOnlyList<string>? DisplayOverrides { get; init; }
+    public ImmutableArray<string>? DisplayOverrides { get; init; }
 
     /// <summary>
     /// The handlers to open files.
     /// </summary>
-    public IReadOnlyList<FileHandler>? FileHandlers { get; init; }
+    public ImmutableArray<FileHandler>? FileHandlers { get; init; }
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<ImageResource>? Icons { get; init; }
+    public ImmutableArray<ImageResource>? Icons { get; init; }
 
     /// <summary>
     /// </summary>
@@ -5103,11 +5103,11 @@ public sealed record WebAppManifest()
     /// <summary>
     /// The handlers to open protocols.
     /// </summary>
-    public IReadOnlyList<ProtocolHandler>? ProtocolHandlers { get; init; }
+    public ImmutableArray<ProtocolHandler>? ProtocolHandlers { get; init; }
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<RelatedApplication>? RelatedApplications { get; init; }
+    public ImmutableArray<RelatedApplication>? RelatedApplications { get; init; }
 
     /// <summary>
     /// </summary>
@@ -5117,12 +5117,12 @@ public sealed record WebAppManifest()
     /// Non-standard, see
     /// https://github.com/WICG/manifest-incubations/blob/gh-pages/scope_extensions-explainer.md
     /// </summary>
-    public IReadOnlyList<ScopeExtension>? ScopeExtensions { get; init; }
+    public ImmutableArray<ScopeExtension>? ScopeExtensions { get; init; }
 
     /// <summary>
     /// The screenshots used by chromium.
     /// </summary>
-    public IReadOnlyList<Screenshot>? Screenshots { get; init; }
+    public ImmutableArray<Screenshot>? Screenshots { get; init; }
 
     /// <summary>
     /// </summary>
@@ -5134,7 +5134,7 @@ public sealed record WebAppManifest()
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<Shortcut>? Shortcuts { get; init; }
+    public ImmutableArray<Shortcut>? Shortcuts { get; init; }
 
     /// <summary>
     /// </summary>
@@ -5821,7 +5821,7 @@ public sealed record BackForwardCacheNotRestoredExplanation(BackForwardCacheNotR
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<BackForwardCacheBlockingDetails>? Details { get; init; }
+    public ImmutableArray<BackForwardCacheBlockingDetails>? Details { get; init; }
 }
 
 /// <summary>
@@ -5835,7 +5835,7 @@ public sealed record BackForwardCacheNotRestoredExplanation(BackForwardCacheNotR
 /// <param name="Children">
 /// Array of children frame
 /// </param>
-public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, IReadOnlyList<BackForwardCacheNotRestoredExplanation> Explanations, IReadOnlyList<BackForwardCacheNotRestoredExplanationTree> Children)
+public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, ImmutableArray<BackForwardCacheNotRestoredExplanation> Explanations, ImmutableArray<BackForwardCacheNotRestoredExplanationTree> Children)
 {
 }
 
@@ -6047,32 +6047,32 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, IRea
 [JsonSerializable(typeof(BackForwardCacheBlockingDetails), TypeInfoPropertyName = "PageBackForwardCacheBlockingDetails")]
 [JsonSerializable(typeof(BackForwardCacheNotRestoredExplanation), TypeInfoPropertyName = "PageBackForwardCacheNotRestoredExplanation")]
 [JsonSerializable(typeof(BackForwardCacheNotRestoredExplanationTree), TypeInfoPropertyName = "PageBackForwardCacheNotRestoredExplanationTree")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AppManifestError>), TypeInfoPropertyName = "IReadOnlyListPageAppManifestError")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InstallabilityError>), TypeInfoPropertyName = "IReadOnlyListPageInstallabilityError")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<NavigationEntry>), TypeInfoPropertyName = "IReadOnlyListPageNavigationEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Debugger.SearchMatch>), TypeInfoPropertyName = "IReadOnlyListDebuggerSearchMatch")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PermissionsPolicyFeatureState>), TypeInfoPropertyName = "IReadOnlyListPagePermissionsPolicyFeatureState")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<OriginTrial>), TypeInfoPropertyName = "IReadOnlyListPageOriginTrial")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScriptFontFamilies>), TypeInfoPropertyName = "IReadOnlyListPageScriptFontFamilies")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CompilationCacheParams>), TypeInfoPropertyName = "IReadOnlyListPageCompilationCacheParams")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackForwardCacheNotRestoredExplanation>), TypeInfoPropertyName = "IReadOnlyListPageBackForwardCacheNotRestoredExplanation")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AdFrameExplanation>), TypeInfoPropertyName = "IReadOnlyListPageAdFrameExplanation")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<OriginTrialTokenWithStatus>), TypeInfoPropertyName = "IReadOnlyListPageOriginTrialTokenWithStatus")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<GatedAPIFeatures>), TypeInfoPropertyName = "IReadOnlyListPageGatedAPIFeatures")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FrameResourceTree>), TypeInfoPropertyName = "IReadOnlyListPageFrameResourceTree")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FrameResource>), TypeInfoPropertyName = "IReadOnlyListPageFrameResource")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FrameTree>), TypeInfoPropertyName = "IReadOnlyListPageFrameTree")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InstallabilityErrorArgument>), TypeInfoPropertyName = "IReadOnlyListPageInstallabilityErrorArgument")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ImageResource>), TypeInfoPropertyName = "IReadOnlyListPageImageResource")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FileFilter>), TypeInfoPropertyName = "IReadOnlyListPageFileFilter")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FileHandler>), TypeInfoPropertyName = "IReadOnlyListPageFileHandler")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ProtocolHandler>), TypeInfoPropertyName = "IReadOnlyListPageProtocolHandler")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RelatedApplication>), TypeInfoPropertyName = "IReadOnlyListPageRelatedApplication")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScopeExtension>), TypeInfoPropertyName = "IReadOnlyListPageScopeExtension")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Screenshot>), TypeInfoPropertyName = "IReadOnlyListPageScreenshot")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Shortcut>), TypeInfoPropertyName = "IReadOnlyListPageShortcut")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackForwardCacheBlockingDetails>), TypeInfoPropertyName = "IReadOnlyListPageBackForwardCacheBlockingDetails")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BackForwardCacheNotRestoredExplanationTree>), TypeInfoPropertyName = "IReadOnlyListPageBackForwardCacheNotRestoredExplanationTree")]
+[JsonSerializable(typeof(ImmutableArray<AppManifestError>), TypeInfoPropertyName = "ImmutableArrayPageAppManifestError")]
+[JsonSerializable(typeof(ImmutableArray<InstallabilityError>), TypeInfoPropertyName = "ImmutableArrayPageInstallabilityError")]
+[JsonSerializable(typeof(ImmutableArray<NavigationEntry>), TypeInfoPropertyName = "ImmutableArrayPageNavigationEntry")]
+[JsonSerializable(typeof(ImmutableArray<Debugger.SearchMatch>), TypeInfoPropertyName = "ImmutableArrayDebuggerSearchMatch")]
+[JsonSerializable(typeof(ImmutableArray<PermissionsPolicyFeatureState>), TypeInfoPropertyName = "ImmutableArrayPagePermissionsPolicyFeatureState")]
+[JsonSerializable(typeof(ImmutableArray<OriginTrial>), TypeInfoPropertyName = "ImmutableArrayPageOriginTrial")]
+[JsonSerializable(typeof(ImmutableArray<ScriptFontFamilies>), TypeInfoPropertyName = "ImmutableArrayPageScriptFontFamilies")]
+[JsonSerializable(typeof(ImmutableArray<CompilationCacheParams>), TypeInfoPropertyName = "ImmutableArrayPageCompilationCacheParams")]
+[JsonSerializable(typeof(ImmutableArray<BackForwardCacheNotRestoredExplanation>), TypeInfoPropertyName = "ImmutableArrayPageBackForwardCacheNotRestoredExplanation")]
+[JsonSerializable(typeof(ImmutableArray<AdFrameExplanation>), TypeInfoPropertyName = "ImmutableArrayPageAdFrameExplanation")]
+[JsonSerializable(typeof(ImmutableArray<OriginTrialTokenWithStatus>), TypeInfoPropertyName = "ImmutableArrayPageOriginTrialTokenWithStatus")]
+[JsonSerializable(typeof(ImmutableArray<GatedAPIFeatures>), TypeInfoPropertyName = "ImmutableArrayPageGatedAPIFeatures")]
+[JsonSerializable(typeof(ImmutableArray<FrameResourceTree>), TypeInfoPropertyName = "ImmutableArrayPageFrameResourceTree")]
+[JsonSerializable(typeof(ImmutableArray<FrameResource>), TypeInfoPropertyName = "ImmutableArrayPageFrameResource")]
+[JsonSerializable(typeof(ImmutableArray<FrameTree>), TypeInfoPropertyName = "ImmutableArrayPageFrameTree")]
+[JsonSerializable(typeof(ImmutableArray<InstallabilityErrorArgument>), TypeInfoPropertyName = "ImmutableArrayPageInstallabilityErrorArgument")]
+[JsonSerializable(typeof(ImmutableArray<ImageResource>), TypeInfoPropertyName = "ImmutableArrayPageImageResource")]
+[JsonSerializable(typeof(ImmutableArray<FileFilter>), TypeInfoPropertyName = "ImmutableArrayPageFileFilter")]
+[JsonSerializable(typeof(ImmutableArray<FileHandler>), TypeInfoPropertyName = "ImmutableArrayPageFileHandler")]
+[JsonSerializable(typeof(ImmutableArray<ProtocolHandler>), TypeInfoPropertyName = "ImmutableArrayPageProtocolHandler")]
+[JsonSerializable(typeof(ImmutableArray<RelatedApplication>), TypeInfoPropertyName = "ImmutableArrayPageRelatedApplication")]
+[JsonSerializable(typeof(ImmutableArray<ScopeExtension>), TypeInfoPropertyName = "ImmutableArrayPageScopeExtension")]
+[JsonSerializable(typeof(ImmutableArray<Screenshot>), TypeInfoPropertyName = "ImmutableArrayPageScreenshot")]
+[JsonSerializable(typeof(ImmutableArray<Shortcut>), TypeInfoPropertyName = "ImmutableArrayPageShortcut")]
+[JsonSerializable(typeof(ImmutableArray<BackForwardCacheBlockingDetails>), TypeInfoPropertyName = "ImmutableArrayPageBackForwardCacheBlockingDetails")]
+[JsonSerializable(typeof(ImmutableArray<BackForwardCacheNotRestoredExplanationTree>), TypeInfoPropertyName = "ImmutableArrayPageBackForwardCacheNotRestoredExplanationTree")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

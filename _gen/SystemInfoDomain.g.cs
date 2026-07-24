@@ -133,7 +133,7 @@ public sealed record GetProcessInfoCommandOptions : CdpCommandOptions
 /// <param name="ProcessInfo">
 /// An array of process info blocks.
 /// </param>
-public sealed record GetProcessInfoResult(IReadOnlyList<ProcessInfo> ProcessInfo) : EmptyResult;
+public sealed record GetProcessInfoResult(ImmutableArray<ProcessInfo> ProcessInfo) : EmptyResult;
 
 
 /// <summary>
@@ -276,7 +276,7 @@ public enum ImageType
 /// <param name="VideoEncoding">
 /// Supported accelerated video encoding capabilities.
 /// </param>
-public sealed record GPUInfo(IReadOnlyList<GPUDevice> Devices, IReadOnlyList<string> DriverBugWorkarounds, IReadOnlyList<VideoDecodeAcceleratorCapability> VideoDecoding, IReadOnlyList<VideoEncodeAcceleratorCapability> VideoEncoding)
+public sealed record GPUInfo(ImmutableArray<GPUDevice> Devices, ImmutableArray<string> DriverBugWorkarounds, ImmutableArray<VideoDecodeAcceleratorCapability> VideoDecoding, ImmutableArray<VideoEncodeAcceleratorCapability> VideoEncoding)
 {
     /// <summary>
     /// An optional dictionary of additional GPU related attributes.
@@ -320,10 +320,10 @@ public sealed record ProcessInfo(string Type, long Id, double CpuTime)
 [JsonSerializable(typeof(ImageType), TypeInfoPropertyName = "SystemInfoImageType")]
 [JsonSerializable(typeof(GPUInfo), TypeInfoPropertyName = "SystemInfoGPUInfo")]
 [JsonSerializable(typeof(ProcessInfo), TypeInfoPropertyName = "SystemInfoProcessInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ProcessInfo>), TypeInfoPropertyName = "IReadOnlyListSystemInfoProcessInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<GPUDevice>), TypeInfoPropertyName = "IReadOnlyListSystemInfoGPUDevice")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<VideoDecodeAcceleratorCapability>), TypeInfoPropertyName = "IReadOnlyListSystemInfoVideoDecodeAcceleratorCapability")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<VideoEncodeAcceleratorCapability>), TypeInfoPropertyName = "IReadOnlyListSystemInfoVideoEncodeAcceleratorCapability")]
+[JsonSerializable(typeof(ImmutableArray<ProcessInfo>), TypeInfoPropertyName = "ImmutableArraySystemInfoProcessInfo")]
+[JsonSerializable(typeof(ImmutableArray<GPUDevice>), TypeInfoPropertyName = "ImmutableArraySystemInfoGPUDevice")]
+[JsonSerializable(typeof(ImmutableArray<VideoDecodeAcceleratorCapability>), TypeInfoPropertyName = "ImmutableArraySystemInfoVideoDecodeAcceleratorCapability")]
+[JsonSerializable(typeof(ImmutableArray<VideoEncodeAcceleratorCapability>), TypeInfoPropertyName = "ImmutableArraySystemInfoVideoEncodeAcceleratorCapability")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

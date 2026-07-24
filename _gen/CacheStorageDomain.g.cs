@@ -203,7 +203,7 @@ public sealed record RequestCacheNamesCommandOptions : CdpCommandOptions
 /// <param name="Caches">
 /// Caches for the security origin.
 /// </param>
-public sealed record RequestCacheNamesResult(IReadOnlyList<Cache> Caches) : EmptyResult;
+public sealed record RequestCacheNamesResult(ImmutableArray<Cache> Caches) : EmptyResult;
 
 
 internal sealed record RequestCachedResponseCommandParameters(CacheId CacheId, string RequestURL, ImmutableArray<Header> RequestHeaders) : Parameters;
@@ -255,7 +255,7 @@ public sealed record RequestEntriesCommandOptions : CdpCommandOptions
 /// Count of returned entries from this storage. If pathFilter is empty, it
 /// is the count of all entries from this storage.
 /// </param>
-public sealed record RequestEntriesResult(IReadOnlyList<DataEntry> CacheDataEntries, double ReturnCount) : EmptyResult;
+public sealed record RequestEntriesResult(ImmutableArray<DataEntry> CacheDataEntries, double ReturnCount) : EmptyResult;
 
 
 /// <summary>
@@ -326,7 +326,7 @@ public enum CachedResponseType
 /// <param name="ResponseHeaders">
 /// Response headers
 /// </param>
-public sealed record DataEntry(string RequestURL, string RequestMethod, IReadOnlyList<Header> RequestHeaders, double ResponseTime, long ResponseStatus, string ResponseStatusText, CachedResponseType ResponseType, IReadOnlyList<Header> ResponseHeaders)
+public sealed record DataEntry(string RequestURL, string RequestMethod, ImmutableArray<Header> RequestHeaders, double ResponseTime, long ResponseStatus, string ResponseStatusText, CachedResponseType ResponseType, ImmutableArray<Header> ResponseHeaders)
 {
 }
 
@@ -389,9 +389,9 @@ public sealed record CachedResponse(string Body)
 [JsonSerializable(typeof(Cache), TypeInfoPropertyName = "CacheStorageCache")]
 [JsonSerializable(typeof(Header), TypeInfoPropertyName = "CacheStorageHeader")]
 [JsonSerializable(typeof(CachedResponse), TypeInfoPropertyName = "CacheStorageCachedResponse")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Cache>), TypeInfoPropertyName = "IReadOnlyListCacheStorageCache")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Header>), TypeInfoPropertyName = "IReadOnlyListCacheStorageHeader")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DataEntry>), TypeInfoPropertyName = "IReadOnlyListCacheStorageDataEntry")]
+[JsonSerializable(typeof(ImmutableArray<Cache>), TypeInfoPropertyName = "ImmutableArrayCacheStorageCache")]
+[JsonSerializable(typeof(ImmutableArray<Header>), TypeInfoPropertyName = "ImmutableArrayCacheStorageHeader")]
+[JsonSerializable(typeof(ImmutableArray<DataEntry>), TypeInfoPropertyName = "ImmutableArrayCacheStorageDataEntry")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

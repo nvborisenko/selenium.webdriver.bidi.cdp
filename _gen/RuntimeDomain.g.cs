@@ -1087,7 +1087,7 @@ public sealed record GetPropertiesCommandOptions : CdpCommandOptions
 /// <param name="ExceptionDetails">
 /// Exception details.
 /// </param>
-public sealed record GetPropertiesResult(IReadOnlyList<PropertyDescriptor> Result, IReadOnlyList<InternalPropertyDescriptor>? InternalProperties, IReadOnlyList<PrivatePropertyDescriptor>? PrivateProperties, ExceptionDetails? ExceptionDetails) : EmptyResult;
+public sealed record GetPropertiesResult(ImmutableArray<PropertyDescriptor> Result, ImmutableArray<InternalPropertyDescriptor>? InternalProperties, ImmutableArray<PrivatePropertyDescriptor>? PrivateProperties, ExceptionDetails? ExceptionDetails) : EmptyResult;
 
 
 internal sealed record GlobalLexicalScopeNamesCommandParameters(ExecutionContextId? ExecutionContextId) : Parameters;
@@ -1107,7 +1107,7 @@ public sealed record GlobalLexicalScopeNamesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Names">
 /// </param>
-public sealed record GlobalLexicalScopeNamesResult(IReadOnlyList<string> Names) : EmptyResult;
+public sealed record GlobalLexicalScopeNamesResult(ImmutableArray<string> Names) : EmptyResult;
 
 
 internal sealed record QueryObjectsCommandParameters(RemoteObjectId PrototypeObjectId, string? ObjectGroup) : Parameters;
@@ -1602,7 +1602,7 @@ public sealed record CustomPreview(string Header)
 /// <param name="Properties">
 /// List of the properties.
 /// </param>
-public sealed record ObjectPreview(string Type, bool Overflow, IReadOnlyList<PropertyPreview> Properties)
+public sealed record ObjectPreview(string Type, bool Overflow, ImmutableArray<PropertyPreview> Properties)
 {
     /// <summary>
     /// Object subtype hint. Specified for <b>object</b> type values only.
@@ -1617,7 +1617,7 @@ public sealed record ObjectPreview(string Type, bool Overflow, IReadOnlyList<Pro
     /// <summary>
     /// List of the entries. Specified for <b>map</b> and <b>set</b> subtype values only.
     /// </summary>
-    public IReadOnlyList<EntryPreview>? Entries { get; init; }
+    public ImmutableArray<EntryPreview>? Entries { get; init; }
 }
 
 /// <summary>
@@ -1907,7 +1907,7 @@ public sealed record CallFrame(string FunctionName, ScriptId ScriptId, string Ur
 /// <param name="CallFrames">
 /// JavaScript function name.
 /// </param>
-public sealed record StackTrace(IReadOnlyList<CallFrame> CallFrames)
+public sealed record StackTrace(ImmutableArray<CallFrame> CallFrames)
 {
     /// <summary>
     /// String label of this stack trace. For async traces this may be a name of the function that
@@ -2025,14 +2025,14 @@ public sealed record StackTraceId(string Id)
 [JsonSerializable(typeof(StackTrace), TypeInfoPropertyName = "RuntimeStackTrace")]
 [JsonSerializable(typeof(UniqueDebuggerId), TypeInfoPropertyName = "RuntimeUniqueDebuggerId")]
 [JsonSerializable(typeof(StackTraceId), TypeInfoPropertyName = "RuntimeStackTraceId")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CallArgument>), TypeInfoPropertyName = "IReadOnlyListRuntimeCallArgument")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PropertyDescriptor>), TypeInfoPropertyName = "IReadOnlyListRuntimePropertyDescriptor")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InternalPropertyDescriptor>), TypeInfoPropertyName = "IReadOnlyListRuntimeInternalPropertyDescriptor")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PrivatePropertyDescriptor>), TypeInfoPropertyName = "IReadOnlyListRuntimePrivatePropertyDescriptor")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RemoteObject>), TypeInfoPropertyName = "IReadOnlyListRuntimeRemoteObject")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PropertyPreview>), TypeInfoPropertyName = "IReadOnlyListRuntimePropertyPreview")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<EntryPreview>), TypeInfoPropertyName = "IReadOnlyListRuntimeEntryPreview")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CallFrame>), TypeInfoPropertyName = "IReadOnlyListRuntimeCallFrame")]
+[JsonSerializable(typeof(ImmutableArray<CallArgument>), TypeInfoPropertyName = "ImmutableArrayRuntimeCallArgument")]
+[JsonSerializable(typeof(ImmutableArray<PropertyDescriptor>), TypeInfoPropertyName = "ImmutableArrayRuntimePropertyDescriptor")]
+[JsonSerializable(typeof(ImmutableArray<InternalPropertyDescriptor>), TypeInfoPropertyName = "ImmutableArrayRuntimeInternalPropertyDescriptor")]
+[JsonSerializable(typeof(ImmutableArray<PrivatePropertyDescriptor>), TypeInfoPropertyName = "ImmutableArrayRuntimePrivatePropertyDescriptor")]
+[JsonSerializable(typeof(ImmutableArray<RemoteObject>), TypeInfoPropertyName = "ImmutableArrayRuntimeRemoteObject")]
+[JsonSerializable(typeof(ImmutableArray<PropertyPreview>), TypeInfoPropertyName = "ImmutableArrayRuntimePropertyPreview")]
+[JsonSerializable(typeof(ImmutableArray<EntryPreview>), TypeInfoPropertyName = "ImmutableArrayRuntimeEntryPreview")]
+[JsonSerializable(typeof(ImmutableArray<CallFrame>), TypeInfoPropertyName = "ImmutableArrayRuntimeCallFrame")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

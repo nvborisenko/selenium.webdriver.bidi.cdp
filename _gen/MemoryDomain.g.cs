@@ -274,7 +274,7 @@ public sealed record GetDOMCountersForLeakDetectionCommandOptions : CdpCommandOp
 /// <param name="Counters">
 /// DOM object counters.
 /// </param>
-public sealed record GetDOMCountersForLeakDetectionResult(IReadOnlyList<DOMCounter> Counters) : EmptyResult;
+public sealed record GetDOMCountersForLeakDetectionResult(ImmutableArray<DOMCounter> Counters) : EmptyResult;
 
 
 internal sealed record PrepareForLeakDetectionCommandParameters() : Parameters;
@@ -446,7 +446,7 @@ public enum PressureLevel
 /// <param name="Stack">
 /// Execution stack at the point of allocation.
 /// </param>
-public sealed record SamplingProfileNode(double Size, double Total, IReadOnlyList<string> Stack)
+public sealed record SamplingProfileNode(double Size, double Total, ImmutableArray<string> Stack)
 {
 }
 
@@ -457,7 +457,7 @@ public sealed record SamplingProfileNode(double Size, double Total, IReadOnlyLis
 /// </param>
 /// <param name="Modules">
 /// </param>
-public sealed record SamplingProfile(IReadOnlyList<SamplingProfileNode> Samples, IReadOnlyList<Module> Modules)
+public sealed record SamplingProfile(ImmutableArray<SamplingProfileNode> Samples, ImmutableArray<Module> Modules)
 {
 }
 
@@ -522,9 +522,9 @@ public sealed record DOMCounter(string Name, long Count)
 [JsonSerializable(typeof(SamplingProfile), TypeInfoPropertyName = "MemorySamplingProfile")]
 [JsonSerializable(typeof(Module), TypeInfoPropertyName = "MemoryModule")]
 [JsonSerializable(typeof(DOMCounter), TypeInfoPropertyName = "MemoryDOMCounter")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOMCounter>), TypeInfoPropertyName = "IReadOnlyListMemoryDOMCounter")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SamplingProfileNode>), TypeInfoPropertyName = "IReadOnlyListMemorySamplingProfileNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Module>), TypeInfoPropertyName = "IReadOnlyListMemoryModule")]
+[JsonSerializable(typeof(ImmutableArray<DOMCounter>), TypeInfoPropertyName = "ImmutableArrayMemoryDOMCounter")]
+[JsonSerializable(typeof(ImmutableArray<SamplingProfileNode>), TypeInfoPropertyName = "ImmutableArrayMemorySamplingProfileNode")]
+[JsonSerializable(typeof(ImmutableArray<Module>), TypeInfoPropertyName = "ImmutableArrayMemoryModule")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

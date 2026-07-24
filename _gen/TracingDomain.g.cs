@@ -224,7 +224,7 @@ public sealed record GetCategoriesCommandOptions : CdpCommandOptions
 /// <param name="Categories">
 /// A list of supported tracing categories.
 /// </param>
-public sealed record GetCategoriesResult(IReadOnlyList<string> Categories) : EmptyResult;
+public sealed record GetCategoriesResult(ImmutableArray<string> Categories) : EmptyResult;
 
 
 internal sealed record GetTrackEventDescriptorCommandParameters() : Parameters;
@@ -447,17 +447,17 @@ public sealed record TraceConfig()
     /// <summary>
     /// Included category filters.
     /// </summary>
-    public IReadOnlyList<string>? IncludedCategories { get; init; }
+    public ImmutableArray<string>? IncludedCategories { get; init; }
 
     /// <summary>
     /// Excluded category filters.
     /// </summary>
-    public IReadOnlyList<string>? ExcludedCategories { get; init; }
+    public ImmutableArray<string>? ExcludedCategories { get; init; }
 
     /// <summary>
     /// Configuration to synthesize the delays in tracing.
     /// </summary>
-    public IReadOnlyList<string>? SyntheticDelays { get; init; }
+    public ImmutableArray<string>? SyntheticDelays { get; init; }
 
     /// <summary>
     /// Configuration for memory dump triggers. Used only when "memory-infra" category is enabled.

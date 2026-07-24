@@ -277,7 +277,7 @@ public sealed record PlayerErrorSourceLocation(string File, long Line)
 /// <param name="Data">
 /// Extra data attached to an error, such as an HRESULT, Video Codec, etc.
 /// </param>
-public sealed record PlayerError(string ErrorType, long Code, IReadOnlyList<PlayerErrorSourceLocation> Stack, IReadOnlyList<PlayerError> Cause, global::System.Text.Json.JsonElement Data)
+public sealed record PlayerError(string ErrorType, long Code, ImmutableArray<PlayerErrorSourceLocation> Stack, ImmutableArray<PlayerError> Cause, global::System.Text.Json.JsonElement Data)
 {
 }
 
@@ -309,11 +309,11 @@ public sealed record Player(PlayerId PlayerId)
 [JsonSerializable(typeof(PlayerErrorSourceLocation), TypeInfoPropertyName = "MediaPlayerErrorSourceLocation")]
 [JsonSerializable(typeof(PlayerError), TypeInfoPropertyName = "MediaPlayerError")]
 [JsonSerializable(typeof(Player), TypeInfoPropertyName = "MediaPlayer")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerProperty>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerProperty")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerEvent>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerEvent")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerMessage>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerMessage")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerError>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerError")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PlayerErrorSourceLocation>), TypeInfoPropertyName = "IReadOnlyListMediaPlayerErrorSourceLocation")]
+[JsonSerializable(typeof(ImmutableArray<PlayerProperty>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerProperty")]
+[JsonSerializable(typeof(ImmutableArray<PlayerEvent>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerEvent")]
+[JsonSerializable(typeof(ImmutableArray<PlayerMessage>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerMessage")]
+[JsonSerializable(typeof(ImmutableArray<PlayerError>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerError")]
+[JsonSerializable(typeof(ImmutableArray<PlayerErrorSourceLocation>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerErrorSourceLocation")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

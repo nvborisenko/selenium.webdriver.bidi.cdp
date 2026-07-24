@@ -391,7 +391,7 @@ public enum SecurityState
 /// <param name="ObsoleteSslSignature">
 /// True if the connection is using an obsolete SSL signature.
 /// </param>
-public sealed record CertificateSecurityState(string Protocol, string KeyExchange, string Cipher, IReadOnlyList<string> Certificate, string SubjectName, string Issuer, Network.TimeSinceEpoch ValidFrom, Network.TimeSinceEpoch ValidTo, bool CertificateHasWeakSignature, bool CertificateHasSha1Signature, bool ModernSSL, bool ObsoleteSslProtocol, bool ObsoleteSslKeyExchange, bool ObsoleteSslCipher, bool ObsoleteSslSignature)
+public sealed record CertificateSecurityState(string Protocol, string KeyExchange, string Cipher, ImmutableArray<string> Certificate, string SubjectName, string Issuer, Network.TimeSinceEpoch ValidFrom, Network.TimeSinceEpoch ValidTo, bool CertificateHasWeakSignature, bool CertificateHasSha1Signature, bool ModernSSL, bool ObsoleteSslProtocol, bool ObsoleteSslKeyExchange, bool ObsoleteSslCipher, bool ObsoleteSslSignature)
 {
     /// <summary>
     /// (EC)DH group used by the connection, if applicable.
@@ -446,7 +446,7 @@ public sealed record SafetyTipInfo(SafetyTipStatus SafetyTipStatus)
 /// <param name="SecurityStateIssueIds">
 /// Array of security state issues ids.
 /// </param>
-public sealed record VisibleSecurityState(SecurityState SecurityState, IReadOnlyList<string> SecurityStateIssueIds)
+public sealed record VisibleSecurityState(SecurityState SecurityState, ImmutableArray<string> SecurityStateIssueIds)
 {
     /// <summary>
     /// Security state details about the page certificate.
@@ -480,12 +480,12 @@ public sealed record VisibleSecurityState(SecurityState SecurityState, IReadOnly
 /// <param name="Certificate">
 /// Page certificate.
 /// </param>
-public sealed record SecurityStateExplanation(SecurityState SecurityState, string Title, string Summary, string Description, MixedContentType MixedContentType, IReadOnlyList<string> Certificate)
+public sealed record SecurityStateExplanation(SecurityState SecurityState, string Title, string Summary, string Description, MixedContentType MixedContentType, ImmutableArray<string> Certificate)
 {
     /// <summary>
     /// Recommendations to fix any issues.
     /// </summary>
-    public IReadOnlyList<string>? Recommendations { get; init; }
+    public ImmutableArray<string>? Recommendations { get; init; }
 }
 
 /// <summary>
@@ -557,7 +557,7 @@ public enum CertificateErrorAction
 [JsonSerializable(typeof(SecurityStateExplanation), TypeInfoPropertyName = "SecuritySecurityStateExplanation")]
 [JsonSerializable(typeof(InsecureContentStatus), TypeInfoPropertyName = "SecurityInsecureContentStatus")]
 [JsonSerializable(typeof(CertificateErrorAction), TypeInfoPropertyName = "SecurityCertificateErrorAction")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SecurityStateExplanation>), TypeInfoPropertyName = "IReadOnlyListSecuritySecurityStateExplanation")]
+[JsonSerializable(typeof(ImmutableArray<SecurityStateExplanation>), TypeInfoPropertyName = "ImmutableArraySecuritySecurityStateExplanation")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

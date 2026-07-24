@@ -730,7 +730,7 @@ public sealed record GetBrowserCommandLineCommandOptions : CdpCommandOptions
 /// <param name="Arguments">
 /// Commandline parameters
 /// </param>
-public sealed record GetBrowserCommandLineResult(IReadOnlyList<string> Arguments) : EmptyResult;
+public sealed record GetBrowserCommandLineResult(ImmutableArray<string> Arguments) : EmptyResult;
 
 
 internal sealed record GetHistogramsCommandParameters(string? Query, bool? Delta) : Parameters;
@@ -758,7 +758,7 @@ public sealed record GetHistogramsCommandOptions : CdpCommandOptions
 /// <param name="Histograms">
 /// Histograms.
 /// </param>
-public sealed record GetHistogramsResult(IReadOnlyList<Histogram> Histograms) : EmptyResult;
+public sealed record GetHistogramsResult(ImmutableArray<Histogram> Histograms) : EmptyResult;
 
 
 internal sealed record GetHistogramCommandParameters(string Name, bool? Delta) : Parameters;
@@ -1294,7 +1294,7 @@ public sealed record Bucket(long Low, long High, long Count)
 /// <param name="Buckets">
 /// Buckets.
 /// </param>
-public sealed record Histogram(string Name, long Sum, long Count, IReadOnlyList<Bucket> Buckets)
+public sealed record Histogram(string Name, long Sum, long Count, ImmutableArray<Bucket> Buckets)
 {
 }
 
@@ -1348,9 +1348,9 @@ public sealed record Histogram(string Name, long Sum, long Count, IReadOnlyList<
 [JsonSerializable(typeof(BrowserCommandId), TypeInfoPropertyName = "BrowserBrowserCommandId")]
 [JsonSerializable(typeof(Bucket), TypeInfoPropertyName = "BrowserBucket")]
 [JsonSerializable(typeof(Histogram), TypeInfoPropertyName = "BrowserHistogram")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PermissionType>), TypeInfoPropertyName = "IReadOnlyListBrowserPermissionType")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Histogram>), TypeInfoPropertyName = "IReadOnlyListBrowserHistogram")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Bucket>), TypeInfoPropertyName = "IReadOnlyListBrowserBucket")]
+[JsonSerializable(typeof(ImmutableArray<PermissionType>), TypeInfoPropertyName = "ImmutableArrayBrowserPermissionType")]
+[JsonSerializable(typeof(ImmutableArray<Histogram>), TypeInfoPropertyName = "ImmutableArrayBrowserHistogram")]
+[JsonSerializable(typeof(ImmutableArray<Bucket>), TypeInfoPropertyName = "ImmutableArrayBrowserBucket")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

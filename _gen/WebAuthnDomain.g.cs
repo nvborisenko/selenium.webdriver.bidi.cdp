@@ -511,7 +511,7 @@ public sealed record GetCredentialsCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Credentials">
 /// </param>
-public sealed record GetCredentialsResult(IReadOnlyList<Credential> Credentials) : EmptyResult;
+public sealed record GetCredentialsResult(ImmutableArray<Credential> Credentials) : EmptyResult;
 
 
 internal sealed record RemoveCredentialCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId) : Parameters;
@@ -870,7 +870,7 @@ public sealed record Credential(string CredentialId, bool IsResidentCredential, 
     /// <summary>
     /// The CMTG keys associated with the credential.
     /// </summary>
-    public IReadOnlyList<string>? CmtgKeys { get; init; }
+    public ImmutableArray<string>? CmtgKeys { get; init; }
 
     /// <summary>
     /// The 0-based index of the active key in cmtgKeys.
@@ -919,7 +919,7 @@ public sealed record Credential(string CredentialId, bool IsResidentCredential, 
 [JsonSerializable(typeof(AuthenticatorTransport), TypeInfoPropertyName = "WebAuthnAuthenticatorTransport")]
 [JsonSerializable(typeof(VirtualAuthenticatorOptions), TypeInfoPropertyName = "WebAuthnVirtualAuthenticatorOptions")]
 [JsonSerializable(typeof(Credential), TypeInfoPropertyName = "WebAuthnCredential")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Credential>), TypeInfoPropertyName = "IReadOnlyListWebAuthnCredential")]
+[JsonSerializable(typeof(ImmutableArray<Credential>), TypeInfoPropertyName = "ImmutableArrayWebAuthnCredential")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

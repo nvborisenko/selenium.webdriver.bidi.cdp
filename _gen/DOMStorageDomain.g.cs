@@ -240,7 +240,7 @@ public sealed record GetDOMStorageItemsCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Entries">
 /// </param>
-public sealed record GetDOMStorageItemsResult(IReadOnlyList<IReadOnlyList<string>> Entries) : EmptyResult;
+public sealed record GetDOMStorageItemsResult(ImmutableArray<ImmutableArray<string>> Entries) : EmptyResult;
 
 
 internal sealed record RemoveDOMStorageItemCommandParameters(StorageId StorageId, string Key) : Parameters;

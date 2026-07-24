@@ -654,7 +654,7 @@ public record HeapSnapshotObjectId : IStringRemoteId
 /// <param name="Children">
 /// Child nodes.
 /// </param>
-public sealed record SamplingHeapProfileNode(Runtime.CallFrame CallFrame, double SelfSize, long Id, IReadOnlyList<SamplingHeapProfileNode> Children)
+public sealed record SamplingHeapProfileNode(Runtime.CallFrame CallFrame, double SelfSize, long Id, ImmutableArray<SamplingHeapProfileNode> Children)
 {
 }
 
@@ -682,7 +682,7 @@ public sealed record SamplingHeapProfileSample(double Size, long NodeId, double 
 /// </param>
 /// <param name="Samples">
 /// </param>
-public sealed record SamplingHeapProfile(SamplingHeapProfileNode Head, IReadOnlyList<SamplingHeapProfileSample> Samples)
+public sealed record SamplingHeapProfile(SamplingHeapProfileNode Head, ImmutableArray<SamplingHeapProfileSample> Samples)
 {
 }
 
@@ -719,8 +719,8 @@ public sealed record SamplingHeapProfile(SamplingHeapProfileNode Head, IReadOnly
 [JsonSerializable(typeof(SamplingHeapProfileNode), TypeInfoPropertyName = "HeapProfilerSamplingHeapProfileNode")]
 [JsonSerializable(typeof(SamplingHeapProfileSample), TypeInfoPropertyName = "HeapProfilerSamplingHeapProfileSample")]
 [JsonSerializable(typeof(SamplingHeapProfile), TypeInfoPropertyName = "HeapProfilerSamplingHeapProfile")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SamplingHeapProfileNode>), TypeInfoPropertyName = "IReadOnlyListHeapProfilerSamplingHeapProfileNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SamplingHeapProfileSample>), TypeInfoPropertyName = "IReadOnlyListHeapProfilerSamplingHeapProfileSample")]
+[JsonSerializable(typeof(ImmutableArray<SamplingHeapProfileNode>), TypeInfoPropertyName = "ImmutableArrayHeapProfilerSamplingHeapProfileNode")]
+[JsonSerializable(typeof(ImmutableArray<SamplingHeapProfileSample>), TypeInfoPropertyName = "ImmutableArrayHeapProfilerSamplingHeapProfileSample")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

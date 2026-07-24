@@ -267,7 +267,7 @@ public sealed record EventMetadata(string Key, string Value)
 /// <param name="StorageKey">
 /// Storage key this event belongs to.
 /// </param>
-public sealed record BackgroundServiceEvent(Network.TimeSinceEpoch Timestamp, string Origin, ServiceWorker.RegistrationID ServiceWorkerRegistrationId, ServiceName Service, string EventName, string InstanceId, IReadOnlyList<EventMetadata> EventMetadata, string StorageKey)
+public sealed record BackgroundServiceEvent(Network.TimeSinceEpoch Timestamp, string Origin, ServiceWorker.RegistrationID ServiceWorkerRegistrationId, ServiceName Service, string EventName, string InstanceId, ImmutableArray<EventMetadata> EventMetadata, string StorageKey)
 {
 }
 
@@ -284,7 +284,7 @@ public sealed record BackgroundServiceEvent(Network.TimeSinceEpoch Timestamp, st
 [JsonSerializable(typeof(ServiceName), TypeInfoPropertyName = "BackgroundServiceServiceName")]
 [JsonSerializable(typeof(EventMetadata), TypeInfoPropertyName = "BackgroundServiceEventMetadata")]
 [JsonSerializable(typeof(BackgroundServiceEvent), TypeInfoPropertyName = "BackgroundServiceBackgroundServiceEvent")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<EventMetadata>), TypeInfoPropertyName = "IReadOnlyListBackgroundServiceEventMetadata")]
+[JsonSerializable(typeof(ImmutableArray<EventMetadata>), TypeInfoPropertyName = "ImmutableArrayBackgroundServiceEventMetadata")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -887,7 +887,7 @@ public sealed record GetCookiesCommandOptions : CdpCommandOptions
 /// <param name="Cookies">
 /// Array of cookie objects.
 /// </param>
-public sealed record GetCookiesResult(IReadOnlyList<Network.Cookie> Cookies) : EmptyResult;
+public sealed record GetCookiesResult(ImmutableArray<Network.Cookie> Cookies) : EmptyResult;
 
 
 internal sealed record SetCookiesCommandParameters(ImmutableArray<Network.CookieParam> Cookies, Browser.BrowserContextID? BrowserContextId) : Parameters;
@@ -949,7 +949,7 @@ public sealed record GetUsageAndQuotaCommandOptions : CdpCommandOptions
 /// <param name="UsageBreakdown">
 /// Storage usage per type (bytes).
 /// </param>
-public sealed record GetUsageAndQuotaResult(double Usage, double Quota, bool OverrideActive, IReadOnlyList<UsageForType> UsageBreakdown) : EmptyResult;
+public sealed record GetUsageAndQuotaResult(double Usage, double Quota, bool OverrideActive, ImmutableArray<UsageForType> UsageBreakdown) : EmptyResult;
 
 
 internal sealed record OverrideQuotaForOriginCommandParameters(string Origin, double? QuotaSize) : Parameters;
@@ -1101,7 +1101,7 @@ public sealed record GetTrustTokensCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Tokens">
 /// </param>
-public sealed record GetTrustTokensResult(IReadOnlyList<TrustTokens> Tokens) : EmptyResult;
+public sealed record GetTrustTokensResult(ImmutableArray<TrustTokens> Tokens) : EmptyResult;
 
 
 internal sealed record ClearTrustTokensCommandParameters(string IssuerOrigin) : Parameters;
@@ -1150,7 +1150,7 @@ public sealed record GetSharedStorageEntriesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Entries">
 /// </param>
-public sealed record GetSharedStorageEntriesResult(IReadOnlyList<SharedStorageEntry> Entries) : EmptyResult;
+public sealed record GetSharedStorageEntriesResult(ImmutableArray<SharedStorageEntry> Entries) : EmptyResult;
 
 
 internal sealed record SetSharedStorageEntryCommandParameters(string OwnerOrigin, string Key, string Value, bool? IgnoreIfPresent) : Parameters;
@@ -1269,7 +1269,7 @@ public sealed record RunBounceTrackingMitigationsCommandOptions : CdpCommandOpti
 /// </summary>
 /// <param name="DeletedSites">
 /// </param>
-public sealed record RunBounceTrackingMitigationsResult(IReadOnlyList<string> DeletedSites) : EmptyResult;
+public sealed record RunBounceTrackingMitigationsResult(ImmutableArray<string> DeletedSites) : EmptyResult;
 
 
 internal sealed record GetRelatedWebsiteSetsCommandParameters() : Parameters;
@@ -1285,7 +1285,7 @@ public sealed record GetRelatedWebsiteSetsCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Sets">
 /// </param>
-public sealed record GetRelatedWebsiteSetsResult(IReadOnlyList<RelatedWebsiteSet> Sets) : EmptyResult;
+public sealed record GetRelatedWebsiteSetsResult(ImmutableArray<RelatedWebsiteSet> Sets) : EmptyResult;
 
 
 /// <summary>
@@ -1675,7 +1675,7 @@ public sealed record SharedStorageReportingMetadata(string EventType, string Rep
 /// <param name="ReportingMetadata">
 /// Any associated reporting metadata.
 /// </param>
-public sealed record SharedStorageUrlWithMetadata(string Url, IReadOnlyList<SharedStorageReportingMetadata> ReportingMetadata)
+public sealed record SharedStorageUrlWithMetadata(string Url, ImmutableArray<SharedStorageReportingMetadata> ReportingMetadata)
 {
 }
 
@@ -1735,7 +1735,7 @@ public sealed record SharedStorageAccessParams()
     /// Array of candidate URLs' specs, along with any associated metadata.
     /// Present only for SharedStorageAccessMethod: selectURL.
     /// </summary>
-    public IReadOnlyList<SharedStorageUrlWithMetadata>? UrlsWithMetadata { get; init; }
+    public ImmutableArray<SharedStorageUrlWithMetadata>? UrlsWithMetadata { get; init; }
 
     /// <summary>
     /// Spec of the URN:UUID generated for a selectURL call.
@@ -1859,7 +1859,7 @@ public sealed record StorageBucketInfo(StorageBucket Bucket, string Id, Network.
 /// <param name="ServiceSites">
 /// The service sites of this set, along with the ccTLDs if there is any.
 /// </param>
-public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IReadOnlyList<string> AssociatedSites, IReadOnlyList<string> ServiceSites)
+public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, ImmutableArray<string> AssociatedSites, ImmutableArray<string> ServiceSites)
 {
 }
 
@@ -1947,14 +1947,14 @@ public sealed record RelatedWebsiteSet(IReadOnlyList<string> PrimarySites, IRead
 [JsonSerializable(typeof(StorageBucket), TypeInfoPropertyName = "StorageStorageBucket")]
 [JsonSerializable(typeof(StorageBucketInfo), TypeInfoPropertyName = "StorageStorageBucketInfo")]
 [JsonSerializable(typeof(RelatedWebsiteSet), TypeInfoPropertyName = "StorageRelatedWebsiteSet")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Network.Cookie>), TypeInfoPropertyName = "IReadOnlyListNetworkCookie")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Network.CookieParam>), TypeInfoPropertyName = "IReadOnlyListNetworkCookieParam")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<UsageForType>), TypeInfoPropertyName = "IReadOnlyListStorageUsageForType")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<TrustTokens>), TypeInfoPropertyName = "IReadOnlyListStorageTrustTokens")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageEntry>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RelatedWebsiteSet>), TypeInfoPropertyName = "IReadOnlyListStorageRelatedWebsiteSet")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageReportingMetadata>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageReportingMetadata")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SharedStorageUrlWithMetadata>), TypeInfoPropertyName = "IReadOnlyListStorageSharedStorageUrlWithMetadata")]
+[JsonSerializable(typeof(ImmutableArray<Network.Cookie>), TypeInfoPropertyName = "ImmutableArrayNetworkCookie")]
+[JsonSerializable(typeof(ImmutableArray<Network.CookieParam>), TypeInfoPropertyName = "ImmutableArrayNetworkCookieParam")]
+[JsonSerializable(typeof(ImmutableArray<UsageForType>), TypeInfoPropertyName = "ImmutableArrayStorageUsageForType")]
+[JsonSerializable(typeof(ImmutableArray<TrustTokens>), TypeInfoPropertyName = "ImmutableArrayStorageTrustTokens")]
+[JsonSerializable(typeof(ImmutableArray<SharedStorageEntry>), TypeInfoPropertyName = "ImmutableArrayStorageSharedStorageEntry")]
+[JsonSerializable(typeof(ImmutableArray<RelatedWebsiteSet>), TypeInfoPropertyName = "ImmutableArrayStorageRelatedWebsiteSet")]
+[JsonSerializable(typeof(ImmutableArray<SharedStorageReportingMetadata>), TypeInfoPropertyName = "ImmutableArrayStorageSharedStorageReportingMetadata")]
+[JsonSerializable(typeof(ImmutableArray<SharedStorageUrlWithMetadata>), TypeInfoPropertyName = "ImmutableArrayStorageSharedStorageUrlWithMetadata")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

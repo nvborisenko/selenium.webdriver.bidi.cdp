@@ -101,7 +101,7 @@ public sealed record AdFrameData(Page.FrameId FrameId, double NetworkBytes, doub
 /// <param name="RemoveAdFrames">
 /// The list of ad frame IDs that have been removed since the last event.
 /// </param>
-public sealed record AdMetrics(long ViewportAdDensityByArea, double AverageViewportAdDensityByArea, long ViewportAdCount, double AverageViewportAdCount, double TotalAdCpuTime, double TotalAdNetworkBytes, IReadOnlyList<AdFrameData> UpdateAdFrames, IReadOnlyList<Page.FrameId> RemoveAdFrames)
+public sealed record AdMetrics(long ViewportAdDensityByArea, double AverageViewportAdDensityByArea, long ViewportAdCount, double AverageViewportAdCount, double TotalAdCpuTime, double TotalAdNetworkBytes, ImmutableArray<AdFrameData> UpdateAdFrames, ImmutableArray<Page.FrameId> RemoveAdFrames)
 {
 }
 
@@ -109,8 +109,8 @@ public sealed record AdMetrics(long ViewportAdDensityByArea, double AverageViewp
 [JsonSerializable(typeof(GetAdMetricsResult), TypeInfoPropertyName = "GetAdMetricsResult")]
 [JsonSerializable(typeof(AdFrameData), TypeInfoPropertyName = "AdsAdFrameData")]
 [JsonSerializable(typeof(AdMetrics), TypeInfoPropertyName = "AdsAdMetrics")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AdFrameData>), TypeInfoPropertyName = "IReadOnlyListAdsAdFrameData")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Page.FrameId>), TypeInfoPropertyName = "IReadOnlyListPageFrameId")]
+[JsonSerializable(typeof(ImmutableArray<AdFrameData>), TypeInfoPropertyName = "ImmutableArrayAdsAdFrameData")]
+[JsonSerializable(typeof(ImmutableArray<Page.FrameId>), TypeInfoPropertyName = "ImmutableArrayPageFrameId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

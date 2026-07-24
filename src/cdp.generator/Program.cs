@@ -531,7 +531,7 @@ foreach (var inputFile in inputFiles)
                 }
                 else if (typeInfo.IsArray())
                 {
-                    // Skip generation — resolved as IReadOnlyList<T> at usage sites
+                    // Skip generation — resolved as ImmutableArray<T> at usage sites
                 }
                 else
                 {
@@ -677,7 +677,7 @@ foreach (var inputFile in inputFiles)
         foreach (var elementType in collectionTypes)
         {
             var qualifiedName = elementType.Contains('.') ? elementType.Replace(".", "") : $"{domainInfo.Domain}{elementType}";
-            domainBuilder.AppendLine($"[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<{elementType}>), TypeInfoPropertyName = \"IReadOnlyList{qualifiedName}\")]");
+            domainBuilder.AppendLine($"[JsonSerializable(typeof(ImmutableArray<{elementType}>), TypeInfoPropertyName = \"ImmutableArray{qualifiedName}\")]");
         }
 
         domainBuilder.AppendLine($"""
@@ -812,7 +812,7 @@ static class Extensions
         {
             if (returnInfo.Type == "array")
             {
-                res = $"IReadOnlyList<{GetPrimitiveCSharpType(returnInfo.Items!.Type, returnInfo.Items.Ref)}>";
+                res = $"ImmutableArray<{GetPrimitiveCSharpType(returnInfo.Items!.Type, returnInfo.Items.Ref)}>";
             }
             else
             {
@@ -860,7 +860,7 @@ static class Extensions
         {
             if (propertyInfo.Type == "array")
             {
-                res = $"IReadOnlyList<{GetPrimitiveCSharpType(propertyInfo.Items!.Type, propertyInfo.Items.Ref)}>";
+                res = $"ImmutableArray<{GetPrimitiveCSharpType(propertyInfo.Items!.Type, propertyInfo.Items.Ref)}>";
             }
             else
             {
@@ -889,7 +889,7 @@ static class Extensions
             if (ArrayTypes.TryGetValue(typeName, out var itemInfo))
             {
                 var itemType = GetPrimitiveCSharpType(itemInfo.Type, itemInfo.Ref) ?? "global::System.Text.Json.JsonElement";
-                return $"IReadOnlyList<{itemType}>";
+                return $"ImmutableArray<{itemType}>";
             }
             return @ref;
         }

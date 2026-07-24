@@ -1945,7 +1945,7 @@ public sealed record EmulateNetworkConditionsByRuleCommandOptions : CdpCommandOp
 /// An id for each entry in matchedNetworkConditions. The id will be included in the requestWillBeSentExtraInfo for
 /// requests affected by a rule.
 /// </param>
-public sealed record EmulateNetworkConditionsByRuleResult(IReadOnlyList<string> RuleIds) : EmptyResult;
+public sealed record EmulateNetworkConditionsByRuleResult(ImmutableArray<string> RuleIds) : EmptyResult;
 
 
 internal sealed record OverrideNetworkStateCommandParameters(bool Offline, double Latency, double DownloadThroughput, double UploadThroughput, ConnectionType? ConnectionType) : Parameters;
@@ -2047,7 +2047,7 @@ public sealed record GetAllCookiesCommandOptions : CdpCommandOptions
 /// <param name="Cookies">
 /// Array of cookie objects.
 /// </param>
-public sealed record GetAllCookiesResult(IReadOnlyList<Cookie> Cookies) : EmptyResult;
+public sealed record GetAllCookiesResult(ImmutableArray<Cookie> Cookies) : EmptyResult;
 
 
 internal sealed record GetCertificateCommandParameters(string Origin) : Parameters;
@@ -2063,7 +2063,7 @@ public sealed record GetCertificateCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="TableNames">
 /// </param>
-public sealed record GetCertificateResult(IReadOnlyList<string> TableNames) : EmptyResult;
+public sealed record GetCertificateResult(ImmutableArray<string> TableNames) : EmptyResult;
 
 
 internal sealed record GetCookiesCommandParameters(ImmutableArray<string>? Urls) : Parameters;
@@ -2086,7 +2086,7 @@ public sealed record GetCookiesCommandOptions : CdpCommandOptions
 /// <param name="Cookies">
 /// Array of cookie objects.
 /// </param>
-public sealed record GetCookiesResult(IReadOnlyList<Cookie> Cookies) : EmptyResult;
+public sealed record GetCookiesResult(ImmutableArray<Cookie> Cookies) : EmptyResult;
 
 
 internal sealed record GetResponseBodyCommandParameters(RequestId RequestId) : Parameters;
@@ -2202,7 +2202,7 @@ public sealed record SearchInResponseBodyCommandOptions : CdpCommandOptions
 /// <param name="Result">
 /// List of search matches.
 /// </param>
-public sealed record SearchInResponseBodyResult(IReadOnlyList<Debugger.SearchMatch> Result) : EmptyResult;
+public sealed record SearchInResponseBodyResult(ImmutableArray<Debugger.SearchMatch> Result) : EmptyResult;
 
 
 internal sealed record SetBlockedURLsCommandParameters(ImmutableArray<BlockPattern>? UrlPatterns, ImmutableArray<string>? Urls) : Parameters;
@@ -3761,7 +3761,7 @@ public sealed record Request(string Url, string Method, global::System.Collectio
     /// <summary>
     /// Request body elements (post data broken into individual entries).
     /// </summary>
-    public IReadOnlyList<PostDataEntry>? PostDataEntries { get; init; }
+    public ImmutableArray<PostDataEntry>? PostDataEntries { get; init; }
 
     /// <summary>
     /// The mixed content type of the request.
@@ -3862,7 +3862,7 @@ public sealed record SignedCertificateTimestamp(string Status, string Origin, st
 /// <param name="EncryptedClientHello">
 /// Whether the connection used Encrypted ClientHello
 /// </param>
-public sealed record SecurityDetails(string Protocol, string KeyExchange, string Cipher, Security.CertificateId CertificateId, string SubjectName, IReadOnlyList<string> SanList, string Issuer, TimeSinceEpoch ValidFrom, TimeSinceEpoch ValidTo, IReadOnlyList<SignedCertificateTimestamp> SignedCertificateTimestampList, CertificateTransparencyCompliance CertificateTransparencyCompliance, bool EncryptedClientHello)
+public sealed record SecurityDetails(string Protocol, string KeyExchange, string Cipher, Security.CertificateId CertificateId, string SubjectName, ImmutableArray<string> SanList, string Issuer, TimeSinceEpoch ValidFrom, TimeSinceEpoch ValidTo, ImmutableArray<SignedCertificateTimestamp> SignedCertificateTimestampList, CertificateTransparencyCompliance CertificateTransparencyCompliance, bool EncryptedClientHello)
 {
     /// <summary>
     /// (EC)DH group used by the connection, if applicable.
@@ -4145,7 +4145,7 @@ public sealed record TrustTokenParams(TrustTokenOperationType Operation, string 
     /// Origins of issuers from whom to request tokens or redemption
     /// records.
     /// </summary>
-    public IReadOnlyList<string>? Issuers { get; init; }
+    public ImmutableArray<string>? Issuers { get; init; }
 }
 
 /// <summary>
@@ -4789,7 +4789,7 @@ public enum CookieExemptionReason
 /// The string representing this individual cookie as it would appear in the header.
 /// This is not the entire "cookie" or "set-cookie" header which could have multiple cookies.
 /// </param>
-public sealed record BlockedSetCookieWithReason(IReadOnlyList<SetCookieBlockedReason> BlockedReasons, string CookieLine)
+public sealed record BlockedSetCookieWithReason(ImmutableArray<SetCookieBlockedReason> BlockedReasons, string CookieLine)
 {
     /// <summary>
     /// The cookie object which represents the cookie which was not stored. It is optional because
@@ -4826,7 +4826,7 @@ public sealed record ExemptedSetCookieWithReason(CookieExemptionReason Exemption
 /// <param name="BlockedReasons">
 /// The reason(s) the cookie was blocked. If empty means the cookie is included.
 /// </param>
-public sealed record AssociatedCookie(Cookie Cookie, IReadOnlyList<CookieBlockedReason> BlockedReasons)
+public sealed record AssociatedCookie(Cookie Cookie, ImmutableArray<CookieBlockedReason> BlockedReasons)
 {
     /// <summary>
     /// The reason the cookie should have been blocked by 3PCD but is exempted. A cookie could
@@ -5024,7 +5024,7 @@ public sealed record SignedExchangeSignature(string Label, string Signature, str
     /// <summary>
     /// The encoded certificates.
     /// </summary>
-    public IReadOnlyList<string>? Certificates { get; init; }
+    public ImmutableArray<string>? Certificates { get; init; }
 }
 
 /// <summary>
@@ -5046,7 +5046,7 @@ public sealed record SignedExchangeSignature(string Label, string Signature, str
 /// <param name="HeaderIntegrity">
 /// Signed exchange header integrity hash in the form of <b>sha256-&lt;base64-hash-value&gt;</b>.
 /// </param>
-public sealed record SignedExchangeHeader(string RequestUrl, long ResponseCode, global::System.Collections.Generic.IReadOnlyDictionary<string, string> ResponseHeaders, IReadOnlyList<SignedExchangeSignature> Signatures, string HeaderIntegrity)
+public sealed record SignedExchangeHeader(string RequestUrl, long ResponseCode, global::System.Collections.Generic.IReadOnlyDictionary<string, string> ResponseHeaders, ImmutableArray<SignedExchangeSignature> Signatures, string HeaderIntegrity)
 {
 }
 
@@ -5126,7 +5126,7 @@ public sealed record SignedExchangeInfo(Response OuterResponse, bool HasExtraInf
     /// <summary>
     /// Errors occurred while handling the signed exchange.
     /// </summary>
-    public IReadOnlyList<SignedExchangeError>? Errors { get; init; }
+    public ImmutableArray<SignedExchangeError>? Errors { get; init; }
 }
 
 /// <summary>
@@ -5423,7 +5423,7 @@ public sealed record AdScriptIdentifier(Runtime.ScriptId ScriptId, Runtime.Uniqu
 /// ordered from the script itself (lowest level) up to its root ancestor
 /// that was flagged by a filter list.
 /// </param>
-public sealed record AdAncestry(IReadOnlyList<AdScriptIdentifier> AncestryChain)
+public sealed record AdAncestry(ImmutableArray<AdScriptIdentifier> AncestryChain)
 {
     /// <summary>
     /// The filter list rule that caused the root (last) script in
@@ -5582,7 +5582,7 @@ public sealed record SecurityIsolationStatus()
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<ContentSecurityPolicyStatus>? Csp { get; init; }
+    public ImmutableArray<ContentSecurityPolicyStatus>? Csp { get; init; }
 }
 
 /// <summary>
@@ -5742,7 +5742,7 @@ public sealed record DeviceBoundSessionUrlRule(string RuleType, string HostPatte
 /// <param name="UrlRules">
 /// See comments on <b>net::device_bound_sessions::SessionInclusionRules::url_rules_</b>.
 /// </param>
-public sealed record DeviceBoundSessionInclusionRules(string Origin, bool IncludeSite, IReadOnlyList<DeviceBoundSessionUrlRule> UrlRules)
+public sealed record DeviceBoundSessionInclusionRules(string Origin, bool IncludeSite, ImmutableArray<DeviceBoundSessionUrlRule> UrlRules)
 {
 }
 
@@ -5767,7 +5767,7 @@ public sealed record DeviceBoundSessionInclusionRules(string Origin, bool Includ
 /// <param name="AllowedRefreshInitiators">
 /// See comments on <b>net::device_bound_sessions::Session::allowed_refresh_initiators_</b>.
 /// </param>
-public sealed record DeviceBoundSession(DeviceBoundSessionKey Key, string RefreshUrl, DeviceBoundSessionInclusionRules InclusionRules, IReadOnlyList<DeviceBoundSessionCookieCraving> CookieCravings, Network.TimeSinceEpoch ExpiryDate, IReadOnlyList<string> AllowedRefreshInitiators)
+public sealed record DeviceBoundSession(DeviceBoundSessionKey Key, string RefreshUrl, DeviceBoundSessionInclusionRules InclusionRules, ImmutableArray<DeviceBoundSessionCookieCraving> CookieCravings, Network.TimeSinceEpoch ExpiryDate, ImmutableArray<string> AllowedRefreshInitiators)
 {
     /// <summary>
     /// See comments on <b>net::device_bound_sessions::Session::cached_challenge__</b>.
@@ -6449,29 +6449,29 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(ChallengeEventDetails), TypeInfoPropertyName = "NetworkChallengeEventDetails")]
 [JsonSerializable(typeof(LoadNetworkResourcePageResult), TypeInfoPropertyName = "NetworkLoadNetworkResourcePageResult")]
 [JsonSerializable(typeof(LoadNetworkResourceOptions), TypeInfoPropertyName = "NetworkLoadNetworkResourceOptions")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ContentEncoding>), TypeInfoPropertyName = "IReadOnlyListNetworkContentEncoding")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<NetworkConditions>), TypeInfoPropertyName = "IReadOnlyListNetworkNetworkConditions")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Cookie>), TypeInfoPropertyName = "IReadOnlyListNetworkCookie")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Debugger.SearchMatch>), TypeInfoPropertyName = "IReadOnlyListDebuggerSearchMatch")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BlockPattern>), TypeInfoPropertyName = "IReadOnlyListNetworkBlockPattern")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CookieParam>), TypeInfoPropertyName = "IReadOnlyListNetworkCookieParam")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RequestPattern>), TypeInfoPropertyName = "IReadOnlyListNetworkRequestPattern")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AssociatedCookie>), TypeInfoPropertyName = "IReadOnlyListNetworkAssociatedCookie")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSessionWithUsage>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSessionWithUsage")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BlockedSetCookieWithReason>), TypeInfoPropertyName = "IReadOnlyListNetworkBlockedSetCookieWithReason")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ExemptedSetCookieWithReason>), TypeInfoPropertyName = "IReadOnlyListNetworkExemptedSetCookieWithReason")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ReportingApiEndpoint>), TypeInfoPropertyName = "IReadOnlyListNetworkReportingApiEndpoint")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSession>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSession")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PostDataEntry>), TypeInfoPropertyName = "IReadOnlyListNetworkPostDataEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SignedCertificateTimestamp>), TypeInfoPropertyName = "IReadOnlyListNetworkSignedCertificateTimestamp")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SetCookieBlockedReason>), TypeInfoPropertyName = "IReadOnlyListNetworkSetCookieBlockedReason")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CookieBlockedReason>), TypeInfoPropertyName = "IReadOnlyListNetworkCookieBlockedReason")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SignedExchangeSignature>), TypeInfoPropertyName = "IReadOnlyListNetworkSignedExchangeSignature")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SignedExchangeError>), TypeInfoPropertyName = "IReadOnlyListNetworkSignedExchangeError")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<AdScriptIdentifier>), TypeInfoPropertyName = "IReadOnlyListNetworkAdScriptIdentifier")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ContentSecurityPolicyStatus>), TypeInfoPropertyName = "IReadOnlyListNetworkContentSecurityPolicyStatus")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSessionUrlRule>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSessionUrlRule")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DeviceBoundSessionCookieCraving>), TypeInfoPropertyName = "IReadOnlyListNetworkDeviceBoundSessionCookieCraving")]
+[JsonSerializable(typeof(ImmutableArray<ContentEncoding>), TypeInfoPropertyName = "ImmutableArrayNetworkContentEncoding")]
+[JsonSerializable(typeof(ImmutableArray<NetworkConditions>), TypeInfoPropertyName = "ImmutableArrayNetworkNetworkConditions")]
+[JsonSerializable(typeof(ImmutableArray<Cookie>), TypeInfoPropertyName = "ImmutableArrayNetworkCookie")]
+[JsonSerializable(typeof(ImmutableArray<Debugger.SearchMatch>), TypeInfoPropertyName = "ImmutableArrayDebuggerSearchMatch")]
+[JsonSerializable(typeof(ImmutableArray<BlockPattern>), TypeInfoPropertyName = "ImmutableArrayNetworkBlockPattern")]
+[JsonSerializable(typeof(ImmutableArray<CookieParam>), TypeInfoPropertyName = "ImmutableArrayNetworkCookieParam")]
+[JsonSerializable(typeof(ImmutableArray<RequestPattern>), TypeInfoPropertyName = "ImmutableArrayNetworkRequestPattern")]
+[JsonSerializable(typeof(ImmutableArray<AssociatedCookie>), TypeInfoPropertyName = "ImmutableArrayNetworkAssociatedCookie")]
+[JsonSerializable(typeof(ImmutableArray<DeviceBoundSessionWithUsage>), TypeInfoPropertyName = "ImmutableArrayNetworkDeviceBoundSessionWithUsage")]
+[JsonSerializable(typeof(ImmutableArray<BlockedSetCookieWithReason>), TypeInfoPropertyName = "ImmutableArrayNetworkBlockedSetCookieWithReason")]
+[JsonSerializable(typeof(ImmutableArray<ExemptedSetCookieWithReason>), TypeInfoPropertyName = "ImmutableArrayNetworkExemptedSetCookieWithReason")]
+[JsonSerializable(typeof(ImmutableArray<ReportingApiEndpoint>), TypeInfoPropertyName = "ImmutableArrayNetworkReportingApiEndpoint")]
+[JsonSerializable(typeof(ImmutableArray<DeviceBoundSession>), TypeInfoPropertyName = "ImmutableArrayNetworkDeviceBoundSession")]
+[JsonSerializable(typeof(ImmutableArray<PostDataEntry>), TypeInfoPropertyName = "ImmutableArrayNetworkPostDataEntry")]
+[JsonSerializable(typeof(ImmutableArray<SignedCertificateTimestamp>), TypeInfoPropertyName = "ImmutableArrayNetworkSignedCertificateTimestamp")]
+[JsonSerializable(typeof(ImmutableArray<SetCookieBlockedReason>), TypeInfoPropertyName = "ImmutableArrayNetworkSetCookieBlockedReason")]
+[JsonSerializable(typeof(ImmutableArray<CookieBlockedReason>), TypeInfoPropertyName = "ImmutableArrayNetworkCookieBlockedReason")]
+[JsonSerializable(typeof(ImmutableArray<SignedExchangeSignature>), TypeInfoPropertyName = "ImmutableArrayNetworkSignedExchangeSignature")]
+[JsonSerializable(typeof(ImmutableArray<SignedExchangeError>), TypeInfoPropertyName = "ImmutableArrayNetworkSignedExchangeError")]
+[JsonSerializable(typeof(ImmutableArray<AdScriptIdentifier>), TypeInfoPropertyName = "ImmutableArrayNetworkAdScriptIdentifier")]
+[JsonSerializable(typeof(ImmutableArray<ContentSecurityPolicyStatus>), TypeInfoPropertyName = "ImmutableArrayNetworkContentSecurityPolicyStatus")]
+[JsonSerializable(typeof(ImmutableArray<DeviceBoundSessionUrlRule>), TypeInfoPropertyName = "ImmutableArrayNetworkDeviceBoundSessionUrlRule")]
+[JsonSerializable(typeof(ImmutableArray<DeviceBoundSessionCookieCraving>), TypeInfoPropertyName = "ImmutableArrayNetworkDeviceBoundSessionCookieCraving")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -190,7 +190,7 @@ public sealed record CheckFormsIssuesCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="FormIssues">
 /// </param>
-public sealed record CheckFormsIssuesResult(IReadOnlyList<GenericIssueDetails> FormIssues) : EmptyResult;
+public sealed record CheckFormsIssuesResult(ImmutableArray<GenericIssueDetails> FormIssues) : EmptyResult;
 
 
 /// <summary>
@@ -402,7 +402,7 @@ public sealed record CookieIssueInsight(InsightType Type)
 /// Optionally identifies the site-for-cookies and the cookie url, which
 /// may be used by the front-end as additional context.
 /// </param>
-public sealed record CookieIssueDetails(IReadOnlyList<CookieWarningReason> CookieWarningReasons, IReadOnlyList<CookieExclusionReason> CookieExclusionReasons, CookieOperation Operation)
+public sealed record CookieIssueDetails(ImmutableArray<CookieWarningReason> CookieWarningReasons, ImmutableArray<CookieExclusionReason> CookieExclusionReasons, CookieOperation Operation)
 {
     /// <summary>
     /// If AffectedCookie is not set then rawCookieLine contains the raw
@@ -1199,7 +1199,7 @@ public sealed record SharedDictionaryIssueDetails(SharedDictionaryError SharedDi
 /// </param>
 /// <param name="Request">
 /// </param>
-public sealed record SRIMessageSignatureIssueDetails(SRIMessageSignatureError Error, string SignatureBase, IReadOnlyList<string> IntegrityAssertions, AffectedRequest Request)
+public sealed record SRIMessageSignatureIssueDetails(SRIMessageSignatureError Error, string SignatureBase, ImmutableArray<string> IntegrityAssertions, AffectedRequest Request)
 {
 }
 
@@ -1364,7 +1364,7 @@ public sealed record DeprecationIssueDetails(SourceCodeLocation SourceCodeLocati
 /// </summary>
 /// <param name="TrackingSites">
 /// </param>
-public sealed record BounceTrackingIssueDetails(IReadOnlyList<string> TrackingSites)
+public sealed record BounceTrackingIssueDetails(ImmutableArray<string> TrackingSites)
 {
 }
 
@@ -1383,7 +1383,7 @@ public sealed record BounceTrackingIssueDetails(IReadOnlyList<string> TrackingSi
 /// </param>
 /// <param name="Operation">
 /// </param>
-public sealed record CookieDeprecationMetadataIssueDetails(IReadOnlyList<string> AllowedSites, double OptOutPercentage, bool IsOptOutTopLevel, CookieOperation Operation)
+public sealed record CookieDeprecationMetadataIssueDetails(ImmutableArray<string> AllowedSites, double OptOutPercentage, bool IsOptOutTopLevel, CookieOperation Operation)
 {
 }
 
@@ -2636,9 +2636,9 @@ public sealed record InspectorIssue(InspectorIssueCode Code, InspectorIssueDetai
 [JsonSerializable(typeof(InspectorIssueDetails), TypeInfoPropertyName = "AuditsInspectorIssueDetails")]
 [JsonSerializable(typeof(IssueId), TypeInfoPropertyName = "AuditsIssueId")]
 [JsonSerializable(typeof(InspectorIssue), TypeInfoPropertyName = "AuditsInspectorIssue")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<GenericIssueDetails>), TypeInfoPropertyName = "IReadOnlyListAuditsGenericIssueDetails")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CookieWarningReason>), TypeInfoPropertyName = "IReadOnlyListAuditsCookieWarningReason")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CookieExclusionReason>), TypeInfoPropertyName = "IReadOnlyListAuditsCookieExclusionReason")]
+[JsonSerializable(typeof(ImmutableArray<GenericIssueDetails>), TypeInfoPropertyName = "ImmutableArrayAuditsGenericIssueDetails")]
+[JsonSerializable(typeof(ImmutableArray<CookieWarningReason>), TypeInfoPropertyName = "ImmutableArrayAuditsCookieWarningReason")]
+[JsonSerializable(typeof(ImmutableArray<CookieExclusionReason>), TypeInfoPropertyName = "ImmutableArrayAuditsCookieExclusionReason")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

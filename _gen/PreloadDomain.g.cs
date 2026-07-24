@@ -395,7 +395,7 @@ public sealed record PreloadingAttemptKey(Network.LoaderId LoaderId, Speculation
 /// </param>
 /// <param name="NodeIds">
 /// </param>
-public sealed record PreloadingAttemptSource(PreloadingAttemptKey Key, IReadOnlyList<RuleSetId> RuleSetIds, IReadOnlyList<DOM.BackendNodeId> NodeIds)
+public sealed record PreloadingAttemptSource(PreloadingAttemptKey Key, ImmutableArray<RuleSetId> RuleSetIds, ImmutableArray<DOM.BackendNodeId> NodeIds)
 {
 }
 
@@ -950,10 +950,10 @@ public sealed record PrerenderMismatchedHeaders(string HeaderName)
 [JsonSerializable(typeof(PreloadingStatus), TypeInfoPropertyName = "PreloadPreloadingStatus")]
 [JsonSerializable(typeof(PrefetchStatus), TypeInfoPropertyName = "PreloadPrefetchStatus")]
 [JsonSerializable(typeof(PrerenderMismatchedHeaders), TypeInfoPropertyName = "PreloadPrerenderMismatchedHeaders")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PrerenderMismatchedHeaders>), TypeInfoPropertyName = "IReadOnlyListPreloadPrerenderMismatchedHeaders")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PreloadingAttemptSource>), TypeInfoPropertyName = "IReadOnlyListPreloadPreloadingAttemptSource")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RuleSetId>), TypeInfoPropertyName = "IReadOnlyListPreloadRuleSetId")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOM.BackendNodeId>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNodeId")]
+[JsonSerializable(typeof(ImmutableArray<PrerenderMismatchedHeaders>), TypeInfoPropertyName = "ImmutableArrayPreloadPrerenderMismatchedHeaders")]
+[JsonSerializable(typeof(ImmutableArray<PreloadingAttemptSource>), TypeInfoPropertyName = "ImmutableArrayPreloadPreloadingAttemptSource")]
+[JsonSerializable(typeof(ImmutableArray<RuleSetId>), TypeInfoPropertyName = "ImmutableArrayPreloadRuleSetId")]
+[JsonSerializable(typeof(ImmutableArray<DOM.BackendNodeId>), TypeInfoPropertyName = "ImmutableArrayDOMBackendNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

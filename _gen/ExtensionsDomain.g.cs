@@ -273,7 +273,7 @@ public sealed record GetExtensionsCommandOptions : CdpCommandOptions
 /// </summary>
 /// <param name="Extensions">
 /// </param>
-public sealed record GetExtensionsResult(IReadOnlyList<ExtensionInfo> Extensions) : EmptyResult;
+public sealed record GetExtensionsResult(ImmutableArray<ExtensionInfo> Extensions) : EmptyResult;
 
 
 internal sealed record UninstallCommandParameters(string Id) : Parameters;
@@ -416,7 +416,7 @@ public sealed record ExtensionInfo(string Id, string Name, string Version, strin
 [JsonSerializable(typeof(SetStorageItemsResult), TypeInfoPropertyName = "SetStorageItemsResult")]
 [JsonSerializable(typeof(StorageArea), TypeInfoPropertyName = "ExtensionsStorageArea")]
 [JsonSerializable(typeof(ExtensionInfo), TypeInfoPropertyName = "ExtensionsExtensionInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ExtensionInfo>), TypeInfoPropertyName = "IReadOnlyListExtensionsExtensionInfo")]
+[JsonSerializable(typeof(ImmutableArray<ExtensionInfo>), TypeInfoPropertyName = "ImmutableArrayExtensionsExtensionInfo")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

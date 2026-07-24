@@ -368,8 +368,8 @@ public sealed record RemovedTool(string Name, Page.FrameId FrameId)
 [JsonSerializable(typeof(InvocationStatus), TypeInfoPropertyName = "WebMCPInvocationStatus")]
 [JsonSerializable(typeof(Tool), TypeInfoPropertyName = "WebMCPTool")]
 [JsonSerializable(typeof(RemovedTool), TypeInfoPropertyName = "WebMCPRemovedTool")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Tool>), TypeInfoPropertyName = "IReadOnlyListWebMCPTool")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RemovedTool>), TypeInfoPropertyName = "IReadOnlyListWebMCPRemovedTool")]
+[JsonSerializable(typeof(ImmutableArray<Tool>), TypeInfoPropertyName = "ImmutableArrayWebMCPTool")]
+[JsonSerializable(typeof(ImmutableArray<RemovedTool>), TypeInfoPropertyName = "ImmutableArrayWebMCPRemovedTool")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -279,7 +279,7 @@ public sealed record GetBestEffortCoverageCommandOptions : CdpCommandOptions
 /// <param name="Result">
 /// Coverage data for the current isolate.
 /// </param>
-public sealed record GetBestEffortCoverageResult(IReadOnlyList<ScriptCoverage> Result) : EmptyResult;
+public sealed record GetBestEffortCoverageResult(ImmutableArray<ScriptCoverage> Result) : EmptyResult;
 
 
 internal sealed record SetSamplingIntervalCommandParameters(long Interval) : Parameters;
@@ -389,7 +389,7 @@ public sealed record TakePreciseCoverageCommandOptions : CdpCommandOptions
 /// <param name="Timestamp">
 /// Monotonically increasing time (in seconds) when the coverage update was taken in the backend.
 /// </param>
-public sealed record TakePreciseCoverageResult(IReadOnlyList<ScriptCoverage> Result, double Timestamp) : EmptyResult;
+public sealed record TakePreciseCoverageResult(ImmutableArray<ScriptCoverage> Result, double Timestamp) : EmptyResult;
 
 
 /// <summary>
@@ -455,7 +455,7 @@ public sealed record ProfileNode(long Id, Runtime.CallFrame CallFrame)
     /// <summary>
     /// Child node ids.
     /// </summary>
-    public IReadOnlyList<long>? Children { get; init; }
+    public ImmutableArray<long>? Children { get; init; }
 
     /// <summary>
     /// The reason of being not optimized. The function may be deoptimized or marked as don't
@@ -466,7 +466,7 @@ public sealed record ProfileNode(long Id, Runtime.CallFrame CallFrame)
     /// <summary>
     /// An array of source position ticks.
     /// </summary>
-    public IReadOnlyList<PositionTickInfo>? PositionTicks { get; init; }
+    public ImmutableArray<PositionTickInfo>? PositionTicks { get; init; }
 }
 
 /// <summary>
@@ -481,18 +481,18 @@ public sealed record ProfileNode(long Id, Runtime.CallFrame CallFrame)
 /// <param name="EndTime">
 /// Profiling end timestamp in microseconds.
 /// </param>
-public sealed record Profile(IReadOnlyList<ProfileNode> Nodes, double StartTime, double EndTime)
+public sealed record Profile(ImmutableArray<ProfileNode> Nodes, double StartTime, double EndTime)
 {
     /// <summary>
     /// Ids of samples top nodes.
     /// </summary>
-    public IReadOnlyList<long>? Samples { get; init; }
+    public ImmutableArray<long>? Samples { get; init; }
 
     /// <summary>
     /// Time intervals between adjacent samples in microseconds. The first delta is relative to the
     /// profile startTime.
     /// </summary>
-    public IReadOnlyList<long>? TimeDeltas { get; init; }
+    public ImmutableArray<long>? TimeDeltas { get; init; }
 }
 
 /// <summary>
@@ -536,7 +536,7 @@ public sealed record CoverageRange(long StartOffset, long EndOffset, long Count)
 /// <param name="IsBlockCoverage">
 /// Whether coverage data for this function has block granularity.
 /// </param>
-public sealed record FunctionCoverage(string FunctionName, IReadOnlyList<CoverageRange> Ranges, bool IsBlockCoverage)
+public sealed record FunctionCoverage(string FunctionName, ImmutableArray<CoverageRange> Ranges, bool IsBlockCoverage)
 {
 }
 
@@ -552,7 +552,7 @@ public sealed record FunctionCoverage(string FunctionName, IReadOnlyList<Coverag
 /// <param name="Functions">
 /// Functions contained in the script that has coverage data.
 /// </param>
-public sealed record ScriptCoverage(Runtime.ScriptId ScriptId, string Url, IReadOnlyList<FunctionCoverage> Functions)
+public sealed record ScriptCoverage(Runtime.ScriptId ScriptId, string Url, ImmutableArray<FunctionCoverage> Functions)
 {
 }
 
@@ -583,11 +583,11 @@ public sealed record ScriptCoverage(Runtime.ScriptId ScriptId, string Url, IRead
 [JsonSerializable(typeof(CoverageRange), TypeInfoPropertyName = "ProfilerCoverageRange")]
 [JsonSerializable(typeof(FunctionCoverage), TypeInfoPropertyName = "ProfilerFunctionCoverage")]
 [JsonSerializable(typeof(ScriptCoverage), TypeInfoPropertyName = "ProfilerScriptCoverage")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScriptCoverage>), TypeInfoPropertyName = "IReadOnlyListProfilerScriptCoverage")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PositionTickInfo>), TypeInfoPropertyName = "IReadOnlyListProfilerPositionTickInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ProfileNode>), TypeInfoPropertyName = "IReadOnlyListProfilerProfileNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CoverageRange>), TypeInfoPropertyName = "IReadOnlyListProfilerCoverageRange")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FunctionCoverage>), TypeInfoPropertyName = "IReadOnlyListProfilerFunctionCoverage")]
+[JsonSerializable(typeof(ImmutableArray<ScriptCoverage>), TypeInfoPropertyName = "ImmutableArrayProfilerScriptCoverage")]
+[JsonSerializable(typeof(ImmutableArray<PositionTickInfo>), TypeInfoPropertyName = "ImmutableArrayProfilerPositionTickInfo")]
+[JsonSerializable(typeof(ImmutableArray<ProfileNode>), TypeInfoPropertyName = "ImmutableArrayProfilerProfileNode")]
+[JsonSerializable(typeof(ImmutableArray<CoverageRange>), TypeInfoPropertyName = "ImmutableArrayProfilerCoverageRange")]
+[JsonSerializable(typeof(ImmutableArray<FunctionCoverage>), TypeInfoPropertyName = "ImmutableArrayProfilerFunctionCoverage")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

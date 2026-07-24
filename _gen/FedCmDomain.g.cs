@@ -456,7 +456,7 @@ public sealed record Account(string AccountId, string Email, string Name, string
 [JsonSerializable(typeof(DialogButton), TypeInfoPropertyName = "FedCmDialogButton")]
 [JsonSerializable(typeof(AccountUrlType), TypeInfoPropertyName = "FedCmAccountUrlType")]
 [JsonSerializable(typeof(Account), TypeInfoPropertyName = "FedCmAccount")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Account>), TypeInfoPropertyName = "IReadOnlyListFedCmAccount")]
+[JsonSerializable(typeof(ImmutableArray<Account>), TypeInfoPropertyName = "ImmutableArrayFedCmAccount")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -591,7 +591,7 @@ public sealed record AnimationEffect(double Delay, double EndDelay, double Itera
 /// <param name="Keyframes">
 /// List of animation keyframes.
 /// </param>
-public sealed record KeyframesRule(IReadOnlyList<KeyframeStyle> Keyframes)
+public sealed record KeyframesRule(ImmutableArray<KeyframeStyle> Keyframes)
 {
     /// <summary>
     /// CSS keyframed animation's name.
@@ -641,7 +641,7 @@ public sealed record KeyframeStyle(string Offset, string Easing)
 [JsonSerializable(typeof(AnimationEffect), TypeInfoPropertyName = "AnimationAnimationEffect")]
 [JsonSerializable(typeof(KeyframesRule), TypeInfoPropertyName = "AnimationKeyframesRule")]
 [JsonSerializable(typeof(KeyframeStyle), TypeInfoPropertyName = "AnimationKeyframeStyle")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<KeyframeStyle>), TypeInfoPropertyName = "IReadOnlyListAnimationKeyframeStyle")]
+[JsonSerializable(typeof(ImmutableArray<KeyframeStyle>), TypeInfoPropertyName = "ImmutableArrayAnimationKeyframeStyle")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

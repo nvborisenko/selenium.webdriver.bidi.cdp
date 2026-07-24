@@ -126,7 +126,7 @@ public sealed record LayoutShiftAttribution(DOM.Rect PreviousRect, DOM.Rect Curr
 /// </param>
 /// <param name="Sources">
 /// </param>
-public sealed record LayoutShift(double Value, bool HadRecentInput, Network.TimeSinceEpoch LastInputTime, IReadOnlyList<LayoutShiftAttribution> Sources)
+public sealed record LayoutShift(double Value, bool HadRecentInput, Network.TimeSinceEpoch LastInputTime, ImmutableArray<LayoutShiftAttribution> Sources)
 {
 }
 
@@ -168,7 +168,7 @@ public sealed record TimelineEvent(Page.FrameId FrameId, string Type, string Nam
 [JsonSerializable(typeof(LayoutShiftAttribution), TypeInfoPropertyName = "PerformanceTimelineLayoutShiftAttribution")]
 [JsonSerializable(typeof(LayoutShift), TypeInfoPropertyName = "PerformanceTimelineLayoutShift")]
 [JsonSerializable(typeof(TimelineEvent), TypeInfoPropertyName = "PerformanceTimelineTimelineEvent")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<LayoutShiftAttribution>), TypeInfoPropertyName = "IReadOnlyListPerformanceTimelineLayoutShiftAttribution")]
+[JsonSerializable(typeof(ImmutableArray<LayoutShiftAttribution>), TypeInfoPropertyName = "ImmutableArrayPerformanceTimelineLayoutShiftAttribution")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

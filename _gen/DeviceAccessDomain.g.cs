@@ -216,7 +216,7 @@ public sealed record PromptDevice(DeviceId Id, string Name)
 [JsonSerializable(typeof(RequestId), TypeInfoPropertyName = "DeviceAccessRequestId")]
 [JsonSerializable(typeof(DeviceId), TypeInfoPropertyName = "DeviceAccessDeviceId")]
 [JsonSerializable(typeof(PromptDevice), TypeInfoPropertyName = "DeviceAccessPromptDevice")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PromptDevice>), TypeInfoPropertyName = "IReadOnlyListDeviceAccessPromptDevice")]
+[JsonSerializable(typeof(ImmutableArray<PromptDevice>), TypeInfoPropertyName = "ImmutableArrayDeviceAccessPromptDevice")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

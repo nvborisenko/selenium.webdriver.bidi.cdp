@@ -290,7 +290,7 @@ public sealed record GetEventListenersCommandOptions : CdpCommandOptions
 /// <param name="Listeners">
 /// Array of relevant listeners.
 /// </param>
-public sealed record GetEventListenersResult(IReadOnlyList<EventListener> Listeners) : EmptyResult;
+public sealed record GetEventListenersResult(ImmutableArray<EventListener> Listeners) : EmptyResult;
 
 
 internal sealed record RemoveDOMBreakpointCommandParameters(DOM.NodeId NodeId, DOMBreakpointType Type) : Parameters;
@@ -529,8 +529,8 @@ public sealed record EventListener(string Type, bool UseCapture, bool Passive, b
 [JsonSerializable(typeof(DOMBreakpointType), TypeInfoPropertyName = "DOMDebuggerDOMBreakpointType")]
 [JsonSerializable(typeof(CSPViolationType), TypeInfoPropertyName = "DOMDebuggerCSPViolationType")]
 [JsonSerializable(typeof(EventListener), TypeInfoPropertyName = "DOMDebuggerEventListener")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<EventListener>), TypeInfoPropertyName = "IReadOnlyListDOMDebuggerEventListener")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CSPViolationType>), TypeInfoPropertyName = "IReadOnlyListDOMDebuggerCSPViolationType")]
+[JsonSerializable(typeof(ImmutableArray<EventListener>), TypeInfoPropertyName = "ImmutableArrayDOMDebuggerEventListener")]
+[JsonSerializable(typeof(ImmutableArray<CSPViolationType>), TypeInfoPropertyName = "ImmutableArrayDOMDebuggerCSPViolationType")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

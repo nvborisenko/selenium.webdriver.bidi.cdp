@@ -1108,7 +1108,7 @@ public sealed record GetPossibleBreakpointsCommandOptions : CdpCommandOptions
 /// <param name="Locations">
 /// List of the possible breakpoint locations.
 /// </param>
-public sealed record GetPossibleBreakpointsResult(IReadOnlyList<BreakLocation> Locations) : EmptyResult;
+public sealed record GetPossibleBreakpointsResult(ImmutableArray<BreakLocation> Locations) : EmptyResult;
 
 
 internal sealed record GetScriptSourceCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
@@ -1156,7 +1156,7 @@ public sealed record DisassembleWasmModuleCommandOptions : CdpCommandOptions
 /// <param name="Chunk">
 /// The first chunk of disassembly.
 /// </param>
-public sealed record DisassembleWasmModuleResult(string? StreamId, long TotalNumberOfLines, IReadOnlyList<long> FunctionBodyOffsets, WasmDisassemblyChunk Chunk) : EmptyResult;
+public sealed record DisassembleWasmModuleResult(string? StreamId, long TotalNumberOfLines, ImmutableArray<long> FunctionBodyOffsets, WasmDisassemblyChunk Chunk) : EmptyResult;
 
 
 internal sealed record NextWasmDisassemblyChunkCommandParameters(string StreamId) : Parameters;
@@ -1276,7 +1276,7 @@ public sealed record RestartFrameCommandOptions : CdpCommandOptions
 /// <param name="AsyncStackTraceId">
 /// Async stack trace, if any.
 /// </param>
-public sealed record RestartFrameResult(IReadOnlyList<CallFrame> CallFrames, Runtime.StackTrace? AsyncStackTrace, Runtime.StackTraceId? AsyncStackTraceId) : EmptyResult;
+public sealed record RestartFrameResult(ImmutableArray<CallFrame> CallFrames, Runtime.StackTrace? AsyncStackTrace, Runtime.StackTraceId? AsyncStackTraceId) : EmptyResult;
 
 
 internal sealed record ResumeCommandParameters(bool? TerminateOnResume) : Parameters;
@@ -1324,7 +1324,7 @@ public sealed record SearchInContentCommandOptions : CdpCommandOptions
 /// <param name="Result">
 /// List of search matches.
 /// </param>
-public sealed record SearchInContentResult(IReadOnlyList<SearchMatch> Result) : EmptyResult;
+public sealed record SearchInContentResult(ImmutableArray<SearchMatch> Result) : EmptyResult;
 
 
 internal sealed record SetAsyncCallStackDepthCommandParameters(long MaxDepth) : Parameters;
@@ -1472,7 +1472,7 @@ public sealed record SetBreakpointByUrlCommandOptions : CdpCommandOptions
 /// <param name="Locations">
 /// List of the locations this breakpoint resolved into upon addition.
 /// </param>
-public sealed record SetBreakpointByUrlResult(BreakpointId BreakpointId, IReadOnlyList<Location> Locations) : EmptyResult;
+public sealed record SetBreakpointByUrlResult(BreakpointId BreakpointId, ImmutableArray<Location> Locations) : EmptyResult;
 
 
 internal sealed record SetBreakpointOnFunctionCallCommandParameters(Runtime.RemoteObjectId ObjectId, string? Condition) : Parameters;
@@ -1581,7 +1581,7 @@ public sealed record SetScriptSourceCommandOptions : CdpCommandOptions
 /// <param name="ExceptionDetails">
 /// Exception details if any. Only present when <b>status</b> is <b>CompileError</b>.
 /// </param>
-public sealed record SetScriptSourceResult(IReadOnlyList<CallFrame>? CallFrames, bool? StackChanged, Runtime.StackTrace? AsyncStackTrace, Runtime.StackTraceId? AsyncStackTraceId, string Status, Runtime.ExceptionDetails? ExceptionDetails) : EmptyResult;
+public sealed record SetScriptSourceResult(ImmutableArray<CallFrame>? CallFrames, bool? StackChanged, Runtime.StackTrace? AsyncStackTrace, Runtime.StackTraceId? AsyncStackTraceId, string Status, Runtime.ExceptionDetails? ExceptionDetails) : EmptyResult;
 
 
 internal sealed record SetSkipAllPausesCommandParameters(bool Skip) : Parameters;
@@ -1923,7 +1923,7 @@ public sealed record LocationRange(Runtime.ScriptId ScriptId, ScriptPosition Sta
 /// <param name="This">
 /// <b>this</b> object for this call frame.
 /// </param>
-public sealed record CallFrame(CallFrameId CallFrameId, string FunctionName, Location Location, string Url, IReadOnlyList<Scope> ScopeChain, Runtime.RemoteObject This)
+public sealed record CallFrame(CallFrameId CallFrameId, string FunctionName, Location Location, string Url, ImmutableArray<Scope> ScopeChain, Runtime.RemoteObject This)
 {
     /// <summary>
     /// Location in the source code.
@@ -2013,7 +2013,7 @@ public sealed record BreakLocation(Runtime.ScriptId ScriptId, long LineNumber)
 /// <param name="BytecodeOffsets">
 /// The bytecode offsets describing the start of each line.
 /// </param>
-public sealed record WasmDisassemblyChunk(IReadOnlyList<string> Lines, IReadOnlyList<long> BytecodeOffsets)
+public sealed record WasmDisassemblyChunk(ImmutableArray<string> Lines, ImmutableArray<long> BytecodeOffsets)
 {
 }
 
@@ -2143,15 +2143,15 @@ public sealed record ResolvedBreakpoint(BreakpointId BreakpointId, Location Loca
 [JsonSerializable(typeof(ScriptLanguage), TypeInfoPropertyName = "DebuggerScriptLanguage")]
 [JsonSerializable(typeof(DebugSymbols), TypeInfoPropertyName = "DebuggerDebugSymbols")]
 [JsonSerializable(typeof(ResolvedBreakpoint), TypeInfoPropertyName = "DebuggerResolvedBreakpoint")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<BreakLocation>), TypeInfoPropertyName = "IReadOnlyListDebuggerBreakLocation")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<CallFrame>), TypeInfoPropertyName = "IReadOnlyListDebuggerCallFrame")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<SearchMatch>), TypeInfoPropertyName = "IReadOnlyListDebuggerSearchMatch")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScriptPosition>), TypeInfoPropertyName = "IReadOnlyListDebuggerScriptPosition")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Location>), TypeInfoPropertyName = "IReadOnlyListDebuggerLocation")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<LocationRange>), TypeInfoPropertyName = "IReadOnlyListDebuggerLocationRange")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Debugger.DebugSymbols>), TypeInfoPropertyName = "IReadOnlyListDebuggerDebugSymbols")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ResolvedBreakpoint>), TypeInfoPropertyName = "IReadOnlyListDebuggerResolvedBreakpoint")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Scope>), TypeInfoPropertyName = "IReadOnlyListDebuggerScope")]
+[JsonSerializable(typeof(ImmutableArray<BreakLocation>), TypeInfoPropertyName = "ImmutableArrayDebuggerBreakLocation")]
+[JsonSerializable(typeof(ImmutableArray<CallFrame>), TypeInfoPropertyName = "ImmutableArrayDebuggerCallFrame")]
+[JsonSerializable(typeof(ImmutableArray<SearchMatch>), TypeInfoPropertyName = "ImmutableArrayDebuggerSearchMatch")]
+[JsonSerializable(typeof(ImmutableArray<ScriptPosition>), TypeInfoPropertyName = "ImmutableArrayDebuggerScriptPosition")]
+[JsonSerializable(typeof(ImmutableArray<Location>), TypeInfoPropertyName = "ImmutableArrayDebuggerLocation")]
+[JsonSerializable(typeof(ImmutableArray<LocationRange>), TypeInfoPropertyName = "ImmutableArrayDebuggerLocationRange")]
+[JsonSerializable(typeof(ImmutableArray<Debugger.DebugSymbols>), TypeInfoPropertyName = "ImmutableArrayDebuggerDebugSymbols")]
+[JsonSerializable(typeof(ImmutableArray<ResolvedBreakpoint>), TypeInfoPropertyName = "ImmutableArrayDebuggerResolvedBreakpoint")]
+[JsonSerializable(typeof(ImmutableArray<Scope>), TypeInfoPropertyName = "ImmutableArrayDebuggerScope")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

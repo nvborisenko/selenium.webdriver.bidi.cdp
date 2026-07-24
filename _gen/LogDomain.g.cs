@@ -250,7 +250,7 @@ public sealed record LogEntry(string Source, string Level, string Text, Runtime.
     /// <summary>
     /// Call arguments.
     /// </summary>
-    public IReadOnlyList<Runtime.RemoteObject>? Args { get; init; }
+    public ImmutableArray<Runtime.RemoteObject>? Args { get; init; }
 }
 
 /// <summary>
@@ -279,8 +279,8 @@ public sealed record ViolationSetting(string Name, double Threshold)
 [JsonSerializable(typeof(CdpEventArgs<EntryAddedEventArgs>), TypeInfoPropertyName = "EntryAddedCdpEventArgs")]
 [JsonSerializable(typeof(LogEntry), TypeInfoPropertyName = "LogLogEntry")]
 [JsonSerializable(typeof(ViolationSetting), TypeInfoPropertyName = "LogViolationSetting")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ViolationSetting>), TypeInfoPropertyName = "IReadOnlyListLogViolationSetting")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Runtime.RemoteObject>), TypeInfoPropertyName = "IReadOnlyListRuntimeRemoteObject")]
+[JsonSerializable(typeof(ImmutableArray<ViolationSetting>), TypeInfoPropertyName = "ImmutableArrayLogViolationSetting")]
+[JsonSerializable(typeof(ImmutableArray<Runtime.RemoteObject>), TypeInfoPropertyName = "ImmutableArrayRuntimeRemoteObject")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

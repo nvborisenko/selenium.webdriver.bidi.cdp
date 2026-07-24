@@ -183,7 +183,7 @@ public sealed record GetSnapshotCommandOptions : CdpCommandOptions
 /// <param name="ComputedStyles">
 /// Whitelisted ComputedStyle properties for each node in the layout tree.
 /// </param>
-public sealed record GetSnapshotResult(IReadOnlyList<DOMNode> DomNodes, IReadOnlyList<LayoutTreeNode> LayoutTreeNodes, IReadOnlyList<ComputedStyle> ComputedStyles) : EmptyResult;
+public sealed record GetSnapshotResult(ImmutableArray<DOMNode> DomNodes, ImmutableArray<LayoutTreeNode> LayoutTreeNodes, ImmutableArray<ComputedStyle> ComputedStyles) : EmptyResult;
 
 
 internal sealed record CaptureSnapshotCommandParameters(ImmutableArray<string> ComputedStyles, bool? IncludePaintOrder, bool? IncludeDOMRects, bool? IncludeBlendedBackgroundColors, bool? IncludeTextColorOpacities) : Parameters;
@@ -226,7 +226,7 @@ public sealed record CaptureSnapshotCommandOptions : CdpCommandOptions
 /// <param name="Strings">
 /// Shared string table that all string properties refer to with indexes.
 /// </param>
-public sealed record CaptureSnapshotResult(IReadOnlyList<DocumentSnapshot> Documents, IReadOnlyList<string> Strings) : EmptyResult;
+public sealed record CaptureSnapshotResult(ImmutableArray<DocumentSnapshot> Documents, ImmutableArray<string> Strings) : EmptyResult;
 
 
 /// <summary>
@@ -270,18 +270,18 @@ public sealed record DOMNode(long NodeType, string NodeName, string NodeValue, D
     /// The indexes of the node's child nodes in the <b>domNodes</b> array returned by <b>getSnapshot</b>, if
     /// any.
     /// </summary>
-    public IReadOnlyList<long>? ChildNodeIndexes { get; init; }
+    public ImmutableArray<long>? ChildNodeIndexes { get; init; }
 
     /// <summary>
     /// Attributes of an <b>Element</b> node.
     /// </summary>
-    public IReadOnlyList<NameValue>? Attributes { get; init; }
+    public ImmutableArray<NameValue>? Attributes { get; init; }
 
     /// <summary>
     /// Indexes of pseudo elements associated with this node in the <b>domNodes</b> array returned by
     /// <b>getSnapshot</b>, if any.
     /// </summary>
-    public IReadOnlyList<long>? PseudoElementIndexes { get; init; }
+    public ImmutableArray<long>? PseudoElementIndexes { get; init; }
 
     /// <summary>
     /// The index of the node's related layout tree node in the <b>layoutTreeNodes</b> array returned by
@@ -350,7 +350,7 @@ public sealed record DOMNode(long NodeType, string NodeName, string NodeValue, D
     /// <summary>
     /// Details of the node's event listeners, if any.
     /// </summary>
-    public IReadOnlyList<DOMDebugger.EventListener>? EventListeners { get; init; }
+    public ImmutableArray<DOMDebugger.EventListener>? EventListeners { get; init; }
 
     /// <summary>
     /// The selected url for nodes with a srcset attribute.
@@ -410,7 +410,7 @@ public sealed record LayoutTreeNode(long DomNodeIndex, DOM.Rect BoundingBox)
     /// <summary>
     /// The post-layout inline text nodes, if any.
     /// </summary>
-    public IReadOnlyList<InlineTextBox>? InlineTextNodes { get; init; }
+    public ImmutableArray<InlineTextBox>? InlineTextNodes { get; init; }
 
     /// <summary>
     /// Index into the <b>computedStyles</b> array returned by <b>getSnapshot</b>.
@@ -436,7 +436,7 @@ public sealed record LayoutTreeNode(long DomNodeIndex, DOM.Rect BoundingBox)
 /// <param name="Properties">
 /// Name/value pairs of computed style properties.
 /// </param>
-public sealed record ComputedStyle(IReadOnlyList<NameValue> Properties)
+public sealed record ComputedStyle(ImmutableArray<NameValue> Properties)
 {
 }
 
@@ -473,7 +473,7 @@ public record StringIndex : INumberRemoteId
 /// </param>
 /// <param name="Value">
 /// </param>
-public sealed record RareStringData(IReadOnlyList<long> Index, IReadOnlyList<StringIndex> Value)
+public sealed record RareStringData(ImmutableArray<long> Index, ImmutableArray<StringIndex> Value)
 {
 }
 
@@ -481,7 +481,7 @@ public sealed record RareStringData(IReadOnlyList<long> Index, IReadOnlyList<Str
 /// </summary>
 /// <param name="Index">
 /// </param>
-public sealed record RareBooleanData(IReadOnlyList<long> Index)
+public sealed record RareBooleanData(ImmutableArray<long> Index)
 {
 }
 
@@ -491,7 +491,7 @@ public sealed record RareBooleanData(IReadOnlyList<long> Index)
 /// </param>
 /// <param name="Value">
 /// </param>
-public sealed record RareIntegerData(IReadOnlyList<long> Index, IReadOnlyList<long> Value)
+public sealed record RareIntegerData(ImmutableArray<long> Index, ImmutableArray<long> Value)
 {
 }
 
@@ -565,12 +565,12 @@ public sealed record NodeTreeSnapshot()
     /// <summary>
     /// Parent node index.
     /// </summary>
-    public IReadOnlyList<long>? ParentIndex { get; init; }
+    public ImmutableArray<long>? ParentIndex { get; init; }
 
     /// <summary>
     /// <b>Node</b>'s nodeType.
     /// </summary>
-    public IReadOnlyList<long>? NodeType { get; init; }
+    public ImmutableArray<long>? NodeType { get; init; }
 
     /// <summary>
     /// Type of the shadow root the <b>Node</b> is in. String values are equal to the <b>ShadowRootType</b> enum.
@@ -580,22 +580,22 @@ public sealed record NodeTreeSnapshot()
     /// <summary>
     /// <b>Node</b>'s nodeName.
     /// </summary>
-    public IReadOnlyList<StringIndex>? NodeName { get; init; }
+    public ImmutableArray<StringIndex>? NodeName { get; init; }
 
     /// <summary>
     /// <b>Node</b>'s nodeValue.
     /// </summary>
-    public IReadOnlyList<StringIndex>? NodeValue { get; init; }
+    public ImmutableArray<StringIndex>? NodeValue { get; init; }
 
     /// <summary>
     /// <b>Node</b>'s id, corresponds to DOM.Node.backendNodeId.
     /// </summary>
-    public IReadOnlyList<DOM.BackendNodeId>? BackendNodeId { get; init; }
+    public ImmutableArray<DOM.BackendNodeId>? BackendNodeId { get; init; }
 
     /// <summary>
     /// Attributes of an <b>Element</b> node. Flatten name, value pairs.
     /// </summary>
-    public IReadOnlyList<IReadOnlyList<StringIndex>>? Attributes { get; init; }
+    public ImmutableArray<ImmutableArray<StringIndex>>? Attributes { get; init; }
 
     /// <summary>
     /// Only set for textarea elements, contains the text value.
@@ -669,39 +669,39 @@ public sealed record NodeTreeSnapshot()
 /// <param name="StackingContexts">
 /// Stacking context information.
 /// </param>
-public sealed record LayoutTreeSnapshot(IReadOnlyList<long> NodeIndex, IReadOnlyList<IReadOnlyList<StringIndex>> Styles, IReadOnlyList<IReadOnlyList<double>> Bounds, IReadOnlyList<StringIndex> Text, RareBooleanData StackingContexts)
+public sealed record LayoutTreeSnapshot(ImmutableArray<long> NodeIndex, ImmutableArray<ImmutableArray<StringIndex>> Styles, ImmutableArray<ImmutableArray<double>> Bounds, ImmutableArray<StringIndex> Text, RareBooleanData StackingContexts)
 {
     /// <summary>
     /// Global paint order index, which is determined by the stacking order of the nodes. Nodes
     /// that are painted together will have the same index. Only provided if includePaintOrder in
     /// captureSnapshot was true.
     /// </summary>
-    public IReadOnlyList<long>? PaintOrders { get; init; }
+    public ImmutableArray<long>? PaintOrders { get; init; }
 
     /// <summary>
     /// The offset rect of nodes. Only available when includeDOMRects is set to true
     /// </summary>
-    public IReadOnlyList<IReadOnlyList<double>>? OffsetRects { get; init; }
+    public ImmutableArray<ImmutableArray<double>>? OffsetRects { get; init; }
 
     /// <summary>
     /// The scroll rect of nodes. Only available when includeDOMRects is set to true
     /// </summary>
-    public IReadOnlyList<IReadOnlyList<double>>? ScrollRects { get; init; }
+    public ImmutableArray<ImmutableArray<double>>? ScrollRects { get; init; }
 
     /// <summary>
     /// The client rect of nodes. Only available when includeDOMRects is set to true
     /// </summary>
-    public IReadOnlyList<IReadOnlyList<double>>? ClientRects { get; init; }
+    public ImmutableArray<ImmutableArray<double>>? ClientRects { get; init; }
 
     /// <summary>
     /// The list of background colors that are blended with colors of overlapping elements.
     /// </summary>
-    public IReadOnlyList<StringIndex>? BlendedBackgroundColors { get; init; }
+    public ImmutableArray<StringIndex>? BlendedBackgroundColors { get; init; }
 
     /// <summary>
     /// The list of computed text opacities.
     /// </summary>
-    public IReadOnlyList<double>? TextColorOpacities { get; init; }
+    public ImmutableArray<double>? TextColorOpacities { get; init; }
 }
 
 /// <summary>
@@ -722,7 +722,7 @@ public sealed record LayoutTreeSnapshot(IReadOnlyList<long> NodeIndex, IReadOnly
 /// The number of characters in this post layout textbox substring. Characters that would be
 /// represented as a surrogate pair in UTF-16 have length 2.
 /// </param>
-public sealed record TextBoxSnapshot(IReadOnlyList<long> LayoutIndex, IReadOnlyList<IReadOnlyList<double>> Bounds, IReadOnlyList<long> Start, IReadOnlyList<long> Length)
+public sealed record TextBoxSnapshot(ImmutableArray<long> LayoutIndex, ImmutableArray<ImmutableArray<double>> Bounds, ImmutableArray<long> Start, ImmutableArray<long> Length)
 {
 }
 
@@ -747,15 +747,15 @@ public sealed record TextBoxSnapshot(IReadOnlyList<long> LayoutIndex, IReadOnlyL
 [JsonSerializable(typeof(NodeTreeSnapshot), TypeInfoPropertyName = "DOMSnapshotNodeTreeSnapshot")]
 [JsonSerializable(typeof(LayoutTreeSnapshot), TypeInfoPropertyName = "DOMSnapshotLayoutTreeSnapshot")]
 [JsonSerializable(typeof(TextBoxSnapshot), TypeInfoPropertyName = "DOMSnapshotTextBoxSnapshot")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOMNode>), TypeInfoPropertyName = "IReadOnlyListDOMSnapshotDOMNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<LayoutTreeNode>), TypeInfoPropertyName = "IReadOnlyListDOMSnapshotLayoutTreeNode")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ComputedStyle>), TypeInfoPropertyName = "IReadOnlyListDOMSnapshotComputedStyle")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DocumentSnapshot>), TypeInfoPropertyName = "IReadOnlyListDOMSnapshotDocumentSnapshot")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<NameValue>), TypeInfoPropertyName = "IReadOnlyListDOMSnapshotNameValue")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOMDebugger.EventListener>), TypeInfoPropertyName = "IReadOnlyListDOMDebuggerEventListener")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<InlineTextBox>), TypeInfoPropertyName = "IReadOnlyListDOMSnapshotInlineTextBox")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<StringIndex>), TypeInfoPropertyName = "IReadOnlyListDOMSnapshotStringIndex")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOM.BackendNodeId>), TypeInfoPropertyName = "IReadOnlyListDOMBackendNodeId")]
+[JsonSerializable(typeof(ImmutableArray<DOMNode>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotDOMNode")]
+[JsonSerializable(typeof(ImmutableArray<LayoutTreeNode>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotLayoutTreeNode")]
+[JsonSerializable(typeof(ImmutableArray<ComputedStyle>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotComputedStyle")]
+[JsonSerializable(typeof(ImmutableArray<DocumentSnapshot>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotDocumentSnapshot")]
+[JsonSerializable(typeof(ImmutableArray<NameValue>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotNameValue")]
+[JsonSerializable(typeof(ImmutableArray<DOMDebugger.EventListener>), TypeInfoPropertyName = "ImmutableArrayDOMDebuggerEventListener")]
+[JsonSerializable(typeof(ImmutableArray<InlineTextBox>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotInlineTextBox")]
+[JsonSerializable(typeof(ImmutableArray<StringIndex>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotStringIndex")]
+[JsonSerializable(typeof(ImmutableArray<DOM.BackendNodeId>), TypeInfoPropertyName = "ImmutableArrayDOMBackendNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

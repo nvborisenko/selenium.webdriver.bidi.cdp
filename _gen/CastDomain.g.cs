@@ -304,7 +304,7 @@ public sealed record Sink(string Name, string Id)
 [JsonSerializable(typeof(CdpEventArgs<SinksUpdatedEventArgs>), TypeInfoPropertyName = "SinksUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<IssueUpdatedEventArgs>), TypeInfoPropertyName = "IssueUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(Sink), TypeInfoPropertyName = "CastSink")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Sink>), TypeInfoPropertyName = "IReadOnlyListCastSink")]
+[JsonSerializable(typeof(ImmutableArray<Sink>), TypeInfoPropertyName = "ImmutableArrayCastSink")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

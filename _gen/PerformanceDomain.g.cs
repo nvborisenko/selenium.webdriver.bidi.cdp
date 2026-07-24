@@ -173,7 +173,7 @@ public sealed record GetMetricsCommandOptions : CdpCommandOptions
 /// <param name="Metrics">
 /// Current values for run-time metrics.
 /// </param>
-public sealed record GetMetricsResult(IReadOnlyList<Metric> Metrics) : EmptyResult;
+public sealed record GetMetricsResult(ImmutableArray<Metric> Metrics) : EmptyResult;
 
 
 /// <summary>
@@ -210,7 +210,7 @@ public sealed record Metric(string Name, double Value)
 [JsonSerializable(typeof(GetMetricsResult), TypeInfoPropertyName = "GetMetricsResult")]
 [JsonSerializable(typeof(CdpEventArgs<MetricsEventArgs>), TypeInfoPropertyName = "MetricsCdpEventArgs")]
 [JsonSerializable(typeof(Metric), TypeInfoPropertyName = "PerformanceMetric")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Metric>), TypeInfoPropertyName = "IReadOnlyListPerformanceMetric")]
+[JsonSerializable(typeof(ImmutableArray<Metric>), TypeInfoPropertyName = "ImmutableArrayPerformanceMetric")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

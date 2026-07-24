@@ -437,7 +437,7 @@ public sealed record RequestDataCommandOptions : CdpCommandOptions
 /// <param name="HasMore">
 /// If true, there are more entries to fetch in the given range.
 /// </param>
-public sealed record RequestDataResult(IReadOnlyList<DataEntry> ObjectStoreDataEntries, bool HasMore) : EmptyResult;
+public sealed record RequestDataResult(ImmutableArray<DataEntry> ObjectStoreDataEntries, bool HasMore) : EmptyResult;
 
 
 internal sealed record GetMetadataCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName, string ObjectStoreName) : Parameters;
@@ -538,7 +538,7 @@ public sealed record RequestDatabaseNamesCommandOptions : CdpCommandOptions
 /// <param name="DatabaseNames">
 /// Database names for origin.
 /// </param>
-public sealed record RequestDatabaseNamesResult(IReadOnlyList<string> DatabaseNames) : EmptyResult;
+public sealed record RequestDatabaseNamesResult(ImmutableArray<string> DatabaseNames) : EmptyResult;
 
 
 /// <summary>
@@ -554,7 +554,7 @@ public sealed record RequestDatabaseNamesResult(IReadOnlyList<string> DatabaseNa
 /// <param name="ObjectStores">
 /// Object stores in this database.
 /// </param>
-public sealed record DatabaseWithObjectStores(string Name, double Version, IReadOnlyList<ObjectStore> ObjectStores)
+public sealed record DatabaseWithObjectStores(string Name, double Version, ImmutableArray<ObjectStore> ObjectStores)
 {
 }
 
@@ -573,7 +573,7 @@ public sealed record DatabaseWithObjectStores(string Name, double Version, IRead
 /// <param name="Indexes">
 /// Indexes in this object store.
 /// </param>
-public sealed record ObjectStore(string Name, KeyPath KeyPath, bool AutoIncrement, IReadOnlyList<ObjectStoreIndex> Indexes)
+public sealed record ObjectStore(string Name, KeyPath KeyPath, bool AutoIncrement, ImmutableArray<ObjectStoreIndex> Indexes)
 {
 }
 
@@ -622,7 +622,7 @@ public sealed record Key(string Type)
     /// <summary>
     /// Array value.
     /// </summary>
-    public IReadOnlyList<Key>? Array { get; init; }
+    public ImmutableArray<Key>? Array { get; init; }
 }
 
 /// <summary>
@@ -679,7 +679,7 @@ public sealed record KeyPath(string Type)
     /// <summary>
     /// Array value.
     /// </summary>
-    public IReadOnlyList<string>? Array { get; init; }
+    public ImmutableArray<string>? Array { get; init; }
 }
 
 [JsonSerializable(typeof(ClearObjectStoreCommandParameters), TypeInfoPropertyName = "ClearObjectStoreCommandParameters")]
@@ -707,10 +707,10 @@ public sealed record KeyPath(string Type)
 [JsonSerializable(typeof(KeyRange), TypeInfoPropertyName = "IndexedDBKeyRange")]
 [JsonSerializable(typeof(DataEntry), TypeInfoPropertyName = "IndexedDBDataEntry")]
 [JsonSerializable(typeof(KeyPath), TypeInfoPropertyName = "IndexedDBKeyPath")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DataEntry>), TypeInfoPropertyName = "IReadOnlyListIndexedDBDataEntry")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ObjectStore>), TypeInfoPropertyName = "IReadOnlyListIndexedDBObjectStore")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ObjectStoreIndex>), TypeInfoPropertyName = "IReadOnlyListIndexedDBObjectStoreIndex")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Key>), TypeInfoPropertyName = "IReadOnlyListIndexedDBKey")]
+[JsonSerializable(typeof(ImmutableArray<DataEntry>), TypeInfoPropertyName = "ImmutableArrayIndexedDBDataEntry")]
+[JsonSerializable(typeof(ImmutableArray<ObjectStore>), TypeInfoPropertyName = "ImmutableArrayIndexedDBObjectStore")]
+[JsonSerializable(typeof(ImmutableArray<ObjectStoreIndex>), TypeInfoPropertyName = "ImmutableArrayIndexedDBObjectStoreIndex")]
+[JsonSerializable(typeof(ImmutableArray<Key>), TypeInfoPropertyName = "ImmutableArrayIndexedDBKey")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

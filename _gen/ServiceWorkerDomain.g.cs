@@ -581,7 +581,7 @@ public sealed record ServiceWorkerVersion(string VersionId, RegistrationID Regis
 
     /// <summary>
     /// </summary>
-    public IReadOnlyList<Target.TargetID>? ControlledClients { get; init; }
+    public ImmutableArray<Target.TargetID>? ControlledClients { get; init; }
 
     /// <summary>
     /// </summary>
@@ -644,9 +644,9 @@ public sealed record ServiceWorkerErrorMessage(string ErrorMessage, Registration
 [JsonSerializable(typeof(ServiceWorkerVersionStatus), TypeInfoPropertyName = "ServiceWorkerServiceWorkerVersionStatus")]
 [JsonSerializable(typeof(ServiceWorkerVersion), TypeInfoPropertyName = "ServiceWorkerServiceWorkerVersion")]
 [JsonSerializable(typeof(ServiceWorkerErrorMessage), TypeInfoPropertyName = "ServiceWorkerServiceWorkerErrorMessage")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ServiceWorkerRegistration>), TypeInfoPropertyName = "IReadOnlyListServiceWorkerServiceWorkerRegistration")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ServiceWorkerVersion>), TypeInfoPropertyName = "IReadOnlyListServiceWorkerServiceWorkerVersion")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Target.TargetID>), TypeInfoPropertyName = "IReadOnlyListTargetTargetID")]
+[JsonSerializable(typeof(ImmutableArray<ServiceWorkerRegistration>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerRegistration")]
+[JsonSerializable(typeof(ImmutableArray<ServiceWorkerVersion>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerVersion")]
+[JsonSerializable(typeof(ImmutableArray<Target.TargetID>), TypeInfoPropertyName = "ImmutableArrayTargetTargetID")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

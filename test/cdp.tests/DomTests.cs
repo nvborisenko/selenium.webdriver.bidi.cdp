@@ -73,6 +73,6 @@ public class DomTests : CdpTestFixture
 
         await Assert.That(document.Root).IsNotNull();
         await Assert.That(document.Root.Children).IsNotNull();
-        await Assert.That(document.Root.Children!.Count).IsGreaterThan(0);
+        await Assert.That(document.Root.Children!.Value).IsNotEmpty();
     }
 }

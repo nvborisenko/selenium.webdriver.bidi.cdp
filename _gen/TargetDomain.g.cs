@@ -768,7 +768,7 @@ public sealed record GetBrowserContextsCommandOptions : CdpCommandOptions
 /// <param name="DefaultBrowserContextId">
 /// The id of the default browser context if available.
 /// </param>
-public sealed record GetBrowserContextsResult(IReadOnlyList<Browser.BrowserContextID> BrowserContextIds, Browser.BrowserContextID? DefaultBrowserContextId) : EmptyResult;
+public sealed record GetBrowserContextsResult(ImmutableArray<Browser.BrowserContextID> BrowserContextIds, Browser.BrowserContextID? DefaultBrowserContextId) : EmptyResult;
 
 
 internal sealed record CreateTargetCommandParameters(string Url, long? Left, long? Top, long? Width, long? Height, WindowState? WindowState, Browser.BrowserContextID? BrowserContextId, bool? EnableBeginFrameControl, bool? NewWindow, bool? Background, bool? ForTab, bool? Hidden, bool? Focus) : Parameters;
@@ -913,7 +913,7 @@ public sealed record GetTargetInfoCommandOptions : CdpCommandOptions
 public sealed record GetTargetInfoResult(TargetInfo TargetInfo) : EmptyResult;
 
 
-internal sealed record GetTargetsCommandParameters(IReadOnlyList<FilterEntry>? Filter) : Parameters;
+internal sealed record GetTargetsCommandParameters(ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TargetDomain.GetTargetsAsync"/>.
@@ -925,7 +925,7 @@ public sealed record GetTargetsCommandOptions : CdpCommandOptions
     /// and target discovery is currently enabled, a filter used for target discovery
     /// is used for consistency.
     /// </summary>
-    public IReadOnlyList<FilterEntry>? Filter { get; init; }
+    public ImmutableArray<FilterEntry>? Filter { get; init; }
 }
 
 /// <summary>
@@ -933,7 +933,7 @@ public sealed record GetTargetsCommandOptions : CdpCommandOptions
 /// <param name="TargetInfos">
 /// The list of targets.
 /// </param>
-public sealed record GetTargetsResult(IReadOnlyList<TargetInfo> TargetInfos) : EmptyResult;
+public sealed record GetTargetsResult(ImmutableArray<TargetInfo> TargetInfos) : EmptyResult;
 
 
 internal sealed record SendMessageToTargetCommandParameters(string Message, SessionID? SessionId, TargetID? TargetId) : Parameters;
@@ -960,7 +960,7 @@ public sealed record SendMessageToTargetCommandOptions : CdpCommandOptions
 public sealed record SendMessageToTargetResult() : EmptyResult;
 
 
-internal sealed record SetAutoAttachCommandParameters(bool AutoAttach, bool WaitForDebuggerOnStart, bool? Flatten, IReadOnlyList<FilterEntry>? Filter) : Parameters;
+internal sealed record SetAutoAttachCommandParameters(bool AutoAttach, bool WaitForDebuggerOnStart, bool? Flatten, ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TargetDomain.SetAutoAttachAsync"/>.
@@ -977,7 +977,7 @@ public sealed record SetAutoAttachCommandOptions : CdpCommandOptions
     /// <summary>
     /// Only targets matching filter will be attached.
     /// </summary>
-    public IReadOnlyList<FilterEntry>? Filter { get; init; }
+    public ImmutableArray<FilterEntry>? Filter { get; init; }
 }
 
 /// <summary>
@@ -985,7 +985,7 @@ public sealed record SetAutoAttachCommandOptions : CdpCommandOptions
 public sealed record SetAutoAttachResult() : EmptyResult;
 
 
-internal sealed record AutoAttachRelatedCommandParameters(TargetID TargetId, bool WaitForDebuggerOnStart, IReadOnlyList<FilterEntry>? Filter) : Parameters;
+internal sealed record AutoAttachRelatedCommandParameters(TargetID TargetId, bool WaitForDebuggerOnStart, ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TargetDomain.AutoAttachRelatedAsync"/>.
@@ -995,7 +995,7 @@ public sealed record AutoAttachRelatedCommandOptions : CdpCommandOptions
     /// <summary>
     /// Only targets matching filter will be attached.
     /// </summary>
-    public IReadOnlyList<FilterEntry>? Filter { get; init; }
+    public ImmutableArray<FilterEntry>? Filter { get; init; }
 }
 
 /// <summary>
@@ -1003,7 +1003,7 @@ public sealed record AutoAttachRelatedCommandOptions : CdpCommandOptions
 public sealed record AutoAttachRelatedResult() : EmptyResult;
 
 
-internal sealed record SetDiscoverTargetsCommandParameters(bool Discover, IReadOnlyList<FilterEntry>? Filter) : Parameters;
+internal sealed record SetDiscoverTargetsCommandParameters(bool Discover, ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TargetDomain.SetDiscoverTargetsAsync"/>.
@@ -1014,7 +1014,7 @@ public sealed record SetDiscoverTargetsCommandOptions : CdpCommandOptions
     /// Only targets matching filter will be attached. If <b>discover</b> is false,
     /// <b>filter</b> must be omitted or empty.
     /// </summary>
-    public IReadOnlyList<FilterEntry>? Filter { get; init; }
+    public ImmutableArray<FilterEntry>? Filter { get; init; }
 }
 
 /// <summary>
@@ -1333,9 +1333,9 @@ public enum WindowState
 [JsonSerializable(typeof(FilterEntry), TypeInfoPropertyName = "TargetFilterEntry")]
 [JsonSerializable(typeof(RemoteLocation), TypeInfoPropertyName = "TargetRemoteLocation")]
 [JsonSerializable(typeof(WindowState), TypeInfoPropertyName = "TargetWindowState")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Browser.BrowserContextID>), TypeInfoPropertyName = "IReadOnlyListBrowserBrowserContextID")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<TargetInfo>), TypeInfoPropertyName = "IReadOnlyListTargetTargetInfo")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RemoteLocation>), TypeInfoPropertyName = "IReadOnlyListTargetRemoteLocation")]
+[JsonSerializable(typeof(ImmutableArray<Browser.BrowserContextID>), TypeInfoPropertyName = "ImmutableArrayBrowserBrowserContextID")]
+[JsonSerializable(typeof(ImmutableArray<TargetInfo>), TypeInfoPropertyName = "ImmutableArrayTargetTargetInfo")]
+[JsonSerializable(typeof(ImmutableArray<RemoteLocation>), TypeInfoPropertyName = "ImmutableArrayTargetRemoteLocation")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

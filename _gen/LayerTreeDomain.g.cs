@@ -259,7 +259,7 @@ public sealed record CompositingReasonsCommandOptions : CdpCommandOptions
 /// <param name="CompositingReasonIds">
 /// A list of strings specifying reason IDs for the given layer to become composited.
 /// </param>
-public sealed record CompositingReasonsResult(IReadOnlyList<string> CompositingReasons, IReadOnlyList<string> CompositingReasonIds) : EmptyResult;
+public sealed record CompositingReasonsResult(ImmutableArray<string> CompositingReasons, ImmutableArray<string> CompositingReasonIds) : EmptyResult;
 
 
 internal sealed record DisableCommandParameters() : Parameters;
@@ -352,7 +352,7 @@ public sealed record ProfileSnapshotCommandOptions : CdpCommandOptions
 /// <param name="Timings">
 /// The array of paint profiles, one per run.
 /// </param>
-public sealed record ProfileSnapshotResult(IReadOnlyList<IReadOnlyList<double>> Timings) : EmptyResult;
+public sealed record ProfileSnapshotResult(ImmutableArray<ImmutableArray<double>> Timings) : EmptyResult;
 
 
 internal sealed record ReleaseSnapshotCommandParameters(SnapshotId SnapshotId) : Parameters;
@@ -414,7 +414,7 @@ public sealed record SnapshotCommandLogCommandOptions : CdpCommandOptions
 /// <param name="CommandLog">
 /// The array of canvas function calls.
 /// </param>
-public sealed record SnapshotCommandLogResult(IReadOnlyList<global::System.Text.Json.JsonElement> CommandLog) : EmptyResult;
+public sealed record SnapshotCommandLogResult(ImmutableArray<global::System.Text.Json.JsonElement> CommandLog) : EmptyResult;
 
 
 /// <summary>
@@ -543,7 +543,7 @@ public sealed record Layer(LayerId LayerId, double OffsetX, double OffsetY, doub
     /// <summary>
     /// Transformation matrix for layer, default is identity matrix
     /// </summary>
-    public IReadOnlyList<double>? Transform { get; init; }
+    public ImmutableArray<double>? Transform { get; init; }
 
     /// <summary>
     /// Transform anchor point X, absent if no transform specified
@@ -568,7 +568,7 @@ public sealed record Layer(LayerId LayerId, double OffsetX, double OffsetY, doub
     /// <summary>
     /// Rectangles scrolling on main thread only.
     /// </summary>
-    public IReadOnlyList<ScrollRect>? ScrollRects { get; init; }
+    public ImmutableArray<ScrollRect>? ScrollRects { get; init; }
 
     /// <summary>
     /// Sticky position constraint information
@@ -606,9 +606,9 @@ public sealed record Layer(LayerId LayerId, double OffsetX, double OffsetY, doub
 [JsonSerializable(typeof(StickyPositionConstraint), TypeInfoPropertyName = "LayerTreeStickyPositionConstraint")]
 [JsonSerializable(typeof(PictureTile), TypeInfoPropertyName = "LayerTreePictureTile")]
 [JsonSerializable(typeof(Layer), TypeInfoPropertyName = "LayerTreeLayer")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<PictureTile>), TypeInfoPropertyName = "IReadOnlyListLayerTreePictureTile")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<Layer>), TypeInfoPropertyName = "IReadOnlyListLayerTreeLayer")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScrollRect>), TypeInfoPropertyName = "IReadOnlyListLayerTreeScrollRect")]
+[JsonSerializable(typeof(ImmutableArray<PictureTile>), TypeInfoPropertyName = "ImmutableArrayLayerTreePictureTile")]
+[JsonSerializable(typeof(ImmutableArray<Layer>), TypeInfoPropertyName = "ImmutableArrayLayerTreeLayer")]
+[JsonSerializable(typeof(ImmutableArray<ScrollRect>), TypeInfoPropertyName = "ImmutableArrayLayerTreeScrollRect")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

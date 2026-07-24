@@ -232,7 +232,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightQuadResult"/>.
     /// </returns>
-    public async Task<HighlightQuadResult> HighlightQuadAsync(IReadOnlyList<double> quad, HighlightQuadCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, HighlightQuadCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightQuadCommandParameters(Quad: quad, Color: options?.Color, OutlineColor: options?.OutlineColor);
         return await ExecuteCommandAsync(HighlightQuadCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -991,7 +991,7 @@ public sealed record HighlightNodeCommandOptions : CdpCommandOptions
 public sealed record HighlightNodeResult() : EmptyResult;
 
 
-internal sealed record HighlightQuadCommandParameters(IReadOnlyList<double> Quad, DOM.RGBA? Color, DOM.RGBA? OutlineColor) : Parameters;
+internal sealed record HighlightQuadCommandParameters(ImmutableArray<double> Quad, DOM.RGBA? Color, DOM.RGBA? OutlineColor) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="OverlayDomain.HighlightQuadAsync"/>.
@@ -2130,12 +2130,12 @@ public sealed record InspectedElementAnchorConfig()
 [JsonSerializable(typeof(IsolationModeHighlightConfig), TypeInfoPropertyName = "OverlayIsolationModeHighlightConfig")]
 [JsonSerializable(typeof(InspectMode), TypeInfoPropertyName = "OverlayInspectMode")]
 [JsonSerializable(typeof(InspectedElementAnchorConfig), TypeInfoPropertyName = "OverlayInspectedElementAnchorConfig")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<DOM.NodeId>), TypeInfoPropertyName = "IReadOnlyListDOMNodeId")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<GridNodeHighlightConfig>), TypeInfoPropertyName = "IReadOnlyListOverlayGridNodeHighlightConfig")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<FlexNodeHighlightConfig>), TypeInfoPropertyName = "IReadOnlyListOverlayFlexNodeHighlightConfig")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ScrollSnapHighlightConfig>), TypeInfoPropertyName = "IReadOnlyListOverlayScrollSnapHighlightConfig")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<ContainerQueryHighlightConfig>), TypeInfoPropertyName = "IReadOnlyListOverlayContainerQueryHighlightConfig")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<IsolatedElementHighlightConfig>), TypeInfoPropertyName = "IReadOnlyListOverlayIsolatedElementHighlightConfig")]
+[JsonSerializable(typeof(ImmutableArray<DOM.NodeId>), TypeInfoPropertyName = "ImmutableArrayDOMNodeId")]
+[JsonSerializable(typeof(ImmutableArray<GridNodeHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayGridNodeHighlightConfig")]
+[JsonSerializable(typeof(ImmutableArray<FlexNodeHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayFlexNodeHighlightConfig")]
+[JsonSerializable(typeof(ImmutableArray<ScrollSnapHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayScrollSnapHighlightConfig")]
+[JsonSerializable(typeof(ImmutableArray<ContainerQueryHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayContainerQueryHighlightConfig")]
+[JsonSerializable(typeof(ImmutableArray<IsolatedElementHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayIsolatedElementHighlightConfig")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

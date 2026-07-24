@@ -735,8 +735,8 @@ public sealed record AuthChallengeResponse(string Response)
 [JsonSerializable(typeof(HeaderEntry), TypeInfoPropertyName = "FetchHeaderEntry")]
 [JsonSerializable(typeof(AuthChallenge), TypeInfoPropertyName = "FetchAuthChallenge")]
 [JsonSerializable(typeof(AuthChallengeResponse), TypeInfoPropertyName = "FetchAuthChallengeResponse")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<RequestPattern>), TypeInfoPropertyName = "IReadOnlyListFetchRequestPattern")]
-[JsonSerializable(typeof(global::System.Collections.Generic.IReadOnlyList<HeaderEntry>), TypeInfoPropertyName = "IReadOnlyListFetchHeaderEntry")]
+[JsonSerializable(typeof(ImmutableArray<RequestPattern>), TypeInfoPropertyName = "ImmutableArrayFetchRequestPattern")]
+[JsonSerializable(typeof(ImmutableArray<HeaderEntry>), TypeInfoPropertyName = "ImmutableArrayFetchHeaderEntry")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
