@@ -97,7 +97,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetGridHighlightObjectsForTestResult"/>.
     /// </returns>
-    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(IEnumerable<DOM.NodeId> nodeIds, GetGridHighlightObjectsForTestCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, GetGridHighlightObjectsForTestCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetGridHighlightObjectsForTestCommandParameters(NodeIds: nodeIds);
         return await ExecuteCommandAsync(GetGridHighlightObjectsForTestCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -445,7 +445,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowGridOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(IEnumerable<GridNodeHighlightConfig> gridNodeHighlightConfigs, SetShowGridOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, SetShowGridOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowGridOverlaysCommandParameters(GridNodeHighlightConfigs: gridNodeHighlightConfigs);
         return await ExecuteCommandAsync(SetShowGridOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -466,7 +466,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowFlexOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(IEnumerable<FlexNodeHighlightConfig> flexNodeHighlightConfigs, SetShowFlexOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, SetShowFlexOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowFlexOverlaysCommandParameters(FlexNodeHighlightConfigs: flexNodeHighlightConfigs);
         return await ExecuteCommandAsync(SetShowFlexOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -487,7 +487,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowScrollSnapOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(IEnumerable<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, SetShowScrollSnapOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, SetShowScrollSnapOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowScrollSnapOverlaysCommandParameters(ScrollSnapHighlightConfigs: scrollSnapHighlightConfigs);
         return await ExecuteCommandAsync(SetShowScrollSnapOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -508,7 +508,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowContainerQueryOverlaysResult"/>.
     /// </returns>
-    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(IEnumerable<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, SetShowContainerQueryOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, SetShowContainerQueryOverlaysCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowContainerQueryOverlaysCommandParameters(ContainerQueryHighlightConfigs: containerQueryHighlightConfigs);
         return await ExecuteCommandAsync(SetShowContainerQueryOverlaysCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -734,7 +734,7 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowIsolatedElementsResult"/>.
     /// </returns>
-    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(IEnumerable<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, SetShowIsolatedElementsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, SetShowIsolatedElementsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowIsolatedElementsCommandParameters(IsolatedElementHighlightConfigs: isolatedElementHighlightConfigs);
         return await ExecuteCommandAsync(SetShowIsolatedElementsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -887,7 +887,7 @@ public sealed record GetHighlightObjectForTestCommandOptions : CdpCommandOptions
 public sealed record GetHighlightObjectForTestResult(global::System.Text.Json.JsonElement Highlight) : EmptyResult;
 
 
-internal sealed record GetGridHighlightObjectsForTestCommandParameters(IEnumerable<DOM.NodeId> NodeIds) : Parameters;
+internal sealed record GetGridHighlightObjectsForTestCommandParameters(ImmutableArray<DOM.NodeId> NodeIds) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="OverlayDomain.GetGridHighlightObjectsForTestAsync"/>.
@@ -1144,7 +1144,7 @@ public sealed record SetShowFPSCounterCommandOptions : CdpCommandOptions
 public sealed record SetShowFPSCounterResult() : EmptyResult;
 
 
-internal sealed record SetShowGridOverlaysCommandParameters(IEnumerable<GridNodeHighlightConfig> GridNodeHighlightConfigs) : Parameters;
+internal sealed record SetShowGridOverlaysCommandParameters(ImmutableArray<GridNodeHighlightConfig> GridNodeHighlightConfigs) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="OverlayDomain.SetShowGridOverlaysAsync"/>.
@@ -1158,7 +1158,7 @@ public sealed record SetShowGridOverlaysCommandOptions : CdpCommandOptions
 public sealed record SetShowGridOverlaysResult() : EmptyResult;
 
 
-internal sealed record SetShowFlexOverlaysCommandParameters(IEnumerable<FlexNodeHighlightConfig> FlexNodeHighlightConfigs) : Parameters;
+internal sealed record SetShowFlexOverlaysCommandParameters(ImmutableArray<FlexNodeHighlightConfig> FlexNodeHighlightConfigs) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="OverlayDomain.SetShowFlexOverlaysAsync"/>.
@@ -1172,7 +1172,7 @@ public sealed record SetShowFlexOverlaysCommandOptions : CdpCommandOptions
 public sealed record SetShowFlexOverlaysResult() : EmptyResult;
 
 
-internal sealed record SetShowScrollSnapOverlaysCommandParameters(IEnumerable<ScrollSnapHighlightConfig> ScrollSnapHighlightConfigs) : Parameters;
+internal sealed record SetShowScrollSnapOverlaysCommandParameters(ImmutableArray<ScrollSnapHighlightConfig> ScrollSnapHighlightConfigs) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="OverlayDomain.SetShowScrollSnapOverlaysAsync"/>.
@@ -1186,7 +1186,7 @@ public sealed record SetShowScrollSnapOverlaysCommandOptions : CdpCommandOptions
 public sealed record SetShowScrollSnapOverlaysResult() : EmptyResult;
 
 
-internal sealed record SetShowContainerQueryOverlaysCommandParameters(IEnumerable<ContainerQueryHighlightConfig> ContainerQueryHighlightConfigs) : Parameters;
+internal sealed record SetShowContainerQueryOverlaysCommandParameters(ImmutableArray<ContainerQueryHighlightConfig> ContainerQueryHighlightConfigs) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="OverlayDomain.SetShowContainerQueryOverlaysAsync"/>.
@@ -1334,7 +1334,7 @@ public sealed record SetShowDisplayCutoutCommandOptions : CdpCommandOptions
 public sealed record SetShowDisplayCutoutResult() : EmptyResult;
 
 
-internal sealed record SetShowIsolatedElementsCommandParameters(IEnumerable<IsolatedElementHighlightConfig> IsolatedElementHighlightConfigs) : Parameters;
+internal sealed record SetShowIsolatedElementsCommandParameters(ImmutableArray<IsolatedElementHighlightConfig> IsolatedElementHighlightConfigs) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="OverlayDomain.SetShowIsolatedElementsAsync"/>.

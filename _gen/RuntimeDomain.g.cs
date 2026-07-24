@@ -729,7 +729,7 @@ public sealed record AwaitPromiseCommandOptions : CdpCommandOptions
 public sealed record AwaitPromiseResult(RemoteObject Result, ExceptionDetails? ExceptionDetails) : EmptyResult;
 
 
-internal sealed record CallFunctionOnCommandParameters(string FunctionDeclaration, RemoteObjectId? ObjectId, IEnumerable<CallArgument>? Arguments, bool? Silent, bool? ReturnByValue, bool? GeneratePreview, bool? UserGesture, bool? AwaitPromise, ExecutionContextId? ExecutionContextId, string? ObjectGroup, bool? ThrowOnSideEffect, string? UniqueContextId, SerializationOptions? SerializationOptions) : Parameters;
+internal sealed record CallFunctionOnCommandParameters(string FunctionDeclaration, RemoteObjectId? ObjectId, ImmutableArray<CallArgument>? Arguments, bool? Silent, bool? ReturnByValue, bool? GeneratePreview, bool? UserGesture, bool? AwaitPromise, ExecutionContextId? ExecutionContextId, string? ObjectGroup, bool? ThrowOnSideEffect, string? UniqueContextId, SerializationOptions? SerializationOptions) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="RuntimeDomain.CallFunctionOnAsync"/>.
@@ -746,7 +746,7 @@ public sealed record CallFunctionOnCommandOptions : CdpCommandOptions
     /// Call arguments. All call arguments must belong to the same JavaScript world as the target
     /// object.
     /// </summary>
-    public IEnumerable<CallArgument>? Arguments { get; init; }
+    public ImmutableArray<CallArgument>? Arguments { get; init; }
 
     /// <summary>
     /// In silent mode exceptions thrown during evaluation are not reported and do not pause
@@ -1387,7 +1387,7 @@ public sealed record BindingCalledEventArgs(string Name, string Payload, Executi
 /// 'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
 /// on named context.
 /// </param>
-public sealed record ConsoleAPICalledEventArgs(string Type, IEnumerable<RemoteObject> Args, ExecutionContextId ExecutionContextId, Timestamp Timestamp, StackTrace? StackTrace = null, string? Context = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record ConsoleAPICalledEventArgs(string Type, ImmutableArray<RemoteObject> Args, ExecutionContextId ExecutionContextId, Timestamp Timestamp, StackTrace? StackTrace = null, string? Context = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Issued when unhandled exception was revoked.

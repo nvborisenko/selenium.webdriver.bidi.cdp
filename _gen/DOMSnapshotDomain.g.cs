@@ -78,7 +78,7 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// A task representing the asynchronous operation, containing a <see cref="GetSnapshotResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    public async Task<GetSnapshotResult> GetSnapshotAsync(IEnumerable<string> computedStyleWhitelist, GetSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, GetSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSnapshotCommandParameters(ComputedStyleWhitelist: computedStyleWhitelist, IncludeEventListeners: options?.IncludeEventListeners, IncludePaintOrder: options?.IncludePaintOrder, IncludeUserAgentShadowTree: options?.IncludeUserAgentShadowTree);
         return await ExecuteCommandAsync(GetSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -112,7 +112,7 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CaptureSnapshotResult"/>.
     /// </returns>
-    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(IEnumerable<string> computedStyles, CaptureSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, CaptureSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureSnapshotCommandParameters(ComputedStyles: computedStyles, IncludePaintOrder: options?.IncludePaintOrder, IncludeDOMRects: options?.IncludeDOMRects, IncludeBlendedBackgroundColors: options?.IncludeBlendedBackgroundColors, IncludeTextColorOpacities: options?.IncludeTextColorOpacities);
         return await ExecuteCommandAsync(CaptureSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -149,7 +149,7 @@ public sealed record EnableCommandOptions : CdpCommandOptions
 public sealed record EnableResult() : EmptyResult;
 
 
-internal sealed record GetSnapshotCommandParameters(IEnumerable<string> ComputedStyleWhitelist, bool? IncludeEventListeners, bool? IncludePaintOrder, bool? IncludeUserAgentShadowTree) : Parameters;
+internal sealed record GetSnapshotCommandParameters(ImmutableArray<string> ComputedStyleWhitelist, bool? IncludeEventListeners, bool? IncludePaintOrder, bool? IncludeUserAgentShadowTree) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMSnapshotDomain.GetSnapshotAsync"/>.
@@ -186,7 +186,7 @@ public sealed record GetSnapshotCommandOptions : CdpCommandOptions
 public sealed record GetSnapshotResult(IReadOnlyList<DOMNode> DomNodes, IReadOnlyList<LayoutTreeNode> LayoutTreeNodes, IReadOnlyList<ComputedStyle> ComputedStyles) : EmptyResult;
 
 
-internal sealed record CaptureSnapshotCommandParameters(IEnumerable<string> ComputedStyles, bool? IncludePaintOrder, bool? IncludeDOMRects, bool? IncludeBlendedBackgroundColors, bool? IncludeTextColorOpacities) : Parameters;
+internal sealed record CaptureSnapshotCommandParameters(ImmutableArray<string> ComputedStyles, bool? IncludePaintOrder, bool? IncludeDOMRects, bool? IncludeBlendedBackgroundColors, bool? IncludeTextColorOpacities) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMSnapshotDomain.CaptureSnapshotAsync"/>.

@@ -603,7 +603,7 @@ public sealed record AddHeapSnapshotChunkEventArgs(string Chunk) : OpenQA.Seleni
 /// index, the second integer is a total count of objects for the fragment, the third integer is
 /// a total size of the objects for the fragment.
 /// </param>
-public sealed record HeapStatsUpdateEventArgs(IEnumerable<long> StatsUpdate) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record HeapStatsUpdateEventArgs(ImmutableArray<long> StatsUpdate) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// If heap objects tracking has been started then backend regularly sends a current value for last

@@ -160,7 +160,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForcePseudoStateResult"/>.
     /// </returns>
-    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, IEnumerable<string> forcedPseudoClasses, ForcePseudoStateCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, ForcePseudoStateCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForcePseudoStateCommandParameters(NodeId: nodeId, ForcedPseudoClasses: forcedPseudoClasses);
         return await ExecuteCommandAsync(ForcePseudoStateCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -270,7 +270,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveValuesResult"/>.
     /// </returns>
-    public async Task<ResolveValuesResult> ResolveValuesAsync(IEnumerable<string> values, DOM.NodeId nodeId, ResolveValuesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, ResolveValuesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveValuesCommandParameters(Values: values, NodeId: nodeId, PropertyName: options?.PropertyName, PseudoType: options?.PseudoType, PseudoIdentifier: options?.PseudoIdentifier);
         return await ExecuteCommandAsync(ResolveValuesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -542,7 +542,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackComputedStyleUpdatesResult"/>.
     /// </returns>
-    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(IEnumerable<CSSComputedStyleProperty> propertiesToTrack, TrackComputedStyleUpdatesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, TrackComputedStyleUpdatesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackComputedStyleUpdatesCommandParameters(PropertiesToTrack: propertiesToTrack);
         return await ExecuteCommandAsync(TrackComputedStyleUpdatesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -864,7 +864,7 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleTextsResult"/>.
     /// </returns>
-    public async Task<SetStyleTextsResult> SetStyleTextsAsync(IEnumerable<StyleDeclarationEdit> edits, SetStyleTextsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, SetStyleTextsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStyleTextsCommandParameters(Edits: edits, NodeForPropertySyntaxValidation: options?.NodeForPropertySyntaxValidation);
         return await ExecuteCommandAsync(SetStyleTextsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -1102,7 +1102,7 @@ public sealed record EnableCommandOptions : CdpCommandOptions
 public sealed record EnableResult() : EmptyResult;
 
 
-internal sealed record ForcePseudoStateCommandParameters(DOM.NodeId NodeId, IEnumerable<string> ForcedPseudoClasses) : Parameters;
+internal sealed record ForcePseudoStateCommandParameters(DOM.NodeId NodeId, ImmutableArray<string> ForcedPseudoClasses) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.ForcePseudoStateAsync"/>.
@@ -1179,7 +1179,7 @@ public sealed record GetComputedStyleForNodeCommandOptions : CdpCommandOptions
 public sealed record GetComputedStyleForNodeResult(IReadOnlyList<CSSComputedStyleProperty> ComputedStyle, ComputedStyleExtraFields ExtraFields) : EmptyResult;
 
 
-internal sealed record ResolveValuesCommandParameters(IEnumerable<string> Values, DOM.NodeId NodeId, string? PropertyName, DOM.PseudoType? PseudoType, string? PseudoIdentifier) : Parameters;
+internal sealed record ResolveValuesCommandParameters(ImmutableArray<string> Values, DOM.NodeId NodeId, string? PropertyName, DOM.PseudoType? PseudoType, string? PseudoIdentifier) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.ResolveValuesAsync"/>.
@@ -1442,7 +1442,7 @@ public sealed record TrackComputedStyleUpdatesForNodeCommandOptions : CdpCommand
 public sealed record TrackComputedStyleUpdatesForNodeResult() : EmptyResult;
 
 
-internal sealed record TrackComputedStyleUpdatesCommandParameters(IEnumerable<CSSComputedStyleProperty> PropertiesToTrack) : Parameters;
+internal sealed record TrackComputedStyleUpdatesCommandParameters(ImmutableArray<CSSComputedStyleProperty> PropertiesToTrack) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.TrackComputedStyleUpdatesAsync"/>.
@@ -1657,7 +1657,7 @@ public sealed record SetStyleSheetTextCommandOptions : CdpCommandOptions
 public sealed record SetStyleSheetTextResult(string? SourceMapURL) : EmptyResult;
 
 
-internal sealed record SetStyleTextsCommandParameters(IEnumerable<StyleDeclarationEdit> Edits, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
+internal sealed record SetStyleTextsCommandParameters(ImmutableArray<StyleDeclarationEdit> Edits, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CSSDomain.SetStyleTextsAsync"/>.

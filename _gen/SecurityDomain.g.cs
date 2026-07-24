@@ -279,7 +279,7 @@ public sealed record VisibleSecurityStateChangedEventArgs(VisibleSecurityState V
 /// <param name="Summary">
 /// Overrides user-visible description of the state. Always omitted.
 /// </param>
-public sealed record SecurityStateChangedEventArgs(SecurityState SecurityState, bool SchemeIsCryptographic, IEnumerable<SecurityStateExplanation> Explanations, InsecureContentStatus InsecureContentStatus, string? Summary = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record SecurityStateChangedEventArgs(SecurityState SecurityState, bool SchemeIsCryptographic, ImmutableArray<SecurityStateExplanation> Explanations, InsecureContentStatus InsecureContentStatus, string? Summary = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// An internal certificate ID value.

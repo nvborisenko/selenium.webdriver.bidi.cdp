@@ -264,7 +264,7 @@ public sealed record StopCastingResult() : EmptyResult;
 /// </summary>
 /// <param name="Sinks">
 /// </param>
-public sealed record SinksUpdatedEventArgs(IEnumerable<Sink> Sinks) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record SinksUpdatedEventArgs(ImmutableArray<Sink> Sinks) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// This is fired whenever the outstanding issue/error message changes.

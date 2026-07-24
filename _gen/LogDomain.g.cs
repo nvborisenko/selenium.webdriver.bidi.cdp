@@ -85,7 +85,7 @@ public sealed class LogDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartViolationsReportResult"/>.
     /// </returns>
-    public async Task<StartViolationsReportResult> StartViolationsReportAsync(IEnumerable<ViolationSetting> config, StartViolationsReportCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<StartViolationsReportResult> StartViolationsReportAsync(ImmutableArray<ViolationSetting> config, StartViolationsReportCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartViolationsReportCommandParameters(Config: config);
         return await ExecuteCommandAsync(StartViolationsReportCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -165,7 +165,7 @@ public sealed record EnableCommandOptions : CdpCommandOptions
 public sealed record EnableResult() : EmptyResult;
 
 
-internal sealed record StartViolationsReportCommandParameters(IEnumerable<ViolationSetting> Config) : Parameters;
+internal sealed record StartViolationsReportCommandParameters(ImmutableArray<ViolationSetting> Config) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="LogDomain.StartViolationsReportAsync"/>.

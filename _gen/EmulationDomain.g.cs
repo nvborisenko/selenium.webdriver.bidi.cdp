@@ -323,7 +323,7 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// A task representing the asynchronous operation, containing a <see cref="SetDisplayFeaturesOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideAsync(IEnumerable<DisplayFeature> features, SetDisplayFeaturesOverrideCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideAsync(ImmutableArray<DisplayFeature> features, SetDisplayFeaturesOverrideCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDisplayFeaturesOverrideCommandParameters(Features: features);
         return await ExecuteCommandAsync(SetDisplayFeaturesOverrideCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -936,7 +936,7 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// A task representing the asynchronous operation, containing a <see cref="SetDisabledImageTypesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDisabledImageTypesResult> SetDisabledImageTypesAsync(IEnumerable<DisabledImageType> imageTypes, SetDisabledImageTypesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetDisabledImageTypesResult> SetDisabledImageTypesAsync(ImmutableArray<DisabledImageType> imageTypes, SetDisabledImageTypesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDisabledImageTypesCommandParameters(ImageTypes: imageTypes);
         return await ExecuteCommandAsync(SetDisabledImageTypesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -1491,7 +1491,7 @@ public sealed record ClearDevicePostureOverrideCommandOptions : CdpCommandOption
 public sealed record ClearDevicePostureOverrideResult() : EmptyResult;
 
 
-internal sealed record SetDisplayFeaturesOverrideCommandParameters(IEnumerable<DisplayFeature> Features) : Parameters;
+internal sealed record SetDisplayFeaturesOverrideCommandParameters(ImmutableArray<DisplayFeature> Features) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="EmulationDomain.SetDisplayFeaturesOverrideAsync"/>.
@@ -1565,7 +1565,7 @@ public sealed record SetEmitTouchEventsForMouseCommandOptions : CdpCommandOption
 public sealed record SetEmitTouchEventsForMouseResult() : EmptyResult;
 
 
-internal sealed record SetEmulatedMediaCommandParameters(string? Media, IEnumerable<MediaFeature>? Features) : Parameters;
+internal sealed record SetEmulatedMediaCommandParameters(string? Media, ImmutableArray<MediaFeature>? Features) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="EmulationDomain.SetEmulatedMediaAsync"/>.
@@ -1580,7 +1580,7 @@ public sealed record SetEmulatedMediaCommandOptions : CdpCommandOptions
     /// <summary>
     /// Media features to emulate.
     /// </summary>
-    public IEnumerable<MediaFeature>? Features { get; init; }
+    public ImmutableArray<MediaFeature>? Features { get; init; }
 }
 
 /// <summary>
@@ -1913,7 +1913,7 @@ public sealed record SetVisibleSizeCommandOptions : CdpCommandOptions
 public sealed record SetVisibleSizeResult() : EmptyResult;
 
 
-internal sealed record SetDisabledImageTypesCommandParameters(IEnumerable<DisabledImageType> ImageTypes) : Parameters;
+internal sealed record SetDisabledImageTypesCommandParameters(ImmutableArray<DisabledImageType> ImageTypes) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="EmulationDomain.SetDisabledImageTypesAsync"/>.

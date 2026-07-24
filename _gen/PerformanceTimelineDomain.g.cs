@@ -34,7 +34,7 @@ public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    public async Task<EnableResult> EnableAsync(IEnumerable<string> eventTypes, EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, EnableCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EventTypes: eventTypes);
         return await ExecuteCommandAsync(EnableCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -53,7 +53,7 @@ public sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.
     public IEventSource<TimelineEventAddedEventArgs> TimelineEventAdded => CreateCdpEventSource(PerformanceTimelineDomainEvent.TimelineEventAdded);
 }
 
-internal sealed record EnableCommandParameters(IEnumerable<string> EventTypes) : Parameters;
+internal sealed record EnableCommandParameters(ImmutableArray<string> EventTypes) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="PerformanceTimelineDomain.EnableAsync"/>.

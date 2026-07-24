@@ -147,7 +147,7 @@ public sealed record DisableResult() : EmptyResult;
 /// </param>
 /// <param name="Properties">
 /// </param>
-public sealed record PlayerPropertiesChangedEventArgs(PlayerId PlayerId, IEnumerable<PlayerProperty> Properties) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PlayerPropertiesChangedEventArgs(PlayerId PlayerId, ImmutableArray<PlayerProperty> Properties) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Send events as a list, allowing them to be batched on the browser for less
@@ -157,7 +157,7 @@ public sealed record PlayerPropertiesChangedEventArgs(PlayerId PlayerId, IEnumer
 /// </param>
 /// <param name="Events">
 /// </param>
-public sealed record PlayerEventsAddedEventArgs(PlayerId PlayerId, IEnumerable<PlayerEvent> Events) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PlayerEventsAddedEventArgs(PlayerId PlayerId, ImmutableArray<PlayerEvent> Events) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Send a list of any messages that need to be delivered.
@@ -166,7 +166,7 @@ public sealed record PlayerEventsAddedEventArgs(PlayerId PlayerId, IEnumerable<P
 /// </param>
 /// <param name="Messages">
 /// </param>
-public sealed record PlayerMessagesLoggedEventArgs(PlayerId PlayerId, IEnumerable<PlayerMessage> Messages) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PlayerMessagesLoggedEventArgs(PlayerId PlayerId, ImmutableArray<PlayerMessage> Messages) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Send a list of any errors that need to be delivered.
@@ -175,7 +175,7 @@ public sealed record PlayerMessagesLoggedEventArgs(PlayerId PlayerId, IEnumerabl
 /// </param>
 /// <param name="Errors">
 /// </param>
-public sealed record PlayerErrorsRaisedEventArgs(PlayerId PlayerId, IEnumerable<PlayerError> Errors) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PlayerErrorsRaisedEventArgs(PlayerId PlayerId, ImmutableArray<PlayerError> Errors) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Called whenever a player is created, or when a new agent joins and receives

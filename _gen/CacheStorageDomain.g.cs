@@ -107,7 +107,7 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestCachedResponseResult"/>.
     /// </returns>
-    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, IEnumerable<Header> requestHeaders, RequestCachedResponseCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, RequestCachedResponseCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestCachedResponseCommandParameters(CacheId: cacheId, RequestURL: requestURL, RequestHeaders: requestHeaders);
         return await ExecuteCommandAsync(RequestCachedResponseCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -206,7 +206,7 @@ public sealed record RequestCacheNamesCommandOptions : CdpCommandOptions
 public sealed record RequestCacheNamesResult(IReadOnlyList<Cache> Caches) : EmptyResult;
 
 
-internal sealed record RequestCachedResponseCommandParameters(CacheId CacheId, string RequestURL, IEnumerable<Header> RequestHeaders) : Parameters;
+internal sealed record RequestCachedResponseCommandParameters(CacheId CacheId, string RequestURL, ImmutableArray<Header> RequestHeaders) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="CacheStorageDomain.RequestCachedResponseAsync"/>.

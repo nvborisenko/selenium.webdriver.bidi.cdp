@@ -388,7 +388,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="GetNodesForSubtreeByStyleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, IEnumerable<CSSComputedStyleProperty> computedStyles, GetNodesForSubtreeByStyleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, GetNodesForSubtreeByStyleCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodesForSubtreeByStyleCommandParameters(NodeId: nodeId, ComputedStyles: computedStyles, Pierce: options?.Pierce);
         return await ExecuteCommandAsync(GetNodesForSubtreeByStyleCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -686,7 +686,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// A task representing the asynchronous operation, containing a <see cref="PushNodesByBackendIdsToFrontendResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(IEnumerable<BackendNodeId> backendNodeIds, PushNodesByBackendIdsToFrontendCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, PushNodesByBackendIdsToFrontendCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new PushNodesByBackendIdsToFrontendCommandParameters(BackendNodeIds: backendNodeIds);
         return await ExecuteCommandAsync(PushNodesByBackendIdsToFrontendCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -1024,7 +1024,7 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetFileInputFilesResult"/>.
     /// </returns>
-    public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(IEnumerable<string> files, SetFileInputFilesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, SetFileInputFilesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetFileInputFilesCommandParameters(Files: files, NodeId: options?.NodeId, BackendNodeId: options?.BackendNodeId, ObjectId: options?.ObjectId);
         return await ExecuteCommandAsync(SetFileInputFilesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -1921,7 +1921,7 @@ public sealed record GetFlattenedDocumentCommandOptions : CdpCommandOptions
 public sealed record GetFlattenedDocumentResult(IReadOnlyList<Node> Nodes) : EmptyResult;
 
 
-internal sealed record GetNodesForSubtreeByStyleCommandParameters(NodeId NodeId, IEnumerable<CSSComputedStyleProperty> ComputedStyles, bool? Pierce) : Parameters;
+internal sealed record GetNodesForSubtreeByStyleCommandParameters(NodeId NodeId, ImmutableArray<CSSComputedStyleProperty> ComputedStyles, bool? Pierce) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMDomain.GetNodesForSubtreeByStyleAsync"/>.
@@ -2164,7 +2164,7 @@ public sealed record PushNodeByPathToFrontendCommandOptions : CdpCommandOptions
 public sealed record PushNodeByPathToFrontendResult(NodeId NodeId) : EmptyResult;
 
 
-internal sealed record PushNodesByBackendIdsToFrontendCommandParameters(IEnumerable<BackendNodeId> BackendNodeIds) : Parameters;
+internal sealed record PushNodesByBackendIdsToFrontendCommandParameters(ImmutableArray<BackendNodeId> BackendNodeIds) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMDomain.PushNodesByBackendIdsToFrontendAsync"/>.
@@ -2403,7 +2403,7 @@ public sealed record SetAttributesAsTextCommandOptions : CdpCommandOptions
 public sealed record SetAttributesAsTextResult() : EmptyResult;
 
 
-internal sealed record SetFileInputFilesCommandParameters(IEnumerable<string> Files, NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
+internal sealed record SetFileInputFilesCommandParameters(ImmutableArray<string> Files, NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMDomain.SetFileInputFilesAsync"/>.
@@ -2712,7 +2712,7 @@ public sealed record AttributeModifiedEventArgs(NodeId NodeId, string Name, stri
 /// <param name="AdoptedStyleSheets">
 /// New adoptedStyleSheets array.
 /// </param>
-public sealed record AdoptedStyleSheetsModifiedEventArgs(NodeId NodeId, IEnumerable<StyleSheetId> AdoptedStyleSheets) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record AdoptedStyleSheetsModifiedEventArgs(NodeId NodeId, ImmutableArray<StyleSheetId> AdoptedStyleSheets) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when <b>Element</b>'s attribute is removed.
@@ -2781,7 +2781,7 @@ public sealed record ChildNodeRemovedEventArgs(NodeId ParentNodeId, NodeId NodeI
 /// <param name="DistributedNodes">
 /// Distributed nodes for given insertion point.
 /// </param>
-public sealed record DistributedNodesUpdatedEventArgs(NodeId InsertionPointId, IEnumerable<BackendNode> DistributedNodes) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DistributedNodesUpdatedEventArgs(NodeId InsertionPointId, ImmutableArray<BackendNode> DistributedNodes) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when <b>Document</b> has been totally updated. Node ids are no longer valid.
@@ -2794,7 +2794,7 @@ public sealed record DocumentUpdatedEventArgs() : OpenQA.Selenium.BiDi.EventArgs
 /// <param name="NodeIds">
 /// Ids of the nodes for which the inline styles have been invalidated.
 /// </param>
-public sealed record InlineStyleInvalidatedEventArgs(IEnumerable<NodeId> NodeIds) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record InlineStyleInvalidatedEventArgs(ImmutableArray<NodeId> NodeIds) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Called when a pseudo element is added to an element.
@@ -2866,7 +2866,7 @@ public sealed record PseudoElementRemovedEventArgs(NodeId ParentId, NodeId Pseud
 /// <param name="Nodes">
 /// Child nodes array.
 /// </param>
-public sealed record SetChildNodesEventArgs(NodeId ParentId, IEnumerable<Node> Nodes) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record SetChildNodesEventArgs(NodeId ParentId, ImmutableArray<Node> Nodes) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Called when shadow root is popped from the element.

@@ -836,7 +836,7 @@ static class Extensions
         {
             if (parameterInfo.Type == "array")
             {
-                res = $"IEnumerable<{GetPrimitiveCSharpType(parameterInfo.Items!.Type, parameterInfo.Items.Ref)}>";
+                res = $"ImmutableArray<{GetPrimitiveCSharpType(parameterInfo.Items!.Type, parameterInfo.Items.Ref)}>";
             }
             else
             {

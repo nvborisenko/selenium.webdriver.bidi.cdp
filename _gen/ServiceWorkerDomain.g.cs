@@ -470,13 +470,13 @@ public sealed record WorkerErrorReportedEventArgs(ServiceWorkerErrorMessage Erro
 /// </summary>
 /// <param name="Registrations">
 /// </param>
-public sealed record WorkerRegistrationUpdatedEventArgs(IEnumerable<ServiceWorkerRegistration> Registrations) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record WorkerRegistrationUpdatedEventArgs(ImmutableArray<ServiceWorkerRegistration> Registrations) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>
 /// <param name="Versions">
 /// </param>
-public sealed record WorkerVersionUpdatedEventArgs(IEnumerable<ServiceWorkerVersion> Versions) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record WorkerVersionUpdatedEventArgs(ImmutableArray<ServiceWorkerVersion> Versions) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>

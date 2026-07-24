@@ -185,7 +185,7 @@ public sealed record GetMetricsResult(IReadOnlyList<Metric> Metrics) : EmptyResu
 /// <param name="Title">
 /// Timestamp title.
 /// </param>
-public sealed record MetricsEventArgs(IEnumerable<Metric> Metrics, string Title) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record MetricsEventArgs(ImmutableArray<Metric> Metrics, string Title) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Run-time execution metric.

@@ -389,7 +389,7 @@ public sealed record BufferUsageEventArgs(double? PercentFull = null, double? Ev
 /// </summary>
 /// <param name="Value">
 /// </param>
-public sealed record DataCollectedEventArgs(IEnumerable<global::System.Text.Json.JsonElement> Value) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DataCollectedEventArgs(ImmutableArray<global::System.Text.Json.JsonElement> Value) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Signals that tracing is stopped and there is no trace buffers pending flush, all data were

@@ -476,7 +476,7 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// A task representing the asynchronous operation, containing a <see cref="SetRemoteLocationsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(IEnumerable<RemoteLocation> locations, SetRemoteLocationsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, SetRemoteLocationsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRemoteLocationsCommandParameters(Locations: locations);
         return await ExecuteCommandAsync(SetRemoteLocationsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -714,7 +714,7 @@ public sealed record ExposeDevToolsProtocolCommandOptions : CdpCommandOptions
 public sealed record ExposeDevToolsProtocolResult() : EmptyResult;
 
 
-internal sealed record CreateBrowserContextCommandParameters(bool? DisposeOnDetach, string? ProxyServer, string? ProxyBypassList, IEnumerable<string>? OriginsWithUniversalNetworkAccess) : Parameters;
+internal sealed record CreateBrowserContextCommandParameters(bool? DisposeOnDetach, string? ProxyServer, string? ProxyBypassList, ImmutableArray<string>? OriginsWithUniversalNetworkAccess) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TargetDomain.CreateBrowserContextAsync"/>.
@@ -740,7 +740,7 @@ public sealed record CreateBrowserContextCommandOptions : CdpCommandOptions
     /// An optional list of origins to grant unlimited cross-origin access to.
     /// Parts of the URL other than those constituting origin are ignored.
     /// </summary>
-    public IEnumerable<string>? OriginsWithUniversalNetworkAccess { get; init; }
+    public ImmutableArray<string>? OriginsWithUniversalNetworkAccess { get; init; }
 }
 
 /// <summary>
@@ -1022,7 +1022,7 @@ public sealed record SetDiscoverTargetsCommandOptions : CdpCommandOptions
 public sealed record SetDiscoverTargetsResult() : EmptyResult;
 
 
-internal sealed record SetRemoteLocationsCommandParameters(IEnumerable<RemoteLocation> Locations) : Parameters;
+internal sealed record SetRemoteLocationsCommandParameters(ImmutableArray<RemoteLocation> Locations) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="TargetDomain.SetRemoteLocationsAsync"/>.

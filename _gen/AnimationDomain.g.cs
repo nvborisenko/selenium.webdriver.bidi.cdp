@@ -106,7 +106,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseAnimationsResult"/>.
     /// </returns>
-    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(IEnumerable<string> animations, ReleaseAnimationsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, ReleaseAnimationsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseAnimationsCommandParameters(Animations: animations);
         return await ExecuteCommandAsync(ReleaseAnimationsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -153,7 +153,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SeekAnimationsResult"/>.
     /// </returns>
-    public async Task<SeekAnimationsResult> SeekAnimationsAsync(IEnumerable<string> animations, double currentTime, SeekAnimationsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, SeekAnimationsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime);
         return await ExecuteCommandAsync(SeekAnimationsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -178,7 +178,7 @@ public sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPausedResult"/>.
     /// </returns>
-    public async Task<SetPausedResult> SetPausedAsync(IEnumerable<string> animations, bool paused, SetPausedCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, SetPausedCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPausedCommandParameters(Animations: animations, Paused: paused);
         return await ExecuteCommandAsync(SetPausedCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -339,7 +339,7 @@ public sealed record GetPlaybackRateCommandOptions : CdpCommandOptions
 public sealed record GetPlaybackRateResult(double PlaybackRate) : EmptyResult;
 
 
-internal sealed record ReleaseAnimationsCommandParameters(IEnumerable<string> Animations) : Parameters;
+internal sealed record ReleaseAnimationsCommandParameters(ImmutableArray<string> Animations) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="AnimationDomain.ReleaseAnimationsAsync"/>.
@@ -370,7 +370,7 @@ public sealed record ResolveAnimationCommandOptions : CdpCommandOptions
 public sealed record ResolveAnimationResult(Runtime.RemoteObject RemoteObject) : EmptyResult;
 
 
-internal sealed record SeekAnimationsCommandParameters(IEnumerable<string> Animations, double CurrentTime) : Parameters;
+internal sealed record SeekAnimationsCommandParameters(ImmutableArray<string> Animations, double CurrentTime) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="AnimationDomain.SeekAnimationsAsync"/>.
@@ -384,7 +384,7 @@ public sealed record SeekAnimationsCommandOptions : CdpCommandOptions
 public sealed record SeekAnimationsResult() : EmptyResult;
 
 
-internal sealed record SetPausedCommandParameters(IEnumerable<string> Animations, bool Paused) : Parameters;
+internal sealed record SetPausedCommandParameters(ImmutableArray<string> Animations, bool Paused) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="AnimationDomain.SetPausedAsync"/>.

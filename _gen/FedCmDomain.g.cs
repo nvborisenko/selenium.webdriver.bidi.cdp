@@ -317,7 +317,7 @@ public sealed record ResetCooldownResult() : EmptyResult;
 /// </param>
 /// <param name="Subtitle">
 /// </param>
-public sealed record DialogShownEventArgs(string DialogId, DialogType DialogType, IEnumerable<Account> Accounts, string Title, string? Subtitle = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DialogShownEventArgs(string DialogId, DialogType DialogType, ImmutableArray<Account> Accounts, string Title, string? Subtitle = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Triggered when a dialog is closed, either by user action, JS abort,

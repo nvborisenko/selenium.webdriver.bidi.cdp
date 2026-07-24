@@ -227,7 +227,7 @@ public sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchTouchEventResult"/>.
     /// </returns>
-    public async Task<DispatchTouchEventResult> DispatchTouchEventAsync(string type, IEnumerable<TouchPoint> touchPoints, DispatchTouchEventCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<DispatchTouchEventResult> DispatchTouchEventAsync(string type, ImmutableArray<TouchPoint> touchPoints, DispatchTouchEventCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchTouchEventCommandParameters(Type: type, TouchPoints: touchPoints, Modifiers: options?.Modifiers, Timestamp: options?.Timestamp);
         return await ExecuteCommandAsync(DispatchTouchEventCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -484,7 +484,7 @@ public sealed record DispatchDragEventCommandOptions : CdpCommandOptions
 public sealed record DispatchDragEventResult() : EmptyResult;
 
 
-internal sealed record DispatchKeyEventCommandParameters(string Type, long? Modifiers, TimeSinceEpoch? Timestamp, string? Text, string? UnmodifiedText, string? KeyIdentifier, string? Code, string? Key, long? WindowsVirtualKeyCode, long? NativeVirtualKeyCode, bool? AutoRepeat, bool? IsKeypad, bool? IsSystemKey, long? Location, IEnumerable<string>? Commands) : Parameters;
+internal sealed record DispatchKeyEventCommandParameters(string Type, long? Modifiers, TimeSinceEpoch? Timestamp, string? Text, string? UnmodifiedText, string? KeyIdentifier, string? Code, string? Key, long? WindowsVirtualKeyCode, long? NativeVirtualKeyCode, bool? AutoRepeat, bool? IsKeypad, bool? IsSystemKey, long? Location, ImmutableArray<string>? Commands) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="InputDomain.DispatchKeyEventAsync"/>.
@@ -566,7 +566,7 @@ public sealed record DispatchKeyEventCommandOptions : CdpCommandOptions
     /// These are related to but not equal the command names used in <b>document.execCommand</b> and NSStandardKeyBindingResponding.
     /// See https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/editing/commands/editor_command_names.h for valid command names.
     /// </summary>
-    public IEnumerable<string>? Commands { get; init; }
+    public ImmutableArray<string>? Commands { get; init; }
 }
 
 /// <summary>
@@ -691,7 +691,7 @@ public sealed record DispatchMouseEventCommandOptions : CdpCommandOptions
 public sealed record DispatchMouseEventResult() : EmptyResult;
 
 
-internal sealed record DispatchTouchEventCommandParameters(string Type, IEnumerable<TouchPoint> TouchPoints, long? Modifiers, TimeSinceEpoch? Timestamp) : Parameters;
+internal sealed record DispatchTouchEventCommandParameters(string Type, ImmutableArray<TouchPoint> TouchPoints, long? Modifiers, TimeSinceEpoch? Timestamp) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="InputDomain.DispatchTouchEventAsync"/>.

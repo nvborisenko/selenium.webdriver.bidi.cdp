@@ -434,7 +434,7 @@ public sealed record ConsoleProfileStartedEventArgs(string Id, Debugger.Location
 /// <param name="Result">
 /// Coverage data for the current isolate.
 /// </param>
-public sealed record PreciseCoverageDeltaUpdateEventArgs(double Timestamp, string Occasion, IEnumerable<ScriptCoverage> Result) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PreciseCoverageDeltaUpdateEventArgs(double Timestamp, string Occasion, ImmutableArray<ScriptCoverage> Result) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Profile node. Holds callsite information, execution statistics and child nodes.

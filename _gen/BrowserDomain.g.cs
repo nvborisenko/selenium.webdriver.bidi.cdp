@@ -70,7 +70,7 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<GrantPermissionsResult> GrantPermissionsAsync(IEnumerable<PermissionType> permissions, GrantPermissionsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, GrantPermissionsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new GrantPermissionsCommandParameters(Permissions: permissions, Origin: options?.Origin, BrowserContextId: options?.BrowserContextId);
         return await ExecuteCommandAsync(GrantPermissionsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -557,7 +557,7 @@ public sealed record SetPermissionCommandOptions : CdpCommandOptions
 public sealed record SetPermissionResult() : EmptyResult;
 
 
-internal sealed record GrantPermissionsCommandParameters(IEnumerable<PermissionType> Permissions, string? Origin, BrowserContextID? BrowserContextId) : Parameters;
+internal sealed record GrantPermissionsCommandParameters(ImmutableArray<PermissionType> Permissions, string? Origin, BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="BrowserDomain.GrantPermissionsAsync"/>.

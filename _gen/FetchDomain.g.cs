@@ -329,7 +329,7 @@ public sealed record DisableCommandOptions : CdpCommandOptions
 public sealed record DisableResult() : EmptyResult;
 
 
-internal sealed record EnableCommandParameters(IEnumerable<RequestPattern>? Patterns, bool? HandleAuthRequests) : Parameters;
+internal sealed record EnableCommandParameters(ImmutableArray<RequestPattern>? Patterns, bool? HandleAuthRequests) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="FetchDomain.EnableAsync"/>.
@@ -341,7 +341,7 @@ public sealed record EnableCommandOptions : CdpCommandOptions
     /// fetchRequested event and will be paused until clients response. If not set,
     /// all requests will be affected.
     /// </summary>
-    public IEnumerable<RequestPattern>? Patterns { get; init; }
+    public ImmutableArray<RequestPattern>? Patterns { get; init; }
 
     /// <summary>
     /// If true, authRequired events will be issued and requests will be paused
@@ -369,7 +369,7 @@ public sealed record FailRequestCommandOptions : CdpCommandOptions
 public sealed record FailRequestResult() : EmptyResult;
 
 
-internal sealed record FulfillRequestCommandParameters(RequestId RequestId, long ResponseCode, IEnumerable<HeaderEntry>? ResponseHeaders, string? BinaryResponseHeaders, string? Body, string? ResponsePhrase) : Parameters;
+internal sealed record FulfillRequestCommandParameters(RequestId RequestId, long ResponseCode, ImmutableArray<HeaderEntry>? ResponseHeaders, string? BinaryResponseHeaders, string? Body, string? ResponsePhrase) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="FetchDomain.FulfillRequestAsync"/>.
@@ -379,7 +379,7 @@ public sealed record FulfillRequestCommandOptions : CdpCommandOptions
     /// <summary>
     /// Response headers.
     /// </summary>
-    public IEnumerable<HeaderEntry>? ResponseHeaders { get; init; }
+    public ImmutableArray<HeaderEntry>? ResponseHeaders { get; init; }
 
     /// <summary>
     /// Alternative way of specifying response headers as a \0-separated
@@ -408,7 +408,7 @@ public sealed record FulfillRequestCommandOptions : CdpCommandOptions
 public sealed record FulfillRequestResult() : EmptyResult;
 
 
-internal sealed record ContinueRequestCommandParameters(RequestId RequestId, string? Url, string? Method, string? PostData, IEnumerable<HeaderEntry>? Headers, bool? InterceptResponse) : Parameters;
+internal sealed record ContinueRequestCommandParameters(RequestId RequestId, string? Url, string? Method, string? PostData, ImmutableArray<HeaderEntry>? Headers, bool? InterceptResponse) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="FetchDomain.ContinueRequestAsync"/>.
@@ -435,7 +435,7 @@ public sealed record ContinueRequestCommandOptions : CdpCommandOptions
     /// extend to subsequent redirect hops, if a redirect happens. Another override
     /// may be applied to a different request produced by a redirect.
     /// </summary>
-    public IEnumerable<HeaderEntry>? Headers { get; init; }
+    public ImmutableArray<HeaderEntry>? Headers { get; init; }
 
     /// <summary>
     /// If set, overrides response interception behavior for this request.
@@ -462,7 +462,7 @@ public sealed record ContinueWithAuthCommandOptions : CdpCommandOptions
 public sealed record ContinueWithAuthResult() : EmptyResult;
 
 
-internal sealed record ContinueResponseCommandParameters(RequestId RequestId, long? ResponseCode, string? ResponsePhrase, IEnumerable<HeaderEntry>? ResponseHeaders, string? BinaryResponseHeaders) : Parameters;
+internal sealed record ContinueResponseCommandParameters(RequestId RequestId, long? ResponseCode, string? ResponsePhrase, ImmutableArray<HeaderEntry>? ResponseHeaders, string? BinaryResponseHeaders) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="FetchDomain.ContinueResponseAsync"/>.
@@ -483,7 +483,7 @@ public sealed record ContinueResponseCommandOptions : CdpCommandOptions
     /// <summary>
     /// Response headers. If absent, original response headers will be used.
     /// </summary>
-    public IEnumerable<HeaderEntry>? ResponseHeaders { get; init; }
+    public ImmutableArray<HeaderEntry>? ResponseHeaders { get; init; }
 
     /// <summary>
     /// Alternative way of specifying response headers as a \0-separated
@@ -580,7 +580,7 @@ public sealed record TakeResponseBodyAsStreamResult(IO.StreamHandle Stream) : Em
 /// If the request is due to a redirect response from the server, the id of the request that
 /// has caused the redirect.
 /// </param>
-public sealed record RequestPausedEventArgs(RequestId RequestId, Network.Request Request, Page.FrameId FrameId, Network.ResourceType ResourceType, Network.ErrorReason? ResponseErrorReason = null, long? ResponseStatusCode = null, string? ResponseStatusText = null, IEnumerable<HeaderEntry>? ResponseHeaders = null, Network.RequestId? NetworkId = null, RequestId? RedirectedRequestId = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record RequestPausedEventArgs(RequestId RequestId, Network.Request Request, Page.FrameId FrameId, Network.ResourceType ResourceType, Network.ErrorReason? ResponseErrorReason = null, long? ResponseStatusCode = null, string? ResponseStatusText = null, ImmutableArray<HeaderEntry>? ResponseHeaders = null, Network.RequestId? NetworkId = null, RequestId? RedirectedRequestId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Issued when the domain is enabled with handleAuthRequests set to true.

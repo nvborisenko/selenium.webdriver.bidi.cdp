@@ -157,7 +157,7 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookiesResult"/>.
     /// </returns>
-    public async Task<SetCookiesResult> SetCookiesAsync(IEnumerable<Network.CookieParam> cookies, SetCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, SetCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies, BrowserContextId: options?.BrowserContextId);
         return await ExecuteCommandAsync(SetCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -890,7 +890,7 @@ public sealed record GetCookiesCommandOptions : CdpCommandOptions
 public sealed record GetCookiesResult(IReadOnlyList<Network.Cookie> Cookies) : EmptyResult;
 
 
-internal sealed record SetCookiesCommandParameters(IEnumerable<Network.CookieParam> Cookies, Browser.BrowserContextID? BrowserContextId) : Parameters;
+internal sealed record SetCookiesCommandParameters(ImmutableArray<Network.CookieParam> Cookies, Browser.BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="StorageDomain.SetCookiesAsync"/>.

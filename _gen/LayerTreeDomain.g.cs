@@ -87,7 +87,7 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LoadSnapshotResult"/>.
     /// </returns>
-    public async Task<LoadSnapshotResult> LoadSnapshotAsync(IEnumerable<PictureTile> tiles, LoadSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, LoadSnapshotCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new LoadSnapshotCommandParameters(Tiles: tiles);
         return await ExecuteCommandAsync(LoadSnapshotCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -290,7 +290,7 @@ public sealed record EnableCommandOptions : CdpCommandOptions
 public sealed record EnableResult() : EmptyResult;
 
 
-internal sealed record LoadSnapshotCommandParameters(IEnumerable<PictureTile> Tiles) : Parameters;
+internal sealed record LoadSnapshotCommandParameters(ImmutableArray<PictureTile> Tiles) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="LayerTreeDomain.LoadSnapshotAsync"/>.
@@ -432,7 +432,7 @@ public sealed record LayerPaintedEventArgs(LayerId LayerId, DOM.Rect Clip) : Ope
 /// <param name="Layers">
 /// Layer tree, absent if not in the compositing mode.
 /// </param>
-public sealed record LayerTreeDidChangeEventArgs(IEnumerable<Layer>? Layers = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record LayerTreeDidChangeEventArgs(ImmutableArray<Layer>? Layers = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Unique Layer identifier.

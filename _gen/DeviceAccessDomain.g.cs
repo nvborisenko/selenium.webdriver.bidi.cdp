@@ -172,7 +172,7 @@ public sealed record CancelPromptResult() : EmptyResult;
 /// </param>
 /// <param name="Devices">
 /// </param>
-public sealed record DeviceRequestPromptedEventArgs(RequestId Id, IEnumerable<PromptDevice> Devices) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DeviceRequestPromptedEventArgs(RequestId Id, ImmutableArray<PromptDevice> Devices) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Device request id.

@@ -29,7 +29,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="SetAcceptedEncodingsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(IEnumerable<ContentEncoding> encodings, SetAcceptedEncodingsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, SetAcceptedEncodingsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAcceptedEncodingsCommandParameters(Encodings: encodings);
         return await ExecuteCommandAsync(SetAcceptedEncodingsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -312,7 +312,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsByRuleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(IEnumerable<NetworkConditions> matchedNetworkConditions, EmulateNetworkConditionsByRuleCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, EmulateNetworkConditionsByRuleCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: options?.Offline, EmulateOfflineServiceWorker: options?.EmulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
         return await ExecuteCommandAsync(EmulateNetworkConditionsByRuleCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -763,7 +763,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookiesResult"/>.
     /// </returns>
-    public async Task<SetCookiesResult> SetCookiesAsync(IEnumerable<CookieParam> cookies, SetCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, SetCookiesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies);
         return await ExecuteCommandAsync(SetCookiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -834,7 +834,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(IEnumerable<RequestPattern> patterns, SetRequestInterceptionCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, SetRequestInterceptionCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRequestInterceptionCommandParameters(Patterns: patterns);
         return await ExecuteCommandAsync(SetRequestInterceptionCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -1676,7 +1676,7 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     public IEventSource<DeviceBoundSessionEventOccurredEventArgs> DeviceBoundSessionEventOccurred => CreateCdpEventSource(NetworkDomainEvent.DeviceBoundSessionEventOccurred);
 }
 
-internal sealed record SetAcceptedEncodingsCommandParameters(IEnumerable<ContentEncoding> Encodings) : Parameters;
+internal sealed record SetAcceptedEncodingsCommandParameters(ImmutableArray<ContentEncoding> Encodings) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.SetAcceptedEncodingsAsync"/>.
@@ -1919,7 +1919,7 @@ public sealed record EmulateNetworkConditionsCommandOptions : CdpCommandOptions
 public sealed record EmulateNetworkConditionsResult() : EmptyResult;
 
 
-internal sealed record EmulateNetworkConditionsByRuleCommandParameters(bool? Offline, bool? EmulateOfflineServiceWorker, IEnumerable<NetworkConditions> MatchedNetworkConditions) : Parameters;
+internal sealed record EmulateNetworkConditionsByRuleCommandParameters(bool? Offline, bool? EmulateOfflineServiceWorker, ImmutableArray<NetworkConditions> MatchedNetworkConditions) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.EmulateNetworkConditionsByRuleAsync"/>.
@@ -2066,7 +2066,7 @@ public sealed record GetCertificateCommandOptions : CdpCommandOptions
 public sealed record GetCertificateResult(IReadOnlyList<string> TableNames) : EmptyResult;
 
 
-internal sealed record GetCookiesCommandParameters(IEnumerable<string>? Urls) : Parameters;
+internal sealed record GetCookiesCommandParameters(ImmutableArray<string>? Urls) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.GetCookiesAsync"/>.
@@ -2078,7 +2078,7 @@ public sealed record GetCookiesCommandOptions : CdpCommandOptions
     /// If not specified, it's assumed to be set to the list containing
     /// the URLs of the page and all of its subframes.
     /// </summary>
-    public IEnumerable<string>? Urls { get; init; }
+    public ImmutableArray<string>? Urls { get; init; }
 }
 
 /// <summary>
@@ -2205,7 +2205,7 @@ public sealed record SearchInResponseBodyCommandOptions : CdpCommandOptions
 public sealed record SearchInResponseBodyResult(IReadOnlyList<Debugger.SearchMatch> Result) : EmptyResult;
 
 
-internal sealed record SetBlockedURLsCommandParameters(IEnumerable<BlockPattern>? UrlPatterns, IEnumerable<string>? Urls) : Parameters;
+internal sealed record SetBlockedURLsCommandParameters(ImmutableArray<BlockPattern>? UrlPatterns, ImmutableArray<string>? Urls) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.SetBlockedURLsAsync"/>.
@@ -2216,13 +2216,13 @@ public sealed record SetBlockedURLsCommandOptions : CdpCommandOptions
     /// Patterns to match in the order in which they are given. These patterns
     /// also take precedence over any wildcard patterns defined in <b>urls</b>.
     /// </summary>
-    public IEnumerable<BlockPattern>? UrlPatterns { get; init; }
+    public ImmutableArray<BlockPattern>? UrlPatterns { get; init; }
 
     /// <summary>
     /// URL patterns to block. Wildcards ('*') are allowed.
     /// </summary>
     [global::System.Obsolete]
-    public IEnumerable<string>? Urls { get; init; }
+    public ImmutableArray<string>? Urls { get; init; }
 }
 
 /// <summary>
@@ -2332,7 +2332,7 @@ public sealed record SetCookieCommandOptions : CdpCommandOptions
 public sealed record SetCookieResult(bool Success) : EmptyResult;
 
 
-internal sealed record SetCookiesCommandParameters(IEnumerable<CookieParam> Cookies) : Parameters;
+internal sealed record SetCookiesCommandParameters(ImmutableArray<CookieParam> Cookies) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.SetCookiesAsync"/>.
@@ -2374,7 +2374,7 @@ public sealed record SetAttachDebugStackCommandOptions : CdpCommandOptions
 public sealed record SetAttachDebugStackResult() : EmptyResult;
 
 
-internal sealed record SetRequestInterceptionCommandParameters(IEnumerable<RequestPattern> Patterns) : Parameters;
+internal sealed record SetRequestInterceptionCommandParameters(ImmutableArray<RequestPattern> Patterns) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="NetworkDomain.SetRequestInterceptionAsync"/>.
@@ -3121,7 +3121,7 @@ public sealed record DirectUDPSocketChunkReceivedEventArgs(RequestId Identifier,
 /// The network conditions id if this request was affected by network conditions configured via
 /// emulateNetworkConditionsByRule.
 /// </param>
-public sealed record RequestWillBeSentExtraInfoEventArgs(RequestId RequestId, IEnumerable<AssociatedCookie> AssociatedCookies, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, ConnectTiming ConnectTiming, IEnumerable<DeviceBoundSessionWithUsage>? DeviceBoundSessionUsages = null, ClientSecurityState? ClientSecurityState = null, bool? SiteHasCookieInOtherPartition = null, string? AppliedNetworkConditionsId = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record RequestWillBeSentExtraInfoEventArgs(RequestId RequestId, ImmutableArray<AssociatedCookie> AssociatedCookies, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, ConnectTiming ConnectTiming, ImmutableArray<DeviceBoundSessionWithUsage>? DeviceBoundSessionUsages = null, ClientSecurityState? ClientSecurityState = null, bool? SiteHasCookieInOtherPartition = null, string? AppliedNetworkConditionsId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when additional information about a responseReceived event is available from the network
@@ -3166,7 +3166,7 @@ public sealed record RequestWillBeSentExtraInfoEventArgs(RequestId RequestId, IE
 /// A list of cookies which should have been blocked by 3PCD but are exempted and stored from
 /// the response with the corresponding reason.
 /// </param>
-public sealed record ResponseReceivedExtraInfoEventArgs(RequestId RequestId, IEnumerable<BlockedSetCookieWithReason> BlockedCookies, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, IPAddressSpace ResourceIPAddressSpace, long StatusCode, string? HeadersText = null, CookiePartitionKey? CookiePartitionKey = null, bool? CookiePartitionKeyOpaque = null, IEnumerable<ExemptedSetCookieWithReason>? ExemptedCookies = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record ResponseReceivedExtraInfoEventArgs(RequestId RequestId, ImmutableArray<BlockedSetCookieWithReason> BlockedCookies, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, IPAddressSpace ResourceIPAddressSpace, long StatusCode, string? HeadersText = null, CookiePartitionKey? CookiePartitionKey = null, bool? CookiePartitionKeyOpaque = null, ImmutableArray<ExemptedSetCookieWithReason>? ExemptedCookies = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when 103 Early Hints headers is received in addition to the common response.
@@ -3237,7 +3237,7 @@ public sealed record ReportingApiReportUpdatedEventArgs(ReportingApiReport Repor
 /// </param>
 /// <param name="Endpoints">
 /// </param>
-public sealed record ReportingApiEndpointsChangedForOriginEventArgs(string Origin, IEnumerable<ReportingApiEndpoint> Endpoints) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record ReportingApiEndpointsChangedForOriginEventArgs(string Origin, ImmutableArray<ReportingApiEndpoint> Endpoints) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Triggered when the initial set of device bound sessions is added.
@@ -3245,7 +3245,7 @@ public sealed record ReportingApiEndpointsChangedForOriginEventArgs(string Origi
 /// <param name="Sessions">
 /// The device bound sessions.
 /// </param>
-public sealed record DeviceBoundSessionsAddedEventArgs(IEnumerable<DeviceBoundSession> Sessions) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DeviceBoundSessionsAddedEventArgs(ImmutableArray<DeviceBoundSession> Sessions) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Triggered when a device bound session event occurs.

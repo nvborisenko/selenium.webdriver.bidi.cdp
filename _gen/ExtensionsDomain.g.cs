@@ -162,7 +162,7 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveStorageItemsResult"/>.
     /// </returns>
-    public async Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, IEnumerable<string> keys, RemoveStorageItemsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, RemoveStorageItemsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: keys);
         return await ExecuteCommandAsync(RemoveStorageItemsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -290,7 +290,7 @@ public sealed record UninstallCommandOptions : CdpCommandOptions
 public sealed record UninstallResult() : EmptyResult;
 
 
-internal sealed record GetStorageItemsCommandParameters(string Id, StorageArea StorageArea, IEnumerable<string>? Keys) : Parameters;
+internal sealed record GetStorageItemsCommandParameters(string Id, StorageArea StorageArea, ImmutableArray<string>? Keys) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="ExtensionsDomain.GetStorageItemsAsync"/>.
@@ -300,7 +300,7 @@ public sealed record GetStorageItemsCommandOptions : CdpCommandOptions
     /// <summary>
     /// Keys to retrieve.
     /// </summary>
-    public IEnumerable<string>? Keys { get; init; }
+    public ImmutableArray<string>? Keys { get; init; }
 }
 
 /// <summary>
@@ -310,7 +310,7 @@ public sealed record GetStorageItemsCommandOptions : CdpCommandOptions
 public sealed record GetStorageItemsResult(global::System.Text.Json.JsonElement Data) : EmptyResult;
 
 
-internal sealed record RemoveStorageItemsCommandParameters(string Id, StorageArea StorageArea, IEnumerable<string> Keys) : Parameters;
+internal sealed record RemoveStorageItemsCommandParameters(string Id, StorageArea StorageArea, ImmutableArray<string> Keys) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="ExtensionsDomain.RemoveStorageItemsAsync"/>.

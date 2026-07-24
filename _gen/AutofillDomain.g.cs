@@ -58,7 +58,7 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAddressesResult"/>.
     /// </returns>
-    public async Task<SetAddressesResult> SetAddressesAsync(IEnumerable<Address> addresses, SetAddressesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, SetAddressesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAddressesCommandParameters(Addresses: addresses);
         return await ExecuteCommandAsync(SetAddressesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -144,7 +144,7 @@ public sealed record TriggerCommandOptions : CdpCommandOptions
 public sealed record TriggerResult() : EmptyResult;
 
 
-internal sealed record SetAddressesCommandParameters(IEnumerable<Address> Addresses) : Parameters;
+internal sealed record SetAddressesCommandParameters(ImmutableArray<Address> Addresses) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="AutofillDomain.SetAddressesAsync"/>.
@@ -196,7 +196,7 @@ public sealed record EnableResult() : EmptyResult;
 /// An UI representation of the address used to fill the form.
 /// Consists of a 2D array where each child represents an address/profile line.
 /// </param>
-public sealed record AddressFormFilledEventArgs(IEnumerable<FilledField> FilledFields, AddressUI AddressUi) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record AddressFormFilledEventArgs(ImmutableArray<FilledField> FilledFields, AddressUI AddressUi) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>

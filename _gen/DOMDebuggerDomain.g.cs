@@ -157,7 +157,7 @@ public sealed class DOMDebuggerDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakOnCSPViolationResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBreakOnCSPViolationResult> SetBreakOnCSPViolationAsync(IEnumerable<CSPViolationType> violationTypes, SetBreakOnCSPViolationCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakOnCSPViolationResult> SetBreakOnCSPViolationAsync(ImmutableArray<CSPViolationType> violationTypes, SetBreakOnCSPViolationCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBreakOnCSPViolationCommandParameters(ViolationTypes: violationTypes);
         return await ExecuteCommandAsync(SetBreakOnCSPViolationCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -353,7 +353,7 @@ public sealed record RemoveXHRBreakpointCommandOptions : CdpCommandOptions
 public sealed record RemoveXHRBreakpointResult() : EmptyResult;
 
 
-internal sealed record SetBreakOnCSPViolationCommandParameters(IEnumerable<CSPViolationType> ViolationTypes) : Parameters;
+internal sealed record SetBreakOnCSPViolationCommandParameters(ImmutableArray<CSPViolationType> ViolationTypes) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DOMDebuggerDomain.SetBreakOnCSPViolationAsync"/>.

@@ -468,7 +468,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxExecutionContextsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(IEnumerable<string> uniqueIds, SetBlackboxExecutionContextsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, SetBlackboxExecutionContextsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxExecutionContextsCommandParameters(UniqueIds: uniqueIds);
         return await ExecuteCommandAsync(SetBlackboxExecutionContextsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -499,7 +499,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxPatternsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(IEnumerable<string> patterns, SetBlackboxPatternsCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, SetBlackboxPatternsCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxPatternsCommandParameters(Patterns: patterns, SkipAnonymous: options?.SkipAnonymous);
         return await ExecuteCommandAsync(SetBlackboxPatternsCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -527,7 +527,7 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxedRangesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, IEnumerable<ScriptPosition> positions, SetBlackboxedRangesCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, SetBlackboxedRangesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxedRangesCommandParameters(ScriptId: scriptId, Positions: positions);
         return await ExecuteCommandAsync(SetBlackboxedRangesCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -1341,7 +1341,7 @@ public sealed record SetAsyncCallStackDepthCommandOptions : CdpCommandOptions
 public sealed record SetAsyncCallStackDepthResult() : EmptyResult;
 
 
-internal sealed record SetBlackboxExecutionContextsCommandParameters(IEnumerable<string> UniqueIds) : Parameters;
+internal sealed record SetBlackboxExecutionContextsCommandParameters(ImmutableArray<string> UniqueIds) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DebuggerDomain.SetBlackboxExecutionContextsAsync"/>.
@@ -1355,7 +1355,7 @@ public sealed record SetBlackboxExecutionContextsCommandOptions : CdpCommandOpti
 public sealed record SetBlackboxExecutionContextsResult() : EmptyResult;
 
 
-internal sealed record SetBlackboxPatternsCommandParameters(IEnumerable<string> Patterns, bool? SkipAnonymous) : Parameters;
+internal sealed record SetBlackboxPatternsCommandParameters(ImmutableArray<string> Patterns, bool? SkipAnonymous) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DebuggerDomain.SetBlackboxPatternsAsync"/>.
@@ -1373,7 +1373,7 @@ public sealed record SetBlackboxPatternsCommandOptions : CdpCommandOptions
 public sealed record SetBlackboxPatternsResult() : EmptyResult;
 
 
-internal sealed record SetBlackboxedRangesCommandParameters(Runtime.ScriptId ScriptId, IEnumerable<ScriptPosition> Positions) : Parameters;
+internal sealed record SetBlackboxedRangesCommandParameters(Runtime.ScriptId ScriptId, ImmutableArray<ScriptPosition> Positions) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DebuggerDomain.SetBlackboxedRangesAsync"/>.
@@ -1612,7 +1612,7 @@ public sealed record SetVariableValueCommandOptions : CdpCommandOptions
 public sealed record SetVariableValueResult() : EmptyResult;
 
 
-internal sealed record StepIntoCommandParameters(bool? BreakOnAsyncCall, IEnumerable<LocationRange>? SkipList) : Parameters;
+internal sealed record StepIntoCommandParameters(bool? BreakOnAsyncCall, ImmutableArray<LocationRange>? SkipList) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DebuggerDomain.StepIntoAsync"/>.
@@ -1628,7 +1628,7 @@ public sealed record StepIntoCommandOptions : CdpCommandOptions
     /// <summary>
     /// The skipList specifies location ranges that should be skipped on step into.
     /// </summary>
-    public IEnumerable<LocationRange>? SkipList { get; init; }
+    public ImmutableArray<LocationRange>? SkipList { get; init; }
 }
 
 /// <summary>
@@ -1650,7 +1650,7 @@ public sealed record StepOutCommandOptions : CdpCommandOptions
 public sealed record StepOutResult() : EmptyResult;
 
 
-internal sealed record StepOverCommandParameters(IEnumerable<LocationRange>? SkipList) : Parameters;
+internal sealed record StepOverCommandParameters(ImmutableArray<LocationRange>? SkipList) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="DebuggerDomain.StepOverAsync"/>.
@@ -1660,7 +1660,7 @@ public sealed record StepOverCommandOptions : CdpCommandOptions
     /// <summary>
     /// The skipList specifies location ranges that should be skipped on step over.
     /// </summary>
-    public IEnumerable<LocationRange>? SkipList { get; init; }
+    public ImmutableArray<LocationRange>? SkipList { get; init; }
 }
 
 /// <summary>
@@ -1704,7 +1704,7 @@ public sealed record BreakpointResolvedEventArgs(BreakpointId BreakpointId, Loca
 /// <param name="AsyncCallStackTraceId">
 /// Never present, will be removed.
 /// </param>
-public sealed record PausedEventArgs(IEnumerable<CallFrame> CallFrames, string Reason, global::System.Text.Json.JsonElement? Data = null, IEnumerable<string>? HitBreakpoints = null, Runtime.StackTrace? AsyncStackTrace = null, Runtime.StackTraceId? AsyncStackTraceId = null, Runtime.StackTraceId? AsyncCallStackTraceId = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PausedEventArgs(ImmutableArray<CallFrame> CallFrames, string Reason, global::System.Text.Json.JsonElement? Data = null, ImmutableArray<string>? HitBreakpoints = null, Runtime.StackTrace? AsyncStackTrace = null, Runtime.StackTraceId? AsyncStackTraceId = null, Runtime.StackTraceId? AsyncCallStackTraceId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when the virtual machine resumed execution.
@@ -1839,7 +1839,7 @@ public sealed record ScriptFailedToParseEventArgs(Runtime.ScriptId ScriptId, str
 /// matches this script's URL or hash. Clients that use this list can ignore the
 /// <b>breakpointResolved</b> event. They are equivalent.
 /// </param>
-public sealed record ScriptParsedEventArgs(Runtime.ScriptId ScriptId, string Url, long StartLine, long StartColumn, long EndLine, long EndColumn, Runtime.ExecutionContextId ExecutionContextId, string Hash, string BuildId, global::System.Text.Json.JsonElement? ExecutionContextAuxData = null, bool? IsLiveEdit = null, string? SourceMapURL = null, bool? HasSourceURL = null, bool? IsModule = null, long? Length = null, Runtime.StackTrace? StackTrace = null, long? CodeOffset = null, Debugger.ScriptLanguage? ScriptLanguage = null, IEnumerable<Debugger.DebugSymbols>? DebugSymbols = null, string? EmbedderName = null, IEnumerable<ResolvedBreakpoint>? ResolvedBreakpoints = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record ScriptParsedEventArgs(Runtime.ScriptId ScriptId, string Url, long StartLine, long StartColumn, long EndLine, long EndColumn, Runtime.ExecutionContextId ExecutionContextId, string Hash, string BuildId, global::System.Text.Json.JsonElement? ExecutionContextAuxData = null, bool? IsLiveEdit = null, string? SourceMapURL = null, bool? HasSourceURL = null, bool? IsModule = null, long? Length = null, Runtime.StackTrace? StackTrace = null, long? CodeOffset = null, Debugger.ScriptLanguage? ScriptLanguage = null, ImmutableArray<Debugger.DebugSymbols>? DebugSymbols = null, string? EmbedderName = null, ImmutableArray<ResolvedBreakpoint>? ResolvedBreakpoints = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Breakpoint identifier.

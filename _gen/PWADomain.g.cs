@@ -167,7 +167,7 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LaunchFilesInAppResult"/>.
     /// </returns>
-    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, IEnumerable<string> files, LaunchFilesInAppCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, LaunchFilesInAppCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new LaunchFilesInAppCommandParameters(ManifestId: manifestId, Files: files);
         return await ExecuteCommandAsync(LaunchFilesInAppCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -306,7 +306,7 @@ public sealed record LaunchCommandOptions : CdpCommandOptions
 public sealed record LaunchResult(Target.TargetID TargetId) : EmptyResult;
 
 
-internal sealed record LaunchFilesInAppCommandParameters(string ManifestId, IEnumerable<string> Files) : Parameters;
+internal sealed record LaunchFilesInAppCommandParameters(string ManifestId, ImmutableArray<string> Files) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="PWADomain.LaunchFilesInAppAsync"/>.

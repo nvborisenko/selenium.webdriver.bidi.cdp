@@ -219,7 +219,7 @@ public sealed record PrefetchStatusUpdatedEventArgs(PreloadingAttemptKey Key, Pr
 /// </param>
 /// <param name="MismatchedHeaders">
 /// </param>
-public sealed record PrerenderStatusUpdatedEventArgs(PreloadingAttemptKey Key, PreloadPipelineId PipelineId, PreloadingStatus Status, PrerenderFinalStatus? PrerenderStatus = null, string? DisallowedMojoInterface = null, IEnumerable<PrerenderMismatchedHeaders>? MismatchedHeaders = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PrerenderStatusUpdatedEventArgs(PreloadingAttemptKey Key, PreloadPipelineId PipelineId, PreloadingStatus Status, PrerenderFinalStatus? PrerenderStatus = null, string? DisallowedMojoInterface = null, ImmutableArray<PrerenderMismatchedHeaders>? MismatchedHeaders = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Send a list of sources for all preloading attempts in a document.
@@ -228,7 +228,7 @@ public sealed record PrerenderStatusUpdatedEventArgs(PreloadingAttemptKey Key, P
 /// </param>
 /// <param name="PreloadingAttemptSources">
 /// </param>
-public sealed record PreloadingAttemptSourcesUpdatedEventArgs(Network.LoaderId LoaderId, IEnumerable<PreloadingAttemptSource> PreloadingAttemptSources) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PreloadingAttemptSourcesUpdatedEventArgs(Network.LoaderId LoaderId, ImmutableArray<PreloadingAttemptSource> PreloadingAttemptSources) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Unique id

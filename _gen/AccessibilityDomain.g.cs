@@ -464,7 +464,7 @@ public sealed record LoadCompleteEventArgs(AXNode Root) : OpenQA.Selenium.BiDi.E
 /// <param name="Nodes">
 /// Updated node data.
 /// </param>
-public sealed record NodesUpdatedEventArgs(IEnumerable<AXNode> Nodes) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record NodesUpdatedEventArgs(ImmutableArray<AXNode> Nodes) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Unique accessibility node identifier.

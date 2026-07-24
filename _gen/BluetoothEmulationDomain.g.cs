@@ -101,7 +101,7 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulatePreconnectedPeripheralResult"/>.
     /// </returns>
-    public async Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, IEnumerable<ManufacturerData> manufacturerData, IEnumerable<string> knownServiceUuids, SimulatePreconnectedPeripheralCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, SimulatePreconnectedPeripheralCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulatePreconnectedPeripheralCommandParameters(Address: address, Name: name, ManufacturerData: manufacturerData, KnownServiceUuids: knownServiceUuids);
         return await ExecuteCommandAsync(SimulatePreconnectedPeripheralCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -470,7 +470,7 @@ public sealed record DisableCommandOptions : CdpCommandOptions
 public sealed record DisableResult() : EmptyResult;
 
 
-internal sealed record SimulatePreconnectedPeripheralCommandParameters(string Address, string Name, IEnumerable<ManufacturerData> ManufacturerData, IEnumerable<string> KnownServiceUuids) : Parameters;
+internal sealed record SimulatePreconnectedPeripheralCommandParameters(string Address, string Name, ImmutableArray<ManufacturerData> ManufacturerData, ImmutableArray<string> KnownServiceUuids) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="BluetoothEmulationDomain.SimulatePreconnectedPeripheralAsync"/>.

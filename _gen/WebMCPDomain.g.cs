@@ -215,7 +215,7 @@ public sealed record CancelInvocationResult() : EmptyResult;
 /// <param name="Tools">
 /// Array of tools that were added.
 /// </param>
-public sealed record ToolsAddedEventArgs(IEnumerable<Tool> Tools) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record ToolsAddedEventArgs(ImmutableArray<Tool> Tools) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Event fired when tools are removed.
@@ -223,7 +223,7 @@ public sealed record ToolsAddedEventArgs(IEnumerable<Tool> Tools) : OpenQA.Selen
 /// <param name="Tools">
 /// Array of tools that were removed.
 /// </param>
-public sealed record ToolsRemovedEventArgs(IEnumerable<RemovedTool> Tools) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record ToolsRemovedEventArgs(ImmutableArray<RemovedTool> Tools) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Event fired when a tool invocation starts.

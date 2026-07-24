@@ -122,7 +122,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportListReadersResultResult"/>.
     /// </returns>
-    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, IEnumerable<string> readers, ReportListReadersResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, ReportListReadersResultCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportListReadersResultCommandParameters(RequestId: requestId, Readers: readers);
         return await ExecuteCommandAsync(ReportListReadersResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -149,7 +149,7 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportGetStatusChangeResultResult"/>.
     /// </returns>
-    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, IEnumerable<ReaderStateOut> readerStates, ReportGetStatusChangeResultCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, ReportGetStatusChangeResultCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportGetStatusChangeResultCommandParameters(RequestId: requestId, ReaderStates: readerStates);
         return await ExecuteCommandAsync(ReportGetStatusChangeResultCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -634,7 +634,7 @@ public sealed record ReportReleaseContextResultCommandOptions : CdpCommandOption
 public sealed record ReportReleaseContextResultResult() : EmptyResult;
 
 
-internal sealed record ReportListReadersResultCommandParameters(string RequestId, IEnumerable<string> Readers) : Parameters;
+internal sealed record ReportListReadersResultCommandParameters(string RequestId, ImmutableArray<string> Readers) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="SmartCardEmulationDomain.ReportListReadersResultAsync"/>.
@@ -648,7 +648,7 @@ public sealed record ReportListReadersResultCommandOptions : CdpCommandOptions
 public sealed record ReportListReadersResultResult() : EmptyResult;
 
 
-internal sealed record ReportGetStatusChangeResultCommandParameters(string RequestId, IEnumerable<ReaderStateOut> ReaderStates) : Parameters;
+internal sealed record ReportGetStatusChangeResultCommandParameters(string RequestId, ImmutableArray<ReaderStateOut> ReaderStates) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="SmartCardEmulationDomain.ReportGetStatusChangeResultAsync"/>.
@@ -805,7 +805,7 @@ public sealed record ListReadersRequestedEventArgs(string RequestId, long Contex
 /// <param name="Timeout">
 /// in milliseconds, if absent, it means "infinite"
 /// </param>
-public sealed record GetStatusChangeRequestedEventArgs(string RequestId, long ContextId, IEnumerable<ReaderStateIn> ReaderStates, long? Timeout = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record GetStatusChangeRequestedEventArgs(string RequestId, long ContextId, ImmutableArray<ReaderStateIn> ReaderStates, long? Timeout = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when |SCardCancel| is called.

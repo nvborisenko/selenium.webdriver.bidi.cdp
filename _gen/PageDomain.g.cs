@@ -1298,7 +1298,7 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// A task representing the asynchronous operation, containing a <see cref="ProduceCompilationCacheResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(IEnumerable<CompilationCacheParams> scripts, ProduceCompilationCacheCommandOptions? options = default, CancellationToken cancellationToken = default)
+    public async Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, ProduceCompilationCacheCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
         var @params = new ProduceCompilationCacheCommandParameters(Scripts: scripts);
         return await ExecuteCommandAsync(ProduceCompilationCacheCommand, @params, options, cancellationToken).ConfigureAwait(false);
@@ -2778,7 +2778,7 @@ public sealed record SetDeviceOrientationOverrideCommandOptions : CdpCommandOpti
 public sealed record SetDeviceOrientationOverrideResult() : EmptyResult;
 
 
-internal sealed record SetFontFamiliesCommandParameters(FontFamilies FontFamilies, IEnumerable<ScriptFontFamilies>? ForScripts) : Parameters;
+internal sealed record SetFontFamiliesCommandParameters(FontFamilies FontFamilies, ImmutableArray<ScriptFontFamilies>? ForScripts) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="PageDomain.SetFontFamiliesAsync"/>.
@@ -2788,7 +2788,7 @@ public sealed record SetFontFamiliesCommandOptions : CdpCommandOptions
     /// <summary>
     /// Specifies font families to set for individual scripts.
     /// </summary>
-    public IEnumerable<ScriptFontFamilies>? ForScripts { get; init; }
+    public ImmutableArray<ScriptFontFamilies>? ForScripts { get; init; }
 }
 
 /// <summary>
@@ -3010,7 +3010,7 @@ public sealed record StopScreencastCommandOptions : CdpCommandOptions
 public sealed record StopScreencastResult() : EmptyResult;
 
 
-internal sealed record ProduceCompilationCacheCommandParameters(IEnumerable<CompilationCacheParams> Scripts) : Parameters;
+internal sealed record ProduceCompilationCacheCommandParameters(ImmutableArray<CompilationCacheParams> Scripts) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="PageDomain.ProduceCompilationCacheAsync"/>.
@@ -3450,7 +3450,7 @@ public sealed record LifecycleEventEventArgs(FrameId FrameId, Network.LoaderId L
 /// <param name="NotRestoredExplanationsTree">
 /// Tree structure of reasons why the page could not be cached for each frame.
 /// </param>
-public sealed record BackForwardCacheNotUsedEventArgs(Network.LoaderId LoaderId, FrameId FrameId, IEnumerable<BackForwardCacheNotRestoredExplanation> NotRestoredExplanations, BackForwardCacheNotRestoredExplanationTree? NotRestoredExplanationsTree = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record BackForwardCacheNotUsedEventArgs(Network.LoaderId LoaderId, FrameId FrameId, ImmutableArray<BackForwardCacheNotRestoredExplanation> NotRestoredExplanations, BackForwardCacheNotRestoredExplanationTree? NotRestoredExplanationsTree = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>
@@ -3510,7 +3510,7 @@ public sealed record ScreencastVisibilityChangedEventArgs(bool Visible) : OpenQA
 /// <param name="UserGesture">
 /// Whether or not it was triggered by user gesture.
 /// </param>
-public sealed record WindowOpenEventArgs(string Url, string WindowName, IEnumerable<string> WindowFeatures, bool UserGesture) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record WindowOpenEventArgs(string Url, string WindowName, ImmutableArray<string> WindowFeatures, bool UserGesture) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Issued for every compilation cache generated.
