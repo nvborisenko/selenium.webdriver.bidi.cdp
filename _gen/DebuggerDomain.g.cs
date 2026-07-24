@@ -16,12 +16,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Continues execution until specific location is reached.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TargetCallFrames</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="location">
     /// Location to continue to.
     /// </param>
@@ -66,12 +60,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Enables debugger for the given page. Clients should not assume that the debugging has been
     /// enabled until the result for this command is received.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>MaxScriptsCacheSize</b> - The maximum size in bytes of collected scripts (not referenced by other heap objects) the debugger can hold. Puts no limit if parameter is omitted.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="maxScriptsCacheSize">
     /// The maximum size in bytes of collected scripts (not referenced by other heap objects)
     /// the debugger can hold. Puts no limit if parameter is omitted.
@@ -95,18 +83,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Evaluates expression on a given call frame.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ObjectGroup</b> - String object group name to put result into (allows rapid releasing resulting object handles using <b>releaseObjectGroup</b>).</description></item>
-    /// <item><description><b>IncludeCommandLineAPI</b> - Specifies whether command line API should be available to the evaluated expression, defaults to false.</description></item>
-    /// <item><description><b>Silent</b> - In silent mode exceptions thrown during evaluation are not reported and do not pause execution. Overrides <b>setPauseOnException</b> state.</description></item>
-    /// <item><description><b>ReturnByValue</b> - Whether the result is expected to be a JSON object that should be sent by value.</description></item>
-    /// <item><description><b>GeneratePreview</b> - Whether preview should be generated for the result.</description></item>
-    /// <item><description><b>ThrowOnSideEffect</b> - Whether to throw an exception if side effect cannot be ruled out during evaluation.</description></item>
-    /// <item><description><b>Timeout</b> - Terminate execution after timing out (number of milliseconds).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="callFrameId">
     /// Call frame identifier to evaluate on.
     /// </param>
@@ -157,13 +133,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Returns possible locations for breakpoint. scriptId in start and end range locations should be
     /// the same.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>End</b> - End of range to search possible breakpoint locations in (excluding). When not specified, end of scripts is used as end of range.</description></item>
-    /// <item><description><b>RestrictToFunction</b> - Only consider locations which are in the same (non-nested) function as start.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="start">
     /// Start of range to search possible breakpoint locations in.
     /// </param>
@@ -382,12 +351,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Use the call frames from the <b>Debugger#paused</b> events instead, that fires
     /// once V8 pauses at the beginning of the restarted function.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Mode</b> - The <b>mode</b> parameter must be present and set to 'StepInto', otherwise <b>restartFrame</b> will error out.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="callFrameId">
     /// Call frame identifier to evaluate on.
     /// </param>
@@ -414,12 +377,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Resumes JavaScript execution.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TerminateOnResume</b> - Set to true to terminate execution upon resuming execution. In contrast to Runtime.terminateExecution, this will allows to execute further JavaScript (i.e. via evaluation) until execution of the paused code is actually resumed, at which point termination is triggered. If execution is currently not paused, this parameter has no effect.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="terminateOnResume">
     /// Set to true to terminate execution upon resuming execution. In contrast
     /// to Runtime.terminateExecution, this will allows to execute further
@@ -446,13 +403,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Searches for given string in script content.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>CaseSensitive</b> - If true, search is case sensitive.</description></item>
-    /// <item><description><b>IsRegex</b> - If true, treats string parameter as regex.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="scriptId">
     /// Id of the script to search in.
     /// </param>
@@ -534,12 +484,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// scripts with url matching one of the patterns. VM will try to leave blackboxed script by
     /// performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SkipAnonymous</b> - If true, also ignore scripts with no source url.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="patterns">
     /// Array of regexps that will be used to check script url for blackbox state.
     /// </param>
@@ -594,12 +538,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Sets JavaScript breakpoint at a given location.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Condition</b> - Expression to use as a breakpoint condition. When specified, debugger will only stop on the breakpoint if this expression evaluates to true.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="location">
     /// Location to set breakpoint in.
     /// </param>
@@ -651,16 +589,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <b>locations</b> property. Further matching script parsing will result in subsequent
     /// <b>breakpointResolved</b> events issued. This logical breakpoint will survive page reloads.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Url</b> - URL of the resources to set breakpoint on.</description></item>
-    /// <item><description><b>UrlRegex</b> - Regex pattern for the URLs of the resources to set breakpoints on. Either <b>url</b> or <b>urlRegex</b> must be specified.</description></item>
-    /// <item><description><b>ScriptHash</b> - Script hash of the resources to set breakpoint on.</description></item>
-    /// <item><description><b>ColumnNumber</b> - Offset in the line to set breakpoint at.</description></item>
-    /// <item><description><b>Condition</b> - Expression to use as a breakpoint condition. When specified, debugger will only stop on the breakpoint if this expression evaluates to true.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="lineNumber">
     /// Line number to set breakpoint at.
     /// </param>
@@ -702,12 +630,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// If another function was created from the same source as a given one,
     /// calling it will also trigger the breakpoint.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Condition</b> - Expression to use as a breakpoint condition. When specified, debugger will stop on the breakpoint if this expression evaluates to true.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="objectId">
     /// Function object id.
     /// </param>
@@ -809,13 +731,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// the live edit will be successful and a <b>Debugger.restartFrame</b> for the
     /// top-most function is automatically triggered.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>DryRun</b> - If true the change will not actually be applied. Dry run may be used to get result description without actually modifying the code.</description></item>
-    /// <item><description><b>AllowTopFrameEditing</b> - If true, then <b>scriptSource</b> is allowed to change the function on top of the stack as long as the top-most stack frame is the only activation of that function.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="scriptId">
     /// Id of the script to edit.
     /// </param>
@@ -904,13 +819,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Steps into the function call.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BreakOnAsyncCall</b> - Debugger will pause on the execution of the first async task which was scheduled before next pause.</description></item>
-    /// <item><description><b>SkipList</b> - The skipList specifies location ranges that should be skipped on step into.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="breakOnAsyncCall">
     /// Debugger will pause on the execution of the first async task which was scheduled
     /// before next pause.
@@ -956,12 +864,6 @@ public sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Steps over the statement.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SkipList</b> - The skipList specifies location ranges that should be skipped on step over.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="skipList">
     /// The skipList specifies location ranges that should be skipped on step over.
     /// </param>

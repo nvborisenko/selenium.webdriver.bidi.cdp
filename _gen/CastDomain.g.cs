@@ -21,12 +21,6 @@ public sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// Also starts observing for issue messages. When an issue is added or removed,
     /// an |issueUpdated| event is fired.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>PresentationUrl</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="presentationUrl">
     /// </param>
     /// <param name="session">

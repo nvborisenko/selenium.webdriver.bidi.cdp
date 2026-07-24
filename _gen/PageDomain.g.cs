@@ -38,14 +38,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Evaluates given script in every frame upon creation (before loading frame's scripts).
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>WorldName</b> - If specified, creates an isolated world with the given name and evaluates given script in it. This world name will be used as the ExecutionContextDescription::name when the corresponding event is emitted.</description></item>
-    /// <item><description><b>IncludeCommandLineAPI</b> - Specifies whether command line API should be available to the script, defaults to false.</description></item>
-    /// <item><description><b>RunImmediately</b> - If true, runs the script immediately on existing execution contexts or worlds. Default: false.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="source">
     /// </param>
     /// <param name="worldName">
@@ -99,17 +91,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Capture page screenshot.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Format</b> - Image compression format (defaults to png).</description></item>
-    /// <item><description><b>Quality</b> - Compression quality from range [0..100] (jpeg only).</description></item>
-    /// <item><description><b>Clip</b> - Capture the screenshot of a given region only.</description></item>
-    /// <item><description><b>FromSurface</b> - Capture the screenshot from the surface, rather than the view. Defaults to true.</description></item>
-    /// <item><description><b>CaptureBeyondViewport</b> - Capture the screenshot beyond the viewport. Defaults to false.</description></item>
-    /// <item><description><b>OptimizeForSpeed</b> - Optimize image encoding for speed, not for resulting size (defaults to false)</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="format">
     /// Image compression format (defaults to png).
     /// </param>
@@ -148,12 +129,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// Returns a snapshot of the page as a string. For MHTML format, the serialization includes
     /// iframes, shadow DOM, external resources, and element-inline styles.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Format</b> - Format (defaults to mhtml).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="format">
     /// Format (defaults to mhtml).
     /// </param>
@@ -239,14 +214,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Creates an isolated world for the given frame.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>WorldName</b> - An optional name which is reported in the Execution Context.</description></item>
-    /// <item><description><b>GrantUniveralAccess</b> - Whether or not universal access should be granted to the isolated world. This is a powerful option, use with caution.</description></item>
-    /// <item><description><b>ContentSecurityPolicy</b> - An optional content security policy to set for the isolated world. If omitted, any existing CSP for the world will be cleared. Note that clearing or updating the CSP does not immediately affect the active context in the same document because LocalDOMWindow caches the ContentSecurityPolicy object. The change takes effect on subsequent navigations when a new window context is created.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameId">
     /// Id of the frame in which the isolated world should be created.
     /// </param>
@@ -330,12 +297,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Enables page domain notifications.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>EnableFileChooserOpenedEvent</b> - If true, the <b>Page.fileChooserOpened</b> event will be emitted regardless of the state set by <b>Page.setInterceptFileChooserDialog</b> command (default: false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enableFileChooserOpenedEvent">
     /// If true, the <b>Page.fileChooserOpened</b> event will be emitted regardless of the state set by
     /// <b>Page.setInterceptFileChooserDialog</b> command (default: false).
@@ -363,12 +324,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     ///     current document, this API errors out.
     ///   If there is not a loaded page, this API errors out immediately.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ManifestId</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="manifestId">
     /// </param>
     /// <param name="session">
@@ -594,12 +549,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Accepts or dismisses a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload).
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>PromptText</b> - The text to enter into the dialog prompt before accepting. Used only if this is a prompt dialog.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="accept">
     /// Whether to accept or dismiss the dialog.
     /// </param>
@@ -626,15 +575,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Navigates current page to the given URL.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Referrer</b> - Referrer URL.</description></item>
-    /// <item><description><b>TransitionType</b> - Intended transition type.</description></item>
-    /// <item><description><b>FrameId</b> - Frame id to navigate, if not specified navigates the top frame.</description></item>
-    /// <item><description><b>ReferrerPolicy</b> - Referrer-policy used for the navigation.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="url">
     /// URL to navigate the page to.
     /// </param>
@@ -691,28 +631,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Print page as PDF.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Landscape</b> - Paper orientation. Defaults to false.</description></item>
-    /// <item><description><b>DisplayHeaderFooter</b> - Display header and footer. Defaults to false.</description></item>
-    /// <item><description><b>PrintBackground</b> - Print background graphics. Defaults to false.</description></item>
-    /// <item><description><b>Scale</b> - Scale of the webpage rendering. Defaults to 1.</description></item>
-    /// <item><description><b>PaperWidth</b> - Paper width in inches. Defaults to 8.5 inches.</description></item>
-    /// <item><description><b>PaperHeight</b> - Paper height in inches. Defaults to 11 inches.</description></item>
-    /// <item><description><b>MarginTop</b> - Top margin in inches. Defaults to 1cm (~0.4 inches).</description></item>
-    /// <item><description><b>MarginBottom</b> - Bottom margin in inches. Defaults to 1cm (~0.4 inches).</description></item>
-    /// <item><description><b>MarginLeft</b> - Left margin in inches. Defaults to 1cm (~0.4 inches).</description></item>
-    /// <item><description><b>MarginRight</b> - Right margin in inches. Defaults to 1cm (~0.4 inches).</description></item>
-    /// <item><description><b>PageRanges</b> - Paper ranges to print, one based, e.g., '1-5, 8, 11-13'. Pages are printed in the document order, not in the order specified, and no more than once. Defaults to empty string, which implies the entire document is printed. The page numbers are quietly capped to actual page count of the document, and ranges beyond the end of the document are ignored. If this results in no pages to print, an error is reported. It is an error to specify a range with start greater than end.</description></item>
-    /// <item><description><b>HeaderTemplate</b> - HTML template for the print header. Should be valid HTML markup with following classes used to inject printing values into them: - <b>date</b>: formatted print date - <b>title</b>: document title - <b>url</b>: document location - <b>pageNumber</b>: current page number - <b>totalPages</b>: total pages in the document  For example, <b>&lt;span class=title&gt;&lt;/span&gt;</b> would generate span containing the title.</description></item>
-    /// <item><description><b>FooterTemplate</b> - HTML template for the print footer. Should use the same format as the <b>headerTemplate</b>.</description></item>
-    /// <item><description><b>PreferCSSPageSize</b> - Whether or not to prefer page size as defined by css. Defaults to false, in which case the content will be scaled to fit the paper size.</description></item>
-    /// <item><description><b>TransferMode</b> - return as stream</description></item>
-    /// <item><description><b>GenerateTaggedPDF</b> - Whether or not to generate tagged (accessible) PDF. Defaults to embedder choice.</description></item>
-    /// <item><description><b>GenerateDocumentOutline</b> - Whether or not to embed the document outline into the PDF.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="landscape">
     /// Paper orientation. Defaults to false.
     /// </param>
@@ -799,14 +717,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Reloads given page optionally ignoring the cache.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IgnoreCache</b> - If true, browser cache is ignored (as if the user pressed Shift+refresh).</description></item>
-    /// <item><description><b>ScriptToEvaluateOnLoad</b> - If set, the script will be injected into all frames of the inspected page after reload. Argument will be ignored if reloading dataURL origin.</description></item>
-    /// <item><description><b>LoaderId</b> - If set, an error will be thrown if the target page's main frame's loader id does not match the provided id. This prevents accidentally reloading an unintended target in case there's a racing navigation.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="ignoreCache">
     /// If true, browser cache is ignored (as if the user pressed Shift+refresh).
     /// </param>
@@ -905,13 +815,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Searches for given string in resource content.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>CaseSensitive</b> - If true, search is case sensitive.</description></item>
-    /// <item><description><b>IsRegex</b> - If true, treats string parameter as regex.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameId">
     /// Frame id for resource to search in.
     /// </param>
@@ -1038,19 +941,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
     /// query results).
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Scale</b> - Scale to apply to resulting view image.</description></item>
-    /// <item><description><b>ScreenWidth</b> - Overriding screen width value in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>ScreenHeight</b> - Overriding screen height value in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>PositionX</b> - Overriding view X position on screen in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>PositionY</b> - Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>DontSetVisibleSize</b> - Do not set visible view size, rely upon explicit setVisibleSize call.</description></item>
-    /// <item><description><b>ScreenOrientation</b> - Screen orientation override.</description></item>
-    /// <item><description><b>Viewport</b> - The viewport dimensions and scale. If not set, the override is cleared.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="width">
     /// Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
     /// </param>
@@ -1139,12 +1029,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Set generic font families.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ForScripts</b> - Specifies font families to set for individual scripts.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="fontFamilies">
     /// Specifies font families to set. If a font family is not specified, it won't be changed.
     /// </param>
@@ -1219,12 +1103,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Set the behavior when downloading a file.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>DownloadPath</b> - The default path to save downloaded files to. This is required if behavior is set to 'allow'</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="behavior">
     /// Whether to allow all or deny all download requests, or use default Chrome behavior if
     /// available (otherwise deny).
@@ -1254,14 +1132,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
     /// unavailable.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Latitude</b> - Mock latitude</description></item>
-    /// <item><description><b>Longitude</b> - Mock longitude</description></item>
-    /// <item><description><b>Accuracy</b> - Mock accuracy</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="latitude">
     /// Mock latitude
     /// </param>
@@ -1313,12 +1183,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Toggles mouse event-based touch event emulation.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Configuration</b> - Touch/gesture events configuration. Default: current platform.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enabled">
     /// Whether the touch event emulation should be enabled.
     /// </param>
@@ -1346,16 +1210,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Starts sending each frame using the <b>screencastFrame</b> event.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Format</b> - Image compression format.</description></item>
-    /// <item><description><b>Quality</b> - Compression quality from range [0..100].</description></item>
-    /// <item><description><b>MaxWidth</b> - Maximum screenshot width.</description></item>
-    /// <item><description><b>MaxHeight</b> - Maximum screenshot height.</description></item>
-    /// <item><description><b>EveryNthFrame</b> - Send every n-th frame.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="format">
     /// Image compression format.
     /// </param>
@@ -1613,12 +1467,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// <summary>
     /// Generates a report for testing.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Group</b> - Specifies the endpoint group to deliver the report to.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="message">
     /// Message to be displayed in the report.
     /// </param>
@@ -1667,12 +1515,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// When file chooser interception is enabled, native file chooser dialog is not shown.
     /// Instead, a protocol event <b>Page.fileChooserOpened</b> is emitted.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Cancel</b> - If true, cancels the dialog by emitting relevant events (if any) in addition to not showing it if the interception is enabled (default: false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enabled">
     /// </param>
     /// <param name="cancel">
@@ -1728,12 +1570,6 @@ public sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     /// Get the annotated page content for the main frame.
     /// This is an experimental command that is subject to change.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IncludeActionableInformation</b> - Whether to include actionable information. Defaults to true.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="includeActionableInformation">
     /// Whether to include actionable information. Defaults to true.
     /// </param>

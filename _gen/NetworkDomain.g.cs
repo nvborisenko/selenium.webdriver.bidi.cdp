@@ -161,18 +161,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// event will be sent with the same InterceptionId.
     /// Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ErrorReason</b> - If set this causes the request to fail with the given reason. Passing <b>Aborted</b> for requests marked with <b>isNavigationRequest</b> also cancels the navigation. Must not be set in response to an authChallenge.</description></item>
-    /// <item><description><b>RawResponse</b> - If set the requests completes using with the provided base64 encoded raw response, including HTTP status line and headers etc... Must not be set in response to an authChallenge. (Encoded as a base64 string when passed over JSON)</description></item>
-    /// <item><description><b>Url</b> - If set the request url will be modified in a way that's not observable by page. Must not be set in response to an authChallenge.</description></item>
-    /// <item><description><b>Method</b> - If set this allows the request method to be overridden. Must not be set in response to an authChallenge.</description></item>
-    /// <item><description><b>PostData</b> - If set this allows postData to be set. Must not be set in response to an authChallenge.</description></item>
-    /// <item><description><b>Headers</b> - If set this allows the request headers to be changed. Must not be set in response to an authChallenge.</description></item>
-    /// <item><description><b>AuthChallengeResponse</b> - Response to a requestIntercepted with an authChallenge. Must not be set otherwise.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="interceptionId">
     /// </param>
     /// <param name="errorReason">
@@ -223,15 +211,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Deletes browser cookies with matching name and url or domain/path/partitionKey pair.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Url</b> - If specified, deletes all the cookies with the given name where domain and path match provided URL.</description></item>
-    /// <item><description><b>Domain</b> - If specified, deletes only cookies with the exact domain.</description></item>
-    /// <item><description><b>Path</b> - If specified, deletes only cookies with the exact path.</description></item>
-    /// <item><description><b>PartitionKey</b> - If specified, deletes only cookies with the the given name and partitionKey where all partition key attributes match the cookie partition key attribute.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="name">
     /// Name of the cookies to remove.
     /// </param>
@@ -288,15 +267,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Activates emulation of network conditions. This command is deprecated in favor of the emulateNetworkConditionsByRule
     /// and overrideNetworkState commands, which can be used together to the same effect.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ConnectionType</b> - Connection type if known.</description></item>
-    /// <item><description><b>PacketLoss</b> - WebRTC packet loss (percent, 0-100). 0 disables packet loss emulation, 100 drops all the packets.</description></item>
-    /// <item><description><b>PacketQueueLength</b> - WebRTC packet queue length (packet). 0 removes any queue length limitations.</description></item>
-    /// <item><description><b>PacketReordering</b> - WebRTC packetReordering feature.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="offline">
     /// True to emulate internet disconnection.
     /// </param>
@@ -343,13 +313,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Network.emulateNetworkConditions this method does not affect <b>navigator</b> state. Use Network.overrideNetworkState to
     /// explicitly modify <b>navigator</b> behavior.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Offline</b> - True to emulate internet disconnection. Deprecated, use the offline property in matchedNetworkConditions or emulateOfflineServiceWorker instead.</description></item>
-    /// <item><description><b>EmulateOfflineServiceWorker</b> - True to emulate offline service worker.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="matchedNetworkConditions">
     /// Configure conditions for matching requests. If multiple entries match a request, the first entry wins.  Global
     /// conditions can be configured by leaving the urlPattern for the conditions empty. These global conditions are
@@ -382,12 +345,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Override the state of navigator.onLine and navigator.connection.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ConnectionType</b> - Connection type if known.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="offline">
     /// True to emulate internet disconnection.
     /// </param>
@@ -423,16 +380,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Enables network tracking, network events will now be delivered to the client.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>MaxTotalBufferSize</b> - Buffer size in bytes to use when preserving network payloads (XHRs, etc). This is the maximum number of bytes that will be collected by this DevTools session.</description></item>
-    /// <item><description><b>MaxResourceBufferSize</b> - Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
-    /// <item><description><b>MaxPostDataSize</b> - Longest post body size (in bytes) that would be included in requestWillBeSent notification</description></item>
-    /// <item><description><b>ReportDirectSocketTraffic</b> - Whether DirectSocket chunk send/receive events should be reported.</description></item>
-    /// <item><description><b>EnableDurableMessages</b> - Enable storing response bodies outside of renderer, so that these survive a cross-process navigation. Requires maxTotalBufferSize to be set. Currently defaults to false. This field is being deprecated in favor of the dedicated configureDurableMessages command, due to the possibility of deadlocks when awaiting Network.enable before issuing Runtime.runIfWaitingForDebugger.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="maxTotalBufferSize">
     /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
     /// This is the maximum number of bytes that will be collected by this
@@ -475,13 +422,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// a cross-process navigation.
     /// If maxTotalBufferSize is not set, durable messages are disabled.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>MaxTotalBufferSize</b> - Buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
-    /// <item><description><b>MaxResourceBufferSize</b> - Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="maxTotalBufferSize">
     /// Buffer size in bytes to use when preserving network payloads (XHRs, etc).
     /// </param>
@@ -554,12 +494,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Returns all browser cookies for the current URL. Depending on the backend support, will return
     /// detailed cookie information in the <b>cookies</b> field.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Urls</b> - The list of URLs for which applicable cookies will be fetched. If not specified, it's assumed to be set to the list containing the URLs of the page and all of its subframes.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="urls">
     /// The list of URLs for which applicable cookies will be fetched.
     /// If not specified, it's assumed to be set to the list containing
@@ -701,13 +635,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Searches for given string in response content.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>CaseSensitive</b> - If true, search is case sensitive.</description></item>
-    /// <item><description><b>IsRegex</b> - If true, treats string parameter as regex.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="requestId">
     /// Identifier of the network response to search.
     /// </param>
@@ -740,13 +667,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Blocks URLs from loading.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>UrlPatterns</b> - Patterns to match in the order in which they are given. These patterns also take precedence over any wildcard patterns defined in <b>urls</b>.</description></item>
-    /// <item><description><b>Urls</b> - URL patterns to block. Wildcards ('*') are allowed.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="urlPatterns">
     /// Patterns to match in the order in which they are given. These patterns
     /// also take precedence over any wildcard patterns defined in <b>urls</b>.
@@ -818,22 +738,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Url</b> - The request-URI to associate with the setting of the cookie. This value can affect the default domain, path, source port, and source scheme values of the created cookie.</description></item>
-    /// <item><description><b>Domain</b> - Cookie domain.</description></item>
-    /// <item><description><b>Path</b> - Cookie path.</description></item>
-    /// <item><description><b>Secure</b> - True if cookie is secure.</description></item>
-    /// <item><description><b>HttpOnly</b> - True if cookie is http-only.</description></item>
-    /// <item><description><b>SameSite</b> - Cookie SameSite type.</description></item>
-    /// <item><description><b>Expires</b> - Cookie expiration date, session cookie if not set</description></item>
-    /// <item><description><b>Priority</b> - Cookie Priority type.</description></item>
-    /// <item><description><b>SourceScheme</b> - Cookie source scheme type.</description></item>
-    /// <item><description><b>SourcePort</b> - Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port. An unspecified port value allows protocol clients to emulate legacy cookie scope for the port. This is a temporary ability and it will be removed in the future.</description></item>
-    /// <item><description><b>PartitionKey</b> - Cookie partition key. If not set, the cookie will be set as not partitioned.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="name">
     /// Cookie name.
     /// </param>
@@ -988,14 +892,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Allows overriding user agent with the given string.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>AcceptLanguage</b> - Browser language to emulate.</description></item>
-    /// <item><description><b>Platform</b> - The platform navigator.platform should return.</description></item>
-    /// <item><description><b>UserAgentMetadata</b> - To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="userAgent">
     /// User agent to use.
     /// </param>
@@ -1051,12 +947,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Returns information about the COEP/COOP isolation status.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FrameId</b> - If no frameId is provided, the status of the target is provided.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameId">
     /// If no frameId is provided, the status of the target is provided.
     /// </param>
@@ -1172,12 +1062,6 @@ public sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Fetches the resource and returns the content.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FrameId</b> - Frame id to get the resource for. Mandatory for frame targets, and should be omitted for worker targets.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="url">
     /// URL of the resource to get content for.
     /// </param>

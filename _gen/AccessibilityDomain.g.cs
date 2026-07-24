@@ -54,15 +54,6 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <summary>
     /// Fetches the accessibility node and partial accessibility tree for this DOM node, if it exists.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node to get the partial accessibility tree for.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to get the partial accessibility tree for.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper to get the partial accessibility tree for.</description></item>
-    /// <item><description><b>FetchRelatives</b> - Whether to fetch this node's ancestors, siblings and children. Defaults to true.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node to get the partial accessibility tree for.
     /// </param>
@@ -94,13 +85,6 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// <summary>
     /// Fetches the entire accessibility tree for the root Document
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Depth</b> - The maximum depth at which descendants of the root node should be retrieved. If omitted, the full tree is returned.</description></item>
-    /// <item><description><b>FrameId</b> - The frame for whose document the AX tree should be retrieved. If omitted, the root frame is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="depth">
     /// The maximum depth at which descendants of the root node should be retrieved.
     /// If omitted, the full tree is returned.
@@ -129,12 +113,6 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Fetches the root node.
     /// Requires <b>enable()</b> to have been called previously.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FrameId</b> - The frame in whose document the node resides. If omitted, the root frame is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameId">
     /// The frame in whose document the node resides.
     /// If omitted, the root frame is used.
@@ -159,14 +137,6 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Fetches a node and all ancestors up to and including the root.
     /// Requires <b>enable()</b> to have been called previously.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node to get.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to get.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper to get.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node to get.
     /// </param>
@@ -196,12 +166,6 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// Fetches a particular accessibility node by AXNodeId.
     /// Requires <b>enable()</b> to have been called previously.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FrameId</b> - The frame in whose document the node resides. If omitted, the root frame is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="id">
     /// </param>
     /// <param name="frameId">
@@ -231,16 +195,6 @@ public sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDri
     /// node is specified, or the DOM node does not exist, the command returns an error. If neither
     /// <b>accessibleName</b> or <b>role</b> is specified, it returns all the accessibility nodes in the subtree.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node for the root to query.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node for the root to query.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper for the root to query.</description></item>
-    /// <item><description><b>AccessibleName</b> - Find nodes with this computed name.</description></item>
-    /// <item><description><b>Role</b> - Find nodes with this computed role.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node for the root to query.
     /// </param>

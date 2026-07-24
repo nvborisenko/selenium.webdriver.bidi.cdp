@@ -22,12 +22,6 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Inserts a new rule with the given <b>ruleText</b> in a stylesheet with given <b>styleSheetId</b>, at the
     /// position specified by <b>location</b>.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeForPropertySyntaxValidation</b> - NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="styleSheetId">
     /// The css style sheet identifier where a new rule should be inserted.
     /// </param>
@@ -82,12 +76,6 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Creates a new special "via-inspector" stylesheet in the frame with given <b>frameId</b>.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Force</b> - If true, creates a new stylesheet for every call. If false, returns a stylesheet previously created by a call with force=false for the frame's document if it exists or creates a new stylesheet (default: false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameId">
     /// Identifier of the frame where "via-inspector" stylesheet should be created.
     /// </param>
@@ -258,14 +246,6 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Note: this function currently does not resolve CSS random() function,
     /// it returns unmodified random() function parts.`
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>PropertyName</b> - Only longhands and custom property names are accepted.</description></item>
-    /// <item><description><b>PseudoType</b> - Pseudo element type, only works for pseudo elements that generate elements in the tree, such as ::before and ::after.</description></item>
-    /// <item><description><b>PseudoIdentifier</b> - Pseudo element custom ident.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="values">
     /// Cascade-dependent keywords (revert/revert-layer) do not work.
     /// </param>
@@ -522,12 +502,6 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// so passing a new node id removes tracking from the previous node.
     /// Pass <b>undefined</b> to disable tracking.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// </param>
     /// <param name="session">
@@ -870,12 +844,6 @@ public sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Applies specified style edits one after another in the given order.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeForPropertySyntaxValidation</b> - NodeId for the DOM node in whose context custom property declarations for registered properties should be validated. If omitted, declarations in the new rule text can only be validated statically, which may produce incorrect results if the declaration contains a var() for example.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="edits">
     /// </param>
     /// <param name="nodeForPropertySyntaxValidation">

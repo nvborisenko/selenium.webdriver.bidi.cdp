@@ -15,14 +15,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Set permission settings for given embedding and embedded origins.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Origin</b> - Embedding origin the permission applies to, all origins if not specified.</description></item>
-    /// <item><description><b>EmbeddedOrigin</b> - Embedded origin the permission applies to. It is ignored unless the embedding origin is present and valid. If the embedding origin is provided but the embedded origin isn't, the embedding origin is used as the embedded origin.</description></item>
-    /// <item><description><b>BrowserContextId</b> - Context to override. When omitted, default browser context is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="permission">
     /// Descriptor of permission to override.
     /// </param>
@@ -61,13 +53,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Grant specific permissions to the given origin and reject all others. Deprecated. Use
     /// setPermission instead.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Origin</b> - Origin the permission applies to, all origins if not specified.</description></item>
-    /// <item><description><b>BrowserContextId</b> - BrowserContext to override permissions. When omitted, default browser context is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="permissions">
     /// </param>
     /// <param name="origin">
@@ -97,12 +82,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Reset all permission management for all origins.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BrowserContextId</b> - BrowserContext to reset permissions. When omitted, default browser context is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="browserContextId">
     /// BrowserContext to reset permissions. When omitted, default browser context is used.
     /// </param>
@@ -125,14 +104,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Set the behavior when downloading a file.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BrowserContextId</b> - BrowserContext to set download behavior. When omitted, default browser context is used.</description></item>
-    /// <item><description><b>DownloadPath</b> - The default path to save downloaded files to. This is required if behavior is set to 'allow' or 'allowAndName'.</description></item>
-    /// <item><description><b>EventsEnabled</b> - Whether to emit download events (defaults to false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="behavior">
     /// Whether to allow all or deny all download requests, or use default Chrome behavior if
     /// available (otherwise deny). |allowAndName| allows download and names files according to
@@ -168,12 +139,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Cancel a download if in progress
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BrowserContextId</b> - BrowserContext to perform the action in. When omitted, default browser context is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="guid">
     /// Global unique identifier of the download.
     /// </param>
@@ -299,13 +264,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Get Chrome histograms.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Query</b> - Requested substring in name. Only histograms which have query as a substring in their name are extracted. An empty or absent query returns all histograms.</description></item>
-    /// <item><description><b>Delta</b> - If true, retrieve delta since last delta call.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="query">
     /// Requested substring in name. Only histograms which have query as a
     /// substring in their name are extracted. An empty or absent query returns
@@ -334,12 +292,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Get a Chrome histogram by name.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Delta</b> - If true, retrieve delta since last delta call.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="name">
     /// Requested histogram name.
     /// </param>
@@ -389,12 +341,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Get the browser window that contains the devtools target.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TargetId</b> - Devtools agent host id. If called as a part of the session, associated targetId is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="targetId">
     /// Devtools agent host id. If called as a part of the session, associated targetId is used.
     /// </param>
@@ -445,13 +391,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Set size of the browser contents resizing browser window as necessary.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Width</b> - The window contents width in DIP. Assumes current width if omitted. Must be specified if 'height' is omitted.</description></item>
-    /// <item><description><b>Height</b> - The window contents height in DIP. Assumes current height if omitted. Must be specified if 'width' is omitted.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="windowId">
     /// Browser window id.
     /// </param>
@@ -483,13 +422,6 @@ public sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Set dock tile details, platform-specific.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BadgeLabel</b></description></item>
-    /// <item><description><b>Image</b> - Png encoded image. (Encoded as a base64 string when passed over JSON)</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="badgeLabel">
     /// </param>
     /// <param name="image">

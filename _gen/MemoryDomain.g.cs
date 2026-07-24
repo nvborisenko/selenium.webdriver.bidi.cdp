@@ -136,13 +136,6 @@ public sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Start collecting native memory profile.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SamplingInterval</b> - Average number of bytes between samples.</description></item>
-    /// <item><description><b>SuppressRandomness</b> - Do not randomize intervals between samples.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="samplingInterval">
     /// Average number of bytes between samples.
     /// </param>

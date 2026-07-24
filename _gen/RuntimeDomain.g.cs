@@ -19,13 +19,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Add handler to promise with given promise object id.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ReturnByValue</b> - Whether the result is expected to be a JSON object that should be sent by value.</description></item>
-    /// <item><description><b>GeneratePreview</b> - Whether preview should be generated for the result.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="promiseObjectId">
     /// Identifier of the promise.
     /// </param>
@@ -55,23 +48,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Calls function with given declaration on the given object. Object group of the result is
     /// inherited from the target object.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ObjectId</b> - Identifier of the object to call function on. Either objectId or executionContextId should be specified.</description></item>
-    /// <item><description><b>Arguments</b> - Call arguments. All call arguments must belong to the same JavaScript world as the target object.</description></item>
-    /// <item><description><b>Silent</b> - In silent mode exceptions thrown during evaluation are not reported and do not pause execution. Overrides <b>setPauseOnException</b> state.</description></item>
-    /// <item><description><b>ReturnByValue</b> - Whether the result is expected to be a JSON object which should be sent by value. Can be overriden by <b>serializationOptions</b>.</description></item>
-    /// <item><description><b>GeneratePreview</b> - Whether preview should be generated for the result.</description></item>
-    /// <item><description><b>UserGesture</b> - Whether execution should be treated as initiated by user in the UI.</description></item>
-    /// <item><description><b>AwaitPromise</b> - Whether execution should <b>await</b> for resulting value and return once awaited promise is resolved.</description></item>
-    /// <item><description><b>ExecutionContextId</b> - Specifies execution context which global object will be used to call function on. Either executionContextId or objectId should be specified.</description></item>
-    /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release multiple objects. If objectGroup is not specified and objectId is, objectGroup will be inherited from object.</description></item>
-    /// <item><description><b>ThrowOnSideEffect</b> - Whether to throw an exception if side effect cannot be ruled out during evaluation.</description></item>
-    /// <item><description><b>UniqueContextId</b> - An alternative way to specify the execution context to call function on. Compared to contextId that may be reused across processes, this is guaranteed to be system-unique, so it can be used to prevent accidental function call in context different than intended (e.g. as a result of navigation across process boundaries). This is mutually exclusive with <b>executionContextId</b>.</description></item>
-    /// <item><description><b>SerializationOptions</b> - Specifies the result serialization. If provided, overrides <b>generatePreview</b> and <b>returnByValue</b>.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="functionDeclaration">
     /// Declaration of the function to call.
     /// </param>
@@ -143,12 +119,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Compiles expression.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ExecutionContextId</b> - Specifies in which execution context to perform script run. If the parameter is omitted the evaluation will be performed in the context of the inspected page.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="expression">
     /// Expression to compile.
     /// </param>
@@ -240,26 +210,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Evaluates expression on global object.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release multiple objects.</description></item>
-    /// <item><description><b>IncludeCommandLineAPI</b> - Determines whether Command Line API should be available during the evaluation.</description></item>
-    /// <item><description><b>Silent</b> - In silent mode exceptions thrown during evaluation are not reported and do not pause execution. Overrides <b>setPauseOnException</b> state.</description></item>
-    /// <item><description><b>ContextId</b> - Specifies in which execution context to perform evaluation. If the parameter is omitted the evaluation will be performed in the context of the inspected page. This is mutually exclusive with <b>uniqueContextId</b>, which offers an alternative way to identify the execution context that is more reliable in a multi-process environment.</description></item>
-    /// <item><description><b>ReturnByValue</b> - Whether the result is expected to be a JSON object that should be sent by value.</description></item>
-    /// <item><description><b>GeneratePreview</b> - Whether preview should be generated for the result.</description></item>
-    /// <item><description><b>UserGesture</b> - Whether execution should be treated as initiated by user in the UI.</description></item>
-    /// <item><description><b>AwaitPromise</b> - Whether execution should <b>await</b> for resulting value and return once awaited promise is resolved.</description></item>
-    /// <item><description><b>ThrowOnSideEffect</b> - Whether to throw an exception if side effect cannot be ruled out during evaluation. This implies <b>disableBreaks</b> below.</description></item>
-    /// <item><description><b>Timeout</b> - Terminate execution after timing out (number of milliseconds).</description></item>
-    /// <item><description><b>DisableBreaks</b> - Disable breakpoints during execution.</description></item>
-    /// <item><description><b>ReplMode</b> - Setting this flag to true enables <b>let</b> re-declaration and top-level <b>await</b>. Note that <b>let</b> variables can only be re-declared if they originate from <b>replMode</b> themselves.</description></item>
-    /// <item><description><b>AllowUnsafeEvalBlockedByCSP</b> - The Content Security Policy (CSP) for the target might block 'unsafe-eval' which includes eval(), Function(), setTimeout() and setInterval() when called with non-callable arguments. This flag bypasses CSP for this evaluation and allows unsafe-eval. Defaults to true.</description></item>
-    /// <item><description><b>UniqueContextId</b> - An alternative way to specify the execution context to evaluate in. Compared to contextId that may be reused across processes, this is guaranteed to be system-unique, so it can be used to prevent accidental evaluation of the expression in context different than intended (e.g. as a result of navigation across process boundaries). This is mutually exclusive with <b>contextId</b>.</description></item>
-    /// <item><description><b>SerializationOptions</b> - Specifies the result serialization. If provided, overrides <b>generatePreview</b> and <b>returnByValue</b>.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="expression">
     /// Expression to evaluate.
     /// </param>
@@ -387,15 +337,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Returns properties of a given object. Object group of the result is inherited from the target
     /// object.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>OwnProperties</b> - If true, returns properties belonging only to the element itself, not to its prototype chain.</description></item>
-    /// <item><description><b>AccessorPropertiesOnly</b> - If true, returns accessor properties (with getter/setter) only; internal properties are not returned either.</description></item>
-    /// <item><description><b>GeneratePreview</b> - Whether preview should be generated for the results.</description></item>
-    /// <item><description><b>NonIndexedPropertiesOnly</b> - If true, returns non-indexed properties only.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="objectId">
     /// Identifier of the object to return properties for.
     /// </param>
@@ -432,12 +373,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Returns all let, const and class variables from global scope.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ExecutionContextId</b> - Specifies in which execution context to lookup global scope variables.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="executionContextId">
     /// Specifies in which execution context to lookup global scope variables.
     /// </param>
@@ -459,12 +394,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release the results.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="prototypeObjectId">
     /// Identifier of the prototype to return objects for.
     /// </param>
@@ -553,18 +482,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Runs script with given id in a given context.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ExecutionContextId</b> - Specifies in which execution context to perform script run. If the parameter is omitted the evaluation will be performed in the context of the inspected page.</description></item>
-    /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release multiple objects.</description></item>
-    /// <item><description><b>Silent</b> - In silent mode exceptions thrown during evaluation are not reported and do not pause execution. Overrides <b>setPauseOnException</b> state.</description></item>
-    /// <item><description><b>IncludeCommandLineAPI</b> - Determines whether Command Line API should be available during the evaluation.</description></item>
-    /// <item><description><b>ReturnByValue</b> - Whether the result is expected to be a JSON object which should be sent by value.</description></item>
-    /// <item><description><b>GeneratePreview</b> - Whether preview should be generated for the result.</description></item>
-    /// <item><description><b>AwaitPromise</b> - Whether execution should <b>await</b> for resulting value and return once awaited promise is resolved.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="scriptId">
     /// Id of the script to run.
     /// </param>
@@ -702,13 +619,6 @@ public sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// in case of any other input, function throws an exception.
     /// Each binding function call produces Runtime.bindingCalled notification.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ExecutionContextId</b> - If specified, the binding would only be exposed to the specified execution context. If omitted and <b>executionContextName</b> is not set, the binding is exposed to all execution contexts of the target. This parameter is mutually exclusive with <b>executionContextName</b>. Deprecated in favor of <b>executionContextName</b> due to an unclear use case and bugs in implementation (crbug.com/1169639). <b>executionContextId</b> will be removed in the future.</description></item>
-    /// <item><description><b>ExecutionContextName</b> - If specified, the binding is exposed to the executionContext with matching name, even for contexts created after the binding is added. See also <b>ExecutionContext.name</b> and <b>worldName</b> parameter to <b>Page.addScriptToEvaluateOnNewDocument</b>. This parameter is mutually exclusive with <b>executionContextId</b>.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="name">
     /// </param>
     /// <param name="executionContextId">

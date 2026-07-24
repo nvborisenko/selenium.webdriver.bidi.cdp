@@ -96,13 +96,6 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Request a global memory dump.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Deterministic</b> - Enables more deterministic results by forcing garbage collection</description></item>
-    /// <item><description><b>LevelOfDetail</b> - Specifies level of details in memory dump. Defaults to "detailed".</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="deterministic">
     /// Enables more deterministic results by forcing garbage collection
     /// </param>
@@ -129,22 +122,6 @@ public sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Start trace events collection.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Categories</b> - Category/tag filter</description></item>
-    /// <item><description><b>Options</b> - Tracing options</description></item>
-    /// <item><description><b>BufferUsageReportingInterval</b> - If set, the agent will issue bufferUsage events at this interval, specified in milliseconds</description></item>
-    /// <item><description><b>TransferMode</b> - Whether to report trace events as series of dataCollected events or to save trace to a stream (defaults to <b>ReportEvents</b>).</description></item>
-    /// <item><description><b>StreamFormat</b> - Trace data format to use. This only applies when using <b>ReturnAsStream</b> transfer mode (defaults to <b>json</b>).</description></item>
-    /// <item><description><b>StreamCompression</b> - Compression format to use. This only applies when using <b>ReturnAsStream</b> transfer mode (defaults to <b>none</b>)</description></item>
-    /// <item><description><b>TraceConfig</b></description></item>
-    /// <item><description><b>PerfettoConfig</b> - Base64-encoded serialized perfetto.protos.TraceConfig protobuf message When specified, the parameters <b>categories</b>, <b>options</b>, <b>traceConfig</b> are ignored. (Encoded as a base64 string when passed over JSON)</description></item>
-    /// <item><description><b>TracingBackend</b> - Backend type (defaults to <b>auto</b>)</description></item>
-    /// <item><description><b>ScreenshotMaxSize</b> - Maximum width and height (in pixels) of each captured screenshot. Only used when the <b>disabled-by-default-devtools.screenshot</b> category is enabled. Defaults to 500. The combined memory footprint of screenshots (<b>screenshotMaxSize</b> * <b>screenshotMaxSize</b> * 4 * <b>screenshotMaxCount</b>) is clamped to the existing per-session budget.</description></item>
-    /// <item><description><b>ScreenshotMaxCount</b> - Maximum number of screenshots captured during a single tracing session. Only used when the <b>disabled-by-default-devtools.screenshot</b> category is enabled. Defaults to 450. Clamped together with <b>screenshotMaxSize</b> to stay within the per-session screenshot memory budget.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="categories">
     /// Category/tag filter
     /// </param>

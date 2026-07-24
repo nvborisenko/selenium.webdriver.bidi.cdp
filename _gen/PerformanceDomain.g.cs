@@ -33,12 +33,6 @@ public sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <summary>
     /// Enable collecting and reporting metrics.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TimeDomain</b> - Time domain to use for collecting and reporting duration metrics.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="timeDomain">
     /// Time domain to use for collecting and reporting duration metrics.
     /// </param>

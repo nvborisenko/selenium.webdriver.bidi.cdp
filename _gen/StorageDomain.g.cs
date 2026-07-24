@@ -39,12 +39,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Returns storage key for the given frame. If no frame ID is provided,
     /// the storage key of the target executing this command is returned.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FrameId</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameId">
     /// </param>
     /// <param name="session">
@@ -116,12 +110,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Returns all browser cookies.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BrowserContextId</b> - Browser context to use when called on the browser endpoint.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="browserContextId">
     /// Browser context to use when called on the browser endpoint.
     /// </param>
@@ -144,12 +132,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Sets given cookies.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BrowserContextId</b> - Browser context to use when called on the browser endpoint.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="cookies">
     /// Cookies to be set.
     /// </param>
@@ -175,12 +157,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Clears cookies.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BrowserContextId</b> - Browser context to use when called on the browser endpoint.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="browserContextId">
     /// Browser context to use when called on the browser endpoint.
     /// </param>
@@ -225,12 +201,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Override quota for the specified origin
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>QuotaSize</b> - The quota size (in bytes) to override the original quota with. If this is called multiple times, the overridden quota will be equal to the quotaSize provided in the final call. If this is called without specifying a quotaSize, the quota will be reset to the default value for the specified origin. If this is called multiple times with different origins, the override will be maintained for each origin until it is disabled (called without a quotaSize).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="origin">
     /// Security origin.
     /// </param>
@@ -522,12 +492,6 @@ public sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Sets entry with <b>key</b> and <b>value</b> for a given origin's shared storage.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IgnoreIfPresent</b> - If <b>ignoreIfPresent</b> is included and true, then only sets the entry if <b>key</b> doesn't already exist.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="ownerOrigin">
     /// </param>
     /// <param name="key">

@@ -112,12 +112,6 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release multiple objects.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="objectId">
     /// </param>
     /// <param name="objectGroup">
@@ -159,15 +153,6 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SamplingInterval</b> - Average sample interval in bytes. Poisson distribution is used for the intervals. The default value is 32768 bytes.</description></item>
-    /// <item><description><b>StackDepth</b> - Maximum stack depth. The default value is 128.</description></item>
-    /// <item><description><b>IncludeObjectsCollectedByMajorGC</b> - By default, the sampling heap profiler reports only objects which are still alive when the profile is returned via getSamplingProfile or stopSampling, which is useful for determining what functions contribute the most to steady-state memory usage. This flag instructs the sampling heap profiler to also include information about objects discarded by major GC, which will show which functions cause large temporary memory usage or long GC pauses.</description></item>
-    /// <item><description><b>IncludeObjectsCollectedByMinorGC</b> - By default, the sampling heap profiler reports only objects which are still alive when the profile is returned via getSamplingProfile or stopSampling, which is useful for determining what functions contribute the most to steady-state memory usage. This flag instructs the sampling heap profiler to also include information about objects discarded by minor GC, which is useful when tuning a latency-sensitive application for minimal GC activity.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="samplingInterval">
     /// Average sample interval in bytes. Poisson distribution is used for the intervals. The
     /// default value is 32768 bytes.
@@ -211,12 +196,6 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TrackAllocations</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="trackAllocations">
     /// </param>
     /// <param name="session">
@@ -255,15 +234,6 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ReportProgress</b> - If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken when the tracking is stopped.</description></item>
-    /// <item><description><b>TreatGlobalObjectsAsRoots</b> - Deprecated in favor of <b>exposeInternals</b>.</description></item>
-    /// <item><description><b>CaptureNumericValue</b> - If true, numerical values are included in the snapshot</description></item>
-    /// <item><description><b>ExposeInternals</b> - If true, exposes internals of the snapshot.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="reportProgress">
     /// If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
     /// when the tracking is stopped.
@@ -295,15 +265,6 @@ public sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriv
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ReportProgress</b> - If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken.</description></item>
-    /// <item><description><b>TreatGlobalObjectsAsRoots</b> - If true, a raw snapshot without artificial roots will be generated. Deprecated in favor of <b>exposeInternals</b>.</description></item>
-    /// <item><description><b>CaptureNumericValue</b> - If true, numerical values are included in the snapshot</description></item>
-    /// <item><description><b>ExposeInternals</b> - If true, exposes internals of the snapshot.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="reportProgress">
     /// If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken.
     /// </param>

@@ -118,14 +118,6 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>MinRepeatCount</b> - The maximum number of times to replay the snapshot (1, if not specified).</description></item>
-    /// <item><description><b>MinDuration</b> - The minimum duration (in seconds) to replay the snapshot.</description></item>
-    /// <item><description><b>ClipRect</b> - The clip rectangle to apply when replaying the snapshot.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="snapshotId">
     /// The id of the layer snapshot.
     /// </param>
@@ -179,14 +171,6 @@ public sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Replays the layer snapshot and returns the resulting bitmap.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FromStep</b> - The first step to replay from (replay from the very start if not specified).</description></item>
-    /// <item><description><b>ToStep</b> - The last step to replay to (replay till the end if not specified).</description></item>
-    /// <item><description><b>Scale</b> - The scale to apply while replaying (defaults to 1).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="snapshotId">
     /// The id of the layer snapshot.
     /// </param>

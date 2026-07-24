@@ -18,12 +18,6 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Enable the WebAuthn domain and start intercepting credential storage and
     /// retrieval with a virtual authenticator.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>EnableUI</b> - Whether to enable the WebAuthn user interface. Enabling the UI is recommended for debugging and demo purposes, as it is closer to the real experience. Disabling the UI is recommended for automated testing. Supported at the embedder's discretion if UI is available. Defaults to false.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enableUI">
     /// Whether to enable the WebAuthn user interface. Enabling the UI is
     /// recommended for debugging and demo purposes, as it is closer to the real
@@ -90,14 +84,6 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <summary>
     /// Resets parameters isBogusSignature, isBadUV, isBadUP to false if they are not present.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IsBogusSignature</b> - If isBogusSignature is set, overrides the signature in the authenticator response to be zero. Defaults to false.</description></item>
-    /// <item><description><b>IsBadUV</b> - If isBadUV is set, overrides the UV bit in the flags in the authenticator response to be zero. Defaults to false.</description></item>
-    /// <item><description><b>IsBadUP</b> - If isBadUP is set, overrides the UP bit in the flags in the authenticator response to be zero. Defaults to false.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="authenticatorId">
     /// </param>
     /// <param name="isBogusSignature">
@@ -313,15 +299,6 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Allows setting credential properties.
     /// https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BackupEligibility</b></description></item>
-    /// <item><description><b>BackupState</b></description></item>
-    /// <item><description><b>ActiveCmtgKeyIndex</b></description></item>
-    /// <item><description><b>GenerateCmtgKeyOnNextOperation</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="authenticatorId">
     /// </param>
     /// <param name="credentialId">

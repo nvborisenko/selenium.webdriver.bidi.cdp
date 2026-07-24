@@ -37,13 +37,6 @@ public sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cd
     /// <summary>
     /// Read a chunk of the stream
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Offset</b> - Seek to the specified offset before reading (if not specified, proceed with offset following the last read). Some types of streams may only support sequential reads.</description></item>
-    /// <item><description><b>Size</b> - Maximum number of bytes to read (left upon the agent discretion if not specified).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="handle">
     /// Handle of the stream to read.
     /// </param>

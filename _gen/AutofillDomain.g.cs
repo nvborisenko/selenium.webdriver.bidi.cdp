@@ -17,14 +17,6 @@ public sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// Trigger autofill on a form identified by the fieldId.
     /// If the field and related form cannot be autofilled, returns an error.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FrameId</b> - Identifies the frame that field belongs to.</description></item>
-    /// <item><description><b>Card</b> - Credit card information to fill out the form. Credit card data is not saved.  Mutually exclusive with <b>address</b>.</description></item>
-    /// <item><description><b>Address</b> - Address to fill out the form. Address data is not saved. Mutually exclusive with <b>card</b>.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="fieldId">
     /// Identifies a field that serves as an anchor for autofill.
     /// </param>

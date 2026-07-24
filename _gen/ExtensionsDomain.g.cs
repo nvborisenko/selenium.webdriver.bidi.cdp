@@ -43,12 +43,6 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// --load-extension CLI flags. Returns extension ID once the extension
     /// has been installed.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>EnableInIncognito</b> - Enable the extension in incognito</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="path">
     /// Absolute file path.
     /// </param>
@@ -116,12 +110,6 @@ public sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver
     /// Gets data from extension storage in the given <b>storageArea</b>. If <b>keys</b> is
     /// specified, these are used to filter the result.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Keys</b> - Keys to retrieve.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="id">
     /// ID of extension.
     /// </param>

@@ -230,12 +230,6 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga4e515829752e0a8dbc4d630696a8d6a5
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardconnecta
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ActiveProtocol</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="requestId">
     /// </param>
     /// <param name="handle">
@@ -302,12 +296,6 @@ public sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gae49c3c894ad7ac12a5b896bde70d0382
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardstatusa
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Protocol</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="requestId">
     /// </param>
     /// <param name="readerName">

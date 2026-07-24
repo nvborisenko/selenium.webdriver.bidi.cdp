@@ -112,14 +112,6 @@ public sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// coverage may be incomplete. Enabling prevents running optimized code and resets execution
     /// counters.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>CallCount</b> - Collect accurate call counts beyond simple 'covered' or 'not covered'.</description></item>
-    /// <item><description><b>Detailed</b> - Collect block-based coverage.</description></item>
-    /// <item><description><b>AllowTriggeredUpdates</b> - Allow the backend to send updates on its own initiative</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="callCount">
     /// Collect accurate call counts beyond simple 'covered' or 'not covered'.
     /// </param>

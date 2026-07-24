@@ -16,13 +16,6 @@ public sealed class DOMDebuggerDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <summary>
     /// Returns event listeners of the given object.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Depth</b> - The maximum depth at which Node children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
-    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false). Reports listeners for all contexts if pierce is enabled.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="objectId">
     /// Identifier of the object to return listeners for.
     /// </param>
@@ -78,12 +71,6 @@ public sealed class DOMDebuggerDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <summary>
     /// Removes breakpoint on particular DOM event.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TargetName</b> - EventTarget interface name.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="eventName">
     /// Event name.
     /// </param>
@@ -203,12 +190,6 @@ public sealed class DOMDebuggerDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// <summary>
     /// Sets breakpoint on particular DOM event.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TargetName</b> - EventTarget interface name to stop on. If equal to <b>"*"</b> or not provided, will stop on any EventTarget.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="eventName">
     /// DOM Event name to stop on (any DOM event will do).
     /// </param>

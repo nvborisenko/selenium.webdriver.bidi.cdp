@@ -57,14 +57,6 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
     /// flattened.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IncludeEventListeners</b> - Whether or not to retrieve details of DOM listeners (default false).</description></item>
-    /// <item><description><b>IncludePaintOrder</b> - Whether to determine and include the paint order index of LayoutTreeNodes (default false).</description></item>
-    /// <item><description><b>IncludeUserAgentShadowTree</b> - Whether to include UA shadow tree in the snapshot (default false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="computedStyleWhitelist">
     /// Whitelist of computed styles to return.
     /// </param>
@@ -100,15 +92,6 @@ public sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDrive
     /// white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
     /// flattened.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IncludePaintOrder</b> - Whether to include layout object paint orders into the snapshot.</description></item>
-    /// <item><description><b>IncludeDOMRects</b> - Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot</description></item>
-    /// <item><description><b>IncludeBlendedBackgroundColors</b> - Whether to include blended background colors in the snapshot (default: false). Blended background color is achieved by blending background colors of all elements that overlap with the current element.</description></item>
-    /// <item><description><b>IncludeTextColorOpacities</b> - Whether to include text color opacity in the snapshot (default: false). An element might have the opacity property set that affects the text color of the element. The final text color opacity is computed based on the opacity of all overlapping elements.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="computedStyles">
     /// Whitelist of computed styles to return.
     /// </param>

@@ -116,12 +116,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Automatically render all web contents using a dark theme.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Enabled</b> - Whether to enable or disable automatic dark mode. If not specified, any existing override will be cleared.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enabled">
     /// Whether to enable or disable automatic dark mode.
     /// If not specified, any existing override will be cleared.
@@ -169,12 +163,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// Sets or clears an override of the default background color of the frame. This override is used
     /// if the content does not specify one.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Color</b> - RGBA of the default background color. If not specified, any existing override will be cleared.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="color">
     /// RGBA of the default background color. If not specified, any existing override will be
     /// cleared.
@@ -223,23 +211,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
     /// query results).
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Scale</b> - Scale to apply to resulting view image.</description></item>
-    /// <item><description><b>ScreenWidth</b> - Overriding screen width value in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>ScreenHeight</b> - Overriding screen height value in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>PositionX</b> - Overriding view X position on screen in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>PositionY</b> - Overriding view Y position on screen in pixels (minimum 0, maximum 10000000).</description></item>
-    /// <item><description><b>DontSetVisibleSize</b> - Do not set visible view size, rely upon explicit setVisibleSize call.</description></item>
-    /// <item><description><b>ScreenOrientation</b> - Screen orientation override.</description></item>
-    /// <item><description><b>Viewport</b> - If set, the visible area of the page will be overridden to this viewport. This viewport change is not observed by the page, e.g. viewport-relative elements do not change positions.</description></item>
-    /// <item><description><b>DisplayFeature</b> - If set, the display feature of a multi-segment screen. If not set, multi-segment support is turned-off. Deprecated, use Emulation.setDisplayFeaturesOverride.</description></item>
-    /// <item><description><b>DevicePosture</b> - If set, the posture of a foldable device. If not set the posture is set to continuous. Deprecated, use Emulation.setDevicePostureOverride.</description></item>
-    /// <item><description><b>ScrollbarType</b> - Scrollbar type. Default: <b>default</b>.</description></item>
-    /// <item><description><b>ScreenOrientationLockEmulation</b> - If set to true, enables screen orientation lock emulation, which intercepts screen.orientation.lock() calls from the page and reports orientation changes via screenOrientationLockChanged events. This is useful for emulating mobile device orientation lock behavior in responsive design mode.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="width">
     /// Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override.
     /// </param>
@@ -452,12 +423,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Configuration</b> - Touch/gesture events configuration. Default: current platform.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enabled">
     /// Whether touch emulation based on mouse input should be enabled.
     /// </param>
@@ -484,13 +449,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Emulates the given media type or media feature for CSS media queries.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Media</b> - Media type to emulate. Empty string disables the override.</description></item>
-    /// <item><description><b>Features</b> - Media features to emulate.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="media">
     /// Media type to emulate. Empty string disables the override.
     /// </param>
@@ -539,12 +497,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Emulates the given OS text scale.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Scale</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="scale">
     /// </param>
     /// <param name="session">
@@ -567,18 +519,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// Overrides the Geolocation Position or Error. Omitting latitude, longitude or
     /// accuracy emulates position unavailable.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Latitude</b> - Mock latitude</description></item>
-    /// <item><description><b>Longitude</b> - Mock longitude</description></item>
-    /// <item><description><b>Accuracy</b> - Mock accuracy</description></item>
-    /// <item><description><b>Altitude</b> - Mock altitude</description></item>
-    /// <item><description><b>AltitudeAccuracy</b> - Mock altitudeAccuracy</description></item>
-    /// <item><description><b>Heading</b> - Mock heading</description></item>
-    /// <item><description><b>Speed</b> - Mock speed</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="latitude">
     /// Mock latitude
     /// </param>
@@ -644,12 +584,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// sensor-backend Sensor objects will fire an error event and new calls to
     /// Sensor.start() will attempt to use a real sensor instead.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Metadata</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enabled">
     /// </param>
     /// <param name="type">
@@ -704,12 +638,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// via setPressureStateOverride instead of being retrieved from
     /// platform-provided telemetry data.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Metadata</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enabled">
     /// </param>
     /// <param name="source">
@@ -875,12 +803,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Enables touch on platforms which do not support them.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>MaxTouchPoints</b> - Maximum touch points supported. Defaults to one.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="enabled">
     /// Whether the touch event emulation should be enabled.
     /// </param>
@@ -907,14 +829,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets
     /// the current virtual time policy.  Note this supersedes any previous time budget.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Budget</b> - If set, after this many virtual milliseconds have elapsed virtual time will be paused and a virtualTimeBudgetExpired event is sent.</description></item>
-    /// <item><description><b>MaxVirtualTimeTaskStarvationCount</b> - If set this specifies the maximum number of tasks that can be run before virtual is forced forwards to prevent deadlock.</description></item>
-    /// <item><description><b>InitialVirtualTime</b> - If set, base::Time::Now will be overridden to initially return this value.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="policy">
     /// </param>
     /// <param name="budget">
@@ -948,12 +862,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Overrides default host system locale with the specified one.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Locale</b> - ICU style C locale (e.g. "en_US"). If not specified or empty, disables the override and restores default host system locale.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="locale">
     /// ICU style C locale (e.g. "en_US"). If not specified or empty, disables the override and
     /// restores default host system locale.
@@ -1053,12 +961,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Override the value of navigator.connection.saveData
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>DataSaverEnabled</b> - Override value. Omitting the parameter disables the override.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="dataSaverEnabled">
     /// Override value. Omitting the parameter disables the override.
     /// </param>
@@ -1105,14 +1007,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// Allows overriding user agent with the given string.
     /// <b>userAgentMetadata</b> must be set for Client Hint headers to be sent.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>AcceptLanguage</b> - Browser language to emulate.</description></item>
-    /// <item><description><b>Platform</b> - The platform navigator.platform should return.</description></item>
-    /// <item><description><b>UserAgentMetadata</b> - To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="userAgent">
     /// User agent to use.
     /// </param>
@@ -1213,17 +1107,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Add a new screen to the device. Only supported in headless mode.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>WorkAreaInsets</b> - Specifies the screen's work area. Default is entire screen.</description></item>
-    /// <item><description><b>DevicePixelRatio</b> - Specifies the screen's device pixel ratio. Default is 1.</description></item>
-    /// <item><description><b>Rotation</b> - Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270. Default is 0.</description></item>
-    /// <item><description><b>ColorDepth</b> - Specifies the screen's color depth in bits. Default is 24.</description></item>
-    /// <item><description><b>Label</b> - Specifies the descriptive label for the screen. Default is none.</description></item>
-    /// <item><description><b>IsInternal</b> - Indicates whether the screen is internal to the device or external, attached to the device. Default is false.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="left">
     /// Offset of the left edge of the screen in pixels.
     /// </param>
@@ -1274,21 +1157,6 @@ public sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Updates specified screen parameters. Only supported in headless mode.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Left</b> - Offset of the left edge of the screen in pixels.</description></item>
-    /// <item><description><b>Top</b> - Offset of the top edge of the screen in pixels.</description></item>
-    /// <item><description><b>Width</b> - The width of the screen in pixels.</description></item>
-    /// <item><description><b>Height</b> - The height of the screen in pixels.</description></item>
-    /// <item><description><b>WorkAreaInsets</b> - Specifies the screen's work area.</description></item>
-    /// <item><description><b>DevicePixelRatio</b> - Specifies the screen's device pixel ratio.</description></item>
-    /// <item><description><b>Rotation</b> - Specifies the screen's rotation angle. Available values are 0, 90, 180 and 270.</description></item>
-    /// <item><description><b>ColorDepth</b> - Specifies the screen's color depth in bits.</description></item>
-    /// <item><description><b>Label</b> - Specifies the descriptive label for the screen.</description></item>
-    /// <item><description><b>IsInternal</b> - Indicates whether the screen is internal to the device or external, attached to the device. Default is false.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="screenId">
     /// Target screen identifier.
     /// </param>

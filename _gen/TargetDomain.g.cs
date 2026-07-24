@@ -36,12 +36,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Attaches to the target with given id.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Flatten</b> - Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="targetId">
     /// </param>
     /// <param name="flatten">
@@ -116,13 +110,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// - <b>binding.send(json)</b> - a method to send messages over the remote debugging protocol
     /// - <b>binding.onmessage = json =&gt; handleMessage(json)</b> - a callback that will be called for the protocol notifications and command responses.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>BindingName</b> - Binding name, 'cdp' if not specified.</description></item>
-    /// <item><description><b>InheritPermissions</b> - If true, inherits the current root session's permissions (default: false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="targetId">
     /// </param>
     /// <param name="bindingName">
@@ -152,15 +139,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Creates a new empty BrowserContext. Similar to an incognito profile but you can have more than
     /// one.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>DisposeOnDetach</b> - If specified, disposes this context when debugging session disconnects.</description></item>
-    /// <item><description><b>ProxyServer</b> - Proxy server, similar to the one passed to --proxy-server</description></item>
-    /// <item><description><b>ProxyBypassList</b> - Proxy bypass list, similar to the one passed to --proxy-bypass-list</description></item>
-    /// <item><description><b>OriginsWithUniversalNetworkAccess</b> - An optional list of origins to grant unlimited cross-origin access to. Parts of the URL other than those constituting origin are ignored.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="disposeOnDetach">
     /// If specified, disposes this context when debugging session disconnects.
     /// </param>
@@ -212,23 +190,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Creates a new page.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Left</b> - Frame left origin in DIP (requires newWindow to be true or headless shell).</description></item>
-    /// <item><description><b>Top</b> - Frame top origin in DIP (requires newWindow to be true or headless shell).</description></item>
-    /// <item><description><b>Width</b> - Frame width in DIP (requires newWindow to be true or headless shell).</description></item>
-    /// <item><description><b>Height</b> - Frame height in DIP (requires newWindow to be true or headless shell).</description></item>
-    /// <item><description><b>WindowState</b> - Frame window state (requires newWindow to be true or headless shell). Default is normal.</description></item>
-    /// <item><description><b>BrowserContextId</b> - The browser context to create the page in.</description></item>
-    /// <item><description><b>EnableBeginFrameControl</b> - Whether BeginFrames for this target will be controlled via DevTools (headless shell only, not supported on MacOS yet, false by default).</description></item>
-    /// <item><description><b>NewWindow</b> - Whether to create a new Window or Tab (false by default, not supported by headless shell).</description></item>
-    /// <item><description><b>Background</b> - Whether to create the target in background or foreground (false by default, not supported by headless shell).</description></item>
-    /// <item><description><b>ForTab</b> - Whether to create the target of type "tab".</description></item>
-    /// <item><description><b>Hidden</b> - Whether to create a hidden target. The hidden target is observable via protocol, but not present in the tab UI strip. Cannot be created with <b>forTab: true</b>, <b>newWindow: true</b> or <b>background: false</b>. The life-time of the tab is limited to the life-time of the session.</description></item>
-    /// <item><description><b>Focus</b> - If specified, determines whether the new target should be focused. By default, the focus behavior depends on the <b>background</b> parameter: - If <b>background</b> is false (default) and <b>focus</b> is omitted, the new target is focused and the browser window is brought to the foreground. - If <b>background</b> is false and <b>focus</b> is false, the target is opened but the browser window's focus remains unchanged (e.g., if the window was in the background, it stays there). - If <b>background</b> is true, setting <b>focus</b> to true is not supported and will result in an error.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="url">
     /// The initial URL the page will be navigated to. An empty string indicates about:blank.
     /// </param>
@@ -296,13 +257,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Detaches session with given id.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SessionId</b> - Session to detach.</description></item>
-    /// <item><description><b>TargetId</b> - Deprecated.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="sessionId">
     /// Session to detach.
     /// </param>
@@ -350,12 +304,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Returns information about a target.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TargetId</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="targetId">
     /// </param>
     /// <param name="session">
@@ -378,12 +326,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Retrieves a list of available targets.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Filter</b> - Only targets matching filter will be reported. If filter is not specified and target discovery is currently enabled, a filter used for target discovery is used for consistency.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="filter">
     /// Only targets matching filter will be reported. If filter is not specified
     /// and target discovery is currently enabled, a filter used for target discovery
@@ -410,13 +352,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Consider using flat mode instead; see commands attachToTarget, setAutoAttach,
     /// and crbug.com/991325.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SessionId</b> - Identifier of the session.</description></item>
-    /// <item><description><b>TargetId</b> - Deprecated.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="message">
     /// </param>
     /// <param name="sessionId">
@@ -452,13 +387,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// You might want to call this recursively for auto-attached targets to attach
     /// to all available targets.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Flatten</b> - Enables "flat" access to the session via specifying sessionId attribute in the commands. We plan to make this the default, deprecate non-flattened mode, and eventually retire it. See crbug.com/991325.</description></item>
-    /// <item><description><b>Filter</b> - Only targets matching filter will be attached.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="autoAttach">
     /// Whether to auto-attach to related targets.
     /// </param>
@@ -497,12 +425,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// This cancels the effect of any previous <b>setAutoAttach</b> and is also cancelled by subsequent
     /// <b>setAutoAttach</b>. Only available at the Browser target.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Filter</b> - Only targets matching filter will be attached.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="targetId">
     /// </param>
     /// <param name="waitForDebuggerOnStart">
@@ -533,12 +455,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Controls whether to discover available targets and notify via
     /// <b>targetCreated/targetInfoChanged/targetDestroyed</b> events.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Filter</b> - Only targets matching filter will be attached. If <b>discover</b> is false, <b>filter</b> must be omitted or empty.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="discover">
     /// Whether to discover available targets.
     /// </param>
@@ -613,12 +529,6 @@ public sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// <summary>
     /// Opens a DevTools window for the target.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>PanelId</b> - The id of the panel we want DevTools to open initially. Currently supported panels are elements, console, network, sources, resources, timeline, chrome-recorder, heap-profiler, lighthouse, and security.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="targetId">
     /// This can be the page or tab target ID.
     /// </param>

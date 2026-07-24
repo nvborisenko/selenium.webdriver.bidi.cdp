@@ -54,15 +54,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// For testing.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IncludeDistance</b> - Whether to include distance info.</description></item>
-    /// <item><description><b>IncludeStyle</b> - Whether to include style info.</description></item>
-    /// <item><description><b>ColorFormat</b> - The color format to get config with (default: hex).</description></item>
-    /// <item><description><b>ShowAccessibilityInfo</b> - Whether to show accessibility info (default: true).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the node to get highlight object for.
     /// </param>
@@ -163,13 +154,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// separation (the owner node might be in a different process). Determine
     /// the owner node in the client and use highlightNode.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ContentColor</b> - The content box highlight fill color (default: transparent).</description></item>
-    /// <item><description><b>ContentOutlineColor</b> - The content box highlight outline color (default: transparent).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameId">
     /// Identifier of the frame to highlight.
     /// </param>
@@ -200,15 +184,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Highlights DOM node with given id or with the given JavaScript object wrapper. Either nodeId or
     /// objectId must be specified.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node to highlight.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to highlight.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node to be highlighted.</description></item>
-    /// <item><description><b>Selector</b> - Selectors to highlight relevant nodes.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="highlightConfig">
     /// A descriptor for the highlight appearance.
     /// </param>
@@ -243,13 +218,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Highlights given quad. Coordinates are absolute with respect to the main frame viewport.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Color</b> - The highlight fill color (default: transparent).</description></item>
-    /// <item><description><b>OutlineColor</b> - The highlight outline color (default: transparent).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="quad">
     /// Quad to highlight
     /// </param>
@@ -281,13 +249,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// The coordinates currently have to be adjusted by the client
     /// if DPR is not 1 (see crbug.com/437807128).
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Color</b> - The highlight fill color (default: transparent).</description></item>
-    /// <item><description><b>OutlineColor</b> - The highlight outline color (default: transparent).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="x">
     /// X coordinate
     /// </param>
@@ -326,14 +287,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Highlights the source order of the children of the DOM node with given id or with the given
     /// JavaScript object wrapper. Either nodeId or objectId must be specified.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node to highlight.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node to highlight.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node to be highlighted.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="sourceOrderConfig">
     /// A descriptor for the appearance of the overlay drawing.
     /// </param>
@@ -366,12 +319,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// Enters the 'inspect' mode. In this mode, elements that user is hovering over are highlighted.
     /// Backend then generates 'inspectNodeRequested' event upon element selection.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>HighlightConfig</b> - A descriptor for the highlight appearance of hovered-over nodes. May be omitted if `enabled == false`.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="mode">
     /// Set an inspection mode.
     /// </param>
@@ -419,12 +366,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Message</b> - The message to display, also triggers resume and step over controls.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="message">
     /// The message to display, also triggers resume and step over controls.
     /// </param>
@@ -730,12 +671,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Add a dual screen device hinge
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>HingeConfig</b> - hinge data, null means hideHinge</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="hingeConfig">
     /// hinge data, null means hideHinge
     /// </param>
@@ -758,12 +693,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Add a display cutout overlay.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>DisplayCutoutConfig</b> - display cutout data, null means hide display cutout</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="displayCutoutConfig">
     /// display cutout data, null means hide display cutout
     /// </param>
@@ -808,12 +737,6 @@ public sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     /// <summary>
     /// Show Window Controls Overlay for PWA
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>WindowControlsOverlayConfig</b> - Window Controls Overlay data, null means hide Window Controls Overlay</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="windowControlsOverlayConfig">
     /// Window Controls Overlay data, null means hide Window Controls Overlay
     /// </param>

@@ -104,22 +104,6 @@ foreach (var inputFile in inputFiles)
                 }
                 domainBuilder.AppendLine("    /// </summary>");
 
-                if (commandInfo.Parameters?.Where(p => p.Optional is true).ToList() is { Count: > 0 } optionalParams)
-                {
-                    domainBuilder.AppendLine("    /// <remarks>");
-                    domainBuilder.AppendLine("    /// Optional parameters:");
-                    domainBuilder.AppendLine("    /// <list type=\"bullet\">");
-                    foreach (var parameterInfo in optionalParams)
-                    {
-                        var desc = parameterInfo.Description is not null
-                            ? " - " + string.Join(" ", GetNormalizedDescription(parameterInfo.Description))
-                            : "";
-                        domainBuilder.AppendLine($"    /// <item><description><b>{parameterInfo.Name.Dehumanize()}</b>{desc}</description></item>");
-                    }
-                    domainBuilder.AppendLine("    /// </list>");
-                    domainBuilder.AppendLine("    /// </remarks>");
-                }
-
                 if (commandInfo.Parameters is not null)
                 {
                     var requiredParameters = commandInfo.Parameters.Where(p => p.Optional is not true);

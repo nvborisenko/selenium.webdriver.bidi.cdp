@@ -65,12 +65,6 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// If Chrome is not in IWA dev
     /// mode, the installation will fail, regardless of the state of the allowlist.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>InstallUrlOrBundleUrl</b> - The location of the app or bundle overriding the one derived from the manifestId.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="manifestId">
     /// </param>
     /// <param name="installUrlOrBundleUrl">
@@ -119,12 +113,6 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// default start url if it is provided. Returns a page Target.TargetID which
     /// can be used to attach to via Target.attachToTarget or similar APIs.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Url</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="manifestId">
     /// </param>
     /// <param name="url">
@@ -214,13 +202,6 @@ public sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// 
     /// See the comment of each parameter.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>LinkCapturing</b> - If user allows the links clicked on by the user in the app's scope, or extended scope if the manifest has scope extensions and the flags <b>DesktopPWAsLinkCapturingWithScopeExtensions</b> and <b>WebAppEnableScopeExtensions</b> are enabled.  Note, the API does not support resetting the linkCapturing to the initial value, uninstalling and installing the web app again will reset it.  TODO(crbug.com/339453269): Setting this value on ChromeOS is not supported yet.</description></item>
-    /// <item><description><b>DisplayMode</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="manifestId">
     /// </param>
     /// <param name="linkCapturing">

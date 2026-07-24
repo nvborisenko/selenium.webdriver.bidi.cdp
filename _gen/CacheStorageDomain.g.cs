@@ -62,14 +62,6 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <summary>
     /// Requests cache names.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="securityOrigin">
     /// At least and at most one of securityOrigin, storageKey, storageBucket must be specified.
     /// Security origin.
@@ -127,14 +119,6 @@ public sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     /// <summary>
     /// Requests data from cache.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SkipCount</b> - Number of records to skip.</description></item>
-    /// <item><description><b>PageSize</b> - Number of records to fetch.</description></item>
-    /// <item><description><b>PathFilter</b> - If present, only return the entries containing this substring in the path</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="cacheId">
     /// ID of cache to get entries from.
     /// </param>

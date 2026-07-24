@@ -164,12 +164,6 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// The |data| is expected to exist when simulating a successful read operation
     /// response.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Data</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="characteristicId">
     /// </param>
     /// <param name="type">
@@ -201,12 +195,6 @@ public sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium.W
     /// The |data| is expected to exist when simulating a successful read operation
     /// response.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Data</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="descriptorId">
     /// </param>
     /// <param name="type">

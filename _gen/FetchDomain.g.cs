@@ -35,13 +35,6 @@ public sealed class FetchDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// Enables issuing of requestPaused events. A request will be paused until client
     /// calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Patterns</b> - If specified, only requests matching any of these patterns will produce fetchRequested event and will be paused until clients response. If not set, all requests will be affected.</description></item>
-    /// <item><description><b>HandleAuthRequests</b> - If true, authRequired events will be issued and requests will be paused expecting a call to continueWithAuth.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="patterns">
     /// If specified, only requests matching any of these patterns will produce
     /// fetchRequested event and will be paused until clients response. If not set,
@@ -95,15 +88,6 @@ public sealed class FetchDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <summary>
     /// Provides response to the request.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ResponseHeaders</b> - Response headers.</description></item>
-    /// <item><description><b>BinaryResponseHeaders</b> - Alternative way of specifying response headers as a \0-separated series of name: value pairs. Prefer the above method unless you need to represent some non-UTF8 values that can't be transmitted over the protocol as text. (Encoded as a base64 string when passed over JSON)</description></item>
-    /// <item><description><b>Body</b> - A response body. If absent, original response body will be used if the request is intercepted at the response stage and empty body will be used if the request is intercepted at the request stage. (Encoded as a base64 string when passed over JSON)</description></item>
-    /// <item><description><b>ResponsePhrase</b> - A textual representation of responseCode. If absent, a standard phrase matching responseCode is used.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="requestId">
     /// An id the client received in requestPaused event.
     /// </param>
@@ -147,16 +131,6 @@ public sealed class FetchDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// <summary>
     /// Continues the request, optionally modifying some of its parameters.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Url</b> - If set, the request url will be modified in a way that's not observable by page.</description></item>
-    /// <item><description><b>Method</b> - If set, the request method is overridden.</description></item>
-    /// <item><description><b>PostData</b> - If set, overrides the post data in the request. (Encoded as a base64 string when passed over JSON)</description></item>
-    /// <item><description><b>Headers</b> - If set, overrides the request headers. Note that the overrides do not extend to subsequent redirect hops, if a redirect happens. Another override may be applied to a different request produced by a redirect.</description></item>
-    /// <item><description><b>InterceptResponse</b> - If set, overrides response interception behavior for this request.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="requestId">
     /// An id the client received in requestPaused event.
     /// </param>
@@ -223,15 +197,6 @@ public sealed class FetchDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     /// response headers. If either responseCode or headers are modified, all of them
     /// must be present.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ResponseCode</b> - An HTTP response code. If absent, original response code will be used.</description></item>
-    /// <item><description><b>ResponsePhrase</b> - A textual representation of responseCode. If absent, a standard phrase matching responseCode is used.</description></item>
-    /// <item><description><b>ResponseHeaders</b> - Response headers. If absent, original response headers will be used.</description></item>
-    /// <item><description><b>BinaryResponseHeaders</b> - Alternative way of specifying response headers as a \0-separated series of name: value pairs. Prefer the above method unless you need to represent some non-UTF8 values that can't be transmitted over the protocol as text. (Encoded as a base64 string when passed over JSON)</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="requestId">
     /// An id the client received in requestPaused event.
     /// </param>

@@ -45,12 +45,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Creates a deep copy of the specified node and places it into the target container before the
     /// given anchor.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>InsertBeforeNodeId</b> - Drop the copy before this node (if absent, the copy becomes the last child of <b>targetNodeId</b>).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the node to copy.
     /// </param>
@@ -82,16 +76,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Describes node given its id, does not require domain to be enabled. Does not start tracking any
     /// objects, can be used for automation.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
-    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
-    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node.
     /// </param>
@@ -130,15 +114,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Note: exactly one between nodeId, backendNodeId and objectId should be passed
     /// to identify the node.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
-    /// <item><description><b>Rect</b> - The rect to be scrolled into view, relative to the node's border box, in CSS pixels. When omitted, center of the node will be used, similar to Element.scrollIntoView.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node.
     /// </param>
@@ -214,12 +189,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Enables DOM agent for the given page.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IncludeWhitespace</b> - Whether to include whitespaces in the children array of returned Nodes.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="includeWhitespace">
     /// Whether to include whitespaces in the children array of returned Nodes.
     /// </param>
@@ -242,14 +211,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Focuses the given element.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node.
     /// </param>
@@ -300,14 +261,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Returns boxes for the given node.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node.
     /// </param>
@@ -337,14 +290,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Returns quads that describe node position on the page. This method
     /// might return multiple quads for inline nodes.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node.
     /// </param>
@@ -375,13 +320,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Returns the root DOM node (and optionally the subtree) to the caller.
     /// Implicitly enables the DOM domain events for the current target.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
-    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="depth">
     /// The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
     /// entire subtree or provide an integer larger than 0.
@@ -411,13 +349,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Deprecated, as it is not designed to work well with the rest of the DOM agent.
     /// Use DOMSnapshot.captureSnapshot instead.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
-    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="depth">
     /// The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
     /// entire subtree or provide an integer larger than 0.
@@ -446,12 +377,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Finds nodes with a given computed style in a subtree.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots in the same target should be traversed when returning the results (default is false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Node ID pointing to the root of a subtree.
     /// </param>
@@ -483,13 +408,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is
     /// either returned or not.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IncludeUserAgentShadowDOM</b> - False to skip to the nearest non-UA shadow root ancestor (default: false).</description></item>
-    /// <item><description><b>IgnorePointerEventsNone</b> - Whether to ignore pointer-events: none on elements and hit test them.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="x">
     /// X coordinate.
     /// </param>
@@ -521,15 +439,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Returns node's HTML markup.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
-    /// <item><description><b>IncludeShadowDOM</b> - Include all shadow roots. Equals to false if not specified.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Identifier of the node.
     /// </param>
@@ -691,12 +600,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Moves node into the new container, places it before the given anchor.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>InsertBeforeNodeId</b> - Drop node before this one (if absent, the moved node becomes the last child of <b>targetNodeId</b>).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the node to move.
     /// </param>
@@ -727,12 +630,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Searches for a given string in the DOM tree. Use <b>getSearchResults</b> to access search results or
     /// <b>cancelSearch</b> to end this search session.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>IncludeUserAgentShadowDOM</b> - True to search in user agent shadow DOM.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="query">
     /// Plain text or query selector or XPath search query.
     /// </param>
@@ -972,13 +869,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <b>setChildNodes</b> events where not only immediate children are retrieved, but all children down to
     /// the specified depth.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Depth</b> - The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.</description></item>
-    /// <item><description><b>Pierce</b> - Whether or not iframes and shadow roots should be traversed when returning the sub-tree (default is false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the node to get children for.
     /// </param>
@@ -1033,15 +923,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Resolves the JavaScript node object for a given NodeId or BackendNodeId.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Id of the node to resolve.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Backend identifier of the node to resolve.</description></item>
-    /// <item><description><b>ObjectGroup</b> - Symbolic group name that can be used to release multiple objects.</description></item>
-    /// <item><description><b>ExecutionContextId</b> - Execution context in which to resolve the node.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the node to resolve.
     /// </param>
@@ -1102,12 +983,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Sets attributes on element with given id. This method is useful when user edits some existing
     /// attribute value and types in several attribute name/value pairs.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Name</b> - Attribute name to replace with new attributes derived from text in case text parsed successfully.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the element to set attributes for.
     /// </param>
@@ -1137,14 +1012,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// <summary>
     /// Sets files for the given file input element.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>NodeId</b> - Identifier of the node.</description></item>
-    /// <item><description><b>BackendNodeId</b> - Identifier of the backend node.</description></item>
-    /// <item><description><b>ObjectId</b> - JavaScript object id of the node wrapper.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="files">
     /// Array of file paths to set.
     /// </param>
@@ -1411,16 +1278,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// queriesScrollState is false, the style container is returned, which is the
     /// direct parent or the closest element with a matching container-name.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>ContainerName</b></description></item>
-    /// <item><description><b>PhysicalAxes</b></description></item>
-    /// <item><description><b>LogicalAxes</b></description></item>
-    /// <item><description><b>QueriesScrollState</b></description></item>
-    /// <item><description><b>QueriesAnchored</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// </param>
     /// <param name="containerName">
@@ -1478,12 +1335,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// Returns the target anchor element of the given anchor query according to
     /// https://www.w3.org/TR/css-anchor-position-1/#target.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>AnchorSpecifier</b> - An optional anchor specifier, as defined in https://www.w3.org/TR/css-anchor-position-1/#anchor-specifier. If not provided, it will return the implicit anchor element for the given positioned element.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the positioned element from which to find the anchor.
     /// </param>
@@ -1514,12 +1365,6 @@ public sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.C
     /// When enabling, this API force-opens the popover identified by nodeId
     /// and keeps it open until disabled.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>InvokerNodeId</b> - Optional ID of the element invoking this popover, used to establish the implicit anchor. If not provided, it will fall back to the first invoker in the document, preferring elements with a popovertarget attribute over those with a commandfor attribute. Note that if there are multiple invokers, this is just an estimate.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="nodeId">
     /// Id of the popover HTMLElement
     /// </param>

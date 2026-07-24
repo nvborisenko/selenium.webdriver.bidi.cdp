@@ -17,13 +17,6 @@ public sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     /// Returns the response body and size if it were re-encoded with the specified settings. Only
     /// applies to images.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Quality</b> - The quality of the encoding (0-1). (defaults to 1)</description></item>
-    /// <item><description><b>SizeOnly</b> - Whether to only return the size information (defaults to false).</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="requestId">
     /// Identifier of the network request to get content for.
     /// </param>

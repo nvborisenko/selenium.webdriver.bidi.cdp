@@ -15,14 +15,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Clears all entries from an object store.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="databaseName">
     /// Database name.
     /// </param>
@@ -58,14 +50,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Deletes a database.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="databaseName">
     /// Database name.
     /// </param>
@@ -98,14 +82,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Delete a range of entries from an object store
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="databaseName">
     /// </param>
     /// <param name="objectStoreName">
@@ -180,16 +156,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Requests data from object store or index.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// <item><description><b>IndexName</b> - Index name. If not specified, it performs an object store data request.</description></item>
-    /// <item><description><b>KeyRange</b> - Key range.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="databaseName">
     /// Database name.
     /// </param>
@@ -237,14 +203,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Gets metadata of an object store.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="databaseName">
     /// Database name.
     /// </param>
@@ -280,14 +238,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Requests database with given name in given frame.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="databaseName">
     /// Database name.
     /// </param>
@@ -320,14 +270,6 @@ public sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDriver.
     /// <summary>
     /// Requests database names for given security origin.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>SecurityOrigin</b> - At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.</description></item>
-    /// <item><description><b>StorageKey</b> - Storage key.</description></item>
-    /// <item><description><b>StorageBucket</b> - Storage bucket. If not specified, it uses the default bucket.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="securityOrigin">
     /// At least and at most one of securityOrigin, storageKey, or storageBucket must be specified.
     /// Security origin.

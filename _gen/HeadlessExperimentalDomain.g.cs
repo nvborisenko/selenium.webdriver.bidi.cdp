@@ -19,15 +19,6 @@ public sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Selenium
     /// BeginFrameControl. Designed for use with --run-all-compositor-stages-before-draw, see also
     /// https://goo.gle/chrome-headless-rendering for more background.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>FrameTimeTicks</b> - Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set, the current time will be used.</description></item>
-    /// <item><description><b>Interval</b> - The interval between BeginFrames that is reported to the compositor, in milliseconds. Defaults to a 60 frames/second interval, i.e. about 16.666 milliseconds.</description></item>
-    /// <item><description><b>NoDisplayUpdates</b> - Whether updates should not be committed and drawn onto the display. False by default. If true, only side effects of the BeginFrame will be run, such as layout and animations, but any visual updates may not be visible on the display or in screenshots.</description></item>
-    /// <item><description><b>Screenshot</b> - If set, a screenshot of the frame will be captured and returned in the response. Otherwise, no screenshot will be captured. Note that capturing a screenshot can fail, for example, during renderer initialization. In such a case, no screenshot data will be returned.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="frameTimeTicks">
     /// Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set,
     /// the current time will be used.

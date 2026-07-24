@@ -15,12 +15,6 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>DisableRejectionDelay</b> - Allows callers to disable the promise rejection delay that would normally happen, if this is unimportant to what's being tested. (step 4 of https://fedidcg.github.io/FedCM/#browser-api-rp-sign-in)</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="disableRejectionDelay">
     /// Allows callers to disable the promise rejection delay that would
     /// normally happen, if this is unimportant to what's being tested.
@@ -130,12 +124,6 @@ public sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 
     /// <summary>
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>TriggerCooldown</b></description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="dialogId">
     /// </param>
     /// <param name="triggerCooldown">

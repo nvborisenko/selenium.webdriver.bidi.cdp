@@ -17,14 +17,6 @@ public sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.W
     /// Sets the behavior of the virtual wallet for digital credential requests
     /// issued from this frame.
     /// </summary>
-    /// <remarks>
-    /// Optional parameters:
-    /// <list type="bullet">
-    /// <item><description><b>Protocol</b> - The protocol identifier (e.g. "openid4vp"). Required when |action| is "respond", forbidden otherwise.</description></item>
-    /// <item><description><b>Response</b> - The response data object returned by the wallet. Required when |action| is "respond", forbidden otherwise.</description></item>
-    /// <item><description><b>FrameId</b> - The frame to scope the virtual wallet behavior to.</description></item>
-    /// </list>
-    /// </remarks>
     /// <param name="action">
     /// The action of the virtual wallet.
     /// </param>
