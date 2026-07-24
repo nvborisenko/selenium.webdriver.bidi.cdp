@@ -299,6 +299,8 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// <list type="bullet">
     /// <item><description><b>BackupEligibility</b></description></item>
     /// <item><description><b>BackupState</b></description></item>
+    /// <item><description><b>ActiveCmtgKeyIndex</b></description></item>
+    /// <item><description><b>GenerateCmtgKeyOnNextOperation</b></description></item>
     /// </list>
     /// </remarks>
     /// <param name="authenticatorId">
@@ -316,7 +318,7 @@ public sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     /// </returns>
     public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, SetCredentialPropertiesCommandOptions? options = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: options?.BackupEligibility, BackupState: options?.BackupState);
+        var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: options?.BackupEligibility, BackupState: options?.BackupState, ActiveCmtgKeyIndex: options?.ActiveCmtgKeyIndex, GenerateCmtgKeyOnNextOperation: options?.GenerateCmtgKeyOnNextOperation);
         return await ExecuteCommandAsync(SetCredentialPropertiesCommand, @params, options, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCredentialPropertiesCommandParameters, SetCredentialPropertiesResult> SetCredentialPropertiesCommand = new("WebAuthn.setCredentialProperties", JsonContext.SetCredentialPropertiesCommandParameters, JsonContext.SetCredentialPropertiesResult);
@@ -568,7 +570,7 @@ public sealed record SetAutomaticPresenceSimulationCommandOptions : CdpCommandOp
 public sealed record SetAutomaticPresenceSimulationResult() : EmptyResult;
 
 
-internal sealed record SetCredentialPropertiesCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId, bool? BackupEligibility, bool? BackupState) : Parameters;
+internal sealed record SetCredentialPropertiesCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId, bool? BackupEligibility, bool? BackupState, long? ActiveCmtgKeyIndex, bool? GenerateCmtgKeyOnNextOperation) : Parameters;
 
 /// <summary>
 /// Optional parameters for <see cref="WebAuthnDomain.SetCredentialPropertiesAsync"/>.
@@ -582,6 +584,14 @@ public sealed record SetCredentialPropertiesCommandOptions : CdpCommandOptions
     /// <summary>
     /// </summary>
     public bool? BackupState { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public long? ActiveCmtgKeyIndex { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public bool? GenerateCmtgKeyOnNextOperation { get; init; }
 }
 
 /// <summary>
