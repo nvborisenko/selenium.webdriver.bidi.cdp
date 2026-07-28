@@ -249,6 +249,12 @@ public interface IWebAuthn
     /// </param>
     /// <param name="generateCmtgKeyOnNextOperation">
     /// </param>
+    /// <param name="signCount">
+    /// Must be equal to or greater than -1.
+    /// If -1, the signature counter is removed from the credential, and every
+    /// assertion operation will report a value of 0.
+    /// See https://w3c.github.io/webauthn/#signature-counter
+    /// </param>
     /// <param name="session">
     /// Optional CDP session override.
     /// </param>
@@ -258,7 +264,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCredentialPropertiesResult"/>.
     /// </returns>
-    Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, long? signCount = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Triggered when a credential is added to an authenticator.
@@ -401,9 +407,9 @@ internal sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver
     }
     private static readonly CdpCommand<SetAutomaticPresenceSimulationCommandParameters, SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationCommand = new("WebAuthn.setAutomaticPresenceSimulation", JsonContext.SetAutomaticPresenceSimulationCommandParameters, JsonContext.SetAutomaticPresenceSimulationResult);
 
-    public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, long? signCount = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: backupEligibility, BackupState: backupState, ActiveCmtgKeyIndex: activeCmtgKeyIndex, GenerateCmtgKeyOnNextOperation: generateCmtgKeyOnNextOperation);
+        var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: backupEligibility, BackupState: backupState, ActiveCmtgKeyIndex: activeCmtgKeyIndex, GenerateCmtgKeyOnNextOperation: generateCmtgKeyOnNextOperation, SignCount: signCount);
         return await ExecuteCommandAsync(SetCredentialPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetCredentialPropertiesCommandParameters, SetCredentialPropertiesResult> SetCredentialPropertiesCommand = new("WebAuthn.setCredentialProperties", JsonContext.SetCredentialPropertiesCommandParameters, JsonContext.SetCredentialPropertiesResult);
@@ -504,7 +510,7 @@ internal sealed record SetAutomaticPresenceSimulationCommandParameters(Authentic
 public sealed record SetAutomaticPresenceSimulationResult() : EmptyResult;
 
 
-internal sealed record SetCredentialPropertiesCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId, bool? BackupEligibility, bool? BackupState, long? ActiveCmtgKeyIndex, bool? GenerateCmtgKeyOnNextOperation) : Parameters;
+internal sealed record SetCredentialPropertiesCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId, bool? BackupEligibility, bool? BackupState, long? ActiveCmtgKeyIndex, bool? GenerateCmtgKeyOnNextOperation, long? SignCount) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -727,12 +733,7 @@ public sealed record VirtualAuthenticatorOptions(AuthenticatorProtocol Protocol,
 /// <param name="PrivateKey">
 /// The ECDSA P-256 private key in PKCS#8 format. (Encoded as a base64 string when passed over JSON)
 /// </param>
-/// <param name="SignCount">
-/// Signature counter. This is incremented by one for each successful
-/// assertion.
-/// See https://w3c.github.io/webauthn/#signature-counter
-/// </param>
-public sealed record Credential(string CredentialId, bool IsResidentCredential, string PrivateKey, long SignCount)
+public sealed record Credential(string CredentialId, bool IsResidentCredential, string PrivateKey)
 {
     /// <summary>
     /// Relying Party ID the credential is scoped to. Must be set when adding a
@@ -745,6 +746,14 @@ public sealed record Credential(string CredentialId, bool IsResidentCredential, 
     /// credential to a specific user. (Encoded as a base64 string when passed over JSON)
     /// </summary>
     public string? UserHandle { get; init; }
+
+    /// <summary>
+    /// Signature counter. Must be equal to or greater than -1.
+    /// If -1, the credential won't have an associated signature counter, and
+    /// every assertion operation will report a value of 0.
+    /// See https://w3c.github.io/webauthn/#signature-counter
+    /// </summary>
+    public long? SignCount { get; init; }
 
     /// <summary>
     /// The large blob associated with the credential.
