@@ -99,17 +99,20 @@ jobs:
           NEW_VERSION: ${{ steps.upstream.outputs.version }}
         run: |
           set -euo pipefail
-          branch="bot/update-protocol-$NEW_TAG"
+          major=$(sed -nE 's#.*<MajorVersion>([0-9]+)</MajorVersion>.*#\1#p' Directory.Build.props)
+          minor=$(sed -nE 's#.*<MinorVersion>([0-9]+)</MinorVersion>.*#\1#p' Directory.Build.props)
+          package_tag="v${major}.${minor}.${NEW_VERSION}"
+          branch="bot/update-protocol-$package_tag"
           git config user.name "Arim Bot"
           git config user.email "22616990+nvborisenko@users.noreply.github.com"
           git checkout -b "$branch"
           git add spec/ Directory.Build.props _gen/
-          git commit -m "Update CDP to $NEW_TAG"
+          git commit -m "Update CDP to $package_tag"
           git push --force-with-lease origin "$branch"
           # Create the PR only if one does not already exist for this branch.
           if ! gh pr view "$branch" >/dev/null 2>&1; then
             body=$(cat <<EOF
-          Automated update of the Chrome DevTools Protocol to \`$NEW_TAG\` (version $NEW_VERSION).
+          Automated update of the Chrome DevTools Protocol to \`$package_tag\` (version $NEW_VERSION).
 
           The git tag and NuGet release are created automatically once this PR merges and the required checks pass.
           EOF
@@ -117,7 +120,7 @@ jobs:
             gh pr create \
               --base "${{ github.ref_name }}" \
               --head "$branch" \
-              --title "Update CDP to $NEW_TAG" \
+              --title "Update CDP to $package_tag" \
               --body "$body"
           fi
           # Merge automatically once required status checks pass.
