@@ -5889,6 +5889,7 @@ public sealed record CreationEventDetails(DeviceBoundSessionFetchResult FetchRes
 /// </summary>
 /// <param name="RefreshResult">
 /// The result of a refresh.
+/// LINT.IfChange(DeviceBoundSessionRefreshResult)
 /// </param>
 /// <param name="WasFullyProactiveRefresh">
 /// See comments on <b>net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh</b>.
@@ -5896,6 +5897,7 @@ public sealed record CreationEventDetails(DeviceBoundSessionFetchResult FetchRes
 public sealed record RefreshEventDetails(string RefreshResult, bool WasFullyProactiveRefresh)
 {
     /// <summary>
+    /// LINT.ThenChange(//net/device_bound_sessions/refresh_result.h:DeviceBoundSessionRefreshResult,//content/browser/devtools/protocol/network_handler.cc:DeviceBoundSessionRefreshResult)
     /// If there was a fetch attempt, the result of that.
     /// </summary>
     public DeviceBoundSessionFetchResult? FetchResult { get; init; }
