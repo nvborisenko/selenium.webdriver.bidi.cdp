@@ -118,55 +118,6 @@ public interface INetwork
     Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Response to Network.requestIntercepted which either modifies the request to continue with any
-    /// modifications, or blocks it, or completes it with the provided response bytes. If a network
-    /// fetch occurs as a result which encounters a redirect an additional Network.requestIntercepted
-    /// event will be sent with the same InterceptionId.
-    /// Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead.
-    /// </summary>
-    /// <param name="interceptionId">
-    /// </param>
-    /// <param name="errorReason">
-    /// If set this causes the request to fail with the given reason. Passing <b>Aborted</b> for requests
-    /// marked with <b>isNavigationRequest</b> also cancels the navigation. Must not be set in response
-    /// to an authChallenge.
-    /// </param>
-    /// <param name="rawResponse">
-    /// If set the requests completes using with the provided base64 encoded raw response, including
-    /// HTTP status line and headers etc... Must not be set in response to an authChallenge. (Encoded as a base64 string when passed over JSON)
-    /// </param>
-    /// <param name="url">
-    /// If set the request url will be modified in a way that's not observable by page. Must not be
-    /// set in response to an authChallenge.
-    /// </param>
-    /// <param name="method">
-    /// If set this allows the request method to be overridden. Must not be set in response to an
-    /// authChallenge.
-    /// </param>
-    /// <param name="postData">
-    /// If set this allows postData to be set. Must not be set in response to an authChallenge.
-    /// </param>
-    /// <param name="headers">
-    /// If set this allows the request headers to be changed. Must not be set in response to an
-    /// authChallenge.
-    /// </param>
-    /// <param name="authChallengeResponse">
-    /// Response to a requestIntercepted with an authChallenge. Must not be set otherwise.
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="ContinueInterceptedRequestResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    [global::System.Obsolete]
-    Task<ContinueInterceptedRequestResult> ContinueInterceptedRequestAsync(InterceptionId interceptionId, ErrorReason? errorReason = default, string? rawResponse = default, string? url = default, string? method = default, string? postData = default, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? headers = default, AuthChallengeResponse? authChallengeResponse = default, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Deletes browser cookies with matching name and url or domain/path/partitionKey pair.
     /// </summary>
     /// <param name="name">
@@ -458,44 +409,6 @@ public interface INetwork
     Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Returns content served for the given currently intercepted request.
-    /// </summary>
-    /// <param name="interceptionId">
-    /// Identifier for the intercepted request to get body for.
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="GetResponseBodyForInterceptionResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Returns a handle to the stream representing the response body. Note that after this command,
-    /// the intercepted request can't be continued as is -- you either need to cancel it or to provide
-    /// the response body. The stream only supports sequential read, IO.read will fail if the position
-    /// is specified.
-    /// </summary>
-    /// <param name="interceptionId">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="TakeResponseBodyForInterceptionAsStreamResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// This method sends a new XMLHttpRequest which is identical to the original one. The following
     /// parameters should be identical: method, url, async, request body, extra headers, withCredentials
     /// attribute, user, password.
@@ -705,27 +618,6 @@ public interface INetwork
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Sets the requests to intercept that match the provided patterns and optionally resource types.
-    /// Deprecated, please use Fetch.enable instead.
-    /// </summary>
-    /// <param name="patterns">
-    /// Requests matching any of these patterns will be forwarded and wait for the corresponding
-    /// continueInterceptedRequest call.
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetRequestInterceptionResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    [global::System.Obsolete]
-    Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows overriding user agent with the given string.
@@ -965,32 +857,6 @@ public interface INetwork
     /// </list>
     /// </remarks>
     IEventSource<LoadingFinishedEventArgs> LoadingFinished { get; }
-
-    /// <summary>
-    /// Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
-    /// mocked.
-    /// Deprecated, use Fetch.requestPaused instead.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="RequestInterceptedEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>InterceptionId</b> - Each request the page makes will have a unique id, however if any redirects are encountered while processing that fetch, they will be reported with the same id as the original fetch. Likewise if HTTP authentication is needed then the same fetch id will be used.</description></item>
-    /// <item><description><b>Request</b></description></item>
-    /// <item><description><b>FrameId</b> - The id of the frame that initiated the request.</description></item>
-    /// <item><description><b>ResourceType</b> - How the requested resource will be used.</description></item>
-    /// <item><description><b>IsNavigationRequest</b> - Whether this is a navigation request, which can abort the navigation completely.</description></item>
-    /// <item><description><b>IsDownload</b> - Set if the request is a navigation that will result in a download. Only present after response is received from the server (i.e. HeadersReceived stage).</description></item>
-    /// <item><description><b>RedirectUrl</b> - Redirect location, only sent if a redirect was intercepted.</description></item>
-    /// <item><description><b>AuthChallenge</b> - Details of the Authorization Challenge encountered. If this is set then continueInterceptedRequest must contain an authChallengeResponse.</description></item>
-    /// <item><description><b>ResponseErrorReason</b> - Response error if intercepted at response stage or if redirect occurred while intercepting request.</description></item>
-    /// <item><description><b>ResponseStatusCode</b> - Response code if intercepted at response stage or if redirect occurred while intercepting request or auth retry occurred.</description></item>
-    /// <item><description><b>ResponseHeaders</b> - Response headers if intercepted at the response stage or if redirect occurred while intercepting request or auth retry occurred.</description></item>
-    /// <item><description><b>RequestId</b> - If the intercepted request had a corresponding requestWillBeSent event fired for it, then this requestId will be the same as the requestId present in the requestWillBeSent event.</description></item>
-    /// </list>
-    /// </remarks>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    [global::System.Obsolete]
-    IEventSource<RequestInterceptedEventArgs> RequestIntercepted { get; }
 
     /// <summary>
     /// Fired if request ended up loading from cache.
@@ -1615,15 +1481,6 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
     }
     private static readonly CdpCommand<ClearBrowserCookiesCommandParameters, ClearBrowserCookiesResult> ClearBrowserCookiesCommand = new("Network.clearBrowserCookies", JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult);
 
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    [global::System.Obsolete]
-    public async Task<ContinueInterceptedRequestResult> ContinueInterceptedRequestAsync(InterceptionId interceptionId, ErrorReason? errorReason = default, string? rawResponse = default, string? url = default, string? method = default, string? postData = default, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? headers = default, AuthChallengeResponse? authChallengeResponse = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ContinueInterceptedRequestCommandParameters(InterceptionId: interceptionId, ErrorReason: errorReason, RawResponse: rawResponse, Url: url, Method: method, PostData: postData, Headers: headers, AuthChallengeResponse: authChallengeResponse);
-        return await ExecuteCommandAsync(ContinueInterceptedRequestCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ContinueInterceptedRequestCommandParameters, ContinueInterceptedRequestResult> ContinueInterceptedRequestCommand = new("Network.continueInterceptedRequest", JsonContext.ContinueInterceptedRequestCommandParameters, JsonContext.ContinueInterceptedRequestResult);
-
     public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCookiesCommandParameters(Name: name, Url: url, Domain: domain, Path: path, PartitionKey: partitionKey);
@@ -1715,22 +1572,6 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly CdpCommand<GetRequestPostDataCommandParameters, GetRequestPostDataResult> GetRequestPostDataCommand = new("Network.getRequestPostData", JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetResponseBodyForInterceptionCommandParameters(InterceptionId: interceptionId);
-        return await ExecuteCommandAsync(GetResponseBodyForInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetResponseBodyForInterceptionCommandParameters, GetResponseBodyForInterceptionResult> GetResponseBodyForInterceptionCommand = new("Network.getResponseBodyForInterception", JsonContext.GetResponseBodyForInterceptionCommandParameters, JsonContext.GetResponseBodyForInterceptionResult);
-
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamAsync(InterceptionId interceptionId, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new TakeResponseBodyForInterceptionAsStreamCommandParameters(InterceptionId: interceptionId);
-        return await ExecuteCommandAsync(TakeResponseBodyForInterceptionAsStreamCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<TakeResponseBodyForInterceptionAsStreamCommandParameters, TakeResponseBodyForInterceptionAsStreamResult> TakeResponseBodyForInterceptionAsStreamCommand = new("Network.takeResponseBodyForInterceptionAsStream", JsonContext.TakeResponseBodyForInterceptionAsStreamCommandParameters, JsonContext.TakeResponseBodyForInterceptionAsStreamResult);
-
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReplayXHRCommandParameters(RequestId: requestId);
@@ -1796,15 +1637,6 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
         return await ExecuteCommandAsync(SetAttachDebugStackCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<SetAttachDebugStackCommandParameters, SetAttachDebugStackResult> SetAttachDebugStackCommand = new("Network.setAttachDebugStack", JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult);
-
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    [global::System.Obsolete]
-    public async Task<SetRequestInterceptionResult> SetRequestInterceptionAsync(ImmutableArray<RequestPattern> patterns, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetRequestInterceptionCommandParameters(Patterns: patterns);
-        return await ExecuteCommandAsync(SetRequestInterceptionCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetRequestInterceptionCommandParameters, SetRequestInterceptionResult> SetRequestInterceptionCommand = new("Network.setRequestInterception", JsonContext.SetRequestInterceptionCommandParameters, JsonContext.SetRequestInterceptionResult);
 
     public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
@@ -1881,9 +1713,6 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
     public IEventSource<EventSourceMessageReceivedEventArgs> EventSourceMessageReceived => CreateCdpEventSource(NetworkDomainEvent.EventSourceMessageReceived);
     public IEventSource<LoadingFailedEventArgs> LoadingFailed => CreateCdpEventSource(NetworkDomainEvent.LoadingFailed);
     public IEventSource<LoadingFinishedEventArgs> LoadingFinished => CreateCdpEventSource(NetworkDomainEvent.LoadingFinished);
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    [global::System.Obsolete]
-    public IEventSource<RequestInterceptedEventArgs> RequestIntercepted => CreateCdpEventSource(NetworkDomainEvent.RequestIntercepted);
     public IEventSource<RequestServedFromCacheEventArgs> RequestServedFromCache => CreateCdpEventSource(NetworkDomainEvent.RequestServedFromCache);
     public IEventSource<RequestWillBeSentEventArgs> RequestWillBeSent => CreateCdpEventSource(NetworkDomainEvent.RequestWillBeSent);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -2009,13 +1838,6 @@ internal sealed record ClearBrowserCookiesCommandParameters() : Parameters;
 public sealed record ClearBrowserCookiesResult() : EmptyResult;
 
 
-internal sealed record ContinueInterceptedRequestCommandParameters(InterceptionId InterceptionId, ErrorReason? ErrorReason, string? RawResponse, string? Url, string? Method, string? PostData, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? Headers, AuthChallengeResponse? AuthChallengeResponse) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record ContinueInterceptedRequestResult() : EmptyResult;
-
-
 internal sealed record DeleteCookiesCommandParameters(string Name, string? Url, string? Domain, string? Path, CookiePartitionKey? PartitionKey) : Parameters;
 
 /// <summary>
@@ -2124,28 +1946,6 @@ internal sealed record GetRequestPostDataCommandParameters(RequestId RequestId) 
 public sealed record GetRequestPostDataResult(string PostData, bool Base64Encoded) : EmptyResult;
 
 
-internal sealed record GetResponseBodyForInterceptionCommandParameters(InterceptionId InterceptionId) : Parameters;
-
-/// <summary>
-/// </summary>
-/// <param name="Body">
-/// Response body.
-/// </param>
-/// <param name="Base64Encoded">
-/// True, if content was sent as base64.
-/// </param>
-public sealed record GetResponseBodyForInterceptionResult(string Body, bool Base64Encoded) : EmptyResult;
-
-
-internal sealed record TakeResponseBodyForInterceptionAsStreamCommandParameters(InterceptionId InterceptionId) : Parameters;
-
-/// <summary>
-/// </summary>
-/// <param name="Stream">
-/// </param>
-public sealed record TakeResponseBodyForInterceptionAsStreamResult(IO.StreamHandle Stream) : EmptyResult;
-
-
 internal sealed record ReplayXHRCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
@@ -2213,13 +2013,6 @@ internal sealed record SetAttachDebugStackCommandParameters(bool Enabled) : Para
 /// <summary>
 /// </summary>
 public sealed record SetAttachDebugStackResult() : EmptyResult;
-
-
-internal sealed record SetRequestInterceptionCommandParameters(ImmutableArray<RequestPattern> Patterns) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record SetRequestInterceptionResult() : EmptyResult;
 
 
 internal sealed record SetUserAgentOverrideCommandParameters(string UserAgent, string? AcceptLanguage, string? Platform, Emulation.UserAgentMetadata? UserAgentMetadata) : Parameters;
@@ -2374,56 +2167,6 @@ public sealed record LoadingFailedEventArgs(RequestId RequestId, MonotonicTime T
 /// Total number of bytes received for this request.
 /// </param>
 public sealed record LoadingFinishedEventArgs(RequestId RequestId, MonotonicTime Timestamp, double EncodedDataLength) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
-/// mocked.
-/// Deprecated, use Fetch.requestPaused instead.
-/// </summary>
-/// <param name="InterceptionId">
-/// Each request the page makes will have a unique id, however if any redirects are encountered
-/// while processing that fetch, they will be reported with the same id as the original fetch.
-/// Likewise if HTTP authentication is needed then the same fetch id will be used.
-/// </param>
-/// <param name="Request">
-/// </param>
-/// <param name="FrameId">
-/// The id of the frame that initiated the request.
-/// </param>
-/// <param name="ResourceType">
-/// How the requested resource will be used.
-/// </param>
-/// <param name="IsNavigationRequest">
-/// Whether this is a navigation request, which can abort the navigation completely.
-/// </param>
-/// <param name="IsDownload">
-/// Set if the request is a navigation that will result in a download.
-/// Only present after response is received from the server (i.e. HeadersReceived stage).
-/// </param>
-/// <param name="RedirectUrl">
-/// Redirect location, only sent if a redirect was intercepted.
-/// </param>
-/// <param name="AuthChallenge">
-/// Details of the Authorization Challenge encountered. If this is set then
-/// continueInterceptedRequest must contain an authChallengeResponse.
-/// </param>
-/// <param name="ResponseErrorReason">
-/// Response error if intercepted at response stage or if redirect occurred while intercepting
-/// request.
-/// </param>
-/// <param name="ResponseStatusCode">
-/// Response code if intercepted at response stage or if redirect occurred while intercepting
-/// request or auth retry occurred.
-/// </param>
-/// <param name="ResponseHeaders">
-/// Response headers if intercepted at the response stage or if redirect occurred while
-/// intercepting request or auth retry occurred.
-/// </param>
-/// <param name="RequestId">
-/// If the intercepted request had a corresponding requestWillBeSent event fired for it, then
-/// this requestId will be the same as the requestId present in the requestWillBeSent event.
-/// </param>
-public sealed record RequestInterceptedEventArgs(InterceptionId InterceptionId, Request Request, Page.FrameId FrameId, ResourceType ResourceType, bool IsNavigationRequest, bool? IsDownload = null, string? RedirectUrl = null, AuthChallenge? AuthChallenge = null, ErrorReason? ResponseErrorReason = null, long? ResponseStatusCode = null, global::System.Collections.Generic.IReadOnlyDictionary<string, string>? ResponseHeaders = null, RequestId? RequestId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired if request ended up loading from cache.
@@ -2714,7 +2457,7 @@ public sealed record DirectTCPSocketOpenedEventArgs(RequestId Identifier, string
 /// </param>
 /// <param name="Timestamp">
 /// </param>
-public sealed record DirectTCPSocketAbortedEventArgs(RequestId Identifier, string ErrorMessage, MonotonicTime Timestamp) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DirectTCPSocketAbortedEventArgs(RequestId Identifier, ErrorReason ErrorMessage, MonotonicTime Timestamp) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when direct_socket.TCPSocket is closed.
@@ -2804,7 +2547,7 @@ public sealed record DirectUDPSocketOpenedEventArgs(RequestId Identifier, string
 /// </param>
 /// <param name="Timestamp">
 /// </param>
-public sealed record DirectUDPSocketAbortedEventArgs(RequestId Identifier, string ErrorMessage, MonotonicTime Timestamp) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DirectUDPSocketAbortedEventArgs(RequestId Identifier, ErrorReason ErrorMessage, MonotonicTime Timestamp) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when direct_socket.UDPSocket is closed.
@@ -3122,15 +2865,6 @@ public record LoaderId : IStringRemoteId
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<RequestId>))]
 public record RequestId : IStringRemoteId
-{
-    string IStringRemoteId.Id { get; init; } = null!;
-}
-
-/// <summary>
-/// Unique intercepted request identifier.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<InterceptionId>))]
-public record InterceptionId : IStringRemoteId
 {
     string IStringRemoteId.Id { get; init; } = null!;
 }
@@ -4697,45 +4431,6 @@ public sealed record AuthChallengeResponse(string Response)
 }
 
 /// <summary>
-/// Stages of the interception to begin intercepting. Request will intercept before the request is
-/// sent. Response will intercept after the response is received.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<InterceptionStage>))]
-public enum InterceptionStage
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Request")]
-    Request,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HeadersReceived")]
-    HeadersReceived,
-}
-
-/// <summary>
-/// Request pattern for interception.
-/// </summary>
-public sealed record RequestPattern()
-{
-    /// <summary>
-    /// Wildcards (<b>'*'</b> -&gt; zero or more, <b>'?'</b> -&gt; exactly one) are allowed. Escape character is
-    /// backslash. Omitting is equivalent to <b>"*"</b>.
-    /// </summary>
-    public string? UrlPattern { get; init; }
-
-    /// <summary>
-    /// If set, only requests for matching resource types will be intercepted.
-    /// </summary>
-    public ResourceType? ResourceType { get; init; }
-
-    /// <summary>
-    /// Stage at which to begin intercepting requests. Default is Request.
-    /// </summary>
-    public InterceptionStage? InterceptionStage { get; init; }
-}
-
-/// <summary>
 /// Information about a signed exchange signature.
 /// https://wicg.github.io/webpackage/draft-yasskin-httpbis-origin-signed-exchanges-impl.html#rfc.section.3.1
 /// </summary>
@@ -5995,8 +5690,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(ClearBrowserCacheResult), TypeInfoPropertyName = "ClearBrowserCacheResult")]
 [JsonSerializable(typeof(ClearBrowserCookiesCommandParameters), TypeInfoPropertyName = "ClearBrowserCookiesCommandParameters")]
 [JsonSerializable(typeof(ClearBrowserCookiesResult), TypeInfoPropertyName = "ClearBrowserCookiesResult")]
-[JsonSerializable(typeof(ContinueInterceptedRequestCommandParameters), TypeInfoPropertyName = "ContinueInterceptedRequestCommandParameters")]
-[JsonSerializable(typeof(ContinueInterceptedRequestResult), TypeInfoPropertyName = "ContinueInterceptedRequestResult")]
 [JsonSerializable(typeof(DeleteCookiesCommandParameters), TypeInfoPropertyName = "DeleteCookiesCommandParameters")]
 [JsonSerializable(typeof(DeleteCookiesResult), TypeInfoPropertyName = "DeleteCookiesResult")]
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]
@@ -6021,10 +5714,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(GetResponseBodyResult), TypeInfoPropertyName = "GetResponseBodyResult")]
 [JsonSerializable(typeof(GetRequestPostDataCommandParameters), TypeInfoPropertyName = "GetRequestPostDataCommandParameters")]
 [JsonSerializable(typeof(GetRequestPostDataResult), TypeInfoPropertyName = "GetRequestPostDataResult")]
-[JsonSerializable(typeof(GetResponseBodyForInterceptionCommandParameters), TypeInfoPropertyName = "GetResponseBodyForInterceptionCommandParameters")]
-[JsonSerializable(typeof(GetResponseBodyForInterceptionResult), TypeInfoPropertyName = "GetResponseBodyForInterceptionResult")]
-[JsonSerializable(typeof(TakeResponseBodyForInterceptionAsStreamCommandParameters), TypeInfoPropertyName = "TakeResponseBodyForInterceptionAsStreamCommandParameters")]
-[JsonSerializable(typeof(TakeResponseBodyForInterceptionAsStreamResult), TypeInfoPropertyName = "TakeResponseBodyForInterceptionAsStreamResult")]
 [JsonSerializable(typeof(ReplayXHRCommandParameters), TypeInfoPropertyName = "ReplayXHRCommandParameters")]
 [JsonSerializable(typeof(ReplayXHRResult), TypeInfoPropertyName = "ReplayXHRResult")]
 [JsonSerializable(typeof(SearchInResponseBodyCommandParameters), TypeInfoPropertyName = "SearchInResponseBodyCommandParameters")]
@@ -6043,8 +5732,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(SetExtraHTTPHeadersResult), TypeInfoPropertyName = "SetExtraHTTPHeadersResult")]
 [JsonSerializable(typeof(SetAttachDebugStackCommandParameters), TypeInfoPropertyName = "SetAttachDebugStackCommandParameters")]
 [JsonSerializable(typeof(SetAttachDebugStackResult), TypeInfoPropertyName = "SetAttachDebugStackResult")]
-[JsonSerializable(typeof(SetRequestInterceptionCommandParameters), TypeInfoPropertyName = "SetRequestInterceptionCommandParameters")]
-[JsonSerializable(typeof(SetRequestInterceptionResult), TypeInfoPropertyName = "SetRequestInterceptionResult")]
 [JsonSerializable(typeof(SetUserAgentOverrideCommandParameters), TypeInfoPropertyName = "SetUserAgentOverrideCommandParameters")]
 [JsonSerializable(typeof(SetUserAgentOverrideResult), TypeInfoPropertyName = "SetUserAgentOverrideResult")]
 [JsonSerializable(typeof(StreamResourceContentCommandParameters), TypeInfoPropertyName = "StreamResourceContentCommandParameters")]
@@ -6067,7 +5754,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(CdpEventArgs<EventSourceMessageReceivedEventArgs>), TypeInfoPropertyName = "EventSourceMessageReceivedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<LoadingFailedEventArgs>), TypeInfoPropertyName = "LoadingFailedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<LoadingFinishedEventArgs>), TypeInfoPropertyName = "LoadingFinishedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<RequestInterceptedEventArgs>), TypeInfoPropertyName = "RequestInterceptedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<RequestServedFromCacheEventArgs>), TypeInfoPropertyName = "RequestServedFromCacheCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<RequestWillBeSentEventArgs>), TypeInfoPropertyName = "RequestWillBeSentCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<ResourceChangedPriorityEventArgs>), TypeInfoPropertyName = "ResourceChangedPriorityCdpEventArgs")]
@@ -6110,7 +5796,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(ResourceType), TypeInfoPropertyName = "NetworkResourceType")]
 [JsonSerializable(typeof(LoaderId), TypeInfoPropertyName = "NetworkLoaderId")]
 [JsonSerializable(typeof(RequestId), TypeInfoPropertyName = "NetworkRequestId")]
-[JsonSerializable(typeof(InterceptionId), TypeInfoPropertyName = "NetworkInterceptionId")]
 [JsonSerializable(typeof(ErrorReason), TypeInfoPropertyName = "NetworkErrorReason")]
 [JsonSerializable(typeof(TimeSinceEpoch), TypeInfoPropertyName = "NetworkTimeSinceEpoch")]
 [JsonSerializable(typeof(MonotonicTime), TypeInfoPropertyName = "NetworkMonotonicTime")]
@@ -6152,8 +5837,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(CookieParam), TypeInfoPropertyName = "NetworkCookieParam")]
 [JsonSerializable(typeof(AuthChallenge), TypeInfoPropertyName = "NetworkAuthChallenge")]
 [JsonSerializable(typeof(AuthChallengeResponse), TypeInfoPropertyName = "NetworkAuthChallengeResponse")]
-[JsonSerializable(typeof(InterceptionStage), TypeInfoPropertyName = "NetworkInterceptionStage")]
-[JsonSerializable(typeof(RequestPattern), TypeInfoPropertyName = "NetworkRequestPattern")]
 [JsonSerializable(typeof(SignedExchangeSignature), TypeInfoPropertyName = "NetworkSignedExchangeSignature")]
 [JsonSerializable(typeof(SignedExchangeHeader), TypeInfoPropertyName = "NetworkSignedExchangeHeader")]
 [JsonSerializable(typeof(SignedExchangeErrorField), TypeInfoPropertyName = "NetworkSignedExchangeErrorField")]
@@ -6205,7 +5888,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(ImmutableArray<Debugger.SearchMatch>), TypeInfoPropertyName = "ImmutableArrayDebuggerSearchMatch")]
 [JsonSerializable(typeof(ImmutableArray<BlockPattern>), TypeInfoPropertyName = "ImmutableArrayNetworkBlockPattern")]
 [JsonSerializable(typeof(ImmutableArray<CookieParam>), TypeInfoPropertyName = "ImmutableArrayNetworkCookieParam")]
-[JsonSerializable(typeof(ImmutableArray<RequestPattern>), TypeInfoPropertyName = "ImmutableArrayNetworkRequestPattern")]
 [JsonSerializable(typeof(ImmutableArray<AssociatedCookie>), TypeInfoPropertyName = "ImmutableArrayNetworkAssociatedCookie")]
 [JsonSerializable(typeof(ImmutableArray<DeviceBoundSessionWithUsage>), TypeInfoPropertyName = "ImmutableArrayNetworkDeviceBoundSessionWithUsage")]
 [JsonSerializable(typeof(ImmutableArray<BlockedSetCookieWithReason>), TypeInfoPropertyName = "ImmutableArrayNetworkBlockedSetCookieWithReason")]
@@ -6263,16 +5945,6 @@ public static class NetworkDomainEvent
         EventDescriptor<CdpEventArgs<LoadingFinishedEventArgs>>.Create(
             "goog:cdp.Network.loadingFinished",
             NetworkJsonSerializerContext.Default.LoadingFinishedCdpEventArgs);
-
-    /// <summary>
-    /// Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
-    /// mocked.
-    /// Deprecated, use Fetch.requestPaused instead.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<RequestInterceptedEventArgs>> RequestIntercepted { get; } =
-        EventDescriptor<CdpEventArgs<RequestInterceptedEventArgs>>.Create(
-            "goog:cdp.Network.requestIntercepted",
-            NetworkJsonSerializerContext.Default.RequestInterceptedCdpEventArgs);
 
     /// <summary>
     /// Fired if request ended up loading from cache.
