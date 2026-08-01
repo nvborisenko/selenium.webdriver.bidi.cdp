@@ -1414,6 +1414,10 @@ public enum FederatedAuthRequestIssueReason
     WellKnownNoResponse,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownBlockedByConnectionAllowlist")]
+    WellKnownBlockedByConnectionAllowlist,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownInvalidResponse")]
     WellKnownInvalidResponse,
     /// <summary>
@@ -1440,6 +1444,10 @@ public enum FederatedAuthRequestIssueReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigNoResponse")]
     ConfigNoResponse,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigBlockedByConnectionAllowlist")]
+    ConfigBlockedByConnectionAllowlist,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigInvalidResponse")]
@@ -1478,6 +1486,10 @@ public enum FederatedAuthRequestIssueReason
     AccountsNoResponse,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsBlockedByConnectionAllowlist")]
+    AccountsBlockedByConnectionAllowlist,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsInvalidResponse")]
     AccountsInvalidResponse,
     /// <summary>
@@ -1496,6 +1508,10 @@ public enum FederatedAuthRequestIssueReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenNoResponse")]
     IdTokenNoResponse,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenBlockedByConnectionAllowlist")]
+    IdTokenBlockedByConnectionAllowlist,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenInvalidResponse")]
