@@ -107,4 +107,32 @@ public class PageTests : CdpTestFixture
         var imageBytes = Convert.FromBase64String(result.Data);
         await Assert.That(imageBytes.Length).IsGreaterThan(0);
     }
+
+    [Test]
+    public async Task VerifyScreencastFrame()
+    {
+        await using var screencastFrameStream = await Cdp.Page.ScreencastFrame.StreamAsync();
+
+        await Cdp.Page.StartScreencastAsync(format: "png", everyNthFrame: 1);
+
+        var frame = await screencastFrameStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+
+        await NavigateAndWaitForLoadAsync("https://www.example.com");
+
+        await Assert.That(frame.Data).IsNotNull();
+        var imageBytes = Convert.FromBase64String(frame.Data);
+        await Assert.That(imageBytes.Length).IsGreaterThan(0);
+
+        // PNG files start with specific magic bytes.
+        await Assert.That(imageBytes[0]).IsEqualTo((byte)0x89);
+        await Assert.That(imageBytes[1]).IsEqualTo((byte)0x50); // 'P'
+        await Assert.That(imageBytes[2]).IsEqualTo((byte)0x4E); // 'N'
+        await Assert.That(imageBytes[3]).IsEqualTo((byte)0x47); // 'G'
+
+        await Assert.That(frame.Metadata.DeviceWidth).IsGreaterThan(0);
+        await Assert.That(frame.Metadata.DeviceHeight).IsGreaterThan(0);
+
+        await Cdp.Page.ScreencastFrameAckAsync(frame.SessionId);
+        await Cdp.Page.StopScreencastAsync();
+    }
 }
