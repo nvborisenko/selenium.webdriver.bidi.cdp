@@ -4468,10 +4468,6 @@ public sealed record FileFilter()
 public sealed record FileHandler(string Action, string Name, string LaunchType)
 {
     /// <summary>
-    /// </summary>
-    public ImmutableArray<ImageResource>? Icons { get; init; }
-
-    /// <summary>
     /// Mimic a map, name is the key, accepts is the value.
     /// </summary>
     public ImmutableArray<FileFilter>? Accepts { get; init; }
@@ -5612,9 +5608,9 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, Immu
 [JsonSerializable(typeof(ImmutableArray<FrameResource>), TypeInfoPropertyName = "ImmutableArrayPageFrameResource")]
 [JsonSerializable(typeof(ImmutableArray<FrameTree>), TypeInfoPropertyName = "ImmutableArrayPageFrameTree")]
 [JsonSerializable(typeof(ImmutableArray<InstallabilityErrorArgument>), TypeInfoPropertyName = "ImmutableArrayPageInstallabilityErrorArgument")]
-[JsonSerializable(typeof(ImmutableArray<ImageResource>), TypeInfoPropertyName = "ImmutableArrayPageImageResource")]
 [JsonSerializable(typeof(ImmutableArray<FileFilter>), TypeInfoPropertyName = "ImmutableArrayPageFileFilter")]
 [JsonSerializable(typeof(ImmutableArray<FileHandler>), TypeInfoPropertyName = "ImmutableArrayPageFileHandler")]
+[JsonSerializable(typeof(ImmutableArray<ImageResource>), TypeInfoPropertyName = "ImmutableArrayPageImageResource")]
 [JsonSerializable(typeof(ImmutableArray<ProtocolHandler>), TypeInfoPropertyName = "ImmutableArrayPageProtocolHandler")]
 [JsonSerializable(typeof(ImmutableArray<RelatedApplication>), TypeInfoPropertyName = "ImmutableArrayPageRelatedApplication")]
 [JsonSerializable(typeof(ImmutableArray<ScopeExtension>), TypeInfoPropertyName = "ImmutableArrayPageScopeExtension")]

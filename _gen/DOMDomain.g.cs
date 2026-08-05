@@ -1129,6 +1129,28 @@ public interface IDOM
     Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// When enabling, this API forces an element to gain interest in its target,
+    /// keeping interest active until disabled.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the interest invoker HTMLElement.
+    /// </param>
+    /// <param name="enable">
+    /// If true, opens and holds interest. If false, releases forced interest.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ForceShowInterestResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Fired when <b>Element</b>'s attribute is modified.
     /// </summary>
     /// <remarks>
@@ -1758,6 +1780,14 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     }
     private static readonly CdpCommand<ForceShowPopoverCommandParameters, ForceShowPopoverResult> ForceShowPopoverCommand = new("DOM.forceShowPopover", JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult);
 
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new ForceShowInterestCommandParameters(NodeId: nodeId, Enable: enable);
+        return await ExecuteCommandAsync(ForceShowInterestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<ForceShowInterestCommandParameters, ForceShowInterestResult> ForceShowInterestCommand = new("DOM.forceShowInterest", JsonContext.ForceShowInterestCommandParameters, JsonContext.ForceShowInterestResult);
+
     public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<AdoptedStyleSheetsModifiedEventArgs> AdoptedStyleSheetsModified => CreateCdpEventSource(DOMDomainEvent.AdoptedStyleSheetsModified);
@@ -2267,6 +2297,13 @@ internal sealed record ForceShowPopoverCommandParameters(NodeId NodeId, bool Ena
 /// List of popovers that were closed in order to respect popover stacking order.
 /// </param>
 public sealed record ForceShowPopoverResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record ForceShowInterestCommandParameters(NodeId NodeId, bool Enable) : Parameters;
+
+/// <summary>
+/// </summary>
+public sealed record ForceShowInterestResult() : EmptyResult;
 
 
 /// <summary>
@@ -3180,6 +3217,8 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 [JsonSerializable(typeof(GetAnchorElementResult), TypeInfoPropertyName = "GetAnchorElementResult")]
 [JsonSerializable(typeof(ForceShowPopoverCommandParameters), TypeInfoPropertyName = "ForceShowPopoverCommandParameters")]
 [JsonSerializable(typeof(ForceShowPopoverResult), TypeInfoPropertyName = "ForceShowPopoverResult")]
+[JsonSerializable(typeof(ForceShowInterestCommandParameters), TypeInfoPropertyName = "ForceShowInterestCommandParameters")]
+[JsonSerializable(typeof(ForceShowInterestResult), TypeInfoPropertyName = "ForceShowInterestResult")]
 [JsonSerializable(typeof(CdpEventArgs<AttributeModifiedEventArgs>), TypeInfoPropertyName = "AttributeModifiedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>), TypeInfoPropertyName = "AdoptedStyleSheetsModifiedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<AttributeRemovedEventArgs>), TypeInfoPropertyName = "AttributeRemovedCdpEventArgs")]
