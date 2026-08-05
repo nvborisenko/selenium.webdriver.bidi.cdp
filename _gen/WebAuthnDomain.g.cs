@@ -733,7 +733,13 @@ public sealed record VirtualAuthenticatorOptions(AuthenticatorProtocol Protocol,
 /// <param name="PrivateKey">
 /// The ECDSA P-256 private key in PKCS#8 format. (Encoded as a base64 string when passed over JSON)
 /// </param>
-public sealed record Credential(string CredentialId, bool IsResidentCredential, string PrivateKey)
+/// <param name="SignCount">
+/// Signature counter. Must be equal to or greater than -1.
+/// If -1, the credential won't have an associated signature counter, and
+/// every assertion operation will report a value of 0.
+/// See https://w3c.github.io/webauthn/#signature-counter
+/// </param>
+public sealed record Credential(string CredentialId, bool IsResidentCredential, string PrivateKey, long SignCount)
 {
     /// <summary>
     /// Relying Party ID the credential is scoped to. Must be set when adding a
@@ -746,14 +752,6 @@ public sealed record Credential(string CredentialId, bool IsResidentCredential, 
     /// credential to a specific user. (Encoded as a base64 string when passed over JSON)
     /// </summary>
     public string? UserHandle { get; init; }
-
-    /// <summary>
-    /// Signature counter. Must be equal to or greater than -1.
-    /// If -1, the credential won't have an associated signature counter, and
-    /// every assertion operation will report a value of 0.
-    /// See https://w3c.github.io/webauthn/#signature-counter
-    /// </summary>
-    public long? SignCount { get; init; }
 
     /// <summary>
     /// The large blob associated with the credential.
