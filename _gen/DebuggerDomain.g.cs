@@ -96,6 +96,9 @@ public interface IDebugger
     /// <param name="timeout">
     /// Terminate execution after timing out (number of milliseconds).
     /// </param>
+    /// <param name="scopeNumber">
+    /// Specifies the scope number to evaluate the expression in (default: 0, innermost scope).
+    /// </param>
     /// <param name="session">
     /// Optional CDP session override.
     /// </param>
@@ -105,7 +108,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EvaluateOnCallFrameResult"/>.
     /// </returns>
-    Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, long? scopeNumber = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns possible locations for breakpoint. scriptId in start and end range locations should be
@@ -839,9 +842,9 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
     }
     private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Debugger.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
-    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, long? scopeNumber = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new EvaluateOnCallFrameCommandParameters(CallFrameId: callFrameId, Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout);
+        var @params = new EvaluateOnCallFrameCommandParameters(CallFrameId: callFrameId, Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout, ScopeNumber: scopeNumber);
         return await ExecuteCommandAsync(EvaluateOnCallFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<EvaluateOnCallFrameCommandParameters, EvaluateOnCallFrameResult> EvaluateOnCallFrameCommand = new("Debugger.evaluateOnCallFrame", JsonContext.EvaluateOnCallFrameCommandParameters, JsonContext.EvaluateOnCallFrameResult);
@@ -1092,7 +1095,7 @@ internal sealed record EnableCommandParameters(double? MaxScriptsCacheSize) : Pa
 public sealed record EnableResult(Runtime.UniqueDebuggerId DebuggerId) : EmptyResult;
 
 
-internal sealed record EvaluateOnCallFrameCommandParameters(CallFrameId CallFrameId, string Expression, string? ObjectGroup, bool? IncludeCommandLineAPI, bool? Silent, bool? ReturnByValue, bool? GeneratePreview, bool? ThrowOnSideEffect, Runtime.TimeDelta? Timeout) : Parameters;
+internal sealed record EvaluateOnCallFrameCommandParameters(CallFrameId CallFrameId, string Expression, string? ObjectGroup, bool? IncludeCommandLineAPI, bool? Silent, bool? ReturnByValue, bool? GeneratePreview, bool? ThrowOnSideEffect, Runtime.TimeDelta? Timeout, long? ScopeNumber) : Parameters;
 
 /// <summary>
 /// </summary>
