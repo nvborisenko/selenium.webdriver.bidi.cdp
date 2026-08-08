@@ -1011,6 +1011,47 @@ public interface IPage
     Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Starts screencast video recording.
+    /// </summary>
+    /// <param name="audio">
+    /// </param>
+    /// <param name="maxWidth">
+    /// Maximum frame width in pixels.
+    /// </param>
+    /// <param name="maxHeight">
+    /// Maximum frame height in pixels.
+    /// </param>
+    /// <param name="frameRate">
+    /// Maximum frame rate in frames per second.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="StartScreenRecordingResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = default, long? maxWidth = default, long? maxHeight = default, long? frameRate = default, string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Stops screencast video recording.
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="StopScreenRecordingResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<StopScreenRecordingResult> StopScreenRecordingAsync(string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Force the page stop all navigations and pending resource fetches.
     /// </summary>
     /// <param name="session">
@@ -2014,6 +2055,22 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     }
     private static readonly CdpCommand<StartScreencastCommandParameters, StartScreencastResult> StartScreencastCommand = new("Page.startScreencast", JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult);
 
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = default, long? maxWidth = default, long? maxHeight = default, long? frameRate = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StartScreenRecordingCommandParameters(Audio: audio, MaxWidth: maxWidth, MaxHeight: maxHeight, FrameRate: frameRate);
+        return await ExecuteCommandAsync(StartScreenRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StartScreenRecordingCommandParameters, StartScreenRecordingResult> StartScreenRecordingCommand = new("Page.startScreenRecording", JsonContext.StartScreenRecordingCommandParameters, JsonContext.StartScreenRecordingResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<StopScreenRecordingResult> StopScreenRecordingAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new StopScreenRecordingCommandParameters();
+        return await ExecuteCommandAsync(StopScreenRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<StopScreenRecordingCommandParameters, StopScreenRecordingResult> StopScreenRecordingCommand = new("Page.stopScreenRecording", JsonContext.StopScreenRecordingCommandParameters, JsonContext.StopScreenRecordingResult);
+
     public async Task<StopLoadingResult> StopLoadingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopLoadingCommandParameters();
@@ -2606,6 +2663,26 @@ internal sealed record StartScreencastCommandParameters(string? Format, long? Qu
 /// <summary>
 /// </summary>
 public sealed record StartScreencastResult() : EmptyResult;
+
+
+internal sealed record StartScreenRecordingCommandParameters(bool? Audio, long? MaxWidth, long? MaxHeight, long? FrameRate) : Parameters;
+
+/// <summary>
+/// </summary>
+/// <param name="Stream">
+/// A handle of the stream that holds resulting screencast data.
+/// </param>
+public sealed record StartScreenRecordingResult(IO.StreamHandle Stream) : EmptyResult;
+
+
+internal sealed record StopScreenRecordingCommandParameters() : Parameters;
+
+/// <summary>
+/// </summary>
+/// <param name="Stream">
+/// A handle of the stream that holds resulting screencast data.
+/// </param>
+public sealed record StopScreenRecordingResult(IO.StreamHandle Stream) : EmptyResult;
 
 
 internal sealed record StopLoadingCommandParameters() : Parameters;
@@ -5476,6 +5553,10 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, Immu
 [JsonSerializable(typeof(SetTouchEmulationEnabledResult), TypeInfoPropertyName = "SetTouchEmulationEnabledResult")]
 [JsonSerializable(typeof(StartScreencastCommandParameters), TypeInfoPropertyName = "StartScreencastCommandParameters")]
 [JsonSerializable(typeof(StartScreencastResult), TypeInfoPropertyName = "StartScreencastResult")]
+[JsonSerializable(typeof(StartScreenRecordingCommandParameters), TypeInfoPropertyName = "StartScreenRecordingCommandParameters")]
+[JsonSerializable(typeof(StartScreenRecordingResult), TypeInfoPropertyName = "StartScreenRecordingResult")]
+[JsonSerializable(typeof(StopScreenRecordingCommandParameters), TypeInfoPropertyName = "StopScreenRecordingCommandParameters")]
+[JsonSerializable(typeof(StopScreenRecordingResult), TypeInfoPropertyName = "StopScreenRecordingResult")]
 [JsonSerializable(typeof(StopLoadingCommandParameters), TypeInfoPropertyName = "StopLoadingCommandParameters")]
 [JsonSerializable(typeof(StopLoadingResult), TypeInfoPropertyName = "StopLoadingResult")]
 [JsonSerializable(typeof(CrashCommandParameters), TypeInfoPropertyName = "CrashCommandParameters")]
