@@ -598,6 +598,7 @@ public enum Ctap2Version
 }
 
 /// <summary>
+/// LINT.IfChange(AuthenticatorTransport)
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AuthenticatorTransport>))]
 public enum AuthenticatorTransport
@@ -618,6 +619,14 @@ public enum AuthenticatorTransport
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cable")]
     Cable,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hybrid")]
+    Hybrid,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("smart-card")]
+    SmartCard,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("internal")]
