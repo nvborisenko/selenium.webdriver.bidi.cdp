@@ -12,39 +12,6 @@ namespace Selenium.WebDriver.BiDi.Cdp.Network;
 public interface INetwork
 {
     /// <summary>
-    /// Sets a list of content encodings that will be accepted. Empty list means no encoding is accepted.
-    /// </summary>
-    /// <param name="encodings">
-    /// List of accepted content encodings.
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetAcceptedEncodingsResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Clears accepted encodings set by setAcceptedEncodings
-    /// </summary>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="ClearAcceptedEncodingsOverrideResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Tells whether clearing browser cache is supported.
     /// </summary>
     /// <param name="session">
@@ -1427,22 +1394,6 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
 {
     private static NetworkJsonSerializerContext JsonContext = NetworkJsonSerializerContext.Default;
 
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAcceptedEncodingsResult> SetAcceptedEncodingsAsync(ImmutableArray<ContentEncoding> encodings, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetAcceptedEncodingsCommandParameters(Encodings: encodings);
-        return await ExecuteCommandAsync(SetAcceptedEncodingsCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetAcceptedEncodingsCommandParameters, SetAcceptedEncodingsResult> SetAcceptedEncodingsCommand = new("Network.setAcceptedEncodings", JsonContext.SetAcceptedEncodingsCommandParameters, JsonContext.SetAcceptedEncodingsResult);
-
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearAcceptedEncodingsOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearAcceptedEncodingsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearAcceptedEncodingsOverrideCommandParameters, ClearAcceptedEncodingsOverrideResult> ClearAcceptedEncodingsOverrideCommand = new("Network.clearAcceptedEncodingsOverride", JsonContext.ClearAcceptedEncodingsOverrideCommandParameters, JsonContext.ClearAcceptedEncodingsOverrideResult);
-
     [global::System.Obsolete]
     public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
@@ -1779,20 +1730,6 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DeviceBoundSessionEventOccurredEventArgs> DeviceBoundSessionEventOccurred => CreateCdpEventSource(NetworkDomainEvent.DeviceBoundSessionEventOccurred);
 }
-
-internal sealed record SetAcceptedEncodingsCommandParameters(ImmutableArray<ContentEncoding> Encodings) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record SetAcceptedEncodingsResult() : EmptyResult;
-
-
-internal sealed record ClearAcceptedEncodingsOverrideCommandParameters() : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record ClearAcceptedEncodingsOverrideResult() : EmptyResult;
-
 
 internal sealed record CanClearBrowserCacheCommandParameters() : Parameters;
 
@@ -4573,30 +4510,6 @@ public sealed record SignedExchangeInfo(Response OuterResponse, bool HasExtraInf
 }
 
 /// <summary>
-/// List of content encodings supported by the backend.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ContentEncoding>))]
-public enum ContentEncoding
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deflate")]
-    Deflate,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("gzip")]
-    Gzip,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("br")]
-    Br,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("zstd")]
-    Zstd,
-}
-
-/// <summary>
 /// </summary>
 /// <param name="UrlPattern">
 /// Only matching requests will be affected by these conditions. Patterns use the URLPattern constructor string
@@ -5676,10 +5589,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 {
 }
 
-[JsonSerializable(typeof(SetAcceptedEncodingsCommandParameters), TypeInfoPropertyName = "SetAcceptedEncodingsCommandParameters")]
-[JsonSerializable(typeof(SetAcceptedEncodingsResult), TypeInfoPropertyName = "SetAcceptedEncodingsResult")]
-[JsonSerializable(typeof(ClearAcceptedEncodingsOverrideCommandParameters), TypeInfoPropertyName = "ClearAcceptedEncodingsOverrideCommandParameters")]
-[JsonSerializable(typeof(ClearAcceptedEncodingsOverrideResult), TypeInfoPropertyName = "ClearAcceptedEncodingsOverrideResult")]
 [JsonSerializable(typeof(CanClearBrowserCacheCommandParameters), TypeInfoPropertyName = "CanClearBrowserCacheCommandParameters")]
 [JsonSerializable(typeof(CanClearBrowserCacheResult), TypeInfoPropertyName = "CanClearBrowserCacheResult")]
 [JsonSerializable(typeof(CanClearBrowserCookiesCommandParameters), TypeInfoPropertyName = "CanClearBrowserCookiesCommandParameters")]
@@ -5842,7 +5751,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(SignedExchangeErrorField), TypeInfoPropertyName = "NetworkSignedExchangeErrorField")]
 [JsonSerializable(typeof(SignedExchangeError), TypeInfoPropertyName = "NetworkSignedExchangeError")]
 [JsonSerializable(typeof(SignedExchangeInfo), TypeInfoPropertyName = "NetworkSignedExchangeInfo")]
-[JsonSerializable(typeof(ContentEncoding), TypeInfoPropertyName = "NetworkContentEncoding")]
 [JsonSerializable(typeof(NetworkConditions), TypeInfoPropertyName = "NetworkNetworkConditions")]
 [JsonSerializable(typeof(BlockPattern), TypeInfoPropertyName = "NetworkBlockPattern")]
 [JsonSerializable(typeof(DirectSocketDnsQueryType), TypeInfoPropertyName = "NetworkDirectSocketDnsQueryType")]
@@ -5882,7 +5790,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(ChallengeEventDetails), TypeInfoPropertyName = "NetworkChallengeEventDetails")]
 [JsonSerializable(typeof(LoadNetworkResourcePageResult), TypeInfoPropertyName = "NetworkLoadNetworkResourcePageResult")]
 [JsonSerializable(typeof(LoadNetworkResourceOptions), TypeInfoPropertyName = "NetworkLoadNetworkResourceOptions")]
-[JsonSerializable(typeof(ImmutableArray<ContentEncoding>), TypeInfoPropertyName = "ImmutableArrayNetworkContentEncoding")]
 [JsonSerializable(typeof(ImmutableArray<NetworkConditions>), TypeInfoPropertyName = "ImmutableArrayNetworkNetworkConditions")]
 [JsonSerializable(typeof(ImmutableArray<Cookie>), TypeInfoPropertyName = "ImmutableArrayNetworkCookie")]
 [JsonSerializable(typeof(ImmutableArray<Debugger.SearchMatch>), TypeInfoPropertyName = "ImmutableArrayDebuggerSearchMatch")]

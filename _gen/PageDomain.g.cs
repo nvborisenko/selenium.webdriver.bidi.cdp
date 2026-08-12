@@ -5363,6 +5363,10 @@ public enum BackForwardCacheNotRestoredReason
     EmbedderExtensionFrame,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderPrivilegedWebContents")]
+    EmbedderPrivilegedWebContents,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedByWebViewClient")]
     RequestedByWebViewClient,
     /// <summary>

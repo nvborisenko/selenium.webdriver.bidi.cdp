@@ -589,13 +589,7 @@ public interface IDebugger
     Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Edits JavaScript source live.
-    /// 
-    /// In general, functions that are currently on the stack can not be edited with
-    /// a single exception: If the edited function is the top-most stack frame and
-    /// that is the only activation of that function on the stack. In this case
-    /// the live edit will be successful and a <b>Debugger.restartFrame</b> for the
-    /// top-most function is automatically triggered.
+    /// Live edit is no longer supported and this command always fails with a "no longer available" error.
     /// </summary>
     /// <param name="scriptId">
     /// Id of the script to edit.
@@ -620,6 +614,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScriptSourceResult"/>.
     /// </returns>
+    [global::System.Obsolete]
     Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -1021,6 +1016,7 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
     }
     private static readonly CdpCommand<SetReturnValueCommandParameters, SetReturnValueResult> SetReturnValueCommand = new("Debugger.setReturnValue", JsonContext.SetReturnValueCommandParameters, JsonContext.SetReturnValueResult);
 
+    [global::System.Obsolete]
     public async Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetScriptSourceCommandParameters(ScriptId: scriptId, ScriptSource: scriptSource, DryRun: dryRun, AllowTopFrameEditing: allowTopFrameEditing);
