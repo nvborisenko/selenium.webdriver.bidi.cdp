@@ -1122,6 +1122,18 @@ public enum ConnectionAllowlistError
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidUrlPattern")]
     InvalidUrlPattern,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IFrameAttributeLoosensEmbeddingRequirement")]
+    IFrameAttributeLoosensEmbeddingRequirement,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowConnectionAllowlistFrom")]
+    InvalidAllowConnectionAllowlistFrom,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbeddingRequirementNotSatisfied")]
+    EmbeddingRequirementNotSatisfied,
 }
 
 /// <summary>
