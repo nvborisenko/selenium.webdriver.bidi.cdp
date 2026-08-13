@@ -3597,10 +3597,6 @@ public enum PermissionsPolicyFeature
     PictureInPicture,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("private-aggregation")]
-    PrivateAggregation,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("private-state-token-issuance")]
     PrivateStateTokenIssuance,
     /// <summary>
