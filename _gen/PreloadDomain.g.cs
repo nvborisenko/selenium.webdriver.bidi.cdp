@@ -835,6 +835,10 @@ public enum PrefetchStatus
     PrefetchNotEligibleBrowserContextOffTheRecord,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleCrossOrigin")]
+    PrefetchNotEligibleCrossOrigin,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleDataSaverEnabled")]
     PrefetchNotEligibleDataSaverEnabled,
     /// <summary>

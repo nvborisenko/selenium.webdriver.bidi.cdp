@@ -5443,6 +5443,14 @@ public enum DeviceBoundSessionFetchResult
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreProvisionedKeyNotFound")]
     PreProvisionedKeyNotFound,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttestationCertificationError")]
+    AttestationCertificationError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttestationSigningError")]
+    AttestationSigningError,
 }
 
 /// <summary>
