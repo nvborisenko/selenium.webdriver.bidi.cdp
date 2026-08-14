@@ -568,7 +568,9 @@ public sealed record ContextRealtimeData(double CurrentTime, double RenderCapaci
 /// <param name="SampleRate">
 /// Context sample rate.
 /// </param>
-public sealed record BaseAudioContext(GraphObjectId ContextId, ContextType ContextType, ContextState ContextState, double CallbackBufferSize, double MaxOutputChannelCount, double SampleRate)
+/// <param name="RenderQuantumSize">
+/// </param>
+public sealed record BaseAudioContext(GraphObjectId ContextId, ContextType ContextType, ContextState ContextState, double CallbackBufferSize, double MaxOutputChannelCount, double SampleRate, double RenderQuantumSize)
 {
     /// <summary>
     /// </summary>
