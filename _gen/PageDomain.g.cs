@@ -3529,10 +3529,6 @@ public enum PermissionsPolicyFeature
     InterestCohort,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("join-ad-interest-group")]
-    JoinAdInterestGroup,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyboard-map")]
     KeyboardMap,
     /// <summary>
@@ -3613,16 +3609,8 @@ public enum PermissionsPolicyFeature
     PublickeyCredentialsGet,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("record-ad-auction-events")]
-    RecordAdAuctionEvents,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rewriter")]
     Rewriter,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("run-ad-auction")]
-    RunAdAuction,
     /// <summary>
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("screen-wake-lock")]
