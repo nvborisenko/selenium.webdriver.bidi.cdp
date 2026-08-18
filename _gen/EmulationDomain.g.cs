@@ -829,6 +829,24 @@ public interface IEmulation
     Task<SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideAsync(long hardwareConcurrency, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Overrides the value of navigator.cpuPerformance
+    /// </summary>
+    /// <param name="performanceTier">
+    /// Override value. Omitting the parameter disables the override.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetCPUPerformanceOverrideResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(string? performanceTier = default, string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Allows overriding user agent with the given string.
     /// <b>userAgentMetadata</b> must be set for Client Hint headers to be sent.
     /// </summary>
@@ -1374,6 +1392,14 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
     }
     private static readonly CdpCommand<SetHardwareConcurrencyOverrideCommandParameters, SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideCommand = new("Emulation.setHardwareConcurrencyOverride", JsonContext.SetHardwareConcurrencyOverrideCommandParameters, JsonContext.SetHardwareConcurrencyOverrideResult);
 
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(string? performanceTier = default, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetCPUPerformanceOverrideCommandParameters(PerformanceTier: performanceTier);
+        return await ExecuteCommandAsync(SetCPUPerformanceOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetCPUPerformanceOverrideCommandParameters, SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideCommand = new("Emulation.setCPUPerformanceOverride", JsonContext.SetCPUPerformanceOverrideCommandParameters, JsonContext.SetCPUPerformanceOverrideResult);
+
     public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
@@ -1729,6 +1755,13 @@ internal sealed record SetHardwareConcurrencyOverrideCommandParameters(long Hard
 /// <summary>
 /// </summary>
 public sealed record SetHardwareConcurrencyOverrideResult() : EmptyResult;
+
+
+internal sealed record SetCPUPerformanceOverrideCommandParameters(string? PerformanceTier) : Parameters;
+
+/// <summary>
+/// </summary>
+public sealed record SetCPUPerformanceOverrideResult() : EmptyResult;
 
 
 internal sealed record SetUserAgentOverrideCommandParameters(string UserAgent, string? AcceptLanguage, string? Platform, UserAgentMetadata? UserAgentMetadata) : Parameters;
@@ -2327,6 +2360,8 @@ public enum DisabledImageType
 [JsonSerializable(typeof(SetDataSaverOverrideResult), TypeInfoPropertyName = "SetDataSaverOverrideResult")]
 [JsonSerializable(typeof(SetHardwareConcurrencyOverrideCommandParameters), TypeInfoPropertyName = "SetHardwareConcurrencyOverrideCommandParameters")]
 [JsonSerializable(typeof(SetHardwareConcurrencyOverrideResult), TypeInfoPropertyName = "SetHardwareConcurrencyOverrideResult")]
+[JsonSerializable(typeof(SetCPUPerformanceOverrideCommandParameters), TypeInfoPropertyName = "SetCPUPerformanceOverrideCommandParameters")]
+[JsonSerializable(typeof(SetCPUPerformanceOverrideResult), TypeInfoPropertyName = "SetCPUPerformanceOverrideResult")]
 [JsonSerializable(typeof(SetUserAgentOverrideCommandParameters), TypeInfoPropertyName = "SetUserAgentOverrideCommandParameters")]
 [JsonSerializable(typeof(SetUserAgentOverrideResult), TypeInfoPropertyName = "SetUserAgentOverrideResult")]
 [JsonSerializable(typeof(SetAutomationOverrideCommandParameters), TypeInfoPropertyName = "SetAutomationOverrideCommandParameters")]
