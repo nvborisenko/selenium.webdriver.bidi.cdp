@@ -392,6 +392,40 @@ public interface IBrowser
     Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets the current globally-applied privacy control status
+    /// See https://www.w3.org/TR/gpc/#get-global-privacy-control
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetGlobalPrivacyControlResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<GetGlobalPrivacyControlResult> GetGlobalPrivacyControlAsync(string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sets and then gets the current globally-applied privacy control status
+    /// See https://www.w3.org/TR/gpc/#set-global-privacy-control
+    /// </summary>
+    /// <param name="gpc">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetGlobalPrivacyControlResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<SetGlobalPrivacyControlResult> SetGlobalPrivacyControlAsync(bool gpc, string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Fired when page is about to start a download.
     /// </summary>
     /// <remarks>
@@ -578,6 +612,22 @@ internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly CdpCommand<AddPrivacySandboxEnrollmentOverrideCommandParameters, AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideCommand = new("Browser.addPrivacySandboxEnrollmentOverride", JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetGlobalPrivacyControlResult> GetGlobalPrivacyControlAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetGlobalPrivacyControlCommandParameters();
+        return await ExecuteCommandAsync(GetGlobalPrivacyControlCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetGlobalPrivacyControlCommandParameters, GetGlobalPrivacyControlResult> GetGlobalPrivacyControlCommand = new("Browser.getGlobalPrivacyControl", JsonContext.GetGlobalPrivacyControlCommandParameters, JsonContext.GetGlobalPrivacyControlResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetGlobalPrivacyControlResult> SetGlobalPrivacyControlAsync(bool gpc, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetGlobalPrivacyControlCommandParameters(Gpc: gpc);
+        return await ExecuteCommandAsync(SetGlobalPrivacyControlCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<SetGlobalPrivacyControlCommandParameters, SetGlobalPrivacyControlResult> SetGlobalPrivacyControlCommand = new("Browser.setGlobalPrivacyControl", JsonContext.SetGlobalPrivacyControlCommandParameters, JsonContext.SetGlobalPrivacyControlResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin => CreateCdpEventSource(BrowserDomainEvent.DownloadWillBegin);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DownloadProgressEventArgs> DownloadProgress => CreateCdpEventSource(BrowserDomainEvent.DownloadProgress);
@@ -749,6 +799,24 @@ internal sealed record AddPrivacySandboxEnrollmentOverrideCommandParameters(stri
 /// <summary>
 /// </summary>
 public sealed record AddPrivacySandboxEnrollmentOverrideResult() : EmptyResult;
+
+
+internal sealed record GetGlobalPrivacyControlCommandParameters() : Parameters;
+
+/// <summary>
+/// </summary>
+/// <param name="Gpc">
+/// </param>
+public sealed record GetGlobalPrivacyControlResult(bool Gpc) : EmptyResult;
+
+
+internal sealed record SetGlobalPrivacyControlCommandParameters(bool Gpc) : Parameters;
+
+/// <summary>
+/// </summary>
+/// <param name="Gpc">
+/// </param>
+public sealed record SetGlobalPrivacyControlResult(bool Gpc) : EmptyResult;
 
 
 /// <summary>
@@ -1173,6 +1241,10 @@ public sealed record Histogram(string Name, long Sum, long Count, ImmutableArray
 [JsonSerializable(typeof(ExecuteBrowserCommandResult), TypeInfoPropertyName = "ExecuteBrowserCommandResult")]
 [JsonSerializable(typeof(AddPrivacySandboxEnrollmentOverrideCommandParameters), TypeInfoPropertyName = "AddPrivacySandboxEnrollmentOverrideCommandParameters")]
 [JsonSerializable(typeof(AddPrivacySandboxEnrollmentOverrideResult), TypeInfoPropertyName = "AddPrivacySandboxEnrollmentOverrideResult")]
+[JsonSerializable(typeof(GetGlobalPrivacyControlCommandParameters), TypeInfoPropertyName = "GetGlobalPrivacyControlCommandParameters")]
+[JsonSerializable(typeof(GetGlobalPrivacyControlResult), TypeInfoPropertyName = "GetGlobalPrivacyControlResult")]
+[JsonSerializable(typeof(SetGlobalPrivacyControlCommandParameters), TypeInfoPropertyName = "SetGlobalPrivacyControlCommandParameters")]
+[JsonSerializable(typeof(SetGlobalPrivacyControlResult), TypeInfoPropertyName = "SetGlobalPrivacyControlResult")]
 [JsonSerializable(typeof(CdpEventArgs<DownloadWillBeginEventArgs>), TypeInfoPropertyName = "DownloadWillBeginCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DownloadProgressEventArgs>), TypeInfoPropertyName = "DownloadProgressCdpEventArgs")]
 [JsonSerializable(typeof(BrowserContextID), TypeInfoPropertyName = "BrowserBrowserContextID")]
