@@ -25,6 +25,22 @@ public interface IAds
     /// </returns>
     Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = default, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Retrieves ad scripts for the current page. To minimize payload size, this
+    /// only returns the newly tracked ad scripts since the last call to
+    /// getAdScripts (i.e., the delta).
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetAdScriptsResult"/>.
+    /// </returns>
+    Task<GetAdScriptsResult> GetAdScriptsAsync(string? session = default, CancellationToken cancellationToken = default);
+
 }
 
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -39,6 +55,13 @@ internal sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     }
     private static readonly CdpCommand<GetAdMetricsCommandParameters, GetAdMetricsResult> GetAdMetricsCommand = new("Ads.getAdMetrics", JsonContext.GetAdMetricsCommandParameters, JsonContext.GetAdMetricsResult);
 
+    public async Task<GetAdScriptsResult> GetAdScriptsAsync(string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetAdScriptsCommandParameters();
+        return await ExecuteCommandAsync(GetAdScriptsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<GetAdScriptsCommandParameters, GetAdScriptsResult> GetAdScriptsCommand = new("Ads.getAdScripts", JsonContext.GetAdScriptsCommandParameters, JsonContext.GetAdScriptsResult);
+
 }
 
 internal sealed record GetAdMetricsCommandParameters() : Parameters;
@@ -48,6 +71,15 @@ internal sealed record GetAdMetricsCommandParameters() : Parameters;
 /// <param name="Metrics">
 /// </param>
 public sealed record GetAdMetricsResult(AdMetrics Metrics) : EmptyResult;
+
+
+internal sealed record GetAdScriptsCommandParameters() : Parameters;
+
+/// <summary>
+/// </summary>
+/// <param name="NewScripts">
+/// </param>
+public sealed record GetAdScriptsResult(ImmutableArray<AdScript> NewScripts) : EmptyResult;
 
 
 /// <summary>
@@ -105,10 +137,32 @@ public sealed record AdMetrics(long ViewportAdDensityByArea, double AverageViewp
 {
 }
 
+/// <summary>
+/// An ad script.
+/// Note: when the script is a transitive ad script, we only fill in the
+/// immediate ancestor script in the provenance's adScriptAncestry field (as its
+/// first entry), rather than filling in the full ancestry. This saves work for
+/// the backend, and the frontend can reconstruct the full ancestry if
+/// necessary.
+/// </summary>
+/// <param name="ScriptId">
+/// The script ID.
+/// </param>
+/// <param name="Provenance">
+/// The ad provenance.
+/// </param>
+public sealed record AdScript(Runtime.ScriptId ScriptId, Network.AdProvenance Provenance)
+{
+}
+
 [JsonSerializable(typeof(GetAdMetricsCommandParameters), TypeInfoPropertyName = "GetAdMetricsCommandParameters")]
 [JsonSerializable(typeof(GetAdMetricsResult), TypeInfoPropertyName = "GetAdMetricsResult")]
+[JsonSerializable(typeof(GetAdScriptsCommandParameters), TypeInfoPropertyName = "GetAdScriptsCommandParameters")]
+[JsonSerializable(typeof(GetAdScriptsResult), TypeInfoPropertyName = "GetAdScriptsResult")]
 [JsonSerializable(typeof(AdFrameData), TypeInfoPropertyName = "AdsAdFrameData")]
 [JsonSerializable(typeof(AdMetrics), TypeInfoPropertyName = "AdsAdMetrics")]
+[JsonSerializable(typeof(AdScript), TypeInfoPropertyName = "AdsAdScript")]
+[JsonSerializable(typeof(ImmutableArray<AdScript>), TypeInfoPropertyName = "ImmutableArrayAdsAdScript")]
 [JsonSerializable(typeof(ImmutableArray<AdFrameData>), TypeInfoPropertyName = "ImmutableArrayAdsAdFrameData")]
 [JsonSerializable(typeof(ImmutableArray<Page.FrameId>), TypeInfoPropertyName = "ImmutableArrayPageFrameId")]
 [JsonSourceGenerationOptions(

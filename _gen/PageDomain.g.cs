@@ -996,7 +996,17 @@ public interface IPage
     /// Maximum screenshot height.
     /// </param>
     /// <param name="everyNthFrame">
-    /// Send every n-th frame.
+    /// Send every n-th frame. Must be a positive integer.
+    /// </param>
+    /// <param name="maxFramesInFlight">
+    /// Maximum number of frames sent until screencastFrameAck is required.
+    /// Defaults to 3. Must be a positive integer.
+    /// </param>
+    /// <param name="sendLastFrame">
+    /// By default, after screencastFrameAck arrives, the next produced frame is sent.
+    /// Passing this flag enables storing the last produced frame in memory, which is
+    /// immediately sent upon screencastFrameAck. This way, overall performance is
+    /// traded for a better latency.
     /// </param>
     /// <param name="session">
     /// Optional CDP session override.
@@ -1008,7 +1018,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="StartScreencastResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts screencast video recording.
@@ -2048,9 +2058,9 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     private static readonly CdpCommand<SetTouchEmulationEnabledCommandParameters, SetTouchEmulationEnabledResult> SetTouchEmulationEnabledCommand = new("Page.setTouchEmulationEnabled", JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new StartScreencastCommandParameters(Format: format, Quality: quality, MaxWidth: maxWidth, MaxHeight: maxHeight, EveryNthFrame: everyNthFrame);
+        var @params = new StartScreencastCommandParameters(Format: format, Quality: quality, MaxWidth: maxWidth, MaxHeight: maxHeight, EveryNthFrame: everyNthFrame, MaxFramesInFlight: maxFramesInFlight, SendLastFrame: sendLastFrame);
         return await ExecuteCommandAsync(StartScreencastCommand, @params, session, cancellationToken).ConfigureAwait(false);
     }
     private static readonly CdpCommand<StartScreencastCommandParameters, StartScreencastResult> StartScreencastCommand = new("Page.startScreencast", JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult);
@@ -2658,7 +2668,7 @@ internal sealed record SetTouchEmulationEnabledCommandParameters(bool Enabled, s
 public sealed record SetTouchEmulationEnabledResult() : EmptyResult;
 
 
-internal sealed record StartScreencastCommandParameters(string? Format, long? Quality, long? MaxWidth, long? MaxHeight, long? EveryNthFrame) : Parameters;
+internal sealed record StartScreencastCommandParameters(string? Format, long? Quality, long? MaxWidth, long? MaxHeight, long? EveryNthFrame, long? MaxFramesInFlight, bool? SendLastFrame) : Parameters;
 
 /// <summary>
 /// </summary>
