@@ -272,6 +272,11 @@ public sealed record Annotation()
     public bool? UntrustedContent { get; init; }
 
     /// <summary>
+    /// A hint indicating that executing the tool will result in consequential actions, ex: booking a flight, transferring money.
+    /// </summary>
+    public bool? Consequential { get; init; }
+
+    /// <summary>
     /// If the declarative tool was declared with the autosubmit attribute.
     /// </summary>
     public bool? Autosubmit { get; init; }
