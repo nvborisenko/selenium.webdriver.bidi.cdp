@@ -505,6 +505,105 @@ public enum ServiceWorkerVersionStatus
 }
 
 /// <summary>
+/// Mostly corresponds to <b>RouterCondition</b> in ServiceWorker spec
+/// (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while this
+/// currently lacks support for the nested conditions ("or" and "not").
+/// TODO(crbug.com/540469610): Support recursive conditions.
+/// </summary>
+public sealed record ServiceWorkerRouterCondition()
+{
+    /// <summary>
+    /// Plain text, or JSON serialization of URLPatternInit or URLPattern
+    /// </summary>
+    public string? UrlPattern { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public string? RequestMethod { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public string? RequestMode { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public string? RequestDestination { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public ServiceWorkerVersionRunningStatus? RunningStatus { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ServiceWorkerRouterSourceType>))]
+public enum ServiceWorkerRouterSourceType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cache")]
+    Cache,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fetchEvent")]
+    FetchEvent,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
+    Network,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("raceNetworkAndFetchHandler")]
+    RaceNetworkAndFetchHandler,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("raceNetworkAndCache")]
+    RaceNetworkAndCache,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sourceDict")]
+    SourceDict,
+}
+
+/// <summary>
+/// https://www.w3.org/TR/service-workers/#dictdef-routersourcedict
+/// </summary>
+/// <param name="CacheName">
+/// </param>
+public sealed record ServiceWorkerRouterSourceDict(string CacheName)
+{
+}
+
+/// <summary>
+/// Corresponds to <b>RouterSource</b> in the spec while the representation is different as follows.
+/// (https://www.w3.org/TR/service-workers/#typedefdef-routersource)
+/// - <b>RouterSourceEnum</b>: <b>type</b> equals <b>cache</b>, <b>sourceDict</b> is null.
+/// - <b>RouterSourceDict</b>: <b>type</b> equals <b>sourceDict</b>, <b>sourceDict</b> has valid value.
+/// </summary>
+/// <param name="Type">
+/// </param>
+public sealed record ServiceWorkerRouterSource(ServiceWorkerRouterSourceType Type)
+{
+    /// <summary>
+    /// Non-empty iff <b>type</b> equals "sourceDict".
+    /// </summary>
+    public ServiceWorkerRouterSourceDict? SourceDict { get; init; }
+}
+
+/// <summary>
+/// </summary>
+/// <param name="Condition">
+/// </param>
+/// <param name="Source">
+/// </param>
+/// <param name="Id">
+/// Rule ID assigned by the browser. Unique within each ServiceWorkerVersion.
+/// </param>
+public sealed record ServiceWorkerRouterRule(ServiceWorkerRouterCondition Condition, ServiceWorkerRouterSource Source, long Id)
+{
+}
+
+/// <summary>
 /// ServiceWorker version.
 /// </summary>
 /// <param name="VersionId">
@@ -539,8 +638,15 @@ public sealed record ServiceWorkerVersion(string VersionId, RegistrationID Regis
     public Target.TargetID? TargetId { get; init; }
 
     /// <summary>
+    /// Migration to <b>typedRouterRules</b> is in progress. The browser sends either
+    /// <b>routerRules</b> or <b>typedRouterRules</b>.
+    /// TODO(crbug.com/540469610): Remove <b>routerRules</b> after the migration.
     /// </summary>
     public string? RouterRules { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public ImmutableArray<ServiceWorkerRouterRule>? TypedRouterRules { get; init; }
 }
 
 /// <summary>
@@ -593,11 +699,17 @@ public sealed record ServiceWorkerErrorMessage(string ErrorMessage, Registration
 [JsonSerializable(typeof(ServiceWorkerRegistration), TypeInfoPropertyName = "ServiceWorkerServiceWorkerRegistration")]
 [JsonSerializable(typeof(ServiceWorkerVersionRunningStatus), TypeInfoPropertyName = "ServiceWorkerServiceWorkerVersionRunningStatus")]
 [JsonSerializable(typeof(ServiceWorkerVersionStatus), TypeInfoPropertyName = "ServiceWorkerServiceWorkerVersionStatus")]
+[JsonSerializable(typeof(ServiceWorkerRouterCondition), TypeInfoPropertyName = "ServiceWorkerServiceWorkerRouterCondition")]
+[JsonSerializable(typeof(ServiceWorkerRouterSourceType), TypeInfoPropertyName = "ServiceWorkerServiceWorkerRouterSourceType")]
+[JsonSerializable(typeof(ServiceWorkerRouterSourceDict), TypeInfoPropertyName = "ServiceWorkerServiceWorkerRouterSourceDict")]
+[JsonSerializable(typeof(ServiceWorkerRouterSource), TypeInfoPropertyName = "ServiceWorkerServiceWorkerRouterSource")]
+[JsonSerializable(typeof(ServiceWorkerRouterRule), TypeInfoPropertyName = "ServiceWorkerServiceWorkerRouterRule")]
 [JsonSerializable(typeof(ServiceWorkerVersion), TypeInfoPropertyName = "ServiceWorkerServiceWorkerVersion")]
 [JsonSerializable(typeof(ServiceWorkerErrorMessage), TypeInfoPropertyName = "ServiceWorkerServiceWorkerErrorMessage")]
 [JsonSerializable(typeof(ImmutableArray<ServiceWorkerRegistration>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerRegistration")]
 [JsonSerializable(typeof(ImmutableArray<ServiceWorkerVersion>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerVersion")]
 [JsonSerializable(typeof(ImmutableArray<Target.TargetID>), TypeInfoPropertyName = "ImmutableArrayTargetTargetID")]
+[JsonSerializable(typeof(ImmutableArray<ServiceWorkerRouterRule>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerRouterRule")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

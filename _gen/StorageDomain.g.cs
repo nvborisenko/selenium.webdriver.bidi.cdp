@@ -351,128 +351,6 @@ public interface IStorage
     Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets metadata for an origin's shared storage.
-    /// </summary>
-    /// <param name="ownerOrigin">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="GetSharedStorageMetadataResult"/>.
-    /// </returns>
-    Task<GetSharedStorageMetadataResult> GetSharedStorageMetadataAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Gets the entries in an given origin's shared storage.
-    /// </summary>
-    /// <param name="ownerOrigin">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="GetSharedStorageEntriesResult"/>.
-    /// </returns>
-    Task<GetSharedStorageEntriesResult> GetSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Sets entry with <b>key</b> and <b>value</b> for a given origin's shared storage.
-    /// </summary>
-    /// <param name="ownerOrigin">
-    /// </param>
-    /// <param name="key">
-    /// </param>
-    /// <param name="value">
-    /// </param>
-    /// <param name="ignoreIfPresent">
-    /// If <b>ignoreIfPresent</b> is included and true, then only sets the entry if
-    /// <b>key</b> doesn't already exist.
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetSharedStorageEntryResult"/>.
-    /// </returns>
-    Task<SetSharedStorageEntryResult> SetSharedStorageEntryAsync(string ownerOrigin, string key, string value, bool? ignoreIfPresent = default, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Deletes entry for <b>key</b> (if it exists) for a given origin's shared storage.
-    /// </summary>
-    /// <param name="ownerOrigin">
-    /// </param>
-    /// <param name="key">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="DeleteSharedStorageEntryResult"/>.
-    /// </returns>
-    Task<DeleteSharedStorageEntryResult> DeleteSharedStorageEntryAsync(string ownerOrigin, string key, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Clears all entries for a given origin's shared storage.
-    /// </summary>
-    /// <param name="ownerOrigin">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="ClearSharedStorageEntriesResult"/>.
-    /// </returns>
-    Task<ClearSharedStorageEntriesResult> ClearSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Resets the budget for <b>ownerOrigin</b> by clearing all budget withdrawals.
-    /// </summary>
-    /// <param name="ownerOrigin">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="ResetSharedStorageBudgetResult"/>.
-    /// </returns>
-    Task<ResetSharedStorageBudgetResult> ResetSharedStorageBudgetAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Enables/disables issuing of sharedStorageAccessed events.
-    /// </summary>
-    /// <param name="enable">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetSharedStorageTrackingResult"/>.
-    /// </returns>
-    Task<SetSharedStorageTrackingResult> SetSharedStorageTrackingAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Set tracking for a storage key's buckets.
     /// </summary>
     /// <param name="storageKey">
@@ -589,42 +467,6 @@ public interface IStorage
     /// </list>
     /// </remarks>
     IEventSource<IndexedDBListUpdatedEventArgs> IndexedDBListUpdated { get; }
-
-    /// <summary>
-    /// Shared storage was accessed by the associated page.
-    /// The following parameters are included in all events.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="SharedStorageAccessedEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>AccessTime</b> - Time of the access.</description></item>
-    /// <item><description><b>Scope</b> - Enum value indicating the access scope.</description></item>
-    /// <item><description><b>Method</b> - Enum value indicating the Shared Storage API method invoked.</description></item>
-    /// <item><description><b>MainFrameId</b> - DevTools Frame Token for the primary frame tree's root.</description></item>
-    /// <item><description><b>OwnerOrigin</b> - Serialization of the origin owning the Shared Storage data.</description></item>
-    /// <item><description><b>OwnerSite</b> - Serialization of the site owning the Shared Storage data.</description></item>
-    /// <item><description><b>Params</b> - The sub-parameters wrapped by <b>params</b> are all optional and their presence/absence depends on <b>type</b>.</description></item>
-    /// </list>
-    /// </remarks>
-    IEventSource<SharedStorageAccessedEventArgs> SharedStorageAccessed { get; }
-
-    /// <summary>
-    /// A shared storage run or selectURL operation finished its execution.
-    /// The following parameters are included in all events.
-    /// </summary>
-    /// <remarks>
-    /// Event args (<see cref="SharedStorageWorkletOperationExecutionFinishedEventArgs"/>):
-    /// <list type="bullet">
-    /// <item><description><b>FinishedTime</b> - Time that the operation finished.</description></item>
-    /// <item><description><b>ExecutionTime</b> - Time, in microseconds, from start of shared storage JS API call until end of operation execution in the worklet.</description></item>
-    /// <item><description><b>Method</b> - Enum value indicating the Shared Storage API method invoked.</description></item>
-    /// <item><description><b>OperationId</b> - ID of the operation call.</description></item>
-    /// <item><description><b>WorkletTargetId</b> - Hex representation of the DevTools token used as the TargetID for the associated shared storage worklet.</description></item>
-    /// <item><description><b>MainFrameId</b> - DevTools Frame Token for the primary frame tree's root.</description></item>
-    /// <item><description><b>OwnerOrigin</b> - Serialization of the origin owning the Shared Storage data.</description></item>
-    /// </list>
-    /// </remarks>
-    IEventSource<SharedStorageWorkletOperationExecutionFinishedEventArgs> SharedStorageWorkletOperationExecutionFinished { get; }
 
     /// <summary>
     /// 
@@ -789,55 +631,6 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
     }
     private static readonly CdpCommand<ClearTrustTokensCommandParameters, ClearTrustTokensResult> ClearTrustTokensCommand = new("Storage.clearTrustTokens", JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult);
 
-    public async Task<GetSharedStorageMetadataResult> GetSharedStorageMetadataAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetSharedStorageMetadataCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(GetSharedStorageMetadataCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetSharedStorageMetadataCommandParameters, GetSharedStorageMetadataResult> GetSharedStorageMetadataCommand = new("Storage.getSharedStorageMetadata", JsonContext.GetSharedStorageMetadataCommandParameters, JsonContext.GetSharedStorageMetadataResult);
-
-    public async Task<GetSharedStorageEntriesResult> GetSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetSharedStorageEntriesCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(GetSharedStorageEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<GetSharedStorageEntriesCommandParameters, GetSharedStorageEntriesResult> GetSharedStorageEntriesCommand = new("Storage.getSharedStorageEntries", JsonContext.GetSharedStorageEntriesCommandParameters, JsonContext.GetSharedStorageEntriesResult);
-
-    public async Task<SetSharedStorageEntryResult> SetSharedStorageEntryAsync(string ownerOrigin, string key, string value, bool? ignoreIfPresent = default, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSharedStorageEntryCommandParameters(OwnerOrigin: ownerOrigin, Key: key, Value: value, IgnoreIfPresent: ignoreIfPresent);
-        return await ExecuteCommandAsync(SetSharedStorageEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSharedStorageEntryCommandParameters, SetSharedStorageEntryResult> SetSharedStorageEntryCommand = new("Storage.setSharedStorageEntry", JsonContext.SetSharedStorageEntryCommandParameters, JsonContext.SetSharedStorageEntryResult);
-
-    public async Task<DeleteSharedStorageEntryResult> DeleteSharedStorageEntryAsync(string ownerOrigin, string key, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new DeleteSharedStorageEntryCommandParameters(OwnerOrigin: ownerOrigin, Key: key);
-        return await ExecuteCommandAsync(DeleteSharedStorageEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<DeleteSharedStorageEntryCommandParameters, DeleteSharedStorageEntryResult> DeleteSharedStorageEntryCommand = new("Storage.deleteSharedStorageEntry", JsonContext.DeleteSharedStorageEntryCommandParameters, JsonContext.DeleteSharedStorageEntryResult);
-
-    public async Task<ClearSharedStorageEntriesResult> ClearSharedStorageEntriesAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ClearSharedStorageEntriesCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(ClearSharedStorageEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ClearSharedStorageEntriesCommandParameters, ClearSharedStorageEntriesResult> ClearSharedStorageEntriesCommand = new("Storage.clearSharedStorageEntries", JsonContext.ClearSharedStorageEntriesCommandParameters, JsonContext.ClearSharedStorageEntriesResult);
-
-    public async Task<ResetSharedStorageBudgetResult> ResetSharedStorageBudgetAsync(string ownerOrigin, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new ResetSharedStorageBudgetCommandParameters(OwnerOrigin: ownerOrigin);
-        return await ExecuteCommandAsync(ResetSharedStorageBudgetCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<ResetSharedStorageBudgetCommandParameters, ResetSharedStorageBudgetResult> ResetSharedStorageBudgetCommand = new("Storage.resetSharedStorageBudget", JsonContext.ResetSharedStorageBudgetCommandParameters, JsonContext.ResetSharedStorageBudgetResult);
-
-    public async Task<SetSharedStorageTrackingResult> SetSharedStorageTrackingAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetSharedStorageTrackingCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(SetSharedStorageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
-    }
-    private static readonly CdpCommand<SetSharedStorageTrackingCommandParameters, SetSharedStorageTrackingResult> SetSharedStorageTrackingCommand = new("Storage.setSharedStorageTracking", JsonContext.SetSharedStorageTrackingCommandParameters, JsonContext.SetSharedStorageTrackingResult);
-
     public async Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStorageBucketTrackingCommandParameters(StorageKey: storageKey, Enable: enable);
@@ -870,8 +663,6 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
     public IEventSource<CacheStorageListUpdatedEventArgs> CacheStorageListUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageListUpdated);
     public IEventSource<IndexedDBContentUpdatedEventArgs> IndexedDBContentUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBContentUpdated);
     public IEventSource<IndexedDBListUpdatedEventArgs> IndexedDBListUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBListUpdated);
-    public IEventSource<SharedStorageAccessedEventArgs> SharedStorageAccessed => CreateCdpEventSource(StorageDomainEvent.SharedStorageAccessed);
-    public IEventSource<SharedStorageWorkletOperationExecutionFinishedEventArgs> SharedStorageWorkletOperationExecutionFinished => CreateCdpEventSource(StorageDomainEvent.SharedStorageWorkletOperationExecutionFinished);
     public IEventSource<StorageBucketCreatedOrUpdatedEventArgs> StorageBucketCreatedOrUpdated => CreateCdpEventSource(StorageDomainEvent.StorageBucketCreatedOrUpdated);
     public IEventSource<StorageBucketDeletedEventArgs> StorageBucketDeleted => CreateCdpEventSource(StorageDomainEvent.StorageBucketDeleted);
 }
@@ -1033,59 +824,6 @@ internal sealed record ClearTrustTokensCommandParameters(string IssuerOrigin) : 
 public sealed record ClearTrustTokensResult(bool DidDeleteTokens) : EmptyResult;
 
 
-internal sealed record GetSharedStorageMetadataCommandParameters(string OwnerOrigin) : Parameters;
-
-/// <summary>
-/// </summary>
-/// <param name="Metadata">
-/// </param>
-public sealed record GetSharedStorageMetadataResult(SharedStorageMetadata Metadata) : EmptyResult;
-
-
-internal sealed record GetSharedStorageEntriesCommandParameters(string OwnerOrigin) : Parameters;
-
-/// <summary>
-/// </summary>
-/// <param name="Entries">
-/// </param>
-public sealed record GetSharedStorageEntriesResult(ImmutableArray<SharedStorageEntry> Entries) : EmptyResult;
-
-
-internal sealed record SetSharedStorageEntryCommandParameters(string OwnerOrigin, string Key, string Value, bool? IgnoreIfPresent) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record SetSharedStorageEntryResult() : EmptyResult;
-
-
-internal sealed record DeleteSharedStorageEntryCommandParameters(string OwnerOrigin, string Key) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record DeleteSharedStorageEntryResult() : EmptyResult;
-
-
-internal sealed record ClearSharedStorageEntriesCommandParameters(string OwnerOrigin) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record ClearSharedStorageEntriesResult() : EmptyResult;
-
-
-internal sealed record ResetSharedStorageBudgetCommandParameters(string OwnerOrigin) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record ResetSharedStorageBudgetResult() : EmptyResult;
-
-
-internal sealed record SetSharedStorageTrackingCommandParameters(bool Enable) : Parameters;
-
-/// <summary>
-/// </summary>
-public sealed record SetSharedStorageTrackingResult() : EmptyResult;
-
-
 internal sealed record SetStorageBucketTrackingCommandParameters(string StorageKey, bool Enable) : Parameters;
 
 /// <summary>
@@ -1184,63 +922,6 @@ public sealed record IndexedDBContentUpdatedEventArgs(string Origin, string Stor
 public sealed record IndexedDBListUpdatedEventArgs(string Origin, string StorageKey, string BucketId) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
-/// Shared storage was accessed by the associated page.
-/// The following parameters are included in all events.
-/// </summary>
-/// <param name="AccessTime">
-/// Time of the access.
-/// </param>
-/// <param name="Scope">
-/// Enum value indicating the access scope.
-/// </param>
-/// <param name="Method">
-/// Enum value indicating the Shared Storage API method invoked.
-/// </param>
-/// <param name="MainFrameId">
-/// DevTools Frame Token for the primary frame tree's root.
-/// </param>
-/// <param name="OwnerOrigin">
-/// Serialization of the origin owning the Shared Storage data.
-/// </param>
-/// <param name="OwnerSite">
-/// Serialization of the site owning the Shared Storage data.
-/// </param>
-/// <param name="Params">
-/// The sub-parameters wrapped by <b>params</b> are all optional and their
-/// presence/absence depends on <b>type</b>.
-/// </param>
-public sealed record SharedStorageAccessedEventArgs(Network.TimeSinceEpoch AccessTime, SharedStorageAccessScope Scope, SharedStorageAccessMethod Method, Page.FrameId MainFrameId, string OwnerOrigin, string OwnerSite, SharedStorageAccessParams Params) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
-/// A shared storage run or selectURL operation finished its execution.
-/// The following parameters are included in all events.
-/// </summary>
-/// <param name="FinishedTime">
-/// Time that the operation finished.
-/// </param>
-/// <param name="ExecutionTime">
-/// Time, in microseconds, from start of shared storage JS API call until
-/// end of operation execution in the worklet.
-/// </param>
-/// <param name="Method">
-/// Enum value indicating the Shared Storage API method invoked.
-/// </param>
-/// <param name="OperationId">
-/// ID of the operation call.
-/// </param>
-/// <param name="WorkletTargetId">
-/// Hex representation of the DevTools token used as the TargetID for the
-/// associated shared storage worklet.
-/// </param>
-/// <param name="MainFrameId">
-/// DevTools Frame Token for the primary frame tree's root.
-/// </param>
-/// <param name="OwnerOrigin">
-/// Serialization of the origin owning the Shared Storage data.
-/// </param>
-public sealed record SharedStorageWorkletOperationExecutionFinishedEventArgs(Network.TimeSinceEpoch FinishedTime, long ExecutionTime, SharedStorageAccessMethod Method, string OperationId, Target.TargetID WorkletTargetId, Page.FrameId MainFrameId, string OwnerOrigin) : OpenQA.Selenium.BiDi.EventArgs;
-
-/// <summary>
 /// </summary>
 /// <param name="BucketInfo">
 /// </param>
@@ -1300,10 +981,6 @@ public enum StorageType
     CacheStorage,
     /// <summary>
     /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared_storage")]
-    SharedStorage,
-    /// <summary>
-    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storage_buckets")]
     StorageBuckets,
     /// <summary>
@@ -1339,296 +1016,6 @@ public sealed record UsageForType(StorageType StorageType, double Usage)
 /// </param>
 public sealed record TrustTokens(string IssuerOrigin, double Count)
 {
-}
-
-/// <summary>
-/// Enum of shared storage access scopes.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SharedStorageAccessScope>))]
-public enum SharedStorageAccessScope
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("window")]
-    Window,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sharedStorageWorklet")]
-    SharedStorageWorklet,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("header")]
-    Header,
-}
-
-/// <summary>
-/// Enum of shared storage access methods.
-/// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SharedStorageAccessMethod>))]
-public enum SharedStorageAccessMethod
-{
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("addModule")]
-    AddModule,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("createWorklet")]
-    CreateWorklet,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selectURL")]
-    SelectURL,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("run")]
-    Run,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("batchUpdate")]
-    BatchUpdate,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
-    Set,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("append")]
-    Append,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("delete")]
-    Delete,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clear")]
-    Clear,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("get")]
-    Get,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keys")]
-    Keys,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("values")]
-    Values,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("entries")]
-    Entries,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("length")]
-    Length,
-    /// <summary>
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("remainingBudget")]
-    RemainingBudget,
-}
-
-/// <summary>
-/// Struct for a single key-value pair in an origin's shared storage.
-/// </summary>
-/// <param name="Key">
-/// </param>
-/// <param name="Value">
-/// </param>
-public sealed record SharedStorageEntry(string Key, string Value)
-{
-}
-
-/// <summary>
-/// Details for an origin's shared storage.
-/// </summary>
-/// <param name="CreationTime">
-/// Time when the origin's shared storage was last created.
-/// </param>
-/// <param name="Length">
-/// Number of key-value pairs stored in origin's shared storage.
-/// </param>
-/// <param name="RemainingBudget">
-/// Current amount of bits of entropy remaining in the navigation budget.
-/// </param>
-/// <param name="BytesUsed">
-/// Total number of bytes stored as key-value pairs in origin's shared
-/// storage.
-/// </param>
-public sealed record SharedStorageMetadata(Network.TimeSinceEpoch CreationTime, long Length, double RemainingBudget, long BytesUsed)
-{
-}
-
-/// <summary>
-/// Represents a dictionary object passed in as privateAggregationConfig to
-/// run or selectURL.
-/// </summary>
-/// <param name="FilteringIdMaxBytes">
-/// Configures the maximum size allowed for filtering IDs.
-/// </param>
-public sealed record SharedStoragePrivateAggregationConfig(long FilteringIdMaxBytes)
-{
-    /// <summary>
-    /// The chosen aggregation service deployment.
-    /// </summary>
-    public string? AggregationCoordinatorOrigin { get; init; }
-
-    /// <summary>
-    /// The context ID provided.
-    /// </summary>
-    public string? ContextId { get; init; }
-
-    /// <summary>
-    /// The limit on the number of contributions in the final report.
-    /// </summary>
-    public long? MaxContributions { get; init; }
-}
-
-/// <summary>
-/// Pair of reporting metadata details for a candidate URL for <b>selectURL()</b>.
-/// </summary>
-/// <param name="EventType">
-/// </param>
-/// <param name="ReportingUrl">
-/// </param>
-public sealed record SharedStorageReportingMetadata(string EventType, string ReportingUrl)
-{
-}
-
-/// <summary>
-/// Bundles a candidate URL with its reporting metadata.
-/// </summary>
-/// <param name="Url">
-/// Spec of candidate URL.
-/// </param>
-/// <param name="ReportingMetadata">
-/// Any associated reporting metadata.
-/// </param>
-public sealed record SharedStorageUrlWithMetadata(string Url, ImmutableArray<SharedStorageReportingMetadata> ReportingMetadata)
-{
-}
-
-/// <summary>
-/// Bundles the parameters for shared storage access events whose
-/// presence/absence can vary according to SharedStorageAccessType.
-/// </summary>
-public sealed record SharedStorageAccessParams()
-{
-    /// <summary>
-    /// Spec of the module script URL.
-    /// Present only for SharedStorageAccessMethods: addModule and
-    /// createWorklet.
-    /// </summary>
-    public string? ScriptSourceUrl { get; init; }
-
-    /// <summary>
-    /// String denoting "context-origin", "script-origin", or a custom
-    /// origin to be used as the worklet's data origin.
-    /// Present only for SharedStorageAccessMethod: createWorklet.
-    /// </summary>
-    public string? DataOrigin { get; init; }
-
-    /// <summary>
-    /// Name of the registered operation to be run.
-    /// Present only for SharedStorageAccessMethods: run and selectURL.
-    /// </summary>
-    public string? OperationName { get; init; }
-
-    /// <summary>
-    /// ID of the operation call.
-    /// Present only for SharedStorageAccessMethods: run and selectURL.
-    /// </summary>
-    public string? OperationId { get; init; }
-
-    /// <summary>
-    /// Whether or not to keep the worket alive for future run or selectURL
-    /// calls.
-    /// Present only for SharedStorageAccessMethods: run and selectURL.
-    /// </summary>
-    public bool? KeepAlive { get; init; }
-
-    /// <summary>
-    /// Configures the private aggregation options.
-    /// Present only for SharedStorageAccessMethods: run and selectURL.
-    /// </summary>
-    public SharedStoragePrivateAggregationConfig? PrivateAggregationConfig { get; init; }
-
-    /// <summary>
-    /// The operation's serialized data in bytes (converted to a string).
-    /// Present only for SharedStorageAccessMethods: run and selectURL.
-    /// TODO(crbug.com/401011862): Consider updating this parameter to binary.
-    /// </summary>
-    public string? SerializedData { get; init; }
-
-    /// <summary>
-    /// Array of candidate URLs' specs, along with any associated metadata.
-    /// Present only for SharedStorageAccessMethod: selectURL.
-    /// </summary>
-    public ImmutableArray<SharedStorageUrlWithMetadata>? UrlsWithMetadata { get; init; }
-
-    /// <summary>
-    /// Spec of the URN:UUID generated for a selectURL call.
-    /// Present only for SharedStorageAccessMethod: selectURL.
-    /// </summary>
-    public string? UrnUuid { get; init; }
-
-    /// <summary>
-    /// Key for a specific entry in an origin's shared storage.
-    /// Present only for SharedStorageAccessMethods: set, append, delete, and
-    /// get.
-    /// </summary>
-    public string? Key { get; init; }
-
-    /// <summary>
-    /// Value for a specific entry in an origin's shared storage.
-    /// Present only for SharedStorageAccessMethods: set and append.
-    /// </summary>
-    public string? Value { get; init; }
-
-    /// <summary>
-    /// Whether or not to set an entry for a key if that key is already present.
-    /// Present only for SharedStorageAccessMethod: set.
-    /// </summary>
-    public bool? IgnoreIfPresent { get; init; }
-
-    /// <summary>
-    /// A number denoting the (0-based) order of the worklet's
-    /// creation relative to all other shared storage worklets created by
-    /// documents using the current storage partition.
-    /// Present only for SharedStorageAccessMethods: addModule, createWorklet.
-    /// </summary>
-    public long? WorkletOrdinal { get; init; }
-
-    /// <summary>
-    /// Hex representation of the DevTools token used as the TargetID for the
-    /// associated shared storage worklet.
-    /// Present only for SharedStorageAccessMethods: addModule, createWorklet,
-    /// run, selectURL, and any other SharedStorageAccessMethod when the
-    /// SharedStorageAccessScope is sharedStorageWorklet.
-    /// </summary>
-    public Target.TargetID? WorkletTargetId { get; init; }
-
-    /// <summary>
-    /// Name of the lock to be acquired, if present.
-    /// Optionally present only for SharedStorageAccessMethods: batchUpdate,
-    /// set, append, delete, and clear.
-    /// </summary>
-    public string? WithLock { get; init; }
-
-    /// <summary>
-    /// If the method has been called as part of a batchUpdate, then this
-    /// number identifies the batch to which it belongs.
-    /// Optionally present only for SharedStorageAccessMethods:
-    /// batchUpdate (required), set, append, delete, and clear.
-    /// </summary>
-    public string? BatchUpdateId { get; init; }
-
-    /// <summary>
-    /// Number of modifier methods sent in batch.
-    /// Present only for SharedStorageAccessMethod: batchUpdate.
-    /// </summary>
-    public long? BatchSize { get; init; }
 }
 
 /// <summary>
@@ -1731,20 +1118,6 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(GetTrustTokensResult), TypeInfoPropertyName = "GetTrustTokensResult")]
 [JsonSerializable(typeof(ClearTrustTokensCommandParameters), TypeInfoPropertyName = "ClearTrustTokensCommandParameters")]
 [JsonSerializable(typeof(ClearTrustTokensResult), TypeInfoPropertyName = "ClearTrustTokensResult")]
-[JsonSerializable(typeof(GetSharedStorageMetadataCommandParameters), TypeInfoPropertyName = "GetSharedStorageMetadataCommandParameters")]
-[JsonSerializable(typeof(GetSharedStorageMetadataResult), TypeInfoPropertyName = "GetSharedStorageMetadataResult")]
-[JsonSerializable(typeof(GetSharedStorageEntriesCommandParameters), TypeInfoPropertyName = "GetSharedStorageEntriesCommandParameters")]
-[JsonSerializable(typeof(GetSharedStorageEntriesResult), TypeInfoPropertyName = "GetSharedStorageEntriesResult")]
-[JsonSerializable(typeof(SetSharedStorageEntryCommandParameters), TypeInfoPropertyName = "SetSharedStorageEntryCommandParameters")]
-[JsonSerializable(typeof(SetSharedStorageEntryResult), TypeInfoPropertyName = "SetSharedStorageEntryResult")]
-[JsonSerializable(typeof(DeleteSharedStorageEntryCommandParameters), TypeInfoPropertyName = "DeleteSharedStorageEntryCommandParameters")]
-[JsonSerializable(typeof(DeleteSharedStorageEntryResult), TypeInfoPropertyName = "DeleteSharedStorageEntryResult")]
-[JsonSerializable(typeof(ClearSharedStorageEntriesCommandParameters), TypeInfoPropertyName = "ClearSharedStorageEntriesCommandParameters")]
-[JsonSerializable(typeof(ClearSharedStorageEntriesResult), TypeInfoPropertyName = "ClearSharedStorageEntriesResult")]
-[JsonSerializable(typeof(ResetSharedStorageBudgetCommandParameters), TypeInfoPropertyName = "ResetSharedStorageBudgetCommandParameters")]
-[JsonSerializable(typeof(ResetSharedStorageBudgetResult), TypeInfoPropertyName = "ResetSharedStorageBudgetResult")]
-[JsonSerializable(typeof(SetSharedStorageTrackingCommandParameters), TypeInfoPropertyName = "SetSharedStorageTrackingCommandParameters")]
-[JsonSerializable(typeof(SetSharedStorageTrackingResult), TypeInfoPropertyName = "SetSharedStorageTrackingResult")]
 [JsonSerializable(typeof(SetStorageBucketTrackingCommandParameters), TypeInfoPropertyName = "SetStorageBucketTrackingCommandParameters")]
 [JsonSerializable(typeof(SetStorageBucketTrackingResult), TypeInfoPropertyName = "SetStorageBucketTrackingResult")]
 [JsonSerializable(typeof(DeleteStorageBucketCommandParameters), TypeInfoPropertyName = "DeleteStorageBucketCommandParameters")]
@@ -1757,22 +1130,12 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(CdpEventArgs<CacheStorageListUpdatedEventArgs>), TypeInfoPropertyName = "CacheStorageListUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<IndexedDBContentUpdatedEventArgs>), TypeInfoPropertyName = "IndexedDBContentUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<IndexedDBListUpdatedEventArgs>), TypeInfoPropertyName = "IndexedDBListUpdatedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<SharedStorageAccessedEventArgs>), TypeInfoPropertyName = "SharedStorageAccessedCdpEventArgs")]
-[JsonSerializable(typeof(CdpEventArgs<SharedStorageWorkletOperationExecutionFinishedEventArgs>), TypeInfoPropertyName = "SharedStorageWorkletOperationExecutionFinishedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>), TypeInfoPropertyName = "StorageBucketCreatedOrUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StorageBucketDeletedEventArgs>), TypeInfoPropertyName = "StorageBucketDeletedCdpEventArgs")]
 [JsonSerializable(typeof(SerializedStorageKey), TypeInfoPropertyName = "StorageSerializedStorageKey")]
 [JsonSerializable(typeof(StorageType), TypeInfoPropertyName = "StorageStorageType")]
 [JsonSerializable(typeof(UsageForType), TypeInfoPropertyName = "StorageUsageForType")]
 [JsonSerializable(typeof(TrustTokens), TypeInfoPropertyName = "StorageTrustTokens")]
-[JsonSerializable(typeof(SharedStorageAccessScope), TypeInfoPropertyName = "StorageSharedStorageAccessScope")]
-[JsonSerializable(typeof(SharedStorageAccessMethod), TypeInfoPropertyName = "StorageSharedStorageAccessMethod")]
-[JsonSerializable(typeof(SharedStorageEntry), TypeInfoPropertyName = "StorageSharedStorageEntry")]
-[JsonSerializable(typeof(SharedStorageMetadata), TypeInfoPropertyName = "StorageSharedStorageMetadata")]
-[JsonSerializable(typeof(SharedStoragePrivateAggregationConfig), TypeInfoPropertyName = "StorageSharedStoragePrivateAggregationConfig")]
-[JsonSerializable(typeof(SharedStorageReportingMetadata), TypeInfoPropertyName = "StorageSharedStorageReportingMetadata")]
-[JsonSerializable(typeof(SharedStorageUrlWithMetadata), TypeInfoPropertyName = "StorageSharedStorageUrlWithMetadata")]
-[JsonSerializable(typeof(SharedStorageAccessParams), TypeInfoPropertyName = "StorageSharedStorageAccessParams")]
 [JsonSerializable(typeof(StorageBucketsDurability), TypeInfoPropertyName = "StorageStorageBucketsDurability")]
 [JsonSerializable(typeof(StorageBucket), TypeInfoPropertyName = "StorageStorageBucket")]
 [JsonSerializable(typeof(StorageBucketInfo), TypeInfoPropertyName = "StorageStorageBucketInfo")]
@@ -1781,10 +1144,7 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(ImmutableArray<Network.CookieParam>), TypeInfoPropertyName = "ImmutableArrayNetworkCookieParam")]
 [JsonSerializable(typeof(ImmutableArray<UsageForType>), TypeInfoPropertyName = "ImmutableArrayStorageUsageForType")]
 [JsonSerializable(typeof(ImmutableArray<TrustTokens>), TypeInfoPropertyName = "ImmutableArrayStorageTrustTokens")]
-[JsonSerializable(typeof(ImmutableArray<SharedStorageEntry>), TypeInfoPropertyName = "ImmutableArrayStorageSharedStorageEntry")]
 [JsonSerializable(typeof(ImmutableArray<RelatedWebsiteSet>), TypeInfoPropertyName = "ImmutableArrayStorageRelatedWebsiteSet")]
-[JsonSerializable(typeof(ImmutableArray<SharedStorageReportingMetadata>), TypeInfoPropertyName = "ImmutableArrayStorageSharedStorageReportingMetadata")]
-[JsonSerializable(typeof(ImmutableArray<SharedStorageUrlWithMetadata>), TypeInfoPropertyName = "ImmutableArrayStorageSharedStorageUrlWithMetadata")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
@@ -1826,24 +1186,6 @@ public static class StorageDomainEvent
         EventDescriptor<CdpEventArgs<IndexedDBListUpdatedEventArgs>>.Create(
             "goog:cdp.Storage.indexedDBListUpdated",
             StorageJsonSerializerContext.Default.IndexedDBListUpdatedCdpEventArgs);
-
-    /// <summary>
-    /// Shared storage was accessed by the associated page.
-    /// The following parameters are included in all events.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<SharedStorageAccessedEventArgs>> SharedStorageAccessed { get; } =
-        EventDescriptor<CdpEventArgs<SharedStorageAccessedEventArgs>>.Create(
-            "goog:cdp.Storage.sharedStorageAccessed",
-            StorageJsonSerializerContext.Default.SharedStorageAccessedCdpEventArgs);
-
-    /// <summary>
-    /// A shared storage run or selectURL operation finished its execution.
-    /// The following parameters are included in all events.
-    /// </summary>
-    public static EventDescriptor<CdpEventArgs<SharedStorageWorkletOperationExecutionFinishedEventArgs>> SharedStorageWorkletOperationExecutionFinished { get; } =
-        EventDescriptor<CdpEventArgs<SharedStorageWorkletOperationExecutionFinishedEventArgs>>.Create(
-            "goog:cdp.Storage.sharedStorageWorkletOperationExecutionFinished",
-            StorageJsonSerializerContext.Default.SharedStorageWorkletOperationExecutionFinishedCdpEventArgs);
 
     /// <summary>
     /// 
