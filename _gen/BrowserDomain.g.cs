@@ -210,6 +210,28 @@ public interface IBrowser
     Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Adds or updates a mock camera in the shared video capture device list for
+    /// test automation. The mock camera is not scoped to a particular page or
+    /// frame and is removed when the DevTools session that created it disconnects.
+    /// </summary>
+    /// <param name="deviceId">
+    /// Required non-empty identifier for the mock camera. This is mapped to an
+    /// internal virtual-device identifier and is not the MediaDeviceInfo.deviceId
+    /// exposed to the page.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="AddMockCameraResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<AddMockCameraResult> AddMockCameraAsync(string deviceId, string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Get Chrome histograms.
     /// </summary>
     /// <param name="query">
@@ -541,6 +563,14 @@ internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly CdpCommand<GetBrowserCommandLineCommandParameters, GetBrowserCommandLineResult> GetBrowserCommandLineCommand = new("Browser.getBrowserCommandLine", JsonContext.GetBrowserCommandLineCommandParameters, JsonContext.GetBrowserCommandLineResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<AddMockCameraResult> AddMockCameraAsync(string deviceId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new AddMockCameraCommandParameters(DeviceId: deviceId);
+        return await ExecuteCommandAsync(AddMockCameraCommand, @params, session, cancellationToken).ConfigureAwait(false);
+    }
+    private static readonly CdpCommand<AddMockCameraCommandParameters, AddMockCameraResult> AddMockCameraCommand = new("Browser.addMockCamera", JsonContext.AddMockCameraCommandParameters, JsonContext.AddMockCameraResult);
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetHistogramsResult> GetHistogramsAsync(string? query = default, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHistogramsCommandParameters(Query: query, Delta: delta);
@@ -719,6 +749,13 @@ internal sealed record GetBrowserCommandLineCommandParameters() : Parameters;
 /// Commandline parameters
 /// </param>
 public sealed record GetBrowserCommandLineResult(ImmutableArray<string> Arguments) : EmptyResult;
+
+
+internal sealed record AddMockCameraCommandParameters(string DeviceId) : Parameters;
+
+/// <summary>
+/// </summary>
+public sealed record AddMockCameraResult() : EmptyResult;
 
 
 internal sealed record GetHistogramsCommandParameters(string? Query, bool? Delta) : Parameters;
@@ -1223,6 +1260,8 @@ public sealed record Histogram(string Name, long Sum, long Count, ImmutableArray
 [JsonSerializable(typeof(GetVersionResult), TypeInfoPropertyName = "GetVersionResult")]
 [JsonSerializable(typeof(GetBrowserCommandLineCommandParameters), TypeInfoPropertyName = "GetBrowserCommandLineCommandParameters")]
 [JsonSerializable(typeof(GetBrowserCommandLineResult), TypeInfoPropertyName = "GetBrowserCommandLineResult")]
+[JsonSerializable(typeof(AddMockCameraCommandParameters), TypeInfoPropertyName = "AddMockCameraCommandParameters")]
+[JsonSerializable(typeof(AddMockCameraResult), TypeInfoPropertyName = "AddMockCameraResult")]
 [JsonSerializable(typeof(GetHistogramsCommandParameters), TypeInfoPropertyName = "GetHistogramsCommandParameters")]
 [JsonSerializable(typeof(GetHistogramsResult), TypeInfoPropertyName = "GetHistogramsResult")]
 [JsonSerializable(typeof(GetHistogramCommandParameters), TypeInfoPropertyName = "GetHistogramCommandParameters")]

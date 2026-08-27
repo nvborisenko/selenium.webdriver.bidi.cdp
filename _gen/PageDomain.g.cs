@@ -3523,6 +3523,10 @@ public enum PermissionsPolicyFeature
     Gyroscope,
     /// <summary>
     /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("haptics")]
+    Haptics,
+    /// <summary>
+    /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hid")]
     Hid,
     /// <summary>
