@@ -50,7 +50,13 @@ public partial class CdpModule : Module
     internal IEventSource<TParams> CreateCdpEventSource<TParams>(EventDescriptor<CdpEventArgs<TParams>> descriptor)
         where TParams : OpenQA.Selenium.BiDi.EventArgs
     {
-        return new CdpEventSource<TParams>(CreateEventSource(descriptor));
+        const string CdpEventPrefix = "goog:cdp.";
+
+        var eventName = descriptor.Name.StartsWith(CdpEventPrefix, StringComparison.Ordinal)
+            ? descriptor.Name[CdpEventPrefix.Length..]
+            : descriptor.Name;
+
+        return new CdpEventSource<TParams>(CreateEventSource(descriptor), eventName);
     }
 
     /// <summary>
