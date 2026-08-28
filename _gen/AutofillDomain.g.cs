@@ -99,35 +99,35 @@ public interface IAutofill
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAutofill
 {
-    private static AutofillJsonSerializerContext JsonContext = AutofillJsonSerializerContext.Default;
+    private static readonly AutofillJsonSerializerContext JsonContext = AutofillJsonSerializerContext.Default;
 
     public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: frameId, Card: card, Address: address);
-        return await ExecuteCommandAsync(TriggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TriggerCommandParameters, TriggerResult>("Autofill.trigger", JsonContext.TriggerCommandParameters, JsonContext.TriggerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TriggerCommandParameters, TriggerResult> TriggerCommand = new("Autofill.trigger", JsonContext.TriggerCommandParameters, JsonContext.TriggerResult);
 
     public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAddressesCommandParameters(Addresses: addresses);
-        return await ExecuteCommandAsync(SetAddressesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAddressesCommandParameters, SetAddressesResult>("Autofill.setAddresses", JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAddressesCommandParameters, SetAddressesResult> SetAddressesCommand = new("Autofill.setAddresses", JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Autofill.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Autofill.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Autofill.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Autofill.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public IEventSource<AddressFormFilledEventArgs> AddressFormFilled => CreateCdpEventSource(AutofillDomainEvent.AddressFormFilled);
 }
@@ -320,9 +320,10 @@ public static class AutofillDomainEvent
     /// <summary>
     /// Emitted when an address form is filled.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AddressFormFilledEventArgs>> AddressFormFilled { get; } =
-        EventDescriptor<CdpEventArgs<AddressFormFilledEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AddressFormFilledEventArgs>> AddressFormFilled =>
+        _addressFormFilled ?? global::System.Threading.Interlocked.CompareExchange(ref _addressFormFilled, EventDescriptor<CdpEventArgs<AddressFormFilledEventArgs>>.Create(
             "goog:cdp.Autofill.addressFormFilled",
-            AutofillJsonSerializerContext.Default.AddressFormFilledCdpEventArgs);
+            AutofillJsonSerializerContext.Default.AddressFormFilledCdpEventArgs), null) ?? _addressFormFilled;
+    private static EventDescriptor<CdpEventArgs<AddressFormFilledEventArgs>>? _addressFormFilled;
 
 }

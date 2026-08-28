@@ -98,35 +98,35 @@ public interface IAudits
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAudits
 {
-    private static AuditsJsonSerializerContext JsonContext = AuditsJsonSerializerContext.Default;
+    private static readonly AuditsJsonSerializerContext JsonContext = AuditsJsonSerializerContext.Default;
 
     public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: quality, SizeOnly: sizeOnly);
-        return await ExecuteCommandAsync(GetEncodedResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetEncodedResponseCommandParameters, GetEncodedResponseResult>("Audits.getEncodedResponse", JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetEncodedResponseCommandParameters, GetEncodedResponseResult> GetEncodedResponseCommand = new("Audits.getEncodedResponse", JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Audits.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Audits.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Audits.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Audits.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CheckFormsIssuesCommandParameters();
-        return await ExecuteCommandAsync(CheckFormsIssuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CheckFormsIssuesCommandParameters, CheckFormsIssuesResult>("Audits.checkFormsIssues", JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CheckFormsIssuesCommandParameters, CheckFormsIssuesResult> CheckFormsIssuesCommand = new("Audits.checkFormsIssues", JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult);
 
     public IEventSource<IssueAddedEventArgs> IssueAdded => CreateCdpEventSource(AuditsDomainEvent.IssueAdded);
 }
@@ -2657,9 +2657,10 @@ public static class AuditsDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<IssueAddedEventArgs>> IssueAdded { get; } =
-        EventDescriptor<CdpEventArgs<IssueAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<IssueAddedEventArgs>> IssueAdded =>
+        _issueAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _issueAdded, EventDescriptor<CdpEventArgs<IssueAddedEventArgs>>.Create(
             "goog:cdp.Audits.issueAdded",
-            AuditsJsonSerializerContext.Default.IssueAddedCdpEventArgs);
+            AuditsJsonSerializerContext.Default.IssueAddedCdpEventArgs), null) ?? _issueAdded;
+    private static EventDescriptor<CdpEventArgs<IssueAddedEventArgs>>? _issueAdded;
 
 }

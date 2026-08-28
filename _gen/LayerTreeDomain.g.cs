@@ -202,70 +202,70 @@ public interface ILayerTree
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ILayerTree
 {
-    private static LayerTreeJsonSerializerContext JsonContext = LayerTreeJsonSerializerContext.Default;
+    private static readonly LayerTreeJsonSerializerContext JsonContext = LayerTreeJsonSerializerContext.Default;
 
     public async Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CompositingReasonsCommandParameters(LayerId: layerId);
-        return await ExecuteCommandAsync(CompositingReasonsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CompositingReasonsCommandParameters, CompositingReasonsResult>("LayerTree.compositingReasons", JsonContext.CompositingReasonsCommandParameters, JsonContext.CompositingReasonsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CompositingReasonsCommandParameters, CompositingReasonsResult> CompositingReasonsCommand = new("LayerTree.compositingReasons", JsonContext.CompositingReasonsCommandParameters, JsonContext.CompositingReasonsResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("LayerTree.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("LayerTree.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("LayerTree.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("LayerTree.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LoadSnapshotCommandParameters(Tiles: tiles);
-        return await ExecuteCommandAsync(LoadSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<LoadSnapshotCommandParameters, LoadSnapshotResult>("LayerTree.loadSnapshot", JsonContext.LoadSnapshotCommandParameters, JsonContext.LoadSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<LoadSnapshotCommandParameters, LoadSnapshotResult> LoadSnapshotCommand = new("LayerTree.loadSnapshot", JsonContext.LoadSnapshotCommandParameters, JsonContext.LoadSnapshotResult);
 
     public async Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new MakeSnapshotCommandParameters(LayerId: layerId);
-        return await ExecuteCommandAsync(MakeSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<MakeSnapshotCommandParameters, MakeSnapshotResult>("LayerTree.makeSnapshot", JsonContext.MakeSnapshotCommandParameters, JsonContext.MakeSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<MakeSnapshotCommandParameters, MakeSnapshotResult> MakeSnapshotCommand = new("LayerTree.makeSnapshot", JsonContext.MakeSnapshotCommandParameters, JsonContext.MakeSnapshotResult);
 
     public async Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = default, double? minDuration = default, DOM.Rect? clipRect = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ProfileSnapshotCommandParameters(SnapshotId: snapshotId, MinRepeatCount: minRepeatCount, MinDuration: minDuration, ClipRect: clipRect);
-        return await ExecuteCommandAsync(ProfileSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ProfileSnapshotCommandParameters, ProfileSnapshotResult>("LayerTree.profileSnapshot", JsonContext.ProfileSnapshotCommandParameters, JsonContext.ProfileSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ProfileSnapshotCommandParameters, ProfileSnapshotResult> ProfileSnapshotCommand = new("LayerTree.profileSnapshot", JsonContext.ProfileSnapshotCommandParameters, JsonContext.ProfileSnapshotResult);
 
     public async Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseSnapshotCommandParameters(SnapshotId: snapshotId);
-        return await ExecuteCommandAsync(ReleaseSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReleaseSnapshotCommandParameters, ReleaseSnapshotResult>("LayerTree.releaseSnapshot", JsonContext.ReleaseSnapshotCommandParameters, JsonContext.ReleaseSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReleaseSnapshotCommandParameters, ReleaseSnapshotResult> ReleaseSnapshotCommand = new("LayerTree.releaseSnapshot", JsonContext.ReleaseSnapshotCommandParameters, JsonContext.ReleaseSnapshotResult);
 
     public async Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = default, long? toStep = default, double? scale = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReplaySnapshotCommandParameters(SnapshotId: snapshotId, FromStep: fromStep, ToStep: toStep, Scale: scale);
-        return await ExecuteCommandAsync(ReplaySnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReplaySnapshotCommandParameters, ReplaySnapshotResult>("LayerTree.replaySnapshot", JsonContext.ReplaySnapshotCommandParameters, JsonContext.ReplaySnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReplaySnapshotCommandParameters, ReplaySnapshotResult> ReplaySnapshotCommand = new("LayerTree.replaySnapshot", JsonContext.ReplaySnapshotCommandParameters, JsonContext.ReplaySnapshotResult);
 
     public async Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SnapshotCommandLogCommandParameters(SnapshotId: snapshotId);
-        return await ExecuteCommandAsync(SnapshotCommandLogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SnapshotCommandLogCommandParameters, SnapshotCommandLogResult>("LayerTree.snapshotCommandLog", JsonContext.SnapshotCommandLogCommandParameters, JsonContext.SnapshotCommandLogResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SnapshotCommandLogCommandParameters, SnapshotCommandLogResult> SnapshotCommandLogCommand = new("LayerTree.snapshotCommandLog", JsonContext.SnapshotCommandLogCommandParameters, JsonContext.SnapshotCommandLogResult);
 
     public IEventSource<LayerPaintedEventArgs> LayerPainted => CreateCdpEventSource(LayerTreeDomainEvent.LayerPainted);
     public IEventSource<LayerTreeDidChangeEventArgs> LayerTreeDidChange => CreateCdpEventSource(LayerTreeDomainEvent.LayerTreeDidChange);
@@ -560,17 +560,19 @@ public static class LayerTreeDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LayerPaintedEventArgs>> LayerPainted { get; } =
-        EventDescriptor<CdpEventArgs<LayerPaintedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LayerPaintedEventArgs>> LayerPainted =>
+        _layerPainted ?? global::System.Threading.Interlocked.CompareExchange(ref _layerPainted, EventDescriptor<CdpEventArgs<LayerPaintedEventArgs>>.Create(
             "goog:cdp.LayerTree.layerPainted",
-            LayerTreeJsonSerializerContext.Default.LayerPaintedCdpEventArgs);
+            LayerTreeJsonSerializerContext.Default.LayerPaintedCdpEventArgs), null) ?? _layerPainted;
+    private static EventDescriptor<CdpEventArgs<LayerPaintedEventArgs>>? _layerPainted;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LayerTreeDidChangeEventArgs>> LayerTreeDidChange { get; } =
-        EventDescriptor<CdpEventArgs<LayerTreeDidChangeEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LayerTreeDidChangeEventArgs>> LayerTreeDidChange =>
+        _layerTreeDidChange ?? global::System.Threading.Interlocked.CompareExchange(ref _layerTreeDidChange, EventDescriptor<CdpEventArgs<LayerTreeDidChangeEventArgs>>.Create(
             "goog:cdp.LayerTree.layerTreeDidChange",
-            LayerTreeJsonSerializerContext.Default.LayerTreeDidChangeCdpEventArgs);
+            LayerTreeJsonSerializerContext.Default.LayerTreeDidChangeCdpEventArgs), null) ?? _layerTreeDidChange;
+    private static EventDescriptor<CdpEventArgs<LayerTreeDidChangeEventArgs>>? _layerTreeDidChange;
 
 }

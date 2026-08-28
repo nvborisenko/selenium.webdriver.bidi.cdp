@@ -196,70 +196,70 @@ public interface IProfiler
 
 internal sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IProfiler
 {
-    private static ProfilerJsonSerializerContext JsonContext = ProfilerJsonSerializerContext.Default;
+    private static readonly ProfilerJsonSerializerContext JsonContext = ProfilerJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Profiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Profiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Profiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Profiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<GetBestEffortCoverageResult> GetBestEffortCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBestEffortCoverageCommandParameters();
-        return await ExecuteCommandAsync(GetBestEffortCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetBestEffortCoverageCommandParameters, GetBestEffortCoverageResult>("Profiler.getBestEffortCoverage", JsonContext.GetBestEffortCoverageCommandParameters, JsonContext.GetBestEffortCoverageResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetBestEffortCoverageCommandParameters, GetBestEffortCoverageResult> GetBestEffortCoverageCommand = new("Profiler.getBestEffortCoverage", JsonContext.GetBestEffortCoverageCommandParameters, JsonContext.GetBestEffortCoverageResult);
 
     public async Task<SetSamplingIntervalResult> SetSamplingIntervalAsync(long interval, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSamplingIntervalCommandParameters(Interval: interval);
-        return await ExecuteCommandAsync(SetSamplingIntervalCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSamplingIntervalCommandParameters, SetSamplingIntervalResult>("Profiler.setSamplingInterval", JsonContext.SetSamplingIntervalCommandParameters, JsonContext.SetSamplingIntervalResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSamplingIntervalCommandParameters, SetSamplingIntervalResult> SetSamplingIntervalCommand = new("Profiler.setSamplingInterval", JsonContext.SetSamplingIntervalCommandParameters, JsonContext.SetSamplingIntervalResult);
 
     public async Task<StartResult> StartAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartCommandParameters();
-        return await ExecuteCommandAsync(StartCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartCommandParameters, StartResult>("Profiler.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartCommandParameters, StartResult> StartCommand = new("Profiler.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
 
     public async Task<StartPreciseCoverageResult> StartPreciseCoverageAsync(bool? callCount = default, bool? detailed = default, bool? allowTriggeredUpdates = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartPreciseCoverageCommandParameters(CallCount: callCount, Detailed: detailed, AllowTriggeredUpdates: allowTriggeredUpdates);
-        return await ExecuteCommandAsync(StartPreciseCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartPreciseCoverageCommandParameters, StartPreciseCoverageResult>("Profiler.startPreciseCoverage", JsonContext.StartPreciseCoverageCommandParameters, JsonContext.StartPreciseCoverageResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartPreciseCoverageCommandParameters, StartPreciseCoverageResult> StartPreciseCoverageCommand = new("Profiler.startPreciseCoverage", JsonContext.StartPreciseCoverageCommandParameters, JsonContext.StartPreciseCoverageResult);
 
     public async Task<StopResult> StopAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopCommandParameters();
-        return await ExecuteCommandAsync(StopCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopCommandParameters, StopResult>("Profiler.stop", JsonContext.StopCommandParameters, JsonContext.StopResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopCommandParameters, StopResult> StopCommand = new("Profiler.stop", JsonContext.StopCommandParameters, JsonContext.StopResult);
 
     public async Task<StopPreciseCoverageResult> StopPreciseCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopPreciseCoverageCommandParameters();
-        return await ExecuteCommandAsync(StopPreciseCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopPreciseCoverageCommandParameters, StopPreciseCoverageResult>("Profiler.stopPreciseCoverage", JsonContext.StopPreciseCoverageCommandParameters, JsonContext.StopPreciseCoverageResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopPreciseCoverageCommandParameters, StopPreciseCoverageResult> StopPreciseCoverageCommand = new("Profiler.stopPreciseCoverage", JsonContext.StopPreciseCoverageCommandParameters, JsonContext.StopPreciseCoverageResult);
 
     public async Task<TakePreciseCoverageResult> TakePreciseCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakePreciseCoverageCommandParameters();
-        return await ExecuteCommandAsync(TakePreciseCoverageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TakePreciseCoverageCommandParameters, TakePreciseCoverageResult>("Profiler.takePreciseCoverage", JsonContext.TakePreciseCoverageCommandParameters, JsonContext.TakePreciseCoverageResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TakePreciseCoverageCommandParameters, TakePreciseCoverageResult> TakePreciseCoverageCommand = new("Profiler.takePreciseCoverage", JsonContext.TakePreciseCoverageCommandParameters, JsonContext.TakePreciseCoverageResult);
 
     public IEventSource<ConsoleProfileFinishedEventArgs> ConsoleProfileFinished => CreateCdpEventSource(ProfilerDomainEvent.ConsoleProfileFinished);
     public IEventSource<ConsoleProfileStartedEventArgs> ConsoleProfileStarted => CreateCdpEventSource(ProfilerDomainEvent.ConsoleProfileStarted);
@@ -554,18 +554,20 @@ public static class ProfilerDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ConsoleProfileFinishedEventArgs>> ConsoleProfileFinished { get; } =
-        EventDescriptor<CdpEventArgs<ConsoleProfileFinishedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ConsoleProfileFinishedEventArgs>> ConsoleProfileFinished =>
+        _consoleProfileFinished ?? global::System.Threading.Interlocked.CompareExchange(ref _consoleProfileFinished, EventDescriptor<CdpEventArgs<ConsoleProfileFinishedEventArgs>>.Create(
             "goog:cdp.Profiler.consoleProfileFinished",
-            ProfilerJsonSerializerContext.Default.ConsoleProfileFinishedCdpEventArgs);
+            ProfilerJsonSerializerContext.Default.ConsoleProfileFinishedCdpEventArgs), null) ?? _consoleProfileFinished;
+    private static EventDescriptor<CdpEventArgs<ConsoleProfileFinishedEventArgs>>? _consoleProfileFinished;
 
     /// <summary>
     /// Sent when new profile recording is started using console.profile() call.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ConsoleProfileStartedEventArgs>> ConsoleProfileStarted { get; } =
-        EventDescriptor<CdpEventArgs<ConsoleProfileStartedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ConsoleProfileStartedEventArgs>> ConsoleProfileStarted =>
+        _consoleProfileStarted ?? global::System.Threading.Interlocked.CompareExchange(ref _consoleProfileStarted, EventDescriptor<CdpEventArgs<ConsoleProfileStartedEventArgs>>.Create(
             "goog:cdp.Profiler.consoleProfileStarted",
-            ProfilerJsonSerializerContext.Default.ConsoleProfileStartedCdpEventArgs);
+            ProfilerJsonSerializerContext.Default.ConsoleProfileStartedCdpEventArgs), null) ?? _consoleProfileStarted;
+    private static EventDescriptor<CdpEventArgs<ConsoleProfileStartedEventArgs>>? _consoleProfileStarted;
 
     /// <summary>
     /// Reports coverage delta since the last poll (either from an event like this, or from
@@ -573,9 +575,10 @@ public static class ProfilerDomainEvent
     /// coverage has been started. This event can be trigged by the embedder to, for example,
     /// trigger collection of coverage data immediately at a certain point in time.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PreciseCoverageDeltaUpdateEventArgs>> PreciseCoverageDeltaUpdate { get; } =
-        EventDescriptor<CdpEventArgs<PreciseCoverageDeltaUpdateEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PreciseCoverageDeltaUpdateEventArgs>> PreciseCoverageDeltaUpdate =>
+        _preciseCoverageDeltaUpdate ?? global::System.Threading.Interlocked.CompareExchange(ref _preciseCoverageDeltaUpdate, EventDescriptor<CdpEventArgs<PreciseCoverageDeltaUpdateEventArgs>>.Create(
             "goog:cdp.Profiler.preciseCoverageDeltaUpdate",
-            ProfilerJsonSerializerContext.Default.PreciseCoverageDeltaUpdateCdpEventArgs);
+            ProfilerJsonSerializerContext.Default.PreciseCoverageDeltaUpdateCdpEventArgs), null) ?? _preciseCoverageDeltaUpdate;
+    private static EventDescriptor<CdpEventArgs<PreciseCoverageDeltaUpdateEventArgs>>? _preciseCoverageDeltaUpdate;
 
 }

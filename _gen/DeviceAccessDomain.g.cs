@@ -90,35 +90,35 @@ public interface IDeviceAccess
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDeviceAccess
 {
-    private static DeviceAccessJsonSerializerContext JsonContext = DeviceAccessJsonSerializerContext.Default;
+    private static readonly DeviceAccessJsonSerializerContext JsonContext = DeviceAccessJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DeviceAccess.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DeviceAccess.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DeviceAccess.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DeviceAccess.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SelectPromptCommandParameters(Id: id, DeviceId: deviceId);
-        return await ExecuteCommandAsync(SelectPromptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SelectPromptCommandParameters, SelectPromptResult>("DeviceAccess.selectPrompt", JsonContext.SelectPromptCommandParameters, JsonContext.SelectPromptResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SelectPromptCommandParameters, SelectPromptResult> SelectPromptCommand = new("DeviceAccess.selectPrompt", JsonContext.SelectPromptCommandParameters, JsonContext.SelectPromptResult);
 
     public async Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CancelPromptCommandParameters(Id: id);
-        return await ExecuteCommandAsync(CancelPromptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CancelPromptCommandParameters, CancelPromptResult>("DeviceAccess.cancelPrompt", JsonContext.CancelPromptCommandParameters, JsonContext.CancelPromptResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CancelPromptCommandParameters, CancelPromptResult> CancelPromptCommand = new("DeviceAccess.cancelPrompt", JsonContext.CancelPromptCommandParameters, JsonContext.CancelPromptResult);
 
     public IEventSource<DeviceRequestPromptedEventArgs> DeviceRequestPrompted => CreateCdpEventSource(DeviceAccessDomainEvent.DeviceRequestPrompted);
 }
@@ -218,9 +218,10 @@ public static class DeviceAccessDomainEvent
     /// A device request opened a user prompt to select a device. Respond with the
     /// selectPrompt or cancelPrompt command.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DeviceRequestPromptedEventArgs>> DeviceRequestPrompted { get; } =
-        EventDescriptor<CdpEventArgs<DeviceRequestPromptedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DeviceRequestPromptedEventArgs>> DeviceRequestPrompted =>
+        _deviceRequestPrompted ?? global::System.Threading.Interlocked.CompareExchange(ref _deviceRequestPrompted, EventDescriptor<CdpEventArgs<DeviceRequestPromptedEventArgs>>.Create(
             "goog:cdp.DeviceAccess.deviceRequestPrompted",
-            DeviceAccessJsonSerializerContext.Default.DeviceRequestPromptedCdpEventArgs);
+            DeviceAccessJsonSerializerContext.Default.DeviceRequestPromptedCdpEventArgs), null) ?? _deviceRequestPrompted;
+    private static EventDescriptor<CdpEventArgs<DeviceRequestPromptedEventArgs>>? _deviceRequestPrompted;
 
 }

@@ -159,56 +159,56 @@ public interface IFedCm
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IFedCm
 {
-    private static FedCmJsonSerializerContext JsonContext = FedCmJsonSerializerContext.Default;
+    private static readonly FedCmJsonSerializerContext JsonContext = FedCmJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(bool? disableRejectionDelay = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(DisableRejectionDelay: disableRejectionDelay);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("FedCm.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("FedCm.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("FedCm.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("FedCm.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SelectAccountCommandParameters(DialogId: dialogId, AccountIndex: accountIndex);
-        return await ExecuteCommandAsync(SelectAccountCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SelectAccountCommandParameters, SelectAccountResult>("FedCm.selectAccount", JsonContext.SelectAccountCommandParameters, JsonContext.SelectAccountResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SelectAccountCommandParameters, SelectAccountResult> SelectAccountCommand = new("FedCm.selectAccount", JsonContext.SelectAccountCommandParameters, JsonContext.SelectAccountResult);
 
     public async Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClickDialogButtonCommandParameters(DialogId: dialogId, DialogButton: dialogButton);
-        return await ExecuteCommandAsync(ClickDialogButtonCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClickDialogButtonCommandParameters, ClickDialogButtonResult>("FedCm.clickDialogButton", JsonContext.ClickDialogButtonCommandParameters, JsonContext.ClickDialogButtonResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClickDialogButtonCommandParameters, ClickDialogButtonResult> ClickDialogButtonCommand = new("FedCm.clickDialogButton", JsonContext.ClickDialogButtonCommandParameters, JsonContext.ClickDialogButtonResult);
 
     public async Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OpenUrlCommandParameters(DialogId: dialogId, AccountIndex: accountIndex, AccountUrlType: accountUrlType);
-        return await ExecuteCommandAsync(OpenUrlCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<OpenUrlCommandParameters, OpenUrlResult>("FedCm.openUrl", JsonContext.OpenUrlCommandParameters, JsonContext.OpenUrlResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<OpenUrlCommandParameters, OpenUrlResult> OpenUrlCommand = new("FedCm.openUrl", JsonContext.OpenUrlCommandParameters, JsonContext.OpenUrlResult);
 
     public async Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DismissDialogCommandParameters(DialogId: dialogId, TriggerCooldown: triggerCooldown);
-        return await ExecuteCommandAsync(DismissDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DismissDialogCommandParameters, DismissDialogResult>("FedCm.dismissDialog", JsonContext.DismissDialogCommandParameters, JsonContext.DismissDialogResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DismissDialogCommandParameters, DismissDialogResult> DismissDialogCommand = new("FedCm.dismissDialog", JsonContext.DismissDialogCommandParameters, JsonContext.DismissDialogResult);
 
     public async Task<ResetCooldownResult> ResetCooldownAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResetCooldownCommandParameters();
-        return await ExecuteCommandAsync(ResetCooldownCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ResetCooldownCommandParameters, ResetCooldownResult>("FedCm.resetCooldown", JsonContext.ResetCooldownCommandParameters, JsonContext.ResetCooldownResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ResetCooldownCommandParameters, ResetCooldownResult> ResetCooldownCommand = new("FedCm.resetCooldown", JsonContext.ResetCooldownCommandParameters, JsonContext.ResetCooldownResult);
 
     public IEventSource<DialogShownEventArgs> DialogShown => CreateCdpEventSource(FedCmDomainEvent.DialogShown);
     public IEventSource<DialogClosedEventArgs> DialogClosed => CreateCdpEventSource(FedCmDomainEvent.DialogClosed);
@@ -430,18 +430,20 @@ public static class FedCmDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DialogShownEventArgs>> DialogShown { get; } =
-        EventDescriptor<CdpEventArgs<DialogShownEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DialogShownEventArgs>> DialogShown =>
+        _dialogShown ?? global::System.Threading.Interlocked.CompareExchange(ref _dialogShown, EventDescriptor<CdpEventArgs<DialogShownEventArgs>>.Create(
             "goog:cdp.FedCm.dialogShown",
-            FedCmJsonSerializerContext.Default.DialogShownCdpEventArgs);
+            FedCmJsonSerializerContext.Default.DialogShownCdpEventArgs), null) ?? _dialogShown;
+    private static EventDescriptor<CdpEventArgs<DialogShownEventArgs>>? _dialogShown;
 
     /// <summary>
     /// Triggered when a dialog is closed, either by user action, JS abort,
     /// or a command below.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DialogClosedEventArgs>> DialogClosed { get; } =
-        EventDescriptor<CdpEventArgs<DialogClosedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DialogClosedEventArgs>> DialogClosed =>
+        _dialogClosed ?? global::System.Threading.Interlocked.CompareExchange(ref _dialogClosed, EventDescriptor<CdpEventArgs<DialogClosedEventArgs>>.Create(
             "goog:cdp.FedCm.dialogClosed",
-            FedCmJsonSerializerContext.Default.DialogClosedCdpEventArgs);
+            FedCmJsonSerializerContext.Default.DialogClosedCdpEventArgs), null) ?? _dialogClosed;
+    private static EventDescriptor<CdpEventArgs<DialogClosedEventArgs>>? _dialogClosed;
 
 }

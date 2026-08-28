@@ -297,71 +297,71 @@ public interface IFetch
 
 internal sealed class FetchDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IFetch
 {
-    private static FetchJsonSerializerContext JsonContext = FetchJsonSerializerContext.Default;
+    private static readonly FetchJsonSerializerContext JsonContext = FetchJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Fetch.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Fetch.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(ImmutableArray<RequestPattern>? patterns = default, bool? handleAuthRequests = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(Patterns: patterns, HandleAuthRequests: handleAuthRequests);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Fetch.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Fetch.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<FailRequestResult> FailRequestAsync(RequestId requestId, Network.ErrorReason errorReason, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new FailRequestCommandParameters(RequestId: requestId, ErrorReason: errorReason);
-        return await ExecuteCommandAsync(FailRequestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<FailRequestCommandParameters, FailRequestResult>("Fetch.failRequest", JsonContext.FailRequestCommandParameters, JsonContext.FailRequestResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<FailRequestCommandParameters, FailRequestResult> FailRequestCommand = new("Fetch.failRequest", JsonContext.FailRequestCommandParameters, JsonContext.FailRequestResult);
 
     public async Task<FulfillRequestResult> FulfillRequestAsync(RequestId requestId, long responseCode, ImmutableArray<HeaderEntry>? responseHeaders = default, string? binaryResponseHeaders = default, string? body = default, string? responsePhrase = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new FulfillRequestCommandParameters(RequestId: requestId, ResponseCode: responseCode, ResponseHeaders: responseHeaders, BinaryResponseHeaders: binaryResponseHeaders, Body: body, ResponsePhrase: responsePhrase);
-        return await ExecuteCommandAsync(FulfillRequestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<FulfillRequestCommandParameters, FulfillRequestResult>("Fetch.fulfillRequest", JsonContext.FulfillRequestCommandParameters, JsonContext.FulfillRequestResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<FulfillRequestCommandParameters, FulfillRequestResult> FulfillRequestCommand = new("Fetch.fulfillRequest", JsonContext.FulfillRequestCommandParameters, JsonContext.FulfillRequestResult);
 
     public async Task<ContinueRequestResult> ContinueRequestAsync(RequestId requestId, string? url = default, string? method = default, string? postData = default, ImmutableArray<HeaderEntry>? headers = default, bool? interceptResponse = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueRequestCommandParameters(RequestId: requestId, Url: url, Method: method, PostData: postData, Headers: headers, InterceptResponse: interceptResponse);
-        return await ExecuteCommandAsync(ContinueRequestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ContinueRequestCommandParameters, ContinueRequestResult>("Fetch.continueRequest", JsonContext.ContinueRequestCommandParameters, JsonContext.ContinueRequestResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ContinueRequestCommandParameters, ContinueRequestResult> ContinueRequestCommand = new("Fetch.continueRequest", JsonContext.ContinueRequestCommandParameters, JsonContext.ContinueRequestResult);
 
     public async Task<ContinueWithAuthResult> ContinueWithAuthAsync(RequestId requestId, AuthChallengeResponse authChallengeResponse, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueWithAuthCommandParameters(RequestId: requestId, AuthChallengeResponse: authChallengeResponse);
-        return await ExecuteCommandAsync(ContinueWithAuthCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ContinueWithAuthCommandParameters, ContinueWithAuthResult>("Fetch.continueWithAuth", JsonContext.ContinueWithAuthCommandParameters, JsonContext.ContinueWithAuthResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ContinueWithAuthCommandParameters, ContinueWithAuthResult> ContinueWithAuthCommand = new("Fetch.continueWithAuth", JsonContext.ContinueWithAuthCommandParameters, JsonContext.ContinueWithAuthResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ContinueResponseResult> ContinueResponseAsync(RequestId requestId, long? responseCode = default, string? responsePhrase = default, ImmutableArray<HeaderEntry>? responseHeaders = default, string? binaryResponseHeaders = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueResponseCommandParameters(RequestId: requestId, ResponseCode: responseCode, ResponsePhrase: responsePhrase, ResponseHeaders: responseHeaders, BinaryResponseHeaders: binaryResponseHeaders);
-        return await ExecuteCommandAsync(ContinueResponseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ContinueResponseCommandParameters, ContinueResponseResult>("Fetch.continueResponse", JsonContext.ContinueResponseCommandParameters, JsonContext.ContinueResponseResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ContinueResponseCommandParameters, ContinueResponseResult> ContinueResponseCommand = new("Fetch.continueResponse", JsonContext.ContinueResponseCommandParameters, JsonContext.ContinueResponseResult);
 
     public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(GetResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult>("Fetch.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult> GetResponseBodyCommand = new("Fetch.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
 
     public async Task<TakeResponseBodyAsStreamResult> TakeResponseBodyAsStreamAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeResponseBodyAsStreamCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(TakeResponseBodyAsStreamCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TakeResponseBodyAsStreamCommandParameters, TakeResponseBodyAsStreamResult>("Fetch.takeResponseBodyAsStream", JsonContext.TakeResponseBodyAsStreamCommandParameters, JsonContext.TakeResponseBodyAsStreamResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TakeResponseBodyAsStreamCommandParameters, TakeResponseBodyAsStreamResult> TakeResponseBodyAsStreamCommand = new("Fetch.takeResponseBodyAsStream", JsonContext.TakeResponseBodyAsStreamCommandParameters, JsonContext.TakeResponseBodyAsStreamResult);
 
     public IEventSource<RequestPausedEventArgs> RequestPaused => CreateCdpEventSource(FetchDomainEvent.RequestPaused);
     public IEventSource<AuthRequiredEventArgs> AuthRequired => CreateCdpEventSource(FetchDomainEvent.AuthRequired);
@@ -663,18 +663,20 @@ public static class FetchDomainEvent
     /// presence of the <b>location</b> header. Requests resulting from a redirect will
     /// have <b>redirectedRequestId</b> field set.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<RequestPausedEventArgs>> RequestPaused { get; } =
-        EventDescriptor<CdpEventArgs<RequestPausedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<RequestPausedEventArgs>> RequestPaused =>
+        _requestPaused ?? global::System.Threading.Interlocked.CompareExchange(ref _requestPaused, EventDescriptor<CdpEventArgs<RequestPausedEventArgs>>.Create(
             "goog:cdp.Fetch.requestPaused",
-            FetchJsonSerializerContext.Default.RequestPausedCdpEventArgs);
+            FetchJsonSerializerContext.Default.RequestPausedCdpEventArgs), null) ?? _requestPaused;
+    private static EventDescriptor<CdpEventArgs<RequestPausedEventArgs>>? _requestPaused;
 
     /// <summary>
     /// Issued when the domain is enabled with handleAuthRequests set to true.
     /// The request is paused until client responds with continueWithAuth.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AuthRequiredEventArgs>> AuthRequired { get; } =
-        EventDescriptor<CdpEventArgs<AuthRequiredEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AuthRequiredEventArgs>> AuthRequired =>
+        _authRequired ?? global::System.Threading.Interlocked.CompareExchange(ref _authRequired, EventDescriptor<CdpEventArgs<AuthRequiredEventArgs>>.Create(
             "goog:cdp.Fetch.authRequired",
-            FetchJsonSerializerContext.Default.AuthRequiredCdpEventArgs);
+            FetchJsonSerializerContext.Default.AuthRequiredCdpEventArgs), null) ?? _authRequired;
+    private static EventDescriptor<CdpEventArgs<AuthRequiredEventArgs>>? _authRequired;
 
 }

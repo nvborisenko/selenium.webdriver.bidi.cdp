@@ -97,7 +97,7 @@ foreach (var inputFile in inputFiles)
         domainBuilder.AppendLine("{");
 
         // JsonContext alias
-        domainBuilder.AppendLine($"    private static {domainInfo.Domain}JsonSerializerContext JsonContext = {domainInfo.Domain}JsonSerializerContext.Default;");
+        domainBuilder.AppendLine($"    private static readonly {domainInfo.Domain}JsonSerializerContext JsonContext = {domainInfo.Domain}JsonSerializerContext.Default;");
         domainBuilder.AppendLine();
 
         // Commands
@@ -121,10 +121,10 @@ foreach (var inputFile in inputFiles)
 
                 domainBuilder.AppendLine(");");
 
-                domainBuilder.AppendLine($"        return await ExecuteCommandAsync({commandInfo.Name.Dehumanize()}Command, @params, {sessionArgName}, cancellationToken).ConfigureAwait(false);");
+                // Built per call so that only the JsonTypeInfo of commands actually used gets materialized.
+                domainBuilder.AppendLine($"        var command = new CdpCommand<{commandInfo.Name.Dehumanize()}CommandParameters, {commandInfo.Name.Dehumanize()}Result>(\"{domainInfo.Domain}.{commandInfo.Name}\", JsonContext.{commandInfo.Name.Dehumanize()}CommandParameters, JsonContext.{commandInfo.Name.Dehumanize()}Result);");
+                domainBuilder.AppendLine($"        return await ExecuteCommandAsync(command, @params, {sessionArgName}, cancellationToken).ConfigureAwait(false);");
                 domainBuilder.AppendLine("    }");
-
-                domainBuilder.AppendLine($"    private static readonly CdpCommand<{commandInfo.Name.Dehumanize()}CommandParameters, {commandInfo.Name.Dehumanize()}Result> {commandInfo.Name.Dehumanize()}Command = new(\"{domainInfo.Domain}.{commandInfo.Name}\", JsonContext.{commandInfo.Name.Dehumanize()}CommandParameters, JsonContext.{commandInfo.Name.Dehumanize()}Result);");
                 domainBuilder.AppendLine();
             }
         }
@@ -535,10 +535,15 @@ foreach (var inputFile in inputFiles)
                 }
                 domainBuilder.AppendLine("    /// </summary>");
 
-                domainBuilder.AppendLine($"    public static EventDescriptor<CdpEventArgs<{eventInfo.Name.Dehumanize()}EventArgs>> {eventInfo.Name.Dehumanize()} {{ get; }} =");
-                domainBuilder.AppendLine($"        EventDescriptor<CdpEventArgs<{eventInfo.Name.Dehumanize()}EventArgs>>.Create(");
+                var eventName = eventInfo.Name.Dehumanize();
+                var eventFieldName = "_" + eventName.Substring(0, 1).ToLower() + (eventName.Length > 1 ? eventName.Substring(1) : "");
+                var descriptorType = $"EventDescriptor<CdpEventArgs<{eventName}EventArgs>>";
+
+                domainBuilder.AppendLine($"    public static {descriptorType} {eventName} =>");
+                domainBuilder.AppendLine($"        {eventFieldName} ?? global::System.Threading.Interlocked.CompareExchange(ref {eventFieldName}, {descriptorType}.Create(");
                 domainBuilder.AppendLine($"            \"goog:cdp.{domainInfo.Domain}.{eventInfo.Name}\",");
-                domainBuilder.AppendLine($"            {domainInfo.Domain}JsonSerializerContext.Default.{eventInfo.Name.Dehumanize()}CdpEventArgs);");
+                domainBuilder.AppendLine($"            {domainInfo.Domain}JsonSerializerContext.Default.{eventName}CdpEventArgs), null) ?? {eventFieldName};");
+                domainBuilder.AppendLine($"    private static {descriptorType}? {eventFieldName};");
                 domainBuilder.AppendLine();
             }
 

@@ -212,63 +212,63 @@ public interface IAccessibility
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAccessibility
 {
-    private static AccessibilityJsonSerializerContext JsonContext = AccessibilityJsonSerializerContext.Default;
+    private static readonly AccessibilityJsonSerializerContext JsonContext = AccessibilityJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Accessibility.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Accessibility.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Accessibility.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Accessibility.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? fetchRelatives = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPartialAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, FetchRelatives: fetchRelatives);
-        return await ExecuteCommandAsync(GetPartialAXTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetPartialAXTreeCommandParameters, GetPartialAXTreeResult>("Accessibility.getPartialAXTree", JsonContext.GetPartialAXTreeCommandParameters, JsonContext.GetPartialAXTreeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetPartialAXTreeCommandParameters, GetPartialAXTreeResult> GetPartialAXTreeCommand = new("Accessibility.getPartialAXTree", JsonContext.GetPartialAXTreeCommandParameters, JsonContext.GetPartialAXTreeResult);
 
     public async Task<GetFullAXTreeResult> GetFullAXTreeAsync(long? depth = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFullAXTreeCommandParameters(Depth: depth, FrameId: frameId);
-        return await ExecuteCommandAsync(GetFullAXTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetFullAXTreeCommandParameters, GetFullAXTreeResult>("Accessibility.getFullAXTree", JsonContext.GetFullAXTreeCommandParameters, JsonContext.GetFullAXTreeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetFullAXTreeCommandParameters, GetFullAXTreeResult> GetFullAXTreeCommand = new("Accessibility.getFullAXTree", JsonContext.GetFullAXTreeCommandParameters, JsonContext.GetFullAXTreeResult);
 
     public async Task<GetRootAXNodeResult> GetRootAXNodeAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRootAXNodeCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetRootAXNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetRootAXNodeCommandParameters, GetRootAXNodeResult>("Accessibility.getRootAXNode", JsonContext.GetRootAXNodeCommandParameters, JsonContext.GetRootAXNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetRootAXNodeCommandParameters, GetRootAXNodeResult> GetRootAXNodeCommand = new("Accessibility.getRootAXNode", JsonContext.GetRootAXNodeCommandParameters, JsonContext.GetRootAXNodeResult);
 
     public async Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAXNodeAndAncestorsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(GetAXNodeAndAncestorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAXNodeAndAncestorsCommandParameters, GetAXNodeAndAncestorsResult>("Accessibility.getAXNodeAndAncestors", JsonContext.GetAXNodeAndAncestorsCommandParameters, JsonContext.GetAXNodeAndAncestorsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAXNodeAndAncestorsCommandParameters, GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsCommand = new("Accessibility.getAXNodeAndAncestors", JsonContext.GetAXNodeAndAncestorsCommandParameters, JsonContext.GetAXNodeAndAncestorsResult);
 
     public async Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetChildAXNodesCommandParameters(Id: id, FrameId: frameId);
-        return await ExecuteCommandAsync(GetChildAXNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetChildAXNodesCommandParameters, GetChildAXNodesResult>("Accessibility.getChildAXNodes", JsonContext.GetChildAXNodesCommandParameters, JsonContext.GetChildAXNodesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetChildAXNodesCommandParameters, GetChildAXNodesResult> GetChildAXNodesCommand = new("Accessibility.getChildAXNodes", JsonContext.GetChildAXNodesCommandParameters, JsonContext.GetChildAXNodesResult);
 
     public async Task<QueryAXTreeResult> QueryAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? accessibleName = default, string? role = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QueryAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, AccessibleName: accessibleName, Role: role);
-        return await ExecuteCommandAsync(QueryAXTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<QueryAXTreeCommandParameters, QueryAXTreeResult>("Accessibility.queryAXTree", JsonContext.QueryAXTreeCommandParameters, JsonContext.QueryAXTreeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<QueryAXTreeCommandParameters, QueryAXTreeResult> QueryAXTreeCommand = new("Accessibility.queryAXTree", JsonContext.QueryAXTreeCommandParameters, JsonContext.QueryAXTreeResult);
 
     public IEventSource<LoadCompleteEventArgs> LoadComplete => CreateCdpEventSource(AccessibilityDomainEvent.LoadComplete);
     public IEventSource<NodesUpdatedEventArgs> NodesUpdated => CreateCdpEventSource(AccessibilityDomainEvent.NodesUpdated);
@@ -991,17 +991,19 @@ public static class AccessibilityDomainEvent
     /// The loadComplete event mirrors the load complete event sent by the browser to assistive
     /// technology when the web page has finished loading.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LoadCompleteEventArgs>> LoadComplete { get; } =
-        EventDescriptor<CdpEventArgs<LoadCompleteEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LoadCompleteEventArgs>> LoadComplete =>
+        _loadComplete ?? global::System.Threading.Interlocked.CompareExchange(ref _loadComplete, EventDescriptor<CdpEventArgs<LoadCompleteEventArgs>>.Create(
             "goog:cdp.Accessibility.loadComplete",
-            AccessibilityJsonSerializerContext.Default.LoadCompleteCdpEventArgs);
+            AccessibilityJsonSerializerContext.Default.LoadCompleteCdpEventArgs), null) ?? _loadComplete;
+    private static EventDescriptor<CdpEventArgs<LoadCompleteEventArgs>>? _loadComplete;
 
     /// <summary>
     /// The nodesUpdated event is sent every time a previously requested node has changed the in tree.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<NodesUpdatedEventArgs>> NodesUpdated { get; } =
-        EventDescriptor<CdpEventArgs<NodesUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<NodesUpdatedEventArgs>> NodesUpdated =>
+        _nodesUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _nodesUpdated, EventDescriptor<CdpEventArgs<NodesUpdatedEventArgs>>.Create(
             "goog:cdp.Accessibility.nodesUpdated",
-            AccessibilityJsonSerializerContext.Default.NodesUpdatedCdpEventArgs);
+            AccessibilityJsonSerializerContext.Default.NodesUpdatedCdpEventArgs), null) ?? _nodesUpdated;
+    private static EventDescriptor<CdpEventArgs<NodesUpdatedEventArgs>>? _nodesUpdated;
 
 }

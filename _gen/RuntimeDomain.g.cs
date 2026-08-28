@@ -685,174 +685,174 @@ public interface IRuntime
 
 internal sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IRuntime
 {
-    private static RuntimeJsonSerializerContext JsonContext = RuntimeJsonSerializerContext.Default;
+    private static readonly RuntimeJsonSerializerContext JsonContext = RuntimeJsonSerializerContext.Default;
 
     public async Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = default, bool? generatePreview = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AwaitPromiseCommandParameters(PromiseObjectId: promiseObjectId, ReturnByValue: returnByValue, GeneratePreview: generatePreview);
-        return await ExecuteCommandAsync(AwaitPromiseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AwaitPromiseCommandParameters, AwaitPromiseResult>("Runtime.awaitPromise", JsonContext.AwaitPromiseCommandParameters, JsonContext.AwaitPromiseResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AwaitPromiseCommandParameters, AwaitPromiseResult> AwaitPromiseCommand = new("Runtime.awaitPromise", JsonContext.AwaitPromiseCommandParameters, JsonContext.AwaitPromiseResult);
 
     public async Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = default, ImmutableArray<CallArgument>? arguments = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? throwOnSideEffect = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CallFunctionOnCommandParameters(FunctionDeclaration: functionDeclaration, ObjectId: objectId, Arguments: arguments, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, ThrowOnSideEffect: throwOnSideEffect, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
-        return await ExecuteCommandAsync(CallFunctionOnCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CallFunctionOnCommandParameters, CallFunctionOnResult>("Runtime.callFunctionOn", JsonContext.CallFunctionOnCommandParameters, JsonContext.CallFunctionOnResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CallFunctionOnCommandParameters, CallFunctionOnResult> CallFunctionOnCommand = new("Runtime.callFunctionOn", JsonContext.CallFunctionOnCommandParameters, JsonContext.CallFunctionOnResult);
 
     public async Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CompileScriptCommandParameters(Expression: expression, SourceURL: sourceURL, PersistScript: persistScript, ExecutionContextId: executionContextId);
-        return await ExecuteCommandAsync(CompileScriptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CompileScriptCommandParameters, CompileScriptResult>("Runtime.compileScript", JsonContext.CompileScriptCommandParameters, JsonContext.CompileScriptResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CompileScriptCommandParameters, CompileScriptResult> CompileScriptCommand = new("Runtime.compileScript", JsonContext.CompileScriptCommandParameters, JsonContext.CompileScriptResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Runtime.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Runtime.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DiscardConsoleEntriesCommandParameters();
-        return await ExecuteCommandAsync(DiscardConsoleEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DiscardConsoleEntriesCommandParameters, DiscardConsoleEntriesResult>("Runtime.discardConsoleEntries", JsonContext.DiscardConsoleEntriesCommandParameters, JsonContext.DiscardConsoleEntriesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DiscardConsoleEntriesCommandParameters, DiscardConsoleEntriesResult> DiscardConsoleEntriesCommand = new("Runtime.discardConsoleEntries", JsonContext.DiscardConsoleEntriesCommandParameters, JsonContext.DiscardConsoleEntriesResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Runtime.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Runtime.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, ExecutionContextId? contextId = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, bool? throwOnSideEffect = default, TimeDelta? timeout = default, bool? disableBreaks = default, bool? replMode = default, bool? allowUnsafeEvalBlockedByCSP = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EvaluateCommandParameters(Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ContextId: contextId, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout, DisableBreaks: disableBreaks, ReplMode: replMode, AllowUnsafeEvalBlockedByCSP: allowUnsafeEvalBlockedByCSP, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
-        return await ExecuteCommandAsync(EvaluateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EvaluateCommandParameters, EvaluateResult>("Runtime.evaluate", JsonContext.EvaluateCommandParameters, JsonContext.EvaluateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EvaluateCommandParameters, EvaluateResult> EvaluateCommand = new("Runtime.evaluate", JsonContext.EvaluateCommandParameters, JsonContext.EvaluateResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetIsolateIdCommandParameters();
-        return await ExecuteCommandAsync(GetIsolateIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetIsolateIdCommandParameters, GetIsolateIdResult>("Runtime.getIsolateId", JsonContext.GetIsolateIdCommandParameters, JsonContext.GetIsolateIdResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetIsolateIdCommandParameters, GetIsolateIdResult> GetIsolateIdCommand = new("Runtime.getIsolateId", JsonContext.GetIsolateIdCommandParameters, JsonContext.GetIsolateIdResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHeapUsageCommandParameters();
-        return await ExecuteCommandAsync(GetHeapUsageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetHeapUsageCommandParameters, GetHeapUsageResult>("Runtime.getHeapUsage", JsonContext.GetHeapUsageCommandParameters, JsonContext.GetHeapUsageResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetHeapUsageCommandParameters, GetHeapUsageResult> GetHeapUsageCommand = new("Runtime.getHeapUsage", JsonContext.GetHeapUsageCommandParameters, JsonContext.GetHeapUsageResult);
 
     public async Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = default, bool? accessorPropertiesOnly = default, bool? generatePreview = default, bool? nonIndexedPropertiesOnly = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPropertiesCommandParameters(ObjectId: objectId, OwnProperties: ownProperties, AccessorPropertiesOnly: accessorPropertiesOnly, GeneratePreview: generatePreview, NonIndexedPropertiesOnly: nonIndexedPropertiesOnly);
-        return await ExecuteCommandAsync(GetPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetPropertiesCommandParameters, GetPropertiesResult>("Runtime.getProperties", JsonContext.GetPropertiesCommandParameters, JsonContext.GetPropertiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetPropertiesCommandParameters, GetPropertiesResult> GetPropertiesCommand = new("Runtime.getProperties", JsonContext.GetPropertiesCommandParameters, JsonContext.GetPropertiesResult);
 
     public async Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GlobalLexicalScopeNamesCommandParameters(ExecutionContextId: executionContextId);
-        return await ExecuteCommandAsync(GlobalLexicalScopeNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GlobalLexicalScopeNamesCommandParameters, GlobalLexicalScopeNamesResult>("Runtime.globalLexicalScopeNames", JsonContext.GlobalLexicalScopeNamesCommandParameters, JsonContext.GlobalLexicalScopeNamesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GlobalLexicalScopeNamesCommandParameters, GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesCommand = new("Runtime.globalLexicalScopeNames", JsonContext.GlobalLexicalScopeNamesCommandParameters, JsonContext.GlobalLexicalScopeNamesResult);
 
     public async Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QueryObjectsCommandParameters(PrototypeObjectId: prototypeObjectId, ObjectGroup: objectGroup);
-        return await ExecuteCommandAsync(QueryObjectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<QueryObjectsCommandParameters, QueryObjectsResult>("Runtime.queryObjects", JsonContext.QueryObjectsCommandParameters, JsonContext.QueryObjectsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<QueryObjectsCommandParameters, QueryObjectsResult> QueryObjectsCommand = new("Runtime.queryObjects", JsonContext.QueryObjectsCommandParameters, JsonContext.QueryObjectsResult);
 
     public async Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseObjectCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(ReleaseObjectCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReleaseObjectCommandParameters, ReleaseObjectResult>("Runtime.releaseObject", JsonContext.ReleaseObjectCommandParameters, JsonContext.ReleaseObjectResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReleaseObjectCommandParameters, ReleaseObjectResult> ReleaseObjectCommand = new("Runtime.releaseObject", JsonContext.ReleaseObjectCommandParameters, JsonContext.ReleaseObjectResult);
 
     public async Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseObjectGroupCommandParameters(ObjectGroup: objectGroup);
-        return await ExecuteCommandAsync(ReleaseObjectGroupCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReleaseObjectGroupCommandParameters, ReleaseObjectGroupResult>("Runtime.releaseObjectGroup", JsonContext.ReleaseObjectGroupCommandParameters, JsonContext.ReleaseObjectGroupResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReleaseObjectGroupCommandParameters, ReleaseObjectGroupResult> ReleaseObjectGroupCommand = new("Runtime.releaseObjectGroup", JsonContext.ReleaseObjectGroupCommandParameters, JsonContext.ReleaseObjectGroupResult);
 
     public async Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RunIfWaitingForDebuggerCommandParameters();
-        return await ExecuteCommandAsync(RunIfWaitingForDebuggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RunIfWaitingForDebuggerCommandParameters, RunIfWaitingForDebuggerResult>("Runtime.runIfWaitingForDebugger", JsonContext.RunIfWaitingForDebuggerCommandParameters, JsonContext.RunIfWaitingForDebuggerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RunIfWaitingForDebuggerCommandParameters, RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerCommand = new("Runtime.runIfWaitingForDebugger", JsonContext.RunIfWaitingForDebuggerCommandParameters, JsonContext.RunIfWaitingForDebuggerResult);
 
     public async Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? silent = default, bool? includeCommandLineAPI = default, bool? returnByValue = default, bool? generatePreview = default, bool? awaitPromise = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RunScriptCommandParameters(ScriptId: scriptId, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, Silent: silent, IncludeCommandLineAPI: includeCommandLineAPI, ReturnByValue: returnByValue, GeneratePreview: generatePreview, AwaitPromise: awaitPromise);
-        return await ExecuteCommandAsync(RunScriptCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RunScriptCommandParameters, RunScriptResult>("Runtime.runScript", JsonContext.RunScriptCommandParameters, JsonContext.RunScriptResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RunScriptCommandParameters, RunScriptResult> RunScriptCommand = new("Runtime.runScript", JsonContext.RunScriptCommandParameters, JsonContext.RunScriptResult);
 
     public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
-        return await ExecuteCommandAsync(SetAsyncCallStackDepthCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult>("Runtime.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult> SetAsyncCallStackDepthCommand = new("Runtime.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCustomObjectFormatterEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetCustomObjectFormatterEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCustomObjectFormatterEnabledCommandParameters, SetCustomObjectFormatterEnabledResult>("Runtime.setCustomObjectFormatterEnabled", JsonContext.SetCustomObjectFormatterEnabledCommandParameters, JsonContext.SetCustomObjectFormatterEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCustomObjectFormatterEnabledCommandParameters, SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledCommand = new("Runtime.setCustomObjectFormatterEnabled", JsonContext.SetCustomObjectFormatterEnabledCommandParameters, JsonContext.SetCustomObjectFormatterEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetMaxCallStackSizeToCaptureCommandParameters(Size: size);
-        return await ExecuteCommandAsync(SetMaxCallStackSizeToCaptureCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetMaxCallStackSizeToCaptureCommandParameters, SetMaxCallStackSizeToCaptureResult>("Runtime.setMaxCallStackSizeToCapture", JsonContext.SetMaxCallStackSizeToCaptureCommandParameters, JsonContext.SetMaxCallStackSizeToCaptureResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetMaxCallStackSizeToCaptureCommandParameters, SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureCommand = new("Runtime.setMaxCallStackSizeToCapture", JsonContext.SetMaxCallStackSizeToCaptureCommandParameters, JsonContext.SetMaxCallStackSizeToCaptureResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TerminateExecutionCommandParameters();
-        return await ExecuteCommandAsync(TerminateExecutionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TerminateExecutionCommandParameters, TerminateExecutionResult>("Runtime.terminateExecution", JsonContext.TerminateExecutionCommandParameters, JsonContext.TerminateExecutionResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TerminateExecutionCommandParameters, TerminateExecutionResult> TerminateExecutionCommand = new("Runtime.terminateExecution", JsonContext.TerminateExecutionCommandParameters, JsonContext.TerminateExecutionResult);
 
     public async Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = default, string? executionContextName = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddBindingCommandParameters(Name: name, ExecutionContextId: executionContextId, ExecutionContextName: executionContextName);
-        return await ExecuteCommandAsync(AddBindingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddBindingCommandParameters, AddBindingResult>("Runtime.addBinding", JsonContext.AddBindingCommandParameters, JsonContext.AddBindingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddBindingCommandParameters, AddBindingResult> AddBindingCommand = new("Runtime.addBinding", JsonContext.AddBindingCommandParameters, JsonContext.AddBindingResult);
 
     public async Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveBindingCommandParameters(Name: name);
-        return await ExecuteCommandAsync(RemoveBindingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveBindingCommandParameters, RemoveBindingResult>("Runtime.removeBinding", JsonContext.RemoveBindingCommandParameters, JsonContext.RemoveBindingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveBindingCommandParameters, RemoveBindingResult> RemoveBindingCommand = new("Runtime.removeBinding", JsonContext.RemoveBindingCommandParameters, JsonContext.RemoveBindingResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetExceptionDetailsCommandParameters(ErrorObjectId: errorObjectId);
-        return await ExecuteCommandAsync(GetExceptionDetailsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetExceptionDetailsCommandParameters, GetExceptionDetailsResult>("Runtime.getExceptionDetails", JsonContext.GetExceptionDetailsCommandParameters, JsonContext.GetExceptionDetailsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetExceptionDetailsCommandParameters, GetExceptionDetailsResult> GetExceptionDetailsCommand = new("Runtime.getExceptionDetails", JsonContext.GetExceptionDetailsCommandParameters, JsonContext.GetExceptionDetailsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<BindingCalledEventArgs> BindingCalled => CreateCdpEventSource(RuntimeDomainEvent.BindingCalled);
@@ -1786,66 +1786,74 @@ public static class RuntimeDomainEvent
     /// <summary>
     /// Notification is issued every time when binding is called.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<BindingCalledEventArgs>> BindingCalled { get; } =
-        EventDescriptor<CdpEventArgs<BindingCalledEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<BindingCalledEventArgs>> BindingCalled =>
+        _bindingCalled ?? global::System.Threading.Interlocked.CompareExchange(ref _bindingCalled, EventDescriptor<CdpEventArgs<BindingCalledEventArgs>>.Create(
             "goog:cdp.Runtime.bindingCalled",
-            RuntimeJsonSerializerContext.Default.BindingCalledCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.BindingCalledCdpEventArgs), null) ?? _bindingCalled;
+    private static EventDescriptor<CdpEventArgs<BindingCalledEventArgs>>? _bindingCalled;
 
     /// <summary>
     /// Issued when console API was called.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ConsoleAPICalledEventArgs>> ConsoleAPICalled { get; } =
-        EventDescriptor<CdpEventArgs<ConsoleAPICalledEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ConsoleAPICalledEventArgs>> ConsoleAPICalled =>
+        _consoleAPICalled ?? global::System.Threading.Interlocked.CompareExchange(ref _consoleAPICalled, EventDescriptor<CdpEventArgs<ConsoleAPICalledEventArgs>>.Create(
             "goog:cdp.Runtime.consoleAPICalled",
-            RuntimeJsonSerializerContext.Default.ConsoleAPICalledCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.ConsoleAPICalledCdpEventArgs), null) ?? _consoleAPICalled;
+    private static EventDescriptor<CdpEventArgs<ConsoleAPICalledEventArgs>>? _consoleAPICalled;
 
     /// <summary>
     /// Issued when unhandled exception was revoked.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ExceptionRevokedEventArgs>> ExceptionRevoked { get; } =
-        EventDescriptor<CdpEventArgs<ExceptionRevokedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ExceptionRevokedEventArgs>> ExceptionRevoked =>
+        _exceptionRevoked ?? global::System.Threading.Interlocked.CompareExchange(ref _exceptionRevoked, EventDescriptor<CdpEventArgs<ExceptionRevokedEventArgs>>.Create(
             "goog:cdp.Runtime.exceptionRevoked",
-            RuntimeJsonSerializerContext.Default.ExceptionRevokedCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.ExceptionRevokedCdpEventArgs), null) ?? _exceptionRevoked;
+    private static EventDescriptor<CdpEventArgs<ExceptionRevokedEventArgs>>? _exceptionRevoked;
 
     /// <summary>
     /// Issued when exception was thrown and unhandled.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ExceptionThrownEventArgs>> ExceptionThrown { get; } =
-        EventDescriptor<CdpEventArgs<ExceptionThrownEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ExceptionThrownEventArgs>> ExceptionThrown =>
+        _exceptionThrown ?? global::System.Threading.Interlocked.CompareExchange(ref _exceptionThrown, EventDescriptor<CdpEventArgs<ExceptionThrownEventArgs>>.Create(
             "goog:cdp.Runtime.exceptionThrown",
-            RuntimeJsonSerializerContext.Default.ExceptionThrownCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.ExceptionThrownCdpEventArgs), null) ?? _exceptionThrown;
+    private static EventDescriptor<CdpEventArgs<ExceptionThrownEventArgs>>? _exceptionThrown;
 
     /// <summary>
     /// Issued when new execution context is created.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ExecutionContextCreatedEventArgs>> ExecutionContextCreated { get; } =
-        EventDescriptor<CdpEventArgs<ExecutionContextCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ExecutionContextCreatedEventArgs>> ExecutionContextCreated =>
+        _executionContextCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _executionContextCreated, EventDescriptor<CdpEventArgs<ExecutionContextCreatedEventArgs>>.Create(
             "goog:cdp.Runtime.executionContextCreated",
-            RuntimeJsonSerializerContext.Default.ExecutionContextCreatedCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.ExecutionContextCreatedCdpEventArgs), null) ?? _executionContextCreated;
+    private static EventDescriptor<CdpEventArgs<ExecutionContextCreatedEventArgs>>? _executionContextCreated;
 
     /// <summary>
     /// Issued when execution context is destroyed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ExecutionContextDestroyedEventArgs>> ExecutionContextDestroyed { get; } =
-        EventDescriptor<CdpEventArgs<ExecutionContextDestroyedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ExecutionContextDestroyedEventArgs>> ExecutionContextDestroyed =>
+        _executionContextDestroyed ?? global::System.Threading.Interlocked.CompareExchange(ref _executionContextDestroyed, EventDescriptor<CdpEventArgs<ExecutionContextDestroyedEventArgs>>.Create(
             "goog:cdp.Runtime.executionContextDestroyed",
-            RuntimeJsonSerializerContext.Default.ExecutionContextDestroyedCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.ExecutionContextDestroyedCdpEventArgs), null) ?? _executionContextDestroyed;
+    private static EventDescriptor<CdpEventArgs<ExecutionContextDestroyedEventArgs>>? _executionContextDestroyed;
 
     /// <summary>
     /// Issued when all executionContexts were cleared in browser
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ExecutionContextsClearedEventArgs>> ExecutionContextsCleared { get; } =
-        EventDescriptor<CdpEventArgs<ExecutionContextsClearedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ExecutionContextsClearedEventArgs>> ExecutionContextsCleared =>
+        _executionContextsCleared ?? global::System.Threading.Interlocked.CompareExchange(ref _executionContextsCleared, EventDescriptor<CdpEventArgs<ExecutionContextsClearedEventArgs>>.Create(
             "goog:cdp.Runtime.executionContextsCleared",
-            RuntimeJsonSerializerContext.Default.ExecutionContextsClearedCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.ExecutionContextsClearedCdpEventArgs), null) ?? _executionContextsCleared;
+    private static EventDescriptor<CdpEventArgs<ExecutionContextsClearedEventArgs>>? _executionContextsCleared;
 
     /// <summary>
     /// Issued when object should be inspected (for example, as a result of inspect() command line API
     /// call).
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<InspectRequestedEventArgs>> InspectRequested { get; } =
-        EventDescriptor<CdpEventArgs<InspectRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<InspectRequestedEventArgs>> InspectRequested =>
+        _inspectRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _inspectRequested, EventDescriptor<CdpEventArgs<InspectRequestedEventArgs>>.Create(
             "goog:cdp.Runtime.inspectRequested",
-            RuntimeJsonSerializerContext.Default.InspectRequestedCdpEventArgs);
+            RuntimeJsonSerializerContext.Default.InspectRequestedCdpEventArgs), null) ?? _inspectRequested;
+    private static EventDescriptor<CdpEventArgs<InspectRequestedEventArgs>>? _inspectRequested;
 
 }

@@ -196,53 +196,53 @@ public interface ITracing
 
 internal sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ITracing
 {
-    private static TracingJsonSerializerContext JsonContext = TracingJsonSerializerContext.Default;
+    private static readonly TracingJsonSerializerContext JsonContext = TracingJsonSerializerContext.Default;
 
     public async Task<EndResult> EndAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EndCommandParameters();
-        return await ExecuteCommandAsync(EndCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EndCommandParameters, EndResult>("Tracing.end", JsonContext.EndCommandParameters, JsonContext.EndResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EndCommandParameters, EndResult> EndCommand = new("Tracing.end", JsonContext.EndCommandParameters, JsonContext.EndResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetCategoriesResult> GetCategoriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCategoriesCommandParameters();
-        return await ExecuteCommandAsync(GetCategoriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetCategoriesCommandParameters, GetCategoriesResult>("Tracing.getCategories", JsonContext.GetCategoriesCommandParameters, JsonContext.GetCategoriesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetCategoriesCommandParameters, GetCategoriesResult> GetCategoriesCommand = new("Tracing.getCategories", JsonContext.GetCategoriesCommandParameters, JsonContext.GetCategoriesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetTrackEventDescriptorCommandParameters();
-        return await ExecuteCommandAsync(GetTrackEventDescriptorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetTrackEventDescriptorCommandParameters, GetTrackEventDescriptorResult>("Tracing.getTrackEventDescriptor", JsonContext.GetTrackEventDescriptorCommandParameters, JsonContext.GetTrackEventDescriptorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetTrackEventDescriptorCommandParameters, GetTrackEventDescriptorResult> GetTrackEventDescriptorCommand = new("Tracing.getTrackEventDescriptor", JsonContext.GetTrackEventDescriptorCommandParameters, JsonContext.GetTrackEventDescriptorResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<RecordClockSyncMarkerResult> RecordClockSyncMarkerAsync(string syncId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RecordClockSyncMarkerCommandParameters(SyncId: syncId);
-        return await ExecuteCommandAsync(RecordClockSyncMarkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RecordClockSyncMarkerCommandParameters, RecordClockSyncMarkerResult>("Tracing.recordClockSyncMarker", JsonContext.RecordClockSyncMarkerCommandParameters, JsonContext.RecordClockSyncMarkerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RecordClockSyncMarkerCommandParameters, RecordClockSyncMarkerResult> RecordClockSyncMarkerCommand = new("Tracing.recordClockSyncMarker", JsonContext.RecordClockSyncMarkerCommandParameters, JsonContext.RecordClockSyncMarkerResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<RequestMemoryDumpResult> RequestMemoryDumpAsync(bool? deterministic = default, MemoryDumpLevelOfDetail? levelOfDetail = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestMemoryDumpCommandParameters(Deterministic: deterministic, LevelOfDetail: levelOfDetail);
-        return await ExecuteCommandAsync(RequestMemoryDumpCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RequestMemoryDumpCommandParameters, RequestMemoryDumpResult>("Tracing.requestMemoryDump", JsonContext.RequestMemoryDumpCommandParameters, JsonContext.RequestMemoryDumpResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RequestMemoryDumpCommandParameters, RequestMemoryDumpResult> RequestMemoryDumpCommand = new("Tracing.requestMemoryDump", JsonContext.RequestMemoryDumpCommandParameters, JsonContext.RequestMemoryDumpResult);
 
     public async Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, string? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartCommandParameters(Categories: categories, Options: options, BufferUsageReportingInterval: bufferUsageReportingInterval, TransferMode: transferMode, StreamFormat: streamFormat, StreamCompression: streamCompression, TraceConfig: traceConfig, PerfettoConfig: perfettoConfig, TracingBackend: tracingBackend, ScreenshotMaxSize: screenshotMaxSize, ScreenshotMaxCount: screenshotMaxCount);
-        return await ExecuteCommandAsync(StartCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartCommandParameters, StartResult>("Tracing.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartCommandParameters, StartResult> StartCommand = new("Tracing.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<BufferUsageEventArgs> BufferUsage => CreateCdpEventSource(TracingDomainEvent.BufferUsage);
@@ -514,27 +514,30 @@ public static class TracingDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<BufferUsageEventArgs>> BufferUsage { get; } =
-        EventDescriptor<CdpEventArgs<BufferUsageEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<BufferUsageEventArgs>> BufferUsage =>
+        _bufferUsage ?? global::System.Threading.Interlocked.CompareExchange(ref _bufferUsage, EventDescriptor<CdpEventArgs<BufferUsageEventArgs>>.Create(
             "goog:cdp.Tracing.bufferUsage",
-            TracingJsonSerializerContext.Default.BufferUsageCdpEventArgs);
+            TracingJsonSerializerContext.Default.BufferUsageCdpEventArgs), null) ?? _bufferUsage;
+    private static EventDescriptor<CdpEventArgs<BufferUsageEventArgs>>? _bufferUsage;
 
     /// <summary>
     /// Contains a bucket of collected trace events. When tracing is stopped collected events will be
     /// sent as a sequence of dataCollected events followed by tracingComplete event.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DataCollectedEventArgs>> DataCollected { get; } =
-        EventDescriptor<CdpEventArgs<DataCollectedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DataCollectedEventArgs>> DataCollected =>
+        _dataCollected ?? global::System.Threading.Interlocked.CompareExchange(ref _dataCollected, EventDescriptor<CdpEventArgs<DataCollectedEventArgs>>.Create(
             "goog:cdp.Tracing.dataCollected",
-            TracingJsonSerializerContext.Default.DataCollectedCdpEventArgs);
+            TracingJsonSerializerContext.Default.DataCollectedCdpEventArgs), null) ?? _dataCollected;
+    private static EventDescriptor<CdpEventArgs<DataCollectedEventArgs>>? _dataCollected;
 
     /// <summary>
     /// Signals that tracing is stopped and there is no trace buffers pending flush, all data were
     /// delivered via dataCollected events.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<TracingCompleteEventArgs>> TracingComplete { get; } =
-        EventDescriptor<CdpEventArgs<TracingCompleteEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<TracingCompleteEventArgs>> TracingComplete =>
+        _tracingComplete ?? global::System.Threading.Interlocked.CompareExchange(ref _tracingComplete, EventDescriptor<CdpEventArgs<TracingCompleteEventArgs>>.Create(
             "goog:cdp.Tracing.tracingComplete",
-            TracingJsonSerializerContext.Default.TracingCompleteCdpEventArgs);
+            TracingJsonSerializerContext.Default.TracingCompleteCdpEventArgs), null) ?? _tracingComplete;
+    private static EventDescriptor<CdpEventArgs<TracingCompleteEventArgs>>? _tracingComplete;
 
 }

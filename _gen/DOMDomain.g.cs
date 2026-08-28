@@ -1381,412 +1381,412 @@ public interface IDOM
 
 internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDOM
 {
-    private static DOMJsonSerializerContext JsonContext = DOMJsonSerializerContext.Default;
+    private static readonly DOMJsonSerializerContext JsonContext = DOMJsonSerializerContext.Default;
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectClassNamesFromSubtreeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(CollectClassNamesFromSubtreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CollectClassNamesFromSubtreeCommandParameters, CollectClassNamesFromSubtreeResult>("DOM.collectClassNamesFromSubtree", JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CollectClassNamesFromSubtreeCommandParameters, CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeCommand = new("DOM.collectClassNamesFromSubtree", JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CopyToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
-        return await ExecuteCommandAsync(CopyToCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CopyToCommandParameters, CopyToResult>("DOM.copyTo", JsonContext.CopyToCommandParameters, JsonContext.CopyToResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CopyToCommandParameters, CopyToResult> CopyToCommand = new("DOM.copyTo", JsonContext.CopyToCommandParameters, JsonContext.CopyToResult);
 
     public async Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DescribeNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(DescribeNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DescribeNodeCommandParameters, DescribeNodeResult>("DOM.describeNode", JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DescribeNodeCommandParameters, DescribeNodeResult> DescribeNodeCommand = new("DOM.describeNode", JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult);
 
     public async Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, Rect? rect = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ScrollIntoViewIfNeededCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Rect: rect);
-        return await ExecuteCommandAsync(ScrollIntoViewIfNeededCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ScrollIntoViewIfNeededCommandParameters, ScrollIntoViewIfNeededResult>("DOM.scrollIntoViewIfNeeded", JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ScrollIntoViewIfNeededCommandParameters, ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededCommand = new("DOM.scrollIntoViewIfNeeded", JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DOM.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOM.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DiscardSearchResultsCommandParameters(SearchId: searchId);
-        return await ExecuteCommandAsync(DiscardSearchResultsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DiscardSearchResultsCommandParameters, DiscardSearchResultsResult>("DOM.discardSearchResults", JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DiscardSearchResultsCommandParameters, DiscardSearchResultsResult> DiscardSearchResultsCommand = new("DOM.discardSearchResults", JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult);
 
     public async Task<EnableResult> EnableAsync(string? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(IncludeWhitespace: includeWhitespace);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DOM.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOM.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<FocusResult> FocusAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new FocusCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(FocusCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<FocusCommandParameters, FocusResult>("DOM.focus", JsonContext.FocusCommandParameters, JsonContext.FocusResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<FocusCommandParameters, FocusResult> FocusCommand = new("DOM.focus", JsonContext.FocusCommandParameters, JsonContext.FocusResult);
 
     public async Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAttributesCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetAttributesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAttributesCommandParameters, GetAttributesResult>("DOM.getAttributes", JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAttributesCommandParameters, GetAttributesResult> GetAttributesCommand = new("DOM.getAttributes", JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult);
 
     public async Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBoxModelCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(GetBoxModelCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetBoxModelCommandParameters, GetBoxModelResult>("DOM.getBoxModel", JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetBoxModelCommandParameters, GetBoxModelResult> GetBoxModelCommand = new("DOM.getBoxModel", JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetContentQuadsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(GetContentQuadsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetContentQuadsCommandParameters, GetContentQuadsResult>("DOM.getContentQuads", JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetContentQuadsCommandParameters, GetContentQuadsResult> GetContentQuadsCommand = new("DOM.getContentQuads", JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult);
 
     public async Task<GetDocumentResult> GetDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDocumentCommandParameters(Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(GetDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetDocumentCommandParameters, GetDocumentResult>("DOM.getDocument", JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetDocumentCommandParameters, GetDocumentResult> GetDocumentCommand = new("DOM.getDocument", JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult);
 
     [global::System.Obsolete]
     public async Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFlattenedDocumentCommandParameters(Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(GetFlattenedDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetFlattenedDocumentCommandParameters, GetFlattenedDocumentResult>("DOM.getFlattenedDocument", JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetFlattenedDocumentCommandParameters, GetFlattenedDocumentResult> GetFlattenedDocumentCommand = new("DOM.getFlattenedDocument", JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodesForSubtreeByStyleCommandParameters(NodeId: nodeId, ComputedStyles: computedStyles, Pierce: pierce);
-        return await ExecuteCommandAsync(GetNodesForSubtreeByStyleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetNodesForSubtreeByStyleCommandParameters, GetNodesForSubtreeByStyleResult>("DOM.getNodesForSubtreeByStyle", JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetNodesForSubtreeByStyleCommandParameters, GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleCommand = new("DOM.getNodesForSubtreeByStyle", JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult);
 
     public async Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = default, bool? ignorePointerEventsNone = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodeForLocationCommandParameters(X: x, Y: y, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM, IgnorePointerEventsNone: ignorePointerEventsNone);
-        return await ExecuteCommandAsync(GetNodeForLocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetNodeForLocationCommandParameters, GetNodeForLocationResult>("DOM.getNodeForLocation", JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetNodeForLocationCommandParameters, GetNodeForLocationResult> GetNodeForLocationCommand = new("DOM.getNodeForLocation", JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult);
 
     public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? includeShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetOuterHTMLCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, IncludeShadowDOM: includeShadowDOM);
-        return await ExecuteCommandAsync(GetOuterHTMLCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetOuterHTMLCommandParameters, GetOuterHTMLResult>("DOM.getOuterHTML", JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetOuterHTMLCommandParameters, GetOuterHTMLResult> GetOuterHTMLCommand = new("DOM.getOuterHTML", JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRelayoutBoundaryCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetRelayoutBoundaryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetRelayoutBoundaryCommandParameters, GetRelayoutBoundaryResult>("DOM.getRelayoutBoundary", JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetRelayoutBoundaryCommandParameters, GetRelayoutBoundaryResult> GetRelayoutBoundaryCommand = new("DOM.getRelayoutBoundary", JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSearchResultsCommandParameters(SearchId: searchId, FromIndex: fromIndex, ToIndex: toIndex);
-        return await ExecuteCommandAsync(GetSearchResultsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetSearchResultsCommandParameters, GetSearchResultsResult>("DOM.getSearchResults", JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetSearchResultsCommandParameters, GetSearchResultsResult> GetSearchResultsCommand = new("DOM.getSearchResults", JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult);
 
     public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HideHighlightCommandParameters();
-        return await ExecuteCommandAsync(HideHighlightCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<HideHighlightCommandParameters, HideHighlightResult>("DOM.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<HideHighlightCommandParameters, HideHighlightResult> HideHighlightCommand = new("DOM.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
 
     public async Task<HighlightNodeResult> HighlightNodeAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightNodeCommandParameters();
-        return await ExecuteCommandAsync(HighlightNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult>("DOM.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult> HighlightNodeCommand = new("DOM.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
 
     public async Task<HighlightRectResult> HighlightRectAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightRectCommandParameters();
-        return await ExecuteCommandAsync(HighlightRectCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<HighlightRectCommandParameters, HighlightRectResult>("DOM.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<HighlightRectCommandParameters, HighlightRectResult> HighlightRectCommand = new("DOM.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new MarkUndoableStateCommandParameters();
-        return await ExecuteCommandAsync(MarkUndoableStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<MarkUndoableStateCommandParameters, MarkUndoableStateResult>("DOM.markUndoableState", JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<MarkUndoableStateCommandParameters, MarkUndoableStateResult> MarkUndoableStateCommand = new("DOM.markUndoableState", JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult);
 
     public async Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new MoveToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
-        return await ExecuteCommandAsync(MoveToCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<MoveToCommandParameters, MoveToResult>("DOM.moveTo", JsonContext.MoveToCommandParameters, JsonContext.MoveToResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<MoveToCommandParameters, MoveToResult> MoveToCommand = new("DOM.moveTo", JsonContext.MoveToCommandParameters, JsonContext.MoveToResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PerformSearchCommandParameters(Query: query, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM);
-        return await ExecuteCommandAsync(PerformSearchCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<PerformSearchCommandParameters, PerformSearchResult>("DOM.performSearch", JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<PerformSearchCommandParameters, PerformSearchResult> PerformSearchCommand = new("DOM.performSearch", JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PushNodeByPathToFrontendCommandParameters(Path: path);
-        return await ExecuteCommandAsync(PushNodeByPathToFrontendCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<PushNodeByPathToFrontendCommandParameters, PushNodeByPathToFrontendResult>("DOM.pushNodeByPathToFrontend", JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<PushNodeByPathToFrontendCommandParameters, PushNodeByPathToFrontendResult> PushNodeByPathToFrontendCommand = new("DOM.pushNodeByPathToFrontend", JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PushNodesByBackendIdsToFrontendCommandParameters(BackendNodeIds: backendNodeIds);
-        return await ExecuteCommandAsync(PushNodesByBackendIdsToFrontendCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<PushNodesByBackendIdsToFrontendCommandParameters, PushNodesByBackendIdsToFrontendResult>("DOM.pushNodesByBackendIdsToFrontend", JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<PushNodesByBackendIdsToFrontendCommandParameters, PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendCommand = new("DOM.pushNodesByBackendIdsToFrontend", JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult);
 
     public async Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QuerySelectorCommandParameters(NodeId: nodeId, Selector: selector);
-        return await ExecuteCommandAsync(QuerySelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<QuerySelectorCommandParameters, QuerySelectorResult>("DOM.querySelector", JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<QuerySelectorCommandParameters, QuerySelectorResult> QuerySelectorCommand = new("DOM.querySelector", JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult);
 
     public async Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QuerySelectorAllCommandParameters(NodeId: nodeId, Selector: selector);
-        return await ExecuteCommandAsync(QuerySelectorAllCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<QuerySelectorAllCommandParameters, QuerySelectorAllResult>("DOM.querySelectorAll", JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<QuerySelectorAllCommandParameters, QuerySelectorAllResult> QuerySelectorAllCommand = new("DOM.querySelectorAll", JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetTopLayerElementsCommandParameters();
-        return await ExecuteCommandAsync(GetTopLayerElementsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetTopLayerElementsCommandParameters, GetTopLayerElementsResult>("DOM.getTopLayerElements", JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetTopLayerElementsCommandParameters, GetTopLayerElementsResult> GetTopLayerElementsCommand = new("DOM.getTopLayerElements", JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetElementByRelationCommandParameters(NodeId: nodeId, Relation: relation);
-        return await ExecuteCommandAsync(GetElementByRelationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetElementByRelationCommandParameters, GetElementByRelationResult>("DOM.getElementByRelation", JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetElementByRelationCommandParameters, GetElementByRelationResult> GetElementByRelationCommand = new("DOM.getElementByRelation", JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<RedoResult> RedoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RedoCommandParameters();
-        return await ExecuteCommandAsync(RedoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RedoCommandParameters, RedoResult>("DOM.redo", JsonContext.RedoCommandParameters, JsonContext.RedoResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RedoCommandParameters, RedoResult> RedoCommand = new("DOM.redo", JsonContext.RedoCommandParameters, JsonContext.RedoResult);
 
     public async Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveAttributeCommandParameters(NodeId: nodeId, Name: name);
-        return await ExecuteCommandAsync(RemoveAttributeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveAttributeCommandParameters, RemoveAttributeResult>("DOM.removeAttribute", JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveAttributeCommandParameters, RemoveAttributeResult> RemoveAttributeCommand = new("DOM.removeAttribute", JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult);
 
     public async Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(RemoveNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveNodeCommandParameters, RemoveNodeResult>("DOM.removeNode", JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveNodeCommandParameters, RemoveNodeResult> RemoveNodeCommand = new("DOM.removeNode", JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult);
 
     public async Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestChildNodesCommandParameters(NodeId: nodeId, Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(RequestChildNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RequestChildNodesCommandParameters, RequestChildNodesResult>("DOM.requestChildNodes", JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RequestChildNodesCommandParameters, RequestChildNodesResult> RequestChildNodesCommand = new("DOM.requestChildNodes", JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult);
 
     public async Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestNodeCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(RequestNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RequestNodeCommandParameters, RequestNodeResult>("DOM.requestNode", JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RequestNodeCommandParameters, RequestNodeResult> RequestNodeCommand = new("DOM.requestNode", JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult);
 
     public async Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, string? objectGroup = default, Runtime.ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectGroup: objectGroup, ExecutionContextId: executionContextId);
-        return await ExecuteCommandAsync(ResolveNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ResolveNodeCommandParameters, ResolveNodeResult>("DOM.resolveNode", JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ResolveNodeCommandParameters, ResolveNodeResult> ResolveNodeCommand = new("DOM.resolveNode", JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult);
 
     public async Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttributeValueCommandParameters(NodeId: nodeId, Name: name, Value: value);
-        return await ExecuteCommandAsync(SetAttributeValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAttributeValueCommandParameters, SetAttributeValueResult>("DOM.setAttributeValue", JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAttributeValueCommandParameters, SetAttributeValueResult> SetAttributeValueCommand = new("DOM.setAttributeValue", JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult);
 
     public async Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttributesAsTextCommandParameters(NodeId: nodeId, Text: text, Name: name);
-        return await ExecuteCommandAsync(SetAttributesAsTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAttributesAsTextCommandParameters, SetAttributesAsTextResult>("DOM.setAttributesAsText", JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAttributesAsTextCommandParameters, SetAttributesAsTextResult> SetAttributesAsTextCommand = new("DOM.setAttributesAsText", JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult);
 
     public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetFileInputFilesCommandParameters(Files: files, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        return await ExecuteCommandAsync(SetFileInputFilesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetFileInputFilesCommandParameters, SetFileInputFilesResult>("DOM.setFileInputFiles", JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetFileInputFilesCommandParameters, SetFileInputFilesResult> SetFileInputFilesCommand = new("DOM.setFileInputFiles", JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeStackTracesEnabledCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(SetNodeStackTracesEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetNodeStackTracesEnabledCommandParameters, SetNodeStackTracesEnabledResult>("DOM.setNodeStackTracesEnabled", JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetNodeStackTracesEnabledCommandParameters, SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledCommand = new("DOM.setNodeStackTracesEnabled", JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodeStackTracesCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetNodeStackTracesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetNodeStackTracesCommandParameters, GetNodeStackTracesResult>("DOM.getNodeStackTraces", JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetNodeStackTracesCommandParameters, GetNodeStackTracesResult> GetNodeStackTracesCommand = new("DOM.getNodeStackTraces", JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFileInfoCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(GetFileInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetFileInfoCommandParameters, GetFileInfoResult>("DOM.getFileInfo", JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetFileInfoCommandParameters, GetFileInfoResult> GetFileInfoCommand = new("DOM.getFileInfo", JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDetachedDomNodesCommandParameters();
-        return await ExecuteCommandAsync(GetDetachedDomNodesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetDetachedDomNodesCommandParameters, GetDetachedDomNodesResult>("DOM.getDetachedDomNodes", JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetDetachedDomNodesCommandParameters, GetDetachedDomNodesResult> GetDetachedDomNodesCommand = new("DOM.getDetachedDomNodes", JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInspectedNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(SetInspectedNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetInspectedNodeCommandParameters, SetInspectedNodeResult>("DOM.setInspectedNode", JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetInspectedNodeCommandParameters, SetInspectedNodeResult> SetInspectedNodeCommand = new("DOM.setInspectedNode", JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult);
 
     public async Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeNameCommandParameters(NodeId: nodeId, Name: name);
-        return await ExecuteCommandAsync(SetNodeNameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetNodeNameCommandParameters, SetNodeNameResult>("DOM.setNodeName", JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetNodeNameCommandParameters, SetNodeNameResult> SetNodeNameCommand = new("DOM.setNodeName", JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult);
 
     public async Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeValueCommandParameters(NodeId: nodeId, Value: value);
-        return await ExecuteCommandAsync(SetNodeValueCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetNodeValueCommandParameters, SetNodeValueResult>("DOM.setNodeValue", JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetNodeValueCommandParameters, SetNodeValueResult> SetNodeValueCommand = new("DOM.setNodeValue", JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult);
 
     public async Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetOuterHTMLCommandParameters(NodeId: nodeId, OuterHTML: outerHTML);
-        return await ExecuteCommandAsync(SetOuterHTMLCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetOuterHTMLCommandParameters, SetOuterHTMLResult>("DOM.setOuterHTML", JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetOuterHTMLCommandParameters, SetOuterHTMLResult> SetOuterHTMLCommand = new("DOM.setOuterHTML", JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<UndoResult> UndoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UndoCommandParameters();
-        return await ExecuteCommandAsync(UndoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UndoCommandParameters, UndoResult>("DOM.undo", JsonContext.UndoCommandParameters, JsonContext.UndoResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UndoCommandParameters, UndoResult> UndoCommand = new("DOM.undo", JsonContext.UndoCommandParameters, JsonContext.UndoResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFrameOwnerCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetFrameOwnerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetFrameOwnerCommandParameters, GetFrameOwnerResult>("DOM.getFrameOwner", JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetFrameOwnerCommandParameters, GetFrameOwnerResult> GetFrameOwnerCommand = new("DOM.getFrameOwner", JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = default, PhysicalAxes? physicalAxes = default, LogicalAxes? logicalAxes = default, bool? queriesScrollState = default, bool? queriesAnchored = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: containerName, PhysicalAxes: physicalAxes, LogicalAxes: logicalAxes, QueriesScrollState: queriesScrollState, QueriesAnchored: queriesAnchored);
-        return await ExecuteCommandAsync(GetContainerForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetContainerForNodeCommandParameters, GetContainerForNodeResult>("DOM.getContainerForNode", JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetContainerForNodeCommandParameters, GetContainerForNodeResult> GetContainerForNodeCommand = new("DOM.getContainerForNode", JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetQueryingDescendantsForContainerCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetQueryingDescendantsForContainerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetQueryingDescendantsForContainerCommandParameters, GetQueryingDescendantsForContainerResult>("DOM.getQueryingDescendantsForContainer", JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetQueryingDescendantsForContainerCommandParameters, GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerCommand = new("DOM.getQueryingDescendantsForContainer", JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnchorElementCommandParameters(NodeId: nodeId, AnchorSpecifier: anchorSpecifier);
-        return await ExecuteCommandAsync(GetAnchorElementCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAnchorElementCommandParameters, GetAnchorElementResult>("DOM.getAnchorElement", JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAnchorElementCommandParameters, GetAnchorElementResult> GetAnchorElementCommand = new("DOM.getAnchorElement", JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForceShowPopoverCommandParameters(NodeId: nodeId, Enable: enable, InvokerNodeId: invokerNodeId);
-        return await ExecuteCommandAsync(ForceShowPopoverCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ForceShowPopoverCommandParameters, ForceShowPopoverResult>("DOM.forceShowPopover", JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ForceShowPopoverCommandParameters, ForceShowPopoverResult> ForceShowPopoverCommand = new("DOM.forceShowPopover", JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForceShowInterestCommandParameters(NodeId: nodeId, Enable: enable);
-        return await ExecuteCommandAsync(ForceShowInterestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ForceShowInterestCommandParameters, ForceShowInterestResult>("DOM.forceShowInterest", JsonContext.ForceShowInterestCommandParameters, JsonContext.ForceShowInterestResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ForceShowInterestCommandParameters, ForceShowInterestResult> ForceShowInterestCommand = new("DOM.forceShowInterest", JsonContext.ForceShowInterestCommandParameters, JsonContext.ForceShowInterestResult);
 
     public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -3275,154 +3275,173 @@ public static class DOMDomainEvent
     /// <summary>
     /// Fired when <b>Element</b>'s attribute is modified.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>> AttributeModified { get; } =
-        EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>> AttributeModified =>
+        _attributeModified ?? global::System.Threading.Interlocked.CompareExchange(ref _attributeModified, EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>>.Create(
             "goog:cdp.DOM.attributeModified",
-            DOMJsonSerializerContext.Default.AttributeModifiedCdpEventArgs);
+            DOMJsonSerializerContext.Default.AttributeModifiedCdpEventArgs), null) ?? _attributeModified;
+    private static EventDescriptor<CdpEventArgs<AttributeModifiedEventArgs>>? _attributeModified;
 
     /// <summary>
     /// Fired when <b>Element</b>'s adoptedStyleSheets are modified.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>> AdoptedStyleSheetsModified { get; } =
-        EventDescriptor<CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>> AdoptedStyleSheetsModified =>
+        _adoptedStyleSheetsModified ?? global::System.Threading.Interlocked.CompareExchange(ref _adoptedStyleSheetsModified, EventDescriptor<CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>>.Create(
             "goog:cdp.DOM.adoptedStyleSheetsModified",
-            DOMJsonSerializerContext.Default.AdoptedStyleSheetsModifiedCdpEventArgs);
+            DOMJsonSerializerContext.Default.AdoptedStyleSheetsModifiedCdpEventArgs), null) ?? _adoptedStyleSheetsModified;
+    private static EventDescriptor<CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>>? _adoptedStyleSheetsModified;
 
     /// <summary>
     /// Fired when <b>Element</b>'s attribute is removed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AttributeRemovedEventArgs>> AttributeRemoved { get; } =
-        EventDescriptor<CdpEventArgs<AttributeRemovedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AttributeRemovedEventArgs>> AttributeRemoved =>
+        _attributeRemoved ?? global::System.Threading.Interlocked.CompareExchange(ref _attributeRemoved, EventDescriptor<CdpEventArgs<AttributeRemovedEventArgs>>.Create(
             "goog:cdp.DOM.attributeRemoved",
-            DOMJsonSerializerContext.Default.AttributeRemovedCdpEventArgs);
+            DOMJsonSerializerContext.Default.AttributeRemovedCdpEventArgs), null) ?? _attributeRemoved;
+    private static EventDescriptor<CdpEventArgs<AttributeRemovedEventArgs>>? _attributeRemoved;
 
     /// <summary>
     /// Mirrors <b>DOMCharacterDataModified</b> event.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<CharacterDataModifiedEventArgs>> CharacterDataModified { get; } =
-        EventDescriptor<CdpEventArgs<CharacterDataModifiedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<CharacterDataModifiedEventArgs>> CharacterDataModified =>
+        _characterDataModified ?? global::System.Threading.Interlocked.CompareExchange(ref _characterDataModified, EventDescriptor<CdpEventArgs<CharacterDataModifiedEventArgs>>.Create(
             "goog:cdp.DOM.characterDataModified",
-            DOMJsonSerializerContext.Default.CharacterDataModifiedCdpEventArgs);
+            DOMJsonSerializerContext.Default.CharacterDataModifiedCdpEventArgs), null) ?? _characterDataModified;
+    private static EventDescriptor<CdpEventArgs<CharacterDataModifiedEventArgs>>? _characterDataModified;
 
     /// <summary>
     /// Fired when <b>Container</b>'s child node count has changed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ChildNodeCountUpdatedEventArgs>> ChildNodeCountUpdated { get; } =
-        EventDescriptor<CdpEventArgs<ChildNodeCountUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ChildNodeCountUpdatedEventArgs>> ChildNodeCountUpdated =>
+        _childNodeCountUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _childNodeCountUpdated, EventDescriptor<CdpEventArgs<ChildNodeCountUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.childNodeCountUpdated",
-            DOMJsonSerializerContext.Default.ChildNodeCountUpdatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.ChildNodeCountUpdatedCdpEventArgs), null) ?? _childNodeCountUpdated;
+    private static EventDescriptor<CdpEventArgs<ChildNodeCountUpdatedEventArgs>>? _childNodeCountUpdated;
 
     /// <summary>
     /// Mirrors <b>DOMNodeInserted</b> event.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ChildNodeInsertedEventArgs>> ChildNodeInserted { get; } =
-        EventDescriptor<CdpEventArgs<ChildNodeInsertedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ChildNodeInsertedEventArgs>> ChildNodeInserted =>
+        _childNodeInserted ?? global::System.Threading.Interlocked.CompareExchange(ref _childNodeInserted, EventDescriptor<CdpEventArgs<ChildNodeInsertedEventArgs>>.Create(
             "goog:cdp.DOM.childNodeInserted",
-            DOMJsonSerializerContext.Default.ChildNodeInsertedCdpEventArgs);
+            DOMJsonSerializerContext.Default.ChildNodeInsertedCdpEventArgs), null) ?? _childNodeInserted;
+    private static EventDescriptor<CdpEventArgs<ChildNodeInsertedEventArgs>>? _childNodeInserted;
 
     /// <summary>
     /// Mirrors <b>DOMNodeRemoved</b> event.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ChildNodeRemovedEventArgs>> ChildNodeRemoved { get; } =
-        EventDescriptor<CdpEventArgs<ChildNodeRemovedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ChildNodeRemovedEventArgs>> ChildNodeRemoved =>
+        _childNodeRemoved ?? global::System.Threading.Interlocked.CompareExchange(ref _childNodeRemoved, EventDescriptor<CdpEventArgs<ChildNodeRemovedEventArgs>>.Create(
             "goog:cdp.DOM.childNodeRemoved",
-            DOMJsonSerializerContext.Default.ChildNodeRemovedCdpEventArgs);
+            DOMJsonSerializerContext.Default.ChildNodeRemovedCdpEventArgs), null) ?? _childNodeRemoved;
+    private static EventDescriptor<CdpEventArgs<ChildNodeRemovedEventArgs>>? _childNodeRemoved;
 
     /// <summary>
     /// Called when distribution is changed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DistributedNodesUpdatedEventArgs>> DistributedNodesUpdated { get; } =
-        EventDescriptor<CdpEventArgs<DistributedNodesUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DistributedNodesUpdatedEventArgs>> DistributedNodesUpdated =>
+        _distributedNodesUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _distributedNodesUpdated, EventDescriptor<CdpEventArgs<DistributedNodesUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.distributedNodesUpdated",
-            DOMJsonSerializerContext.Default.DistributedNodesUpdatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.DistributedNodesUpdatedCdpEventArgs), null) ?? _distributedNodesUpdated;
+    private static EventDescriptor<CdpEventArgs<DistributedNodesUpdatedEventArgs>>? _distributedNodesUpdated;
 
     /// <summary>
     /// Fired when <b>Document</b> has been totally updated. Node ids are no longer valid.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DocumentUpdatedEventArgs>> DocumentUpdated { get; } =
-        EventDescriptor<CdpEventArgs<DocumentUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DocumentUpdatedEventArgs>> DocumentUpdated =>
+        _documentUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _documentUpdated, EventDescriptor<CdpEventArgs<DocumentUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.documentUpdated",
-            DOMJsonSerializerContext.Default.DocumentUpdatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.DocumentUpdatedCdpEventArgs), null) ?? _documentUpdated;
+    private static EventDescriptor<CdpEventArgs<DocumentUpdatedEventArgs>>? _documentUpdated;
 
     /// <summary>
     /// Fired when <b>Element</b>'s inline style is modified via a CSS property modification.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<InlineStyleInvalidatedEventArgs>> InlineStyleInvalidated { get; } =
-        EventDescriptor<CdpEventArgs<InlineStyleInvalidatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<InlineStyleInvalidatedEventArgs>> InlineStyleInvalidated =>
+        _inlineStyleInvalidated ?? global::System.Threading.Interlocked.CompareExchange(ref _inlineStyleInvalidated, EventDescriptor<CdpEventArgs<InlineStyleInvalidatedEventArgs>>.Create(
             "goog:cdp.DOM.inlineStyleInvalidated",
-            DOMJsonSerializerContext.Default.InlineStyleInvalidatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.InlineStyleInvalidatedCdpEventArgs), null) ?? _inlineStyleInvalidated;
+    private static EventDescriptor<CdpEventArgs<InlineStyleInvalidatedEventArgs>>? _inlineStyleInvalidated;
 
     /// <summary>
     /// Called when a pseudo element is added to an element.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PseudoElementAddedEventArgs>> PseudoElementAdded { get; } =
-        EventDescriptor<CdpEventArgs<PseudoElementAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PseudoElementAddedEventArgs>> PseudoElementAdded =>
+        _pseudoElementAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _pseudoElementAdded, EventDescriptor<CdpEventArgs<PseudoElementAddedEventArgs>>.Create(
             "goog:cdp.DOM.pseudoElementAdded",
-            DOMJsonSerializerContext.Default.PseudoElementAddedCdpEventArgs);
+            DOMJsonSerializerContext.Default.PseudoElementAddedCdpEventArgs), null) ?? _pseudoElementAdded;
+    private static EventDescriptor<CdpEventArgs<PseudoElementAddedEventArgs>>? _pseudoElementAdded;
 
     /// <summary>
     /// Called when top layer elements are changed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<TopLayerElementsUpdatedEventArgs>> TopLayerElementsUpdated { get; } =
-        EventDescriptor<CdpEventArgs<TopLayerElementsUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<TopLayerElementsUpdatedEventArgs>> TopLayerElementsUpdated =>
+        _topLayerElementsUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _topLayerElementsUpdated, EventDescriptor<CdpEventArgs<TopLayerElementsUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.topLayerElementsUpdated",
-            DOMJsonSerializerContext.Default.TopLayerElementsUpdatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.TopLayerElementsUpdatedCdpEventArgs), null) ?? _topLayerElementsUpdated;
+    private static EventDescriptor<CdpEventArgs<TopLayerElementsUpdatedEventArgs>>? _topLayerElementsUpdated;
 
     /// <summary>
     /// Fired when a node's scrollability state changes.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>> ScrollableFlagUpdated { get; } =
-        EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>> ScrollableFlagUpdated =>
+        _scrollableFlagUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _scrollableFlagUpdated, EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.scrollableFlagUpdated",
-            DOMJsonSerializerContext.Default.ScrollableFlagUpdatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.ScrollableFlagUpdatedCdpEventArgs), null) ?? _scrollableFlagUpdated;
+    private static EventDescriptor<CdpEventArgs<ScrollableFlagUpdatedEventArgs>>? _scrollableFlagUpdated;
 
     /// <summary>
     /// Fired when a node's ad related state changes.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AdRelatedStateUpdatedEventArgs>> AdRelatedStateUpdated { get; } =
-        EventDescriptor<CdpEventArgs<AdRelatedStateUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AdRelatedStateUpdatedEventArgs>> AdRelatedStateUpdated =>
+        _adRelatedStateUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _adRelatedStateUpdated, EventDescriptor<CdpEventArgs<AdRelatedStateUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.adRelatedStateUpdated",
-            DOMJsonSerializerContext.Default.AdRelatedStateUpdatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.AdRelatedStateUpdatedCdpEventArgs), null) ?? _adRelatedStateUpdated;
+    private static EventDescriptor<CdpEventArgs<AdRelatedStateUpdatedEventArgs>>? _adRelatedStateUpdated;
 
     /// <summary>
     /// Fired when a node's starting styles changes.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>> AffectedByStartingStylesFlagUpdated { get; } =
-        EventDescriptor<CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>> AffectedByStartingStylesFlagUpdated =>
+        _affectedByStartingStylesFlagUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _affectedByStartingStylesFlagUpdated, EventDescriptor<CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>>.Create(
             "goog:cdp.DOM.affectedByStartingStylesFlagUpdated",
-            DOMJsonSerializerContext.Default.AffectedByStartingStylesFlagUpdatedCdpEventArgs);
+            DOMJsonSerializerContext.Default.AffectedByStartingStylesFlagUpdatedCdpEventArgs), null) ?? _affectedByStartingStylesFlagUpdated;
+    private static EventDescriptor<CdpEventArgs<AffectedByStartingStylesFlagUpdatedEventArgs>>? _affectedByStartingStylesFlagUpdated;
 
     /// <summary>
     /// Called when a pseudo element is removed from an element.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PseudoElementRemovedEventArgs>> PseudoElementRemoved { get; } =
-        EventDescriptor<CdpEventArgs<PseudoElementRemovedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PseudoElementRemovedEventArgs>> PseudoElementRemoved =>
+        _pseudoElementRemoved ?? global::System.Threading.Interlocked.CompareExchange(ref _pseudoElementRemoved, EventDescriptor<CdpEventArgs<PseudoElementRemovedEventArgs>>.Create(
             "goog:cdp.DOM.pseudoElementRemoved",
-            DOMJsonSerializerContext.Default.PseudoElementRemovedCdpEventArgs);
+            DOMJsonSerializerContext.Default.PseudoElementRemovedCdpEventArgs), null) ?? _pseudoElementRemoved;
+    private static EventDescriptor<CdpEventArgs<PseudoElementRemovedEventArgs>>? _pseudoElementRemoved;
 
     /// <summary>
     /// Fired when backend wants to provide client with the missing DOM structure. This happens upon
     /// most of the calls requesting node ids.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<SetChildNodesEventArgs>> SetChildNodes { get; } =
-        EventDescriptor<CdpEventArgs<SetChildNodesEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<SetChildNodesEventArgs>> SetChildNodes =>
+        _setChildNodes ?? global::System.Threading.Interlocked.CompareExchange(ref _setChildNodes, EventDescriptor<CdpEventArgs<SetChildNodesEventArgs>>.Create(
             "goog:cdp.DOM.setChildNodes",
-            DOMJsonSerializerContext.Default.SetChildNodesCdpEventArgs);
+            DOMJsonSerializerContext.Default.SetChildNodesCdpEventArgs), null) ?? _setChildNodes;
+    private static EventDescriptor<CdpEventArgs<SetChildNodesEventArgs>>? _setChildNodes;
 
     /// <summary>
     /// Called when shadow root is popped from the element.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ShadowRootPoppedEventArgs>> ShadowRootPopped { get; } =
-        EventDescriptor<CdpEventArgs<ShadowRootPoppedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ShadowRootPoppedEventArgs>> ShadowRootPopped =>
+        _shadowRootPopped ?? global::System.Threading.Interlocked.CompareExchange(ref _shadowRootPopped, EventDescriptor<CdpEventArgs<ShadowRootPoppedEventArgs>>.Create(
             "goog:cdp.DOM.shadowRootPopped",
-            DOMJsonSerializerContext.Default.ShadowRootPoppedCdpEventArgs);
+            DOMJsonSerializerContext.Default.ShadowRootPoppedCdpEventArgs), null) ?? _shadowRootPopped;
+    private static EventDescriptor<CdpEventArgs<ShadowRootPoppedEventArgs>>? _shadowRootPopped;
 
     /// <summary>
     /// Called when shadow root is pushed into the element.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ShadowRootPushedEventArgs>> ShadowRootPushed { get; } =
-        EventDescriptor<CdpEventArgs<ShadowRootPushedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ShadowRootPushedEventArgs>> ShadowRootPushed =>
+        _shadowRootPushed ?? global::System.Threading.Interlocked.CompareExchange(ref _shadowRootPushed, EventDescriptor<CdpEventArgs<ShadowRootPushedEventArgs>>.Create(
             "goog:cdp.DOM.shadowRootPushed",
-            DOMJsonSerializerContext.Default.ShadowRootPushedCdpEventArgs);
+            DOMJsonSerializerContext.Default.ShadowRootPushedCdpEventArgs), null) ?? _shadowRootPushed;
+    private static EventDescriptor<CdpEventArgs<ShadowRootPushedEventArgs>>? _shadowRootPushed;
 
 }

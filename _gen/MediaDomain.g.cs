@@ -107,21 +107,21 @@ public interface IMedia
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class MediaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IMedia
 {
-    private static MediaJsonSerializerContext JsonContext = MediaJsonSerializerContext.Default;
+    private static readonly MediaJsonSerializerContext JsonContext = MediaJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Media.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Media.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Media.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Media.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public IEventSource<PlayerPropertiesChangedEventArgs> PlayerPropertiesChanged => CreateCdpEventSource(MediaDomainEvent.PlayerPropertiesChanged);
     public IEventSource<PlayerEventsAddedEventArgs> PlayerEventsAdded => CreateCdpEventSource(MediaDomainEvent.PlayerEventsAdded);
@@ -333,44 +333,49 @@ public static class MediaDomainEvent
     /// This can be called multiple times, and can be used to set / override /
     /// remove player properties. A null propValue indicates removal.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PlayerPropertiesChangedEventArgs>> PlayerPropertiesChanged { get; } =
-        EventDescriptor<CdpEventArgs<PlayerPropertiesChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PlayerPropertiesChangedEventArgs>> PlayerPropertiesChanged =>
+        _playerPropertiesChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _playerPropertiesChanged, EventDescriptor<CdpEventArgs<PlayerPropertiesChangedEventArgs>>.Create(
             "goog:cdp.Media.playerPropertiesChanged",
-            MediaJsonSerializerContext.Default.PlayerPropertiesChangedCdpEventArgs);
+            MediaJsonSerializerContext.Default.PlayerPropertiesChangedCdpEventArgs), null) ?? _playerPropertiesChanged;
+    private static EventDescriptor<CdpEventArgs<PlayerPropertiesChangedEventArgs>>? _playerPropertiesChanged;
 
     /// <summary>
     /// Send events as a list, allowing them to be batched on the browser for less
     /// congestion. If batched, events must ALWAYS be in chronological order.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PlayerEventsAddedEventArgs>> PlayerEventsAdded { get; } =
-        EventDescriptor<CdpEventArgs<PlayerEventsAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PlayerEventsAddedEventArgs>> PlayerEventsAdded =>
+        _playerEventsAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _playerEventsAdded, EventDescriptor<CdpEventArgs<PlayerEventsAddedEventArgs>>.Create(
             "goog:cdp.Media.playerEventsAdded",
-            MediaJsonSerializerContext.Default.PlayerEventsAddedCdpEventArgs);
+            MediaJsonSerializerContext.Default.PlayerEventsAddedCdpEventArgs), null) ?? _playerEventsAdded;
+    private static EventDescriptor<CdpEventArgs<PlayerEventsAddedEventArgs>>? _playerEventsAdded;
 
     /// <summary>
     /// Send a list of any messages that need to be delivered.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PlayerMessagesLoggedEventArgs>> PlayerMessagesLogged { get; } =
-        EventDescriptor<CdpEventArgs<PlayerMessagesLoggedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PlayerMessagesLoggedEventArgs>> PlayerMessagesLogged =>
+        _playerMessagesLogged ?? global::System.Threading.Interlocked.CompareExchange(ref _playerMessagesLogged, EventDescriptor<CdpEventArgs<PlayerMessagesLoggedEventArgs>>.Create(
             "goog:cdp.Media.playerMessagesLogged",
-            MediaJsonSerializerContext.Default.PlayerMessagesLoggedCdpEventArgs);
+            MediaJsonSerializerContext.Default.PlayerMessagesLoggedCdpEventArgs), null) ?? _playerMessagesLogged;
+    private static EventDescriptor<CdpEventArgs<PlayerMessagesLoggedEventArgs>>? _playerMessagesLogged;
 
     /// <summary>
     /// Send a list of any errors that need to be delivered.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PlayerErrorsRaisedEventArgs>> PlayerErrorsRaised { get; } =
-        EventDescriptor<CdpEventArgs<PlayerErrorsRaisedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PlayerErrorsRaisedEventArgs>> PlayerErrorsRaised =>
+        _playerErrorsRaised ?? global::System.Threading.Interlocked.CompareExchange(ref _playerErrorsRaised, EventDescriptor<CdpEventArgs<PlayerErrorsRaisedEventArgs>>.Create(
             "goog:cdp.Media.playerErrorsRaised",
-            MediaJsonSerializerContext.Default.PlayerErrorsRaisedCdpEventArgs);
+            MediaJsonSerializerContext.Default.PlayerErrorsRaisedCdpEventArgs), null) ?? _playerErrorsRaised;
+    private static EventDescriptor<CdpEventArgs<PlayerErrorsRaisedEventArgs>>? _playerErrorsRaised;
 
     /// <summary>
     /// Called whenever a player is created, or when a new agent joins and receives
     /// a list of active players. If an agent is restored, it will receive one
     /// event for each active player.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PlayerCreatedEventArgs>> PlayerCreated { get; } =
-        EventDescriptor<CdpEventArgs<PlayerCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PlayerCreatedEventArgs>> PlayerCreated =>
+        _playerCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _playerCreated, EventDescriptor<CdpEventArgs<PlayerCreatedEventArgs>>.Create(
             "goog:cdp.Media.playerCreated",
-            MediaJsonSerializerContext.Default.PlayerCreatedCdpEventArgs);
+            MediaJsonSerializerContext.Default.PlayerCreatedCdpEventArgs), null) ?? _playerCreated;
+    private static EventDescriptor<CdpEventArgs<PlayerCreatedEventArgs>>? _playerCreated;
 
 }

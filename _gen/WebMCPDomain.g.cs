@@ -135,35 +135,35 @@ public interface IWebMCP
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IWebMCP
 {
-    private static WebMCPJsonSerializerContext JsonContext = WebMCPJsonSerializerContext.Default;
+    private static readonly WebMCPJsonSerializerContext JsonContext = WebMCPJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("WebMCP.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("WebMCP.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("WebMCP.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("WebMCP.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new InvokeToolCommandParameters(FrameId: frameId, ToolName: toolName, Input: input);
-        return await ExecuteCommandAsync(InvokeToolCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<InvokeToolCommandParameters, InvokeToolResult>("WebMCP.invokeTool", JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<InvokeToolCommandParameters, InvokeToolResult> InvokeToolCommand = new("WebMCP.invokeTool", JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult);
 
     public async Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CancelInvocationCommandParameters(InvocationId: invocationId);
-        return await ExecuteCommandAsync(CancelInvocationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CancelInvocationCommandParameters, CancelInvocationResult>("WebMCP.cancelInvocation", JsonContext.CancelInvocationCommandParameters, JsonContext.CancelInvocationResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CancelInvocationCommandParameters, CancelInvocationResult> CancelInvocationCommand = new("WebMCP.cancelInvocation", JsonContext.CancelInvocationCommandParameters, JsonContext.CancelInvocationResult);
 
     public IEventSource<ToolsAddedEventArgs> ToolsAdded => CreateCdpEventSource(WebMCPDomainEvent.ToolsAdded);
     public IEventSource<ToolsRemovedEventArgs> ToolsRemoved => CreateCdpEventSource(WebMCPDomainEvent.ToolsRemoved);
@@ -381,33 +381,37 @@ public static class WebMCPDomainEvent
     /// <summary>
     /// Event fired when new tools are added.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ToolsAddedEventArgs>> ToolsAdded { get; } =
-        EventDescriptor<CdpEventArgs<ToolsAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ToolsAddedEventArgs>> ToolsAdded =>
+        _toolsAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _toolsAdded, EventDescriptor<CdpEventArgs<ToolsAddedEventArgs>>.Create(
             "goog:cdp.WebMCP.toolsAdded",
-            WebMCPJsonSerializerContext.Default.ToolsAddedCdpEventArgs);
+            WebMCPJsonSerializerContext.Default.ToolsAddedCdpEventArgs), null) ?? _toolsAdded;
+    private static EventDescriptor<CdpEventArgs<ToolsAddedEventArgs>>? _toolsAdded;
 
     /// <summary>
     /// Event fired when tools are removed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ToolsRemovedEventArgs>> ToolsRemoved { get; } =
-        EventDescriptor<CdpEventArgs<ToolsRemovedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ToolsRemovedEventArgs>> ToolsRemoved =>
+        _toolsRemoved ?? global::System.Threading.Interlocked.CompareExchange(ref _toolsRemoved, EventDescriptor<CdpEventArgs<ToolsRemovedEventArgs>>.Create(
             "goog:cdp.WebMCP.toolsRemoved",
-            WebMCPJsonSerializerContext.Default.ToolsRemovedCdpEventArgs);
+            WebMCPJsonSerializerContext.Default.ToolsRemovedCdpEventArgs), null) ?? _toolsRemoved;
+    private static EventDescriptor<CdpEventArgs<ToolsRemovedEventArgs>>? _toolsRemoved;
 
     /// <summary>
     /// Event fired when a tool invocation starts.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ToolInvokedEventArgs>> ToolInvoked { get; } =
-        EventDescriptor<CdpEventArgs<ToolInvokedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ToolInvokedEventArgs>> ToolInvoked =>
+        _toolInvoked ?? global::System.Threading.Interlocked.CompareExchange(ref _toolInvoked, EventDescriptor<CdpEventArgs<ToolInvokedEventArgs>>.Create(
             "goog:cdp.WebMCP.toolInvoked",
-            WebMCPJsonSerializerContext.Default.ToolInvokedCdpEventArgs);
+            WebMCPJsonSerializerContext.Default.ToolInvokedCdpEventArgs), null) ?? _toolInvoked;
+    private static EventDescriptor<CdpEventArgs<ToolInvokedEventArgs>>? _toolInvoked;
 
     /// <summary>
     /// Event fired when a tool invocation completes or fails.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ToolRespondedEventArgs>> ToolResponded { get; } =
-        EventDescriptor<CdpEventArgs<ToolRespondedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ToolRespondedEventArgs>> ToolResponded =>
+        _toolResponded ?? global::System.Threading.Interlocked.CompareExchange(ref _toolResponded, EventDescriptor<CdpEventArgs<ToolRespondedEventArgs>>.Create(
             "goog:cdp.WebMCP.toolResponded",
-            WebMCPJsonSerializerContext.Default.ToolRespondedCdpEventArgs);
+            WebMCPJsonSerializerContext.Default.ToolRespondedCdpEventArgs), null) ?? _toolResponded;
+    private static EventDescriptor<CdpEventArgs<ToolRespondedEventArgs>>? _toolResponded;
 
 }

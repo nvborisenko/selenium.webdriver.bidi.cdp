@@ -160,49 +160,49 @@ public interface IDOMStorage
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDOMStorage
 {
-    private static DOMStorageJsonSerializerContext JsonContext = DOMStorageJsonSerializerContext.Default;
+    private static readonly DOMStorageJsonSerializerContext JsonContext = DOMStorageJsonSerializerContext.Default;
 
     public async Task<ClearResult> ClearAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCommandParameters(StorageId: storageId);
-        return await ExecuteCommandAsync(ClearCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearCommandParameters, ClearResult>("DOMStorage.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearCommandParameters, ClearResult> ClearCommand = new("DOMStorage.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DOMStorage.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOMStorage.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DOMStorage.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOMStorage.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMStorageItemsCommandParameters(StorageId: storageId);
-        return await ExecuteCommandAsync(GetDOMStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetDOMStorageItemsCommandParameters, GetDOMStorageItemsResult>("DOMStorage.getDOMStorageItems", JsonContext.GetDOMStorageItemsCommandParameters, JsonContext.GetDOMStorageItemsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetDOMStorageItemsCommandParameters, GetDOMStorageItemsResult> GetDOMStorageItemsCommand = new("DOMStorage.getDOMStorageItems", JsonContext.GetDOMStorageItemsCommandParameters, JsonContext.GetDOMStorageItemsResult);
 
     public async Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDOMStorageItemCommandParameters(StorageId: storageId, Key: key);
-        return await ExecuteCommandAsync(RemoveDOMStorageItemCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveDOMStorageItemCommandParameters, RemoveDOMStorageItemResult>("DOMStorage.removeDOMStorageItem", JsonContext.RemoveDOMStorageItemCommandParameters, JsonContext.RemoveDOMStorageItemResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveDOMStorageItemCommandParameters, RemoveDOMStorageItemResult> RemoveDOMStorageItemCommand = new("DOMStorage.removeDOMStorageItem", JsonContext.RemoveDOMStorageItemCommandParameters, JsonContext.RemoveDOMStorageItemResult);
 
     public async Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDOMStorageItemCommandParameters(StorageId: storageId, Key: key, Value: value);
-        return await ExecuteCommandAsync(SetDOMStorageItemCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDOMStorageItemCommandParameters, SetDOMStorageItemResult>("DOMStorage.setDOMStorageItem", JsonContext.SetDOMStorageItemCommandParameters, JsonContext.SetDOMStorageItemResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDOMStorageItemCommandParameters, SetDOMStorageItemResult> SetDOMStorageItemCommand = new("DOMStorage.setDOMStorageItem", JsonContext.SetDOMStorageItemCommandParameters, JsonContext.SetDOMStorageItemResult);
 
     public IEventSource<DomStorageItemAddedEventArgs> DomStorageItemAdded => CreateCdpEventSource(DOMStorageDomainEvent.DomStorageItemAdded);
     public IEventSource<DomStorageItemRemovedEventArgs> DomStorageItemRemoved => CreateCdpEventSource(DOMStorageDomainEvent.DomStorageItemRemoved);
@@ -352,33 +352,37 @@ public static class DOMStorageDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DomStorageItemAddedEventArgs>> DomStorageItemAdded { get; } =
-        EventDescriptor<CdpEventArgs<DomStorageItemAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DomStorageItemAddedEventArgs>> DomStorageItemAdded =>
+        _domStorageItemAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _domStorageItemAdded, EventDescriptor<CdpEventArgs<DomStorageItemAddedEventArgs>>.Create(
             "goog:cdp.DOMStorage.domStorageItemAdded",
-            DOMStorageJsonSerializerContext.Default.DomStorageItemAddedCdpEventArgs);
+            DOMStorageJsonSerializerContext.Default.DomStorageItemAddedCdpEventArgs), null) ?? _domStorageItemAdded;
+    private static EventDescriptor<CdpEventArgs<DomStorageItemAddedEventArgs>>? _domStorageItemAdded;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DomStorageItemRemovedEventArgs>> DomStorageItemRemoved { get; } =
-        EventDescriptor<CdpEventArgs<DomStorageItemRemovedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DomStorageItemRemovedEventArgs>> DomStorageItemRemoved =>
+        _domStorageItemRemoved ?? global::System.Threading.Interlocked.CompareExchange(ref _domStorageItemRemoved, EventDescriptor<CdpEventArgs<DomStorageItemRemovedEventArgs>>.Create(
             "goog:cdp.DOMStorage.domStorageItemRemoved",
-            DOMStorageJsonSerializerContext.Default.DomStorageItemRemovedCdpEventArgs);
+            DOMStorageJsonSerializerContext.Default.DomStorageItemRemovedCdpEventArgs), null) ?? _domStorageItemRemoved;
+    private static EventDescriptor<CdpEventArgs<DomStorageItemRemovedEventArgs>>? _domStorageItemRemoved;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DomStorageItemUpdatedEventArgs>> DomStorageItemUpdated { get; } =
-        EventDescriptor<CdpEventArgs<DomStorageItemUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DomStorageItemUpdatedEventArgs>> DomStorageItemUpdated =>
+        _domStorageItemUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _domStorageItemUpdated, EventDescriptor<CdpEventArgs<DomStorageItemUpdatedEventArgs>>.Create(
             "goog:cdp.DOMStorage.domStorageItemUpdated",
-            DOMStorageJsonSerializerContext.Default.DomStorageItemUpdatedCdpEventArgs);
+            DOMStorageJsonSerializerContext.Default.DomStorageItemUpdatedCdpEventArgs), null) ?? _domStorageItemUpdated;
+    private static EventDescriptor<CdpEventArgs<DomStorageItemUpdatedEventArgs>>? _domStorageItemUpdated;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DomStorageItemsClearedEventArgs>> DomStorageItemsCleared { get; } =
-        EventDescriptor<CdpEventArgs<DomStorageItemsClearedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DomStorageItemsClearedEventArgs>> DomStorageItemsCleared =>
+        _domStorageItemsCleared ?? global::System.Threading.Interlocked.CompareExchange(ref _domStorageItemsCleared, EventDescriptor<CdpEventArgs<DomStorageItemsClearedEventArgs>>.Create(
             "goog:cdp.DOMStorage.domStorageItemsCleared",
-            DOMStorageJsonSerializerContext.Default.DomStorageItemsClearedCdpEventArgs);
+            DOMStorageJsonSerializerContext.Default.DomStorageItemsClearedCdpEventArgs), null) ?? _domStorageItemsCleared;
+    private static EventDescriptor<CdpEventArgs<DomStorageItemsClearedEventArgs>>? _domStorageItemsCleared;
 
 }

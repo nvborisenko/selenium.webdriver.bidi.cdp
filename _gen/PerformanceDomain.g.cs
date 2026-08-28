@@ -91,37 +91,37 @@ public interface IPerformance
 
 internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPerformance
 {
-    private static PerformanceJsonSerializerContext JsonContext = PerformanceJsonSerializerContext.Default;
+    private static readonly PerformanceJsonSerializerContext JsonContext = PerformanceJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Performance.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Performance.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(TimeDomain: timeDomain);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Performance.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Performance.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
-        return await ExecuteCommandAsync(SetTimeDomainCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetTimeDomainCommandParameters, SetTimeDomainResult>("Performance.setTimeDomain", JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetTimeDomainCommandParameters, SetTimeDomainResult> SetTimeDomainCommand = new("Performance.setTimeDomain", JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult);
 
     public async Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMetricsCommandParameters();
-        return await ExecuteCommandAsync(GetMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetMetricsCommandParameters, GetMetricsResult>("Performance.getMetrics", JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetMetricsCommandParameters, GetMetricsResult> GetMetricsCommand = new("Performance.getMetrics", JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult);
 
     public IEventSource<MetricsEventArgs> Metrics => CreateCdpEventSource(PerformanceDomainEvent.Metrics);
 }
@@ -205,9 +205,10 @@ public static class PerformanceDomainEvent
     /// <summary>
     /// Current values of the metrics.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<MetricsEventArgs>> Metrics { get; } =
-        EventDescriptor<CdpEventArgs<MetricsEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<MetricsEventArgs>> Metrics =>
+        _metrics ?? global::System.Threading.Interlocked.CompareExchange(ref _metrics, EventDescriptor<CdpEventArgs<MetricsEventArgs>>.Create(
             "goog:cdp.Performance.metrics",
-            PerformanceJsonSerializerContext.Default.MetricsCdpEventArgs);
+            PerformanceJsonSerializerContext.Default.MetricsCdpEventArgs), null) ?? _metrics;
+    private static EventDescriptor<CdpEventArgs<MetricsEventArgs>>? _metrics;
 
 }

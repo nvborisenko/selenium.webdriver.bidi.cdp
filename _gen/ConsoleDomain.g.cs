@@ -70,28 +70,28 @@ public interface IConsole
 [global::System.Obsolete]
 internal sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IConsole
 {
-    private static ConsoleJsonSerializerContext JsonContext = ConsoleJsonSerializerContext.Default;
+    private static readonly ConsoleJsonSerializerContext JsonContext = ConsoleJsonSerializerContext.Default;
 
     public async Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearMessagesCommandParameters();
-        return await ExecuteCommandAsync(ClearMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearMessagesCommandParameters, ClearMessagesResult>("Console.clearMessages", JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearMessagesCommandParameters, ClearMessagesResult> ClearMessagesCommand = new("Console.clearMessages", JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Console.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Console.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Console.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Console.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public IEventSource<MessageAddedEventArgs> MessageAdded => CreateCdpEventSource(ConsoleDomainEvent.MessageAdded);
 }
@@ -176,9 +176,10 @@ public static class ConsoleDomainEvent
     /// <summary>
     /// Issued when new console message is added.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<MessageAddedEventArgs>> MessageAdded { get; } =
-        EventDescriptor<CdpEventArgs<MessageAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<MessageAddedEventArgs>> MessageAdded =>
+        _messageAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _messageAdded, EventDescriptor<CdpEventArgs<MessageAddedEventArgs>>.Create(
             "goog:cdp.Console.messageAdded",
-            ConsoleJsonSerializerContext.Default.MessageAddedCdpEventArgs);
+            ConsoleJsonSerializerContext.Default.MessageAddedCdpEventArgs), null) ?? _messageAdded;
+    private static EventDescriptor<CdpEventArgs<MessageAddedEventArgs>>? _messageAdded;
 
 }

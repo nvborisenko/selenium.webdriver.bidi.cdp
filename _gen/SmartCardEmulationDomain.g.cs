@@ -525,91 +525,91 @@ public interface ISmartCardEmulation
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ISmartCardEmulation
 {
-    private static SmartCardEmulationJsonSerializerContext JsonContext = SmartCardEmulationJsonSerializerContext.Default;
+    private static readonly SmartCardEmulationJsonSerializerContext JsonContext = SmartCardEmulationJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("SmartCardEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("SmartCardEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("SmartCardEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("SmartCardEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportEstablishContextResultCommandParameters(RequestId: requestId, ContextId: contextId);
-        return await ExecuteCommandAsync(ReportEstablishContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportEstablishContextResultCommandParameters, ReportEstablishContextResultResult>("SmartCardEmulation.reportEstablishContextResult", JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportEstablishContextResultCommandParameters, ReportEstablishContextResultResult> ReportEstablishContextResultCommand = new("SmartCardEmulation.reportEstablishContextResult", JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult);
 
     public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportReleaseContextResultCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReportReleaseContextResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportReleaseContextResultCommandParameters, ReportReleaseContextResultResult>("SmartCardEmulation.reportReleaseContextResult", JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportReleaseContextResultCommandParameters, ReportReleaseContextResultResult> ReportReleaseContextResultCommand = new("SmartCardEmulation.reportReleaseContextResult", JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult);
 
     public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportListReadersResultCommandParameters(RequestId: requestId, Readers: readers);
-        return await ExecuteCommandAsync(ReportListReadersResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportListReadersResultCommandParameters, ReportListReadersResultResult>("SmartCardEmulation.reportListReadersResult", JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportListReadersResultCommandParameters, ReportListReadersResultResult> ReportListReadersResultCommand = new("SmartCardEmulation.reportListReadersResult", JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult);
 
     public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportGetStatusChangeResultCommandParameters(RequestId: requestId, ReaderStates: readerStates);
-        return await ExecuteCommandAsync(ReportGetStatusChangeResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportGetStatusChangeResultCommandParameters, ReportGetStatusChangeResultResult>("SmartCardEmulation.reportGetStatusChangeResult", JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportGetStatusChangeResultCommandParameters, ReportGetStatusChangeResultResult> ReportGetStatusChangeResultCommand = new("SmartCardEmulation.reportGetStatusChangeResult", JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult);
 
     public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportBeginTransactionResultCommandParameters(RequestId: requestId, Handle: handle);
-        return await ExecuteCommandAsync(ReportBeginTransactionResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportBeginTransactionResultCommandParameters, ReportBeginTransactionResultResult>("SmartCardEmulation.reportBeginTransactionResult", JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportBeginTransactionResultCommandParameters, ReportBeginTransactionResultResult> ReportBeginTransactionResultCommand = new("SmartCardEmulation.reportBeginTransactionResult", JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult);
 
     public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportPlainResultCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReportPlainResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportPlainResultCommandParameters, ReportPlainResultResult>("SmartCardEmulation.reportPlainResult", JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportPlainResultCommandParameters, ReportPlainResultResult> ReportPlainResultCommand = new("SmartCardEmulation.reportPlainResult", JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult);
 
     public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportConnectResultCommandParameters(RequestId: requestId, Handle: handle, ActiveProtocol: activeProtocol);
-        return await ExecuteCommandAsync(ReportConnectResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportConnectResultCommandParameters, ReportConnectResultResult>("SmartCardEmulation.reportConnectResult", JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportConnectResultCommandParameters, ReportConnectResultResult> ReportConnectResultCommand = new("SmartCardEmulation.reportConnectResult", JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult);
 
     public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportDataResultCommandParameters(RequestId: requestId, Data: data);
-        return await ExecuteCommandAsync(ReportDataResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportDataResultCommandParameters, ReportDataResultResult>("SmartCardEmulation.reportDataResult", JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportDataResultCommandParameters, ReportDataResultResult> ReportDataResultCommand = new("SmartCardEmulation.reportDataResult", JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult);
 
     public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportStatusResultCommandParameters(RequestId: requestId, ReaderName: readerName, State: state, Atr: atr, Protocol: protocol);
-        return await ExecuteCommandAsync(ReportStatusResultCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportStatusResultCommandParameters, ReportStatusResultResult>("SmartCardEmulation.reportStatusResult", JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportStatusResultCommandParameters, ReportStatusResultResult> ReportStatusResultCommand = new("SmartCardEmulation.reportStatusResult", JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult);
 
     public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportErrorCommandParameters(RequestId: requestId, ResultCode: resultCode);
-        return await ExecuteCommandAsync(ReportErrorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReportErrorCommandParameters, ReportErrorResult>("SmartCardEmulation.reportError", JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReportErrorCommandParameters, ReportErrorResult> ReportErrorCommand = new("SmartCardEmulation.reportError", JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult);
 
     public IEventSource<EstablishContextRequestedEventArgs> EstablishContextRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.EstablishContextRequested);
     public IEventSource<ReleaseContextRequestedEventArgs> ReleaseContextRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.ReleaseContextRequested);
@@ -1316,10 +1316,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gaa1b8970169fd4883a6dc4a8f43f19b67
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardestablishcontext
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<EstablishContextRequestedEventArgs>> EstablishContextRequested { get; } =
-        EventDescriptor<CdpEventArgs<EstablishContextRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<EstablishContextRequestedEventArgs>> EstablishContextRequested =>
+        _establishContextRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _establishContextRequested, EventDescriptor<CdpEventArgs<EstablishContextRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.establishContextRequested",
-            SmartCardEmulationJsonSerializerContext.Default.EstablishContextRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.EstablishContextRequestedCdpEventArgs), null) ?? _establishContextRequested;
+    private static EventDescriptor<CdpEventArgs<EstablishContextRequestedEventArgs>>? _establishContextRequested;
 
     /// <summary>
     /// Fired when |SCardReleaseContext| is called.
@@ -1328,10 +1329,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga6aabcba7744c5c9419fdd6404f73a934
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardreleasecontext
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ReleaseContextRequestedEventArgs>> ReleaseContextRequested { get; } =
-        EventDescriptor<CdpEventArgs<ReleaseContextRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ReleaseContextRequestedEventArgs>> ReleaseContextRequested =>
+        _releaseContextRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _releaseContextRequested, EventDescriptor<CdpEventArgs<ReleaseContextRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.releaseContextRequested",
-            SmartCardEmulationJsonSerializerContext.Default.ReleaseContextRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.ReleaseContextRequestedCdpEventArgs), null) ?? _releaseContextRequested;
+    private static EventDescriptor<CdpEventArgs<ReleaseContextRequestedEventArgs>>? _releaseContextRequested;
 
     /// <summary>
     /// Fired when |SCardListReaders| is called.
@@ -1340,10 +1342,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga93b07815789b3cf2629d439ecf20f0d9
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardlistreadersa
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ListReadersRequestedEventArgs>> ListReadersRequested { get; } =
-        EventDescriptor<CdpEventArgs<ListReadersRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ListReadersRequestedEventArgs>> ListReadersRequested =>
+        _listReadersRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _listReadersRequested, EventDescriptor<CdpEventArgs<ListReadersRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.listReadersRequested",
-            SmartCardEmulationJsonSerializerContext.Default.ListReadersRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.ListReadersRequestedCdpEventArgs), null) ?? _listReadersRequested;
+    private static EventDescriptor<CdpEventArgs<ListReadersRequestedEventArgs>>? _listReadersRequested;
 
     /// <summary>
     /// Fired when |SCardGetStatusChange| is called. Timeout is specified in milliseconds.
@@ -1352,10 +1355,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga33247d5d1257d59e55647c3bb717db24
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardgetstatuschangea
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<GetStatusChangeRequestedEventArgs>> GetStatusChangeRequested { get; } =
-        EventDescriptor<CdpEventArgs<GetStatusChangeRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<GetStatusChangeRequestedEventArgs>> GetStatusChangeRequested =>
+        _getStatusChangeRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _getStatusChangeRequested, EventDescriptor<CdpEventArgs<GetStatusChangeRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.getStatusChangeRequested",
-            SmartCardEmulationJsonSerializerContext.Default.GetStatusChangeRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.GetStatusChangeRequestedCdpEventArgs), null) ?? _getStatusChangeRequested;
+    private static EventDescriptor<CdpEventArgs<GetStatusChangeRequestedEventArgs>>? _getStatusChangeRequested;
 
     /// <summary>
     /// Fired when |SCardCancel| is called.
@@ -1364,10 +1368,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gaacbbc0c6d6c0cbbeb4f4debf6fbeeee6
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardcancel
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<CancelRequestedEventArgs>> CancelRequested { get; } =
-        EventDescriptor<CdpEventArgs<CancelRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<CancelRequestedEventArgs>> CancelRequested =>
+        _cancelRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _cancelRequested, EventDescriptor<CdpEventArgs<CancelRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.cancelRequested",
-            SmartCardEmulationJsonSerializerContext.Default.CancelRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.CancelRequestedCdpEventArgs), null) ?? _cancelRequested;
+    private static EventDescriptor<CdpEventArgs<CancelRequestedEventArgs>>? _cancelRequested;
 
     /// <summary>
     /// Fired when |SCardConnect| is called.
@@ -1376,10 +1381,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga4e515829752e0a8dbc4d630696a8d6a5
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardconnecta
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ConnectRequestedEventArgs>> ConnectRequested { get; } =
-        EventDescriptor<CdpEventArgs<ConnectRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ConnectRequestedEventArgs>> ConnectRequested =>
+        _connectRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _connectRequested, EventDescriptor<CdpEventArgs<ConnectRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.connectRequested",
-            SmartCardEmulationJsonSerializerContext.Default.ConnectRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.ConnectRequestedCdpEventArgs), null) ?? _connectRequested;
+    private static EventDescriptor<CdpEventArgs<ConnectRequestedEventArgs>>? _connectRequested;
 
     /// <summary>
     /// Fired when |SCardDisconnect| is called.
@@ -1388,10 +1394,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga4be198045c73ec0deb79e66c0ca1738a
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scarddisconnect
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DisconnectRequestedEventArgs>> DisconnectRequested { get; } =
-        EventDescriptor<CdpEventArgs<DisconnectRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DisconnectRequestedEventArgs>> DisconnectRequested =>
+        _disconnectRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _disconnectRequested, EventDescriptor<CdpEventArgs<DisconnectRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.disconnectRequested",
-            SmartCardEmulationJsonSerializerContext.Default.DisconnectRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.DisconnectRequestedCdpEventArgs), null) ?? _disconnectRequested;
+    private static EventDescriptor<CdpEventArgs<DisconnectRequestedEventArgs>>? _disconnectRequested;
 
     /// <summary>
     /// Fired when |SCardTransmit| is called.
@@ -1400,10 +1407,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga9a2d77242a271310269065e64633ab99
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardtransmit
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<TransmitRequestedEventArgs>> TransmitRequested { get; } =
-        EventDescriptor<CdpEventArgs<TransmitRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<TransmitRequestedEventArgs>> TransmitRequested =>
+        _transmitRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _transmitRequested, EventDescriptor<CdpEventArgs<TransmitRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.transmitRequested",
-            SmartCardEmulationJsonSerializerContext.Default.TransmitRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.TransmitRequestedCdpEventArgs), null) ?? _transmitRequested;
+    private static EventDescriptor<CdpEventArgs<TransmitRequestedEventArgs>>? _transmitRequested;
 
     /// <summary>
     /// Fired when |SCardControl| is called.
@@ -1412,10 +1420,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gac3454d4657110fd7f753b2d3d8f4e32f
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardcontrol
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ControlRequestedEventArgs>> ControlRequested { get; } =
-        EventDescriptor<CdpEventArgs<ControlRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ControlRequestedEventArgs>> ControlRequested =>
+        _controlRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _controlRequested, EventDescriptor<CdpEventArgs<ControlRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.controlRequested",
-            SmartCardEmulationJsonSerializerContext.Default.ControlRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.ControlRequestedCdpEventArgs), null) ?? _controlRequested;
+    private static EventDescriptor<CdpEventArgs<ControlRequestedEventArgs>>? _controlRequested;
 
     /// <summary>
     /// Fired when |SCardGetAttrib| is called.
@@ -1424,10 +1433,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gaacfec51917255b7a25b94c5104961602
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardgetattrib
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<GetAttribRequestedEventArgs>> GetAttribRequested { get; } =
-        EventDescriptor<CdpEventArgs<GetAttribRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<GetAttribRequestedEventArgs>> GetAttribRequested =>
+        _getAttribRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _getAttribRequested, EventDescriptor<CdpEventArgs<GetAttribRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.getAttribRequested",
-            SmartCardEmulationJsonSerializerContext.Default.GetAttribRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.GetAttribRequestedCdpEventArgs), null) ?? _getAttribRequested;
+    private static EventDescriptor<CdpEventArgs<GetAttribRequestedEventArgs>>? _getAttribRequested;
 
     /// <summary>
     /// Fired when |SCardSetAttrib| is called.
@@ -1436,10 +1446,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#ga060f0038a4ddfd5dd2b8fadf3c3a2e4f
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardsetattrib
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<SetAttribRequestedEventArgs>> SetAttribRequested { get; } =
-        EventDescriptor<CdpEventArgs<SetAttribRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<SetAttribRequestedEventArgs>> SetAttribRequested =>
+        _setAttribRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _setAttribRequested, EventDescriptor<CdpEventArgs<SetAttribRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.setAttribRequested",
-            SmartCardEmulationJsonSerializerContext.Default.SetAttribRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.SetAttribRequestedCdpEventArgs), null) ?? _setAttribRequested;
+    private static EventDescriptor<CdpEventArgs<SetAttribRequestedEventArgs>>? _setAttribRequested;
 
     /// <summary>
     /// Fired when |SCardStatus| is called.
@@ -1448,10 +1459,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gae49c3c894ad7ac12a5b896bde70d0382
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardstatusa
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<StatusRequestedEventArgs>> StatusRequested { get; } =
-        EventDescriptor<CdpEventArgs<StatusRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<StatusRequestedEventArgs>> StatusRequested =>
+        _statusRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _statusRequested, EventDescriptor<CdpEventArgs<StatusRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.statusRequested",
-            SmartCardEmulationJsonSerializerContext.Default.StatusRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.StatusRequestedCdpEventArgs), null) ?? _statusRequested;
+    private static EventDescriptor<CdpEventArgs<StatusRequestedEventArgs>>? _statusRequested;
 
     /// <summary>
     /// Fired when |SCardBeginTransaction| is called.
@@ -1460,10 +1472,11 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gaddb835dce01a0da1d6ca02d33ee7d861
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardbegintransaction
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<BeginTransactionRequestedEventArgs>> BeginTransactionRequested { get; } =
-        EventDescriptor<CdpEventArgs<BeginTransactionRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<BeginTransactionRequestedEventArgs>> BeginTransactionRequested =>
+        _beginTransactionRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _beginTransactionRequested, EventDescriptor<CdpEventArgs<BeginTransactionRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.beginTransactionRequested",
-            SmartCardEmulationJsonSerializerContext.Default.BeginTransactionRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.BeginTransactionRequestedCdpEventArgs), null) ?? _beginTransactionRequested;
+    private static EventDescriptor<CdpEventArgs<BeginTransactionRequestedEventArgs>>? _beginTransactionRequested;
 
     /// <summary>
     /// Fired when |SCardEndTransaction| is called.
@@ -1472,9 +1485,10 @@ public static class SmartCardEmulationDomainEvent
     /// PC/SC Lite: https://pcsclite.apdu.fr/api/group__API.html#gae8742473b404363e5c587f570d7e2f3b
     /// Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winscard-scardendtransaction
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<EndTransactionRequestedEventArgs>> EndTransactionRequested { get; } =
-        EventDescriptor<CdpEventArgs<EndTransactionRequestedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<EndTransactionRequestedEventArgs>> EndTransactionRequested =>
+        _endTransactionRequested ?? global::System.Threading.Interlocked.CompareExchange(ref _endTransactionRequested, EventDescriptor<CdpEventArgs<EndTransactionRequestedEventArgs>>.Create(
             "goog:cdp.SmartCardEmulation.endTransactionRequested",
-            SmartCardEmulationJsonSerializerContext.Default.EndTransactionRequestedCdpEventArgs);
+            SmartCardEmulationJsonSerializerContext.Default.EndTransactionRequestedCdpEventArgs), null) ?? _endTransactionRequested;
+    private static EventDescriptor<CdpEventArgs<EndTransactionRequestedEventArgs>>? _endTransactionRequested;
 
 }

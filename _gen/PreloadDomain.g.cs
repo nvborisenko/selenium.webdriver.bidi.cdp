@@ -123,21 +123,21 @@ public interface IPreload
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPreload
 {
-    private static PreloadJsonSerializerContext JsonContext = PreloadJsonSerializerContext.Default;
+    private static readonly PreloadJsonSerializerContext JsonContext = PreloadJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Preload.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Preload.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Preload.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Preload.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public IEventSource<RuleSetUpdatedEventArgs> RuleSetUpdated => CreateCdpEventSource(PreloadDomainEvent.RuleSetUpdated);
     public IEventSource<RuleSetRemovedEventArgs> RuleSetRemoved => CreateCdpEventSource(PreloadDomainEvent.RuleSetRemoved);
@@ -978,49 +978,55 @@ public static class PreloadDomainEvent
     /// <summary>
     /// Upsert. Currently, it is only emitted when a rule set added.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<RuleSetUpdatedEventArgs>> RuleSetUpdated { get; } =
-        EventDescriptor<CdpEventArgs<RuleSetUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<RuleSetUpdatedEventArgs>> RuleSetUpdated =>
+        _ruleSetUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _ruleSetUpdated, EventDescriptor<CdpEventArgs<RuleSetUpdatedEventArgs>>.Create(
             "goog:cdp.Preload.ruleSetUpdated",
-            PreloadJsonSerializerContext.Default.RuleSetUpdatedCdpEventArgs);
+            PreloadJsonSerializerContext.Default.RuleSetUpdatedCdpEventArgs), null) ?? _ruleSetUpdated;
+    private static EventDescriptor<CdpEventArgs<RuleSetUpdatedEventArgs>>? _ruleSetUpdated;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<RuleSetRemovedEventArgs>> RuleSetRemoved { get; } =
-        EventDescriptor<CdpEventArgs<RuleSetRemovedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<RuleSetRemovedEventArgs>> RuleSetRemoved =>
+        _ruleSetRemoved ?? global::System.Threading.Interlocked.CompareExchange(ref _ruleSetRemoved, EventDescriptor<CdpEventArgs<RuleSetRemovedEventArgs>>.Create(
             "goog:cdp.Preload.ruleSetRemoved",
-            PreloadJsonSerializerContext.Default.RuleSetRemovedCdpEventArgs);
+            PreloadJsonSerializerContext.Default.RuleSetRemovedCdpEventArgs), null) ?? _ruleSetRemoved;
+    private static EventDescriptor<CdpEventArgs<RuleSetRemovedEventArgs>>? _ruleSetRemoved;
 
     /// <summary>
     /// Fired when a preload enabled state is updated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PreloadEnabledStateUpdatedEventArgs>> PreloadEnabledStateUpdated { get; } =
-        EventDescriptor<CdpEventArgs<PreloadEnabledStateUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PreloadEnabledStateUpdatedEventArgs>> PreloadEnabledStateUpdated =>
+        _preloadEnabledStateUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _preloadEnabledStateUpdated, EventDescriptor<CdpEventArgs<PreloadEnabledStateUpdatedEventArgs>>.Create(
             "goog:cdp.Preload.preloadEnabledStateUpdated",
-            PreloadJsonSerializerContext.Default.PreloadEnabledStateUpdatedCdpEventArgs);
+            PreloadJsonSerializerContext.Default.PreloadEnabledStateUpdatedCdpEventArgs), null) ?? _preloadEnabledStateUpdated;
+    private static EventDescriptor<CdpEventArgs<PreloadEnabledStateUpdatedEventArgs>>? _preloadEnabledStateUpdated;
 
     /// <summary>
     /// Fired when a prefetch attempt is updated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PrefetchStatusUpdatedEventArgs>> PrefetchStatusUpdated { get; } =
-        EventDescriptor<CdpEventArgs<PrefetchStatusUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PrefetchStatusUpdatedEventArgs>> PrefetchStatusUpdated =>
+        _prefetchStatusUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _prefetchStatusUpdated, EventDescriptor<CdpEventArgs<PrefetchStatusUpdatedEventArgs>>.Create(
             "goog:cdp.Preload.prefetchStatusUpdated",
-            PreloadJsonSerializerContext.Default.PrefetchStatusUpdatedCdpEventArgs);
+            PreloadJsonSerializerContext.Default.PrefetchStatusUpdatedCdpEventArgs), null) ?? _prefetchStatusUpdated;
+    private static EventDescriptor<CdpEventArgs<PrefetchStatusUpdatedEventArgs>>? _prefetchStatusUpdated;
 
     /// <summary>
     /// Fired when a prerender attempt is updated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PrerenderStatusUpdatedEventArgs>> PrerenderStatusUpdated { get; } =
-        EventDescriptor<CdpEventArgs<PrerenderStatusUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PrerenderStatusUpdatedEventArgs>> PrerenderStatusUpdated =>
+        _prerenderStatusUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _prerenderStatusUpdated, EventDescriptor<CdpEventArgs<PrerenderStatusUpdatedEventArgs>>.Create(
             "goog:cdp.Preload.prerenderStatusUpdated",
-            PreloadJsonSerializerContext.Default.PrerenderStatusUpdatedCdpEventArgs);
+            PreloadJsonSerializerContext.Default.PrerenderStatusUpdatedCdpEventArgs), null) ?? _prerenderStatusUpdated;
+    private static EventDescriptor<CdpEventArgs<PrerenderStatusUpdatedEventArgs>>? _prerenderStatusUpdated;
 
     /// <summary>
     /// Send a list of sources for all preloading attempts in a document.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PreloadingAttemptSourcesUpdatedEventArgs>> PreloadingAttemptSourcesUpdated { get; } =
-        EventDescriptor<CdpEventArgs<PreloadingAttemptSourcesUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PreloadingAttemptSourcesUpdatedEventArgs>> PreloadingAttemptSourcesUpdated =>
+        _preloadingAttemptSourcesUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _preloadingAttemptSourcesUpdated, EventDescriptor<CdpEventArgs<PreloadingAttemptSourcesUpdatedEventArgs>>.Create(
             "goog:cdp.Preload.preloadingAttemptSourcesUpdated",
-            PreloadJsonSerializerContext.Default.PreloadingAttemptSourcesUpdatedCdpEventArgs);
+            PreloadJsonSerializerContext.Default.PreloadingAttemptSourcesUpdatedCdpEventArgs), null) ?? _preloadingAttemptSourcesUpdated;
+    private static EventDescriptor<CdpEventArgs<PreloadingAttemptSourcesUpdatedEventArgs>>? _preloadingAttemptSourcesUpdated;
 
 }

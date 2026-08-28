@@ -60,28 +60,28 @@ public interface ISystemInfo
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ISystemInfo
 {
-    private static SystemInfoJsonSerializerContext JsonContext = SystemInfoJsonSerializerContext.Default;
+    private static readonly SystemInfoJsonSerializerContext JsonContext = SystemInfoJsonSerializerContext.Default;
 
     public async Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetInfoCommandParameters();
-        return await ExecuteCommandAsync(GetInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetInfoCommandParameters, GetInfoResult>("SystemInfo.getInfo", JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetInfoCommandParameters, GetInfoResult> GetInfoCommand = new("SystemInfo.getInfo", JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult);
 
     public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFeatureStateCommandParameters(FeatureState: featureState);
-        return await ExecuteCommandAsync(GetFeatureStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetFeatureStateCommandParameters, GetFeatureStateResult>("SystemInfo.getFeatureState", JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetFeatureStateCommandParameters, GetFeatureStateResult> GetFeatureStateCommand = new("SystemInfo.getFeatureState", JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult);
 
     public async Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetProcessInfoCommandParameters();
-        return await ExecuteCommandAsync(GetProcessInfoCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetProcessInfoCommandParameters, GetProcessInfoResult>("SystemInfo.getProcessInfo", JsonContext.GetProcessInfoCommandParameters, JsonContext.GetProcessInfoResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetProcessInfoCommandParameters, GetProcessInfoResult> GetProcessInfoCommand = new("SystemInfo.getProcessInfo", JsonContext.GetProcessInfoCommandParameters, JsonContext.GetProcessInfoResult);
 
 }
 

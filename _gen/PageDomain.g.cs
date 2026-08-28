@@ -1705,498 +1705,498 @@ public interface IPage
 
 internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPage
 {
-    private static PageJsonSerializerContext JsonContext = PageJsonSerializerContext.Default;
+    private static readonly PageJsonSerializerContext JsonContext = PageJsonSerializerContext.Default;
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddScriptToEvaluateOnLoadCommandParameters(ScriptSource: scriptSource);
-        return await ExecuteCommandAsync(AddScriptToEvaluateOnLoadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddScriptToEvaluateOnLoadCommandParameters, AddScriptToEvaluateOnLoadResult>("Page.addScriptToEvaluateOnLoad", JsonContext.AddScriptToEvaluateOnLoadCommandParameters, JsonContext.AddScriptToEvaluateOnLoadResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddScriptToEvaluateOnLoadCommandParameters, AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadCommand = new("Page.addScriptToEvaluateOnLoad", JsonContext.AddScriptToEvaluateOnLoadCommandParameters, JsonContext.AddScriptToEvaluateOnLoadResult);
 
     public async Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = default, bool? includeCommandLineAPI = default, bool? runImmediately = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddScriptToEvaluateOnNewDocumentCommandParameters(Source: source, WorldName: worldName, IncludeCommandLineAPI: includeCommandLineAPI, RunImmediately: runImmediately);
-        return await ExecuteCommandAsync(AddScriptToEvaluateOnNewDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddScriptToEvaluateOnNewDocumentCommandParameters, AddScriptToEvaluateOnNewDocumentResult>("Page.addScriptToEvaluateOnNewDocument", JsonContext.AddScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.AddScriptToEvaluateOnNewDocumentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddScriptToEvaluateOnNewDocumentCommandParameters, AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentCommand = new("Page.addScriptToEvaluateOnNewDocument", JsonContext.AddScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.AddScriptToEvaluateOnNewDocumentResult);
 
     public async Task<BringToFrontResult> BringToFrontAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new BringToFrontCommandParameters();
-        return await ExecuteCommandAsync(BringToFrontCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<BringToFrontCommandParameters, BringToFrontResult>("Page.bringToFront", JsonContext.BringToFrontCommandParameters, JsonContext.BringToFrontResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<BringToFrontCommandParameters, BringToFrontResult> BringToFrontCommand = new("Page.bringToFront", JsonContext.BringToFrontCommandParameters, JsonContext.BringToFrontResult);
 
     public async Task<CaptureScreenshotResult> CaptureScreenshotAsync(string? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureScreenshotCommandParameters(Format: format, Quality: quality, Clip: clip, FromSurface: fromSurface, CaptureBeyondViewport: captureBeyondViewport, OptimizeForSpeed: optimizeForSpeed);
-        return await ExecuteCommandAsync(CaptureScreenshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CaptureScreenshotCommandParameters, CaptureScreenshotResult>("Page.captureScreenshot", JsonContext.CaptureScreenshotCommandParameters, JsonContext.CaptureScreenshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CaptureScreenshotCommandParameters, CaptureScreenshotResult> CaptureScreenshotCommand = new("Page.captureScreenshot", JsonContext.CaptureScreenshotCommandParameters, JsonContext.CaptureScreenshotResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(string? format = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureSnapshotCommandParameters(Format: format);
-        return await ExecuteCommandAsync(CaptureSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult>("Page.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult> CaptureSnapshotCommand = new("Page.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceMetricsOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearDeviceMetricsOverrideCommandParameters, ClearDeviceMetricsOverrideResult>("Page.clearDeviceMetricsOverride", JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearDeviceMetricsOverrideCommandParameters, ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideCommand = new("Page.clearDeviceMetricsOverride", JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceOrientationOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearDeviceOrientationOverrideCommandParameters, ClearDeviceOrientationOverrideResult>("Page.clearDeviceOrientationOverride", JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearDeviceOrientationOverrideCommandParameters, ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideCommand = new("Page.clearDeviceOrientationOverride", JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult);
 
     [global::System.Obsolete]
     public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearGeolocationOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearGeolocationOverrideCommandParameters, ClearGeolocationOverrideResult>("Page.clearGeolocationOverride", JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearGeolocationOverrideCommandParameters, ClearGeolocationOverrideResult> ClearGeolocationOverrideCommand = new("Page.clearGeolocationOverride", JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult);
 
     public async Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = default, bool? grantUniveralAccess = default, string? contentSecurityPolicy = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CreateIsolatedWorldCommandParameters(FrameId: frameId, WorldName: worldName, GrantUniveralAccess: grantUniveralAccess, ContentSecurityPolicy: contentSecurityPolicy);
-        return await ExecuteCommandAsync(CreateIsolatedWorldCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CreateIsolatedWorldCommandParameters, CreateIsolatedWorldResult>("Page.createIsolatedWorld", JsonContext.CreateIsolatedWorldCommandParameters, JsonContext.CreateIsolatedWorldResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CreateIsolatedWorldCommandParameters, CreateIsolatedWorldResult> CreateIsolatedWorldCommand = new("Page.createIsolatedWorld", JsonContext.CreateIsolatedWorldCommandParameters, JsonContext.CreateIsolatedWorldResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCookieCommandParameters(CookieName: cookieName, Url: url);
-        return await ExecuteCommandAsync(DeleteCookieCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DeleteCookieCommandParameters, DeleteCookieResult>("Page.deleteCookie", JsonContext.DeleteCookieCommandParameters, JsonContext.DeleteCookieResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DeleteCookieCommandParameters, DeleteCookieResult> DeleteCookieCommand = new("Page.deleteCookie", JsonContext.DeleteCookieCommandParameters, JsonContext.DeleteCookieResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Page.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Page.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EnableFileChooserOpenedEvent: enableFileChooserOpenedEvent);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Page.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Page.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAppManifestCommandParameters(ManifestId: manifestId);
-        return await ExecuteCommandAsync(GetAppManifestCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAppManifestCommandParameters, GetAppManifestResult>("Page.getAppManifest", JsonContext.GetAppManifestCommandParameters, JsonContext.GetAppManifestResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAppManifestCommandParameters, GetAppManifestResult> GetAppManifestCommand = new("Page.getAppManifest", JsonContext.GetAppManifestCommandParameters, JsonContext.GetAppManifestResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetInstallabilityErrorsCommandParameters();
-        return await ExecuteCommandAsync(GetInstallabilityErrorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetInstallabilityErrorsCommandParameters, GetInstallabilityErrorsResult>("Page.getInstallabilityErrors", JsonContext.GetInstallabilityErrorsCommandParameters, JsonContext.GetInstallabilityErrorsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetInstallabilityErrorsCommandParameters, GetInstallabilityErrorsResult> GetInstallabilityErrorsCommand = new("Page.getInstallabilityErrors", JsonContext.GetInstallabilityErrorsCommandParameters, JsonContext.GetInstallabilityErrorsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetManifestIconsCommandParameters();
-        return await ExecuteCommandAsync(GetManifestIconsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetManifestIconsCommandParameters, GetManifestIconsResult>("Page.getManifestIcons", JsonContext.GetManifestIconsCommandParameters, JsonContext.GetManifestIconsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetManifestIconsCommandParameters, GetManifestIconsResult> GetManifestIconsCommand = new("Page.getManifestIcons", JsonContext.GetManifestIconsCommandParameters, JsonContext.GetManifestIconsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetAppIdResult> GetAppIdAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAppIdCommandParameters();
-        return await ExecuteCommandAsync(GetAppIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAppIdCommandParameters, GetAppIdResult>("Page.getAppId", JsonContext.GetAppIdCommandParameters, JsonContext.GetAppIdResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAppIdCommandParameters, GetAppIdResult> GetAppIdCommand = new("Page.getAppId", JsonContext.GetAppIdCommandParameters, JsonContext.GetAppIdResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdScriptAncestryCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetAdScriptAncestryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAdScriptAncestryCommandParameters, GetAdScriptAncestryResult>("Page.getAdScriptAncestry", JsonContext.GetAdScriptAncestryCommandParameters, JsonContext.GetAdScriptAncestryResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAdScriptAncestryCommandParameters, GetAdScriptAncestryResult> GetAdScriptAncestryCommand = new("Page.getAdScriptAncestry", JsonContext.GetAdScriptAncestryCommandParameters, JsonContext.GetAdScriptAncestryResult);
 
     public async Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFrameTreeCommandParameters();
-        return await ExecuteCommandAsync(GetFrameTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetFrameTreeCommandParameters, GetFrameTreeResult>("Page.getFrameTree", JsonContext.GetFrameTreeCommandParameters, JsonContext.GetFrameTreeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetFrameTreeCommandParameters, GetFrameTreeResult> GetFrameTreeCommand = new("Page.getFrameTree", JsonContext.GetFrameTreeCommandParameters, JsonContext.GetFrameTreeResult);
 
     public async Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLayoutMetricsCommandParameters();
-        return await ExecuteCommandAsync(GetLayoutMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetLayoutMetricsCommandParameters, GetLayoutMetricsResult>("Page.getLayoutMetrics", JsonContext.GetLayoutMetricsCommandParameters, JsonContext.GetLayoutMetricsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetLayoutMetricsCommandParameters, GetLayoutMetricsResult> GetLayoutMetricsCommand = new("Page.getLayoutMetrics", JsonContext.GetLayoutMetricsCommandParameters, JsonContext.GetLayoutMetricsResult);
 
     public async Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNavigationHistoryCommandParameters();
-        return await ExecuteCommandAsync(GetNavigationHistoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetNavigationHistoryCommandParameters, GetNavigationHistoryResult>("Page.getNavigationHistory", JsonContext.GetNavigationHistoryCommandParameters, JsonContext.GetNavigationHistoryResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetNavigationHistoryCommandParameters, GetNavigationHistoryResult> GetNavigationHistoryCommand = new("Page.getNavigationHistory", JsonContext.GetNavigationHistoryCommandParameters, JsonContext.GetNavigationHistoryResult);
 
     public async Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResetNavigationHistoryCommandParameters();
-        return await ExecuteCommandAsync(ResetNavigationHistoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ResetNavigationHistoryCommandParameters, ResetNavigationHistoryResult>("Page.resetNavigationHistory", JsonContext.ResetNavigationHistoryCommandParameters, JsonContext.ResetNavigationHistoryResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ResetNavigationHistoryCommandParameters, ResetNavigationHistoryResult> ResetNavigationHistoryCommand = new("Page.resetNavigationHistory", JsonContext.ResetNavigationHistoryCommandParameters, JsonContext.ResetNavigationHistoryResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetResourceContentCommandParameters(FrameId: frameId, Url: url);
-        return await ExecuteCommandAsync(GetResourceContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetResourceContentCommandParameters, GetResourceContentResult>("Page.getResourceContent", JsonContext.GetResourceContentCommandParameters, JsonContext.GetResourceContentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetResourceContentCommandParameters, GetResourceContentResult> GetResourceContentCommand = new("Page.getResourceContent", JsonContext.GetResourceContentCommandParameters, JsonContext.GetResourceContentResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetResourceTreeCommandParameters();
-        return await ExecuteCommandAsync(GetResourceTreeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetResourceTreeCommandParameters, GetResourceTreeResult>("Page.getResourceTree", JsonContext.GetResourceTreeCommandParameters, JsonContext.GetResourceTreeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetResourceTreeCommandParameters, GetResourceTreeResult> GetResourceTreeCommand = new("Page.getResourceTree", JsonContext.GetResourceTreeCommandParameters, JsonContext.GetResourceTreeResult);
 
     public async Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HandleJavaScriptDialogCommandParameters(Accept: accept, PromptText: promptText);
-        return await ExecuteCommandAsync(HandleJavaScriptDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<HandleJavaScriptDialogCommandParameters, HandleJavaScriptDialogResult>("Page.handleJavaScriptDialog", JsonContext.HandleJavaScriptDialogCommandParameters, JsonContext.HandleJavaScriptDialogResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<HandleJavaScriptDialogCommandParameters, HandleJavaScriptDialogResult> HandleJavaScriptDialogCommand = new("Page.handleJavaScriptDialog", JsonContext.HandleJavaScriptDialogCommandParameters, JsonContext.HandleJavaScriptDialogResult);
 
     public async Task<NavigateResult> NavigateAsync(string url, string? referrer = default, TransitionType? transitionType = default, FrameId? frameId = default, ReferrerPolicy? referrerPolicy = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new NavigateCommandParameters(Url: url, Referrer: referrer, TransitionType: transitionType, FrameId: frameId, ReferrerPolicy: referrerPolicy);
-        return await ExecuteCommandAsync(NavigateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<NavigateCommandParameters, NavigateResult>("Page.navigate", JsonContext.NavigateCommandParameters, JsonContext.NavigateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<NavigateCommandParameters, NavigateResult> NavigateCommand = new("Page.navigate", JsonContext.NavigateCommandParameters, JsonContext.NavigateResult);
 
     public async Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new NavigateToHistoryEntryCommandParameters(EntryId: entryId);
-        return await ExecuteCommandAsync(NavigateToHistoryEntryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<NavigateToHistoryEntryCommandParameters, NavigateToHistoryEntryResult>("Page.navigateToHistoryEntry", JsonContext.NavigateToHistoryEntryCommandParameters, JsonContext.NavigateToHistoryEntryResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<NavigateToHistoryEntryCommandParameters, NavigateToHistoryEntryResult> NavigateToHistoryEntryCommand = new("Page.navigateToHistoryEntry", JsonContext.NavigateToHistoryEntryCommandParameters, JsonContext.NavigateToHistoryEntryResult);
 
     public async Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, string? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PrintToPDFCommandParameters(Landscape: landscape, DisplayHeaderFooter: displayHeaderFooter, PrintBackground: printBackground, Scale: scale, PaperWidth: paperWidth, PaperHeight: paperHeight, MarginTop: marginTop, MarginBottom: marginBottom, MarginLeft: marginLeft, MarginRight: marginRight, PageRanges: pageRanges, HeaderTemplate: headerTemplate, FooterTemplate: footerTemplate, PreferCSSPageSize: preferCSSPageSize, TransferMode: transferMode, GenerateTaggedPDF: generateTaggedPDF, GenerateDocumentOutline: generateDocumentOutline);
-        return await ExecuteCommandAsync(PrintToPDFCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<PrintToPDFCommandParameters, PrintToPDFResult>("Page.printToPDF", JsonContext.PrintToPDFCommandParameters, JsonContext.PrintToPDFResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<PrintToPDFCommandParameters, PrintToPDFResult> PrintToPDFCommand = new("Page.printToPDF", JsonContext.PrintToPDFCommandParameters, JsonContext.PrintToPDFResult);
 
     public async Task<ReloadResult> ReloadAsync(bool? ignoreCache = default, string? scriptToEvaluateOnLoad = default, Network.LoaderId? loaderId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReloadCommandParameters(IgnoreCache: ignoreCache, ScriptToEvaluateOnLoad: scriptToEvaluateOnLoad, LoaderId: loaderId);
-        return await ExecuteCommandAsync(ReloadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReloadCommandParameters, ReloadResult>("Page.reload", JsonContext.ReloadCommandParameters, JsonContext.ReloadResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReloadCommandParameters, ReloadResult> ReloadCommand = new("Page.reload", JsonContext.ReloadCommandParameters, JsonContext.ReloadResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveScriptToEvaluateOnLoadCommandParameters(Identifier: identifier);
-        return await ExecuteCommandAsync(RemoveScriptToEvaluateOnLoadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveScriptToEvaluateOnLoadCommandParameters, RemoveScriptToEvaluateOnLoadResult>("Page.removeScriptToEvaluateOnLoad", JsonContext.RemoveScriptToEvaluateOnLoadCommandParameters, JsonContext.RemoveScriptToEvaluateOnLoadResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveScriptToEvaluateOnLoadCommandParameters, RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadCommand = new("Page.removeScriptToEvaluateOnLoad", JsonContext.RemoveScriptToEvaluateOnLoadCommandParameters, JsonContext.RemoveScriptToEvaluateOnLoadResult);
 
     public async Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveScriptToEvaluateOnNewDocumentCommandParameters(Identifier: identifier);
-        return await ExecuteCommandAsync(RemoveScriptToEvaluateOnNewDocumentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveScriptToEvaluateOnNewDocumentCommandParameters, RemoveScriptToEvaluateOnNewDocumentResult>("Page.removeScriptToEvaluateOnNewDocument", JsonContext.RemoveScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.RemoveScriptToEvaluateOnNewDocumentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveScriptToEvaluateOnNewDocumentCommandParameters, RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentCommand = new("Page.removeScriptToEvaluateOnNewDocument", JsonContext.RemoveScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.RemoveScriptToEvaluateOnNewDocumentResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ScreencastFrameAckCommandParameters(SessionId: sessionId);
-        return await ExecuteCommandAsync(ScreencastFrameAckCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ScreencastFrameAckCommandParameters, ScreencastFrameAckResult>("Page.screencastFrameAck", JsonContext.ScreencastFrameAckCommandParameters, JsonContext.ScreencastFrameAckResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ScreencastFrameAckCommandParameters, ScreencastFrameAckResult> ScreencastFrameAckCommand = new("Page.screencastFrameAck", JsonContext.ScreencastFrameAckCommandParameters, JsonContext.ScreencastFrameAckResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SearchInResourceCommandParameters(FrameId: frameId, Url: url, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
-        return await ExecuteCommandAsync(SearchInResourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SearchInResourceCommandParameters, SearchInResourceResult>("Page.searchInResource", JsonContext.SearchInResourceCommandParameters, JsonContext.SearchInResourceResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SearchInResourceCommandParameters, SearchInResourceResult> SearchInResourceCommand = new("Page.searchInResource", JsonContext.SearchInResourceCommandParameters, JsonContext.SearchInResourceResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAdBlockingEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAdBlockingEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAdBlockingEnabledCommandParameters, SetAdBlockingEnabledResult>("Page.setAdBlockingEnabled", JsonContext.SetAdBlockingEnabledCommandParameters, JsonContext.SetAdBlockingEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAdBlockingEnabledCommandParameters, SetAdBlockingEnabledResult> SetAdBlockingEnabledCommand = new("Page.setAdBlockingEnabled", JsonContext.SetAdBlockingEnabledCommandParameters, JsonContext.SetAdBlockingEnabledResult);
 
     public async Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBypassCSPCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetBypassCSPCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetBypassCSPCommandParameters, SetBypassCSPResult>("Page.setBypassCSP", JsonContext.SetBypassCSPCommandParameters, JsonContext.SetBypassCSPResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetBypassCSPCommandParameters, SetBypassCSPResult> SetBypassCSPCommand = new("Page.setBypassCSP", JsonContext.SetBypassCSPCommandParameters, JsonContext.SetBypassCSPResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPermissionsPolicyStateCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetPermissionsPolicyStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetPermissionsPolicyStateCommandParameters, GetPermissionsPolicyStateResult>("Page.getPermissionsPolicyState", JsonContext.GetPermissionsPolicyStateCommandParameters, JsonContext.GetPermissionsPolicyStateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetPermissionsPolicyStateCommandParameters, GetPermissionsPolicyStateResult> GetPermissionsPolicyStateCommand = new("Page.getPermissionsPolicyState", JsonContext.GetPermissionsPolicyStateCommandParameters, JsonContext.GetPermissionsPolicyStateResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetOriginTrialsCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetOriginTrialsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetOriginTrialsCommandParameters, GetOriginTrialsResult>("Page.getOriginTrials", JsonContext.GetOriginTrialsCommandParameters, JsonContext.GetOriginTrialsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetOriginTrialsCommandParameters, GetOriginTrialsResult> GetOriginTrialsCommand = new("Page.getOriginTrials", JsonContext.GetOriginTrialsCommandParameters, JsonContext.GetOriginTrialsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, Emulation.ScreenOrientation? screenOrientation = default, Viewport? viewport = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport);
-        return await ExecuteCommandAsync(SetDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult>("Page.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideCommand = new("Page.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceOrientationOverrideCommandParameters(Alpha: alpha, Beta: beta, Gamma: gamma);
-        return await ExecuteCommandAsync(SetDeviceOrientationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDeviceOrientationOverrideCommandParameters, SetDeviceOrientationOverrideResult>("Page.setDeviceOrientationOverride", JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDeviceOrientationOverrideCommandParameters, SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideCommand = new("Page.setDeviceOrientationOverride", JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetFontFamiliesCommandParameters(FontFamilies: fontFamilies, ForScripts: forScripts);
-        return await ExecuteCommandAsync(SetFontFamiliesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetFontFamiliesCommandParameters, SetFontFamiliesResult>("Page.setFontFamilies", JsonContext.SetFontFamiliesCommandParameters, JsonContext.SetFontFamiliesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetFontFamiliesCommandParameters, SetFontFamiliesResult> SetFontFamiliesCommand = new("Page.setFontFamilies", JsonContext.SetFontFamiliesCommandParameters, JsonContext.SetFontFamiliesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetFontSizesCommandParameters(FontSizes: fontSizes);
-        return await ExecuteCommandAsync(SetFontSizesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetFontSizesCommandParameters, SetFontSizesResult>("Page.setFontSizes", JsonContext.SetFontSizesCommandParameters, JsonContext.SetFontSizesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetFontSizesCommandParameters, SetFontSizesResult> SetFontSizesCommand = new("Page.setFontSizes", JsonContext.SetFontSizesCommandParameters, JsonContext.SetFontSizesResult);
 
     public async Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDocumentContentCommandParameters(FrameId: frameId, Html: html);
-        return await ExecuteCommandAsync(SetDocumentContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDocumentContentCommandParameters, SetDocumentContentResult>("Page.setDocumentContent", JsonContext.SetDocumentContentCommandParameters, JsonContext.SetDocumentContentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDocumentContentCommandParameters, SetDocumentContentResult> SetDocumentContentCommand = new("Page.setDocumentContent", JsonContext.SetDocumentContentCommandParameters, JsonContext.SetDocumentContentResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, DownloadPath: downloadPath);
-        return await ExecuteCommandAsync(SetDownloadBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult>("Page.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult> SetDownloadBehaviorCommand = new("Page.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
 
     [global::System.Obsolete]
     public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetGeolocationOverrideCommandParameters(Latitude: latitude, Longitude: longitude, Accuracy: accuracy);
-        return await ExecuteCommandAsync(SetGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetGeolocationOverrideCommandParameters, SetGeolocationOverrideResult>("Page.setGeolocationOverride", JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetGeolocationOverrideCommandParameters, SetGeolocationOverrideResult> SetGeolocationOverrideCommand = new("Page.setGeolocationOverride", JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult);
 
     public async Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetLifecycleEventsEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetLifecycleEventsEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetLifecycleEventsEnabledCommandParameters, SetLifecycleEventsEnabledResult>("Page.setLifecycleEventsEnabled", JsonContext.SetLifecycleEventsEnabledCommandParameters, JsonContext.SetLifecycleEventsEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetLifecycleEventsEnabledCommandParameters, SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledCommand = new("Page.setLifecycleEventsEnabled", JsonContext.SetLifecycleEventsEnabledCommandParameters, JsonContext.SetLifecycleEventsEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTouchEmulationEnabledCommandParameters(Enabled: enabled, Configuration: configuration);
-        return await ExecuteCommandAsync(SetTouchEmulationEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetTouchEmulationEnabledCommandParameters, SetTouchEmulationEnabledResult>("Page.setTouchEmulationEnabled", JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetTouchEmulationEnabledCommandParameters, SetTouchEmulationEnabledResult> SetTouchEmulationEnabledCommand = new("Page.setTouchEmulationEnabled", JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartScreencastCommandParameters(Format: format, Quality: quality, MaxWidth: maxWidth, MaxHeight: maxHeight, EveryNthFrame: everyNthFrame, MaxFramesInFlight: maxFramesInFlight, SendLastFrame: sendLastFrame);
-        return await ExecuteCommandAsync(StartScreencastCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartScreencastCommandParameters, StartScreencastResult>("Page.startScreencast", JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartScreencastCommandParameters, StartScreencastResult> StartScreencastCommand = new("Page.startScreencast", JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = default, long? maxWidth = default, long? maxHeight = default, long? frameRate = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartScreenRecordingCommandParameters(Audio: audio, MaxWidth: maxWidth, MaxHeight: maxHeight, FrameRate: frameRate);
-        return await ExecuteCommandAsync(StartScreenRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartScreenRecordingCommandParameters, StartScreenRecordingResult>("Page.startScreenRecording", JsonContext.StartScreenRecordingCommandParameters, JsonContext.StartScreenRecordingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartScreenRecordingCommandParameters, StartScreenRecordingResult> StartScreenRecordingCommand = new("Page.startScreenRecording", JsonContext.StartScreenRecordingCommandParameters, JsonContext.StartScreenRecordingResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<StopScreenRecordingResult> StopScreenRecordingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopScreenRecordingCommandParameters();
-        return await ExecuteCommandAsync(StopScreenRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopScreenRecordingCommandParameters, StopScreenRecordingResult>("Page.stopScreenRecording", JsonContext.StopScreenRecordingCommandParameters, JsonContext.StopScreenRecordingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopScreenRecordingCommandParameters, StopScreenRecordingResult> StopScreenRecordingCommand = new("Page.stopScreenRecording", JsonContext.StopScreenRecordingCommandParameters, JsonContext.StopScreenRecordingResult);
 
     public async Task<StopLoadingResult> StopLoadingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopLoadingCommandParameters();
-        return await ExecuteCommandAsync(StopLoadingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopLoadingCommandParameters, StopLoadingResult>("Page.stopLoading", JsonContext.StopLoadingCommandParameters, JsonContext.StopLoadingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopLoadingCommandParameters, StopLoadingResult> StopLoadingCommand = new("Page.stopLoading", JsonContext.StopLoadingCommandParameters, JsonContext.StopLoadingResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CrashCommandParameters();
-        return await ExecuteCommandAsync(CrashCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CrashCommandParameters, CrashResult>("Page.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CrashCommandParameters, CrashResult> CrashCommand = new("Page.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
 
     public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CloseCommandParameters();
-        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CloseCommandParameters, CloseResult>("Page.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("Page.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(string state, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetWebLifecycleStateCommandParameters(State: state);
-        return await ExecuteCommandAsync(SetWebLifecycleStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetWebLifecycleStateCommandParameters, SetWebLifecycleStateResult>("Page.setWebLifecycleState", JsonContext.SetWebLifecycleStateCommandParameters, JsonContext.SetWebLifecycleStateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetWebLifecycleStateCommandParameters, SetWebLifecycleStateResult> SetWebLifecycleStateCommand = new("Page.setWebLifecycleState", JsonContext.SetWebLifecycleStateCommandParameters, JsonContext.SetWebLifecycleStateResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<StopScreencastResult> StopScreencastAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopScreencastCommandParameters();
-        return await ExecuteCommandAsync(StopScreencastCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopScreencastCommandParameters, StopScreencastResult>("Page.stopScreencast", JsonContext.StopScreencastCommandParameters, JsonContext.StopScreencastResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopScreencastCommandParameters, StopScreencastResult> StopScreencastCommand = new("Page.stopScreencast", JsonContext.StopScreencastCommandParameters, JsonContext.StopScreencastResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ProduceCompilationCacheCommandParameters(Scripts: scripts);
-        return await ExecuteCommandAsync(ProduceCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ProduceCompilationCacheCommandParameters, ProduceCompilationCacheResult>("Page.produceCompilationCache", JsonContext.ProduceCompilationCacheCommandParameters, JsonContext.ProduceCompilationCacheResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ProduceCompilationCacheCommandParameters, ProduceCompilationCacheResult> ProduceCompilationCacheCommand = new("Page.produceCompilationCache", JsonContext.ProduceCompilationCacheCommandParameters, JsonContext.ProduceCompilationCacheResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddCompilationCacheCommandParameters(Url: url, Data: data);
-        return await ExecuteCommandAsync(AddCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddCompilationCacheCommandParameters, AddCompilationCacheResult>("Page.addCompilationCache", JsonContext.AddCompilationCacheCommandParameters, JsonContext.AddCompilationCacheResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddCompilationCacheCommandParameters, AddCompilationCacheResult> AddCompilationCacheCommand = new("Page.addCompilationCache", JsonContext.AddCompilationCacheCommandParameters, JsonContext.AddCompilationCacheResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCompilationCacheCommandParameters();
-        return await ExecuteCommandAsync(ClearCompilationCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearCompilationCacheCommandParameters, ClearCompilationCacheResult>("Page.clearCompilationCache", JsonContext.ClearCompilationCacheCommandParameters, JsonContext.ClearCompilationCacheResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearCompilationCacheCommandParameters, ClearCompilationCacheResult> ClearCompilationCacheCommand = new("Page.clearCompilationCache", JsonContext.ClearCompilationCacheCommandParameters, JsonContext.ClearCompilationCacheResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSPCTransactionModeCommandParameters(Mode: mode);
-        return await ExecuteCommandAsync(SetSPCTransactionModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSPCTransactionModeCommandParameters, SetSPCTransactionModeResult>("Page.setSPCTransactionMode", JsonContext.SetSPCTransactionModeCommandParameters, JsonContext.SetSPCTransactionModeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSPCTransactionModeCommandParameters, SetSPCTransactionModeResult> SetSPCTransactionModeCommand = new("Page.setSPCTransactionMode", JsonContext.SetSPCTransactionModeCommandParameters, JsonContext.SetSPCTransactionModeResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRPHRegistrationModeCommandParameters(Mode: mode);
-        return await ExecuteCommandAsync(SetRPHRegistrationModeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetRPHRegistrationModeCommandParameters, SetRPHRegistrationModeResult>("Page.setRPHRegistrationMode", JsonContext.SetRPHRegistrationModeCommandParameters, JsonContext.SetRPHRegistrationModeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetRPHRegistrationModeCommandParameters, SetRPHRegistrationModeResult> SetRPHRegistrationModeCommand = new("Page.setRPHRegistrationMode", JsonContext.SetRPHRegistrationModeCommandParameters, JsonContext.SetRPHRegistrationModeResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GenerateTestReportCommandParameters(Message: message, Group: group);
-        return await ExecuteCommandAsync(GenerateTestReportCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GenerateTestReportCommandParameters, GenerateTestReportResult>("Page.generateTestReport", JsonContext.GenerateTestReportCommandParameters, JsonContext.GenerateTestReportResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GenerateTestReportCommandParameters, GenerateTestReportResult> GenerateTestReportCommand = new("Page.generateTestReport", JsonContext.GenerateTestReportCommandParameters, JsonContext.GenerateTestReportResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new WaitForDebuggerCommandParameters();
-        return await ExecuteCommandAsync(WaitForDebuggerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<WaitForDebuggerCommandParameters, WaitForDebuggerResult>("Page.waitForDebugger", JsonContext.WaitForDebuggerCommandParameters, JsonContext.WaitForDebuggerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<WaitForDebuggerCommandParameters, WaitForDebuggerResult> WaitForDebuggerCommand = new("Page.waitForDebugger", JsonContext.WaitForDebuggerCommandParameters, JsonContext.WaitForDebuggerResult);
 
     public async Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInterceptFileChooserDialogCommandParameters(Enabled: enabled, Cancel: cancel);
-        return await ExecuteCommandAsync(SetInterceptFileChooserDialogCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetInterceptFileChooserDialogCommandParameters, SetInterceptFileChooserDialogResult>("Page.setInterceptFileChooserDialog", JsonContext.SetInterceptFileChooserDialogCommandParameters, JsonContext.SetInterceptFileChooserDialogResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetInterceptFileChooserDialogCommandParameters, SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogCommand = new("Page.setInterceptFileChooserDialog", JsonContext.SetInterceptFileChooserDialogCommandParameters, JsonContext.SetInterceptFileChooserDialogResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPrerenderingAllowedCommandParameters(IsAllowed: isAllowed);
-        return await ExecuteCommandAsync(SetPrerenderingAllowedCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPrerenderingAllowedCommandParameters, SetPrerenderingAllowedResult>("Page.setPrerenderingAllowed", JsonContext.SetPrerenderingAllowedCommandParameters, JsonContext.SetPrerenderingAllowedResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPrerenderingAllowedCommandParameters, SetPrerenderingAllowedResult> SetPrerenderingAllowedCommand = new("Page.setPrerenderingAllowed", JsonContext.SetPrerenderingAllowedCommandParameters, JsonContext.SetPrerenderingAllowedResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnnotatedPageContentCommandParameters(IncludeActionableInformation: includeActionableInformation);
-        return await ExecuteCommandAsync(GetAnnotatedPageContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAnnotatedPageContentCommandParameters, GetAnnotatedPageContentResult>("Page.getAnnotatedPageContent", JsonContext.GetAnnotatedPageContentCommandParameters, JsonContext.GetAnnotatedPageContentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAnnotatedPageContentCommandParameters, GetAnnotatedPageContentResult> GetAnnotatedPageContentCommand = new("Page.getAnnotatedPageContent", JsonContext.GetAnnotatedPageContentCommandParameters, JsonContext.GetAnnotatedPageContentResult);
 
     public IEventSource<DomContentEventFiredEventArgs> DomContentEventFired => CreateCdpEventSource(PageDomainEvent.DomContentEventFired);
     public IEventSource<FileChooserOpenedEventArgs> FileChooserOpened => CreateCdpEventSource(PageDomainEvent.FileChooserOpened);
@@ -5714,75 +5714,84 @@ public static class PageDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DomContentEventFiredEventArgs>> DomContentEventFired { get; } =
-        EventDescriptor<CdpEventArgs<DomContentEventFiredEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DomContentEventFiredEventArgs>> DomContentEventFired =>
+        _domContentEventFired ?? global::System.Threading.Interlocked.CompareExchange(ref _domContentEventFired, EventDescriptor<CdpEventArgs<DomContentEventFiredEventArgs>>.Create(
             "goog:cdp.Page.domContentEventFired",
-            PageJsonSerializerContext.Default.DomContentEventFiredCdpEventArgs);
+            PageJsonSerializerContext.Default.DomContentEventFiredCdpEventArgs), null) ?? _domContentEventFired;
+    private static EventDescriptor<CdpEventArgs<DomContentEventFiredEventArgs>>? _domContentEventFired;
 
     /// <summary>
     /// Emitted only when <b>page.interceptFileChooser</b> is enabled.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FileChooserOpenedEventArgs>> FileChooserOpened { get; } =
-        EventDescriptor<CdpEventArgs<FileChooserOpenedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FileChooserOpenedEventArgs>> FileChooserOpened =>
+        _fileChooserOpened ?? global::System.Threading.Interlocked.CompareExchange(ref _fileChooserOpened, EventDescriptor<CdpEventArgs<FileChooserOpenedEventArgs>>.Create(
             "goog:cdp.Page.fileChooserOpened",
-            PageJsonSerializerContext.Default.FileChooserOpenedCdpEventArgs);
+            PageJsonSerializerContext.Default.FileChooserOpenedCdpEventArgs), null) ?? _fileChooserOpened;
+    private static EventDescriptor<CdpEventArgs<FileChooserOpenedEventArgs>>? _fileChooserOpened;
 
     /// <summary>
     /// Fired when frame has been attached to its parent.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameAttachedEventArgs>> FrameAttached { get; } =
-        EventDescriptor<CdpEventArgs<FrameAttachedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameAttachedEventArgs>> FrameAttached =>
+        _frameAttached ?? global::System.Threading.Interlocked.CompareExchange(ref _frameAttached, EventDescriptor<CdpEventArgs<FrameAttachedEventArgs>>.Create(
             "goog:cdp.Page.frameAttached",
-            PageJsonSerializerContext.Default.FrameAttachedCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameAttachedCdpEventArgs), null) ?? _frameAttached;
+    private static EventDescriptor<CdpEventArgs<FrameAttachedEventArgs>>? _frameAttached;
 
     /// <summary>
     /// Fired when frame no longer has a scheduled navigation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameClearedScheduledNavigationEventArgs>> FrameClearedScheduledNavigation { get; } =
-        EventDescriptor<CdpEventArgs<FrameClearedScheduledNavigationEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameClearedScheduledNavigationEventArgs>> FrameClearedScheduledNavigation =>
+        _frameClearedScheduledNavigation ?? global::System.Threading.Interlocked.CompareExchange(ref _frameClearedScheduledNavigation, EventDescriptor<CdpEventArgs<FrameClearedScheduledNavigationEventArgs>>.Create(
             "goog:cdp.Page.frameClearedScheduledNavigation",
-            PageJsonSerializerContext.Default.FrameClearedScheduledNavigationCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameClearedScheduledNavigationCdpEventArgs), null) ?? _frameClearedScheduledNavigation;
+    private static EventDescriptor<CdpEventArgs<FrameClearedScheduledNavigationEventArgs>>? _frameClearedScheduledNavigation;
 
     /// <summary>
     /// Fired when frame has been detached from its parent.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameDetachedEventArgs>> FrameDetached { get; } =
-        EventDescriptor<CdpEventArgs<FrameDetachedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameDetachedEventArgs>> FrameDetached =>
+        _frameDetached ?? global::System.Threading.Interlocked.CompareExchange(ref _frameDetached, EventDescriptor<CdpEventArgs<FrameDetachedEventArgs>>.Create(
             "goog:cdp.Page.frameDetached",
-            PageJsonSerializerContext.Default.FrameDetachedCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameDetachedCdpEventArgs), null) ?? _frameDetached;
+    private static EventDescriptor<CdpEventArgs<FrameDetachedEventArgs>>? _frameDetached;
 
     /// <summary>
     /// Fired before frame subtree is detached. Emitted before any frame of the
     /// subtree is actually detached.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameSubtreeWillBeDetachedEventArgs>> FrameSubtreeWillBeDetached { get; } =
-        EventDescriptor<CdpEventArgs<FrameSubtreeWillBeDetachedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameSubtreeWillBeDetachedEventArgs>> FrameSubtreeWillBeDetached =>
+        _frameSubtreeWillBeDetached ?? global::System.Threading.Interlocked.CompareExchange(ref _frameSubtreeWillBeDetached, EventDescriptor<CdpEventArgs<FrameSubtreeWillBeDetachedEventArgs>>.Create(
             "goog:cdp.Page.frameSubtreeWillBeDetached",
-            PageJsonSerializerContext.Default.FrameSubtreeWillBeDetachedCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameSubtreeWillBeDetachedCdpEventArgs), null) ?? _frameSubtreeWillBeDetached;
+    private static EventDescriptor<CdpEventArgs<FrameSubtreeWillBeDetachedEventArgs>>? _frameSubtreeWillBeDetached;
 
     /// <summary>
     /// Fired once navigation of the frame has completed. Frame is now associated with the new loader.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameNavigatedEventArgs>> FrameNavigated { get; } =
-        EventDescriptor<CdpEventArgs<FrameNavigatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameNavigatedEventArgs>> FrameNavigated =>
+        _frameNavigated ?? global::System.Threading.Interlocked.CompareExchange(ref _frameNavigated, EventDescriptor<CdpEventArgs<FrameNavigatedEventArgs>>.Create(
             "goog:cdp.Page.frameNavigated",
-            PageJsonSerializerContext.Default.FrameNavigatedCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameNavigatedCdpEventArgs), null) ?? _frameNavigated;
+    private static EventDescriptor<CdpEventArgs<FrameNavigatedEventArgs>>? _frameNavigated;
 
     /// <summary>
     /// Fired when opening document to write to.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DocumentOpenedEventArgs>> DocumentOpened { get; } =
-        EventDescriptor<CdpEventArgs<DocumentOpenedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DocumentOpenedEventArgs>> DocumentOpened =>
+        _documentOpened ?? global::System.Threading.Interlocked.CompareExchange(ref _documentOpened, EventDescriptor<CdpEventArgs<DocumentOpenedEventArgs>>.Create(
             "goog:cdp.Page.documentOpened",
-            PageJsonSerializerContext.Default.DocumentOpenedCdpEventArgs);
+            PageJsonSerializerContext.Default.DocumentOpenedCdpEventArgs), null) ?? _documentOpened;
+    private static EventDescriptor<CdpEventArgs<DocumentOpenedEventArgs>>? _documentOpened;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameResizedEventArgs>> FrameResized { get; } =
-        EventDescriptor<CdpEventArgs<FrameResizedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameResizedEventArgs>> FrameResized =>
+        _frameResized ?? global::System.Threading.Interlocked.CompareExchange(ref _frameResized, EventDescriptor<CdpEventArgs<FrameResizedEventArgs>>.Create(
             "goog:cdp.Page.frameResized",
-            PageJsonSerializerContext.Default.FrameResizedCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameResizedCdpEventArgs), null) ?? _frameResized;
+    private static EventDescriptor<CdpEventArgs<FrameResizedEventArgs>>? _frameResized;
 
     /// <summary>
     /// Fired when a navigation starts. This event is fired for both
@@ -5793,104 +5802,116 @@ public static class PageDomainEvent
     /// navigation becomes a cross-document navigation (such as in the case of a
     /// frameset).
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameStartedNavigatingEventArgs>> FrameStartedNavigating { get; } =
-        EventDescriptor<CdpEventArgs<FrameStartedNavigatingEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameStartedNavigatingEventArgs>> FrameStartedNavigating =>
+        _frameStartedNavigating ?? global::System.Threading.Interlocked.CompareExchange(ref _frameStartedNavigating, EventDescriptor<CdpEventArgs<FrameStartedNavigatingEventArgs>>.Create(
             "goog:cdp.Page.frameStartedNavigating",
-            PageJsonSerializerContext.Default.FrameStartedNavigatingCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameStartedNavigatingCdpEventArgs), null) ?? _frameStartedNavigating;
+    private static EventDescriptor<CdpEventArgs<FrameStartedNavigatingEventArgs>>? _frameStartedNavigating;
 
     /// <summary>
     /// Fired when a renderer-initiated navigation is requested.
     /// Navigation may still be cancelled after the event is issued.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameRequestedNavigationEventArgs>> FrameRequestedNavigation { get; } =
-        EventDescriptor<CdpEventArgs<FrameRequestedNavigationEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameRequestedNavigationEventArgs>> FrameRequestedNavigation =>
+        _frameRequestedNavigation ?? global::System.Threading.Interlocked.CompareExchange(ref _frameRequestedNavigation, EventDescriptor<CdpEventArgs<FrameRequestedNavigationEventArgs>>.Create(
             "goog:cdp.Page.frameRequestedNavigation",
-            PageJsonSerializerContext.Default.FrameRequestedNavigationCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameRequestedNavigationCdpEventArgs), null) ?? _frameRequestedNavigation;
+    private static EventDescriptor<CdpEventArgs<FrameRequestedNavigationEventArgs>>? _frameRequestedNavigation;
 
     /// <summary>
     /// Fired when frame schedules a potential navigation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameScheduledNavigationEventArgs>> FrameScheduledNavigation { get; } =
-        EventDescriptor<CdpEventArgs<FrameScheduledNavigationEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameScheduledNavigationEventArgs>> FrameScheduledNavigation =>
+        _frameScheduledNavigation ?? global::System.Threading.Interlocked.CompareExchange(ref _frameScheduledNavigation, EventDescriptor<CdpEventArgs<FrameScheduledNavigationEventArgs>>.Create(
             "goog:cdp.Page.frameScheduledNavigation",
-            PageJsonSerializerContext.Default.FrameScheduledNavigationCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameScheduledNavigationCdpEventArgs), null) ?? _frameScheduledNavigation;
+    private static EventDescriptor<CdpEventArgs<FrameScheduledNavigationEventArgs>>? _frameScheduledNavigation;
 
     /// <summary>
     /// Fired when frame has started loading.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameStartedLoadingEventArgs>> FrameStartedLoading { get; } =
-        EventDescriptor<CdpEventArgs<FrameStartedLoadingEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameStartedLoadingEventArgs>> FrameStartedLoading =>
+        _frameStartedLoading ?? global::System.Threading.Interlocked.CompareExchange(ref _frameStartedLoading, EventDescriptor<CdpEventArgs<FrameStartedLoadingEventArgs>>.Create(
             "goog:cdp.Page.frameStartedLoading",
-            PageJsonSerializerContext.Default.FrameStartedLoadingCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameStartedLoadingCdpEventArgs), null) ?? _frameStartedLoading;
+    private static EventDescriptor<CdpEventArgs<FrameStartedLoadingEventArgs>>? _frameStartedLoading;
 
     /// <summary>
     /// Fired when frame has stopped loading.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FrameStoppedLoadingEventArgs>> FrameStoppedLoading { get; } =
-        EventDescriptor<CdpEventArgs<FrameStoppedLoadingEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FrameStoppedLoadingEventArgs>> FrameStoppedLoading =>
+        _frameStoppedLoading ?? global::System.Threading.Interlocked.CompareExchange(ref _frameStoppedLoading, EventDescriptor<CdpEventArgs<FrameStoppedLoadingEventArgs>>.Create(
             "goog:cdp.Page.frameStoppedLoading",
-            PageJsonSerializerContext.Default.FrameStoppedLoadingCdpEventArgs);
+            PageJsonSerializerContext.Default.FrameStoppedLoadingCdpEventArgs), null) ?? _frameStoppedLoading;
+    private static EventDescriptor<CdpEventArgs<FrameStoppedLoadingEventArgs>>? _frameStoppedLoading;
 
     /// <summary>
     /// Fired when page is about to start a download.
     /// Deprecated. Use Browser.downloadWillBegin instead.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>> DownloadWillBegin { get; } =
-        EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>> DownloadWillBegin =>
+        _downloadWillBegin ?? global::System.Threading.Interlocked.CompareExchange(ref _downloadWillBegin, EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>>.Create(
             "goog:cdp.Page.downloadWillBegin",
-            PageJsonSerializerContext.Default.DownloadWillBeginCdpEventArgs);
+            PageJsonSerializerContext.Default.DownloadWillBeginCdpEventArgs), null) ?? _downloadWillBegin;
+    private static EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>>? _downloadWillBegin;
 
     /// <summary>
     /// Fired when download makes progress. Last call has |done| == true.
     /// Deprecated. Use Browser.downloadProgress instead.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>> DownloadProgress { get; } =
-        EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>> DownloadProgress =>
+        _downloadProgress ?? global::System.Threading.Interlocked.CompareExchange(ref _downloadProgress, EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>>.Create(
             "goog:cdp.Page.downloadProgress",
-            PageJsonSerializerContext.Default.DownloadProgressCdpEventArgs);
+            PageJsonSerializerContext.Default.DownloadProgressCdpEventArgs), null) ?? _downloadProgress;
+    private static EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>>? _downloadProgress;
 
     /// <summary>
     /// Fired when interstitial page was hidden
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<InterstitialHiddenEventArgs>> InterstitialHidden { get; } =
-        EventDescriptor<CdpEventArgs<InterstitialHiddenEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<InterstitialHiddenEventArgs>> InterstitialHidden =>
+        _interstitialHidden ?? global::System.Threading.Interlocked.CompareExchange(ref _interstitialHidden, EventDescriptor<CdpEventArgs<InterstitialHiddenEventArgs>>.Create(
             "goog:cdp.Page.interstitialHidden",
-            PageJsonSerializerContext.Default.InterstitialHiddenCdpEventArgs);
+            PageJsonSerializerContext.Default.InterstitialHiddenCdpEventArgs), null) ?? _interstitialHidden;
+    private static EventDescriptor<CdpEventArgs<InterstitialHiddenEventArgs>>? _interstitialHidden;
 
     /// <summary>
     /// Fired when interstitial page was shown
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<InterstitialShownEventArgs>> InterstitialShown { get; } =
-        EventDescriptor<CdpEventArgs<InterstitialShownEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<InterstitialShownEventArgs>> InterstitialShown =>
+        _interstitialShown ?? global::System.Threading.Interlocked.CompareExchange(ref _interstitialShown, EventDescriptor<CdpEventArgs<InterstitialShownEventArgs>>.Create(
             "goog:cdp.Page.interstitialShown",
-            PageJsonSerializerContext.Default.InterstitialShownCdpEventArgs);
+            PageJsonSerializerContext.Default.InterstitialShownCdpEventArgs), null) ?? _interstitialShown;
+    private static EventDescriptor<CdpEventArgs<InterstitialShownEventArgs>>? _interstitialShown;
 
     /// <summary>
     /// Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
     /// closed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<JavascriptDialogClosedEventArgs>> JavascriptDialogClosed { get; } =
-        EventDescriptor<CdpEventArgs<JavascriptDialogClosedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<JavascriptDialogClosedEventArgs>> JavascriptDialogClosed =>
+        _javascriptDialogClosed ?? global::System.Threading.Interlocked.CompareExchange(ref _javascriptDialogClosed, EventDescriptor<CdpEventArgs<JavascriptDialogClosedEventArgs>>.Create(
             "goog:cdp.Page.javascriptDialogClosed",
-            PageJsonSerializerContext.Default.JavascriptDialogClosedCdpEventArgs);
+            PageJsonSerializerContext.Default.JavascriptDialogClosedCdpEventArgs), null) ?? _javascriptDialogClosed;
+    private static EventDescriptor<CdpEventArgs<JavascriptDialogClosedEventArgs>>? _javascriptDialogClosed;
 
     /// <summary>
     /// Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
     /// open.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<JavascriptDialogOpeningEventArgs>> JavascriptDialogOpening { get; } =
-        EventDescriptor<CdpEventArgs<JavascriptDialogOpeningEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<JavascriptDialogOpeningEventArgs>> JavascriptDialogOpening =>
+        _javascriptDialogOpening ?? global::System.Threading.Interlocked.CompareExchange(ref _javascriptDialogOpening, EventDescriptor<CdpEventArgs<JavascriptDialogOpeningEventArgs>>.Create(
             "goog:cdp.Page.javascriptDialogOpening",
-            PageJsonSerializerContext.Default.JavascriptDialogOpeningCdpEventArgs);
+            PageJsonSerializerContext.Default.JavascriptDialogOpeningCdpEventArgs), null) ?? _javascriptDialogOpening;
+    private static EventDescriptor<CdpEventArgs<JavascriptDialogOpeningEventArgs>>? _javascriptDialogOpening;
 
     /// <summary>
     /// Fired for lifecycle events (navigation, load, paint, etc) in the current
     /// target (including local frames).
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LifecycleEventEventArgs>> LifecycleEvent { get; } =
-        EventDescriptor<CdpEventArgs<LifecycleEventEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LifecycleEventEventArgs>> LifecycleEvent =>
+        _lifecycleEvent ?? global::System.Threading.Interlocked.CompareExchange(ref _lifecycleEvent, EventDescriptor<CdpEventArgs<LifecycleEventEventArgs>>.Create(
             "goog:cdp.Page.lifecycleEvent",
-            PageJsonSerializerContext.Default.LifecycleEventCdpEventArgs);
+            PageJsonSerializerContext.Default.LifecycleEventCdpEventArgs), null) ?? _lifecycleEvent;
+    private static EventDescriptor<CdpEventArgs<LifecycleEventEventArgs>>? _lifecycleEvent;
 
     /// <summary>
     /// Fired for failed bfcache history navigations if BackForwardCache feature is enabled. Do
@@ -5898,58 +5919,65 @@ public static class PageDomainEvent
     /// main-frame history navigation where the document changes (non-same-document navigations),
     /// when bfcache navigation fails.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<BackForwardCacheNotUsedEventArgs>> BackForwardCacheNotUsed { get; } =
-        EventDescriptor<CdpEventArgs<BackForwardCacheNotUsedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<BackForwardCacheNotUsedEventArgs>> BackForwardCacheNotUsed =>
+        _backForwardCacheNotUsed ?? global::System.Threading.Interlocked.CompareExchange(ref _backForwardCacheNotUsed, EventDescriptor<CdpEventArgs<BackForwardCacheNotUsedEventArgs>>.Create(
             "goog:cdp.Page.backForwardCacheNotUsed",
-            PageJsonSerializerContext.Default.BackForwardCacheNotUsedCdpEventArgs);
+            PageJsonSerializerContext.Default.BackForwardCacheNotUsedCdpEventArgs), null) ?? _backForwardCacheNotUsed;
+    private static EventDescriptor<CdpEventArgs<BackForwardCacheNotUsedEventArgs>>? _backForwardCacheNotUsed;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LoadEventFiredEventArgs>> LoadEventFired { get; } =
-        EventDescriptor<CdpEventArgs<LoadEventFiredEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LoadEventFiredEventArgs>> LoadEventFired =>
+        _loadEventFired ?? global::System.Threading.Interlocked.CompareExchange(ref _loadEventFired, EventDescriptor<CdpEventArgs<LoadEventFiredEventArgs>>.Create(
             "goog:cdp.Page.loadEventFired",
-            PageJsonSerializerContext.Default.LoadEventFiredCdpEventArgs);
+            PageJsonSerializerContext.Default.LoadEventFiredCdpEventArgs), null) ?? _loadEventFired;
+    private static EventDescriptor<CdpEventArgs<LoadEventFiredEventArgs>>? _loadEventFired;
 
     /// <summary>
     /// Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<NavigatedWithinDocumentEventArgs>> NavigatedWithinDocument { get; } =
-        EventDescriptor<CdpEventArgs<NavigatedWithinDocumentEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<NavigatedWithinDocumentEventArgs>> NavigatedWithinDocument =>
+        _navigatedWithinDocument ?? global::System.Threading.Interlocked.CompareExchange(ref _navigatedWithinDocument, EventDescriptor<CdpEventArgs<NavigatedWithinDocumentEventArgs>>.Create(
             "goog:cdp.Page.navigatedWithinDocument",
-            PageJsonSerializerContext.Default.NavigatedWithinDocumentCdpEventArgs);
+            PageJsonSerializerContext.Default.NavigatedWithinDocumentCdpEventArgs), null) ?? _navigatedWithinDocument;
+    private static EventDescriptor<CdpEventArgs<NavigatedWithinDocumentEventArgs>>? _navigatedWithinDocument;
 
     /// <summary>
     /// Compressed image data requested by the <b>startScreencast</b>.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ScreencastFrameEventArgs>> ScreencastFrame { get; } =
-        EventDescriptor<CdpEventArgs<ScreencastFrameEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ScreencastFrameEventArgs>> ScreencastFrame =>
+        _screencastFrame ?? global::System.Threading.Interlocked.CompareExchange(ref _screencastFrame, EventDescriptor<CdpEventArgs<ScreencastFrameEventArgs>>.Create(
             "goog:cdp.Page.screencastFrame",
-            PageJsonSerializerContext.Default.ScreencastFrameCdpEventArgs);
+            PageJsonSerializerContext.Default.ScreencastFrameCdpEventArgs), null) ?? _screencastFrame;
+    private static EventDescriptor<CdpEventArgs<ScreencastFrameEventArgs>>? _screencastFrame;
 
     /// <summary>
     /// Fired when the page with currently enabled screencast was shown or hidden `.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ScreencastVisibilityChangedEventArgs>> ScreencastVisibilityChanged { get; } =
-        EventDescriptor<CdpEventArgs<ScreencastVisibilityChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ScreencastVisibilityChangedEventArgs>> ScreencastVisibilityChanged =>
+        _screencastVisibilityChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _screencastVisibilityChanged, EventDescriptor<CdpEventArgs<ScreencastVisibilityChangedEventArgs>>.Create(
             "goog:cdp.Page.screencastVisibilityChanged",
-            PageJsonSerializerContext.Default.ScreencastVisibilityChangedCdpEventArgs);
+            PageJsonSerializerContext.Default.ScreencastVisibilityChangedCdpEventArgs), null) ?? _screencastVisibilityChanged;
+    private static EventDescriptor<CdpEventArgs<ScreencastVisibilityChangedEventArgs>>? _screencastVisibilityChanged;
 
     /// <summary>
     /// Fired when a new window is going to be opened, via window.open(), link click, form submission,
     /// etc.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WindowOpenEventArgs>> WindowOpen { get; } =
-        EventDescriptor<CdpEventArgs<WindowOpenEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WindowOpenEventArgs>> WindowOpen =>
+        _windowOpen ?? global::System.Threading.Interlocked.CompareExchange(ref _windowOpen, EventDescriptor<CdpEventArgs<WindowOpenEventArgs>>.Create(
             "goog:cdp.Page.windowOpen",
-            PageJsonSerializerContext.Default.WindowOpenCdpEventArgs);
+            PageJsonSerializerContext.Default.WindowOpenCdpEventArgs), null) ?? _windowOpen;
+    private static EventDescriptor<CdpEventArgs<WindowOpenEventArgs>>? _windowOpen;
 
     /// <summary>
     /// Issued for every compilation cache generated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<CompilationCacheProducedEventArgs>> CompilationCacheProduced { get; } =
-        EventDescriptor<CdpEventArgs<CompilationCacheProducedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<CompilationCacheProducedEventArgs>> CompilationCacheProduced =>
+        _compilationCacheProduced ?? global::System.Threading.Interlocked.CompareExchange(ref _compilationCacheProduced, EventDescriptor<CdpEventArgs<CompilationCacheProducedEventArgs>>.Create(
             "goog:cdp.Page.compilationCacheProduced",
-            PageJsonSerializerContext.Default.CompilationCacheProducedCdpEventArgs);
+            PageJsonSerializerContext.Default.CompilationCacheProducedCdpEventArgs), null) ?? _compilationCacheProduced;
+    private static EventDescriptor<CdpEventArgs<CompilationCacheProducedEventArgs>>? _compilationCacheProduced;
 
 }

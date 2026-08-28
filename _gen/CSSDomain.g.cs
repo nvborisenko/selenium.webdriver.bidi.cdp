@@ -818,281 +818,281 @@ public interface ICSS
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ICSS
 {
-    private static CSSJsonSerializerContext JsonContext = CSSJsonSerializerContext.Default;
+    private static readonly CSSJsonSerializerContext JsonContext = CSSJsonSerializerContext.Default;
 
     public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddRuleCommandParameters(StyleSheetId: styleSheetId, RuleText: ruleText, Location: location, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
-        return await ExecuteCommandAsync(AddRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddRuleCommandParameters, AddRuleResult>("CSS.addRule", JsonContext.AddRuleCommandParameters, JsonContext.AddRuleResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddRuleCommandParameters, AddRuleResult> AddRuleCommand = new("CSS.addRule", JsonContext.AddRuleCommandParameters, JsonContext.AddRuleResult);
 
     public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectClassNamesCommandParameters(StyleSheetId: styleSheetId);
-        return await ExecuteCommandAsync(CollectClassNamesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CollectClassNamesCommandParameters, CollectClassNamesResult>("CSS.collectClassNames", JsonContext.CollectClassNamesCommandParameters, JsonContext.CollectClassNamesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CollectClassNamesCommandParameters, CollectClassNamesResult> CollectClassNamesCommand = new("CSS.collectClassNames", JsonContext.CollectClassNamesCommandParameters, JsonContext.CollectClassNamesResult);
 
     public async Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CreateStyleSheetCommandParameters(FrameId: frameId, Force: force);
-        return await ExecuteCommandAsync(CreateStyleSheetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CreateStyleSheetCommandParameters, CreateStyleSheetResult>("CSS.createStyleSheet", JsonContext.CreateStyleSheetCommandParameters, JsonContext.CreateStyleSheetResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CreateStyleSheetCommandParameters, CreateStyleSheetResult> CreateStyleSheetCommand = new("CSS.createStyleSheet", JsonContext.CreateStyleSheetCommandParameters, JsonContext.CreateStyleSheetResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("CSS.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("CSS.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("CSS.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("CSS.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForcePseudoStateCommandParameters(NodeId: nodeId, ForcedPseudoClasses: forcedPseudoClasses);
-        return await ExecuteCommandAsync(ForcePseudoStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ForcePseudoStateCommandParameters, ForcePseudoStateResult>("CSS.forcePseudoState", JsonContext.ForcePseudoStateCommandParameters, JsonContext.ForcePseudoStateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ForcePseudoStateCommandParameters, ForcePseudoStateResult> ForcePseudoStateCommand = new("CSS.forcePseudoState", JsonContext.ForcePseudoStateCommandParameters, JsonContext.ForcePseudoStateResult);
 
     public async Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForceStartingStyleCommandParameters(NodeId: nodeId, Forced: forced);
-        return await ExecuteCommandAsync(ForceStartingStyleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ForceStartingStyleCommandParameters, ForceStartingStyleResult>("CSS.forceStartingStyle", JsonContext.ForceStartingStyleCommandParameters, JsonContext.ForceStartingStyleResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ForceStartingStyleCommandParameters, ForceStartingStyleResult> ForceStartingStyleCommand = new("CSS.forceStartingStyle", JsonContext.ForceStartingStyleCommandParameters, JsonContext.ForceStartingStyleResult);
 
     public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBackgroundColorsCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetBackgroundColorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetBackgroundColorsCommandParameters, GetBackgroundColorsResult>("CSS.getBackgroundColors", JsonContext.GetBackgroundColorsCommandParameters, JsonContext.GetBackgroundColorsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetBackgroundColorsCommandParameters, GetBackgroundColorsResult> GetBackgroundColorsCommand = new("CSS.getBackgroundColors", JsonContext.GetBackgroundColorsCommandParameters, JsonContext.GetBackgroundColorsResult);
 
     public async Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetComputedStyleForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetComputedStyleForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetComputedStyleForNodeCommandParameters, GetComputedStyleForNodeResult>("CSS.getComputedStyleForNode", JsonContext.GetComputedStyleForNodeCommandParameters, JsonContext.GetComputedStyleForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetComputedStyleForNodeCommandParameters, GetComputedStyleForNodeResult> GetComputedStyleForNodeCommand = new("CSS.getComputedStyleForNode", JsonContext.GetComputedStyleForNodeCommandParameters, JsonContext.GetComputedStyleForNodeResult);
 
     public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = default, DOM.PseudoType? pseudoType = default, string? pseudoIdentifier = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveValuesCommandParameters(Values: values, NodeId: nodeId, PropertyName: propertyName, PseudoType: pseudoType, PseudoIdentifier: pseudoIdentifier);
-        return await ExecuteCommandAsync(ResolveValuesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ResolveValuesCommandParameters, ResolveValuesResult>("CSS.resolveValues", JsonContext.ResolveValuesCommandParameters, JsonContext.ResolveValuesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ResolveValuesCommandParameters, ResolveValuesResult> ResolveValuesCommand = new("CSS.resolveValues", JsonContext.ResolveValuesCommandParameters, JsonContext.ResolveValuesResult);
 
     public async Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLonghandPropertiesCommandParameters(ShorthandName: shorthandName, Value: value);
-        return await ExecuteCommandAsync(GetLonghandPropertiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetLonghandPropertiesCommandParameters, GetLonghandPropertiesResult>("CSS.getLonghandProperties", JsonContext.GetLonghandPropertiesCommandParameters, JsonContext.GetLonghandPropertiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetLonghandPropertiesCommandParameters, GetLonghandPropertiesResult> GetLonghandPropertiesCommand = new("CSS.getLonghandProperties", JsonContext.GetLonghandPropertiesCommandParameters, JsonContext.GetLonghandPropertiesResult);
 
     public async Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetInlineStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetInlineStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetInlineStylesForNodeCommandParameters, GetInlineStylesForNodeResult>("CSS.getInlineStylesForNode", JsonContext.GetInlineStylesForNodeCommandParameters, JsonContext.GetInlineStylesForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetInlineStylesForNodeCommandParameters, GetInlineStylesForNodeResult> GetInlineStylesForNodeCommand = new("CSS.getInlineStylesForNode", JsonContext.GetInlineStylesForNodeCommandParameters, JsonContext.GetInlineStylesForNodeResult);
 
     public async Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnimatedStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetAnimatedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAnimatedStylesForNodeCommandParameters, GetAnimatedStylesForNodeResult>("CSS.getAnimatedStylesForNode", JsonContext.GetAnimatedStylesForNodeCommandParameters, JsonContext.GetAnimatedStylesForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAnimatedStylesForNodeCommandParameters, GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeCommand = new("CSS.getAnimatedStylesForNode", JsonContext.GetAnimatedStylesForNodeCommandParameters, JsonContext.GetAnimatedStylesForNodeResult);
 
     public async Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMatchedStylesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetMatchedStylesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetMatchedStylesForNodeCommandParameters, GetMatchedStylesForNodeResult>("CSS.getMatchedStylesForNode", JsonContext.GetMatchedStylesForNodeCommandParameters, JsonContext.GetMatchedStylesForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetMatchedStylesForNodeCommandParameters, GetMatchedStylesForNodeResult> GetMatchedStylesForNodeCommand = new("CSS.getMatchedStylesForNode", JsonContext.GetMatchedStylesForNodeCommandParameters, JsonContext.GetMatchedStylesForNodeResult);
 
     public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEnvironmentVariablesCommandParameters();
-        return await ExecuteCommandAsync(GetEnvironmentVariablesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetEnvironmentVariablesCommandParameters, GetEnvironmentVariablesResult>("CSS.getEnvironmentVariables", JsonContext.GetEnvironmentVariablesCommandParameters, JsonContext.GetEnvironmentVariablesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetEnvironmentVariablesCommandParameters, GetEnvironmentVariablesResult> GetEnvironmentVariablesCommand = new("CSS.getEnvironmentVariables", JsonContext.GetEnvironmentVariablesCommandParameters, JsonContext.GetEnvironmentVariablesResult);
 
     public async Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMediaQueriesCommandParameters();
-        return await ExecuteCommandAsync(GetMediaQueriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetMediaQueriesCommandParameters, GetMediaQueriesResult>("CSS.getMediaQueries", JsonContext.GetMediaQueriesCommandParameters, JsonContext.GetMediaQueriesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetMediaQueriesCommandParameters, GetMediaQueriesResult> GetMediaQueriesCommand = new("CSS.getMediaQueries", JsonContext.GetMediaQueriesCommandParameters, JsonContext.GetMediaQueriesResult);
 
     public async Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPlatformFontsForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetPlatformFontsForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetPlatformFontsForNodeCommandParameters, GetPlatformFontsForNodeResult>("CSS.getPlatformFontsForNode", JsonContext.GetPlatformFontsForNodeCommandParameters, JsonContext.GetPlatformFontsForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetPlatformFontsForNodeCommandParameters, GetPlatformFontsForNodeResult> GetPlatformFontsForNodeCommand = new("CSS.getPlatformFontsForNode", JsonContext.GetPlatformFontsForNodeCommandParameters, JsonContext.GetPlatformFontsForNodeResult);
 
     public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId);
-        return await ExecuteCommandAsync(GetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetStyleSheetTextCommandParameters, GetStyleSheetTextResult>("CSS.getStyleSheetText", JsonContext.GetStyleSheetTextCommandParameters, JsonContext.GetStyleSheetTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetStyleSheetTextCommandParameters, GetStyleSheetTextResult> GetStyleSheetTextCommand = new("CSS.getStyleSheetText", JsonContext.GetStyleSheetTextCommandParameters, JsonContext.GetStyleSheetTextResult);
 
     public async Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLayersForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(GetLayersForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetLayersForNodeCommandParameters, GetLayersForNodeResult>("CSS.getLayersForNode", JsonContext.GetLayersForNodeCommandParameters, JsonContext.GetLayersForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetLayersForNodeCommandParameters, GetLayersForNodeResult> GetLayersForNodeCommand = new("CSS.getLayersForNode", JsonContext.GetLayersForNodeCommandParameters, JsonContext.GetLayersForNodeResult);
 
     public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetLocationForSelectorCommandParameters(StyleSheetId: styleSheetId, SelectorText: selectorText);
-        return await ExecuteCommandAsync(GetLocationForSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetLocationForSelectorCommandParameters, GetLocationForSelectorResult>("CSS.getLocationForSelector", JsonContext.GetLocationForSelectorCommandParameters, JsonContext.GetLocationForSelectorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetLocationForSelectorCommandParameters, GetLocationForSelectorResult> GetLocationForSelectorCommand = new("CSS.getLocationForSelector", JsonContext.GetLocationForSelectorCommandParameters, JsonContext.GetLocationForSelectorResult);
 
     public async Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackComputedStyleUpdatesForNodeCommandParameters(NodeId: nodeId);
-        return await ExecuteCommandAsync(TrackComputedStyleUpdatesForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TrackComputedStyleUpdatesForNodeCommandParameters, TrackComputedStyleUpdatesForNodeResult>("CSS.trackComputedStyleUpdatesForNode", JsonContext.TrackComputedStyleUpdatesForNodeCommandParameters, JsonContext.TrackComputedStyleUpdatesForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TrackComputedStyleUpdatesForNodeCommandParameters, TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeCommand = new("CSS.trackComputedStyleUpdatesForNode", JsonContext.TrackComputedStyleUpdatesForNodeCommandParameters, JsonContext.TrackComputedStyleUpdatesForNodeResult);
 
     public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackComputedStyleUpdatesCommandParameters(PropertiesToTrack: propertiesToTrack);
-        return await ExecuteCommandAsync(TrackComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TrackComputedStyleUpdatesCommandParameters, TrackComputedStyleUpdatesResult>("CSS.trackComputedStyleUpdates", JsonContext.TrackComputedStyleUpdatesCommandParameters, JsonContext.TrackComputedStyleUpdatesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TrackComputedStyleUpdatesCommandParameters, TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesCommand = new("CSS.trackComputedStyleUpdates", JsonContext.TrackComputedStyleUpdatesCommandParameters, JsonContext.TrackComputedStyleUpdatesResult);
 
     public async Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeComputedStyleUpdatesCommandParameters();
-        return await ExecuteCommandAsync(TakeComputedStyleUpdatesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TakeComputedStyleUpdatesCommandParameters, TakeComputedStyleUpdatesResult>("CSS.takeComputedStyleUpdates", JsonContext.TakeComputedStyleUpdatesCommandParameters, JsonContext.TakeComputedStyleUpdatesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TakeComputedStyleUpdatesCommandParameters, TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesCommand = new("CSS.takeComputedStyleUpdates", JsonContext.TakeComputedStyleUpdatesCommandParameters, JsonContext.TakeComputedStyleUpdatesResult);
 
     public async Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEffectivePropertyValueForNodeCommandParameters(NodeId: nodeId, PropertyName: propertyName, Value: value);
-        return await ExecuteCommandAsync(SetEffectivePropertyValueForNodeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetEffectivePropertyValueForNodeCommandParameters, SetEffectivePropertyValueForNodeResult>("CSS.setEffectivePropertyValueForNode", JsonContext.SetEffectivePropertyValueForNodeCommandParameters, JsonContext.SetEffectivePropertyValueForNodeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetEffectivePropertyValueForNodeCommandParameters, SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeCommand = new("CSS.setEffectivePropertyValueForNode", JsonContext.SetEffectivePropertyValueForNodeCommandParameters, JsonContext.SetEffectivePropertyValueForNodeResult);
 
     public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPropertyRulePropertyNameCommandParameters(StyleSheetId: styleSheetId, Range: range, PropertyName: propertyName);
-        return await ExecuteCommandAsync(SetPropertyRulePropertyNameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPropertyRulePropertyNameCommandParameters, SetPropertyRulePropertyNameResult>("CSS.setPropertyRulePropertyName", JsonContext.SetPropertyRulePropertyNameCommandParameters, JsonContext.SetPropertyRulePropertyNameResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPropertyRulePropertyNameCommandParameters, SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameCommand = new("CSS.setPropertyRulePropertyName", JsonContext.SetPropertyRulePropertyNameCommandParameters, JsonContext.SetPropertyRulePropertyNameResult);
 
     public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetKeyframeKeyCommandParameters(StyleSheetId: styleSheetId, Range: range, KeyText: keyText);
-        return await ExecuteCommandAsync(SetKeyframeKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetKeyframeKeyCommandParameters, SetKeyframeKeyResult>("CSS.setKeyframeKey", JsonContext.SetKeyframeKeyCommandParameters, JsonContext.SetKeyframeKeyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetKeyframeKeyCommandParameters, SetKeyframeKeyResult> SetKeyframeKeyCommand = new("CSS.setKeyframeKey", JsonContext.SetKeyframeKeyCommandParameters, JsonContext.SetKeyframeKeyResult);
 
     public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetMediaTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetMediaTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetMediaTextCommandParameters, SetMediaTextResult>("CSS.setMediaText", JsonContext.SetMediaTextCommandParameters, JsonContext.SetMediaTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetMediaTextCommandParameters, SetMediaTextResult> SetMediaTextCommand = new("CSS.setMediaText", JsonContext.SetMediaTextCommandParameters, JsonContext.SetMediaTextResult);
 
     [global::System.Obsolete]
     public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetContainerQueryTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetContainerQueryTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetContainerQueryTextCommandParameters, SetContainerQueryTextResult>("CSS.setContainerQueryText", JsonContext.SetContainerQueryTextCommandParameters, JsonContext.SetContainerQueryTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetContainerQueryTextCommandParameters, SetContainerQueryTextResult> SetContainerQueryTextCommand = new("CSS.setContainerQueryText", JsonContext.SetContainerQueryTextCommandParameters, JsonContext.SetContainerQueryTextResult);
 
     public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetContainerQueryConditionTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetContainerQueryConditionTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetContainerQueryConditionTextCommandParameters, SetContainerQueryConditionTextResult>("CSS.setContainerQueryConditionText", JsonContext.SetContainerQueryConditionTextCommandParameters, JsonContext.SetContainerQueryConditionTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetContainerQueryConditionTextCommandParameters, SetContainerQueryConditionTextResult> SetContainerQueryConditionTextCommand = new("CSS.setContainerQueryConditionText", JsonContext.SetContainerQueryConditionTextCommandParameters, JsonContext.SetContainerQueryConditionTextResult);
 
     public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSupportsTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetSupportsTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSupportsTextCommandParameters, SetSupportsTextResult>("CSS.setSupportsText", JsonContext.SetSupportsTextCommandParameters, JsonContext.SetSupportsTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSupportsTextCommandParameters, SetSupportsTextResult> SetSupportsTextCommand = new("CSS.setSupportsText", JsonContext.SetSupportsTextCommandParameters, JsonContext.SetSupportsTextResult);
 
     public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNavigationTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetNavigationTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetNavigationTextCommandParameters, SetNavigationTextResult>("CSS.setNavigationText", JsonContext.SetNavigationTextCommandParameters, JsonContext.SetNavigationTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetNavigationTextCommandParameters, SetNavigationTextResult> SetNavigationTextCommand = new("CSS.setNavigationText", JsonContext.SetNavigationTextCommandParameters, JsonContext.SetNavigationTextResult);
 
     public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetScopeTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
-        return await ExecuteCommandAsync(SetScopeTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetScopeTextCommandParameters, SetScopeTextResult>("CSS.setScopeText", JsonContext.SetScopeTextCommandParameters, JsonContext.SetScopeTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetScopeTextCommandParameters, SetScopeTextResult> SetScopeTextCommand = new("CSS.setScopeText", JsonContext.SetScopeTextCommandParameters, JsonContext.SetScopeTextResult);
 
     public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRuleSelectorCommandParameters(StyleSheetId: styleSheetId, Range: range, Selector: selector);
-        return await ExecuteCommandAsync(SetRuleSelectorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetRuleSelectorCommandParameters, SetRuleSelectorResult>("CSS.setRuleSelector", JsonContext.SetRuleSelectorCommandParameters, JsonContext.SetRuleSelectorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetRuleSelectorCommandParameters, SetRuleSelectorResult> SetRuleSelectorCommand = new("CSS.setRuleSelector", JsonContext.SetRuleSelectorCommandParameters, JsonContext.SetRuleSelectorResult);
 
     public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId, Text: text);
-        return await ExecuteCommandAsync(SetStyleSheetTextCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetStyleSheetTextCommandParameters, SetStyleSheetTextResult>("CSS.setStyleSheetText", JsonContext.SetStyleSheetTextCommandParameters, JsonContext.SetStyleSheetTextResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetStyleSheetTextCommandParameters, SetStyleSheetTextResult> SetStyleSheetTextCommand = new("CSS.setStyleSheetText", JsonContext.SetStyleSheetTextCommandParameters, JsonContext.SetStyleSheetTextResult);
 
     public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStyleTextsCommandParameters(Edits: edits, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
-        return await ExecuteCommandAsync(SetStyleTextsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetStyleTextsCommandParameters, SetStyleTextsResult>("CSS.setStyleTexts", JsonContext.SetStyleTextsCommandParameters, JsonContext.SetStyleTextsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetStyleTextsCommandParameters, SetStyleTextsResult> SetStyleTextsCommand = new("CSS.setStyleTexts", JsonContext.SetStyleTextsCommandParameters, JsonContext.SetStyleTextsResult);
 
     public async Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartRuleUsageTrackingCommandParameters();
-        return await ExecuteCommandAsync(StartRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartRuleUsageTrackingCommandParameters, StartRuleUsageTrackingResult>("CSS.startRuleUsageTracking", JsonContext.StartRuleUsageTrackingCommandParameters, JsonContext.StartRuleUsageTrackingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartRuleUsageTrackingCommandParameters, StartRuleUsageTrackingResult> StartRuleUsageTrackingCommand = new("CSS.startRuleUsageTracking", JsonContext.StartRuleUsageTrackingCommandParameters, JsonContext.StartRuleUsageTrackingResult);
 
     public async Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopRuleUsageTrackingCommandParameters();
-        return await ExecuteCommandAsync(StopRuleUsageTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopRuleUsageTrackingCommandParameters, StopRuleUsageTrackingResult>("CSS.stopRuleUsageTracking", JsonContext.StopRuleUsageTrackingCommandParameters, JsonContext.StopRuleUsageTrackingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopRuleUsageTrackingCommandParameters, StopRuleUsageTrackingResult> StopRuleUsageTrackingCommand = new("CSS.stopRuleUsageTracking", JsonContext.StopRuleUsageTrackingCommandParameters, JsonContext.StopRuleUsageTrackingResult);
 
     public async Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeCoverageDeltaCommandParameters();
-        return await ExecuteCommandAsync(TakeCoverageDeltaCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TakeCoverageDeltaCommandParameters, TakeCoverageDeltaResult>("CSS.takeCoverageDelta", JsonContext.TakeCoverageDeltaCommandParameters, JsonContext.TakeCoverageDeltaResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TakeCoverageDeltaCommandParameters, TakeCoverageDeltaResult> TakeCoverageDeltaCommand = new("CSS.takeCoverageDelta", JsonContext.TakeCoverageDeltaCommandParameters, JsonContext.TakeCoverageDeltaResult);
 
     public async Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetLocalFontsEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetLocalFontsEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetLocalFontsEnabledCommandParameters, SetLocalFontsEnabledResult>("CSS.setLocalFontsEnabled", JsonContext.SetLocalFontsEnabledCommandParameters, JsonContext.SetLocalFontsEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetLocalFontsEnabledCommandParameters, SetLocalFontsEnabledResult> SetLocalFontsEnabledCommand = new("CSS.setLocalFontsEnabled", JsonContext.SetLocalFontsEnabledCommandParameters, JsonContext.SetLocalFontsEnabledResult);
 
     public IEventSource<FontsUpdatedEventArgs> FontsUpdated => CreateCdpEventSource(CSSDomainEvent.FontsUpdated);
     public IEventSource<MediaQueryResultChangedEventArgs> MediaQueryResultChanged => CreateCdpEventSource(CSSDomainEvent.MediaQueryResultChanged);
@@ -2861,50 +2861,56 @@ public static class CSSDomainEvent
     /// Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
     /// web font.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<FontsUpdatedEventArgs>> FontsUpdated { get; } =
-        EventDescriptor<CdpEventArgs<FontsUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<FontsUpdatedEventArgs>> FontsUpdated =>
+        _fontsUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _fontsUpdated, EventDescriptor<CdpEventArgs<FontsUpdatedEventArgs>>.Create(
             "goog:cdp.CSS.fontsUpdated",
-            CSSJsonSerializerContext.Default.FontsUpdatedCdpEventArgs);
+            CSSJsonSerializerContext.Default.FontsUpdatedCdpEventArgs), null) ?? _fontsUpdated;
+    private static EventDescriptor<CdpEventArgs<FontsUpdatedEventArgs>>? _fontsUpdated;
 
     /// <summary>
     /// Fires whenever a MediaQuery result changes (for example, after a browser window has been
     /// resized.) The current implementation considers only viewport-dependent media features.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<MediaQueryResultChangedEventArgs>> MediaQueryResultChanged { get; } =
-        EventDescriptor<CdpEventArgs<MediaQueryResultChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<MediaQueryResultChangedEventArgs>> MediaQueryResultChanged =>
+        _mediaQueryResultChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _mediaQueryResultChanged, EventDescriptor<CdpEventArgs<MediaQueryResultChangedEventArgs>>.Create(
             "goog:cdp.CSS.mediaQueryResultChanged",
-            CSSJsonSerializerContext.Default.MediaQueryResultChangedCdpEventArgs);
+            CSSJsonSerializerContext.Default.MediaQueryResultChangedCdpEventArgs), null) ?? _mediaQueryResultChanged;
+    private static EventDescriptor<CdpEventArgs<MediaQueryResultChangedEventArgs>>? _mediaQueryResultChanged;
 
     /// <summary>
     /// Fired whenever an active document stylesheet is added.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<StyleSheetAddedEventArgs>> StyleSheetAdded { get; } =
-        EventDescriptor<CdpEventArgs<StyleSheetAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<StyleSheetAddedEventArgs>> StyleSheetAdded =>
+        _styleSheetAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _styleSheetAdded, EventDescriptor<CdpEventArgs<StyleSheetAddedEventArgs>>.Create(
             "goog:cdp.CSS.styleSheetAdded",
-            CSSJsonSerializerContext.Default.StyleSheetAddedCdpEventArgs);
+            CSSJsonSerializerContext.Default.StyleSheetAddedCdpEventArgs), null) ?? _styleSheetAdded;
+    private static EventDescriptor<CdpEventArgs<StyleSheetAddedEventArgs>>? _styleSheetAdded;
 
     /// <summary>
     /// Fired whenever a stylesheet is changed as a result of the client operation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<StyleSheetChangedEventArgs>> StyleSheetChanged { get; } =
-        EventDescriptor<CdpEventArgs<StyleSheetChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<StyleSheetChangedEventArgs>> StyleSheetChanged =>
+        _styleSheetChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _styleSheetChanged, EventDescriptor<CdpEventArgs<StyleSheetChangedEventArgs>>.Create(
             "goog:cdp.CSS.styleSheetChanged",
-            CSSJsonSerializerContext.Default.StyleSheetChangedCdpEventArgs);
+            CSSJsonSerializerContext.Default.StyleSheetChangedCdpEventArgs), null) ?? _styleSheetChanged;
+    private static EventDescriptor<CdpEventArgs<StyleSheetChangedEventArgs>>? _styleSheetChanged;
 
     /// <summary>
     /// Fired whenever an active document stylesheet is removed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<StyleSheetRemovedEventArgs>> StyleSheetRemoved { get; } =
-        EventDescriptor<CdpEventArgs<StyleSheetRemovedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<StyleSheetRemovedEventArgs>> StyleSheetRemoved =>
+        _styleSheetRemoved ?? global::System.Threading.Interlocked.CompareExchange(ref _styleSheetRemoved, EventDescriptor<CdpEventArgs<StyleSheetRemovedEventArgs>>.Create(
             "goog:cdp.CSS.styleSheetRemoved",
-            CSSJsonSerializerContext.Default.StyleSheetRemovedCdpEventArgs);
+            CSSJsonSerializerContext.Default.StyleSheetRemovedCdpEventArgs), null) ?? _styleSheetRemoved;
+    private static EventDescriptor<CdpEventArgs<StyleSheetRemovedEventArgs>>? _styleSheetRemoved;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ComputedStyleUpdatedEventArgs>> ComputedStyleUpdated { get; } =
-        EventDescriptor<CdpEventArgs<ComputedStyleUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ComputedStyleUpdatedEventArgs>> ComputedStyleUpdated =>
+        _computedStyleUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _computedStyleUpdated, EventDescriptor<CdpEventArgs<ComputedStyleUpdatedEventArgs>>.Create(
             "goog:cdp.CSS.computedStyleUpdated",
-            CSSJsonSerializerContext.Default.ComputedStyleUpdatedCdpEventArgs);
+            CSSJsonSerializerContext.Default.ComputedStyleUpdatedCdpEventArgs), null) ?? _computedStyleUpdated;
+    private static EventDescriptor<CdpEventArgs<ComputedStyleUpdatedEventArgs>>? _computedStyleUpdated;
 
 }

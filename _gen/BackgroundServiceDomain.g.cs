@@ -106,35 +106,35 @@ public interface IBackgroundService
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IBackgroundService
 {
-    private static BackgroundServiceJsonSerializerContext JsonContext = BackgroundServiceJsonSerializerContext.Default;
+    private static readonly BackgroundServiceJsonSerializerContext JsonContext = BackgroundServiceJsonSerializerContext.Default;
 
     public async Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartObservingCommandParameters(Service: service);
-        return await ExecuteCommandAsync(StartObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartObservingCommandParameters, StartObservingResult>("BackgroundService.startObserving", JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartObservingCommandParameters, StartObservingResult> StartObservingCommand = new("BackgroundService.startObserving", JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult);
 
     public async Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopObservingCommandParameters(Service: service);
-        return await ExecuteCommandAsync(StopObservingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopObservingCommandParameters, StopObservingResult>("BackgroundService.stopObserving", JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopObservingCommandParameters, StopObservingResult> StopObservingCommand = new("BackgroundService.stopObserving", JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult);
 
     public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRecordingCommandParameters(ShouldRecord: shouldRecord, Service: service);
-        return await ExecuteCommandAsync(SetRecordingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetRecordingCommandParameters, SetRecordingResult>("BackgroundService.setRecording", JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetRecordingCommandParameters, SetRecordingResult> SetRecordingCommand = new("BackgroundService.setRecording", JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult);
 
     public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearEventsCommandParameters(Service: service);
-        return await ExecuteCommandAsync(ClearEventsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearEventsCommandParameters, ClearEventsResult>("BackgroundService.clearEvents", JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearEventsCommandParameters, ClearEventsResult> ClearEventsCommand = new("BackgroundService.clearEvents", JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult);
 
     public IEventSource<RecordingStateChangedEventArgs> RecordingStateChanged => CreateCdpEventSource(BackgroundServiceDomainEvent.RecordingStateChanged);
     public IEventSource<BackgroundServiceEventReceivedEventArgs> BackgroundServiceEventReceived => CreateCdpEventSource(BackgroundServiceDomainEvent.BackgroundServiceEventReceived);
@@ -287,18 +287,20 @@ public static class BackgroundServiceDomainEvent
     /// <summary>
     /// Called when the recording state for the service has been updated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<RecordingStateChangedEventArgs>> RecordingStateChanged { get; } =
-        EventDescriptor<CdpEventArgs<RecordingStateChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<RecordingStateChangedEventArgs>> RecordingStateChanged =>
+        _recordingStateChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _recordingStateChanged, EventDescriptor<CdpEventArgs<RecordingStateChangedEventArgs>>.Create(
             "goog:cdp.BackgroundService.recordingStateChanged",
-            BackgroundServiceJsonSerializerContext.Default.RecordingStateChangedCdpEventArgs);
+            BackgroundServiceJsonSerializerContext.Default.RecordingStateChangedCdpEventArgs), null) ?? _recordingStateChanged;
+    private static EventDescriptor<CdpEventArgs<RecordingStateChangedEventArgs>>? _recordingStateChanged;
 
     /// <summary>
     /// Called with all existing backgroundServiceEvents when enabled, and all new
     /// events afterwards if enabled and recording.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<BackgroundServiceEventReceivedEventArgs>> BackgroundServiceEventReceived { get; } =
-        EventDescriptor<CdpEventArgs<BackgroundServiceEventReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<BackgroundServiceEventReceivedEventArgs>> BackgroundServiceEventReceived =>
+        _backgroundServiceEventReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _backgroundServiceEventReceived, EventDescriptor<CdpEventArgs<BackgroundServiceEventReceivedEventArgs>>.Create(
             "goog:cdp.BackgroundService.backgroundServiceEventReceived",
-            BackgroundServiceJsonSerializerContext.Default.BackgroundServiceEventReceivedCdpEventArgs);
+            BackgroundServiceJsonSerializerContext.Default.BackgroundServiceEventReceivedCdpEventArgs), null) ?? _backgroundServiceEventReceived;
+    private static EventDescriptor<CdpEventArgs<BackgroundServiceEventReceivedEventArgs>>? _backgroundServiceEventReceived;
 
 }

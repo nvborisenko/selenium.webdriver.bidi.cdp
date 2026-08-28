@@ -99,42 +99,42 @@ public interface ILog
 
 internal sealed class LogDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ILog
 {
-    private static LogJsonSerializerContext JsonContext = LogJsonSerializerContext.Default;
+    private static readonly LogJsonSerializerContext JsonContext = LogJsonSerializerContext.Default;
 
     public async Task<ClearResult> ClearAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCommandParameters();
-        return await ExecuteCommandAsync(ClearCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearCommandParameters, ClearResult>("Log.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearCommandParameters, ClearResult> ClearCommand = new("Log.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Log.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Log.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Log.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Log.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<StartViolationsReportResult> StartViolationsReportAsync(ImmutableArray<ViolationSetting> config, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartViolationsReportCommandParameters(Config: config);
-        return await ExecuteCommandAsync(StartViolationsReportCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartViolationsReportCommandParameters, StartViolationsReportResult>("Log.startViolationsReport", JsonContext.StartViolationsReportCommandParameters, JsonContext.StartViolationsReportResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartViolationsReportCommandParameters, StartViolationsReportResult> StartViolationsReportCommand = new("Log.startViolationsReport", JsonContext.StartViolationsReportCommandParameters, JsonContext.StartViolationsReportResult);
 
     public async Task<StopViolationsReportResult> StopViolationsReportAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopViolationsReportCommandParameters();
-        return await ExecuteCommandAsync(StopViolationsReportCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopViolationsReportCommandParameters, StopViolationsReportResult>("Log.stopViolationsReport", JsonContext.StopViolationsReportCommandParameters, JsonContext.StopViolationsReportResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopViolationsReportCommandParameters, StopViolationsReportResult> StopViolationsReportCommand = new("Log.stopViolationsReport", JsonContext.StopViolationsReportCommandParameters, JsonContext.StopViolationsReportResult);
 
     public IEventSource<EntryAddedEventArgs> EntryAdded => CreateCdpEventSource(LogDomainEvent.EntryAdded);
 }
@@ -275,9 +275,10 @@ public static class LogDomainEvent
     /// <summary>
     /// Issued when new message was logged.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<EntryAddedEventArgs>> EntryAdded { get; } =
-        EventDescriptor<CdpEventArgs<EntryAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<EntryAddedEventArgs>> EntryAdded =>
+        _entryAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _entryAdded, EventDescriptor<CdpEventArgs<EntryAddedEventArgs>>.Create(
             "goog:cdp.Log.entryAdded",
-            LogJsonSerializerContext.Default.EntryAddedCdpEventArgs);
+            LogJsonSerializerContext.Default.EntryAddedCdpEventArgs), null) ?? _entryAdded;
+    private static EventDescriptor<CdpEventArgs<EntryAddedEventArgs>>? _entryAdded;
 
 }

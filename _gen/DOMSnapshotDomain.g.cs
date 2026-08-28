@@ -110,36 +110,36 @@ public interface IDOMSnapshot
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDOMSnapshot
 {
-    private static DOMSnapshotJsonSerializerContext JsonContext = DOMSnapshotJsonSerializerContext.Default;
+    private static readonly DOMSnapshotJsonSerializerContext JsonContext = DOMSnapshotJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DOMSnapshot.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("DOMSnapshot.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DOMSnapshot.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("DOMSnapshot.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     [global::System.Obsolete]
     public async Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, bool? includeEventListeners = default, bool? includePaintOrder = default, bool? includeUserAgentShadowTree = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSnapshotCommandParameters(ComputedStyleWhitelist: computedStyleWhitelist, IncludeEventListeners: includeEventListeners, IncludePaintOrder: includePaintOrder, IncludeUserAgentShadowTree: includeUserAgentShadowTree);
-        return await ExecuteCommandAsync(GetSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetSnapshotCommandParameters, GetSnapshotResult>("DOMSnapshot.getSnapshot", JsonContext.GetSnapshotCommandParameters, JsonContext.GetSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetSnapshotCommandParameters, GetSnapshotResult> GetSnapshotCommand = new("DOMSnapshot.getSnapshot", JsonContext.GetSnapshotCommandParameters, JsonContext.GetSnapshotResult);
 
     public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, bool? includePaintOrder = default, bool? includeDOMRects = default, bool? includeBlendedBackgroundColors = default, bool? includeTextColorOpacities = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureSnapshotCommandParameters(ComputedStyles: computedStyles, IncludePaintOrder: includePaintOrder, IncludeDOMRects: includeDOMRects, IncludeBlendedBackgroundColors: includeBlendedBackgroundColors, IncludeTextColorOpacities: includeTextColorOpacities);
-        return await ExecuteCommandAsync(CaptureSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult>("DOMSnapshot.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult> CaptureSnapshotCommand = new("DOMSnapshot.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
 
 }
 

@@ -1082,386 +1082,386 @@ public interface IEmulation
 
 internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IEmulation
 {
-    private static EmulationJsonSerializerContext JsonContext = EmulationJsonSerializerContext.Default;
+    private static readonly EmulationJsonSerializerContext JsonContext = EmulationJsonSerializerContext.Default;
 
     [global::System.Obsolete]
     public async Task<CanEmulateResult> CanEmulateAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanEmulateCommandParameters();
-        return await ExecuteCommandAsync(CanEmulateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CanEmulateCommandParameters, CanEmulateResult>("Emulation.canEmulate", JsonContext.CanEmulateCommandParameters, JsonContext.CanEmulateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CanEmulateCommandParameters, CanEmulateResult> CanEmulateCommand = new("Emulation.canEmulate", JsonContext.CanEmulateCommandParameters, JsonContext.CanEmulateResult);
 
     public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceMetricsOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearDeviceMetricsOverrideCommandParameters, ClearDeviceMetricsOverrideResult>("Emulation.clearDeviceMetricsOverride", JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearDeviceMetricsOverrideCommandParameters, ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideCommand = new("Emulation.clearDeviceMetricsOverride", JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult);
 
     public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearGeolocationOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearGeolocationOverrideCommandParameters, ClearGeolocationOverrideResult>("Emulation.clearGeolocationOverride", JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearGeolocationOverrideCommandParameters, ClearGeolocationOverrideResult> ClearGeolocationOverrideCommand = new("Emulation.clearGeolocationOverride", JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ResetPageScaleFactorResult> ResetPageScaleFactorAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResetPageScaleFactorCommandParameters();
-        return await ExecuteCommandAsync(ResetPageScaleFactorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ResetPageScaleFactorCommandParameters, ResetPageScaleFactorResult>("Emulation.resetPageScaleFactor", JsonContext.ResetPageScaleFactorCommandParameters, JsonContext.ResetPageScaleFactorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ResetPageScaleFactorCommandParameters, ResetPageScaleFactorResult> ResetPageScaleFactorCommand = new("Emulation.resetPageScaleFactor", JsonContext.ResetPageScaleFactorCommandParameters, JsonContext.ResetPageScaleFactorResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetFocusEmulationEnabledResult> SetFocusEmulationEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetFocusEmulationEnabledCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetFocusEmulationEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetFocusEmulationEnabledCommandParameters, SetFocusEmulationEnabledResult>("Emulation.setFocusEmulationEnabled", JsonContext.SetFocusEmulationEnabledCommandParameters, JsonContext.SetFocusEmulationEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetFocusEmulationEnabledCommandParameters, SetFocusEmulationEnabledResult> SetFocusEmulationEnabledCommand = new("Emulation.setFocusEmulationEnabled", JsonContext.SetFocusEmulationEnabledCommandParameters, JsonContext.SetFocusEmulationEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetAutoDarkModeOverrideResult> SetAutoDarkModeOverrideAsync(bool? enabled = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutoDarkModeOverrideCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAutoDarkModeOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAutoDarkModeOverrideCommandParameters, SetAutoDarkModeOverrideResult>("Emulation.setAutoDarkModeOverride", JsonContext.SetAutoDarkModeOverrideCommandParameters, JsonContext.SetAutoDarkModeOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAutoDarkModeOverrideCommandParameters, SetAutoDarkModeOverrideResult> SetAutoDarkModeOverrideCommand = new("Emulation.setAutoDarkModeOverride", JsonContext.SetAutoDarkModeOverrideCommandParameters, JsonContext.SetAutoDarkModeOverrideResult);
 
     public async Task<SetCPUThrottlingRateResult> SetCPUThrottlingRateAsync(double rate, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCPUThrottlingRateCommandParameters(Rate: rate);
-        return await ExecuteCommandAsync(SetCPUThrottlingRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCPUThrottlingRateCommandParameters, SetCPUThrottlingRateResult>("Emulation.setCPUThrottlingRate", JsonContext.SetCPUThrottlingRateCommandParameters, JsonContext.SetCPUThrottlingRateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCPUThrottlingRateCommandParameters, SetCPUThrottlingRateResult> SetCPUThrottlingRateCommand = new("Emulation.setCPUThrottlingRate", JsonContext.SetCPUThrottlingRateCommandParameters, JsonContext.SetCPUThrottlingRateResult);
 
     public async Task<SetDefaultBackgroundColorOverrideResult> SetDefaultBackgroundColorOverrideAsync(DOM.RGBA? color = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDefaultBackgroundColorOverrideCommandParameters(Color: color);
-        return await ExecuteCommandAsync(SetDefaultBackgroundColorOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDefaultBackgroundColorOverrideCommandParameters, SetDefaultBackgroundColorOverrideResult>("Emulation.setDefaultBackgroundColorOverride", JsonContext.SetDefaultBackgroundColorOverrideCommandParameters, JsonContext.SetDefaultBackgroundColorOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDefaultBackgroundColorOverrideCommandParameters, SetDefaultBackgroundColorOverrideResult> SetDefaultBackgroundColorOverrideCommand = new("Emulation.setDefaultBackgroundColorOverride", JsonContext.SetDefaultBackgroundColorOverrideCommandParameters, JsonContext.SetDefaultBackgroundColorOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetSafeAreaInsetsOverrideResult> SetSafeAreaInsetsOverrideAsync(SafeAreaInsets insets, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSafeAreaInsetsOverrideCommandParameters(Insets: insets);
-        return await ExecuteCommandAsync(SetSafeAreaInsetsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSafeAreaInsetsOverrideCommandParameters, SetSafeAreaInsetsOverrideResult>("Emulation.setSafeAreaInsetsOverride", JsonContext.SetSafeAreaInsetsOverrideCommandParameters, JsonContext.SetSafeAreaInsetsOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSafeAreaInsetsOverrideCommandParameters, SetSafeAreaInsetsOverrideResult> SetSafeAreaInsetsOverrideCommand = new("Emulation.setSafeAreaInsetsOverride", JsonContext.SetSafeAreaInsetsOverrideCommandParameters, JsonContext.SetSafeAreaInsetsOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideAsync(DOM.Rect? keyboardRect = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualKeyboardGeometryOverrideCommandParameters(KeyboardRect: keyboardRect);
-        return await ExecuteCommandAsync(SetVirtualKeyboardGeometryOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetVirtualKeyboardGeometryOverrideCommandParameters, SetVirtualKeyboardGeometryOverrideResult>("Emulation.setVirtualKeyboardGeometryOverride", JsonContext.SetVirtualKeyboardGeometryOverrideCommandParameters, JsonContext.SetVirtualKeyboardGeometryOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetVirtualKeyboardGeometryOverrideCommandParameters, SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideCommand = new("Emulation.setVirtualKeyboardGeometryOverride", JsonContext.SetVirtualKeyboardGeometryOverrideCommandParameters, JsonContext.SetVirtualKeyboardGeometryOverrideResult);
 
     public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, string? scrollbarType = default, bool? screenOrientationLockEmulation = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation);
-        return await ExecuteCommandAsync(SetDeviceMetricsOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult>("Emulation.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideCommand = new("Emulation.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetDevicePostureOverrideResult> SetDevicePostureOverrideAsync(DevicePosture posture, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDevicePostureOverrideCommandParameters(Posture: posture);
-        return await ExecuteCommandAsync(SetDevicePostureOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDevicePostureOverrideCommandParameters, SetDevicePostureOverrideResult>("Emulation.setDevicePostureOverride", JsonContext.SetDevicePostureOverrideCommandParameters, JsonContext.SetDevicePostureOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDevicePostureOverrideCommandParameters, SetDevicePostureOverrideResult> SetDevicePostureOverrideCommand = new("Emulation.setDevicePostureOverride", JsonContext.SetDevicePostureOverrideCommandParameters, JsonContext.SetDevicePostureOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ClearDevicePostureOverrideResult> ClearDevicePostureOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDevicePostureOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDevicePostureOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearDevicePostureOverrideCommandParameters, ClearDevicePostureOverrideResult>("Emulation.clearDevicePostureOverride", JsonContext.ClearDevicePostureOverrideCommandParameters, JsonContext.ClearDevicePostureOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearDevicePostureOverrideCommandParameters, ClearDevicePostureOverrideResult> ClearDevicePostureOverrideCommand = new("Emulation.clearDevicePostureOverride", JsonContext.ClearDevicePostureOverrideCommandParameters, JsonContext.ClearDevicePostureOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideAsync(ImmutableArray<DisplayFeature> features, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDisplayFeaturesOverrideCommandParameters(Features: features);
-        return await ExecuteCommandAsync(SetDisplayFeaturesOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDisplayFeaturesOverrideCommandParameters, SetDisplayFeaturesOverrideResult>("Emulation.setDisplayFeaturesOverride", JsonContext.SetDisplayFeaturesOverrideCommandParameters, JsonContext.SetDisplayFeaturesOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDisplayFeaturesOverrideCommandParameters, SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideCommand = new("Emulation.setDisplayFeaturesOverride", JsonContext.SetDisplayFeaturesOverrideCommandParameters, JsonContext.SetDisplayFeaturesOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ClearDisplayFeaturesOverrideResult> ClearDisplayFeaturesOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDisplayFeaturesOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearDisplayFeaturesOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearDisplayFeaturesOverrideCommandParameters, ClearDisplayFeaturesOverrideResult>("Emulation.clearDisplayFeaturesOverride", JsonContext.ClearDisplayFeaturesOverrideCommandParameters, JsonContext.ClearDisplayFeaturesOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearDisplayFeaturesOverrideCommandParameters, ClearDisplayFeaturesOverrideResult> ClearDisplayFeaturesOverrideCommand = new("Emulation.clearDisplayFeaturesOverride", JsonContext.ClearDisplayFeaturesOverrideCommandParameters, JsonContext.ClearDisplayFeaturesOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetScrollbarsHiddenResult> SetScrollbarsHiddenAsync(bool hidden, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetScrollbarsHiddenCommandParameters(Hidden: hidden);
-        return await ExecuteCommandAsync(SetScrollbarsHiddenCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetScrollbarsHiddenCommandParameters, SetScrollbarsHiddenResult>("Emulation.setScrollbarsHidden", JsonContext.SetScrollbarsHiddenCommandParameters, JsonContext.SetScrollbarsHiddenResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetScrollbarsHiddenCommandParameters, SetScrollbarsHiddenResult> SetScrollbarsHiddenCommand = new("Emulation.setScrollbarsHidden", JsonContext.SetScrollbarsHiddenCommandParameters, JsonContext.SetScrollbarsHiddenResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetDocumentCookieDisabledResult> SetDocumentCookieDisabledAsync(bool disabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDocumentCookieDisabledCommandParameters(Disabled: disabled);
-        return await ExecuteCommandAsync(SetDocumentCookieDisabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDocumentCookieDisabledCommandParameters, SetDocumentCookieDisabledResult>("Emulation.setDocumentCookieDisabled", JsonContext.SetDocumentCookieDisabledCommandParameters, JsonContext.SetDocumentCookieDisabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDocumentCookieDisabledCommandParameters, SetDocumentCookieDisabledResult> SetDocumentCookieDisabledCommand = new("Emulation.setDocumentCookieDisabled", JsonContext.SetDocumentCookieDisabledCommandParameters, JsonContext.SetDocumentCookieDisabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmitTouchEventsForMouseCommandParameters(Enabled: enabled, Configuration: configuration);
-        return await ExecuteCommandAsync(SetEmitTouchEventsForMouseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetEmitTouchEventsForMouseCommandParameters, SetEmitTouchEventsForMouseResult>("Emulation.setEmitTouchEventsForMouse", JsonContext.SetEmitTouchEventsForMouseCommandParameters, JsonContext.SetEmitTouchEventsForMouseResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetEmitTouchEventsForMouseCommandParameters, SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseCommand = new("Emulation.setEmitTouchEventsForMouse", JsonContext.SetEmitTouchEventsForMouseCommandParameters, JsonContext.SetEmitTouchEventsForMouseResult);
 
     public async Task<SetEmulatedMediaResult> SetEmulatedMediaAsync(string? media = default, ImmutableArray<MediaFeature>? features = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmulatedMediaCommandParameters(Media: media, Features: features);
-        return await ExecuteCommandAsync(SetEmulatedMediaCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetEmulatedMediaCommandParameters, SetEmulatedMediaResult>("Emulation.setEmulatedMedia", JsonContext.SetEmulatedMediaCommandParameters, JsonContext.SetEmulatedMediaResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetEmulatedMediaCommandParameters, SetEmulatedMediaResult> SetEmulatedMediaCommand = new("Emulation.setEmulatedMedia", JsonContext.SetEmulatedMediaCommandParameters, JsonContext.SetEmulatedMediaResult);
 
     public async Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(string type, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmulatedVisionDeficiencyCommandParameters(Type: type);
-        return await ExecuteCommandAsync(SetEmulatedVisionDeficiencyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetEmulatedVisionDeficiencyCommandParameters, SetEmulatedVisionDeficiencyResult>("Emulation.setEmulatedVisionDeficiency", JsonContext.SetEmulatedVisionDeficiencyCommandParameters, JsonContext.SetEmulatedVisionDeficiencyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetEmulatedVisionDeficiencyCommandParameters, SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyCommand = new("Emulation.setEmulatedVisionDeficiency", JsonContext.SetEmulatedVisionDeficiencyCommandParameters, JsonContext.SetEmulatedVisionDeficiencyResult);
 
     public async Task<SetEmulatedOSTextScaleResult> SetEmulatedOSTextScaleAsync(double? scale = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmulatedOSTextScaleCommandParameters(Scale: scale);
-        return await ExecuteCommandAsync(SetEmulatedOSTextScaleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetEmulatedOSTextScaleCommandParameters, SetEmulatedOSTextScaleResult>("Emulation.setEmulatedOSTextScale", JsonContext.SetEmulatedOSTextScaleCommandParameters, JsonContext.SetEmulatedOSTextScaleResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetEmulatedOSTextScaleCommandParameters, SetEmulatedOSTextScaleResult> SetEmulatedOSTextScaleCommand = new("Emulation.setEmulatedOSTextScale", JsonContext.SetEmulatedOSTextScaleCommandParameters, JsonContext.SetEmulatedOSTextScaleResult);
 
     public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, double? altitude = default, double? altitudeAccuracy = default, double? heading = default, double? speed = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetGeolocationOverrideCommandParameters(Latitude: latitude, Longitude: longitude, Accuracy: accuracy, Altitude: altitude, AltitudeAccuracy: altitudeAccuracy, Heading: heading, Speed: speed);
-        return await ExecuteCommandAsync(SetGeolocationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetGeolocationOverrideCommandParameters, SetGeolocationOverrideResult>("Emulation.setGeolocationOverride", JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetGeolocationOverrideCommandParameters, SetGeolocationOverrideResult> SetGeolocationOverrideCommand = new("Emulation.setGeolocationOverride", JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetOverriddenSensorInformationResult> GetOverriddenSensorInformationAsync(SensorType type, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetOverriddenSensorInformationCommandParameters(Type: type);
-        return await ExecuteCommandAsync(GetOverriddenSensorInformationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetOverriddenSensorInformationCommandParameters, GetOverriddenSensorInformationResult>("Emulation.getOverriddenSensorInformation", JsonContext.GetOverriddenSensorInformationCommandParameters, JsonContext.GetOverriddenSensorInformationResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetOverriddenSensorInformationCommandParameters, GetOverriddenSensorInformationResult> GetOverriddenSensorInformationCommand = new("Emulation.getOverriddenSensorInformation", JsonContext.GetOverriddenSensorInformationCommandParameters, JsonContext.GetOverriddenSensorInformationResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetSensorOverrideEnabledResult> SetSensorOverrideEnabledAsync(bool enabled, SensorType type, SensorMetadata? metadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSensorOverrideEnabledCommandParameters(Enabled: enabled, Type: type, Metadata: metadata);
-        return await ExecuteCommandAsync(SetSensorOverrideEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSensorOverrideEnabledCommandParameters, SetSensorOverrideEnabledResult>("Emulation.setSensorOverrideEnabled", JsonContext.SetSensorOverrideEnabledCommandParameters, JsonContext.SetSensorOverrideEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSensorOverrideEnabledCommandParameters, SetSensorOverrideEnabledResult> SetSensorOverrideEnabledCommand = new("Emulation.setSensorOverrideEnabled", JsonContext.SetSensorOverrideEnabledCommandParameters, JsonContext.SetSensorOverrideEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetSensorOverrideReadingsResult> SetSensorOverrideReadingsAsync(SensorType type, SensorReading reading, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSensorOverrideReadingsCommandParameters(Type: type, Reading: reading);
-        return await ExecuteCommandAsync(SetSensorOverrideReadingsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSensorOverrideReadingsCommandParameters, SetSensorOverrideReadingsResult>("Emulation.setSensorOverrideReadings", JsonContext.SetSensorOverrideReadingsCommandParameters, JsonContext.SetSensorOverrideReadingsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSensorOverrideReadingsCommandParameters, SetSensorOverrideReadingsResult> SetSensorOverrideReadingsCommand = new("Emulation.setSensorOverrideReadings", JsonContext.SetSensorOverrideReadingsCommandParameters, JsonContext.SetSensorOverrideReadingsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetPressureSourceOverrideEnabledResult> SetPressureSourceOverrideEnabledAsync(bool enabled, PressureSource source, PressureMetadata? metadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPressureSourceOverrideEnabledCommandParameters(Enabled: enabled, Source: source, Metadata: metadata);
-        return await ExecuteCommandAsync(SetPressureSourceOverrideEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPressureSourceOverrideEnabledCommandParameters, SetPressureSourceOverrideEnabledResult>("Emulation.setPressureSourceOverrideEnabled", JsonContext.SetPressureSourceOverrideEnabledCommandParameters, JsonContext.SetPressureSourceOverrideEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPressureSourceOverrideEnabledCommandParameters, SetPressureSourceOverrideEnabledResult> SetPressureSourceOverrideEnabledCommand = new("Emulation.setPressureSourceOverrideEnabled", JsonContext.SetPressureSourceOverrideEnabledCommandParameters, JsonContext.SetPressureSourceOverrideEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetPressureStateOverrideResult> SetPressureStateOverrideAsync(PressureSource source, PressureState state, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPressureStateOverrideCommandParameters(Source: source, State: state);
-        return await ExecuteCommandAsync(SetPressureStateOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPressureStateOverrideCommandParameters, SetPressureStateOverrideResult>("Emulation.setPressureStateOverride", JsonContext.SetPressureStateOverrideCommandParameters, JsonContext.SetPressureStateOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPressureStateOverrideCommandParameters, SetPressureStateOverrideResult> SetPressureStateOverrideCommand = new("Emulation.setPressureStateOverride", JsonContext.SetPressureStateOverrideCommandParameters, JsonContext.SetPressureStateOverrideResult);
 
     public async Task<SetIdleOverrideResult> SetIdleOverrideAsync(bool isUserActive, bool isScreenUnlocked, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetIdleOverrideCommandParameters(IsUserActive: isUserActive, IsScreenUnlocked: isScreenUnlocked);
-        return await ExecuteCommandAsync(SetIdleOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetIdleOverrideCommandParameters, SetIdleOverrideResult>("Emulation.setIdleOverride", JsonContext.SetIdleOverrideCommandParameters, JsonContext.SetIdleOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetIdleOverrideCommandParameters, SetIdleOverrideResult> SetIdleOverrideCommand = new("Emulation.setIdleOverride", JsonContext.SetIdleOverrideCommandParameters, JsonContext.SetIdleOverrideResult);
 
     public async Task<ClearIdleOverrideResult> ClearIdleOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearIdleOverrideCommandParameters();
-        return await ExecuteCommandAsync(ClearIdleOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearIdleOverrideCommandParameters, ClearIdleOverrideResult>("Emulation.clearIdleOverride", JsonContext.ClearIdleOverrideCommandParameters, JsonContext.ClearIdleOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearIdleOverrideCommandParameters, ClearIdleOverrideResult> ClearIdleOverrideCommand = new("Emulation.clearIdleOverride", JsonContext.ClearIdleOverrideCommandParameters, JsonContext.ClearIdleOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetNavigatorOverridesResult> SetNavigatorOverridesAsync(string platform, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNavigatorOverridesCommandParameters(Platform: platform);
-        return await ExecuteCommandAsync(SetNavigatorOverridesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetNavigatorOverridesCommandParameters, SetNavigatorOverridesResult>("Emulation.setNavigatorOverrides", JsonContext.SetNavigatorOverridesCommandParameters, JsonContext.SetNavigatorOverridesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetNavigatorOverridesCommandParameters, SetNavigatorOverridesResult> SetNavigatorOverridesCommand = new("Emulation.setNavigatorOverrides", JsonContext.SetNavigatorOverridesCommandParameters, JsonContext.SetNavigatorOverridesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetPageScaleFactorResult> SetPageScaleFactorAsync(double pageScaleFactor, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPageScaleFactorCommandParameters(PageScaleFactor: pageScaleFactor);
-        return await ExecuteCommandAsync(SetPageScaleFactorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPageScaleFactorCommandParameters, SetPageScaleFactorResult>("Emulation.setPageScaleFactor", JsonContext.SetPageScaleFactorCommandParameters, JsonContext.SetPageScaleFactorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPageScaleFactorCommandParameters, SetPageScaleFactorResult> SetPageScaleFactorCommand = new("Emulation.setPageScaleFactor", JsonContext.SetPageScaleFactorCommandParameters, JsonContext.SetPageScaleFactorResult);
 
     public async Task<SetScriptExecutionDisabledResult> SetScriptExecutionDisabledAsync(bool value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetScriptExecutionDisabledCommandParameters(Value: value);
-        return await ExecuteCommandAsync(SetScriptExecutionDisabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetScriptExecutionDisabledCommandParameters, SetScriptExecutionDisabledResult>("Emulation.setScriptExecutionDisabled", JsonContext.SetScriptExecutionDisabledCommandParameters, JsonContext.SetScriptExecutionDisabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetScriptExecutionDisabledCommandParameters, SetScriptExecutionDisabledResult> SetScriptExecutionDisabledCommand = new("Emulation.setScriptExecutionDisabled", JsonContext.SetScriptExecutionDisabledCommandParameters, JsonContext.SetScriptExecutionDisabledResult);
 
     public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, long? maxTouchPoints = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTouchEmulationEnabledCommandParameters(Enabled: enabled, MaxTouchPoints: maxTouchPoints);
-        return await ExecuteCommandAsync(SetTouchEmulationEnabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetTouchEmulationEnabledCommandParameters, SetTouchEmulationEnabledResult>("Emulation.setTouchEmulationEnabled", JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetTouchEmulationEnabledCommandParameters, SetTouchEmulationEnabledResult> SetTouchEmulationEnabledCommand = new("Emulation.setTouchEmulationEnabled", JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetVirtualTimePolicyResult> SetVirtualTimePolicyAsync(VirtualTimePolicy policy, double? budget = default, long? maxVirtualTimeTaskStarvationCount = default, Network.TimeSinceEpoch? initialVirtualTime = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualTimePolicyCommandParameters(Policy: policy, Budget: budget, MaxVirtualTimeTaskStarvationCount: maxVirtualTimeTaskStarvationCount, InitialVirtualTime: initialVirtualTime);
-        return await ExecuteCommandAsync(SetVirtualTimePolicyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetVirtualTimePolicyCommandParameters, SetVirtualTimePolicyResult>("Emulation.setVirtualTimePolicy", JsonContext.SetVirtualTimePolicyCommandParameters, JsonContext.SetVirtualTimePolicyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetVirtualTimePolicyCommandParameters, SetVirtualTimePolicyResult> SetVirtualTimePolicyCommand = new("Emulation.setVirtualTimePolicy", JsonContext.SetVirtualTimePolicyCommandParameters, JsonContext.SetVirtualTimePolicyResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetLocaleOverrideResult> SetLocaleOverrideAsync(string? locale = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetLocaleOverrideCommandParameters(Locale: locale);
-        return await ExecuteCommandAsync(SetLocaleOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetLocaleOverrideCommandParameters, SetLocaleOverrideResult>("Emulation.setLocaleOverride", JsonContext.SetLocaleOverrideCommandParameters, JsonContext.SetLocaleOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetLocaleOverrideCommandParameters, SetLocaleOverrideResult> SetLocaleOverrideCommand = new("Emulation.setLocaleOverride", JsonContext.SetLocaleOverrideCommandParameters, JsonContext.SetLocaleOverrideResult);
 
     public async Task<SetTimezoneOverrideResult> SetTimezoneOverrideAsync(string timezoneId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimezoneOverrideCommandParameters(TimezoneId: timezoneId);
-        return await ExecuteCommandAsync(SetTimezoneOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetTimezoneOverrideCommandParameters, SetTimezoneOverrideResult>("Emulation.setTimezoneOverride", JsonContext.SetTimezoneOverrideCommandParameters, JsonContext.SetTimezoneOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetTimezoneOverrideCommandParameters, SetTimezoneOverrideResult> SetTimezoneOverrideCommand = new("Emulation.setTimezoneOverride", JsonContext.SetTimezoneOverrideCommandParameters, JsonContext.SetTimezoneOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetVisibleSizeResult> SetVisibleSizeAsync(long width, long height, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetVisibleSizeCommandParameters(Width: width, Height: height);
-        return await ExecuteCommandAsync(SetVisibleSizeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetVisibleSizeCommandParameters, SetVisibleSizeResult>("Emulation.setVisibleSize", JsonContext.SetVisibleSizeCommandParameters, JsonContext.SetVisibleSizeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetVisibleSizeCommandParameters, SetVisibleSizeResult> SetVisibleSizeCommand = new("Emulation.setVisibleSize", JsonContext.SetVisibleSizeCommandParameters, JsonContext.SetVisibleSizeResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetDisabledImageTypesResult> SetDisabledImageTypesAsync(ImmutableArray<DisabledImageType> imageTypes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDisabledImageTypesCommandParameters(ImageTypes: imageTypes);
-        return await ExecuteCommandAsync(SetDisabledImageTypesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDisabledImageTypesCommandParameters, SetDisabledImageTypesResult>("Emulation.setDisabledImageTypes", JsonContext.SetDisabledImageTypesCommandParameters, JsonContext.SetDisabledImageTypesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDisabledImageTypesCommandParameters, SetDisabledImageTypesResult> SetDisabledImageTypesCommand = new("Emulation.setDisabledImageTypes", JsonContext.SetDisabledImageTypesCommandParameters, JsonContext.SetDisabledImageTypesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetDataSaverOverrideResult> SetDataSaverOverrideAsync(bool? dataSaverEnabled = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDataSaverOverrideCommandParameters(DataSaverEnabled: dataSaverEnabled);
-        return await ExecuteCommandAsync(SetDataSaverOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDataSaverOverrideCommandParameters, SetDataSaverOverrideResult>("Emulation.setDataSaverOverride", JsonContext.SetDataSaverOverrideCommandParameters, JsonContext.SetDataSaverOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDataSaverOverrideCommandParameters, SetDataSaverOverrideResult> SetDataSaverOverrideCommand = new("Emulation.setDataSaverOverride", JsonContext.SetDataSaverOverrideCommandParameters, JsonContext.SetDataSaverOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideAsync(long hardwareConcurrency, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetHardwareConcurrencyOverrideCommandParameters(HardwareConcurrency: hardwareConcurrency);
-        return await ExecuteCommandAsync(SetHardwareConcurrencyOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetHardwareConcurrencyOverrideCommandParameters, SetHardwareConcurrencyOverrideResult>("Emulation.setHardwareConcurrencyOverride", JsonContext.SetHardwareConcurrencyOverrideCommandParameters, JsonContext.SetHardwareConcurrencyOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetHardwareConcurrencyOverrideCommandParameters, SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideCommand = new("Emulation.setHardwareConcurrencyOverride", JsonContext.SetHardwareConcurrencyOverrideCommandParameters, JsonContext.SetHardwareConcurrencyOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(string? performanceTier = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCPUPerformanceOverrideCommandParameters(PerformanceTier: performanceTier);
-        return await ExecuteCommandAsync(SetCPUPerformanceOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCPUPerformanceOverrideCommandParameters, SetCPUPerformanceOverrideResult>("Emulation.setCPUPerformanceOverride", JsonContext.SetCPUPerformanceOverrideCommandParameters, JsonContext.SetCPUPerformanceOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCPUPerformanceOverrideCommandParameters, SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideCommand = new("Emulation.setCPUPerformanceOverride", JsonContext.SetCPUPerformanceOverrideCommandParameters, JsonContext.SetCPUPerformanceOverrideResult);
 
     public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
-        return await ExecuteCommandAsync(SetUserAgentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult>("Emulation.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult> SetUserAgentOverrideCommand = new("Emulation.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetAutomationOverrideResult> SetAutomationOverrideAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutomationOverrideCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAutomationOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAutomationOverrideCommandParameters, SetAutomationOverrideResult>("Emulation.setAutomationOverride", JsonContext.SetAutomationOverrideCommandParameters, JsonContext.SetAutomationOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAutomationOverrideCommandParameters, SetAutomationOverrideResult> SetAutomationOverrideCommand = new("Emulation.setAutomationOverride", JsonContext.SetAutomationOverrideCommandParameters, JsonContext.SetAutomationOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetSmallViewportHeightDifferenceOverrideResult> SetSmallViewportHeightDifferenceOverrideAsync(long difference, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSmallViewportHeightDifferenceOverrideCommandParameters(Difference: difference);
-        return await ExecuteCommandAsync(SetSmallViewportHeightDifferenceOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSmallViewportHeightDifferenceOverrideCommandParameters, SetSmallViewportHeightDifferenceOverrideResult>("Emulation.setSmallViewportHeightDifferenceOverride", JsonContext.SetSmallViewportHeightDifferenceOverrideCommandParameters, JsonContext.SetSmallViewportHeightDifferenceOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSmallViewportHeightDifferenceOverrideCommandParameters, SetSmallViewportHeightDifferenceOverrideResult> SetSmallViewportHeightDifferenceOverrideCommand = new("Emulation.setSmallViewportHeightDifferenceOverride", JsonContext.SetSmallViewportHeightDifferenceOverrideCommandParameters, JsonContext.SetSmallViewportHeightDifferenceOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetScreenInfosResult> GetScreenInfosAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetScreenInfosCommandParameters();
-        return await ExecuteCommandAsync(GetScreenInfosCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetScreenInfosCommandParameters, GetScreenInfosResult>("Emulation.getScreenInfos", JsonContext.GetScreenInfosCommandParameters, JsonContext.GetScreenInfosResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetScreenInfosCommandParameters, GetScreenInfosResult> GetScreenInfosCommand = new("Emulation.getScreenInfos", JsonContext.GetScreenInfosCommandParameters, JsonContext.GetScreenInfosResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<AddScreenResult> AddScreenAsync(long left, long top, long width, long height, WorkAreaInsets? workAreaInsets = default, double? devicePixelRatio = default, long? rotation = default, long? colorDepth = default, string? label = default, bool? isInternal = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddScreenCommandParameters(Left: left, Top: top, Width: width, Height: height, WorkAreaInsets: workAreaInsets, DevicePixelRatio: devicePixelRatio, Rotation: rotation, ColorDepth: colorDepth, Label: label, IsInternal: isInternal);
-        return await ExecuteCommandAsync(AddScreenCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddScreenCommandParameters, AddScreenResult>("Emulation.addScreen", JsonContext.AddScreenCommandParameters, JsonContext.AddScreenResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddScreenCommandParameters, AddScreenResult> AddScreenCommand = new("Emulation.addScreen", JsonContext.AddScreenCommandParameters, JsonContext.AddScreenResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<UpdateScreenResult> UpdateScreenAsync(ScreenId screenId, long? left = default, long? top = default, long? width = default, long? height = default, WorkAreaInsets? workAreaInsets = default, double? devicePixelRatio = default, long? rotation = default, long? colorDepth = default, string? label = default, bool? isInternal = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UpdateScreenCommandParameters(ScreenId: screenId, Left: left, Top: top, Width: width, Height: height, WorkAreaInsets: workAreaInsets, DevicePixelRatio: devicePixelRatio, Rotation: rotation, ColorDepth: colorDepth, Label: label, IsInternal: isInternal);
-        return await ExecuteCommandAsync(UpdateScreenCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UpdateScreenCommandParameters, UpdateScreenResult>("Emulation.updateScreen", JsonContext.UpdateScreenCommandParameters, JsonContext.UpdateScreenResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UpdateScreenCommandParameters, UpdateScreenResult> UpdateScreenCommand = new("Emulation.updateScreen", JsonContext.UpdateScreenCommandParameters, JsonContext.UpdateScreenResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<RemoveScreenResult> RemoveScreenAsync(ScreenId screenId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveScreenCommandParameters(ScreenId: screenId);
-        return await ExecuteCommandAsync(RemoveScreenCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveScreenCommandParameters, RemoveScreenResult>("Emulation.removeScreen", JsonContext.RemoveScreenCommandParameters, JsonContext.RemoveScreenResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveScreenCommandParameters, RemoveScreenResult> RemoveScreenCommand = new("Emulation.removeScreen", JsonContext.RemoveScreenCommandParameters, JsonContext.RemoveScreenResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetPrimaryScreenResult> SetPrimaryScreenAsync(ScreenId screenId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPrimaryScreenCommandParameters(ScreenId: screenId);
-        return await ExecuteCommandAsync(SetPrimaryScreenCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPrimaryScreenCommandParameters, SetPrimaryScreenResult>("Emulation.setPrimaryScreen", JsonContext.SetPrimaryScreenCommandParameters, JsonContext.SetPrimaryScreenResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPrimaryScreenCommandParameters, SetPrimaryScreenResult> SetPrimaryScreenCommand = new("Emulation.setPrimaryScreen", JsonContext.SetPrimaryScreenCommandParameters, JsonContext.SetPrimaryScreenResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<VirtualTimeBudgetExpiredEventArgs> VirtualTimeBudgetExpired => CreateCdpEventSource(EmulationDomainEvent.VirtualTimeBudgetExpired);
@@ -2419,19 +2419,21 @@ public static class EmulationDomainEvent
     /// <summary>
     /// Notification sent after the virtual time budget for the current VirtualTimePolicy has run out.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<VirtualTimeBudgetExpiredEventArgs>> VirtualTimeBudgetExpired { get; } =
-        EventDescriptor<CdpEventArgs<VirtualTimeBudgetExpiredEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<VirtualTimeBudgetExpiredEventArgs>> VirtualTimeBudgetExpired =>
+        _virtualTimeBudgetExpired ?? global::System.Threading.Interlocked.CompareExchange(ref _virtualTimeBudgetExpired, EventDescriptor<CdpEventArgs<VirtualTimeBudgetExpiredEventArgs>>.Create(
             "goog:cdp.Emulation.virtualTimeBudgetExpired",
-            EmulationJsonSerializerContext.Default.VirtualTimeBudgetExpiredCdpEventArgs);
+            EmulationJsonSerializerContext.Default.VirtualTimeBudgetExpiredCdpEventArgs), null) ?? _virtualTimeBudgetExpired;
+    private static EventDescriptor<CdpEventArgs<VirtualTimeBudgetExpiredEventArgs>>? _virtualTimeBudgetExpired;
 
     /// <summary>
     /// Fired when a page calls screen.orientation.lock() or screen.orientation.unlock()
     /// while device emulation is enabled. This allows the DevTools frontend to update the
     /// emulated device orientation accordingly.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ScreenOrientationLockChangedEventArgs>> ScreenOrientationLockChanged { get; } =
-        EventDescriptor<CdpEventArgs<ScreenOrientationLockChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ScreenOrientationLockChangedEventArgs>> ScreenOrientationLockChanged =>
+        _screenOrientationLockChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _screenOrientationLockChanged, EventDescriptor<CdpEventArgs<ScreenOrientationLockChangedEventArgs>>.Create(
             "goog:cdp.Emulation.screenOrientationLockChanged",
-            EmulationJsonSerializerContext.Default.ScreenOrientationLockChangedCdpEventArgs);
+            EmulationJsonSerializerContext.Default.ScreenOrientationLockChangedCdpEventArgs), null) ?? _screenOrientationLockChanged;
+    private static EventDescriptor<CdpEventArgs<ScreenOrientationLockChangedEventArgs>>? _screenOrientationLockChanged;
 
 }

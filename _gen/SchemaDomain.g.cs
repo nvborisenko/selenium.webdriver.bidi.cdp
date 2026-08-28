@@ -30,14 +30,14 @@ public interface ISchema
 [global::System.Obsolete]
 internal sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ISchema
 {
-    private static SchemaJsonSerializerContext JsonContext = SchemaJsonSerializerContext.Default;
+    private static readonly SchemaJsonSerializerContext JsonContext = SchemaJsonSerializerContext.Default;
 
     public async Task<GetDomainsResult> GetDomainsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDomainsCommandParameters();
-        return await ExecuteCommandAsync(GetDomainsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetDomainsCommandParameters, GetDomainsResult>("Schema.getDomains", JsonContext.GetDomainsCommandParameters, JsonContext.GetDomainsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetDomainsCommandParameters, GetDomainsResult> GetDomainsCommand = new("Schema.getDomains", JsonContext.GetDomainsCommandParameters, JsonContext.GetDomainsResult);
 
 }
 

@@ -291,91 +291,91 @@ public interface IHeapProfiler
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IHeapProfiler
 {
-    private static HeapProfilerJsonSerializerContext JsonContext = HeapProfilerJsonSerializerContext.Default;
+    private static readonly HeapProfilerJsonSerializerContext JsonContext = HeapProfilerJsonSerializerContext.Default;
 
     public async Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddInspectedHeapObjectCommandParameters(HeapObjectId: heapObjectId);
-        return await ExecuteCommandAsync(AddInspectedHeapObjectCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddInspectedHeapObjectCommandParameters, AddInspectedHeapObjectResult>("HeapProfiler.addInspectedHeapObject", JsonContext.AddInspectedHeapObjectCommandParameters, JsonContext.AddInspectedHeapObjectResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddInspectedHeapObjectCommandParameters, AddInspectedHeapObjectResult> AddInspectedHeapObjectCommand = new("HeapProfiler.addInspectedHeapObject", JsonContext.AddInspectedHeapObjectCommandParameters, JsonContext.AddInspectedHeapObjectResult);
 
     public async Task<CollectGarbageResult> CollectGarbageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectGarbageCommandParameters();
-        return await ExecuteCommandAsync(CollectGarbageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CollectGarbageCommandParameters, CollectGarbageResult>("HeapProfiler.collectGarbage", JsonContext.CollectGarbageCommandParameters, JsonContext.CollectGarbageResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CollectGarbageCommandParameters, CollectGarbageResult> CollectGarbageCommand = new("HeapProfiler.collectGarbage", JsonContext.CollectGarbageCommandParameters, JsonContext.CollectGarbageResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("HeapProfiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("HeapProfiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("HeapProfiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("HeapProfiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHeapObjectIdCommandParameters(ObjectId: objectId);
-        return await ExecuteCommandAsync(GetHeapObjectIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetHeapObjectIdCommandParameters, GetHeapObjectIdResult>("HeapProfiler.getHeapObjectId", JsonContext.GetHeapObjectIdCommandParameters, JsonContext.GetHeapObjectIdResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetHeapObjectIdCommandParameters, GetHeapObjectIdResult> GetHeapObjectIdCommand = new("HeapProfiler.getHeapObjectId", JsonContext.GetHeapObjectIdCommandParameters, JsonContext.GetHeapObjectIdResult);
 
     public async Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetObjectByHeapObjectIdCommandParameters(ObjectId: objectId, ObjectGroup: objectGroup);
-        return await ExecuteCommandAsync(GetObjectByHeapObjectIdCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetObjectByHeapObjectIdCommandParameters, GetObjectByHeapObjectIdResult>("HeapProfiler.getObjectByHeapObjectId", JsonContext.GetObjectByHeapObjectIdCommandParameters, JsonContext.GetObjectByHeapObjectIdResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetObjectByHeapObjectIdCommandParameters, GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdCommand = new("HeapProfiler.getObjectByHeapObjectId", JsonContext.GetObjectByHeapObjectIdCommandParameters, JsonContext.GetObjectByHeapObjectIdResult);
 
     public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSamplingProfileCommandParameters();
-        return await ExecuteCommandAsync(GetSamplingProfileCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetSamplingProfileCommandParameters, GetSamplingProfileResult>("HeapProfiler.getSamplingProfile", JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetSamplingProfileCommandParameters, GetSamplingProfileResult> GetSamplingProfileCommand = new("HeapProfiler.getSamplingProfile", JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult);
 
     public async Task<StartSamplingResult> StartSamplingAsync(double? samplingInterval = default, double? stackDepth = default, bool? includeObjectsCollectedByMajorGC = default, bool? includeObjectsCollectedByMinorGC = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, StackDepth: stackDepth, IncludeObjectsCollectedByMajorGC: includeObjectsCollectedByMajorGC, IncludeObjectsCollectedByMinorGC: includeObjectsCollectedByMinorGC);
-        return await ExecuteCommandAsync(StartSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartSamplingCommandParameters, StartSamplingResult>("HeapProfiler.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartSamplingCommandParameters, StartSamplingResult> StartSamplingCommand = new("HeapProfiler.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
 
     public async Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(bool? trackAllocations = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartTrackingHeapObjectsCommandParameters(TrackAllocations: trackAllocations);
-        return await ExecuteCommandAsync(StartTrackingHeapObjectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartTrackingHeapObjectsCommandParameters, StartTrackingHeapObjectsResult>("HeapProfiler.startTrackingHeapObjects", JsonContext.StartTrackingHeapObjectsCommandParameters, JsonContext.StartTrackingHeapObjectsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartTrackingHeapObjectsCommandParameters, StartTrackingHeapObjectsResult> StartTrackingHeapObjectsCommand = new("HeapProfiler.startTrackingHeapObjects", JsonContext.StartTrackingHeapObjectsCommandParameters, JsonContext.StartTrackingHeapObjectsResult);
 
     public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopSamplingCommandParameters();
-        return await ExecuteCommandAsync(StopSamplingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopSamplingCommandParameters, StopSamplingResult>("HeapProfiler.stopSampling", JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopSamplingCommandParameters, StopSamplingResult> StopSamplingCommand = new("HeapProfiler.stopSampling", JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult);
 
     public async Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopTrackingHeapObjectsCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
-        return await ExecuteCommandAsync(StopTrackingHeapObjectsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopTrackingHeapObjectsCommandParameters, StopTrackingHeapObjectsResult>("HeapProfiler.stopTrackingHeapObjects", JsonContext.StopTrackingHeapObjectsCommandParameters, JsonContext.StopTrackingHeapObjectsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopTrackingHeapObjectsCommandParameters, StopTrackingHeapObjectsResult> StopTrackingHeapObjectsCommand = new("HeapProfiler.stopTrackingHeapObjects", JsonContext.StopTrackingHeapObjectsCommandParameters, JsonContext.StopTrackingHeapObjectsResult);
 
     public async Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeHeapSnapshotCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
-        return await ExecuteCommandAsync(TakeHeapSnapshotCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TakeHeapSnapshotCommandParameters, TakeHeapSnapshotResult>("HeapProfiler.takeHeapSnapshot", JsonContext.TakeHeapSnapshotCommandParameters, JsonContext.TakeHeapSnapshotResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TakeHeapSnapshotCommandParameters, TakeHeapSnapshotResult> TakeHeapSnapshotCommand = new("HeapProfiler.takeHeapSnapshot", JsonContext.TakeHeapSnapshotCommandParameters, JsonContext.TakeHeapSnapshotResult);
 
     public IEventSource<AddHeapSnapshotChunkEventArgs> AddHeapSnapshotChunk => CreateCdpEventSource(HeapProfilerDomainEvent.AddHeapSnapshotChunk);
     public IEventSource<HeapStatsUpdateEventArgs> HeapStatsUpdate => CreateCdpEventSource(HeapProfilerDomainEvent.HeapStatsUpdate);
@@ -625,43 +625,48 @@ public static class HeapProfilerDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AddHeapSnapshotChunkEventArgs>> AddHeapSnapshotChunk { get; } =
-        EventDescriptor<CdpEventArgs<AddHeapSnapshotChunkEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AddHeapSnapshotChunkEventArgs>> AddHeapSnapshotChunk =>
+        _addHeapSnapshotChunk ?? global::System.Threading.Interlocked.CompareExchange(ref _addHeapSnapshotChunk, EventDescriptor<CdpEventArgs<AddHeapSnapshotChunkEventArgs>>.Create(
             "goog:cdp.HeapProfiler.addHeapSnapshotChunk",
-            HeapProfilerJsonSerializerContext.Default.AddHeapSnapshotChunkCdpEventArgs);
+            HeapProfilerJsonSerializerContext.Default.AddHeapSnapshotChunkCdpEventArgs), null) ?? _addHeapSnapshotChunk;
+    private static EventDescriptor<CdpEventArgs<AddHeapSnapshotChunkEventArgs>>? _addHeapSnapshotChunk;
 
     /// <summary>
     /// If heap objects tracking has been started then backend may send update for one or more fragments
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<HeapStatsUpdateEventArgs>> HeapStatsUpdate { get; } =
-        EventDescriptor<CdpEventArgs<HeapStatsUpdateEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<HeapStatsUpdateEventArgs>> HeapStatsUpdate =>
+        _heapStatsUpdate ?? global::System.Threading.Interlocked.CompareExchange(ref _heapStatsUpdate, EventDescriptor<CdpEventArgs<HeapStatsUpdateEventArgs>>.Create(
             "goog:cdp.HeapProfiler.heapStatsUpdate",
-            HeapProfilerJsonSerializerContext.Default.HeapStatsUpdateCdpEventArgs);
+            HeapProfilerJsonSerializerContext.Default.HeapStatsUpdateCdpEventArgs), null) ?? _heapStatsUpdate;
+    private static EventDescriptor<CdpEventArgs<HeapStatsUpdateEventArgs>>? _heapStatsUpdate;
 
     /// <summary>
     /// If heap objects tracking has been started then backend regularly sends a current value for last
     /// seen object id and corresponding timestamp. If the were changes in the heap since last event
     /// then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LastSeenObjectIdEventArgs>> LastSeenObjectId { get; } =
-        EventDescriptor<CdpEventArgs<LastSeenObjectIdEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LastSeenObjectIdEventArgs>> LastSeenObjectId =>
+        _lastSeenObjectId ?? global::System.Threading.Interlocked.CompareExchange(ref _lastSeenObjectId, EventDescriptor<CdpEventArgs<LastSeenObjectIdEventArgs>>.Create(
             "goog:cdp.HeapProfiler.lastSeenObjectId",
-            HeapProfilerJsonSerializerContext.Default.LastSeenObjectIdCdpEventArgs);
+            HeapProfilerJsonSerializerContext.Default.LastSeenObjectIdCdpEventArgs), null) ?? _lastSeenObjectId;
+    private static EventDescriptor<CdpEventArgs<LastSeenObjectIdEventArgs>>? _lastSeenObjectId;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ReportHeapSnapshotProgressEventArgs>> ReportHeapSnapshotProgress { get; } =
-        EventDescriptor<CdpEventArgs<ReportHeapSnapshotProgressEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ReportHeapSnapshotProgressEventArgs>> ReportHeapSnapshotProgress =>
+        _reportHeapSnapshotProgress ?? global::System.Threading.Interlocked.CompareExchange(ref _reportHeapSnapshotProgress, EventDescriptor<CdpEventArgs<ReportHeapSnapshotProgressEventArgs>>.Create(
             "goog:cdp.HeapProfiler.reportHeapSnapshotProgress",
-            HeapProfilerJsonSerializerContext.Default.ReportHeapSnapshotProgressCdpEventArgs);
+            HeapProfilerJsonSerializerContext.Default.ReportHeapSnapshotProgressCdpEventArgs), null) ?? _reportHeapSnapshotProgress;
+    private static EventDescriptor<CdpEventArgs<ReportHeapSnapshotProgressEventArgs>>? _reportHeapSnapshotProgress;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ResetProfilesEventArgs>> ResetProfiles { get; } =
-        EventDescriptor<CdpEventArgs<ResetProfilesEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ResetProfilesEventArgs>> ResetProfiles =>
+        _resetProfiles ?? global::System.Threading.Interlocked.CompareExchange(ref _resetProfiles, EventDescriptor<CdpEventArgs<ResetProfilesEventArgs>>.Create(
             "goog:cdp.HeapProfiler.resetProfiles",
-            HeapProfilerJsonSerializerContext.Default.ResetProfilesCdpEventArgs);
+            HeapProfilerJsonSerializerContext.Default.ResetProfilesCdpEventArgs), null) ?? _resetProfiles;
+    private static EventDescriptor<CdpEventArgs<ResetProfilesEventArgs>>? _resetProfiles;
 
 }

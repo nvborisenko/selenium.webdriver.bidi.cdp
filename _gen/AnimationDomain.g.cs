@@ -232,77 +232,77 @@ public interface IAnimation
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAnimation
 {
-    private static AnimationJsonSerializerContext JsonContext = AnimationJsonSerializerContext.Default;
+    private static readonly AnimationJsonSerializerContext JsonContext = AnimationJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Animation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Animation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Animation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Animation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCurrentTimeCommandParameters(Id: id);
-        return await ExecuteCommandAsync(GetCurrentTimeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetCurrentTimeCommandParameters, GetCurrentTimeResult>("Animation.getCurrentTime", JsonContext.GetCurrentTimeCommandParameters, JsonContext.GetCurrentTimeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetCurrentTimeCommandParameters, GetCurrentTimeResult> GetCurrentTimeCommand = new("Animation.getCurrentTime", JsonContext.GetCurrentTimeCommandParameters, JsonContext.GetCurrentTimeResult);
 
     public async Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPlaybackRateCommandParameters();
-        return await ExecuteCommandAsync(GetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetPlaybackRateCommandParameters, GetPlaybackRateResult>("Animation.getPlaybackRate", JsonContext.GetPlaybackRateCommandParameters, JsonContext.GetPlaybackRateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetPlaybackRateCommandParameters, GetPlaybackRateResult> GetPlaybackRateCommand = new("Animation.getPlaybackRate", JsonContext.GetPlaybackRateCommandParameters, JsonContext.GetPlaybackRateResult);
 
     public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseAnimationsCommandParameters(Animations: animations);
-        return await ExecuteCommandAsync(ReleaseAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReleaseAnimationsCommandParameters, ReleaseAnimationsResult>("Animation.releaseAnimations", JsonContext.ReleaseAnimationsCommandParameters, JsonContext.ReleaseAnimationsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReleaseAnimationsCommandParameters, ReleaseAnimationsResult> ReleaseAnimationsCommand = new("Animation.releaseAnimations", JsonContext.ReleaseAnimationsCommandParameters, JsonContext.ReleaseAnimationsResult);
 
     public async Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveAnimationCommandParameters(AnimationId: animationId);
-        return await ExecuteCommandAsync(ResolveAnimationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ResolveAnimationCommandParameters, ResolveAnimationResult>("Animation.resolveAnimation", JsonContext.ResolveAnimationCommandParameters, JsonContext.ResolveAnimationResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ResolveAnimationCommandParameters, ResolveAnimationResult> ResolveAnimationCommand = new("Animation.resolveAnimation", JsonContext.ResolveAnimationCommandParameters, JsonContext.ResolveAnimationResult);
 
     public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime);
-        return await ExecuteCommandAsync(SeekAnimationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SeekAnimationsCommandParameters, SeekAnimationsResult>("Animation.seekAnimations", JsonContext.SeekAnimationsCommandParameters, JsonContext.SeekAnimationsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SeekAnimationsCommandParameters, SeekAnimationsResult> SeekAnimationsCommand = new("Animation.seekAnimations", JsonContext.SeekAnimationsCommandParameters, JsonContext.SeekAnimationsResult);
 
     public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPausedCommandParameters(Animations: animations, Paused: paused);
-        return await ExecuteCommandAsync(SetPausedCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPausedCommandParameters, SetPausedResult>("Animation.setPaused", JsonContext.SetPausedCommandParameters, JsonContext.SetPausedResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPausedCommandParameters, SetPausedResult> SetPausedCommand = new("Animation.setPaused", JsonContext.SetPausedCommandParameters, JsonContext.SetPausedResult);
 
     public async Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPlaybackRateCommandParameters(PlaybackRate: playbackRate);
-        return await ExecuteCommandAsync(SetPlaybackRateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPlaybackRateCommandParameters, SetPlaybackRateResult>("Animation.setPlaybackRate", JsonContext.SetPlaybackRateCommandParameters, JsonContext.SetPlaybackRateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPlaybackRateCommandParameters, SetPlaybackRateResult> SetPlaybackRateCommand = new("Animation.setPlaybackRate", JsonContext.SetPlaybackRateCommandParameters, JsonContext.SetPlaybackRateResult);
 
     public async Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimingCommandParameters(AnimationId: animationId, Duration: duration, Delay: delay);
-        return await ExecuteCommandAsync(SetTimingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetTimingCommandParameters, SetTimingResult>("Animation.setTiming", JsonContext.SetTimingCommandParameters, JsonContext.SetTimingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetTimingCommandParameters, SetTimingResult> SetTimingCommand = new("Animation.setTiming", JsonContext.SetTimingCommandParameters, JsonContext.SetTimingResult);
 
     public IEventSource<AnimationCanceledEventArgs> AnimationCanceled => CreateCdpEventSource(AnimationDomainEvent.AnimationCanceled);
     public IEventSource<AnimationCreatedEventArgs> AnimationCreated => CreateCdpEventSource(AnimationDomainEvent.AnimationCreated);
@@ -618,33 +618,37 @@ public static class AnimationDomainEvent
     /// <summary>
     /// Event for when an animation has been cancelled.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AnimationCanceledEventArgs>> AnimationCanceled { get; } =
-        EventDescriptor<CdpEventArgs<AnimationCanceledEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AnimationCanceledEventArgs>> AnimationCanceled =>
+        _animationCanceled ?? global::System.Threading.Interlocked.CompareExchange(ref _animationCanceled, EventDescriptor<CdpEventArgs<AnimationCanceledEventArgs>>.Create(
             "goog:cdp.Animation.animationCanceled",
-            AnimationJsonSerializerContext.Default.AnimationCanceledCdpEventArgs);
+            AnimationJsonSerializerContext.Default.AnimationCanceledCdpEventArgs), null) ?? _animationCanceled;
+    private static EventDescriptor<CdpEventArgs<AnimationCanceledEventArgs>>? _animationCanceled;
 
     /// <summary>
     /// Event for each animation that has been created.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AnimationCreatedEventArgs>> AnimationCreated { get; } =
-        EventDescriptor<CdpEventArgs<AnimationCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AnimationCreatedEventArgs>> AnimationCreated =>
+        _animationCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _animationCreated, EventDescriptor<CdpEventArgs<AnimationCreatedEventArgs>>.Create(
             "goog:cdp.Animation.animationCreated",
-            AnimationJsonSerializerContext.Default.AnimationCreatedCdpEventArgs);
+            AnimationJsonSerializerContext.Default.AnimationCreatedCdpEventArgs), null) ?? _animationCreated;
+    private static EventDescriptor<CdpEventArgs<AnimationCreatedEventArgs>>? _animationCreated;
 
     /// <summary>
     /// Event for animation that has been started.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AnimationStartedEventArgs>> AnimationStarted { get; } =
-        EventDescriptor<CdpEventArgs<AnimationStartedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AnimationStartedEventArgs>> AnimationStarted =>
+        _animationStarted ?? global::System.Threading.Interlocked.CompareExchange(ref _animationStarted, EventDescriptor<CdpEventArgs<AnimationStartedEventArgs>>.Create(
             "goog:cdp.Animation.animationStarted",
-            AnimationJsonSerializerContext.Default.AnimationStartedCdpEventArgs);
+            AnimationJsonSerializerContext.Default.AnimationStartedCdpEventArgs), null) ?? _animationStarted;
+    private static EventDescriptor<CdpEventArgs<AnimationStartedEventArgs>>? _animationStarted;
 
     /// <summary>
     /// Event for animation that has been updated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AnimationUpdatedEventArgs>> AnimationUpdated { get; } =
-        EventDescriptor<CdpEventArgs<AnimationUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AnimationUpdatedEventArgs>> AnimationUpdated =>
+        _animationUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _animationUpdated, EventDescriptor<CdpEventArgs<AnimationUpdatedEventArgs>>.Create(
             "goog:cdp.Animation.animationUpdated",
-            AnimationJsonSerializerContext.Default.AnimationUpdatedCdpEventArgs);
+            AnimationJsonSerializerContext.Default.AnimationUpdatedCdpEventArgs), null) ?? _animationUpdated;
+    private static EventDescriptor<CdpEventArgs<AnimationUpdatedEventArgs>>? _animationUpdated;
 
 }

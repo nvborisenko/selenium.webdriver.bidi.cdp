@@ -1392,273 +1392,273 @@ public interface INetwork
 
 internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), INetwork
 {
-    private static NetworkJsonSerializerContext JsonContext = NetworkJsonSerializerContext.Default;
+    private static readonly NetworkJsonSerializerContext JsonContext = NetworkJsonSerializerContext.Default;
 
     [global::System.Obsolete]
     public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCacheCommandParameters();
-        return await ExecuteCommandAsync(CanClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CanClearBrowserCacheCommandParameters, CanClearBrowserCacheResult>("Network.canClearBrowserCache", JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CanClearBrowserCacheCommandParameters, CanClearBrowserCacheResult> CanClearBrowserCacheCommand = new("Network.canClearBrowserCache", JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult);
 
     [global::System.Obsolete]
     public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCookiesCommandParameters();
-        return await ExecuteCommandAsync(CanClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CanClearBrowserCookiesCommandParameters, CanClearBrowserCookiesResult>("Network.canClearBrowserCookies", JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CanClearBrowserCookiesCommandParameters, CanClearBrowserCookiesResult> CanClearBrowserCookiesCommand = new("Network.canClearBrowserCookies", JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult);
 
     [global::System.Obsolete]
     public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanEmulateNetworkConditionsCommandParameters();
-        return await ExecuteCommandAsync(CanEmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CanEmulateNetworkConditionsCommandParameters, CanEmulateNetworkConditionsResult>("Network.canEmulateNetworkConditions", JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CanEmulateNetworkConditionsCommandParameters, CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsCommand = new("Network.canEmulateNetworkConditions", JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult);
 
     public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCacheCommandParameters();
-        return await ExecuteCommandAsync(ClearBrowserCacheCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearBrowserCacheCommandParameters, ClearBrowserCacheResult>("Network.clearBrowserCache", JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearBrowserCacheCommandParameters, ClearBrowserCacheResult> ClearBrowserCacheCommand = new("Network.clearBrowserCache", JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult);
 
     public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCookiesCommandParameters();
-        return await ExecuteCommandAsync(ClearBrowserCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearBrowserCookiesCommandParameters, ClearBrowserCookiesResult>("Network.clearBrowserCookies", JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearBrowserCookiesCommandParameters, ClearBrowserCookiesResult> ClearBrowserCookiesCommand = new("Network.clearBrowserCookies", JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult);
 
     public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCookiesCommandParameters(Name: name, Url: url, Domain: domain, Path: path, PartitionKey: partitionKey);
-        return await ExecuteCommandAsync(DeleteCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DeleteCookiesCommandParameters, DeleteCookiesResult>("Network.deleteCookies", JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DeleteCookiesCommandParameters, DeleteCookiesResult> DeleteCookiesCommand = new("Network.deleteCookies", JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Network.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Network.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     [global::System.Obsolete]
     public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType, PacketLoss: packetLoss, PacketQueueLength: packetQueueLength, PacketReordering: packetReordering);
-        return await ExecuteCommandAsync(EmulateNetworkConditionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EmulateNetworkConditionsCommandParameters, EmulateNetworkConditionsResult>("Network.emulateNetworkConditions", JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EmulateNetworkConditionsCommandParameters, EmulateNetworkConditionsResult> EmulateNetworkConditionsCommand = new("Network.emulateNetworkConditions", JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: offline, EmulateOfflineServiceWorker: emulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
-        return await ExecuteCommandAsync(EmulateNetworkConditionsByRuleCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EmulateNetworkConditionsByRuleCommandParameters, EmulateNetworkConditionsByRuleResult>("Network.emulateNetworkConditionsByRule", JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EmulateNetworkConditionsByRuleCommandParameters, EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleCommand = new("Network.emulateNetworkConditionsByRule", JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType);
-        return await ExecuteCommandAsync(OverrideNetworkStateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<OverrideNetworkStateCommandParameters, OverrideNetworkStateResult>("Network.overrideNetworkState", JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<OverrideNetworkStateCommandParameters, OverrideNetworkStateResult> OverrideNetworkStateCommand = new("Network.overrideNetworkState", JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult);
 
     public async Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize, MaxPostDataSize: maxPostDataSize, ReportDirectSocketTraffic: reportDirectSocketTraffic, EnableDurableMessages: enableDurableMessages);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Network.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Network.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize);
-        return await ExecuteCommandAsync(ConfigureDurableMessagesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ConfigureDurableMessagesCommandParameters, ConfigureDurableMessagesResult>("Network.configureDurableMessages", JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ConfigureDurableMessagesCommandParameters, ConfigureDurableMessagesResult> ConfigureDurableMessagesCommand = new("Network.configureDurableMessages", JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult);
 
     [global::System.Obsolete]
     public async Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAllCookiesCommandParameters();
-        return await ExecuteCommandAsync(GetAllCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAllCookiesCommandParameters, GetAllCookiesResult>("Network.getAllCookies", JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAllCookiesCommandParameters, GetAllCookiesResult> GetAllCookiesCommand = new("Network.getAllCookies", JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCertificateCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(GetCertificateCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetCertificateCommandParameters, GetCertificateResult>("Network.getCertificate", JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetCertificateCommandParameters, GetCertificateResult> GetCertificateCommand = new("Network.getCertificate", JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult);
 
     public async Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCookiesCommandParameters(Urls: urls);
-        return await ExecuteCommandAsync(GetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetCookiesCommandParameters, GetCookiesResult>("Network.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetCookiesCommandParameters, GetCookiesResult> GetCookiesCommand = new("Network.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
 
     public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(GetResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult>("Network.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult> GetResponseBodyCommand = new("Network.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
 
     public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRequestPostDataCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(GetRequestPostDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetRequestPostDataCommandParameters, GetRequestPostDataResult>("Network.getRequestPostData", JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetRequestPostDataCommandParameters, GetRequestPostDataResult> GetRequestPostDataCommand = new("Network.getRequestPostData", JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReplayXHRCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(ReplayXHRCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ReplayXHRCommandParameters, ReplayXHRResult>("Network.replayXHR", JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ReplayXHRCommandParameters, ReplayXHRResult> ReplayXHRCommand = new("Network.replayXHR", JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SearchInResponseBodyCommandParameters(RequestId: requestId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
-        return await ExecuteCommandAsync(SearchInResponseBodyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SearchInResponseBodyCommandParameters, SearchInResponseBodyResult>("Network.searchInResponseBody", JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SearchInResponseBodyCommandParameters, SearchInResponseBodyResult> SearchInResponseBodyCommand = new("Network.searchInResponseBody", JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlockedURLsCommandParameters(UrlPatterns: urlPatterns, Urls: urls);
-        return await ExecuteCommandAsync(SetBlockedURLsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetBlockedURLsCommandParameters, SetBlockedURLsResult>("Network.setBlockedURLs", JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetBlockedURLsCommandParameters, SetBlockedURLsResult> SetBlockedURLsCommand = new("Network.setBlockedURLs", JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult);
 
     public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBypassServiceWorkerCommandParameters(Bypass: bypass);
-        return await ExecuteCommandAsync(SetBypassServiceWorkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetBypassServiceWorkerCommandParameters, SetBypassServiceWorkerResult>("Network.setBypassServiceWorker", JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetBypassServiceWorkerCommandParameters, SetBypassServiceWorkerResult> SetBypassServiceWorkerCommand = new("Network.setBypassServiceWorker", JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult);
 
     public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCacheDisabledCommandParameters(CacheDisabled: cacheDisabled);
-        return await ExecuteCommandAsync(SetCacheDisabledCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCacheDisabledCommandParameters, SetCacheDisabledResult>("Network.setCacheDisabled", JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCacheDisabledCommandParameters, SetCacheDisabledResult> SetCacheDisabledCommand = new("Network.setCacheDisabled", JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult);
 
     public async Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: url, Domain: domain, Path: path, Secure: secure, HttpOnly: httpOnly, SameSite: sameSite, Expires: expires, Priority: priority, SourceScheme: sourceScheme, SourcePort: sourcePort, PartitionKey: partitionKey);
-        return await ExecuteCommandAsync(SetCookieCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCookieCommandParameters, SetCookieResult>("Network.setCookie", JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCookieCommandParameters, SetCookieResult> SetCookieCommand = new("Network.setCookie", JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult);
 
     public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies);
-        return await ExecuteCommandAsync(SetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCookiesCommandParameters, SetCookiesResult>("Network.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCookiesCommandParameters, SetCookiesResult> SetCookiesCommand = new("Network.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
 
     public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetExtraHTTPHeadersCommandParameters(Headers: headers);
-        return await ExecuteCommandAsync(SetExtraHTTPHeadersCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetExtraHTTPHeadersCommandParameters, SetExtraHTTPHeadersResult>("Network.setExtraHTTPHeaders", JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetExtraHTTPHeadersCommandParameters, SetExtraHTTPHeadersResult> SetExtraHTTPHeadersCommand = new("Network.setExtraHTTPHeaders", JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttachDebugStackCommandParameters(Enabled: enabled);
-        return await ExecuteCommandAsync(SetAttachDebugStackCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetAttachDebugStackCommandParameters, SetAttachDebugStackResult>("Network.setAttachDebugStack", JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetAttachDebugStackCommandParameters, SetAttachDebugStackResult> SetAttachDebugStackCommand = new("Network.setAttachDebugStack", JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult);
 
     public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
-        return await ExecuteCommandAsync(SetUserAgentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult>("Network.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult> SetUserAgentOverrideCommand = new("Network.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StreamResourceContentCommandParameters(RequestId: requestId);
-        return await ExecuteCommandAsync(StreamResourceContentCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StreamResourceContentCommandParameters, StreamResourceContentResult>("Network.streamResourceContent", JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StreamResourceContentCommandParameters, StreamResourceContentResult> StreamResourceContentCommand = new("Network.streamResourceContent", JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSecurityIsolationStatusCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetSecurityIsolationStatusCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetSecurityIsolationStatusCommandParameters, GetSecurityIsolationStatusResult>("Network.getSecurityIsolationStatus", JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetSecurityIsolationStatusCommandParameters, GetSecurityIsolationStatusResult> GetSecurityIsolationStatusCommand = new("Network.getSecurityIsolationStatus", JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableReportingApiCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(EnableReportingApiCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableReportingApiCommandParameters, EnableReportingApiResult>("Network.enableReportingApi", JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableReportingApiCommandParameters, EnableReportingApiResult> EnableReportingApiCommand = new("Network.enableReportingApi", JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableDeviceBoundSessionsCommandParameters(Enable: enable);
-        return await ExecuteCommandAsync(EnableDeviceBoundSessionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableDeviceBoundSessionsCommandParameters, EnableDeviceBoundSessionsResult>("Network.enableDeviceBoundSessions", JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableDeviceBoundSessionsCommandParameters, EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsCommand = new("Network.enableDeviceBoundSessions", JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteDeviceBoundSessionCommandParameters(Key: key);
-        return await ExecuteCommandAsync(DeleteDeviceBoundSessionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DeleteDeviceBoundSessionCommandParameters, DeleteDeviceBoundSessionResult>("Network.deleteDeviceBoundSession", JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DeleteDeviceBoundSessionCommandParameters, DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionCommand = new("Network.deleteDeviceBoundSession", JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new FetchSchemefulSiteCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(FetchSchemefulSiteCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<FetchSchemefulSiteCommandParameters, FetchSchemefulSiteResult>("Network.fetchSchemefulSite", JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<FetchSchemefulSiteCommandParameters, FetchSchemefulSiteResult> FetchSchemefulSiteCommand = new("Network.fetchSchemefulSite", JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LoadNetworkResourceCommandParameters(FrameId: frameId, Url: url, Options: options);
-        return await ExecuteCommandAsync(LoadNetworkResourceCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<LoadNetworkResourceCommandParameters, LoadNetworkResourceResult>("Network.loadNetworkResource", JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<LoadNetworkResourceCommandParameters, LoadNetworkResourceResult> LoadNetworkResourceCommand = new("Network.loadNetworkResource", JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction);
-        return await ExecuteCommandAsync(SetCookieControlsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCookieControlsCommandParameters, SetCookieControlsResult>("Network.setCookieControls", JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCookieControlsCommandParameters, SetCookieControlsResult> SetCookieControlsCommand = new("Network.setCookieControls", JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult);
 
     public IEventSource<DataReceivedEventArgs> DataReceived => CreateCdpEventSource(NetworkDomainEvent.DataReceived);
     public IEventSource<EventSourceMessageReceivedEventArgs> EventSourceMessageReceived => CreateCdpEventSource(NetworkDomainEvent.EventSourceMessageReceived);
@@ -5835,266 +5835,299 @@ public static class NetworkDomainEvent
     /// <summary>
     /// Fired when data chunk was received over the network.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DataReceivedEventArgs>> DataReceived { get; } =
-        EventDescriptor<CdpEventArgs<DataReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DataReceivedEventArgs>> DataReceived =>
+        _dataReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _dataReceived, EventDescriptor<CdpEventArgs<DataReceivedEventArgs>>.Create(
             "goog:cdp.Network.dataReceived",
-            NetworkJsonSerializerContext.Default.DataReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DataReceivedCdpEventArgs), null) ?? _dataReceived;
+    private static EventDescriptor<CdpEventArgs<DataReceivedEventArgs>>? _dataReceived;
 
     /// <summary>
     /// Fired when EventSource message is received.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<EventSourceMessageReceivedEventArgs>> EventSourceMessageReceived { get; } =
-        EventDescriptor<CdpEventArgs<EventSourceMessageReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<EventSourceMessageReceivedEventArgs>> EventSourceMessageReceived =>
+        _eventSourceMessageReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _eventSourceMessageReceived, EventDescriptor<CdpEventArgs<EventSourceMessageReceivedEventArgs>>.Create(
             "goog:cdp.Network.eventSourceMessageReceived",
-            NetworkJsonSerializerContext.Default.EventSourceMessageReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.EventSourceMessageReceivedCdpEventArgs), null) ?? _eventSourceMessageReceived;
+    private static EventDescriptor<CdpEventArgs<EventSourceMessageReceivedEventArgs>>? _eventSourceMessageReceived;
 
     /// <summary>
     /// Fired when HTTP request has failed to load.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LoadingFailedEventArgs>> LoadingFailed { get; } =
-        EventDescriptor<CdpEventArgs<LoadingFailedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LoadingFailedEventArgs>> LoadingFailed =>
+        _loadingFailed ?? global::System.Threading.Interlocked.CompareExchange(ref _loadingFailed, EventDescriptor<CdpEventArgs<LoadingFailedEventArgs>>.Create(
             "goog:cdp.Network.loadingFailed",
-            NetworkJsonSerializerContext.Default.LoadingFailedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.LoadingFailedCdpEventArgs), null) ?? _loadingFailed;
+    private static EventDescriptor<CdpEventArgs<LoadingFailedEventArgs>>? _loadingFailed;
 
     /// <summary>
     /// Fired when HTTP request has finished loading.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<LoadingFinishedEventArgs>> LoadingFinished { get; } =
-        EventDescriptor<CdpEventArgs<LoadingFinishedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<LoadingFinishedEventArgs>> LoadingFinished =>
+        _loadingFinished ?? global::System.Threading.Interlocked.CompareExchange(ref _loadingFinished, EventDescriptor<CdpEventArgs<LoadingFinishedEventArgs>>.Create(
             "goog:cdp.Network.loadingFinished",
-            NetworkJsonSerializerContext.Default.LoadingFinishedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.LoadingFinishedCdpEventArgs), null) ?? _loadingFinished;
+    private static EventDescriptor<CdpEventArgs<LoadingFinishedEventArgs>>? _loadingFinished;
 
     /// <summary>
     /// Fired if request ended up loading from cache.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<RequestServedFromCacheEventArgs>> RequestServedFromCache { get; } =
-        EventDescriptor<CdpEventArgs<RequestServedFromCacheEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<RequestServedFromCacheEventArgs>> RequestServedFromCache =>
+        _requestServedFromCache ?? global::System.Threading.Interlocked.CompareExchange(ref _requestServedFromCache, EventDescriptor<CdpEventArgs<RequestServedFromCacheEventArgs>>.Create(
             "goog:cdp.Network.requestServedFromCache",
-            NetworkJsonSerializerContext.Default.RequestServedFromCacheCdpEventArgs);
+            NetworkJsonSerializerContext.Default.RequestServedFromCacheCdpEventArgs), null) ?? _requestServedFromCache;
+    private static EventDescriptor<CdpEventArgs<RequestServedFromCacheEventArgs>>? _requestServedFromCache;
 
     /// <summary>
     /// Fired when page is about to send HTTP request.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<RequestWillBeSentEventArgs>> RequestWillBeSent { get; } =
-        EventDescriptor<CdpEventArgs<RequestWillBeSentEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<RequestWillBeSentEventArgs>> RequestWillBeSent =>
+        _requestWillBeSent ?? global::System.Threading.Interlocked.CompareExchange(ref _requestWillBeSent, EventDescriptor<CdpEventArgs<RequestWillBeSentEventArgs>>.Create(
             "goog:cdp.Network.requestWillBeSent",
-            NetworkJsonSerializerContext.Default.RequestWillBeSentCdpEventArgs);
+            NetworkJsonSerializerContext.Default.RequestWillBeSentCdpEventArgs), null) ?? _requestWillBeSent;
+    private static EventDescriptor<CdpEventArgs<RequestWillBeSentEventArgs>>? _requestWillBeSent;
 
     /// <summary>
     /// Fired when resource loading priority is changed
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ResourceChangedPriorityEventArgs>> ResourceChangedPriority { get; } =
-        EventDescriptor<CdpEventArgs<ResourceChangedPriorityEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ResourceChangedPriorityEventArgs>> ResourceChangedPriority =>
+        _resourceChangedPriority ?? global::System.Threading.Interlocked.CompareExchange(ref _resourceChangedPriority, EventDescriptor<CdpEventArgs<ResourceChangedPriorityEventArgs>>.Create(
             "goog:cdp.Network.resourceChangedPriority",
-            NetworkJsonSerializerContext.Default.ResourceChangedPriorityCdpEventArgs);
+            NetworkJsonSerializerContext.Default.ResourceChangedPriorityCdpEventArgs), null) ?? _resourceChangedPriority;
+    private static EventDescriptor<CdpEventArgs<ResourceChangedPriorityEventArgs>>? _resourceChangedPriority;
 
     /// <summary>
     /// Fired when a signed exchange was received over the network
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<SignedExchangeReceivedEventArgs>> SignedExchangeReceived { get; } =
-        EventDescriptor<CdpEventArgs<SignedExchangeReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<SignedExchangeReceivedEventArgs>> SignedExchangeReceived =>
+        _signedExchangeReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _signedExchangeReceived, EventDescriptor<CdpEventArgs<SignedExchangeReceivedEventArgs>>.Create(
             "goog:cdp.Network.signedExchangeReceived",
-            NetworkJsonSerializerContext.Default.SignedExchangeReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.SignedExchangeReceivedCdpEventArgs), null) ?? _signedExchangeReceived;
+    private static EventDescriptor<CdpEventArgs<SignedExchangeReceivedEventArgs>>? _signedExchangeReceived;
 
     /// <summary>
     /// Fired when HTTP response is available.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ResponseReceivedEventArgs>> ResponseReceived { get; } =
-        EventDescriptor<CdpEventArgs<ResponseReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ResponseReceivedEventArgs>> ResponseReceived =>
+        _responseReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _responseReceived, EventDescriptor<CdpEventArgs<ResponseReceivedEventArgs>>.Create(
             "goog:cdp.Network.responseReceived",
-            NetworkJsonSerializerContext.Default.ResponseReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.ResponseReceivedCdpEventArgs), null) ?? _responseReceived;
+    private static EventDescriptor<CdpEventArgs<ResponseReceivedEventArgs>>? _responseReceived;
 
     /// <summary>
     /// Fired when WebSocket is closed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebSocketClosedEventArgs>> WebSocketClosed { get; } =
-        EventDescriptor<CdpEventArgs<WebSocketClosedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebSocketClosedEventArgs>> WebSocketClosed =>
+        _webSocketClosed ?? global::System.Threading.Interlocked.CompareExchange(ref _webSocketClosed, EventDescriptor<CdpEventArgs<WebSocketClosedEventArgs>>.Create(
             "goog:cdp.Network.webSocketClosed",
-            NetworkJsonSerializerContext.Default.WebSocketClosedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebSocketClosedCdpEventArgs), null) ?? _webSocketClosed;
+    private static EventDescriptor<CdpEventArgs<WebSocketClosedEventArgs>>? _webSocketClosed;
 
     /// <summary>
     /// Fired upon WebSocket creation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebSocketCreatedEventArgs>> WebSocketCreated { get; } =
-        EventDescriptor<CdpEventArgs<WebSocketCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebSocketCreatedEventArgs>> WebSocketCreated =>
+        _webSocketCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _webSocketCreated, EventDescriptor<CdpEventArgs<WebSocketCreatedEventArgs>>.Create(
             "goog:cdp.Network.webSocketCreated",
-            NetworkJsonSerializerContext.Default.WebSocketCreatedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebSocketCreatedCdpEventArgs), null) ?? _webSocketCreated;
+    private static EventDescriptor<CdpEventArgs<WebSocketCreatedEventArgs>>? _webSocketCreated;
 
     /// <summary>
     /// Fired when WebSocket message error occurs.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebSocketFrameErrorEventArgs>> WebSocketFrameError { get; } =
-        EventDescriptor<CdpEventArgs<WebSocketFrameErrorEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebSocketFrameErrorEventArgs>> WebSocketFrameError =>
+        _webSocketFrameError ?? global::System.Threading.Interlocked.CompareExchange(ref _webSocketFrameError, EventDescriptor<CdpEventArgs<WebSocketFrameErrorEventArgs>>.Create(
             "goog:cdp.Network.webSocketFrameError",
-            NetworkJsonSerializerContext.Default.WebSocketFrameErrorCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebSocketFrameErrorCdpEventArgs), null) ?? _webSocketFrameError;
+    private static EventDescriptor<CdpEventArgs<WebSocketFrameErrorEventArgs>>? _webSocketFrameError;
 
     /// <summary>
     /// Fired when WebSocket message is received.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebSocketFrameReceivedEventArgs>> WebSocketFrameReceived { get; } =
-        EventDescriptor<CdpEventArgs<WebSocketFrameReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebSocketFrameReceivedEventArgs>> WebSocketFrameReceived =>
+        _webSocketFrameReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _webSocketFrameReceived, EventDescriptor<CdpEventArgs<WebSocketFrameReceivedEventArgs>>.Create(
             "goog:cdp.Network.webSocketFrameReceived",
-            NetworkJsonSerializerContext.Default.WebSocketFrameReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebSocketFrameReceivedCdpEventArgs), null) ?? _webSocketFrameReceived;
+    private static EventDescriptor<CdpEventArgs<WebSocketFrameReceivedEventArgs>>? _webSocketFrameReceived;
 
     /// <summary>
     /// Fired when WebSocket message is sent.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebSocketFrameSentEventArgs>> WebSocketFrameSent { get; } =
-        EventDescriptor<CdpEventArgs<WebSocketFrameSentEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebSocketFrameSentEventArgs>> WebSocketFrameSent =>
+        _webSocketFrameSent ?? global::System.Threading.Interlocked.CompareExchange(ref _webSocketFrameSent, EventDescriptor<CdpEventArgs<WebSocketFrameSentEventArgs>>.Create(
             "goog:cdp.Network.webSocketFrameSent",
-            NetworkJsonSerializerContext.Default.WebSocketFrameSentCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebSocketFrameSentCdpEventArgs), null) ?? _webSocketFrameSent;
+    private static EventDescriptor<CdpEventArgs<WebSocketFrameSentEventArgs>>? _webSocketFrameSent;
 
     /// <summary>
     /// Fired when WebSocket handshake response becomes available.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebSocketHandshakeResponseReceivedEventArgs>> WebSocketHandshakeResponseReceived { get; } =
-        EventDescriptor<CdpEventArgs<WebSocketHandshakeResponseReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebSocketHandshakeResponseReceivedEventArgs>> WebSocketHandshakeResponseReceived =>
+        _webSocketHandshakeResponseReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _webSocketHandshakeResponseReceived, EventDescriptor<CdpEventArgs<WebSocketHandshakeResponseReceivedEventArgs>>.Create(
             "goog:cdp.Network.webSocketHandshakeResponseReceived",
-            NetworkJsonSerializerContext.Default.WebSocketHandshakeResponseReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebSocketHandshakeResponseReceivedCdpEventArgs), null) ?? _webSocketHandshakeResponseReceived;
+    private static EventDescriptor<CdpEventArgs<WebSocketHandshakeResponseReceivedEventArgs>>? _webSocketHandshakeResponseReceived;
 
     /// <summary>
     /// Fired when WebSocket is about to initiate handshake.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebSocketWillSendHandshakeRequestEventArgs>> WebSocketWillSendHandshakeRequest { get; } =
-        EventDescriptor<CdpEventArgs<WebSocketWillSendHandshakeRequestEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebSocketWillSendHandshakeRequestEventArgs>> WebSocketWillSendHandshakeRequest =>
+        _webSocketWillSendHandshakeRequest ?? global::System.Threading.Interlocked.CompareExchange(ref _webSocketWillSendHandshakeRequest, EventDescriptor<CdpEventArgs<WebSocketWillSendHandshakeRequestEventArgs>>.Create(
             "goog:cdp.Network.webSocketWillSendHandshakeRequest",
-            NetworkJsonSerializerContext.Default.WebSocketWillSendHandshakeRequestCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebSocketWillSendHandshakeRequestCdpEventArgs), null) ?? _webSocketWillSendHandshakeRequest;
+    private static EventDescriptor<CdpEventArgs<WebSocketWillSendHandshakeRequestEventArgs>>? _webSocketWillSendHandshakeRequest;
 
     /// <summary>
     /// Fired upon WebTransport creation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebTransportCreatedEventArgs>> WebTransportCreated { get; } =
-        EventDescriptor<CdpEventArgs<WebTransportCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebTransportCreatedEventArgs>> WebTransportCreated =>
+        _webTransportCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _webTransportCreated, EventDescriptor<CdpEventArgs<WebTransportCreatedEventArgs>>.Create(
             "goog:cdp.Network.webTransportCreated",
-            NetworkJsonSerializerContext.Default.WebTransportCreatedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebTransportCreatedCdpEventArgs), null) ?? _webTransportCreated;
+    private static EventDescriptor<CdpEventArgs<WebTransportCreatedEventArgs>>? _webTransportCreated;
 
     /// <summary>
     /// Fired when WebTransport handshake is finished.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebTransportConnectionEstablishedEventArgs>> WebTransportConnectionEstablished { get; } =
-        EventDescriptor<CdpEventArgs<WebTransportConnectionEstablishedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebTransportConnectionEstablishedEventArgs>> WebTransportConnectionEstablished =>
+        _webTransportConnectionEstablished ?? global::System.Threading.Interlocked.CompareExchange(ref _webTransportConnectionEstablished, EventDescriptor<CdpEventArgs<WebTransportConnectionEstablishedEventArgs>>.Create(
             "goog:cdp.Network.webTransportConnectionEstablished",
-            NetworkJsonSerializerContext.Default.WebTransportConnectionEstablishedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebTransportConnectionEstablishedCdpEventArgs), null) ?? _webTransportConnectionEstablished;
+    private static EventDescriptor<CdpEventArgs<WebTransportConnectionEstablishedEventArgs>>? _webTransportConnectionEstablished;
 
     /// <summary>
     /// Fired when WebTransport is disposed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WebTransportClosedEventArgs>> WebTransportClosed { get; } =
-        EventDescriptor<CdpEventArgs<WebTransportClosedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WebTransportClosedEventArgs>> WebTransportClosed =>
+        _webTransportClosed ?? global::System.Threading.Interlocked.CompareExchange(ref _webTransportClosed, EventDescriptor<CdpEventArgs<WebTransportClosedEventArgs>>.Create(
             "goog:cdp.Network.webTransportClosed",
-            NetworkJsonSerializerContext.Default.WebTransportClosedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.WebTransportClosedCdpEventArgs), null) ?? _webTransportClosed;
+    private static EventDescriptor<CdpEventArgs<WebTransportClosedEventArgs>>? _webTransportClosed;
 
     /// <summary>
     /// Fired upon direct_socket.TCPSocket creation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectTCPSocketCreatedEventArgs>> DirectTCPSocketCreated { get; } =
-        EventDescriptor<CdpEventArgs<DirectTCPSocketCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectTCPSocketCreatedEventArgs>> DirectTCPSocketCreated =>
+        _directTCPSocketCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _directTCPSocketCreated, EventDescriptor<CdpEventArgs<DirectTCPSocketCreatedEventArgs>>.Create(
             "goog:cdp.Network.directTCPSocketCreated",
-            NetworkJsonSerializerContext.Default.DirectTCPSocketCreatedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectTCPSocketCreatedCdpEventArgs), null) ?? _directTCPSocketCreated;
+    private static EventDescriptor<CdpEventArgs<DirectTCPSocketCreatedEventArgs>>? _directTCPSocketCreated;
 
     /// <summary>
     /// Fired when direct_socket.TCPSocket connection is opened.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectTCPSocketOpenedEventArgs>> DirectTCPSocketOpened { get; } =
-        EventDescriptor<CdpEventArgs<DirectTCPSocketOpenedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectTCPSocketOpenedEventArgs>> DirectTCPSocketOpened =>
+        _directTCPSocketOpened ?? global::System.Threading.Interlocked.CompareExchange(ref _directTCPSocketOpened, EventDescriptor<CdpEventArgs<DirectTCPSocketOpenedEventArgs>>.Create(
             "goog:cdp.Network.directTCPSocketOpened",
-            NetworkJsonSerializerContext.Default.DirectTCPSocketOpenedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectTCPSocketOpenedCdpEventArgs), null) ?? _directTCPSocketOpened;
+    private static EventDescriptor<CdpEventArgs<DirectTCPSocketOpenedEventArgs>>? _directTCPSocketOpened;
 
     /// <summary>
     /// Fired when direct_socket.TCPSocket is aborted.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectTCPSocketAbortedEventArgs>> DirectTCPSocketAborted { get; } =
-        EventDescriptor<CdpEventArgs<DirectTCPSocketAbortedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectTCPSocketAbortedEventArgs>> DirectTCPSocketAborted =>
+        _directTCPSocketAborted ?? global::System.Threading.Interlocked.CompareExchange(ref _directTCPSocketAborted, EventDescriptor<CdpEventArgs<DirectTCPSocketAbortedEventArgs>>.Create(
             "goog:cdp.Network.directTCPSocketAborted",
-            NetworkJsonSerializerContext.Default.DirectTCPSocketAbortedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectTCPSocketAbortedCdpEventArgs), null) ?? _directTCPSocketAborted;
+    private static EventDescriptor<CdpEventArgs<DirectTCPSocketAbortedEventArgs>>? _directTCPSocketAborted;
 
     /// <summary>
     /// Fired when direct_socket.TCPSocket is closed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectTCPSocketClosedEventArgs>> DirectTCPSocketClosed { get; } =
-        EventDescriptor<CdpEventArgs<DirectTCPSocketClosedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectTCPSocketClosedEventArgs>> DirectTCPSocketClosed =>
+        _directTCPSocketClosed ?? global::System.Threading.Interlocked.CompareExchange(ref _directTCPSocketClosed, EventDescriptor<CdpEventArgs<DirectTCPSocketClosedEventArgs>>.Create(
             "goog:cdp.Network.directTCPSocketClosed",
-            NetworkJsonSerializerContext.Default.DirectTCPSocketClosedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectTCPSocketClosedCdpEventArgs), null) ?? _directTCPSocketClosed;
+    private static EventDescriptor<CdpEventArgs<DirectTCPSocketClosedEventArgs>>? _directTCPSocketClosed;
 
     /// <summary>
     /// Fired when data is sent to tcp direct socket stream.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectTCPSocketChunkSentEventArgs>> DirectTCPSocketChunkSent { get; } =
-        EventDescriptor<CdpEventArgs<DirectTCPSocketChunkSentEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectTCPSocketChunkSentEventArgs>> DirectTCPSocketChunkSent =>
+        _directTCPSocketChunkSent ?? global::System.Threading.Interlocked.CompareExchange(ref _directTCPSocketChunkSent, EventDescriptor<CdpEventArgs<DirectTCPSocketChunkSentEventArgs>>.Create(
             "goog:cdp.Network.directTCPSocketChunkSent",
-            NetworkJsonSerializerContext.Default.DirectTCPSocketChunkSentCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectTCPSocketChunkSentCdpEventArgs), null) ?? _directTCPSocketChunkSent;
+    private static EventDescriptor<CdpEventArgs<DirectTCPSocketChunkSentEventArgs>>? _directTCPSocketChunkSent;
 
     /// <summary>
     /// Fired when data is received from tcp direct socket stream.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectTCPSocketChunkReceivedEventArgs>> DirectTCPSocketChunkReceived { get; } =
-        EventDescriptor<CdpEventArgs<DirectTCPSocketChunkReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectTCPSocketChunkReceivedEventArgs>> DirectTCPSocketChunkReceived =>
+        _directTCPSocketChunkReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _directTCPSocketChunkReceived, EventDescriptor<CdpEventArgs<DirectTCPSocketChunkReceivedEventArgs>>.Create(
             "goog:cdp.Network.directTCPSocketChunkReceived",
-            NetworkJsonSerializerContext.Default.DirectTCPSocketChunkReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectTCPSocketChunkReceivedCdpEventArgs), null) ?? _directTCPSocketChunkReceived;
+    private static EventDescriptor<CdpEventArgs<DirectTCPSocketChunkReceivedEventArgs>>? _directTCPSocketChunkReceived;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>> DirectUDPSocketJoinedMulticastGroup { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>> DirectUDPSocketJoinedMulticastGroup =>
+        _directUDPSocketJoinedMulticastGroup ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketJoinedMulticastGroup, EventDescriptor<CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketJoinedMulticastGroup",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketJoinedMulticastGroupCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketJoinedMulticastGroupCdpEventArgs), null) ?? _directUDPSocketJoinedMulticastGroup;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketJoinedMulticastGroupEventArgs>>? _directUDPSocketJoinedMulticastGroup;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>> DirectUDPSocketLeftMulticastGroup { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>> DirectUDPSocketLeftMulticastGroup =>
+        _directUDPSocketLeftMulticastGroup ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketLeftMulticastGroup, EventDescriptor<CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketLeftMulticastGroup",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketLeftMulticastGroupCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketLeftMulticastGroupCdpEventArgs), null) ?? _directUDPSocketLeftMulticastGroup;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketLeftMulticastGroupEventArgs>>? _directUDPSocketLeftMulticastGroup;
 
     /// <summary>
     /// Fired upon direct_socket.UDPSocket creation.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketCreatedEventArgs>> DirectUDPSocketCreated { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketCreatedEventArgs>> DirectUDPSocketCreated =>
+        _directUDPSocketCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketCreated, EventDescriptor<CdpEventArgs<DirectUDPSocketCreatedEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketCreated",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketCreatedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketCreatedCdpEventArgs), null) ?? _directUDPSocketCreated;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketCreatedEventArgs>>? _directUDPSocketCreated;
 
     /// <summary>
     /// Fired when direct_socket.UDPSocket connection is opened.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketOpenedEventArgs>> DirectUDPSocketOpened { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketOpenedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketOpenedEventArgs>> DirectUDPSocketOpened =>
+        _directUDPSocketOpened ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketOpened, EventDescriptor<CdpEventArgs<DirectUDPSocketOpenedEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketOpened",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketOpenedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketOpenedCdpEventArgs), null) ?? _directUDPSocketOpened;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketOpenedEventArgs>>? _directUDPSocketOpened;
 
     /// <summary>
     /// Fired when direct_socket.UDPSocket is aborted.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketAbortedEventArgs>> DirectUDPSocketAborted { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketAbortedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketAbortedEventArgs>> DirectUDPSocketAborted =>
+        _directUDPSocketAborted ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketAborted, EventDescriptor<CdpEventArgs<DirectUDPSocketAbortedEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketAborted",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketAbortedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketAbortedCdpEventArgs), null) ?? _directUDPSocketAborted;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketAbortedEventArgs>>? _directUDPSocketAborted;
 
     /// <summary>
     /// Fired when direct_socket.UDPSocket is closed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketClosedEventArgs>> DirectUDPSocketClosed { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketClosedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketClosedEventArgs>> DirectUDPSocketClosed =>
+        _directUDPSocketClosed ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketClosed, EventDescriptor<CdpEventArgs<DirectUDPSocketClosedEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketClosed",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketClosedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketClosedCdpEventArgs), null) ?? _directUDPSocketClosed;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketClosedEventArgs>>? _directUDPSocketClosed;
 
     /// <summary>
     /// Fired when message is sent to udp direct socket stream.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketChunkSentEventArgs>> DirectUDPSocketChunkSent { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketChunkSentEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketChunkSentEventArgs>> DirectUDPSocketChunkSent =>
+        _directUDPSocketChunkSent ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketChunkSent, EventDescriptor<CdpEventArgs<DirectUDPSocketChunkSentEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketChunkSent",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketChunkSentCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketChunkSentCdpEventArgs), null) ?? _directUDPSocketChunkSent;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketChunkSentEventArgs>>? _directUDPSocketChunkSent;
 
     /// <summary>
     /// Fired when message is received from udp direct socket stream.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DirectUDPSocketChunkReceivedEventArgs>> DirectUDPSocketChunkReceived { get; } =
-        EventDescriptor<CdpEventArgs<DirectUDPSocketChunkReceivedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DirectUDPSocketChunkReceivedEventArgs>> DirectUDPSocketChunkReceived =>
+        _directUDPSocketChunkReceived ?? global::System.Threading.Interlocked.CompareExchange(ref _directUDPSocketChunkReceived, EventDescriptor<CdpEventArgs<DirectUDPSocketChunkReceivedEventArgs>>.Create(
             "goog:cdp.Network.directUDPSocketChunkReceived",
-            NetworkJsonSerializerContext.Default.DirectUDPSocketChunkReceivedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DirectUDPSocketChunkReceivedCdpEventArgs), null) ?? _directUDPSocketChunkReceived;
+    private static EventDescriptor<CdpEventArgs<DirectUDPSocketChunkReceivedEventArgs>>? _directUDPSocketChunkReceived;
 
     /// <summary>
     /// Fired when additional information about a requestWillBeSent event is available from the
@@ -6102,30 +6135,33 @@ public static class NetworkDomainEvent
     /// requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
     /// or requestWillBeSentExtraInfo will be fired first for the same request.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<RequestWillBeSentExtraInfoEventArgs>> RequestWillBeSentExtraInfo { get; } =
-        EventDescriptor<CdpEventArgs<RequestWillBeSentExtraInfoEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<RequestWillBeSentExtraInfoEventArgs>> RequestWillBeSentExtraInfo =>
+        _requestWillBeSentExtraInfo ?? global::System.Threading.Interlocked.CompareExchange(ref _requestWillBeSentExtraInfo, EventDescriptor<CdpEventArgs<RequestWillBeSentExtraInfoEventArgs>>.Create(
             "goog:cdp.Network.requestWillBeSentExtraInfo",
-            NetworkJsonSerializerContext.Default.RequestWillBeSentExtraInfoCdpEventArgs);
+            NetworkJsonSerializerContext.Default.RequestWillBeSentExtraInfoCdpEventArgs), null) ?? _requestWillBeSentExtraInfo;
+    private static EventDescriptor<CdpEventArgs<RequestWillBeSentExtraInfoEventArgs>>? _requestWillBeSentExtraInfo;
 
     /// <summary>
     /// Fired when additional information about a responseReceived event is available from the network
     /// stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
     /// it, and responseReceivedExtraInfo may be fired before or after responseReceived.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ResponseReceivedExtraInfoEventArgs>> ResponseReceivedExtraInfo { get; } =
-        EventDescriptor<CdpEventArgs<ResponseReceivedExtraInfoEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ResponseReceivedExtraInfoEventArgs>> ResponseReceivedExtraInfo =>
+        _responseReceivedExtraInfo ?? global::System.Threading.Interlocked.CompareExchange(ref _responseReceivedExtraInfo, EventDescriptor<CdpEventArgs<ResponseReceivedExtraInfoEventArgs>>.Create(
             "goog:cdp.Network.responseReceivedExtraInfo",
-            NetworkJsonSerializerContext.Default.ResponseReceivedExtraInfoCdpEventArgs);
+            NetworkJsonSerializerContext.Default.ResponseReceivedExtraInfoCdpEventArgs), null) ?? _responseReceivedExtraInfo;
+    private static EventDescriptor<CdpEventArgs<ResponseReceivedExtraInfoEventArgs>>? _responseReceivedExtraInfo;
 
     /// <summary>
     /// Fired when 103 Early Hints headers is received in addition to the common response.
     /// Not every responseReceived event will have an responseReceivedEarlyHints fired.
     /// Only one responseReceivedEarlyHints may be fired for eached responseReceived event.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ResponseReceivedEarlyHintsEventArgs>> ResponseReceivedEarlyHints { get; } =
-        EventDescriptor<CdpEventArgs<ResponseReceivedEarlyHintsEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ResponseReceivedEarlyHintsEventArgs>> ResponseReceivedEarlyHints =>
+        _responseReceivedEarlyHints ?? global::System.Threading.Interlocked.CompareExchange(ref _responseReceivedEarlyHints, EventDescriptor<CdpEventArgs<ResponseReceivedEarlyHintsEventArgs>>.Create(
             "goog:cdp.Network.responseReceivedEarlyHints",
-            NetworkJsonSerializerContext.Default.ResponseReceivedEarlyHintsCdpEventArgs);
+            NetworkJsonSerializerContext.Default.ResponseReceivedEarlyHintsCdpEventArgs), null) ?? _responseReceivedEarlyHints;
+    private static EventDescriptor<CdpEventArgs<ResponseReceivedEarlyHintsEventArgs>>? _responseReceivedEarlyHints;
 
     /// <summary>
     /// Fired exactly once for each Trust Token operation. Depending on
@@ -6133,58 +6169,65 @@ public static class NetworkDomainEvent
     /// failed, the event is fired before the corresponding request was sent
     /// or after the response was received.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<TrustTokenOperationDoneEventArgs>> TrustTokenOperationDone { get; } =
-        EventDescriptor<CdpEventArgs<TrustTokenOperationDoneEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<TrustTokenOperationDoneEventArgs>> TrustTokenOperationDone =>
+        _trustTokenOperationDone ?? global::System.Threading.Interlocked.CompareExchange(ref _trustTokenOperationDone, EventDescriptor<CdpEventArgs<TrustTokenOperationDoneEventArgs>>.Create(
             "goog:cdp.Network.trustTokenOperationDone",
-            NetworkJsonSerializerContext.Default.TrustTokenOperationDoneCdpEventArgs);
+            NetworkJsonSerializerContext.Default.TrustTokenOperationDoneCdpEventArgs), null) ?? _trustTokenOperationDone;
+    private static EventDescriptor<CdpEventArgs<TrustTokenOperationDoneEventArgs>>? _trustTokenOperationDone;
 
     /// <summary>
     /// Fired once security policy has been updated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<PolicyUpdatedEventArgs>> PolicyUpdated { get; } =
-        EventDescriptor<CdpEventArgs<PolicyUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<PolicyUpdatedEventArgs>> PolicyUpdated =>
+        _policyUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _policyUpdated, EventDescriptor<CdpEventArgs<PolicyUpdatedEventArgs>>.Create(
             "goog:cdp.Network.policyUpdated",
-            NetworkJsonSerializerContext.Default.PolicyUpdatedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.PolicyUpdatedCdpEventArgs), null) ?? _policyUpdated;
+    private static EventDescriptor<CdpEventArgs<PolicyUpdatedEventArgs>>? _policyUpdated;
 
     /// <summary>
     /// Is sent whenever a new report is added.
     /// And after 'enableReportingApi' for all existing reports.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ReportingApiReportAddedEventArgs>> ReportingApiReportAdded { get; } =
-        EventDescriptor<CdpEventArgs<ReportingApiReportAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ReportingApiReportAddedEventArgs>> ReportingApiReportAdded =>
+        _reportingApiReportAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _reportingApiReportAdded, EventDescriptor<CdpEventArgs<ReportingApiReportAddedEventArgs>>.Create(
             "goog:cdp.Network.reportingApiReportAdded",
-            NetworkJsonSerializerContext.Default.ReportingApiReportAddedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.ReportingApiReportAddedCdpEventArgs), null) ?? _reportingApiReportAdded;
+    private static EventDescriptor<CdpEventArgs<ReportingApiReportAddedEventArgs>>? _reportingApiReportAdded;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ReportingApiReportUpdatedEventArgs>> ReportingApiReportUpdated { get; } =
-        EventDescriptor<CdpEventArgs<ReportingApiReportUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ReportingApiReportUpdatedEventArgs>> ReportingApiReportUpdated =>
+        _reportingApiReportUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _reportingApiReportUpdated, EventDescriptor<CdpEventArgs<ReportingApiReportUpdatedEventArgs>>.Create(
             "goog:cdp.Network.reportingApiReportUpdated",
-            NetworkJsonSerializerContext.Default.ReportingApiReportUpdatedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.ReportingApiReportUpdatedCdpEventArgs), null) ?? _reportingApiReportUpdated;
+    private static EventDescriptor<CdpEventArgs<ReportingApiReportUpdatedEventArgs>>? _reportingApiReportUpdated;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ReportingApiEndpointsChangedForOriginEventArgs>> ReportingApiEndpointsChangedForOrigin { get; } =
-        EventDescriptor<CdpEventArgs<ReportingApiEndpointsChangedForOriginEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ReportingApiEndpointsChangedForOriginEventArgs>> ReportingApiEndpointsChangedForOrigin =>
+        _reportingApiEndpointsChangedForOrigin ?? global::System.Threading.Interlocked.CompareExchange(ref _reportingApiEndpointsChangedForOrigin, EventDescriptor<CdpEventArgs<ReportingApiEndpointsChangedForOriginEventArgs>>.Create(
             "goog:cdp.Network.reportingApiEndpointsChangedForOrigin",
-            NetworkJsonSerializerContext.Default.ReportingApiEndpointsChangedForOriginCdpEventArgs);
+            NetworkJsonSerializerContext.Default.ReportingApiEndpointsChangedForOriginCdpEventArgs), null) ?? _reportingApiEndpointsChangedForOrigin;
+    private static EventDescriptor<CdpEventArgs<ReportingApiEndpointsChangedForOriginEventArgs>>? _reportingApiEndpointsChangedForOrigin;
 
     /// <summary>
     /// Triggered when the initial set of device bound sessions is added.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DeviceBoundSessionsAddedEventArgs>> DeviceBoundSessionsAdded { get; } =
-        EventDescriptor<CdpEventArgs<DeviceBoundSessionsAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DeviceBoundSessionsAddedEventArgs>> DeviceBoundSessionsAdded =>
+        _deviceBoundSessionsAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _deviceBoundSessionsAdded, EventDescriptor<CdpEventArgs<DeviceBoundSessionsAddedEventArgs>>.Create(
             "goog:cdp.Network.deviceBoundSessionsAdded",
-            NetworkJsonSerializerContext.Default.DeviceBoundSessionsAddedCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DeviceBoundSessionsAddedCdpEventArgs), null) ?? _deviceBoundSessionsAdded;
+    private static EventDescriptor<CdpEventArgs<DeviceBoundSessionsAddedEventArgs>>? _deviceBoundSessionsAdded;
 
     /// <summary>
     /// Triggered when a device bound session event occurs.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>> DeviceBoundSessionEventOccurred { get; } =
-        EventDescriptor<CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>> DeviceBoundSessionEventOccurred =>
+        _deviceBoundSessionEventOccurred ?? global::System.Threading.Interlocked.CompareExchange(ref _deviceBoundSessionEventOccurred, EventDescriptor<CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>>.Create(
             "goog:cdp.Network.deviceBoundSessionEventOccurred",
-            NetworkJsonSerializerContext.Default.DeviceBoundSessionEventOccurredCdpEventArgs);
+            NetworkJsonSerializerContext.Default.DeviceBoundSessionEventOccurredCdpEventArgs), null) ?? _deviceBoundSessionEventOccurred;
+    private static EventDescriptor<CdpEventArgs<DeviceBoundSessionEventOccurredEventArgs>>? _deviceBoundSessionEventOccurred;
 
 }

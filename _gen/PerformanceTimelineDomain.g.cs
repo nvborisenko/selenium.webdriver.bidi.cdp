@@ -50,14 +50,14 @@ public interface IPerformanceTimeline
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IPerformanceTimeline
 {
-    private static PerformanceTimelineJsonSerializerContext JsonContext = PerformanceTimelineJsonSerializerContext.Default;
+    private static readonly PerformanceTimelineJsonSerializerContext JsonContext = PerformanceTimelineJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EventTypes: eventTypes);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("PerformanceTimeline.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("PerformanceTimeline.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public IEventSource<TimelineEventAddedEventArgs> TimelineEventAdded => CreateCdpEventSource(PerformanceTimelineDomainEvent.TimelineEventAdded);
 }
@@ -184,9 +184,10 @@ public static class PerformanceTimelineDomainEvent
     /// <summary>
     /// Sent when a performance timeline event is added. See reportPerformanceTimeline method.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<TimelineEventAddedEventArgs>> TimelineEventAdded { get; } =
-        EventDescriptor<CdpEventArgs<TimelineEventAddedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<TimelineEventAddedEventArgs>> TimelineEventAdded =>
+        _timelineEventAdded ?? global::System.Threading.Interlocked.CompareExchange(ref _timelineEventAdded, EventDescriptor<CdpEventArgs<TimelineEventAddedEventArgs>>.Create(
             "goog:cdp.PerformanceTimeline.timelineEventAdded",
-            PerformanceTimelineJsonSerializerContext.Default.TimelineEventAddedCdpEventArgs);
+            PerformanceTimelineJsonSerializerContext.Default.TimelineEventAddedCdpEventArgs), null) ?? _timelineEventAdded;
+    private static EventDescriptor<CdpEventArgs<TimelineEventAddedEventArgs>>? _timelineEventAdded;
 
 }

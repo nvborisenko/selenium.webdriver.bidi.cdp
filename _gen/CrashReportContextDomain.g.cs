@@ -30,14 +30,14 @@ public interface ICrashReportContext
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ICrashReportContext
 {
-    private static CrashReportContextJsonSerializerContext JsonContext = CrashReportContextJsonSerializerContext.Default;
+    private static readonly CrashReportContextJsonSerializerContext JsonContext = CrashReportContextJsonSerializerContext.Default;
 
     public async Task<GetEntriesResult> GetEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEntriesCommandParameters();
-        return await ExecuteCommandAsync(GetEntriesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetEntriesCommandParameters, GetEntriesResult>("CrashReportContext.getEntries", JsonContext.GetEntriesCommandParameters, JsonContext.GetEntriesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetEntriesCommandParameters, GetEntriesResult> GetEntriesCommand = new("CrashReportContext.getEntries", JsonContext.GetEntriesCommandParameters, JsonContext.GetEntriesResult);
 
 }
 

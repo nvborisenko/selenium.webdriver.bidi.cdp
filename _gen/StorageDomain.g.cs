@@ -495,169 +495,169 @@ public interface IStorage
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IStorage
 {
-    private static StorageJsonSerializerContext JsonContext = StorageJsonSerializerContext.Default;
+    private static readonly StorageJsonSerializerContext JsonContext = StorageJsonSerializerContext.Default;
 
     [global::System.Obsolete]
     public async Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStorageKeyForFrameCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetStorageKeyForFrameCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetStorageKeyForFrameCommandParameters, GetStorageKeyForFrameResult>("Storage.getStorageKeyForFrame", JsonContext.GetStorageKeyForFrameCommandParameters, JsonContext.GetStorageKeyForFrameResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetStorageKeyForFrameCommandParameters, GetStorageKeyForFrameResult> GetStorageKeyForFrameCommand = new("Storage.getStorageKeyForFrame", JsonContext.GetStorageKeyForFrameCommandParameters, JsonContext.GetStorageKeyForFrameResult);
 
     public async Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStorageKeyCommandParameters(FrameId: frameId);
-        return await ExecuteCommandAsync(GetStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetStorageKeyCommandParameters, GetStorageKeyResult>("Storage.getStorageKey", JsonContext.GetStorageKeyCommandParameters, JsonContext.GetStorageKeyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetStorageKeyCommandParameters, GetStorageKeyResult> GetStorageKeyCommand = new("Storage.getStorageKey", JsonContext.GetStorageKeyCommandParameters, JsonContext.GetStorageKeyResult);
 
     public async Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDataForOriginCommandParameters(Origin: origin, StorageTypes: storageTypes);
-        return await ExecuteCommandAsync(ClearDataForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearDataForOriginCommandParameters, ClearDataForOriginResult>("Storage.clearDataForOrigin", JsonContext.ClearDataForOriginCommandParameters, JsonContext.ClearDataForOriginResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearDataForOriginCommandParameters, ClearDataForOriginResult> ClearDataForOriginCommand = new("Storage.clearDataForOrigin", JsonContext.ClearDataForOriginCommandParameters, JsonContext.ClearDataForOriginResult);
 
     public async Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDataForStorageKeyCommandParameters(StorageKey: storageKey, StorageTypes: storageTypes);
-        return await ExecuteCommandAsync(ClearDataForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearDataForStorageKeyCommandParameters, ClearDataForStorageKeyResult>("Storage.clearDataForStorageKey", JsonContext.ClearDataForStorageKeyCommandParameters, JsonContext.ClearDataForStorageKeyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearDataForStorageKeyCommandParameters, ClearDataForStorageKeyResult> ClearDataForStorageKeyCommand = new("Storage.clearDataForStorageKey", JsonContext.ClearDataForStorageKeyCommandParameters, JsonContext.ClearDataForStorageKeyResult);
 
     public async Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCookiesCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(GetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetCookiesCommandParameters, GetCookiesResult>("Storage.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetCookiesCommandParameters, GetCookiesResult> GetCookiesCommand = new("Storage.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
 
     public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(SetCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetCookiesCommandParameters, SetCookiesResult>("Storage.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetCookiesCommandParameters, SetCookiesResult> SetCookiesCommand = new("Storage.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
 
     public async Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCookiesCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(ClearCookiesCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearCookiesCommandParameters, ClearCookiesResult>("Storage.clearCookies", JsonContext.ClearCookiesCommandParameters, JsonContext.ClearCookiesResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearCookiesCommandParameters, ClearCookiesResult> ClearCookiesCommand = new("Storage.clearCookies", JsonContext.ClearCookiesCommandParameters, JsonContext.ClearCookiesResult);
 
     public async Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetUsageAndQuotaCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(GetUsageAndQuotaCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetUsageAndQuotaCommandParameters, GetUsageAndQuotaResult>("Storage.getUsageAndQuota", JsonContext.GetUsageAndQuotaCommandParameters, JsonContext.GetUsageAndQuotaResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetUsageAndQuotaCommandParameters, GetUsageAndQuotaResult> GetUsageAndQuotaCommand = new("Storage.getUsageAndQuota", JsonContext.GetUsageAndQuotaCommandParameters, JsonContext.GetUsageAndQuotaResult);
 
     public async Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OverrideQuotaForOriginCommandParameters(Origin: origin, QuotaSize: quotaSize);
-        return await ExecuteCommandAsync(OverrideQuotaForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<OverrideQuotaForOriginCommandParameters, OverrideQuotaForOriginResult>("Storage.overrideQuotaForOrigin", JsonContext.OverrideQuotaForOriginCommandParameters, JsonContext.OverrideQuotaForOriginResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<OverrideQuotaForOriginCommandParameters, OverrideQuotaForOriginResult> OverrideQuotaForOriginCommand = new("Storage.overrideQuotaForOrigin", JsonContext.OverrideQuotaForOriginCommandParameters, JsonContext.OverrideQuotaForOriginResult);
 
     public async Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackCacheStorageForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(TrackCacheStorageForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TrackCacheStorageForOriginCommandParameters, TrackCacheStorageForOriginResult>("Storage.trackCacheStorageForOrigin", JsonContext.TrackCacheStorageForOriginCommandParameters, JsonContext.TrackCacheStorageForOriginResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TrackCacheStorageForOriginCommandParameters, TrackCacheStorageForOriginResult> TrackCacheStorageForOriginCommand = new("Storage.trackCacheStorageForOrigin", JsonContext.TrackCacheStorageForOriginCommandParameters, JsonContext.TrackCacheStorageForOriginResult);
 
     public async Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(TrackCacheStorageForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TrackCacheStorageForStorageKeyCommandParameters, TrackCacheStorageForStorageKeyResult>("Storage.trackCacheStorageForStorageKey", JsonContext.TrackCacheStorageForStorageKeyCommandParameters, JsonContext.TrackCacheStorageForStorageKeyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TrackCacheStorageForStorageKeyCommandParameters, TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyCommand = new("Storage.trackCacheStorageForStorageKey", JsonContext.TrackCacheStorageForStorageKeyCommandParameters, JsonContext.TrackCacheStorageForStorageKeyResult);
 
     public async Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackIndexedDBForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(TrackIndexedDBForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TrackIndexedDBForOriginCommandParameters, TrackIndexedDBForOriginResult>("Storage.trackIndexedDBForOrigin", JsonContext.TrackIndexedDBForOriginCommandParameters, JsonContext.TrackIndexedDBForOriginResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TrackIndexedDBForOriginCommandParameters, TrackIndexedDBForOriginResult> TrackIndexedDBForOriginCommand = new("Storage.trackIndexedDBForOrigin", JsonContext.TrackIndexedDBForOriginCommandParameters, JsonContext.TrackIndexedDBForOriginResult);
 
     public async Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(TrackIndexedDBForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TrackIndexedDBForStorageKeyCommandParameters, TrackIndexedDBForStorageKeyResult>("Storage.trackIndexedDBForStorageKey", JsonContext.TrackIndexedDBForStorageKeyCommandParameters, JsonContext.TrackIndexedDBForStorageKeyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TrackIndexedDBForStorageKeyCommandParameters, TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyCommand = new("Storage.trackIndexedDBForStorageKey", JsonContext.TrackIndexedDBForStorageKeyCommandParameters, JsonContext.TrackIndexedDBForStorageKeyResult);
 
     public async Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackCacheStorageForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(UntrackCacheStorageForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UntrackCacheStorageForOriginCommandParameters, UntrackCacheStorageForOriginResult>("Storage.untrackCacheStorageForOrigin", JsonContext.UntrackCacheStorageForOriginCommandParameters, JsonContext.UntrackCacheStorageForOriginResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UntrackCacheStorageForOriginCommandParameters, UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginCommand = new("Storage.untrackCacheStorageForOrigin", JsonContext.UntrackCacheStorageForOriginCommandParameters, JsonContext.UntrackCacheStorageForOriginResult);
 
     public async Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(UntrackCacheStorageForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UntrackCacheStorageForStorageKeyCommandParameters, UntrackCacheStorageForStorageKeyResult>("Storage.untrackCacheStorageForStorageKey", JsonContext.UntrackCacheStorageForStorageKeyCommandParameters, JsonContext.UntrackCacheStorageForStorageKeyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UntrackCacheStorageForStorageKeyCommandParameters, UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyCommand = new("Storage.untrackCacheStorageForStorageKey", JsonContext.UntrackCacheStorageForStorageKeyCommandParameters, JsonContext.UntrackCacheStorageForStorageKeyResult);
 
     public async Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackIndexedDBForOriginCommandParameters(Origin: origin);
-        return await ExecuteCommandAsync(UntrackIndexedDBForOriginCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UntrackIndexedDBForOriginCommandParameters, UntrackIndexedDBForOriginResult>("Storage.untrackIndexedDBForOrigin", JsonContext.UntrackIndexedDBForOriginCommandParameters, JsonContext.UntrackIndexedDBForOriginResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UntrackIndexedDBForOriginCommandParameters, UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginCommand = new("Storage.untrackIndexedDBForOrigin", JsonContext.UntrackIndexedDBForOriginCommandParameters, JsonContext.UntrackIndexedDBForOriginResult);
 
     public async Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
-        return await ExecuteCommandAsync(UntrackIndexedDBForStorageKeyCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UntrackIndexedDBForStorageKeyCommandParameters, UntrackIndexedDBForStorageKeyResult>("Storage.untrackIndexedDBForStorageKey", JsonContext.UntrackIndexedDBForStorageKeyCommandParameters, JsonContext.UntrackIndexedDBForStorageKeyResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UntrackIndexedDBForStorageKeyCommandParameters, UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyCommand = new("Storage.untrackIndexedDBForStorageKey", JsonContext.UntrackIndexedDBForStorageKeyCommandParameters, JsonContext.UntrackIndexedDBForStorageKeyResult);
 
     public async Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetTrustTokensCommandParameters();
-        return await ExecuteCommandAsync(GetTrustTokensCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetTrustTokensCommandParameters, GetTrustTokensResult>("Storage.getTrustTokens", JsonContext.GetTrustTokensCommandParameters, JsonContext.GetTrustTokensResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetTrustTokensCommandParameters, GetTrustTokensResult> GetTrustTokensCommand = new("Storage.getTrustTokens", JsonContext.GetTrustTokensCommandParameters, JsonContext.GetTrustTokensResult);
 
     public async Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearTrustTokensCommandParameters(IssuerOrigin: issuerOrigin);
-        return await ExecuteCommandAsync(ClearTrustTokensCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearTrustTokensCommandParameters, ClearTrustTokensResult>("Storage.clearTrustTokens", JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearTrustTokensCommandParameters, ClearTrustTokensResult> ClearTrustTokensCommand = new("Storage.clearTrustTokens", JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult);
 
     public async Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStorageBucketTrackingCommandParameters(StorageKey: storageKey, Enable: enable);
-        return await ExecuteCommandAsync(SetStorageBucketTrackingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetStorageBucketTrackingCommandParameters, SetStorageBucketTrackingResult>("Storage.setStorageBucketTracking", JsonContext.SetStorageBucketTrackingCommandParameters, JsonContext.SetStorageBucketTrackingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetStorageBucketTrackingCommandParameters, SetStorageBucketTrackingResult> SetStorageBucketTrackingCommand = new("Storage.setStorageBucketTracking", JsonContext.SetStorageBucketTrackingCommandParameters, JsonContext.SetStorageBucketTrackingResult);
 
     public async Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteStorageBucketCommandParameters(Bucket: bucket);
-        return await ExecuteCommandAsync(DeleteStorageBucketCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DeleteStorageBucketCommandParameters, DeleteStorageBucketResult>("Storage.deleteStorageBucket", JsonContext.DeleteStorageBucketCommandParameters, JsonContext.DeleteStorageBucketResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DeleteStorageBucketCommandParameters, DeleteStorageBucketResult> DeleteStorageBucketCommand = new("Storage.deleteStorageBucket", JsonContext.DeleteStorageBucketCommandParameters, JsonContext.DeleteStorageBucketResult);
 
     public async Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RunBounceTrackingMitigationsCommandParameters();
-        return await ExecuteCommandAsync(RunBounceTrackingMitigationsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RunBounceTrackingMitigationsCommandParameters, RunBounceTrackingMitigationsResult>("Storage.runBounceTrackingMitigations", JsonContext.RunBounceTrackingMitigationsCommandParameters, JsonContext.RunBounceTrackingMitigationsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RunBounceTrackingMitigationsCommandParameters, RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsCommand = new("Storage.runBounceTrackingMitigations", JsonContext.RunBounceTrackingMitigationsCommandParameters, JsonContext.RunBounceTrackingMitigationsResult);
 
     public async Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRelatedWebsiteSetsCommandParameters();
-        return await ExecuteCommandAsync(GetRelatedWebsiteSetsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetRelatedWebsiteSetsCommandParameters, GetRelatedWebsiteSetsResult>("Storage.getRelatedWebsiteSets", JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetRelatedWebsiteSetsCommandParameters, GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsCommand = new("Storage.getRelatedWebsiteSets", JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult);
 
     public IEventSource<CacheStorageContentUpdatedEventArgs> CacheStorageContentUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageContentUpdated);
     public IEventSource<CacheStorageListUpdatedEventArgs> CacheStorageListUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageListUpdated);
@@ -1158,49 +1158,55 @@ public static class StorageDomainEvent
     /// <summary>
     /// A cache's contents have been modified.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<CacheStorageContentUpdatedEventArgs>> CacheStorageContentUpdated { get; } =
-        EventDescriptor<CdpEventArgs<CacheStorageContentUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<CacheStorageContentUpdatedEventArgs>> CacheStorageContentUpdated =>
+        _cacheStorageContentUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _cacheStorageContentUpdated, EventDescriptor<CdpEventArgs<CacheStorageContentUpdatedEventArgs>>.Create(
             "goog:cdp.Storage.cacheStorageContentUpdated",
-            StorageJsonSerializerContext.Default.CacheStorageContentUpdatedCdpEventArgs);
+            StorageJsonSerializerContext.Default.CacheStorageContentUpdatedCdpEventArgs), null) ?? _cacheStorageContentUpdated;
+    private static EventDescriptor<CdpEventArgs<CacheStorageContentUpdatedEventArgs>>? _cacheStorageContentUpdated;
 
     /// <summary>
     /// A cache has been added/deleted.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<CacheStorageListUpdatedEventArgs>> CacheStorageListUpdated { get; } =
-        EventDescriptor<CdpEventArgs<CacheStorageListUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<CacheStorageListUpdatedEventArgs>> CacheStorageListUpdated =>
+        _cacheStorageListUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _cacheStorageListUpdated, EventDescriptor<CdpEventArgs<CacheStorageListUpdatedEventArgs>>.Create(
             "goog:cdp.Storage.cacheStorageListUpdated",
-            StorageJsonSerializerContext.Default.CacheStorageListUpdatedCdpEventArgs);
+            StorageJsonSerializerContext.Default.CacheStorageListUpdatedCdpEventArgs), null) ?? _cacheStorageListUpdated;
+    private static EventDescriptor<CdpEventArgs<CacheStorageListUpdatedEventArgs>>? _cacheStorageListUpdated;
 
     /// <summary>
     /// The origin's IndexedDB object store has been modified.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<IndexedDBContentUpdatedEventArgs>> IndexedDBContentUpdated { get; } =
-        EventDescriptor<CdpEventArgs<IndexedDBContentUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<IndexedDBContentUpdatedEventArgs>> IndexedDBContentUpdated =>
+        _indexedDBContentUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _indexedDBContentUpdated, EventDescriptor<CdpEventArgs<IndexedDBContentUpdatedEventArgs>>.Create(
             "goog:cdp.Storage.indexedDBContentUpdated",
-            StorageJsonSerializerContext.Default.IndexedDBContentUpdatedCdpEventArgs);
+            StorageJsonSerializerContext.Default.IndexedDBContentUpdatedCdpEventArgs), null) ?? _indexedDBContentUpdated;
+    private static EventDescriptor<CdpEventArgs<IndexedDBContentUpdatedEventArgs>>? _indexedDBContentUpdated;
 
     /// <summary>
     /// The origin's IndexedDB database list has been modified.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<IndexedDBListUpdatedEventArgs>> IndexedDBListUpdated { get; } =
-        EventDescriptor<CdpEventArgs<IndexedDBListUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<IndexedDBListUpdatedEventArgs>> IndexedDBListUpdated =>
+        _indexedDBListUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _indexedDBListUpdated, EventDescriptor<CdpEventArgs<IndexedDBListUpdatedEventArgs>>.Create(
             "goog:cdp.Storage.indexedDBListUpdated",
-            StorageJsonSerializerContext.Default.IndexedDBListUpdatedCdpEventArgs);
+            StorageJsonSerializerContext.Default.IndexedDBListUpdatedCdpEventArgs), null) ?? _indexedDBListUpdated;
+    private static EventDescriptor<CdpEventArgs<IndexedDBListUpdatedEventArgs>>? _indexedDBListUpdated;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>> StorageBucketCreatedOrUpdated { get; } =
-        EventDescriptor<CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>> StorageBucketCreatedOrUpdated =>
+        _storageBucketCreatedOrUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _storageBucketCreatedOrUpdated, EventDescriptor<CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>>.Create(
             "goog:cdp.Storage.storageBucketCreatedOrUpdated",
-            StorageJsonSerializerContext.Default.StorageBucketCreatedOrUpdatedCdpEventArgs);
+            StorageJsonSerializerContext.Default.StorageBucketCreatedOrUpdatedCdpEventArgs), null) ?? _storageBucketCreatedOrUpdated;
+    private static EventDescriptor<CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>>? _storageBucketCreatedOrUpdated;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<StorageBucketDeletedEventArgs>> StorageBucketDeleted { get; } =
-        EventDescriptor<CdpEventArgs<StorageBucketDeletedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<StorageBucketDeletedEventArgs>> StorageBucketDeleted =>
+        _storageBucketDeleted ?? global::System.Threading.Interlocked.CompareExchange(ref _storageBucketDeleted, EventDescriptor<CdpEventArgs<StorageBucketDeletedEventArgs>>.Create(
             "goog:cdp.Storage.storageBucketDeleted",
-            StorageJsonSerializerContext.Default.StorageBucketDeletedCdpEventArgs);
+            StorageJsonSerializerContext.Default.StorageBucketDeletedCdpEventArgs), null) ?? _storageBucketDeleted;
+    private static EventDescriptor<CdpEventArgs<StorageBucketDeletedEventArgs>>? _storageBucketDeleted;
 
 }

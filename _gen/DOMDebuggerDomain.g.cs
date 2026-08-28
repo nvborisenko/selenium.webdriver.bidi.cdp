@@ -211,82 +211,82 @@ public interface IDOMDebugger
 
 internal sealed class DOMDebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDOMDebugger
 {
-    private static DOMDebuggerJsonSerializerContext JsonContext = DOMDebuggerJsonSerializerContext.Default;
+    private static readonly DOMDebuggerJsonSerializerContext JsonContext = DOMDebuggerJsonSerializerContext.Default;
 
     public async Task<GetEventListenersResult> GetEventListenersAsync(Runtime.RemoteObjectId objectId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEventListenersCommandParameters(ObjectId: objectId, Depth: depth, Pierce: pierce);
-        return await ExecuteCommandAsync(GetEventListenersCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetEventListenersCommandParameters, GetEventListenersResult>("DOMDebugger.getEventListeners", JsonContext.GetEventListenersCommandParameters, JsonContext.GetEventListenersResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetEventListenersCommandParameters, GetEventListenersResult> GetEventListenersCommand = new("DOMDebugger.getEventListeners", JsonContext.GetEventListenersCommandParameters, JsonContext.GetEventListenersResult);
 
     public async Task<RemoveDOMBreakpointResult> RemoveDOMBreakpointAsync(DOM.NodeId nodeId, DOMBreakpointType type, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDOMBreakpointCommandParameters(NodeId: nodeId, Type: type);
-        return await ExecuteCommandAsync(RemoveDOMBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveDOMBreakpointCommandParameters, RemoveDOMBreakpointResult>("DOMDebugger.removeDOMBreakpoint", JsonContext.RemoveDOMBreakpointCommandParameters, JsonContext.RemoveDOMBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveDOMBreakpointCommandParameters, RemoveDOMBreakpointResult> RemoveDOMBreakpointCommand = new("DOMDebugger.removeDOMBreakpoint", JsonContext.RemoveDOMBreakpointCommandParameters, JsonContext.RemoveDOMBreakpointResult);
 
     public async Task<RemoveEventListenerBreakpointResult> RemoveEventListenerBreakpointAsync(string eventName, string? targetName = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveEventListenerBreakpointCommandParameters(EventName: eventName, TargetName: targetName);
-        return await ExecuteCommandAsync(RemoveEventListenerBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveEventListenerBreakpointCommandParameters, RemoveEventListenerBreakpointResult>("DOMDebugger.removeEventListenerBreakpoint", JsonContext.RemoveEventListenerBreakpointCommandParameters, JsonContext.RemoveEventListenerBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveEventListenerBreakpointCommandParameters, RemoveEventListenerBreakpointResult> RemoveEventListenerBreakpointCommand = new("DOMDebugger.removeEventListenerBreakpoint", JsonContext.RemoveEventListenerBreakpointCommandParameters, JsonContext.RemoveEventListenerBreakpointResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveInstrumentationBreakpointCommandParameters(EventName: eventName);
-        return await ExecuteCommandAsync(RemoveInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveInstrumentationBreakpointCommandParameters, RemoveInstrumentationBreakpointResult>("DOMDebugger.removeInstrumentationBreakpoint", JsonContext.RemoveInstrumentationBreakpointCommandParameters, JsonContext.RemoveInstrumentationBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveInstrumentationBreakpointCommandParameters, RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointCommand = new("DOMDebugger.removeInstrumentationBreakpoint", JsonContext.RemoveInstrumentationBreakpointCommandParameters, JsonContext.RemoveInstrumentationBreakpointResult);
 
     public async Task<RemoveXHRBreakpointResult> RemoveXHRBreakpointAsync(string url, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveXHRBreakpointCommandParameters(Url: url);
-        return await ExecuteCommandAsync(RemoveXHRBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveXHRBreakpointCommandParameters, RemoveXHRBreakpointResult>("DOMDebugger.removeXHRBreakpoint", JsonContext.RemoveXHRBreakpointCommandParameters, JsonContext.RemoveXHRBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveXHRBreakpointCommandParameters, RemoveXHRBreakpointResult> RemoveXHRBreakpointCommand = new("DOMDebugger.removeXHRBreakpoint", JsonContext.RemoveXHRBreakpointCommandParameters, JsonContext.RemoveXHRBreakpointResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetBreakOnCSPViolationResult> SetBreakOnCSPViolationAsync(ImmutableArray<CSPViolationType> violationTypes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBreakOnCSPViolationCommandParameters(ViolationTypes: violationTypes);
-        return await ExecuteCommandAsync(SetBreakOnCSPViolationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetBreakOnCSPViolationCommandParameters, SetBreakOnCSPViolationResult>("DOMDebugger.setBreakOnCSPViolation", JsonContext.SetBreakOnCSPViolationCommandParameters, JsonContext.SetBreakOnCSPViolationResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetBreakOnCSPViolationCommandParameters, SetBreakOnCSPViolationResult> SetBreakOnCSPViolationCommand = new("DOMDebugger.setBreakOnCSPViolation", JsonContext.SetBreakOnCSPViolationCommandParameters, JsonContext.SetBreakOnCSPViolationResult);
 
     public async Task<SetDOMBreakpointResult> SetDOMBreakpointAsync(DOM.NodeId nodeId, DOMBreakpointType type, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDOMBreakpointCommandParameters(NodeId: nodeId, Type: type);
-        return await ExecuteCommandAsync(SetDOMBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDOMBreakpointCommandParameters, SetDOMBreakpointResult>("DOMDebugger.setDOMBreakpoint", JsonContext.SetDOMBreakpointCommandParameters, JsonContext.SetDOMBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDOMBreakpointCommandParameters, SetDOMBreakpointResult> SetDOMBreakpointCommand = new("DOMDebugger.setDOMBreakpoint", JsonContext.SetDOMBreakpointCommandParameters, JsonContext.SetDOMBreakpointResult);
 
     public async Task<SetEventListenerBreakpointResult> SetEventListenerBreakpointAsync(string eventName, string? targetName = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEventListenerBreakpointCommandParameters(EventName: eventName, TargetName: targetName);
-        return await ExecuteCommandAsync(SetEventListenerBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetEventListenerBreakpointCommandParameters, SetEventListenerBreakpointResult>("DOMDebugger.setEventListenerBreakpoint", JsonContext.SetEventListenerBreakpointCommandParameters, JsonContext.SetEventListenerBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetEventListenerBreakpointCommandParameters, SetEventListenerBreakpointResult> SetEventListenerBreakpointCommand = new("DOMDebugger.setEventListenerBreakpoint", JsonContext.SetEventListenerBreakpointCommandParameters, JsonContext.SetEventListenerBreakpointResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInstrumentationBreakpointCommandParameters(EventName: eventName);
-        return await ExecuteCommandAsync(SetInstrumentationBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult>("DOMDebugger.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetInstrumentationBreakpointCommandParameters, SetInstrumentationBreakpointResult> SetInstrumentationBreakpointCommand = new("DOMDebugger.setInstrumentationBreakpoint", JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult);
 
     public async Task<SetXHRBreakpointResult> SetXHRBreakpointAsync(string url, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetXHRBreakpointCommandParameters(Url: url);
-        return await ExecuteCommandAsync(SetXHRBreakpointCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetXHRBreakpointCommandParameters, SetXHRBreakpointResult>("DOMDebugger.setXHRBreakpoint", JsonContext.SetXHRBreakpointCommandParameters, JsonContext.SetXHRBreakpointResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetXHRBreakpointCommandParameters, SetXHRBreakpointResult> SetXHRBreakpointCommand = new("DOMDebugger.setXHRBreakpoint", JsonContext.SetXHRBreakpointCommandParameters, JsonContext.SetXHRBreakpointResult);
 
 }
 

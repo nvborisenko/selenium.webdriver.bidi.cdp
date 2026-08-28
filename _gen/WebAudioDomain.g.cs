@@ -222,28 +222,28 @@ public interface IWebAudio
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IWebAudio
 {
-    private static WebAudioJsonSerializerContext JsonContext = WebAudioJsonSerializerContext.Default;
+    private static readonly WebAudioJsonSerializerContext JsonContext = WebAudioJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("WebAudio.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("WebAudio.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("WebAudio.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("WebAudio.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRealtimeDataCommandParameters(ContextId: contextId);
-        return await ExecuteCommandAsync(GetRealtimeDataCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetRealtimeDataCommandParameters, GetRealtimeDataResult>("WebAudio.getRealtimeData", JsonContext.GetRealtimeDataCommandParameters, JsonContext.GetRealtimeDataResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetRealtimeDataCommandParameters, GetRealtimeDataResult> GetRealtimeDataCommand = new("WebAudio.getRealtimeData", JsonContext.GetRealtimeDataCommandParameters, JsonContext.GetRealtimeDataResult);
 
     public IEventSource<ContextCreatedEventArgs> ContextCreated => CreateCdpEventSource(WebAudioDomainEvent.ContextCreated);
     public IEventSource<ContextWillBeDestroyedEventArgs> ContextWillBeDestroyed => CreateCdpEventSource(WebAudioDomainEvent.ContextWillBeDestroyed);
@@ -679,105 +679,118 @@ public static class WebAudioDomainEvent
     /// <summary>
     /// Notifies that a new BaseAudioContext has been created.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ContextCreatedEventArgs>> ContextCreated { get; } =
-        EventDescriptor<CdpEventArgs<ContextCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ContextCreatedEventArgs>> ContextCreated =>
+        _contextCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _contextCreated, EventDescriptor<CdpEventArgs<ContextCreatedEventArgs>>.Create(
             "goog:cdp.WebAudio.contextCreated",
-            WebAudioJsonSerializerContext.Default.ContextCreatedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.ContextCreatedCdpEventArgs), null) ?? _contextCreated;
+    private static EventDescriptor<CdpEventArgs<ContextCreatedEventArgs>>? _contextCreated;
 
     /// <summary>
     /// Notifies that an existing BaseAudioContext will be destroyed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ContextWillBeDestroyedEventArgs>> ContextWillBeDestroyed { get; } =
-        EventDescriptor<CdpEventArgs<ContextWillBeDestroyedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ContextWillBeDestroyedEventArgs>> ContextWillBeDestroyed =>
+        _contextWillBeDestroyed ?? global::System.Threading.Interlocked.CompareExchange(ref _contextWillBeDestroyed, EventDescriptor<CdpEventArgs<ContextWillBeDestroyedEventArgs>>.Create(
             "goog:cdp.WebAudio.contextWillBeDestroyed",
-            WebAudioJsonSerializerContext.Default.ContextWillBeDestroyedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.ContextWillBeDestroyedCdpEventArgs), null) ?? _contextWillBeDestroyed;
+    private static EventDescriptor<CdpEventArgs<ContextWillBeDestroyedEventArgs>>? _contextWillBeDestroyed;
 
     /// <summary>
     /// Notifies that existing BaseAudioContext has changed some properties (id stays the same)..
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<ContextChangedEventArgs>> ContextChanged { get; } =
-        EventDescriptor<CdpEventArgs<ContextChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<ContextChangedEventArgs>> ContextChanged =>
+        _contextChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _contextChanged, EventDescriptor<CdpEventArgs<ContextChangedEventArgs>>.Create(
             "goog:cdp.WebAudio.contextChanged",
-            WebAudioJsonSerializerContext.Default.ContextChangedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.ContextChangedCdpEventArgs), null) ?? _contextChanged;
+    private static EventDescriptor<CdpEventArgs<ContextChangedEventArgs>>? _contextChanged;
 
     /// <summary>
     /// Notifies that the construction of an AudioListener has finished.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AudioListenerCreatedEventArgs>> AudioListenerCreated { get; } =
-        EventDescriptor<CdpEventArgs<AudioListenerCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AudioListenerCreatedEventArgs>> AudioListenerCreated =>
+        _audioListenerCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _audioListenerCreated, EventDescriptor<CdpEventArgs<AudioListenerCreatedEventArgs>>.Create(
             "goog:cdp.WebAudio.audioListenerCreated",
-            WebAudioJsonSerializerContext.Default.AudioListenerCreatedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.AudioListenerCreatedCdpEventArgs), null) ?? _audioListenerCreated;
+    private static EventDescriptor<CdpEventArgs<AudioListenerCreatedEventArgs>>? _audioListenerCreated;
 
     /// <summary>
     /// Notifies that a new AudioListener has been created.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AudioListenerWillBeDestroyedEventArgs>> AudioListenerWillBeDestroyed { get; } =
-        EventDescriptor<CdpEventArgs<AudioListenerWillBeDestroyedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AudioListenerWillBeDestroyedEventArgs>> AudioListenerWillBeDestroyed =>
+        _audioListenerWillBeDestroyed ?? global::System.Threading.Interlocked.CompareExchange(ref _audioListenerWillBeDestroyed, EventDescriptor<CdpEventArgs<AudioListenerWillBeDestroyedEventArgs>>.Create(
             "goog:cdp.WebAudio.audioListenerWillBeDestroyed",
-            WebAudioJsonSerializerContext.Default.AudioListenerWillBeDestroyedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.AudioListenerWillBeDestroyedCdpEventArgs), null) ?? _audioListenerWillBeDestroyed;
+    private static EventDescriptor<CdpEventArgs<AudioListenerWillBeDestroyedEventArgs>>? _audioListenerWillBeDestroyed;
 
     /// <summary>
     /// Notifies that a new AudioNode has been created.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AudioNodeCreatedEventArgs>> AudioNodeCreated { get; } =
-        EventDescriptor<CdpEventArgs<AudioNodeCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AudioNodeCreatedEventArgs>> AudioNodeCreated =>
+        _audioNodeCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _audioNodeCreated, EventDescriptor<CdpEventArgs<AudioNodeCreatedEventArgs>>.Create(
             "goog:cdp.WebAudio.audioNodeCreated",
-            WebAudioJsonSerializerContext.Default.AudioNodeCreatedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.AudioNodeCreatedCdpEventArgs), null) ?? _audioNodeCreated;
+    private static EventDescriptor<CdpEventArgs<AudioNodeCreatedEventArgs>>? _audioNodeCreated;
 
     /// <summary>
     /// Notifies that an existing AudioNode has been destroyed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AudioNodeWillBeDestroyedEventArgs>> AudioNodeWillBeDestroyed { get; } =
-        EventDescriptor<CdpEventArgs<AudioNodeWillBeDestroyedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AudioNodeWillBeDestroyedEventArgs>> AudioNodeWillBeDestroyed =>
+        _audioNodeWillBeDestroyed ?? global::System.Threading.Interlocked.CompareExchange(ref _audioNodeWillBeDestroyed, EventDescriptor<CdpEventArgs<AudioNodeWillBeDestroyedEventArgs>>.Create(
             "goog:cdp.WebAudio.audioNodeWillBeDestroyed",
-            WebAudioJsonSerializerContext.Default.AudioNodeWillBeDestroyedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.AudioNodeWillBeDestroyedCdpEventArgs), null) ?? _audioNodeWillBeDestroyed;
+    private static EventDescriptor<CdpEventArgs<AudioNodeWillBeDestroyedEventArgs>>? _audioNodeWillBeDestroyed;
 
     /// <summary>
     /// Notifies that a new AudioParam has been created.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AudioParamCreatedEventArgs>> AudioParamCreated { get; } =
-        EventDescriptor<CdpEventArgs<AudioParamCreatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AudioParamCreatedEventArgs>> AudioParamCreated =>
+        _audioParamCreated ?? global::System.Threading.Interlocked.CompareExchange(ref _audioParamCreated, EventDescriptor<CdpEventArgs<AudioParamCreatedEventArgs>>.Create(
             "goog:cdp.WebAudio.audioParamCreated",
-            WebAudioJsonSerializerContext.Default.AudioParamCreatedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.AudioParamCreatedCdpEventArgs), null) ?? _audioParamCreated;
+    private static EventDescriptor<CdpEventArgs<AudioParamCreatedEventArgs>>? _audioParamCreated;
 
     /// <summary>
     /// Notifies that an existing AudioParam has been destroyed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AudioParamWillBeDestroyedEventArgs>> AudioParamWillBeDestroyed { get; } =
-        EventDescriptor<CdpEventArgs<AudioParamWillBeDestroyedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AudioParamWillBeDestroyedEventArgs>> AudioParamWillBeDestroyed =>
+        _audioParamWillBeDestroyed ?? global::System.Threading.Interlocked.CompareExchange(ref _audioParamWillBeDestroyed, EventDescriptor<CdpEventArgs<AudioParamWillBeDestroyedEventArgs>>.Create(
             "goog:cdp.WebAudio.audioParamWillBeDestroyed",
-            WebAudioJsonSerializerContext.Default.AudioParamWillBeDestroyedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.AudioParamWillBeDestroyedCdpEventArgs), null) ?? _audioParamWillBeDestroyed;
+    private static EventDescriptor<CdpEventArgs<AudioParamWillBeDestroyedEventArgs>>? _audioParamWillBeDestroyed;
 
     /// <summary>
     /// Notifies that two AudioNodes are connected.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<NodesConnectedEventArgs>> NodesConnected { get; } =
-        EventDescriptor<CdpEventArgs<NodesConnectedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<NodesConnectedEventArgs>> NodesConnected =>
+        _nodesConnected ?? global::System.Threading.Interlocked.CompareExchange(ref _nodesConnected, EventDescriptor<CdpEventArgs<NodesConnectedEventArgs>>.Create(
             "goog:cdp.WebAudio.nodesConnected",
-            WebAudioJsonSerializerContext.Default.NodesConnectedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.NodesConnectedCdpEventArgs), null) ?? _nodesConnected;
+    private static EventDescriptor<CdpEventArgs<NodesConnectedEventArgs>>? _nodesConnected;
 
     /// <summary>
     /// Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<NodesDisconnectedEventArgs>> NodesDisconnected { get; } =
-        EventDescriptor<CdpEventArgs<NodesDisconnectedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<NodesDisconnectedEventArgs>> NodesDisconnected =>
+        _nodesDisconnected ?? global::System.Threading.Interlocked.CompareExchange(ref _nodesDisconnected, EventDescriptor<CdpEventArgs<NodesDisconnectedEventArgs>>.Create(
             "goog:cdp.WebAudio.nodesDisconnected",
-            WebAudioJsonSerializerContext.Default.NodesDisconnectedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.NodesDisconnectedCdpEventArgs), null) ?? _nodesDisconnected;
+    private static EventDescriptor<CdpEventArgs<NodesDisconnectedEventArgs>>? _nodesDisconnected;
 
     /// <summary>
     /// Notifies that an AudioNode is connected to an AudioParam.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<NodeParamConnectedEventArgs>> NodeParamConnected { get; } =
-        EventDescriptor<CdpEventArgs<NodeParamConnectedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<NodeParamConnectedEventArgs>> NodeParamConnected =>
+        _nodeParamConnected ?? global::System.Threading.Interlocked.CompareExchange(ref _nodeParamConnected, EventDescriptor<CdpEventArgs<NodeParamConnectedEventArgs>>.Create(
             "goog:cdp.WebAudio.nodeParamConnected",
-            WebAudioJsonSerializerContext.Default.NodeParamConnectedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.NodeParamConnectedCdpEventArgs), null) ?? _nodeParamConnected;
+    private static EventDescriptor<CdpEventArgs<NodeParamConnectedEventArgs>>? _nodeParamConnected;
 
     /// <summary>
     /// Notifies that an AudioNode is disconnected to an AudioParam.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<NodeParamDisconnectedEventArgs>> NodeParamDisconnected { get; } =
-        EventDescriptor<CdpEventArgs<NodeParamDisconnectedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<NodeParamDisconnectedEventArgs>> NodeParamDisconnected =>
+        _nodeParamDisconnected ?? global::System.Threading.Interlocked.CompareExchange(ref _nodeParamDisconnected, EventDescriptor<CdpEventArgs<NodeParamDisconnectedEventArgs>>.Create(
             "goog:cdp.WebAudio.nodeParamDisconnected",
-            WebAudioJsonSerializerContext.Default.NodeParamDisconnectedCdpEventArgs);
+            WebAudioJsonSerializerContext.Default.NodeParamDisconnectedCdpEventArgs), null) ?? _nodeParamDisconnected;
+    private static EventDescriptor<CdpEventArgs<NodeParamDisconnectedEventArgs>>? _nodeParamDisconnected;
 
 }

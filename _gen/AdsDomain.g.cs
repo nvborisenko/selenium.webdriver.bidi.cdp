@@ -46,21 +46,21 @@ public interface IAds
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IAds
 {
-    private static AdsJsonSerializerContext JsonContext = AdsJsonSerializerContext.Default;
+    private static readonly AdsJsonSerializerContext JsonContext = AdsJsonSerializerContext.Default;
 
     public async Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdMetricsCommandParameters();
-        return await ExecuteCommandAsync(GetAdMetricsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAdMetricsCommandParameters, GetAdMetricsResult>("Ads.getAdMetrics", JsonContext.GetAdMetricsCommandParameters, JsonContext.GetAdMetricsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAdMetricsCommandParameters, GetAdMetricsResult> GetAdMetricsCommand = new("Ads.getAdMetrics", JsonContext.GetAdMetricsCommandParameters, JsonContext.GetAdMetricsResult);
 
     public async Task<GetAdScriptsResult> GetAdScriptsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdScriptsCommandParameters();
-        return await ExecuteCommandAsync(GetAdScriptsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetAdScriptsCommandParameters, GetAdScriptsResult>("Ads.getAdScripts", JsonContext.GetAdScriptsCommandParameters, JsonContext.GetAdScriptsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetAdScriptsCommandParameters, GetAdScriptsResult> GetAdScriptsCommand = new("Ads.getAdScripts", JsonContext.GetAdScriptsCommandParameters, JsonContext.GetAdScriptsResult);
 
 }
 

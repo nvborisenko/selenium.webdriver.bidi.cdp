@@ -180,63 +180,63 @@ public interface IExtensions
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IExtensions
 {
-    private static ExtensionsJsonSerializerContext JsonContext = ExtensionsJsonSerializerContext.Default;
+    private static readonly ExtensionsJsonSerializerContext JsonContext = ExtensionsJsonSerializerContext.Default;
 
     public async Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TriggerActionCommandParameters(Id: id, TargetId: targetId);
-        return await ExecuteCommandAsync(TriggerActionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<TriggerActionCommandParameters, TriggerActionResult>("Extensions.triggerAction", JsonContext.TriggerActionCommandParameters, JsonContext.TriggerActionResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<TriggerActionCommandParameters, TriggerActionResult> TriggerActionCommand = new("Extensions.triggerAction", JsonContext.TriggerActionCommandParameters, JsonContext.TriggerActionResult);
 
     public async Task<LoadUnpackedResult> LoadUnpackedAsync(string path, bool? enableInIncognito = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LoadUnpackedCommandParameters(Path: path, EnableInIncognito: enableInIncognito);
-        return await ExecuteCommandAsync(LoadUnpackedCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<LoadUnpackedCommandParameters, LoadUnpackedResult>("Extensions.loadUnpacked", JsonContext.LoadUnpackedCommandParameters, JsonContext.LoadUnpackedResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<LoadUnpackedCommandParameters, LoadUnpackedResult> LoadUnpackedCommand = new("Extensions.loadUnpacked", JsonContext.LoadUnpackedCommandParameters, JsonContext.LoadUnpackedResult);
 
     public async Task<GetExtensionsResult> GetExtensionsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetExtensionsCommandParameters();
-        return await ExecuteCommandAsync(GetExtensionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetExtensionsCommandParameters, GetExtensionsResult>("Extensions.getExtensions", JsonContext.GetExtensionsCommandParameters, JsonContext.GetExtensionsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetExtensionsCommandParameters, GetExtensionsResult> GetExtensionsCommand = new("Extensions.getExtensions", JsonContext.GetExtensionsCommandParameters, JsonContext.GetExtensionsResult);
 
     public async Task<UninstallResult> UninstallAsync(string id, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UninstallCommandParameters(Id: id);
-        return await ExecuteCommandAsync(UninstallCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UninstallCommandParameters, UninstallResult>("Extensions.uninstall", JsonContext.UninstallCommandParameters, JsonContext.UninstallResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UninstallCommandParameters, UninstallResult> UninstallCommand = new("Extensions.uninstall", JsonContext.UninstallCommandParameters, JsonContext.UninstallResult);
 
     public async Task<GetStorageItemsResult> GetStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string>? keys = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: keys);
-        return await ExecuteCommandAsync(GetStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetStorageItemsCommandParameters, GetStorageItemsResult>("Extensions.getStorageItems", JsonContext.GetStorageItemsCommandParameters, JsonContext.GetStorageItemsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetStorageItemsCommandParameters, GetStorageItemsResult> GetStorageItemsCommand = new("Extensions.getStorageItems", JsonContext.GetStorageItemsCommandParameters, JsonContext.GetStorageItemsResult);
 
     public async Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: keys);
-        return await ExecuteCommandAsync(RemoveStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<RemoveStorageItemsCommandParameters, RemoveStorageItemsResult>("Extensions.removeStorageItems", JsonContext.RemoveStorageItemsCommandParameters, JsonContext.RemoveStorageItemsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<RemoveStorageItemsCommandParameters, RemoveStorageItemsResult> RemoveStorageItemsCommand = new("Extensions.removeStorageItems", JsonContext.RemoveStorageItemsCommandParameters, JsonContext.RemoveStorageItemsResult);
 
     public async Task<ClearStorageItemsResult> ClearStorageItemsAsync(string id, StorageArea storageArea, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearStorageItemsCommandParameters(Id: id, StorageArea: storageArea);
-        return await ExecuteCommandAsync(ClearStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ClearStorageItemsCommandParameters, ClearStorageItemsResult>("Extensions.clearStorageItems", JsonContext.ClearStorageItemsCommandParameters, JsonContext.ClearStorageItemsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ClearStorageItemsCommandParameters, ClearStorageItemsResult> ClearStorageItemsCommand = new("Extensions.clearStorageItems", JsonContext.ClearStorageItemsCommandParameters, JsonContext.ClearStorageItemsResult);
 
     public async Task<SetStorageItemsResult> SetStorageItemsAsync(string id, StorageArea storageArea, global::System.Text.Json.JsonElement values, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Values: values);
-        return await ExecuteCommandAsync(SetStorageItemsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetStorageItemsCommandParameters, SetStorageItemsResult>("Extensions.setStorageItems", JsonContext.SetStorageItemsCommandParameters, JsonContext.SetStorageItemsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetStorageItemsCommandParameters, SetStorageItemsResult> SetStorageItemsCommand = new("Extensions.setStorageItems", JsonContext.SetStorageItemsCommandParameters, JsonContext.SetStorageItemsResult);
 
 }
 

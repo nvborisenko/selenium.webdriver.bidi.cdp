@@ -140,49 +140,49 @@ public interface ICast
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ICast
 {
-    private static CastJsonSerializerContext JsonContext = CastJsonSerializerContext.Default;
+    private static readonly CastJsonSerializerContext JsonContext = CastJsonSerializerContext.Default;
 
     public async Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(PresentationUrl: presentationUrl);
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Cast.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Cast.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Cast.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Cast.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSinkToUseCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(SetSinkToUseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetSinkToUseCommandParameters, SetSinkToUseResult>("Cast.setSinkToUse", JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetSinkToUseCommandParameters, SetSinkToUseResult> SetSinkToUseCommand = new("Cast.setSinkToUse", JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult);
 
     public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartDesktopMirroringCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StartDesktopMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartDesktopMirroringCommandParameters, StartDesktopMirroringResult>("Cast.startDesktopMirroring", JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartDesktopMirroringCommandParameters, StartDesktopMirroringResult> StartDesktopMirroringCommand = new("Cast.startDesktopMirroring", JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult);
 
     public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartTabMirroringCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StartTabMirroringCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartTabMirroringCommandParameters, StartTabMirroringResult>("Cast.startTabMirroring", JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartTabMirroringCommandParameters, StartTabMirroringResult> StartTabMirroringCommand = new("Cast.startTabMirroring", JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult);
 
     public async Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopCastingCommandParameters(SinkName: sinkName);
-        return await ExecuteCommandAsync(StopCastingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopCastingCommandParameters, StopCastingResult>("Cast.stopCasting", JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopCastingCommandParameters, StopCastingResult> StopCastingCommand = new("Cast.stopCasting", JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult);
 
     public IEventSource<SinksUpdatedEventArgs> SinksUpdated => CreateCdpEventSource(CastDomainEvent.SinksUpdated);
     public IEventSource<IssueUpdatedEventArgs> IssueUpdated => CreateCdpEventSource(CastDomainEvent.IssueUpdated);
@@ -291,18 +291,20 @@ public static class CastDomainEvent
     /// This is fired whenever the list of available sinks changes. A sink is a
     /// device or a software surface that you can cast to.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<SinksUpdatedEventArgs>> SinksUpdated { get; } =
-        EventDescriptor<CdpEventArgs<SinksUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<SinksUpdatedEventArgs>> SinksUpdated =>
+        _sinksUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _sinksUpdated, EventDescriptor<CdpEventArgs<SinksUpdatedEventArgs>>.Create(
             "goog:cdp.Cast.sinksUpdated",
-            CastJsonSerializerContext.Default.SinksUpdatedCdpEventArgs);
+            CastJsonSerializerContext.Default.SinksUpdatedCdpEventArgs), null) ?? _sinksUpdated;
+    private static EventDescriptor<CdpEventArgs<SinksUpdatedEventArgs>>? _sinksUpdated;
 
     /// <summary>
     /// This is fired whenever the outstanding issue/error message changes.
     /// |issueMessage| is empty if there is no issue.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<IssueUpdatedEventArgs>> IssueUpdated { get; } =
-        EventDescriptor<CdpEventArgs<IssueUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<IssueUpdatedEventArgs>> IssueUpdated =>
+        _issueUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _issueUpdated, EventDescriptor<CdpEventArgs<IssueUpdatedEventArgs>>.Create(
             "goog:cdp.Cast.issueUpdated",
-            CastJsonSerializerContext.Default.IssueUpdatedCdpEventArgs);
+            CastJsonSerializerContext.Default.IssueUpdatedCdpEventArgs), null) ?? _issueUpdated;
+    private static EventDescriptor<CdpEventArgs<IssueUpdatedEventArgs>>? _issueUpdated;
 
 }

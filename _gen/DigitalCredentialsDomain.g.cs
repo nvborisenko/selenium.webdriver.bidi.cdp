@@ -45,14 +45,14 @@ public interface IDigitalCredentials
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IDigitalCredentials
 {
-    private static DigitalCredentialsJsonSerializerContext JsonContext = DigitalCredentialsJsonSerializerContext.Default;
+    private static readonly DigitalCredentialsJsonSerializerContext JsonContext = DigitalCredentialsJsonSerializerContext.Default;
 
     public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = default, global::System.Text.Json.JsonElement? response = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: protocol, Response: response, FrameId: frameId);
-        return await ExecuteCommandAsync(SetVirtualWalletBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetVirtualWalletBehaviorCommandParameters, SetVirtualWalletBehaviorResult>("DigitalCredentials.setVirtualWalletBehavior", JsonContext.SetVirtualWalletBehaviorCommandParameters, JsonContext.SetVirtualWalletBehaviorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetVirtualWalletBehaviorCommandParameters, SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorCommand = new("DigitalCredentials.setVirtualWalletBehavior", JsonContext.SetVirtualWalletBehaviorCommandParameters, JsonContext.SetVirtualWalletBehaviorResult);
 
 }
 

@@ -143,44 +143,44 @@ public interface ISecurity
 
 internal sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ISecurity
 {
-    private static SecurityJsonSerializerContext JsonContext = SecurityJsonSerializerContext.Default;
+    private static readonly SecurityJsonSerializerContext JsonContext = SecurityJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Security.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Security.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Security.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Security.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetIgnoreCertificateErrorsCommandParameters(Ignore: ignore);
-        return await ExecuteCommandAsync(SetIgnoreCertificateErrorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetIgnoreCertificateErrorsCommandParameters, SetIgnoreCertificateErrorsResult>("Security.setIgnoreCertificateErrors", JsonContext.SetIgnoreCertificateErrorsCommandParameters, JsonContext.SetIgnoreCertificateErrorsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetIgnoreCertificateErrorsCommandParameters, SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsCommand = new("Security.setIgnoreCertificateErrors", JsonContext.SetIgnoreCertificateErrorsCommandParameters, JsonContext.SetIgnoreCertificateErrorsResult);
 
     [global::System.Obsolete]
     public async Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HandleCertificateErrorCommandParameters(EventId: eventId, Action: action);
-        return await ExecuteCommandAsync(HandleCertificateErrorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<HandleCertificateErrorCommandParameters, HandleCertificateErrorResult>("Security.handleCertificateError", JsonContext.HandleCertificateErrorCommandParameters, JsonContext.HandleCertificateErrorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<HandleCertificateErrorCommandParameters, HandleCertificateErrorResult> HandleCertificateErrorCommand = new("Security.handleCertificateError", JsonContext.HandleCertificateErrorCommandParameters, JsonContext.HandleCertificateErrorResult);
 
     [global::System.Obsolete]
     public async Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetOverrideCertificateErrorsCommandParameters(Override: @override);
-        return await ExecuteCommandAsync(SetOverrideCertificateErrorsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetOverrideCertificateErrorsCommandParameters, SetOverrideCertificateErrorsResult>("Security.setOverrideCertificateErrors", JsonContext.SetOverrideCertificateErrorsCommandParameters, JsonContext.SetOverrideCertificateErrorsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetOverrideCertificateErrorsCommandParameters, SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsCommand = new("Security.setOverrideCertificateErrors", JsonContext.SetOverrideCertificateErrorsCommandParameters, JsonContext.SetOverrideCertificateErrorsResult);
 
     [global::System.Obsolete]
     public IEventSource<CertificateErrorEventArgs> CertificateError => CreateCdpEventSource(SecurityDomainEvent.CertificateError);
@@ -564,25 +564,28 @@ public static class SecurityDomainEvent
     /// certificate error has been allowed internally. Only one client per target should override
     /// certificate errors at the same time.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<CertificateErrorEventArgs>> CertificateError { get; } =
-        EventDescriptor<CdpEventArgs<CertificateErrorEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<CertificateErrorEventArgs>> CertificateError =>
+        _certificateError ?? global::System.Threading.Interlocked.CompareExchange(ref _certificateError, EventDescriptor<CdpEventArgs<CertificateErrorEventArgs>>.Create(
             "goog:cdp.Security.certificateError",
-            SecurityJsonSerializerContext.Default.CertificateErrorCdpEventArgs);
+            SecurityJsonSerializerContext.Default.CertificateErrorCdpEventArgs), null) ?? _certificateError;
+    private static EventDescriptor<CdpEventArgs<CertificateErrorEventArgs>>? _certificateError;
 
     /// <summary>
     /// The security state of the page changed.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<VisibleSecurityStateChangedEventArgs>> VisibleSecurityStateChanged { get; } =
-        EventDescriptor<CdpEventArgs<VisibleSecurityStateChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<VisibleSecurityStateChangedEventArgs>> VisibleSecurityStateChanged =>
+        _visibleSecurityStateChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _visibleSecurityStateChanged, EventDescriptor<CdpEventArgs<VisibleSecurityStateChangedEventArgs>>.Create(
             "goog:cdp.Security.visibleSecurityStateChanged",
-            SecurityJsonSerializerContext.Default.VisibleSecurityStateChangedCdpEventArgs);
+            SecurityJsonSerializerContext.Default.VisibleSecurityStateChangedCdpEventArgs), null) ?? _visibleSecurityStateChanged;
+    private static EventDescriptor<CdpEventArgs<VisibleSecurityStateChangedEventArgs>>? _visibleSecurityStateChanged;
 
     /// <summary>
     /// The security state of the page changed. No longer being sent.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<SecurityStateChangedEventArgs>> SecurityStateChanged { get; } =
-        EventDescriptor<CdpEventArgs<SecurityStateChangedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<SecurityStateChangedEventArgs>> SecurityStateChanged =>
+        _securityStateChanged ?? global::System.Threading.Interlocked.CompareExchange(ref _securityStateChanged, EventDescriptor<CdpEventArgs<SecurityStateChangedEventArgs>>.Create(
             "goog:cdp.Security.securityStateChanged",
-            SecurityJsonSerializerContext.Default.SecurityStateChangedCdpEventArgs);
+            SecurityJsonSerializerContext.Default.SecurityStateChangedCdpEventArgs), null) ?? _securityStateChanged;
+    private static EventDescriptor<CdpEventArgs<SecurityStateChangedEventArgs>>? _securityStateChanged;
 
 }

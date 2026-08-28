@@ -69,21 +69,21 @@ public interface IInspector
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class InspectorDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IInspector
 {
-    private static InspectorJsonSerializerContext JsonContext = InspectorJsonSerializerContext.Default;
+    private static readonly InspectorJsonSerializerContext JsonContext = InspectorJsonSerializerContext.Default;
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Inspector.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("Inspector.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Inspector.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("Inspector.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public IEventSource<DetachedEventArgs> Detached => CreateCdpEventSource(InspectorDomainEvent.Detached);
     public IEventSource<TargetCrashedEventArgs> TargetCrashed => CreateCdpEventSource(InspectorDomainEvent.TargetCrashed);
@@ -149,33 +149,37 @@ public static class InspectorDomainEvent
     /// <summary>
     /// Fired when remote debugging connection is about to be terminated. Contains detach reason.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DetachedEventArgs>> Detached { get; } =
-        EventDescriptor<CdpEventArgs<DetachedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DetachedEventArgs>> Detached =>
+        _detached ?? global::System.Threading.Interlocked.CompareExchange(ref _detached, EventDescriptor<CdpEventArgs<DetachedEventArgs>>.Create(
             "goog:cdp.Inspector.detached",
-            InspectorJsonSerializerContext.Default.DetachedCdpEventArgs);
+            InspectorJsonSerializerContext.Default.DetachedCdpEventArgs), null) ?? _detached;
+    private static EventDescriptor<CdpEventArgs<DetachedEventArgs>>? _detached;
 
     /// <summary>
     /// Fired when debugging target has crashed
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<TargetCrashedEventArgs>> TargetCrashed { get; } =
-        EventDescriptor<CdpEventArgs<TargetCrashedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<TargetCrashedEventArgs>> TargetCrashed =>
+        _targetCrashed ?? global::System.Threading.Interlocked.CompareExchange(ref _targetCrashed, EventDescriptor<CdpEventArgs<TargetCrashedEventArgs>>.Create(
             "goog:cdp.Inspector.targetCrashed",
-            InspectorJsonSerializerContext.Default.TargetCrashedCdpEventArgs);
+            InspectorJsonSerializerContext.Default.TargetCrashedCdpEventArgs), null) ?? _targetCrashed;
+    private static EventDescriptor<CdpEventArgs<TargetCrashedEventArgs>>? _targetCrashed;
 
     /// <summary>
     /// Fired when debugging target has reloaded after crash
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<TargetReloadedAfterCrashEventArgs>> TargetReloadedAfterCrash { get; } =
-        EventDescriptor<CdpEventArgs<TargetReloadedAfterCrashEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<TargetReloadedAfterCrashEventArgs>> TargetReloadedAfterCrash =>
+        _targetReloadedAfterCrash ?? global::System.Threading.Interlocked.CompareExchange(ref _targetReloadedAfterCrash, EventDescriptor<CdpEventArgs<TargetReloadedAfterCrashEventArgs>>.Create(
             "goog:cdp.Inspector.targetReloadedAfterCrash",
-            InspectorJsonSerializerContext.Default.TargetReloadedAfterCrashCdpEventArgs);
+            InspectorJsonSerializerContext.Default.TargetReloadedAfterCrashCdpEventArgs), null) ?? _targetReloadedAfterCrash;
+    private static EventDescriptor<CdpEventArgs<TargetReloadedAfterCrashEventArgs>>? _targetReloadedAfterCrash;
 
     /// <summary>
     /// Fired on worker targets when main worker script and any imported scripts have been evaluated.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WorkerScriptLoadedEventArgs>> WorkerScriptLoaded { get; } =
-        EventDescriptor<CdpEventArgs<WorkerScriptLoadedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WorkerScriptLoadedEventArgs>> WorkerScriptLoaded =>
+        _workerScriptLoaded ?? global::System.Threading.Interlocked.CompareExchange(ref _workerScriptLoaded, EventDescriptor<CdpEventArgs<WorkerScriptLoadedEventArgs>>.Create(
             "goog:cdp.Inspector.workerScriptLoaded",
-            InspectorJsonSerializerContext.Default.WorkerScriptLoadedCdpEventArgs);
+            InspectorJsonSerializerContext.Default.WorkerScriptLoadedCdpEventArgs), null) ?? _workerScriptLoaded;
+    private static EventDescriptor<CdpEventArgs<WorkerScriptLoadedEventArgs>>? _workerScriptLoaded;
 
 }

@@ -30,14 +30,14 @@ public interface IFileSystem
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IFileSystem
 {
-    private static FileSystemJsonSerializerContext JsonContext = FileSystemJsonSerializerContext.Default;
+    private static readonly FileSystemJsonSerializerContext JsonContext = FileSystemJsonSerializerContext.Default;
 
     public async Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDirectoryCommandParameters(BucketFileSystemLocator: bucketFileSystemLocator);
-        return await ExecuteCommandAsync(GetDirectoryCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetDirectoryCommandParameters, GetDirectoryResult>("FileSystem.getDirectory", JsonContext.GetDirectoryCommandParameters, JsonContext.GetDirectoryResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetDirectoryCommandParameters, GetDirectoryResult> GetDirectoryCommand = new("FileSystem.getDirectory", JsonContext.GetDirectoryCommandParameters, JsonContext.GetDirectoryResult);
 
 }
 

@@ -482,180 +482,180 @@ public interface IBrowser
 
 internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IBrowser
 {
-    private static BrowserJsonSerializerContext JsonContext = BrowserJsonSerializerContext.Default;
+    private static readonly BrowserJsonSerializerContext JsonContext = BrowserJsonSerializerContext.Default;
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = default, string? embeddedOrigin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPermissionCommandParameters(Permission: permission, Setting: setting, Origin: origin, EmbeddedOrigin: embeddedOrigin, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(SetPermissionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetPermissionCommandParameters, SetPermissionResult>("Browser.setPermission", JsonContext.SetPermissionCommandParameters, JsonContext.SetPermissionResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetPermissionCommandParameters, SetPermissionResult> SetPermissionCommand = new("Browser.setPermission", JsonContext.SetPermissionCommandParameters, JsonContext.SetPermissionResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
     public async Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GrantPermissionsCommandParameters(Permissions: permissions, Origin: origin, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(GrantPermissionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GrantPermissionsCommandParameters, GrantPermissionsResult>("Browser.grantPermissions", JsonContext.GrantPermissionsCommandParameters, JsonContext.GrantPermissionsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GrantPermissionsCommandParameters, GrantPermissionsResult> GrantPermissionsCommand = new("Browser.grantPermissions", JsonContext.GrantPermissionsCommandParameters, JsonContext.GrantPermissionsResult);
 
     public async Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResetPermissionsCommandParameters(BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(ResetPermissionsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ResetPermissionsCommandParameters, ResetPermissionsResult>("Browser.resetPermissions", JsonContext.ResetPermissionsCommandParameters, JsonContext.ResetPermissionsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ResetPermissionsCommandParameters, ResetPermissionsResult> ResetPermissionsCommand = new("Browser.resetPermissions", JsonContext.ResetPermissionsCommandParameters, JsonContext.ResetPermissionsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, BrowserContextId: browserContextId, DownloadPath: downloadPath, EventsEnabled: eventsEnabled);
-        return await ExecuteCommandAsync(SetDownloadBehaviorCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult>("Browser.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDownloadBehaviorCommandParameters, SetDownloadBehaviorResult> SetDownloadBehaviorCommand = new("Browser.setDownloadBehavior", JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CancelDownloadCommandParameters(Guid: guid, BrowserContextId: browserContextId);
-        return await ExecuteCommandAsync(CancelDownloadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CancelDownloadCommandParameters, CancelDownloadResult>("Browser.cancelDownload", JsonContext.CancelDownloadCommandParameters, JsonContext.CancelDownloadResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CancelDownloadCommandParameters, CancelDownloadResult> CancelDownloadCommand = new("Browser.cancelDownload", JsonContext.CancelDownloadCommandParameters, JsonContext.CancelDownloadResult);
 
     public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CloseCommandParameters();
-        return await ExecuteCommandAsync(CloseCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CloseCommandParameters, CloseResult>("Browser.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CloseCommandParameters, CloseResult> CloseCommand = new("Browser.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CrashCommandParameters();
-        return await ExecuteCommandAsync(CrashCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CrashCommandParameters, CrashResult>("Browser.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CrashCommandParameters, CrashResult> CrashCommand = new("Browser.crash", JsonContext.CrashCommandParameters, JsonContext.CrashResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CrashGpuProcessCommandParameters();
-        return await ExecuteCommandAsync(CrashGpuProcessCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<CrashGpuProcessCommandParameters, CrashGpuProcessResult>("Browser.crashGpuProcess", JsonContext.CrashGpuProcessCommandParameters, JsonContext.CrashGpuProcessResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<CrashGpuProcessCommandParameters, CrashGpuProcessResult> CrashGpuProcessCommand = new("Browser.crashGpuProcess", JsonContext.CrashGpuProcessCommandParameters, JsonContext.CrashGpuProcessResult);
 
     public async Task<GetVersionResult> GetVersionAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetVersionCommandParameters();
-        return await ExecuteCommandAsync(GetVersionCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetVersionCommandParameters, GetVersionResult>("Browser.getVersion", JsonContext.GetVersionCommandParameters, JsonContext.GetVersionResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetVersionCommandParameters, GetVersionResult> GetVersionCommand = new("Browser.getVersion", JsonContext.GetVersionCommandParameters, JsonContext.GetVersionResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBrowserCommandLineCommandParameters();
-        return await ExecuteCommandAsync(GetBrowserCommandLineCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetBrowserCommandLineCommandParameters, GetBrowserCommandLineResult>("Browser.getBrowserCommandLine", JsonContext.GetBrowserCommandLineCommandParameters, JsonContext.GetBrowserCommandLineResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetBrowserCommandLineCommandParameters, GetBrowserCommandLineResult> GetBrowserCommandLineCommand = new("Browser.getBrowserCommandLine", JsonContext.GetBrowserCommandLineCommandParameters, JsonContext.GetBrowserCommandLineResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<AddMockCameraResult> AddMockCameraAsync(string deviceId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddMockCameraCommandParameters(DeviceId: deviceId);
-        return await ExecuteCommandAsync(AddMockCameraCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddMockCameraCommandParameters, AddMockCameraResult>("Browser.addMockCamera", JsonContext.AddMockCameraCommandParameters, JsonContext.AddMockCameraResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddMockCameraCommandParameters, AddMockCameraResult> AddMockCameraCommand = new("Browser.addMockCamera", JsonContext.AddMockCameraCommandParameters, JsonContext.AddMockCameraResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetHistogramsResult> GetHistogramsAsync(string? query = default, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHistogramsCommandParameters(Query: query, Delta: delta);
-        return await ExecuteCommandAsync(GetHistogramsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetHistogramsCommandParameters, GetHistogramsResult>("Browser.getHistograms", JsonContext.GetHistogramsCommandParameters, JsonContext.GetHistogramsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetHistogramsCommandParameters, GetHistogramsResult> GetHistogramsCommand = new("Browser.getHistograms", JsonContext.GetHistogramsCommandParameters, JsonContext.GetHistogramsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHistogramCommandParameters(Name: name, Delta: delta);
-        return await ExecuteCommandAsync(GetHistogramCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetHistogramCommandParameters, GetHistogramResult>("Browser.getHistogram", JsonContext.GetHistogramCommandParameters, JsonContext.GetHistogramResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetHistogramCommandParameters, GetHistogramResult> GetHistogramCommand = new("Browser.getHistogram", JsonContext.GetHistogramCommandParameters, JsonContext.GetHistogramResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetWindowBoundsCommandParameters(WindowId: windowId);
-        return await ExecuteCommandAsync(GetWindowBoundsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetWindowBoundsCommandParameters, GetWindowBoundsResult>("Browser.getWindowBounds", JsonContext.GetWindowBoundsCommandParameters, JsonContext.GetWindowBoundsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetWindowBoundsCommandParameters, GetWindowBoundsResult> GetWindowBoundsCommand = new("Browser.getWindowBounds", JsonContext.GetWindowBoundsCommandParameters, JsonContext.GetWindowBoundsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetWindowForTargetCommandParameters(TargetId: targetId);
-        return await ExecuteCommandAsync(GetWindowForTargetCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetWindowForTargetCommandParameters, GetWindowForTargetResult>("Browser.getWindowForTarget", JsonContext.GetWindowForTargetCommandParameters, JsonContext.GetWindowForTargetResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetWindowForTargetCommandParameters, GetWindowForTargetResult> GetWindowForTargetCommand = new("Browser.getWindowForTarget", JsonContext.GetWindowForTargetCommandParameters, JsonContext.GetWindowForTargetResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetWindowBoundsCommandParameters(WindowId: windowId, Bounds: bounds);
-        return await ExecuteCommandAsync(SetWindowBoundsCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetWindowBoundsCommandParameters, SetWindowBoundsResult>("Browser.setWindowBounds", JsonContext.SetWindowBoundsCommandParameters, JsonContext.SetWindowBoundsResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetWindowBoundsCommandParameters, SetWindowBoundsResult> SetWindowBoundsCommand = new("Browser.setWindowBounds", JsonContext.SetWindowBoundsCommandParameters, JsonContext.SetWindowBoundsResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = default, long? height = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetContentsSizeCommandParameters(WindowId: windowId, Width: width, Height: height);
-        return await ExecuteCommandAsync(SetContentsSizeCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetContentsSizeCommandParameters, SetContentsSizeResult>("Browser.setContentsSize", JsonContext.SetContentsSizeCommandParameters, JsonContext.SetContentsSizeResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetContentsSizeCommandParameters, SetContentsSizeResult> SetContentsSizeCommand = new("Browser.setContentsSize", JsonContext.SetContentsSizeCommandParameters, JsonContext.SetContentsSizeResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = default, string? image = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDockTileCommandParameters(BadgeLabel: badgeLabel, Image: image);
-        return await ExecuteCommandAsync(SetDockTileCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetDockTileCommandParameters, SetDockTileResult>("Browser.setDockTile", JsonContext.SetDockTileCommandParameters, JsonContext.SetDockTileResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetDockTileCommandParameters, SetDockTileResult> SetDockTileCommand = new("Browser.setDockTile", JsonContext.SetDockTileCommandParameters, JsonContext.SetDockTileResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ExecuteBrowserCommandCommandParameters(CommandId: commandId);
-        return await ExecuteCommandAsync(ExecuteBrowserCommandCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<ExecuteBrowserCommandCommandParameters, ExecuteBrowserCommandResult>("Browser.executeBrowserCommand", JsonContext.ExecuteBrowserCommandCommandParameters, JsonContext.ExecuteBrowserCommandResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<ExecuteBrowserCommandCommandParameters, ExecuteBrowserCommandResult> ExecuteBrowserCommandCommand = new("Browser.executeBrowserCommand", JsonContext.ExecuteBrowserCommandCommandParameters, JsonContext.ExecuteBrowserCommandResult);
 
     public async Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddPrivacySandboxEnrollmentOverrideCommandParameters(Url: url);
-        return await ExecuteCommandAsync(AddPrivacySandboxEnrollmentOverrideCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<AddPrivacySandboxEnrollmentOverrideCommandParameters, AddPrivacySandboxEnrollmentOverrideResult>("Browser.addPrivacySandboxEnrollmentOverride", JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<AddPrivacySandboxEnrollmentOverrideCommandParameters, AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideCommand = new("Browser.addPrivacySandboxEnrollmentOverride", JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetGlobalPrivacyControlResult> GetGlobalPrivacyControlAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetGlobalPrivacyControlCommandParameters();
-        return await ExecuteCommandAsync(GetGlobalPrivacyControlCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<GetGlobalPrivacyControlCommandParameters, GetGlobalPrivacyControlResult>("Browser.getGlobalPrivacyControl", JsonContext.GetGlobalPrivacyControlCommandParameters, JsonContext.GetGlobalPrivacyControlResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<GetGlobalPrivacyControlCommandParameters, GetGlobalPrivacyControlResult> GetGlobalPrivacyControlCommand = new("Browser.getGlobalPrivacyControl", JsonContext.GetGlobalPrivacyControlCommandParameters, JsonContext.GetGlobalPrivacyControlResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetGlobalPrivacyControlResult> SetGlobalPrivacyControlAsync(bool gpc, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetGlobalPrivacyControlCommandParameters(Gpc: gpc);
-        return await ExecuteCommandAsync(SetGlobalPrivacyControlCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetGlobalPrivacyControlCommandParameters, SetGlobalPrivacyControlResult>("Browser.setGlobalPrivacyControl", JsonContext.SetGlobalPrivacyControlCommandParameters, JsonContext.SetGlobalPrivacyControlResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetGlobalPrivacyControlCommandParameters, SetGlobalPrivacyControlResult> SetGlobalPrivacyControlCommand = new("Browser.setGlobalPrivacyControl", JsonContext.SetGlobalPrivacyControlCommandParameters, JsonContext.SetGlobalPrivacyControlResult);
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<DownloadWillBeginEventArgs> DownloadWillBegin => CreateCdpEventSource(BrowserDomainEvent.DownloadWillBegin);
@@ -1312,17 +1312,19 @@ public static class BrowserDomainEvent
     /// <summary>
     /// Fired when page is about to start a download.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>> DownloadWillBegin { get; } =
-        EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>> DownloadWillBegin =>
+        _downloadWillBegin ?? global::System.Threading.Interlocked.CompareExchange(ref _downloadWillBegin, EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>>.Create(
             "goog:cdp.Browser.downloadWillBegin",
-            BrowserJsonSerializerContext.Default.DownloadWillBeginCdpEventArgs);
+            BrowserJsonSerializerContext.Default.DownloadWillBeginCdpEventArgs), null) ?? _downloadWillBegin;
+    private static EventDescriptor<CdpEventArgs<DownloadWillBeginEventArgs>>? _downloadWillBegin;
 
     /// <summary>
     /// Fired when download makes progress. Last call has |done| == true.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>> DownloadProgress { get; } =
-        EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>> DownloadProgress =>
+        _downloadProgress ?? global::System.Threading.Interlocked.CompareExchange(ref _downloadProgress, EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>>.Create(
             "goog:cdp.Browser.downloadProgress",
-            BrowserJsonSerializerContext.Default.DownloadProgressCdpEventArgs);
+            BrowserJsonSerializerContext.Default.DownloadProgressCdpEventArgs), null) ?? _downloadProgress;
+    private static EventDescriptor<CdpEventArgs<DownloadProgressEventArgs>>? _downloadProgress;
 
 }

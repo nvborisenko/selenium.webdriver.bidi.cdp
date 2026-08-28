@@ -62,21 +62,21 @@ public interface ITethering
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), ITethering
 {
-    private static TetheringJsonSerializerContext JsonContext = TetheringJsonSerializerContext.Default;
+    private static readonly TetheringJsonSerializerContext JsonContext = TetheringJsonSerializerContext.Default;
 
     public async Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new BindCommandParameters(Port: port);
-        return await ExecuteCommandAsync(BindCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<BindCommandParameters, BindResult>("Tethering.bind", JsonContext.BindCommandParameters, JsonContext.BindResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<BindCommandParameters, BindResult> BindCommand = new("Tethering.bind", JsonContext.BindCommandParameters, JsonContext.BindResult);
 
     public async Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UnbindCommandParameters(Port: port);
-        return await ExecuteCommandAsync(UnbindCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UnbindCommandParameters, UnbindResult>("Tethering.unbind", JsonContext.UnbindCommandParameters, JsonContext.UnbindResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UnbindCommandParameters, UnbindResult> UnbindCommand = new("Tethering.unbind", JsonContext.UnbindCommandParameters, JsonContext.UnbindResult);
 
     public IEventSource<AcceptedEventArgs> Accepted => CreateCdpEventSource(TetheringDomainEvent.Accepted);
 }
@@ -124,9 +124,10 @@ public static class TetheringDomainEvent
     /// <summary>
     /// Informs that port was successfully bound and got a specified connection id.
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<AcceptedEventArgs>> Accepted { get; } =
-        EventDescriptor<CdpEventArgs<AcceptedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<AcceptedEventArgs>> Accepted =>
+        _accepted ?? global::System.Threading.Interlocked.CompareExchange(ref _accepted, EventDescriptor<CdpEventArgs<AcceptedEventArgs>>.Create(
             "goog:cdp.Tethering.accepted",
-            TetheringJsonSerializerContext.Default.AcceptedCdpEventArgs);
+            TetheringJsonSerializerContext.Default.AcceptedCdpEventArgs), null) ?? _accepted;
+    private static EventDescriptor<CdpEventArgs<AcceptedEventArgs>>? _accepted;
 
 }

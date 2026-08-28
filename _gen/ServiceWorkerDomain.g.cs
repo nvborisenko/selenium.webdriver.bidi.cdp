@@ -236,91 +236,91 @@ public interface IServiceWorker
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
 internal sealed class ServiceWorkerDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.Cdp.Domain(cdp), IServiceWorker
 {
-    private static ServiceWorkerJsonSerializerContext JsonContext = ServiceWorkerJsonSerializerContext.Default;
+    private static readonly ServiceWorkerJsonSerializerContext JsonContext = ServiceWorkerJsonSerializerContext.Default;
 
     public async Task<DeliverPushMessageResult> DeliverPushMessageAsync(string origin, RegistrationID registrationId, string data, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeliverPushMessageCommandParameters(Origin: origin, RegistrationId: registrationId, Data: data);
-        return await ExecuteCommandAsync(DeliverPushMessageCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DeliverPushMessageCommandParameters, DeliverPushMessageResult>("ServiceWorker.deliverPushMessage", JsonContext.DeliverPushMessageCommandParameters, JsonContext.DeliverPushMessageResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DeliverPushMessageCommandParameters, DeliverPushMessageResult> DeliverPushMessageCommand = new("ServiceWorker.deliverPushMessage", JsonContext.DeliverPushMessageCommandParameters, JsonContext.DeliverPushMessageResult);
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        return await ExecuteCommandAsync(DisableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DisableCommandParameters, DisableResult>("ServiceWorker.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DisableCommandParameters, DisableResult> DisableCommand = new("ServiceWorker.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
 
     public async Task<DispatchSyncEventResult> DispatchSyncEventAsync(string origin, RegistrationID registrationId, string tag, bool lastChance, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchSyncEventCommandParameters(Origin: origin, RegistrationId: registrationId, Tag: tag, LastChance: lastChance);
-        return await ExecuteCommandAsync(DispatchSyncEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DispatchSyncEventCommandParameters, DispatchSyncEventResult>("ServiceWorker.dispatchSyncEvent", JsonContext.DispatchSyncEventCommandParameters, JsonContext.DispatchSyncEventResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DispatchSyncEventCommandParameters, DispatchSyncEventResult> DispatchSyncEventCommand = new("ServiceWorker.dispatchSyncEvent", JsonContext.DispatchSyncEventCommandParameters, JsonContext.DispatchSyncEventResult);
 
     public async Task<DispatchPeriodicSyncEventResult> DispatchPeriodicSyncEventAsync(string origin, RegistrationID registrationId, string tag, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchPeriodicSyncEventCommandParameters(Origin: origin, RegistrationId: registrationId, Tag: tag);
-        return await ExecuteCommandAsync(DispatchPeriodicSyncEventCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<DispatchPeriodicSyncEventCommandParameters, DispatchPeriodicSyncEventResult>("ServiceWorker.dispatchPeriodicSyncEvent", JsonContext.DispatchPeriodicSyncEventCommandParameters, JsonContext.DispatchPeriodicSyncEventResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<DispatchPeriodicSyncEventCommandParameters, DispatchPeriodicSyncEventResult> DispatchPeriodicSyncEventCommand = new("ServiceWorker.dispatchPeriodicSyncEvent", JsonContext.DispatchPeriodicSyncEventCommandParameters, JsonContext.DispatchPeriodicSyncEventResult);
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        return await ExecuteCommandAsync(EnableCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<EnableCommandParameters, EnableResult>("ServiceWorker.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<EnableCommandParameters, EnableResult> EnableCommand = new("ServiceWorker.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
 
     public async Task<SetForceUpdateOnPageLoadResult> SetForceUpdateOnPageLoadAsync(bool forceUpdateOnPageLoad, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetForceUpdateOnPageLoadCommandParameters(ForceUpdateOnPageLoad: forceUpdateOnPageLoad);
-        return await ExecuteCommandAsync(SetForceUpdateOnPageLoadCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SetForceUpdateOnPageLoadCommandParameters, SetForceUpdateOnPageLoadResult>("ServiceWorker.setForceUpdateOnPageLoad", JsonContext.SetForceUpdateOnPageLoadCommandParameters, JsonContext.SetForceUpdateOnPageLoadResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SetForceUpdateOnPageLoadCommandParameters, SetForceUpdateOnPageLoadResult> SetForceUpdateOnPageLoadCommand = new("ServiceWorker.setForceUpdateOnPageLoad", JsonContext.SetForceUpdateOnPageLoadCommandParameters, JsonContext.SetForceUpdateOnPageLoadResult);
 
     public async Task<SkipWaitingResult> SkipWaitingAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SkipWaitingCommandParameters(ScopeURL: scopeURL);
-        return await ExecuteCommandAsync(SkipWaitingCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<SkipWaitingCommandParameters, SkipWaitingResult>("ServiceWorker.skipWaiting", JsonContext.SkipWaitingCommandParameters, JsonContext.SkipWaitingResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<SkipWaitingCommandParameters, SkipWaitingResult> SkipWaitingCommand = new("ServiceWorker.skipWaiting", JsonContext.SkipWaitingCommandParameters, JsonContext.SkipWaitingResult);
 
     public async Task<StartWorkerResult> StartWorkerAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartWorkerCommandParameters(ScopeURL: scopeURL);
-        return await ExecuteCommandAsync(StartWorkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StartWorkerCommandParameters, StartWorkerResult>("ServiceWorker.startWorker", JsonContext.StartWorkerCommandParameters, JsonContext.StartWorkerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StartWorkerCommandParameters, StartWorkerResult> StartWorkerCommand = new("ServiceWorker.startWorker", JsonContext.StartWorkerCommandParameters, JsonContext.StartWorkerResult);
 
     public async Task<StopAllWorkersResult> StopAllWorkersAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopAllWorkersCommandParameters();
-        return await ExecuteCommandAsync(StopAllWorkersCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopAllWorkersCommandParameters, StopAllWorkersResult>("ServiceWorker.stopAllWorkers", JsonContext.StopAllWorkersCommandParameters, JsonContext.StopAllWorkersResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopAllWorkersCommandParameters, StopAllWorkersResult> StopAllWorkersCommand = new("ServiceWorker.stopAllWorkers", JsonContext.StopAllWorkersCommandParameters, JsonContext.StopAllWorkersResult);
 
     public async Task<StopWorkerResult> StopWorkerAsync(string versionId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopWorkerCommandParameters(VersionId: versionId);
-        return await ExecuteCommandAsync(StopWorkerCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<StopWorkerCommandParameters, StopWorkerResult>("ServiceWorker.stopWorker", JsonContext.StopWorkerCommandParameters, JsonContext.StopWorkerResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<StopWorkerCommandParameters, StopWorkerResult> StopWorkerCommand = new("ServiceWorker.stopWorker", JsonContext.StopWorkerCommandParameters, JsonContext.StopWorkerResult);
 
     public async Task<UnregisterResult> UnregisterAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UnregisterCommandParameters(ScopeURL: scopeURL);
-        return await ExecuteCommandAsync(UnregisterCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UnregisterCommandParameters, UnregisterResult>("ServiceWorker.unregister", JsonContext.UnregisterCommandParameters, JsonContext.UnregisterResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UnregisterCommandParameters, UnregisterResult> UnregisterCommand = new("ServiceWorker.unregister", JsonContext.UnregisterCommandParameters, JsonContext.UnregisterResult);
 
     public async Task<UpdateRegistrationResult> UpdateRegistrationAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UpdateRegistrationCommandParameters(ScopeURL: scopeURL);
-        return await ExecuteCommandAsync(UpdateRegistrationCommand, @params, session, cancellationToken).ConfigureAwait(false);
+        var command = new CdpCommand<UpdateRegistrationCommandParameters, UpdateRegistrationResult>("ServiceWorker.updateRegistration", JsonContext.UpdateRegistrationCommandParameters, JsonContext.UpdateRegistrationResult);
+        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
-    private static readonly CdpCommand<UpdateRegistrationCommandParameters, UpdateRegistrationResult> UpdateRegistrationCommand = new("ServiceWorker.updateRegistration", JsonContext.UpdateRegistrationCommandParameters, JsonContext.UpdateRegistrationResult);
 
     public IEventSource<WorkerErrorReportedEventArgs> WorkerErrorReported => CreateCdpEventSource(ServiceWorkerDomainEvent.WorkerErrorReported);
     public IEventSource<WorkerRegistrationUpdatedEventArgs> WorkerRegistrationUpdated => CreateCdpEventSource(ServiceWorkerDomainEvent.WorkerRegistrationUpdated);
@@ -723,25 +723,28 @@ public static class ServiceWorkerDomainEvent
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WorkerErrorReportedEventArgs>> WorkerErrorReported { get; } =
-        EventDescriptor<CdpEventArgs<WorkerErrorReportedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WorkerErrorReportedEventArgs>> WorkerErrorReported =>
+        _workerErrorReported ?? global::System.Threading.Interlocked.CompareExchange(ref _workerErrorReported, EventDescriptor<CdpEventArgs<WorkerErrorReportedEventArgs>>.Create(
             "goog:cdp.ServiceWorker.workerErrorReported",
-            ServiceWorkerJsonSerializerContext.Default.WorkerErrorReportedCdpEventArgs);
+            ServiceWorkerJsonSerializerContext.Default.WorkerErrorReportedCdpEventArgs), null) ?? _workerErrorReported;
+    private static EventDescriptor<CdpEventArgs<WorkerErrorReportedEventArgs>>? _workerErrorReported;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WorkerRegistrationUpdatedEventArgs>> WorkerRegistrationUpdated { get; } =
-        EventDescriptor<CdpEventArgs<WorkerRegistrationUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WorkerRegistrationUpdatedEventArgs>> WorkerRegistrationUpdated =>
+        _workerRegistrationUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _workerRegistrationUpdated, EventDescriptor<CdpEventArgs<WorkerRegistrationUpdatedEventArgs>>.Create(
             "goog:cdp.ServiceWorker.workerRegistrationUpdated",
-            ServiceWorkerJsonSerializerContext.Default.WorkerRegistrationUpdatedCdpEventArgs);
+            ServiceWorkerJsonSerializerContext.Default.WorkerRegistrationUpdatedCdpEventArgs), null) ?? _workerRegistrationUpdated;
+    private static EventDescriptor<CdpEventArgs<WorkerRegistrationUpdatedEventArgs>>? _workerRegistrationUpdated;
 
     /// <summary>
     /// 
     /// </summary>
-    public static EventDescriptor<CdpEventArgs<WorkerVersionUpdatedEventArgs>> WorkerVersionUpdated { get; } =
-        EventDescriptor<CdpEventArgs<WorkerVersionUpdatedEventArgs>>.Create(
+    public static EventDescriptor<CdpEventArgs<WorkerVersionUpdatedEventArgs>> WorkerVersionUpdated =>
+        _workerVersionUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _workerVersionUpdated, EventDescriptor<CdpEventArgs<WorkerVersionUpdatedEventArgs>>.Create(
             "goog:cdp.ServiceWorker.workerVersionUpdated",
-            ServiceWorkerJsonSerializerContext.Default.WorkerVersionUpdatedCdpEventArgs);
+            ServiceWorkerJsonSerializerContext.Default.WorkerVersionUpdatedCdpEventArgs), null) ?? _workerVersionUpdated;
+    private static EventDescriptor<CdpEventArgs<WorkerVersionUpdatedEventArgs>>? _workerVersionUpdated;
 
 }
