@@ -60,7 +60,7 @@ internal sealed class CdpEventSource<TParams> : IEventSource<TParams>
     {
         var activity = Domain.ActivitySource.StartActivity(_eventName, ActivityKind.Consumer);
 
-        activity?.SetTag("cdp.method", _eventName);
+        activity?.SetTag("cdp.event", _eventName);
 
         return activity;
     }
