@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -8,7 +9,9 @@ namespace Selenium.WebDriver.BiDi.Cdp.Json;
 internal class JsonStringEnumConverter<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum>
     : JsonConverter<TEnum> where TEnum : struct, Enum
 {
-    private static readonly Dictionary<string, TEnum> s_readMap;
+    // Read matches against UTF-8 names so that no string is allocated per value. CDP enums are
+    // small enough that a linear scan beats hashing a decoded string.
+    private static readonly (byte[] Utf8Name, TEnum Value)[] s_readMap;
     private static readonly Dictionary<TEnum, string> s_writeMap;
 
     static JsonStringEnumConverter()
@@ -21,7 +24,7 @@ internal class JsonStringEnumConverter<[DynamicallyAccessedMembers(DynamicallyAc
         var values = Enum.GetValues<TEnum>();
 #endif
 
-        s_readMap = new Dictionary<string, TEnum>(names.Length, StringComparer.Ordinal);
+        s_readMap = new (byte[], TEnum)[names.Length];
         s_writeMap = new Dictionary<TEnum, string>(names.Length);
 
         Dictionary<string, string>? attributeNames = null;
@@ -39,21 +42,24 @@ internal class JsonStringEnumConverter<[DynamicallyAccessedMembers(DynamicallyAc
                 ? attrName
                 : names[i];
 
-            s_readMap[name] = values[i];
+            s_readMap[i] = (Encoding.UTF8.GetBytes(name), values[i]);
             s_writeMap[values[i]] = name;
         }
     }
 
     public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var str = reader.GetString();
+        var readMap = s_readMap;
 
-        if (str is not null && s_readMap.TryGetValue(str, out var value))
+        for (var i = 0; i < readMap.Length; i++)
         {
-            return value;
+            if (reader.ValueTextEquals(readMap[i].Utf8Name))
+            {
+                return readMap[i].Value;
+            }
         }
 
-        throw new JsonException($"Unknown {typeof(TEnum).Name} value: {str}");
+        throw new JsonException($"Unknown {typeof(TEnum).Name} value: {reader.GetString()}");
     }
 
     public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)

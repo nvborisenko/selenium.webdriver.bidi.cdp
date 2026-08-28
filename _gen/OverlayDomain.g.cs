@@ -1891,6 +1891,9 @@ public sealed record InspectedElementAnchorConfig()
 [JsonSerializable(typeof(ImmutableArray<ScrollSnapHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayScrollSnapHighlightConfig")]
 [JsonSerializable(typeof(ImmutableArray<ContainerQueryHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayContainerQueryHighlightConfig")]
 [JsonSerializable(typeof(ImmutableArray<IsolatedElementHighlightConfig>), TypeInfoPropertyName = "ImmutableArrayOverlayIsolatedElementHighlightConfig")]
+[JsonSerializable(typeof(DOM.NodeId?), TypeInfoPropertyName = "NullableDOMNodeId")]
+[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
+[JsonSerializable(typeof(Runtime.RemoteObjectId?), TypeInfoPropertyName = "NullableRuntimeRemoteObjectId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

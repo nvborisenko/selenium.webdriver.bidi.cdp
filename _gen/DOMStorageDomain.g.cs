@@ -292,10 +292,19 @@ public sealed record DomStorageItemsClearedEventArgs(StorageId StorageId) : Open
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<SerializedStorageKey>))]
-public record SerializedStorageKey : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(SerializedStorageKey.Converter))]
+public readonly record struct SerializedStorageKey
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal SerializedStorageKey(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<SerializedStorageKey>
+    {
+        public override SerializedStorageKey Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, SerializedStorageKey value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -339,6 +348,7 @@ public sealed record StorageId(bool IsLocalStorage)
 [JsonSerializable(typeof(CdpEventArgs<DomStorageItemsClearedEventArgs>), TypeInfoPropertyName = "DomStorageItemsClearedCdpEventArgs")]
 [JsonSerializable(typeof(SerializedStorageKey), TypeInfoPropertyName = "DOMStorageSerializedStorageKey")]
 [JsonSerializable(typeof(StorageId), TypeInfoPropertyName = "DOMStorageStorageId")]
+[JsonSerializable(typeof(SerializedStorageKey?), TypeInfoPropertyName = "NullableDOMStorageSerializedStorageKey")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -194,18 +194,36 @@ public sealed record PlayerCreatedEventArgs(Player Player) : OpenQA.Selenium.BiD
 /// <summary>
 /// Players will get an ID that is unique within the agent context.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<PlayerId>))]
-public record PlayerId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(PlayerId.Converter))]
+public readonly record struct PlayerId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal PlayerId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<PlayerId>
+    {
+        public override PlayerId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, PlayerId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<Timestamp>))]
-public record Timestamp : INumberRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Timestamp.Converter))]
+public readonly record struct Timestamp
 {
-    double INumberRemoteId.Id { get; init; }
+    internal Timestamp(double id) => _id = id;
+
+    private readonly double _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<Timestamp>
+    {
+        public override Timestamp Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, Timestamp value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
+    }
 }
 
 /// <summary>
@@ -319,6 +337,7 @@ public sealed record Player(PlayerId PlayerId)
 [JsonSerializable(typeof(ImmutableArray<PlayerMessage>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerMessage")]
 [JsonSerializable(typeof(ImmutableArray<PlayerError>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerError")]
 [JsonSerializable(typeof(ImmutableArray<PlayerErrorSourceLocation>), TypeInfoPropertyName = "ImmutableArrayMediaPlayerErrorSourceLocation")]
+[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

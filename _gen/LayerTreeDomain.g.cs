@@ -375,19 +375,37 @@ public sealed record LayerTreeDidChangeEventArgs(ImmutableArray<Layer>? Layers =
 /// <summary>
 /// Unique Layer identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<LayerId>))]
-public record LayerId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(LayerId.Converter))]
+public readonly record struct LayerId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal LayerId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<LayerId>
+    {
+        public override LayerId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, LayerId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
 /// Unique snapshot identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<SnapshotId>))]
-public record SnapshotId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(SnapshotId.Converter))]
+public readonly record struct SnapshotId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal SnapshotId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<SnapshotId>
+    {
+        public override SnapshotId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, SnapshotId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -547,6 +565,8 @@ public sealed record Layer(LayerId LayerId, double OffsetX, double OffsetY, doub
 [JsonSerializable(typeof(ImmutableArray<PictureTile>), TypeInfoPropertyName = "ImmutableArrayLayerTreePictureTile")]
 [JsonSerializable(typeof(ImmutableArray<Layer>), TypeInfoPropertyName = "ImmutableArrayLayerTreeLayer")]
 [JsonSerializable(typeof(ImmutableArray<ScrollRect>), TypeInfoPropertyName = "ImmutableArrayLayerTreeScrollRect")]
+[JsonSerializable(typeof(LayerId?), TypeInfoPropertyName = "NullableLayerTreeLayerId")]
+[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

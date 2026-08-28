@@ -897,18 +897,36 @@ public sealed record DownloadProgressEventArgs(string Guid, double TotalBytes, d
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<BrowserContextID>))]
-public record BrowserContextID : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(BrowserContextID.Converter))]
+public readonly record struct BrowserContextID
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal BrowserContextID(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<BrowserContextID>
+    {
+        public override BrowserContextID Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, BrowserContextID value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<WindowID>))]
-public record WindowID : INumberRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(WindowID.Converter))]
+public readonly record struct WindowID
 {
-    double INumberRemoteId.Id { get; init; }
+    internal WindowID(double id) => _id = id;
+
+    private readonly double _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<WindowID>
+    {
+        public override WindowID Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, WindowID value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
+    }
 }
 
 /// <summary>
@@ -1299,6 +1317,8 @@ public sealed record Histogram(string Name, long Sum, long Count, ImmutableArray
 [JsonSerializable(typeof(ImmutableArray<PermissionType>), TypeInfoPropertyName = "ImmutableArrayBrowserPermissionType")]
 [JsonSerializable(typeof(ImmutableArray<Histogram>), TypeInfoPropertyName = "ImmutableArrayBrowserHistogram")]
 [JsonSerializable(typeof(ImmutableArray<Bucket>), TypeInfoPropertyName = "ImmutableArrayBrowserBucket")]
+[JsonSerializable(typeof(BrowserContextID?), TypeInfoPropertyName = "NullableBrowserBrowserContextID")]
+[JsonSerializable(typeof(Target.TargetID?), TypeInfoPropertyName = "NullableTargetTargetID")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

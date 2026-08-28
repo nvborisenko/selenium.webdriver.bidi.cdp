@@ -274,10 +274,19 @@ public sealed record SecurityStateChangedEventArgs(SecurityState SecurityState, 
 /// <summary>
 /// An internal certificate ID value.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<CertificateId>))]
-public record CertificateId : INumberRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(CertificateId.Converter))]
+public readonly record struct CertificateId
 {
-    double INumberRemoteId.Id { get; init; }
+    internal CertificateId(double id) => _id = id;
+
+    private readonly double _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<CertificateId>
+    {
+        public override CertificateId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, CertificateId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
+    }
 }
 
 /// <summary>

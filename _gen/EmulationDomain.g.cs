@@ -2198,10 +2198,19 @@ public sealed record WorkAreaInsets()
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<ScreenId>))]
-public record ScreenId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(ScreenId.Converter))]
+public readonly record struct ScreenId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal ScreenId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<ScreenId>
+    {
+        public override ScreenId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ScreenId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -2406,6 +2415,7 @@ public enum DisabledImageType
 [JsonSerializable(typeof(ImmutableArray<DisabledImageType>), TypeInfoPropertyName = "ImmutableArrayEmulationDisabledImageType")]
 [JsonSerializable(typeof(ImmutableArray<ScreenInfo>), TypeInfoPropertyName = "ImmutableArrayEmulationScreenInfo")]
 [JsonSerializable(typeof(ImmutableArray<UserAgentBrandVersion>), TypeInfoPropertyName = "ImmutableArrayEmulationUserAgentBrandVersion")]
+[JsonSerializable(typeof(Network.TimeSinceEpoch?), TypeInfoPropertyName = "NullableNetworkTimeSinceEpoch")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

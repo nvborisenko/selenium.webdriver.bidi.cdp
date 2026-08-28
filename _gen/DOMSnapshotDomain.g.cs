@@ -413,10 +413,19 @@ public sealed record NameValue(string Name, string Value)
 /// <summary>
 /// Index of the string in the strings table.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<StringIndex>))]
-public record StringIndex : INumberRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(StringIndex.Converter))]
+public readonly record struct StringIndex
 {
-    double INumberRemoteId.Id { get; init; }
+    internal StringIndex(double id) => _id = id;
+
+    private readonly double _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<StringIndex>
+    {
+        public override StringIndex Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, StringIndex value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
+    }
 }
 
 /// <summary>
@@ -713,6 +722,7 @@ public sealed record TextBoxSnapshot(ImmutableArray<long> LayoutIndex, Immutable
 [JsonSerializable(typeof(ImmutableArray<InlineTextBox>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotInlineTextBox")]
 [JsonSerializable(typeof(ImmutableArray<StringIndex>), TypeInfoPropertyName = "ImmutableArrayDOMSnapshotStringIndex")]
 [JsonSerializable(typeof(ImmutableArray<DOM.BackendNodeId>), TypeInfoPropertyName = "ImmutableArrayDOMBackendNodeId")]
+[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

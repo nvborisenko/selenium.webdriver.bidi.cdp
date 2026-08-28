@@ -431,10 +431,19 @@ public sealed record WorkerVersionUpdatedEventArgs(ImmutableArray<ServiceWorkerV
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<RegistrationID>))]
-public record RegistrationID : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(RegistrationID.Converter))]
+public readonly record struct RegistrationID
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal RegistrationID(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<RegistrationID>
+    {
+        public override RegistrationID Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, RegistrationID value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -710,6 +719,7 @@ public sealed record ServiceWorkerErrorMessage(string ErrorMessage, Registration
 [JsonSerializable(typeof(ImmutableArray<ServiceWorkerVersion>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerVersion")]
 [JsonSerializable(typeof(ImmutableArray<Target.TargetID>), TypeInfoPropertyName = "ImmutableArrayTargetTargetID")]
 [JsonSerializable(typeof(ImmutableArray<ServiceWorkerRouterRule>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerRouterRule")]
+[JsonSerializable(typeof(Target.TargetID?), TypeInfoPropertyName = "NullableTargetTargetID")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -15,7 +15,7 @@ public class DomTests : CdpTestFixture
         // Query for the paragraph
         var pNode = await Cdp.DOM.QuerySelectorAsync(document.Root.NodeId, "p.message");
 
-        await Assert.That(pNode.NodeId).IsNotNull();
+        await Assert.That(pNode.NodeId).IsNotEqualTo(default(DOM.NodeId));
 
         var outerHtml = await Cdp.DOM.GetOuterHTMLAsync(nodeId: pNode.NodeId);
 

@@ -15,7 +15,7 @@ public class TargetTests : CdpTestFixture
 
         foreach (var targetInfo in allTargets)
         {
-            await Assert.That(targetInfo.TargetId).IsNotNull();
+            await Assert.That(targetInfo.TargetId).IsNotEqualTo(default(Target.TargetID));
             await Assert.That(targetInfo.Title).IsNotNull();
             await Assert.That(targetInfo.Type).IsNotNull();
             await Assert.That(targetInfo.Url).IsNotNull();
@@ -23,11 +23,11 @@ public class TargetTests : CdpTestFixture
             await Cdp.Target.ActivateTargetAsync(targetInfo.TargetId);
 
             var attachResponse = await Cdp.Target.AttachToTargetAsync(targetInfo.TargetId, flatten: true);
-            await Assert.That(attachResponse.SessionId).IsNotNull();
+            await Assert.That(attachResponse.SessionId).IsNotEqualTo(default(Target.SessionID));
 
             var getInfoResponse = await Cdp.Target.GetTargetInfoAsync(targetId: targetInfo.TargetId);
             await Assert.That(getInfoResponse.TargetInfo).IsNotNull();
-            await Assert.That(getInfoResponse.TargetInfo.TargetId).IsNotNull();
+            await Assert.That(getInfoResponse.TargetInfo.TargetId).IsNotEqualTo(default(Target.TargetID));
         }
     }
 
@@ -38,7 +38,7 @@ public class TargetTests : CdpTestFixture
 
         var response = await Cdp.Target.CreateTargetAsync("https://www.selenium.dev", newWindow: true, background: false);
 
-        await Assert.That(response.TargetId).IsNotNull();
+        await Assert.That(response.TargetId).IsNotEqualTo(default(Target.TargetID));
 
         await Cdp.Target.SetDiscoverTargetsAsync(true);
 

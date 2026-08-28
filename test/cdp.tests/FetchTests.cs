@@ -34,7 +34,7 @@ public class FetchTests : CdpTestFixture
 
         var requestPaused = await requestPausedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 
-        await Assert.That(requestPaused.RequestId).IsNotNull();
+        await Assert.That(requestPaused.RequestId).IsNotEqualTo(default(Fetch.RequestId));
         await Assert.That(requestPaused.Request.Url).Contains("example.com");
 
         // Fulfill with a mock response

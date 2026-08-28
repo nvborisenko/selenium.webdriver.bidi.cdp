@@ -524,10 +524,19 @@ public sealed record ResetProfilesEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
 /// <summary>
 /// Heap snapshot object id.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<HeapSnapshotObjectId>))]
-public record HeapSnapshotObjectId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(HeapSnapshotObjectId.Converter))]
+public readonly record struct HeapSnapshotObjectId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal HeapSnapshotObjectId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<HeapSnapshotObjectId>
+    {
+        public override HeapSnapshotObjectId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, HeapSnapshotObjectId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>

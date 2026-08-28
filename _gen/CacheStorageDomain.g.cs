@@ -215,10 +215,19 @@ public sealed record RequestEntriesResult(ImmutableArray<DataEntry> CacheDataEnt
 /// <summary>
 /// Unique identifier of the Cache object.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<CacheId>))]
-public record CacheId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(CacheId.Converter))]
+public readonly record struct CacheId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal CacheId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<CacheId>
+    {
+        public override CacheId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, CacheId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>

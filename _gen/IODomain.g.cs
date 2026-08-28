@@ -134,10 +134,19 @@ public sealed record ResolveBlobResult(string Uuid) : EmptyResult;
 /// This is either obtained from another method or specified as <b>blob:&lt;uuid&gt;</b> where
 /// <b>&lt;uuid&gt;</b> is an UUID of a Blob.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<StreamHandle>))]
-public record StreamHandle : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(StreamHandle.Converter))]
+public readonly record struct StreamHandle
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal StreamHandle(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<StreamHandle>
+    {
+        public override StreamHandle Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, StreamHandle value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 [JsonSerializable(typeof(CloseCommandParameters), TypeInfoPropertyName = "CloseCommandParameters")]

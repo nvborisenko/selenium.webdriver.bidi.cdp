@@ -33,6 +33,10 @@ foreach (var inputFile in inputFiles)
             {
                 Extensions.ArrayTypes.Add(type.Id, type.Items!);
             }
+            else if (type.IsNumber() || type.IsString())
+            {
+                Extensions.RemoteIdTypes.Add(type.Id);
+            }
         }
     }
 }
@@ -335,10 +339,19 @@ foreach (var inputFile in inputFiles)
                         domainBuilder.AppendLine("[global::System.Obsolete]");
                     }
 
-                    domainBuilder.AppendLine($"[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<{typeInfo.GetTypeName()}>))]");
-                    domainBuilder.AppendLine($"public record {typeInfo.GetTypeName()} : INumberRemoteId");
+                    domainBuilder.AppendLine($"[global::System.Text.Json.Serialization.JsonConverter(typeof({typeInfo.GetTypeName()}.Converter))]");
+                    domainBuilder.AppendLine($"public readonly record struct {typeInfo.GetTypeName()}");
                     domainBuilder.AppendLine("{");
-                    domainBuilder.AppendLine("    double INumberRemoteId.Id { get; init; }");
+                    domainBuilder.AppendLine($"    internal {typeInfo.GetTypeName()}(double id) => _id = id;");
+                    domainBuilder.AppendLine();
+                    domainBuilder.AppendLine("    private readonly double _id;");
+                    domainBuilder.AppendLine();
+                    domainBuilder.AppendLine($"    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<{typeInfo.GetTypeName()}>");
+                    domainBuilder.AppendLine("    {");
+                    domainBuilder.AppendLine($"        public override {typeInfo.GetTypeName()} Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());");
+                    domainBuilder.AppendLine();
+                    domainBuilder.AppendLine($"        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, {typeInfo.GetTypeName()} value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);");
+                    domainBuilder.AppendLine("    }");
                     domainBuilder.AppendLine("}");
                 }
                 else if (typeInfo.IsString())
@@ -348,10 +361,19 @@ foreach (var inputFile in inputFiles)
                         domainBuilder.AppendLine("[global::System.Obsolete]");
                     }
 
-                    domainBuilder.AppendLine($"[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<{typeInfo.GetTypeName()}>))]");
-                    domainBuilder.AppendLine($"public record {typeInfo.GetTypeName()} : IStringRemoteId");
+                    domainBuilder.AppendLine($"[global::System.Text.Json.Serialization.JsonConverter(typeof({typeInfo.GetTypeName()}.Converter))]");
+                    domainBuilder.AppendLine($"public readonly record struct {typeInfo.GetTypeName()}");
                     domainBuilder.AppendLine("{");
-                    domainBuilder.AppendLine("    string IStringRemoteId.Id { get; init; } = null!;");
+                    domainBuilder.AppendLine($"    internal {typeInfo.GetTypeName()}(string id) => _id = id;");
+                    domainBuilder.AppendLine();
+                    domainBuilder.AppendLine("    private readonly string _id;");
+                    domainBuilder.AppendLine();
+                    domainBuilder.AppendLine($"    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<{typeInfo.GetTypeName()}>");
+                    domainBuilder.AppendLine("    {");
+                    domainBuilder.AppendLine($"        public override {typeInfo.GetTypeName()} Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);");
+                    domainBuilder.AppendLine();
+                    domainBuilder.AppendLine($"        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, {typeInfo.GetTypeName()} value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);");
+                    domainBuilder.AppendLine("    }");
                     domainBuilder.AppendLine("}");
                 }
                 else if (typeInfo.IsDictionary())
@@ -507,6 +529,56 @@ foreach (var inputFile in inputFiles)
         {
             var qualifiedName = elementType.Contains('.') ? elementType.Replace(".", "") : $"{domainInfo.Domain}{elementType}";
             domainBuilder.AppendLine($"[JsonSerializable(typeof(ImmutableArray<{elementType}>), TypeInfoPropertyName = \"ImmutableArray{qualifiedName}\")]");
+        }
+
+        // Remote ids are structs, so optional ones surface as Nullable<T>. Register them explicitly,
+        // otherwise same-named ids from different domains both generate "NullableX" (SYSLIB1031).
+        var nullableRemoteIds = new HashSet<string>();
+
+        void CollectNullableRemoteId(string? type, string? @ref, bool optional)
+        {
+            if (!optional || type is not null || @ref is null) return;
+
+            var typeName = @ref.Contains('.') ? @ref.Split('.')[1] : @ref;
+            if (Extensions.RemoteIdTypes.Contains(typeName))
+            {
+                nullableRemoteIds.Add(@ref);
+            }
+        }
+
+        if (domainInfo.Commands is not null)
+        {
+            foreach (var commandInfo in domainInfo.Commands)
+            {
+                foreach (var p in commandInfo.Parameters ?? [])
+                    CollectNullableRemoteId(p.Type, p.Ref, p.Optional is true);
+                foreach (var r in commandInfo.Returns ?? [])
+                    CollectNullableRemoteId(r.Type, r.Ref, r.Optional is true);
+            }
+        }
+
+        if (domainInfo.Events is not null)
+        {
+            foreach (var eventInfo in domainInfo.Events)
+            {
+                foreach (var p in eventInfo.Parameters ?? [])
+                    CollectNullableRemoteId(p.Type, p.Ref, p.Optional is true);
+            }
+        }
+
+        if (domainInfo.Types is not null)
+        {
+            foreach (var typeInfo in domainInfo.Types)
+            {
+                foreach (var p in typeInfo.Properties ?? [])
+                    CollectNullableRemoteId(p.Type, p.Ref, p.Optional is true);
+            }
+        }
+
+        foreach (var remoteId in nullableRemoteIds)
+        {
+            var qualifiedName = remoteId.Contains('.') ? remoteId.Replace(".", "") : $"{domainInfo.Domain}{remoteId}";
+            domainBuilder.AppendLine($"[JsonSerializable(typeof({remoteId}?), TypeInfoPropertyName = \"Nullable{qualifiedName}\")]");
         }
 
         domainBuilder.AppendLine($"""
@@ -772,6 +844,7 @@ static class Extensions
 {
     public static readonly HashSet<string> DictionaryTypes = new();
     public static readonly Dictionary<string, PropertyInfoItem> ArrayTypes = new();
+    public static readonly HashSet<string> RemoteIdTypes = new();
 
     public static string AsCSharpType(this ReturnInfo returnInfo)
     {

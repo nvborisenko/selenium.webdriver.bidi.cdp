@@ -466,6 +466,7 @@ public sealed record EventListener(string Type, bool UseCapture, bool Passive, b
 [JsonSerializable(typeof(EventListener), TypeInfoPropertyName = "DOMDebuggerEventListener")]
 [JsonSerializable(typeof(ImmutableArray<EventListener>), TypeInfoPropertyName = "ImmutableArrayDOMDebuggerEventListener")]
 [JsonSerializable(typeof(ImmutableArray<CSPViolationType>), TypeInfoPropertyName = "ImmutableArrayDOMDebuggerCSPViolationType")]
+[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

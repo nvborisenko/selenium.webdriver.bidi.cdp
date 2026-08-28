@@ -1190,10 +1190,19 @@ public sealed record InspectRequestedEventArgs(RemoteObject Object, global::Syst
 /// <summary>
 /// Unique script identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<ScriptId>))]
-public record ScriptId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(ScriptId.Converter))]
+public readonly record struct ScriptId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal ScriptId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<ScriptId>
+    {
+        public override ScriptId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ScriptId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -1242,20 +1251,38 @@ public sealed record DeepSerializedValue(string Type)
 /// <summary>
 /// Unique object identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<RemoteObjectId>))]
-public record RemoteObjectId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(RemoteObjectId.Converter))]
+public readonly record struct RemoteObjectId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal RemoteObjectId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<RemoteObjectId>
+    {
+        public override RemoteObjectId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, RemoteObjectId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
 /// Primitive value which cannot be JSON-stringified. Includes values <b>-0</b>, <b>NaN</b>, <b>Infinity</b>,
 /// <b>-Infinity</b>, and bigint literals.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<UnserializableValue>))]
-public record UnserializableValue : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(UnserializableValue.Converter))]
+public readonly record struct UnserializableValue
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal UnserializableValue(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<UnserializableValue>
+    {
+        public override UnserializableValue Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, UnserializableValue value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -1518,10 +1545,19 @@ public sealed record CallArgument()
 /// <summary>
 /// Id of an execution context.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<ExecutionContextId>))]
-public record ExecutionContextId : INumberRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(ExecutionContextId.Converter))]
+public readonly record struct ExecutionContextId
 {
-    double INumberRemoteId.Id { get; init; }
+    internal ExecutionContextId(double id) => _id = id;
+
+    private readonly double _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<ExecutionContextId>
+    {
+        public override ExecutionContextId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ExecutionContextId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
+    }
 }
 
 /// <summary>
@@ -1604,19 +1640,37 @@ public sealed record ExceptionDetails(long ExceptionId, string Text, long LineNu
 /// <summary>
 /// Number of milliseconds since epoch.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<Timestamp>))]
-public record Timestamp : INumberRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Timestamp.Converter))]
+public readonly record struct Timestamp
 {
-    double INumberRemoteId.Id { get; init; }
+    internal Timestamp(double id) => _id = id;
+
+    private readonly double _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<Timestamp>
+    {
+        public override Timestamp Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, Timestamp value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
+    }
 }
 
 /// <summary>
 /// Number of milliseconds.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<TimeDelta>))]
-public record TimeDelta : INumberRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(TimeDelta.Converter))]
+public readonly record struct TimeDelta
 {
-    double INumberRemoteId.Id { get; init; }
+    internal TimeDelta(double id) => _id = id;
+
+    private readonly double _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<TimeDelta>
+    {
+        public override TimeDelta Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TimeDelta value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
+    }
 }
 
 /// <summary>
@@ -1669,10 +1723,19 @@ public sealed record StackTrace(ImmutableArray<CallFrame> CallFrames)
 /// <summary>
 /// Unique identifier of current debugger.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<UniqueDebuggerId>))]
-public record UniqueDebuggerId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(UniqueDebuggerId.Converter))]
+public readonly record struct UniqueDebuggerId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal UniqueDebuggerId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<UniqueDebuggerId>
+    {
+        public override UniqueDebuggerId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, UniqueDebuggerId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -1773,6 +1836,12 @@ public sealed record StackTraceId(string Id)
 [JsonSerializable(typeof(ImmutableArray<PropertyPreview>), TypeInfoPropertyName = "ImmutableArrayRuntimePropertyPreview")]
 [JsonSerializable(typeof(ImmutableArray<EntryPreview>), TypeInfoPropertyName = "ImmutableArrayRuntimeEntryPreview")]
 [JsonSerializable(typeof(ImmutableArray<CallFrame>), TypeInfoPropertyName = "ImmutableArrayRuntimeCallFrame")]
+[JsonSerializable(typeof(RemoteObjectId?), TypeInfoPropertyName = "NullableRuntimeRemoteObjectId")]
+[JsonSerializable(typeof(ExecutionContextId?), TypeInfoPropertyName = "NullableRuntimeExecutionContextId")]
+[JsonSerializable(typeof(ScriptId?), TypeInfoPropertyName = "NullableRuntimeScriptId")]
+[JsonSerializable(typeof(TimeDelta?), TypeInfoPropertyName = "NullableRuntimeTimeDelta")]
+[JsonSerializable(typeof(UnserializableValue?), TypeInfoPropertyName = "NullableRuntimeUnserializableValue")]
+[JsonSerializable(typeof(UniqueDebuggerId?), TypeInfoPropertyName = "NullableRuntimeUniqueDebuggerId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

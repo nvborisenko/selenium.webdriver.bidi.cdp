@@ -3161,10 +3161,19 @@ public sealed record CompilationCacheProducedEventArgs(string Url, string Data) 
 /// <summary>
 /// Unique frame identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<FrameId>))]
-public record FrameId : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(FrameId.Converter))]
+public readonly record struct FrameId
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal FrameId(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<FrameId>
+    {
+        public override FrameId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, FrameId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -4054,10 +4063,19 @@ public sealed record FrameTree(Frame Frame)
 /// <summary>
 /// Unique script identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<ScriptIdentifier>))]
-public record ScriptIdentifier : IStringRemoteId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(ScriptIdentifier.Converter))]
+public readonly record struct ScriptIdentifier
 {
-    string IStringRemoteId.Id { get; init; } = null!;
+    internal ScriptIdentifier(string id) => _id = id;
+
+    private readonly string _id;
+
+    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<ScriptIdentifier>
+    {
+        public override ScriptIdentifier Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
+
+        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ScriptIdentifier value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
+    }
 }
 
 /// <summary>
@@ -5701,6 +5719,11 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, Immu
 [JsonSerializable(typeof(ImmutableArray<Shortcut>), TypeInfoPropertyName = "ImmutableArrayPageShortcut")]
 [JsonSerializable(typeof(ImmutableArray<BackForwardCacheBlockingDetails>), TypeInfoPropertyName = "ImmutableArrayPageBackForwardCacheBlockingDetails")]
 [JsonSerializable(typeof(ImmutableArray<BackForwardCacheNotRestoredExplanationTree>), TypeInfoPropertyName = "ImmutableArrayPageBackForwardCacheNotRestoredExplanationTree")]
+[JsonSerializable(typeof(FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
+[JsonSerializable(typeof(Network.LoaderId?), TypeInfoPropertyName = "NullableNetworkLoaderId")]
+[JsonSerializable(typeof(IO.StreamHandle?), TypeInfoPropertyName = "NullableIOStreamHandle")]
+[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
+[JsonSerializable(typeof(Network.TimeSinceEpoch?), TypeInfoPropertyName = "NullableNetworkTimeSinceEpoch")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
