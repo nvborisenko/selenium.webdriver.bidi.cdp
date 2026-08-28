@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using OpenQA.Selenium.BiDi;
@@ -9,6 +10,11 @@ namespace Selenium.WebDriver.BiDi.Cdp;
 /// </summary>
 internal abstract class Domain(CdpModule cdp)
 {
+    /// <summary>
+    /// The <see cref="System.Diagnostics.ActivitySource"/> used to trace CDP command execution.
+    /// </summary>
+    internal static readonly ActivitySource ActivitySource = new("Selenium.WebDriver.BiDi.Cdp", typeof(Domain).Assembly.GetName().Version?.ToString() ?? "");
+
     /// <summary>
     /// Executes a CDP command with the specified parameters and returns the result.
     /// </summary>
@@ -23,11 +29,24 @@ internal abstract class Domain(CdpModule cdp)
         where TParameters : Parameters
         where TResult : EmptyResult
     {
-        var @params = SerializeParameters(parameters, command.ParametersTypeInfo);
+        using var activity = ActivitySource.StartActivity(command.Method, ActivityKind.Client);
 
-        var sendResult = await cdp.SendCommandAsync(command.Method, @params, session, cancellationToken);
+        activity?.SetTag("cdp.method", command.Method);
 
-        return sendResult.Result.Deserialize(command.ResultTypeInfo)!;
+        try
+        {
+            var @params = SerializeParameters(parameters, command.ParametersTypeInfo);
+
+            var sendResult = await cdp.SendCommandAsync(command.Method, @params, session, cancellationToken).ConfigureAwait(false);
+
+            return sendResult.Result.Deserialize(command.ResultTypeInfo)!;
+        }
+        catch (Exception ex)
+        {
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+
+            throw;
+        }
     }
 
     private static JsonElement SerializeParameters<TParameters>(TParameters parameters, JsonTypeInfo<TParameters> parametersTypeInfo)

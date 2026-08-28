@@ -26,6 +26,10 @@
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.1" />
+  </ItemGroup>
+
   <PropertyGroup>
     <_GenDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../../_gen/'))</_GenDir>
     <_RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../../'))</_RepoRoot>
