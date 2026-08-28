@@ -31,23 +31,13 @@ internal abstract class Domain(CdpModule cdp)
     {
         using var activity = ActivitySource.StartActivity(command.Method, ActivityKind.Client);
 
-        if (activity is not null)
-        {
-            activity.SetTag("cdp.method", command.Method);
-
-            if (session is not null)
-            {
-                activity.SetTag("cdp.session", session);
-            }
-        }
+        activity?.SetTag("cdp.method", command.Method);
 
         try
         {
             var @params = SerializeParameters(parameters, command.ParametersTypeInfo);
 
             var sendResult = await cdp.SendCommandAsync(command.Method, @params, session, cancellationToken).ConfigureAwait(false);
-
-            activity?.SetTag("cdp.session", sendResult.Session);
 
             return sendResult.Result.Deserialize(command.ResultTypeInfo)!;
         }
