@@ -501,7 +501,6 @@ public enum TracingBackend
 [JsonSerializable(typeof(StreamCompression), TypeInfoPropertyName = "TracingStreamCompression")]
 [JsonSerializable(typeof(MemoryDumpLevelOfDetail), TypeInfoPropertyName = "TracingMemoryDumpLevelOfDetail")]
 [JsonSerializable(typeof(TracingBackend), TypeInfoPropertyName = "TracingTracingBackend")]
-[JsonSerializable(typeof(IO.StreamHandle?), TypeInfoPropertyName = "NullableIOStreamHandle")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -605,7 +605,6 @@ public sealed record KeyframeStyle(string Offset, string Easing)
 [JsonSerializable(typeof(KeyframesRule), TypeInfoPropertyName = "AnimationKeyframesRule")]
 [JsonSerializable(typeof(KeyframeStyle), TypeInfoPropertyName = "AnimationKeyframeStyle")]
 [JsonSerializable(typeof(ImmutableArray<KeyframeStyle>), TypeInfoPropertyName = "ImmutableArrayAnimationKeyframeStyle")]
-[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

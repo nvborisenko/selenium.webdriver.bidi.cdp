@@ -791,19 +791,10 @@ public enum MouseButton
 /// <summary>
 /// UTC time in seconds, counted from January 1, 1970.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(TimeSinceEpoch.Converter))]
-public readonly record struct TimeSinceEpoch
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<TimeSinceEpoch>))]
+public record TimeSinceEpoch : INumberRemoteId
 {
-    internal TimeSinceEpoch(double id) => _id = id;
-
-    private readonly double _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<TimeSinceEpoch>
-    {
-        public override TimeSinceEpoch Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TimeSinceEpoch value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
-    }
+    double INumberRemoteId.Id { get; init; }
 }
 
 /// <summary>
@@ -879,7 +870,6 @@ public sealed record DragData(ImmutableArray<DragDataItem> Items, long DragOpera
 [JsonSerializable(typeof(DragData), TypeInfoPropertyName = "InputDragData")]
 [JsonSerializable(typeof(ImmutableArray<TouchPoint>), TypeInfoPropertyName = "ImmutableArrayInputTouchPoint")]
 [JsonSerializable(typeof(ImmutableArray<DragDataItem>), TypeInfoPropertyName = "ImmutableArrayInputDragDataItem")]
-[JsonSerializable(typeof(TimeSinceEpoch?), TypeInfoPropertyName = "NullableInputTimeSinceEpoch")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

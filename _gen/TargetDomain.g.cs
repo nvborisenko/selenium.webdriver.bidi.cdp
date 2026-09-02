@@ -944,37 +944,19 @@ public sealed record TargetInfoChangedEventArgs(TargetInfo TargetInfo) : OpenQA.
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(TargetID.Converter))]
-public readonly record struct TargetID
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<TargetID>))]
+public record TargetID : IStringRemoteId
 {
-    internal TargetID(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<TargetID>
-    {
-        public override TargetID Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TargetID value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
 /// Unique identifier of attached debugging session.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(SessionID.Converter))]
-public readonly record struct SessionID
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<SessionID>))]
+public record SessionID : IStringRemoteId
 {
-    internal SessionID(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<SessionID>
-    {
-        public override SessionID Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, SessionID value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -1147,10 +1129,6 @@ public enum WindowState
 [JsonSerializable(typeof(ImmutableArray<Browser.BrowserContextID>), TypeInfoPropertyName = "ImmutableArrayBrowserBrowserContextID")]
 [JsonSerializable(typeof(ImmutableArray<TargetInfo>), TypeInfoPropertyName = "ImmutableArrayTargetTargetInfo")]
 [JsonSerializable(typeof(ImmutableArray<RemoteLocation>), TypeInfoPropertyName = "ImmutableArrayTargetRemoteLocation")]
-[JsonSerializable(typeof(Browser.BrowserContextID?), TypeInfoPropertyName = "NullableBrowserBrowserContextID")]
-[JsonSerializable(typeof(SessionID?), TypeInfoPropertyName = "NullableTargetSessionID")]
-[JsonSerializable(typeof(TargetID?), TypeInfoPropertyName = "NullableTargetTargetID")]
-[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

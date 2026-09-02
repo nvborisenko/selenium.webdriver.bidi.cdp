@@ -23,7 +23,7 @@ public class NetworkTests : CdpTestFixture
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
         var dataReceived = await dataReceivedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
-        await Assert.That(dataReceived.RequestId).IsNotEqualTo(default(Network.RequestId));
+        await Assert.That(dataReceived.RequestId).IsNotNull();
 
         var requestWillBeSent = await requestWillBeSentStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
         await Assert.That(requestWillBeSent.Request.Headers).ContainsKey("headerName");

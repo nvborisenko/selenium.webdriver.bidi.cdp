@@ -1564,37 +1564,19 @@ public sealed record ScriptParsedEventArgs(Runtime.ScriptId ScriptId, string Url
 /// <summary>
 /// Breakpoint identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(BreakpointId.Converter))]
-public readonly record struct BreakpointId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<BreakpointId>))]
+public record BreakpointId : IStringRemoteId
 {
-    internal BreakpointId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<BreakpointId>
-    {
-        public override BreakpointId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, BreakpointId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
 /// Call frame identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(CallFrameId.Converter))]
-public readonly record struct CallFrameId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<CallFrameId>))]
+public record CallFrameId : IStringRemoteId
 {
-    internal CallFrameId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<CallFrameId>
-    {
-        public override CallFrameId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, CallFrameId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -1890,7 +1872,6 @@ public sealed record ResolvedBreakpoint(BreakpointId BreakpointId, Location Loca
 [JsonSerializable(typeof(ImmutableArray<Debugger.DebugSymbols>), TypeInfoPropertyName = "ImmutableArrayDebuggerDebugSymbols")]
 [JsonSerializable(typeof(ImmutableArray<ResolvedBreakpoint>), TypeInfoPropertyName = "ImmutableArrayDebuggerResolvedBreakpoint")]
 [JsonSerializable(typeof(ImmutableArray<Scope>), TypeInfoPropertyName = "ImmutableArrayDebuggerScope")]
-[JsonSerializable(typeof(Runtime.TimeDelta?), TypeInfoPropertyName = "NullableRuntimeTimeDelta")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

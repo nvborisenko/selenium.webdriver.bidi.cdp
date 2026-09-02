@@ -2543,19 +2543,10 @@ public sealed record InspectorIssueDetails()
 /// A unique id for a DevTools inspector issue. Allows other entities (e.g.
 /// exceptions, CDP message, console messages, etc.) to reference an issue.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(IssueId.Converter))]
-public readonly record struct IssueId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<IssueId>))]
+public record IssueId : IStringRemoteId
 {
-    internal IssueId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<IssueId>
-    {
-        public override IssueId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, IssueId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -2653,11 +2644,6 @@ public sealed record InspectorIssue(InspectorIssueCode Code, InspectorIssueDetai
 [JsonSerializable(typeof(ImmutableArray<GenericIssueDetails>), TypeInfoPropertyName = "ImmutableArrayAuditsGenericIssueDetails")]
 [JsonSerializable(typeof(ImmutableArray<CookieWarningReason>), TypeInfoPropertyName = "ImmutableArrayAuditsCookieWarningReason")]
 [JsonSerializable(typeof(ImmutableArray<CookieExclusionReason>), TypeInfoPropertyName = "ImmutableArrayAuditsCookieExclusionReason")]
-[JsonSerializable(typeof(Network.RequestId?), TypeInfoPropertyName = "NullableNetworkRequestId")]
-[JsonSerializable(typeof(Runtime.ScriptId?), TypeInfoPropertyName = "NullableRuntimeScriptId")]
-[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
-[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
-[JsonSerializable(typeof(IssueId?), TypeInfoPropertyName = "NullableAuditsIssueId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

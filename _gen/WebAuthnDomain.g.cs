@@ -557,19 +557,10 @@ public sealed record CredentialAssertedEventArgs(AuthenticatorId AuthenticatorId
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(AuthenticatorId.Converter))]
-public readonly record struct AuthenticatorId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<AuthenticatorId>))]
+public record AuthenticatorId : IStringRemoteId
 {
-    internal AuthenticatorId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<AuthenticatorId>
-    {
-        public override AuthenticatorId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, AuthenticatorId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>

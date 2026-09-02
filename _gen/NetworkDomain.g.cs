@@ -2789,19 +2789,10 @@ public enum ResourceType
 /// <summary>
 /// Unique loader identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(LoaderId.Converter))]
-public readonly record struct LoaderId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<LoaderId>))]
+public record LoaderId : IStringRemoteId
 {
-    internal LoaderId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<LoaderId>
-    {
-        public override LoaderId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, LoaderId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -2809,19 +2800,10 @@ public readonly record struct LoaderId
 /// Note that this does not identify individual HTTP requests that are part of
 /// a network request.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(RequestId.Converter))]
-public readonly record struct RequestId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<RequestId>))]
+public record RequestId : IStringRemoteId
 {
-    internal RequestId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<RequestId>
-    {
-        public override RequestId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, RequestId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -2891,37 +2873,19 @@ public enum ErrorReason
 /// <summary>
 /// UTC time in seconds, counted from January 1, 1970.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(TimeSinceEpoch.Converter))]
-public readonly record struct TimeSinceEpoch
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<TimeSinceEpoch>))]
+public record TimeSinceEpoch : INumberRemoteId
 {
-    internal TimeSinceEpoch(double id) => _id = id;
-
-    private readonly double _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<TimeSinceEpoch>
-    {
-        public override TimeSinceEpoch Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, TimeSinceEpoch value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
-    }
+    double INumberRemoteId.Id { get; init; }
 }
 
 /// <summary>
 /// Monotonically increasing time in seconds since an arbitrary point in the past.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(MonotonicTime.Converter))]
-public readonly record struct MonotonicTime
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<MonotonicTime>))]
+public record MonotonicTime : INumberRemoteId
 {
-    internal MonotonicTime(double id) => _id = id;
-
-    private readonly double _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<MonotonicTime>
-    {
-        public override MonotonicTime Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, MonotonicTime value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
-    }
+    double INumberRemoteId.Id { get; init; }
 }
 
 /// <summary>
@@ -5006,19 +4970,10 @@ public enum ReportStatus
 
 /// <summary>
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(ReportId.Converter))]
-public readonly record struct ReportId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<ReportId>))]
+public record ReportId : IStringRemoteId
 {
-    internal ReportId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<ReportId>
-    {
-        public override ReportId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ReportId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -5182,19 +5137,10 @@ public sealed record DeviceBoundSession(DeviceBoundSessionKey Key, string Refres
 /// <summary>
 /// A unique identifier for a device bound session event.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(DeviceBoundSessionEventId.Converter))]
-public readonly record struct DeviceBoundSessionEventId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<DeviceBoundSessionEventId>))]
+public record DeviceBoundSessionEventId : IStringRemoteId
 {
-    internal DeviceBoundSessionEventId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<DeviceBoundSessionEventId>
-    {
-        public override DeviceBoundSessionEventId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, DeviceBoundSessionEventId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -5876,10 +5822,6 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 [JsonSerializable(typeof(ImmutableArray<ContentSecurityPolicyStatus>), TypeInfoPropertyName = "ImmutableArrayNetworkContentSecurityPolicyStatus")]
 [JsonSerializable(typeof(ImmutableArray<DeviceBoundSessionUrlRule>), TypeInfoPropertyName = "ImmutableArrayNetworkDeviceBoundSessionUrlRule")]
 [JsonSerializable(typeof(ImmutableArray<DeviceBoundSessionCookieCraving>), TypeInfoPropertyName = "ImmutableArrayNetworkDeviceBoundSessionCookieCraving")]
-[JsonSerializable(typeof(TimeSinceEpoch?), TypeInfoPropertyName = "NullableNetworkTimeSinceEpoch")]
-[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
-[JsonSerializable(typeof(RequestId?), TypeInfoPropertyName = "NullableNetworkRequestId")]
-[JsonSerializable(typeof(IO.StreamHandle?), TypeInfoPropertyName = "NullableIOStreamHandle")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

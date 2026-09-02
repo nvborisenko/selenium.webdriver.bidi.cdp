@@ -2847,9 +2847,6 @@ public sealed record StyleDeclarationEdit(DOM.StyleSheetId StyleSheetId, SourceR
 [JsonSerializable(typeof(ImmutableArray<CSSKeyframeRule>), TypeInfoPropertyName = "ImmutableArrayCSSCSSKeyframeRule")]
 [JsonSerializable(typeof(ImmutableArray<CSSFunctionNode>), TypeInfoPropertyName = "ImmutableArrayCSSCSSFunctionNode")]
 [JsonSerializable(typeof(ImmutableArray<CSSFunctionParameter>), TypeInfoPropertyName = "ImmutableArrayCSSCSSFunctionParameter")]
-[JsonSerializable(typeof(DOM.NodeId?), TypeInfoPropertyName = "NullableDOMNodeId")]
-[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
-[JsonSerializable(typeof(DOM.StyleSheetId?), TypeInfoPropertyName = "NullableDOMStyleSheetId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -2510,56 +2510,29 @@ public sealed record ShadowRootPushedEventArgs(NodeId HostId, Node Root) : OpenQ
 /// <summary>
 /// Unique DOM node identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(NodeId.Converter))]
-public readonly record struct NodeId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<NodeId>))]
+public record NodeId : INumberRemoteId
 {
-    internal NodeId(double id) => _id = id;
-
-    private readonly double _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<NodeId>
-    {
-        public override NodeId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, NodeId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
-    }
+    double INumberRemoteId.Id { get; init; }
 }
 
 /// <summary>
 /// Unique DOM node identifier used to reference a node that may not have been pushed to the
 /// front-end.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(BackendNodeId.Converter))]
-public readonly record struct BackendNodeId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.NumberRemoteIdConverter<BackendNodeId>))]
+public record BackendNodeId : INumberRemoteId
 {
-    internal BackendNodeId(double id) => _id = id;
-
-    private readonly double _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<BackendNodeId>
-    {
-        public override BackendNodeId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetDouble());
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, BackendNodeId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteNumberValue(value._id);
-    }
+    double INumberRemoteId.Id { get; init; }
 }
 
 /// <summary>
 /// Unique identifier for a CSS stylesheet.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(StyleSheetId.Converter))]
-public readonly record struct StyleSheetId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<StyleSheetId>))]
+public record StyleSheetId : IStringRemoteId
 {
-    internal StyleSheetId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<StyleSheetId>
-    {
-        public override StyleSheetId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, StyleSheetId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -3289,12 +3262,6 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 [JsonSerializable(typeof(ImmutableArray<DetachedElementInfo>), TypeInfoPropertyName = "ImmutableArrayDOMDetachedElementInfo")]
 [JsonSerializable(typeof(ImmutableArray<StyleSheetId>), TypeInfoPropertyName = "ImmutableArrayDOMStyleSheetId")]
 [JsonSerializable(typeof(ImmutableArray<BackendNode>), TypeInfoPropertyName = "ImmutableArrayDOMBackendNode")]
-[JsonSerializable(typeof(NodeId?), TypeInfoPropertyName = "NullableDOMNodeId")]
-[JsonSerializable(typeof(BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
-[JsonSerializable(typeof(Runtime.RemoteObjectId?), TypeInfoPropertyName = "NullableRuntimeRemoteObjectId")]
-[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
-[JsonSerializable(typeof(Runtime.ExecutionContextId?), TypeInfoPropertyName = "NullableRuntimeExecutionContextId")]
-[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

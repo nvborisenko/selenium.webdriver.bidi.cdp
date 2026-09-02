@@ -171,7 +171,6 @@ public sealed record TimelineEvent(Page.FrameId FrameId, string Type, string Nam
 [JsonSerializable(typeof(LayoutShift), TypeInfoPropertyName = "PerformanceTimelineLayoutShift")]
 [JsonSerializable(typeof(TimelineEvent), TypeInfoPropertyName = "PerformanceTimelineTimelineEvent")]
 [JsonSerializable(typeof(ImmutableArray<LayoutShiftAttribution>), TypeInfoPropertyName = "ImmutableArrayPerformanceTimelineLayoutShiftAttribution")]
-[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

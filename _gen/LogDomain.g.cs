@@ -262,7 +262,6 @@ public sealed record ViolationSetting(string Name, double Threshold)
 [JsonSerializable(typeof(ViolationSetting), TypeInfoPropertyName = "LogViolationSetting")]
 [JsonSerializable(typeof(ImmutableArray<ViolationSetting>), TypeInfoPropertyName = "ImmutableArrayLogViolationSetting")]
 [JsonSerializable(typeof(ImmutableArray<Runtime.RemoteObject>), TypeInfoPropertyName = "ImmutableArrayRuntimeRemoteObject")]
-[JsonSerializable(typeof(Network.RequestId?), TypeInfoPropertyName = "NullableNetworkRequestId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

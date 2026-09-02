@@ -164,37 +164,19 @@ public sealed record DeviceRequestPromptedEventArgs(RequestId Id, ImmutableArray
 /// <summary>
 /// Device request id.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(RequestId.Converter))]
-public readonly record struct RequestId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<RequestId>))]
+public record RequestId : IStringRemoteId
 {
-    internal RequestId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<RequestId>
-    {
-        public override RequestId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, RequestId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
 /// A device id.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(DeviceId.Converter))]
-public readonly record struct DeviceId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<DeviceId>))]
+public record DeviceId : IStringRemoteId
 {
-    internal DeviceId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<DeviceId>
-    {
-        public override DeviceId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, DeviceId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>

@@ -413,19 +413,10 @@ public sealed record NodeParamDisconnectedEventArgs(GraphObjectId ContextId, Gra
 /// <summary>
 /// An unique ID for a graph object (AudioContext, AudioNode, AudioParam) in Web Audio API
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(GraphObjectId.Converter))]
-public readonly record struct GraphObjectId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<GraphObjectId>))]
+public record GraphObjectId : IStringRemoteId
 {
-    internal GraphObjectId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<GraphObjectId>
-    {
-        public override GraphObjectId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, GraphObjectId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -471,19 +462,10 @@ public enum ContextState
 /// <summary>
 /// Enum of AudioNode types
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(NodeType.Converter))]
-public readonly record struct NodeType
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<NodeType>))]
+public record NodeType : IStringRemoteId
 {
-    internal NodeType(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<NodeType>
-    {
-        public override NodeType Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, NodeType value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -525,19 +507,10 @@ public enum ChannelInterpretation
 /// <summary>
 /// Enum of AudioParam types
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(ParamType.Converter))]
-public readonly record struct ParamType
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<ParamType>))]
+public record ParamType : IStringRemoteId
 {
-    internal ParamType(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<ParamType>
-    {
-        public override ParamType Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ParamType value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>

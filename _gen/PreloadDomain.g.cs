@@ -240,19 +240,10 @@ public sealed record PreloadingAttemptSourcesUpdatedEventArgs(Network.LoaderId L
 /// <summary>
 /// Unique id
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(RuleSetId.Converter))]
-public readonly record struct RuleSetId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<RuleSetId>))]
+public record RuleSetId : IStringRemoteId
 {
-    internal RuleSetId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<RuleSetId>
-    {
-        public override RuleSetId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, RuleSetId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -424,19 +415,10 @@ public sealed record PreloadingAttemptSource(PreloadingAttemptKey Key, Immutable
 /// CDP events for them are emitted separately but they share
 /// <b>PreloadPipelineId</b>.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(PreloadPipelineId.Converter))]
-public readonly record struct PreloadPipelineId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<PreloadPipelineId>))]
+public record PreloadPipelineId : IStringRemoteId
 {
-    internal PreloadPipelineId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<PreloadPipelineId>
-    {
-        public override PreloadPipelineId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, PreloadPipelineId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -983,8 +965,6 @@ public sealed record PrerenderMismatchedHeaders(string HeaderName)
 [JsonSerializable(typeof(ImmutableArray<PreloadingAttemptSource>), TypeInfoPropertyName = "ImmutableArrayPreloadPreloadingAttemptSource")]
 [JsonSerializable(typeof(ImmutableArray<RuleSetId>), TypeInfoPropertyName = "ImmutableArrayPreloadRuleSetId")]
 [JsonSerializable(typeof(ImmutableArray<DOM.BackendNodeId>), TypeInfoPropertyName = "ImmutableArrayDOMBackendNodeId")]
-[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
-[JsonSerializable(typeof(Network.RequestId?), TypeInfoPropertyName = "NullableNetworkRequestId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

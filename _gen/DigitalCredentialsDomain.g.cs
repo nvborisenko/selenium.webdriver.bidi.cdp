@@ -90,7 +90,6 @@ public enum VirtualWalletAction
 [JsonSerializable(typeof(SetVirtualWalletBehaviorCommandParameters), TypeInfoPropertyName = "SetVirtualWalletBehaviorCommandParameters")]
 [JsonSerializable(typeof(SetVirtualWalletBehaviorResult), TypeInfoPropertyName = "SetVirtualWalletBehaviorResult")]
 [JsonSerializable(typeof(VirtualWalletAction), TypeInfoPropertyName = "DigitalCredentialsVirtualWalletAction")]
-[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

@@ -366,19 +366,10 @@ public sealed record NodesUpdatedEventArgs(ImmutableArray<AXNode> Nodes) : OpenQ
 /// <summary>
 /// Unique accessibility node identifier.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(AXNodeId.Converter))]
-public readonly record struct AXNodeId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<AXNodeId>))]
+public record AXNodeId : IStringRemoteId
 {
-    internal AXNodeId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<AXNodeId>
-    {
-        public override AXNodeId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, AXNodeId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -986,11 +977,6 @@ public sealed record AXNode(AXNodeId NodeId, bool Ignored)
 [JsonSerializable(typeof(ImmutableArray<AXValueSource>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXValueSource")]
 [JsonSerializable(typeof(ImmutableArray<AXProperty>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXProperty")]
 [JsonSerializable(typeof(ImmutableArray<AXNodeId>), TypeInfoPropertyName = "ImmutableArrayAccessibilityAXNodeId")]
-[JsonSerializable(typeof(DOM.NodeId?), TypeInfoPropertyName = "NullableDOMNodeId")]
-[JsonSerializable(typeof(DOM.BackendNodeId?), TypeInfoPropertyName = "NullableDOMBackendNodeId")]
-[JsonSerializable(typeof(Runtime.RemoteObjectId?), TypeInfoPropertyName = "NullableRuntimeRemoteObjectId")]
-[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
-[JsonSerializable(typeof(AXNodeId?), TypeInfoPropertyName = "NullableAccessibilityAXNodeId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

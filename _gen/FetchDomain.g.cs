@@ -513,19 +513,10 @@ public sealed record AuthRequiredEventArgs(RequestId RequestId, Network.Request 
 /// Note that this does not identify individual HTTP requests that are part of
 /// a network request.
 /// </summary>
-[global::System.Text.Json.Serialization.JsonConverter(typeof(RequestId.Converter))]
-public readonly record struct RequestId
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<RequestId>))]
+public record RequestId : IStringRemoteId
 {
-    internal RequestId(string id) => _id = id;
-
-    private readonly string _id;
-
-    internal sealed class Converter : global::System.Text.Json.Serialization.JsonConverter<RequestId>
-    {
-        public override RequestId Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options) => new(reader.GetString()!);
-
-        public override void Write(global::System.Text.Json.Utf8JsonWriter writer, RequestId value, global::System.Text.Json.JsonSerializerOptions options) => writer.WriteStringValue(value._id);
-    }
+    string IStringRemoteId.Id { get; init; } = null!;
 }
 
 /// <summary>
@@ -649,8 +640,6 @@ public sealed record AuthChallengeResponse(string Response)
 [JsonSerializable(typeof(AuthChallengeResponse), TypeInfoPropertyName = "FetchAuthChallengeResponse")]
 [JsonSerializable(typeof(ImmutableArray<RequestPattern>), TypeInfoPropertyName = "ImmutableArrayFetchRequestPattern")]
 [JsonSerializable(typeof(ImmutableArray<HeaderEntry>), TypeInfoPropertyName = "ImmutableArrayFetchHeaderEntry")]
-[JsonSerializable(typeof(Network.RequestId?), TypeInfoPropertyName = "NullableNetworkRequestId")]
-[JsonSerializable(typeof(RequestId?), TypeInfoPropertyName = "NullableFetchRequestId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

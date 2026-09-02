@@ -307,7 +307,6 @@ public sealed record FilledField(string HtmlType, string Id, string Name, string
 [JsonSerializable(typeof(ImmutableArray<FilledField>), TypeInfoPropertyName = "ImmutableArrayAutofillFilledField")]
 [JsonSerializable(typeof(ImmutableArray<AddressField>), TypeInfoPropertyName = "ImmutableArrayAutofillAddressField")]
 [JsonSerializable(typeof(ImmutableArray<AddressFields>), TypeInfoPropertyName = "ImmutableArrayAutofillAddressFields")]
-[JsonSerializable(typeof(Page.FrameId?), TypeInfoPropertyName = "NullablePageFrameId")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
