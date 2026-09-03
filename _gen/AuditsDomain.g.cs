@@ -1892,6 +1892,10 @@ public enum EmailVerificationRequestIssueReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbSignatureFailed")]
     TokenVerificationKbSignatureFailed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossOriginIframeNotSupported")]
+    CrossOriginIframeNotSupported,
 }
 
 /// <summary>
