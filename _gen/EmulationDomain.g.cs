@@ -244,6 +244,10 @@ public interface IEmulation
     /// useful for emulating mobile device orientation lock behavior in
     /// responsive design mode.
     /// </param>
+    /// <param name="viewportMeta">
+    /// Viewport meta tag behavior. Default: <b>default</b>. Note: if <b>mobile</b> is <b>true</b>,
+    /// the viewport meta tag is always enabled.
+    /// </param>
     /// <param name="session">
     /// Optional CDP session override.
     /// </param>
@@ -253,7 +257,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDeviceMetricsOverrideResult"/>.
     /// </returns>
-    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, string? scrollbarType = default, bool? screenOrientationLockEmulation = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, string? scrollbarType = default, bool? screenOrientationLockEmulation = default, string? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start reporting the given posture value to the Device Posture API.
@@ -1160,9 +1164,9 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
         return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, string? scrollbarType = default, bool? screenOrientationLockEmulation = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, string? scrollbarType = default, bool? screenOrientationLockEmulation = default, string? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default)
     {
-        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation);
+        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation, ViewportMeta: viewportMeta);
         var command = new CdpCommand<SetDeviceMetricsOverrideCommandParameters, SetDeviceMetricsOverrideResult>("Emulation.setDeviceMetricsOverride", JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult);
         return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
     }
@@ -1542,7 +1546,7 @@ internal sealed record SetVirtualKeyboardGeometryOverrideCommandParameters(DOM.R
 public sealed record SetVirtualKeyboardGeometryOverrideResult() : EmptyResult;
 
 
-internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, string? ScrollbarType, bool? ScreenOrientationLockEmulation) : Parameters;
+internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, string? ScrollbarType, bool? ScreenOrientationLockEmulation, string? ViewportMeta) : Parameters;
 
 /// <summary>
 /// </summary>
