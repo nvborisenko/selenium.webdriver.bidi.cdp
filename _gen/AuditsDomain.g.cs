@@ -1592,6 +1592,10 @@ public enum FederatedAuthRequestIssueReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SuppressedBySegmentationPlatform")]
     SuppressedBySegmentationPlatform,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PopupBlockedByConnectionAllowlist")]
+    PopupBlockedByConnectionAllowlist,
 }
 
 /// <summary>
