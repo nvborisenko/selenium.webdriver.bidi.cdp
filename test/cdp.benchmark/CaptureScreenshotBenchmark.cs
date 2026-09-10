@@ -2,8 +2,8 @@ using BenchmarkDotNet.Attributes;
 using OpenQA.Selenium.BiDi;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V151.Page;
-using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V151.DevToolsSessionDomains;
+using OpenQA.Selenium.DevTools.V153.Page;
+using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V153.DevToolsSessionDomains;
 
 namespace Selenium.WebDriver.BiDi.Cdp.Benchmark;
 
@@ -39,7 +39,7 @@ public class CaptureScreenshotBenchmark
     }
 
     [Benchmark]
-    public async Task CaptureScreenshotBiDiCdp()
+    public async Task CaptureScreenshotSeleniumBiDiCdp()
     {
         await _cdp.Page.CaptureScreenshotAsync();
     }

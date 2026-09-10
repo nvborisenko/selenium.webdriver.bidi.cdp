@@ -2,8 +2,8 @@ using BenchmarkDotNet.Attributes;
 using OpenQA.Selenium.BiDi;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V151.Runtime;
-using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V151.DevToolsSessionDomains;
+using OpenQA.Selenium.DevTools.V153.Runtime;
+using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V153.DevToolsSessionDomains;
 
 namespace Selenium.WebDriver.BiDi.Cdp.Benchmark;
 
@@ -42,7 +42,7 @@ public class EvaluateBenchmark
     }
 
     [Benchmark]
-    public async Task EvaluateBiDiCdp()
+    public async Task EvaluateSeleniumBiDiCdp()
     {
         await _cdp.Runtime.EvaluateAsync("1+1");
     }
