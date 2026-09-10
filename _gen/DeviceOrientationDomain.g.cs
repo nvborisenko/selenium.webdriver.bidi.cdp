@@ -57,15 +57,13 @@ internal sealed class DeviceOrientationDomain(CdpModule cdp) : global::Selenium.
     public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceOrientationOverrideCommandParameters();
-        var command = new CdpCommand<ClearDeviceOrientationOverrideCommandParameters, ClearDeviceOrientationOverrideResult>("DeviceOrientation.clearDeviceOrientationOverride", JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DeviceOrientation.clearDeviceOrientationOverride", @params, JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceOrientationOverrideCommandParameters(Alpha: alpha, Beta: beta, Gamma: gamma);
-        var command = new CdpCommand<SetDeviceOrientationOverrideCommandParameters, SetDeviceOrientationOverrideResult>("DeviceOrientation.setDeviceOrientationOverride", JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DeviceOrientation.setDeviceOrientationOverride", @params, JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

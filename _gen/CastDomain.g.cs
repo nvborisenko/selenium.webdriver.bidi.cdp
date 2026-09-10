@@ -145,43 +145,37 @@ internal sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     public async Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(PresentationUrl: presentationUrl);
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Cast.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Cast.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Cast.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Cast.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSinkToUseCommandParameters(SinkName: sinkName);
-        var command = new CdpCommand<SetSinkToUseCommandParameters, SetSinkToUseResult>("Cast.setSinkToUse", JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Cast.setSinkToUse", @params, JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartDesktopMirroringCommandParameters(SinkName: sinkName);
-        var command = new CdpCommand<StartDesktopMirroringCommandParameters, StartDesktopMirroringResult>("Cast.startDesktopMirroring", JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Cast.startDesktopMirroring", @params, JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartTabMirroringCommandParameters(SinkName: sinkName);
-        var command = new CdpCommand<StartTabMirroringCommandParameters, StartTabMirroringResult>("Cast.startTabMirroring", JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Cast.startTabMirroring", @params, JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopCastingCommandParameters(SinkName: sinkName);
-        var command = new CdpCommand<StopCastingCommandParameters, StopCastingResult>("Cast.stopCasting", JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Cast.stopCasting", @params, JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<SinksUpdatedEventArgs> SinksUpdated => CreateCdpEventSource(CastDomainEvent.SinksUpdated);

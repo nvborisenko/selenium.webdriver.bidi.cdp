@@ -165,43 +165,37 @@ internal sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
     public async Task<ClearResult> ClearAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCommandParameters(StorageId: storageId);
-        var command = new CdpCommand<ClearCommandParameters, ClearResult>("DOMStorage.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMStorage.clear", @params, JsonContext.ClearCommandParameters, JsonContext.ClearResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DOMStorage.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMStorage.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DOMStorage.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMStorage.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMStorageItemsCommandParameters(StorageId: storageId);
-        var command = new CdpCommand<GetDOMStorageItemsCommandParameters, GetDOMStorageItemsResult>("DOMStorage.getDOMStorageItems", JsonContext.GetDOMStorageItemsCommandParameters, JsonContext.GetDOMStorageItemsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMStorage.getDOMStorageItems", @params, JsonContext.GetDOMStorageItemsCommandParameters, JsonContext.GetDOMStorageItemsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDOMStorageItemCommandParameters(StorageId: storageId, Key: key);
-        var command = new CdpCommand<RemoveDOMStorageItemCommandParameters, RemoveDOMStorageItemResult>("DOMStorage.removeDOMStorageItem", JsonContext.RemoveDOMStorageItemCommandParameters, JsonContext.RemoveDOMStorageItemResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMStorage.removeDOMStorageItem", @params, JsonContext.RemoveDOMStorageItemCommandParameters, JsonContext.RemoveDOMStorageItemResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDOMStorageItemCommandParameters(StorageId: storageId, Key: key, Value: value);
-        var command = new CdpCommand<SetDOMStorageItemCommandParameters, SetDOMStorageItemResult>("DOMStorage.setDOMStorageItem", JsonContext.SetDOMStorageItemCommandParameters, JsonContext.SetDOMStorageItemResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMStorage.setDOMStorageItem", @params, JsonContext.SetDOMStorageItemCommandParameters, JsonContext.SetDOMStorageItemResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<DomStorageItemAddedEventArgs> DomStorageItemAdded => CreateCdpEventSource(DOMStorageDomainEvent.DomStorageItemAdded);

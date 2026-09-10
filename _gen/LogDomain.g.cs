@@ -104,36 +104,31 @@ internal sealed class LogDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     public async Task<ClearResult> ClearAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCommandParameters();
-        var command = new CdpCommand<ClearCommandParameters, ClearResult>("Log.clear", JsonContext.ClearCommandParameters, JsonContext.ClearResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Log.clear", @params, JsonContext.ClearCommandParameters, JsonContext.ClearResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Log.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Log.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Log.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Log.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartViolationsReportResult> StartViolationsReportAsync(ImmutableArray<ViolationSetting> config, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartViolationsReportCommandParameters(Config: config);
-        var command = new CdpCommand<StartViolationsReportCommandParameters, StartViolationsReportResult>("Log.startViolationsReport", JsonContext.StartViolationsReportCommandParameters, JsonContext.StartViolationsReportResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Log.startViolationsReport", @params, JsonContext.StartViolationsReportCommandParameters, JsonContext.StartViolationsReportResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopViolationsReportResult> StopViolationsReportAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopViolationsReportCommandParameters();
-        var command = new CdpCommand<StopViolationsReportCommandParameters, StopViolationsReportResult>("Log.stopViolationsReport", JsonContext.StopViolationsReportCommandParameters, JsonContext.StopViolationsReportResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Log.stopViolationsReport", @params, JsonContext.StopViolationsReportCommandParameters, JsonContext.StopViolationsReportResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<EntryAddedEventArgs> EntryAdded => CreateCdpEventSource(LogDomainEvent.EntryAdded);

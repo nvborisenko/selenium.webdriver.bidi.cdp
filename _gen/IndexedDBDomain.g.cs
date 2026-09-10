@@ -259,64 +259,55 @@ internal sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDrive
     public async Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearObjectStoreCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
-        var command = new CdpCommand<ClearObjectStoreCommandParameters, ClearObjectStoreResult>("IndexedDB.clearObjectStore", JsonContext.ClearObjectStoreCommandParameters, JsonContext.ClearObjectStoreResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.clearObjectStore", @params, JsonContext.ClearObjectStoreCommandParameters, JsonContext.ClearObjectStoreResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
-        var command = new CdpCommand<DeleteDatabaseCommandParameters, DeleteDatabaseResult>("IndexedDB.deleteDatabase", JsonContext.DeleteDatabaseCommandParameters, JsonContext.DeleteDatabaseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.deleteDatabase", @params, JsonContext.DeleteDatabaseCommandParameters, JsonContext.DeleteDatabaseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteObjectStoreEntriesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, KeyRange: keyRange);
-        var command = new CdpCommand<DeleteObjectStoreEntriesCommandParameters, DeleteObjectStoreEntriesResult>("IndexedDB.deleteObjectStoreEntries", JsonContext.DeleteObjectStoreEntriesCommandParameters, JsonContext.DeleteObjectStoreEntriesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.deleteObjectStoreEntries", @params, JsonContext.DeleteObjectStoreEntriesCommandParameters, JsonContext.DeleteObjectStoreEntriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("IndexedDB.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("IndexedDB.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? indexName = default, KeyRange? keyRange = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestDataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, IndexName: indexName, SkipCount: skipCount, PageSize: pageSize, KeyRange: keyRange);
-        var command = new CdpCommand<RequestDataCommandParameters, RequestDataResult>("IndexedDB.requestData", JsonContext.RequestDataCommandParameters, JsonContext.RequestDataResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.requestData", @params, JsonContext.RequestDataCommandParameters, JsonContext.RequestDataResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMetadataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
-        var command = new CdpCommand<GetMetadataCommandParameters, GetMetadataResult>("IndexedDB.getMetadata", JsonContext.GetMetadataCommandParameters, JsonContext.GetMetadataResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.getMetadata", @params, JsonContext.GetMetadataCommandParameters, JsonContext.GetMetadataResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
-        var command = new CdpCommand<RequestDatabaseCommandParameters, RequestDatabaseResult>("IndexedDB.requestDatabase", JsonContext.RequestDatabaseCommandParameters, JsonContext.RequestDatabaseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.requestDatabase", @params, JsonContext.RequestDatabaseCommandParameters, JsonContext.RequestDatabaseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestDatabaseNamesResult> RequestDatabaseNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestDatabaseNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);
-        var command = new CdpCommand<RequestDatabaseNamesCommandParameters, RequestDatabaseNamesResult>("IndexedDB.requestDatabaseNames", JsonContext.RequestDatabaseNamesCommandParameters, JsonContext.RequestDatabaseNamesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IndexedDB.requestDatabaseNames", @params, JsonContext.RequestDatabaseNamesCommandParameters, JsonContext.RequestDatabaseNamesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

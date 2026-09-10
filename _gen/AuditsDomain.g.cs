@@ -103,29 +103,25 @@ internal sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: quality, SizeOnly: sizeOnly);
-        var command = new CdpCommand<GetEncodedResponseCommandParameters, GetEncodedResponseResult>("Audits.getEncodedResponse", JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Audits.getEncodedResponse", @params, JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Audits.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Audits.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Audits.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Audits.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CheckFormsIssuesCommandParameters();
-        var command = new CdpCommand<CheckFormsIssuesCommandParameters, CheckFormsIssuesResult>("Audits.checkFormsIssues", JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Audits.checkFormsIssues", @params, JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<IssueAddedEventArgs> IssueAdded => CreateCdpEventSource(AuditsDomainEvent.IssueAdded);

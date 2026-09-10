@@ -354,106 +354,91 @@ internal sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium
     public async Task<EnableResult> EnableAsync(CentralState state, bool leSupported, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(State: state, LeSupported: leSupported);
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("BluetoothEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetSimulatedCentralStateResult> SetSimulatedCentralStateAsync(CentralState state, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSimulatedCentralStateCommandParameters(State: state);
-        var command = new CdpCommand<SetSimulatedCentralStateCommandParameters, SetSimulatedCentralStateResult>("BluetoothEmulation.setSimulatedCentralState", JsonContext.SetSimulatedCentralStateCommandParameters, JsonContext.SetSimulatedCentralStateResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.setSimulatedCentralState", @params, JsonContext.SetSimulatedCentralStateCommandParameters, JsonContext.SetSimulatedCentralStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("BluetoothEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulatePreconnectedPeripheralCommandParameters(Address: address, Name: name, ManufacturerData: manufacturerData, KnownServiceUuids: knownServiceUuids);
-        var command = new CdpCommand<SimulatePreconnectedPeripheralCommandParameters, SimulatePreconnectedPeripheralResult>("BluetoothEmulation.simulatePreconnectedPeripheral", JsonContext.SimulatePreconnectedPeripheralCommandParameters, JsonContext.SimulatePreconnectedPeripheralResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.simulatePreconnectedPeripheral", @params, JsonContext.SimulatePreconnectedPeripheralCommandParameters, JsonContext.SimulatePreconnectedPeripheralResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SimulateAdvertisementResult> SimulateAdvertisementAsync(ScanEntry entry, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateAdvertisementCommandParameters(Entry: entry);
-        var command = new CdpCommand<SimulateAdvertisementCommandParameters, SimulateAdvertisementResult>("BluetoothEmulation.simulateAdvertisement", JsonContext.SimulateAdvertisementCommandParameters, JsonContext.SimulateAdvertisementResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.simulateAdvertisement", @params, JsonContext.SimulateAdvertisementCommandParameters, JsonContext.SimulateAdvertisementResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SimulateGATTOperationResponseResult> SimulateGATTOperationResponseAsync(string address, GATTOperationType type, long code, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateGATTOperationResponseCommandParameters(Address: address, Type: type, Code: code);
-        var command = new CdpCommand<SimulateGATTOperationResponseCommandParameters, SimulateGATTOperationResponseResult>("BluetoothEmulation.simulateGATTOperationResponse", JsonContext.SimulateGATTOperationResponseCommandParameters, JsonContext.SimulateGATTOperationResponseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.simulateGATTOperationResponse", @params, JsonContext.SimulateGATTOperationResponseCommandParameters, JsonContext.SimulateGATTOperationResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseAsync(string characteristicId, CharacteristicOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateCharacteristicOperationResponseCommandParameters(CharacteristicId: characteristicId, Type: type, Code: code, Data: data);
-        var command = new CdpCommand<SimulateCharacteristicOperationResponseCommandParameters, SimulateCharacteristicOperationResponseResult>("BluetoothEmulation.simulateCharacteristicOperationResponse", JsonContext.SimulateCharacteristicOperationResponseCommandParameters, JsonContext.SimulateCharacteristicOperationResponseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.simulateCharacteristicOperationResponse", @params, JsonContext.SimulateCharacteristicOperationResponseCommandParameters, JsonContext.SimulateCharacteristicOperationResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseAsync(string descriptorId, DescriptorOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateDescriptorOperationResponseCommandParameters(DescriptorId: descriptorId, Type: type, Code: code, Data: data);
-        var command = new CdpCommand<SimulateDescriptorOperationResponseCommandParameters, SimulateDescriptorOperationResponseResult>("BluetoothEmulation.simulateDescriptorOperationResponse", JsonContext.SimulateDescriptorOperationResponseCommandParameters, JsonContext.SimulateDescriptorOperationResponseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.simulateDescriptorOperationResponse", @params, JsonContext.SimulateDescriptorOperationResponseCommandParameters, JsonContext.SimulateDescriptorOperationResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<AddServiceResult> AddServiceAsync(string address, string serviceUuid, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddServiceCommandParameters(Address: address, ServiceUuid: serviceUuid);
-        var command = new CdpCommand<AddServiceCommandParameters, AddServiceResult>("BluetoothEmulation.addService", JsonContext.AddServiceCommandParameters, JsonContext.AddServiceResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.addService", @params, JsonContext.AddServiceCommandParameters, JsonContext.AddServiceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveServiceResult> RemoveServiceAsync(string serviceId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveServiceCommandParameters(ServiceId: serviceId);
-        var command = new CdpCommand<RemoveServiceCommandParameters, RemoveServiceResult>("BluetoothEmulation.removeService", JsonContext.RemoveServiceCommandParameters, JsonContext.RemoveServiceResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.removeService", @params, JsonContext.RemoveServiceCommandParameters, JsonContext.RemoveServiceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<AddCharacteristicResult> AddCharacteristicAsync(string serviceId, string characteristicUuid, CharacteristicProperties properties, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddCharacteristicCommandParameters(ServiceId: serviceId, CharacteristicUuid: characteristicUuid, Properties: properties);
-        var command = new CdpCommand<AddCharacteristicCommandParameters, AddCharacteristicResult>("BluetoothEmulation.addCharacteristic", JsonContext.AddCharacteristicCommandParameters, JsonContext.AddCharacteristicResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.addCharacteristic", @params, JsonContext.AddCharacteristicCommandParameters, JsonContext.AddCharacteristicResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveCharacteristicResult> RemoveCharacteristicAsync(string characteristicId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveCharacteristicCommandParameters(CharacteristicId: characteristicId);
-        var command = new CdpCommand<RemoveCharacteristicCommandParameters, RemoveCharacteristicResult>("BluetoothEmulation.removeCharacteristic", JsonContext.RemoveCharacteristicCommandParameters, JsonContext.RemoveCharacteristicResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.removeCharacteristic", @params, JsonContext.RemoveCharacteristicCommandParameters, JsonContext.RemoveCharacteristicResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<AddDescriptorResult> AddDescriptorAsync(string characteristicId, string descriptorUuid, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddDescriptorCommandParameters(CharacteristicId: characteristicId, DescriptorUuid: descriptorUuid);
-        var command = new CdpCommand<AddDescriptorCommandParameters, AddDescriptorResult>("BluetoothEmulation.addDescriptor", JsonContext.AddDescriptorCommandParameters, JsonContext.AddDescriptorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.addDescriptor", @params, JsonContext.AddDescriptorCommandParameters, JsonContext.AddDescriptorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveDescriptorResult> RemoveDescriptorAsync(string descriptorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDescriptorCommandParameters(DescriptorId: descriptorId);
-        var command = new CdpCommand<RemoveDescriptorCommandParameters, RemoveDescriptorResult>("BluetoothEmulation.removeDescriptor", JsonContext.RemoveDescriptorCommandParameters, JsonContext.RemoveDescriptorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.removeDescriptor", @params, JsonContext.RemoveDescriptorCommandParameters, JsonContext.RemoveDescriptorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateGATTDisconnectionCommandParameters(Address: address);
-        var command = new CdpCommand<SimulateGATTDisconnectionCommandParameters, SimulateGATTDisconnectionResult>("BluetoothEmulation.simulateGATTDisconnection", JsonContext.SimulateGATTDisconnectionCommandParameters, JsonContext.SimulateGATTDisconnectionResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BluetoothEmulation.simulateGATTDisconnection", @params, JsonContext.SimulateGATTDisconnectionCommandParameters, JsonContext.SimulateGATTDisconnectionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<GattOperationReceivedEventArgs> GattOperationReceived => CreateCdpEventSource(BluetoothEmulationDomainEvent.GattOperationReceived);

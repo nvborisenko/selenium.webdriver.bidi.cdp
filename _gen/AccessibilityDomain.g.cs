@@ -217,57 +217,49 @@ internal sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebD
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Accessibility.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Accessibility.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? fetchRelatives = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPartialAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, FetchRelatives: fetchRelatives);
-        var command = new CdpCommand<GetPartialAXTreeCommandParameters, GetPartialAXTreeResult>("Accessibility.getPartialAXTree", JsonContext.GetPartialAXTreeCommandParameters, JsonContext.GetPartialAXTreeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.getPartialAXTree", @params, JsonContext.GetPartialAXTreeCommandParameters, JsonContext.GetPartialAXTreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetFullAXTreeResult> GetFullAXTreeAsync(long? depth = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFullAXTreeCommandParameters(Depth: depth, FrameId: frameId);
-        var command = new CdpCommand<GetFullAXTreeCommandParameters, GetFullAXTreeResult>("Accessibility.getFullAXTree", JsonContext.GetFullAXTreeCommandParameters, JsonContext.GetFullAXTreeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.getFullAXTree", @params, JsonContext.GetFullAXTreeCommandParameters, JsonContext.GetFullAXTreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetRootAXNodeResult> GetRootAXNodeAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRootAXNodeCommandParameters(FrameId: frameId);
-        var command = new CdpCommand<GetRootAXNodeCommandParameters, GetRootAXNodeResult>("Accessibility.getRootAXNode", JsonContext.GetRootAXNodeCommandParameters, JsonContext.GetRootAXNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.getRootAXNode", @params, JsonContext.GetRootAXNodeCommandParameters, JsonContext.GetRootAXNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAXNodeAndAncestorsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        var command = new CdpCommand<GetAXNodeAndAncestorsCommandParameters, GetAXNodeAndAncestorsResult>("Accessibility.getAXNodeAndAncestors", JsonContext.GetAXNodeAndAncestorsCommandParameters, JsonContext.GetAXNodeAndAncestorsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.getAXNodeAndAncestors", @params, JsonContext.GetAXNodeAndAncestorsCommandParameters, JsonContext.GetAXNodeAndAncestorsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetChildAXNodesCommandParameters(Id: id, FrameId: frameId);
-        var command = new CdpCommand<GetChildAXNodesCommandParameters, GetChildAXNodesResult>("Accessibility.getChildAXNodes", JsonContext.GetChildAXNodesCommandParameters, JsonContext.GetChildAXNodesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.getChildAXNodes", @params, JsonContext.GetChildAXNodesCommandParameters, JsonContext.GetChildAXNodesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<QueryAXTreeResult> QueryAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? accessibleName = default, string? role = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QueryAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, AccessibleName: accessibleName, Role: role);
-        var command = new CdpCommand<QueryAXTreeCommandParameters, QueryAXTreeResult>("Accessibility.queryAXTree", JsonContext.QueryAXTreeCommandParameters, JsonContext.QueryAXTreeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Accessibility.queryAXTree", @params, JsonContext.QueryAXTreeCommandParameters, JsonContext.QueryAXTreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<LoadCompleteEventArgs> LoadComplete => CreateCdpEventSource(AccessibilityDomainEvent.LoadComplete);

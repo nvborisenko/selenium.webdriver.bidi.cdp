@@ -1398,266 +1398,231 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
     public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCacheCommandParameters();
-        var command = new CdpCommand<CanClearBrowserCacheCommandParameters, CanClearBrowserCacheResult>("Network.canClearBrowserCache", JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.canClearBrowserCache", @params, JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCookiesCommandParameters();
-        var command = new CdpCommand<CanClearBrowserCookiesCommandParameters, CanClearBrowserCookiesResult>("Network.canClearBrowserCookies", JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.canClearBrowserCookies", @params, JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CanEmulateNetworkConditionsCommandParameters();
-        var command = new CdpCommand<CanEmulateNetworkConditionsCommandParameters, CanEmulateNetworkConditionsResult>("Network.canEmulateNetworkConditions", JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.canEmulateNetworkConditions", @params, JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCacheCommandParameters();
-        var command = new CdpCommand<ClearBrowserCacheCommandParameters, ClearBrowserCacheResult>("Network.clearBrowserCache", JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.clearBrowserCache", @params, JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCookiesCommandParameters();
-        var command = new CdpCommand<ClearBrowserCookiesCommandParameters, ClearBrowserCookiesResult>("Network.clearBrowserCookies", JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.clearBrowserCookies", @params, JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCookiesCommandParameters(Name: name, Url: url, Domain: domain, Path: path, PartitionKey: partitionKey);
-        var command = new CdpCommand<DeleteCookiesCommandParameters, DeleteCookiesResult>("Network.deleteCookies", JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.deleteCookies", @params, JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Network.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType, PacketLoss: packetLoss, PacketQueueLength: packetQueueLength, PacketReordering: packetReordering);
-        var command = new CdpCommand<EmulateNetworkConditionsCommandParameters, EmulateNetworkConditionsResult>("Network.emulateNetworkConditions", JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.emulateNetworkConditions", @params, JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: offline, EmulateOfflineServiceWorker: emulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
-        var command = new CdpCommand<EmulateNetworkConditionsByRuleCommandParameters, EmulateNetworkConditionsByRuleResult>("Network.emulateNetworkConditionsByRule", JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.emulateNetworkConditionsByRule", @params, JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType);
-        var command = new CdpCommand<OverrideNetworkStateCommandParameters, OverrideNetworkStateResult>("Network.overrideNetworkState", JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.overrideNetworkState", @params, JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize, MaxPostDataSize: maxPostDataSize, ReportDirectSocketTraffic: reportDirectSocketTraffic, EnableDurableMessages: enableDurableMessages);
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Network.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize);
-        var command = new CdpCommand<ConfigureDurableMessagesCommandParameters, ConfigureDurableMessagesResult>("Network.configureDurableMessages", JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.configureDurableMessages", @params, JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAllCookiesCommandParameters();
-        var command = new CdpCommand<GetAllCookiesCommandParameters, GetAllCookiesResult>("Network.getAllCookies", JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.getAllCookies", @params, JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCertificateCommandParameters(Origin: origin);
-        var command = new CdpCommand<GetCertificateCommandParameters, GetCertificateResult>("Network.getCertificate", JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.getCertificate", @params, JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCookiesCommandParameters(Urls: urls);
-        var command = new CdpCommand<GetCookiesCommandParameters, GetCookiesResult>("Network.getCookies", JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.getCookies", @params, JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
-        var command = new CdpCommand<GetResponseBodyCommandParameters, GetResponseBodyResult>("Network.getResponseBody", JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.getResponseBody", @params, JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRequestPostDataCommandParameters(RequestId: requestId);
-        var command = new CdpCommand<GetRequestPostDataCommandParameters, GetRequestPostDataResult>("Network.getRequestPostData", JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.getRequestPostData", @params, JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReplayXHRCommandParameters(RequestId: requestId);
-        var command = new CdpCommand<ReplayXHRCommandParameters, ReplayXHRResult>("Network.replayXHR", JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.replayXHR", @params, JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SearchInResponseBodyCommandParameters(RequestId: requestId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
-        var command = new CdpCommand<SearchInResponseBodyCommandParameters, SearchInResponseBodyResult>("Network.searchInResponseBody", JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.searchInResponseBody", @params, JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlockedURLsCommandParameters(UrlPatterns: urlPatterns, Urls: urls);
-        var command = new CdpCommand<SetBlockedURLsCommandParameters, SetBlockedURLsResult>("Network.setBlockedURLs", JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setBlockedURLs", @params, JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetBypassServiceWorkerCommandParameters(Bypass: bypass);
-        var command = new CdpCommand<SetBypassServiceWorkerCommandParameters, SetBypassServiceWorkerResult>("Network.setBypassServiceWorker", JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setBypassServiceWorker", @params, JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCacheDisabledCommandParameters(CacheDisabled: cacheDisabled);
-        var command = new CdpCommand<SetCacheDisabledCommandParameters, SetCacheDisabledResult>("Network.setCacheDisabled", JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setCacheDisabled", @params, JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: url, Domain: domain, Path: path, Secure: secure, HttpOnly: httpOnly, SameSite: sameSite, Expires: expires, Priority: priority, SourceScheme: sourceScheme, SourcePort: sourcePort, PartitionKey: partitionKey);
-        var command = new CdpCommand<SetCookieCommandParameters, SetCookieResult>("Network.setCookie", JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setCookie", @params, JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies);
-        var command = new CdpCommand<SetCookiesCommandParameters, SetCookiesResult>("Network.setCookies", JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setCookies", @params, JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetExtraHTTPHeadersCommandParameters(Headers: headers);
-        var command = new CdpCommand<SetExtraHTTPHeadersCommandParameters, SetExtraHTTPHeadersResult>("Network.setExtraHTTPHeaders", JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setExtraHTTPHeaders", @params, JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttachDebugStackCommandParameters(Enabled: enabled);
-        var command = new CdpCommand<SetAttachDebugStackCommandParameters, SetAttachDebugStackResult>("Network.setAttachDebugStack", JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setAttachDebugStack", @params, JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
-        var command = new CdpCommand<SetUserAgentOverrideCommandParameters, SetUserAgentOverrideResult>("Network.setUserAgentOverride", JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setUserAgentOverride", @params, JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StreamResourceContentCommandParameters(RequestId: requestId);
-        var command = new CdpCommand<StreamResourceContentCommandParameters, StreamResourceContentResult>("Network.streamResourceContent", JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.streamResourceContent", @params, JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSecurityIsolationStatusCommandParameters(FrameId: frameId);
-        var command = new CdpCommand<GetSecurityIsolationStatusCommandParameters, GetSecurityIsolationStatusResult>("Network.getSecurityIsolationStatus", JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.getSecurityIsolationStatus", @params, JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableReportingApiCommandParameters(Enable: enable);
-        var command = new CdpCommand<EnableReportingApiCommandParameters, EnableReportingApiResult>("Network.enableReportingApi", JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.enableReportingApi", @params, JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableDeviceBoundSessionsCommandParameters(Enable: enable);
-        var command = new CdpCommand<EnableDeviceBoundSessionsCommandParameters, EnableDeviceBoundSessionsResult>("Network.enableDeviceBoundSessions", JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.enableDeviceBoundSessions", @params, JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteDeviceBoundSessionCommandParameters(Key: key);
-        var command = new CdpCommand<DeleteDeviceBoundSessionCommandParameters, DeleteDeviceBoundSessionResult>("Network.deleteDeviceBoundSession", JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.deleteDeviceBoundSession", @params, JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new FetchSchemefulSiteCommandParameters(Origin: origin);
-        var command = new CdpCommand<FetchSchemefulSiteCommandParameters, FetchSchemefulSiteResult>("Network.fetchSchemefulSite", JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.fetchSchemefulSite", @params, JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LoadNetworkResourceCommandParameters(FrameId: frameId, Url: url, Options: options);
-        var command = new CdpCommand<LoadNetworkResourceCommandParameters, LoadNetworkResourceResult>("Network.loadNetworkResource", JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.loadNetworkResource", @params, JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction);
-        var command = new CdpCommand<SetCookieControlsCommandParameters, SetCookieControlsResult>("Network.setCookieControls", JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.setCookieControls", @params, JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<DataReceivedEventArgs> DataReceived => CreateCdpEventSource(NetworkDomainEvent.DataReceived);

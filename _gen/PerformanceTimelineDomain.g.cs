@@ -55,8 +55,7 @@ internal sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Seleniu
     public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EventTypes: eventTypes);
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("PerformanceTimeline.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PerformanceTimeline.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<TimelineEventAddedEventArgs> TimelineEventAdded => CreateCdpEventSource(PerformanceTimelineDomainEvent.TimelineEventAdded);

@@ -190,78 +190,67 @@ internal sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     public async Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMCountersCommandParameters();
-        var command = new CdpCommand<GetDOMCountersCommandParameters, GetDOMCountersResult>("Memory.getDOMCounters", JsonContext.GetDOMCountersCommandParameters, JsonContext.GetDOMCountersResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.getDOMCounters", @params, JsonContext.GetDOMCountersCommandParameters, JsonContext.GetDOMCountersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMCountersForLeakDetectionCommandParameters();
-        var command = new CdpCommand<GetDOMCountersForLeakDetectionCommandParameters, GetDOMCountersForLeakDetectionResult>("Memory.getDOMCountersForLeakDetection", JsonContext.GetDOMCountersForLeakDetectionCommandParameters, JsonContext.GetDOMCountersForLeakDetectionResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.getDOMCountersForLeakDetection", @params, JsonContext.GetDOMCountersForLeakDetectionCommandParameters, JsonContext.GetDOMCountersForLeakDetectionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PrepareForLeakDetectionCommandParameters();
-        var command = new CdpCommand<PrepareForLeakDetectionCommandParameters, PrepareForLeakDetectionResult>("Memory.prepareForLeakDetection", JsonContext.PrepareForLeakDetectionCommandParameters, JsonContext.PrepareForLeakDetectionResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.prepareForLeakDetection", @params, JsonContext.PrepareForLeakDetectionCommandParameters, JsonContext.PrepareForLeakDetectionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForciblyPurgeJavaScriptMemoryCommandParameters();
-        var command = new CdpCommand<ForciblyPurgeJavaScriptMemoryCommandParameters, ForciblyPurgeJavaScriptMemoryResult>("Memory.forciblyPurgeJavaScriptMemory", JsonContext.ForciblyPurgeJavaScriptMemoryCommandParameters, JsonContext.ForciblyPurgeJavaScriptMemoryResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.forciblyPurgeJavaScriptMemory", @params, JsonContext.ForciblyPurgeJavaScriptMemoryCommandParameters, JsonContext.ForciblyPurgeJavaScriptMemoryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPressureNotificationsSuppressedCommandParameters(Suppressed: suppressed);
-        var command = new CdpCommand<SetPressureNotificationsSuppressedCommandParameters, SetPressureNotificationsSuppressedResult>("Memory.setPressureNotificationsSuppressed", JsonContext.SetPressureNotificationsSuppressedCommandParameters, JsonContext.SetPressureNotificationsSuppressedResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.setPressureNotificationsSuppressed", @params, JsonContext.SetPressureNotificationsSuppressedCommandParameters, JsonContext.SetPressureNotificationsSuppressedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SimulatePressureNotificationCommandParameters(Level: level);
-        var command = new CdpCommand<SimulatePressureNotificationCommandParameters, SimulatePressureNotificationResult>("Memory.simulatePressureNotification", JsonContext.SimulatePressureNotificationCommandParameters, JsonContext.SimulatePressureNotificationResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.simulatePressureNotification", @params, JsonContext.SimulatePressureNotificationCommandParameters, JsonContext.SimulatePressureNotificationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = default, bool? suppressRandomness = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, SuppressRandomness: suppressRandomness);
-        var command = new CdpCommand<StartSamplingCommandParameters, StartSamplingResult>("Memory.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.startSampling", @params, JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopSamplingCommandParameters();
-        var command = new CdpCommand<StopSamplingCommandParameters, StopSamplingResult>("Memory.stopSampling", JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.stopSampling", @params, JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAllTimeSamplingProfileCommandParameters();
-        var command = new CdpCommand<GetAllTimeSamplingProfileCommandParameters, GetAllTimeSamplingProfileResult>("Memory.getAllTimeSamplingProfile", JsonContext.GetAllTimeSamplingProfileCommandParameters, JsonContext.GetAllTimeSamplingProfileResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.getAllTimeSamplingProfile", @params, JsonContext.GetAllTimeSamplingProfileCommandParameters, JsonContext.GetAllTimeSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBrowserSamplingProfileCommandParameters();
-        var command = new CdpCommand<GetBrowserSamplingProfileCommandParameters, GetBrowserSamplingProfileResult>("Memory.getBrowserSamplingProfile", JsonContext.GetBrowserSamplingProfileCommandParameters, JsonContext.GetBrowserSamplingProfileResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.getBrowserSamplingProfile", @params, JsonContext.GetBrowserSamplingProfileCommandParameters, JsonContext.GetBrowserSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSamplingProfileCommandParameters();
-        var command = new CdpCommand<GetSamplingProfileCommandParameters, GetSamplingProfileResult>("Memory.getSamplingProfile", JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Memory.getSamplingProfile", @params, JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

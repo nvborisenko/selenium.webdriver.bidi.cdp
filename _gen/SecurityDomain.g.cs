@@ -148,38 +148,33 @@ internal sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Security.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Security.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Security.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Security.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetIgnoreCertificateErrorsCommandParameters(Ignore: ignore);
-        var command = new CdpCommand<SetIgnoreCertificateErrorsCommandParameters, SetIgnoreCertificateErrorsResult>("Security.setIgnoreCertificateErrors", JsonContext.SetIgnoreCertificateErrorsCommandParameters, JsonContext.SetIgnoreCertificateErrorsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Security.setIgnoreCertificateErrors", @params, JsonContext.SetIgnoreCertificateErrorsCommandParameters, JsonContext.SetIgnoreCertificateErrorsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HandleCertificateErrorCommandParameters(EventId: eventId, Action: action);
-        var command = new CdpCommand<HandleCertificateErrorCommandParameters, HandleCertificateErrorResult>("Security.handleCertificateError", JsonContext.HandleCertificateErrorCommandParameters, JsonContext.HandleCertificateErrorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Security.handleCertificateError", @params, JsonContext.HandleCertificateErrorCommandParameters, JsonContext.HandleCertificateErrorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetOverrideCertificateErrorsCommandParameters(Override: @override);
-        var command = new CdpCommand<SetOverrideCertificateErrorsCommandParameters, SetOverrideCertificateErrorsResult>("Security.setOverrideCertificateErrors", JsonContext.SetOverrideCertificateErrorsCommandParameters, JsonContext.SetOverrideCertificateErrorsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Security.setOverrideCertificateErrors", @params, JsonContext.SetOverrideCertificateErrorsCommandParameters, JsonContext.SetOverrideCertificateErrorsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]

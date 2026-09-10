@@ -208,50 +208,43 @@ internal sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     public async Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetOsAppStateCommandParameters(ManifestId: manifestId);
-        var command = new CdpCommand<GetOsAppStateCommandParameters, GetOsAppStateResult>("PWA.getOsAppState", JsonContext.GetOsAppStateCommandParameters, JsonContext.GetOsAppStateResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PWA.getOsAppState", @params, JsonContext.GetOsAppStateCommandParameters, JsonContext.GetOsAppStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new InstallCommandParameters(ManifestId: manifestId, InstallUrlOrBundleUrl: installUrlOrBundleUrl);
-        var command = new CdpCommand<InstallCommandParameters, InstallResult>("PWA.install", JsonContext.InstallCommandParameters, JsonContext.InstallResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PWA.install", @params, JsonContext.InstallCommandParameters, JsonContext.InstallResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<UninstallResult> UninstallAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UninstallCommandParameters(ManifestId: manifestId);
-        var command = new CdpCommand<UninstallCommandParameters, UninstallResult>("PWA.uninstall", JsonContext.UninstallCommandParameters, JsonContext.UninstallResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PWA.uninstall", @params, JsonContext.UninstallCommandParameters, JsonContext.UninstallResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<LaunchResult> LaunchAsync(string manifestId, string? url = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LaunchCommandParameters(ManifestId: manifestId, Url: url);
-        var command = new CdpCommand<LaunchCommandParameters, LaunchResult>("PWA.launch", JsonContext.LaunchCommandParameters, JsonContext.LaunchResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PWA.launch", @params, JsonContext.LaunchCommandParameters, JsonContext.LaunchResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new LaunchFilesInAppCommandParameters(ManifestId: manifestId, Files: files);
-        var command = new CdpCommand<LaunchFilesInAppCommandParameters, LaunchFilesInAppResult>("PWA.launchFilesInApp", JsonContext.LaunchFilesInAppCommandParameters, JsonContext.LaunchFilesInAppResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PWA.launchFilesInApp", @params, JsonContext.LaunchFilesInAppCommandParameters, JsonContext.LaunchFilesInAppResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OpenCurrentPageInAppCommandParameters(ManifestId: manifestId);
-        var command = new CdpCommand<OpenCurrentPageInAppCommandParameters, OpenCurrentPageInAppResult>("PWA.openCurrentPageInApp", JsonContext.OpenCurrentPageInAppCommandParameters, JsonContext.OpenCurrentPageInAppResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PWA.openCurrentPageInApp", @params, JsonContext.OpenCurrentPageInAppCommandParameters, JsonContext.OpenCurrentPageInAppResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = default, DisplayMode? displayMode = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ChangeAppUserSettingsCommandParameters(ManifestId: manifestId, LinkCapturing: linkCapturing, DisplayMode: displayMode);
-        var command = new CdpCommand<ChangeAppUserSettingsCommandParameters, ChangeAppUserSettingsResult>("PWA.changeAppUserSettings", JsonContext.ChangeAppUserSettingsCommandParameters, JsonContext.ChangeAppUserSettingsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("PWA.changeAppUserSettings", @params, JsonContext.ChangeAppUserSettingsCommandParameters, JsonContext.ChangeAppUserSettingsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

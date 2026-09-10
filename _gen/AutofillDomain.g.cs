@@ -104,29 +104,25 @@ internal sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver
     public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: frameId, Card: card, Address: address);
-        var command = new CdpCommand<TriggerCommandParameters, TriggerResult>("Autofill.trigger", JsonContext.TriggerCommandParameters, JsonContext.TriggerResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Autofill.trigger", @params, JsonContext.TriggerCommandParameters, JsonContext.TriggerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAddressesCommandParameters(Addresses: addresses);
-        var command = new CdpCommand<SetAddressesCommandParameters, SetAddressesResult>("Autofill.setAddresses", JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Autofill.setAddresses", @params, JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Autofill.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Autofill.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Autofill.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Autofill.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<AddressFormFilledEventArgs> AddressFormFilled => CreateCdpEventSource(AutofillDomainEvent.AddressFormFilled);

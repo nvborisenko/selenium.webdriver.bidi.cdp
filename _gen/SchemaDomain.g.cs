@@ -35,8 +35,7 @@ internal sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     public async Task<GetDomainsResult> GetDomainsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDomainsCommandParameters();
-        var command = new CdpCommand<GetDomainsCommandParameters, GetDomainsResult>("Schema.getDomains", JsonContext.GetDomainsCommandParameters, JsonContext.GetDomainsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Schema.getDomains", @params, JsonContext.GetDomainsCommandParameters, JsonContext.GetDomainsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

@@ -96,15 +96,13 @@ internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDri
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Performance.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Performance.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(TimeDomain: timeDomain);
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Performance.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Performance.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -112,15 +110,13 @@ internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDri
     public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
-        var command = new CdpCommand<SetTimeDomainCommandParameters, SetTimeDomainResult>("Performance.setTimeDomain", JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Performance.setTimeDomain", @params, JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetMetricsCommandParameters();
-        var command = new CdpCommand<GetMetricsCommandParameters, GetMetricsResult>("Performance.getMetrics", JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Performance.getMetrics", @params, JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<MetricsEventArgs> Metrics => CreateCdpEventSource(PerformanceDomainEvent.Metrics);

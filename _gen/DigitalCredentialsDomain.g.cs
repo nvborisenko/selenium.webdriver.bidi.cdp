@@ -50,8 +50,7 @@ internal sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium
     public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = default, global::System.Text.Json.JsonElement? response = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: protocol, Response: response, FrameId: frameId);
-        var command = new CdpCommand<SetVirtualWalletBehaviorCommandParameters, SetVirtualWalletBehaviorResult>("DigitalCredentials.setVirtualWalletBehavior", JsonContext.SetVirtualWalletBehaviorCommandParameters, JsonContext.SetVirtualWalletBehaviorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DigitalCredentials.setVirtualWalletBehavior", @params, JsonContext.SetVirtualWalletBehaviorCommandParameters, JsonContext.SetVirtualWalletBehaviorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

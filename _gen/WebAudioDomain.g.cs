@@ -227,22 +227,19 @@ internal sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("WebAudio.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAudio.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("WebAudio.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAudio.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRealtimeDataCommandParameters(ContextId: contextId);
-        var command = new CdpCommand<GetRealtimeDataCommandParameters, GetRealtimeDataResult>("WebAudio.getRealtimeData", JsonContext.GetRealtimeDataCommandParameters, JsonContext.GetRealtimeDataResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAudio.getRealtimeData", @params, JsonContext.GetRealtimeDataCommandParameters, JsonContext.GetRealtimeDataResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<ContextCreatedEventArgs> ContextCreated => CreateCdpEventSource(WebAudioDomainEvent.ContextCreated);

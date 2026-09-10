@@ -67,15 +67,13 @@ internal sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDrive
     public async Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new BindCommandParameters(Port: port);
-        var command = new CdpCommand<BindCommandParameters, BindResult>("Tethering.bind", JsonContext.BindCommandParameters, JsonContext.BindResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Tethering.bind", @params, JsonContext.BindCommandParameters, JsonContext.BindResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UnbindCommandParameters(Port: port);
-        var command = new CdpCommand<UnbindCommandParameters, UnbindResult>("Tethering.unbind", JsonContext.UnbindCommandParameters, JsonContext.UnbindResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Tethering.unbind", @params, JsonContext.UnbindCommandParameters, JsonContext.UnbindResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<AcceptedEventArgs> Accepted => CreateCdpEventSource(TetheringDomainEvent.Accepted);

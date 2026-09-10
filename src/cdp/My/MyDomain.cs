@@ -10,8 +10,6 @@ internal sealed class MyDomain(CdpModule cdp) : Domain(cdp)
 {
     private static readonly MyJsonSerializerContext JsonContext = MyJsonSerializerContext.Default;
 
-    private static readonly CdpCommand<EnableParameters, EnableResult> EnableCommand = new("Network.enable", JsonContext.EnableParameters, JsonContext.EnableResult);
-
     /// <summary>
     /// Enables network tracking.
     /// </summary>
@@ -24,7 +22,7 @@ internal sealed class MyDomain(CdpModule cdp) : Domain(cdp)
     {
         var parameters = new EnableParameters(maxTotalBufferSize, maxResourceBufferSize, postDataSizeLimit);
 
-        return await ExecuteCommandAsync(EnableCommand, parameters, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Network.enable", parameters, JsonContext.EnableParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>

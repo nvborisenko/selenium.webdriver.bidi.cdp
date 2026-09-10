@@ -130,36 +130,31 @@ internal sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDr
     public async Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCacheCommandParameters(CacheId: cacheId);
-        var command = new CdpCommand<DeleteCacheCommandParameters, DeleteCacheResult>("CacheStorage.deleteCache", JsonContext.DeleteCacheCommandParameters, JsonContext.DeleteCacheResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("CacheStorage.deleteCache", @params, JsonContext.DeleteCacheCommandParameters, JsonContext.DeleteCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteEntryCommandParameters(CacheId: cacheId, Request: request);
-        var command = new CdpCommand<DeleteEntryCommandParameters, DeleteEntryResult>("CacheStorage.deleteEntry", JsonContext.DeleteEntryCommandParameters, JsonContext.DeleteEntryResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("CacheStorage.deleteEntry", @params, JsonContext.DeleteEntryCommandParameters, JsonContext.DeleteEntryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestCacheNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);
-        var command = new CdpCommand<RequestCacheNamesCommandParameters, RequestCacheNamesResult>("CacheStorage.requestCacheNames", JsonContext.RequestCacheNamesCommandParameters, JsonContext.RequestCacheNamesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("CacheStorage.requestCacheNames", @params, JsonContext.RequestCacheNamesCommandParameters, JsonContext.RequestCacheNamesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestCachedResponseCommandParameters(CacheId: cacheId, RequestURL: requestURL, RequestHeaders: requestHeaders);
-        var command = new CdpCommand<RequestCachedResponseCommandParameters, RequestCachedResponseResult>("CacheStorage.requestCachedResponse", JsonContext.RequestCachedResponseCommandParameters, JsonContext.RequestCachedResponseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("CacheStorage.requestCachedResponse", @params, JsonContext.RequestCachedResponseCommandParameters, JsonContext.RequestCachedResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = default, long? pageSize = default, string? pathFilter = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestEntriesCommandParameters(CacheId: cacheId, SkipCount: skipCount, PageSize: pageSize, PathFilter: pathFilter);
-        var command = new CdpCommand<RequestEntriesCommandParameters, RequestEntriesResult>("CacheStorage.requestEntries", JsonContext.RequestEntriesCommandParameters, JsonContext.RequestEntriesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("CacheStorage.requestEntries", @params, JsonContext.RequestEntriesCommandParameters, JsonContext.RequestEntriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

@@ -670,221 +670,190 @@ internal sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Overlay.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Overlay.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = default, bool? includeStyle = default, ColorFormat? colorFormat = default, bool? showAccessibilityInfo = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHighlightObjectForTestCommandParameters(NodeId: nodeId, IncludeDistance: includeDistance, IncludeStyle: includeStyle, ColorFormat: colorFormat, ShowAccessibilityInfo: showAccessibilityInfo);
-        var command = new CdpCommand<GetHighlightObjectForTestCommandParameters, GetHighlightObjectForTestResult>("Overlay.getHighlightObjectForTest", JsonContext.GetHighlightObjectForTestCommandParameters, JsonContext.GetHighlightObjectForTestResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.getHighlightObjectForTest", @params, JsonContext.GetHighlightObjectForTestCommandParameters, JsonContext.GetHighlightObjectForTestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetGridHighlightObjectsForTestCommandParameters(NodeIds: nodeIds);
-        var command = new CdpCommand<GetGridHighlightObjectsForTestCommandParameters, GetGridHighlightObjectsForTestResult>("Overlay.getGridHighlightObjectsForTest", JsonContext.GetGridHighlightObjectsForTestCommandParameters, JsonContext.GetGridHighlightObjectsForTestResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.getGridHighlightObjectsForTest", @params, JsonContext.GetGridHighlightObjectsForTestCommandParameters, JsonContext.GetGridHighlightObjectsForTestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSourceOrderHighlightObjectForTestCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<GetSourceOrderHighlightObjectForTestCommandParameters, GetSourceOrderHighlightObjectForTestResult>("Overlay.getSourceOrderHighlightObjectForTest", JsonContext.GetSourceOrderHighlightObjectForTestCommandParameters, JsonContext.GetSourceOrderHighlightObjectForTestResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.getSourceOrderHighlightObjectForTest", @params, JsonContext.GetSourceOrderHighlightObjectForTestCommandParameters, JsonContext.GetSourceOrderHighlightObjectForTestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HideHighlightCommandParameters();
-        var command = new CdpCommand<HideHighlightCommandParameters, HideHighlightResult>("Overlay.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.hideHighlight", @params, JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = default, DOM.RGBA? contentOutlineColor = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightFrameCommandParameters(FrameId: frameId, ContentColor: contentColor, ContentOutlineColor: contentOutlineColor);
-        var command = new CdpCommand<HighlightFrameCommandParameters, HighlightFrameResult>("Overlay.highlightFrame", JsonContext.HighlightFrameCommandParameters, JsonContext.HighlightFrameResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.highlightFrame", @params, JsonContext.HighlightFrameCommandParameters, JsonContext.HighlightFrameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? selector = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightNodeCommandParameters(HighlightConfig: highlightConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Selector: selector);
-        var command = new CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult>("Overlay.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.highlightNode", @params, JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightQuadCommandParameters(Quad: quad, Color: color, OutlineColor: outlineColor);
-        var command = new CdpCommand<HighlightQuadCommandParameters, HighlightQuadResult>("Overlay.highlightQuad", JsonContext.HighlightQuadCommandParameters, JsonContext.HighlightQuadResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.highlightQuad", @params, JsonContext.HighlightQuadCommandParameters, JsonContext.HighlightQuadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightRectCommandParameters(X: x, Y: y, Width: width, Height: height, Color: color, OutlineColor: outlineColor);
-        var command = new CdpCommand<HighlightRectCommandParameters, HighlightRectResult>("Overlay.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.highlightRect", @params, JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightSourceOrderCommandParameters(SourceOrderConfig: sourceOrderConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        var command = new CdpCommand<HighlightSourceOrderCommandParameters, HighlightSourceOrderResult>("Overlay.highlightSourceOrder", JsonContext.HighlightSourceOrderCommandParameters, JsonContext.HighlightSourceOrderResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.highlightSourceOrder", @params, JsonContext.HighlightSourceOrderCommandParameters, JsonContext.HighlightSourceOrderResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInspectModeCommandParameters(Mode: mode, HighlightConfig: highlightConfig);
-        var command = new CdpCommand<SetInspectModeCommandParameters, SetInspectModeResult>("Overlay.setInspectMode", JsonContext.SetInspectModeCommandParameters, JsonContext.SetInspectModeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setInspectMode", @params, JsonContext.SetInspectModeCommandParameters, JsonContext.SetInspectModeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowAdHighlightsCommandParameters(Show: show);
-        var command = new CdpCommand<SetShowAdHighlightsCommandParameters, SetShowAdHighlightsResult>("Overlay.setShowAdHighlights", JsonContext.SetShowAdHighlightsCommandParameters, JsonContext.SetShowAdHighlightsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowAdHighlights", @params, JsonContext.SetShowAdHighlightsCommandParameters, JsonContext.SetShowAdHighlightsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPausedInDebuggerMessageCommandParameters(Message: message);
-        var command = new CdpCommand<SetPausedInDebuggerMessageCommandParameters, SetPausedInDebuggerMessageResult>("Overlay.setPausedInDebuggerMessage", JsonContext.SetPausedInDebuggerMessageCommandParameters, JsonContext.SetPausedInDebuggerMessageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setPausedInDebuggerMessage", @params, JsonContext.SetPausedInDebuggerMessageCommandParameters, JsonContext.SetPausedInDebuggerMessageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowDebugBordersCommandParameters(Show: show);
-        var command = new CdpCommand<SetShowDebugBordersCommandParameters, SetShowDebugBordersResult>("Overlay.setShowDebugBorders", JsonContext.SetShowDebugBordersCommandParameters, JsonContext.SetShowDebugBordersResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowDebugBorders", @params, JsonContext.SetShowDebugBordersCommandParameters, JsonContext.SetShowDebugBordersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowFPSCounterCommandParameters(Show: show);
-        var command = new CdpCommand<SetShowFPSCounterCommandParameters, SetShowFPSCounterResult>("Overlay.setShowFPSCounter", JsonContext.SetShowFPSCounterCommandParameters, JsonContext.SetShowFPSCounterResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowFPSCounter", @params, JsonContext.SetShowFPSCounterCommandParameters, JsonContext.SetShowFPSCounterResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowGridOverlaysCommandParameters(GridNodeHighlightConfigs: gridNodeHighlightConfigs);
-        var command = new CdpCommand<SetShowGridOverlaysCommandParameters, SetShowGridOverlaysResult>("Overlay.setShowGridOverlays", JsonContext.SetShowGridOverlaysCommandParameters, JsonContext.SetShowGridOverlaysResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowGridOverlays", @params, JsonContext.SetShowGridOverlaysCommandParameters, JsonContext.SetShowGridOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowFlexOverlaysCommandParameters(FlexNodeHighlightConfigs: flexNodeHighlightConfigs);
-        var command = new CdpCommand<SetShowFlexOverlaysCommandParameters, SetShowFlexOverlaysResult>("Overlay.setShowFlexOverlays", JsonContext.SetShowFlexOverlaysCommandParameters, JsonContext.SetShowFlexOverlaysResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowFlexOverlays", @params, JsonContext.SetShowFlexOverlaysCommandParameters, JsonContext.SetShowFlexOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowScrollSnapOverlaysCommandParameters(ScrollSnapHighlightConfigs: scrollSnapHighlightConfigs);
-        var command = new CdpCommand<SetShowScrollSnapOverlaysCommandParameters, SetShowScrollSnapOverlaysResult>("Overlay.setShowScrollSnapOverlays", JsonContext.SetShowScrollSnapOverlaysCommandParameters, JsonContext.SetShowScrollSnapOverlaysResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowScrollSnapOverlays", @params, JsonContext.SetShowScrollSnapOverlaysCommandParameters, JsonContext.SetShowScrollSnapOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowContainerQueryOverlaysCommandParameters(ContainerQueryHighlightConfigs: containerQueryHighlightConfigs);
-        var command = new CdpCommand<SetShowContainerQueryOverlaysCommandParameters, SetShowContainerQueryOverlaysResult>("Overlay.setShowContainerQueryOverlays", JsonContext.SetShowContainerQueryOverlaysCommandParameters, JsonContext.SetShowContainerQueryOverlaysResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowContainerQueryOverlays", @params, JsonContext.SetShowContainerQueryOverlaysCommandParameters, JsonContext.SetShowContainerQueryOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig: inspectedElementAnchorConfig);
-        var command = new CdpCommand<SetShowInspectedElementAnchorCommandParameters, SetShowInspectedElementAnchorResult>("Overlay.setShowInspectedElementAnchor", JsonContext.SetShowInspectedElementAnchorCommandParameters, JsonContext.SetShowInspectedElementAnchorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowInspectedElementAnchor", @params, JsonContext.SetShowInspectedElementAnchorCommandParameters, JsonContext.SetShowInspectedElementAnchorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowPaintRectsCommandParameters(Result: result);
-        var command = new CdpCommand<SetShowPaintRectsCommandParameters, SetShowPaintRectsResult>("Overlay.setShowPaintRects", JsonContext.SetShowPaintRectsCommandParameters, JsonContext.SetShowPaintRectsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowPaintRects", @params, JsonContext.SetShowPaintRectsCommandParameters, JsonContext.SetShowPaintRectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowLayoutShiftRegionsCommandParameters(Result: result);
-        var command = new CdpCommand<SetShowLayoutShiftRegionsCommandParameters, SetShowLayoutShiftRegionsResult>("Overlay.setShowLayoutShiftRegions", JsonContext.SetShowLayoutShiftRegionsCommandParameters, JsonContext.SetShowLayoutShiftRegionsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowLayoutShiftRegions", @params, JsonContext.SetShowLayoutShiftRegionsCommandParameters, JsonContext.SetShowLayoutShiftRegionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowScrollBottleneckRectsCommandParameters(Show: show);
-        var command = new CdpCommand<SetShowScrollBottleneckRectsCommandParameters, SetShowScrollBottleneckRectsResult>("Overlay.setShowScrollBottleneckRects", JsonContext.SetShowScrollBottleneckRectsCommandParameters, JsonContext.SetShowScrollBottleneckRectsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowScrollBottleneckRects", @params, JsonContext.SetShowScrollBottleneckRectsCommandParameters, JsonContext.SetShowScrollBottleneckRectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowHitTestBordersCommandParameters(Show: show);
-        var command = new CdpCommand<SetShowHitTestBordersCommandParameters, SetShowHitTestBordersResult>("Overlay.setShowHitTestBorders", JsonContext.SetShowHitTestBordersCommandParameters, JsonContext.SetShowHitTestBordersResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowHitTestBorders", @params, JsonContext.SetShowHitTestBordersCommandParameters, JsonContext.SetShowHitTestBordersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowWebVitalsCommandParameters(Show: show);
-        var command = new CdpCommand<SetShowWebVitalsCommandParameters, SetShowWebVitalsResult>("Overlay.setShowWebVitals", JsonContext.SetShowWebVitalsCommandParameters, JsonContext.SetShowWebVitalsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowWebVitals", @params, JsonContext.SetShowWebVitalsCommandParameters, JsonContext.SetShowWebVitalsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowViewportSizeOnResizeCommandParameters(Show: show);
-        var command = new CdpCommand<SetShowViewportSizeOnResizeCommandParameters, SetShowViewportSizeOnResizeResult>("Overlay.setShowViewportSizeOnResize", JsonContext.SetShowViewportSizeOnResizeCommandParameters, JsonContext.SetShowViewportSizeOnResizeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowViewportSizeOnResize", @params, JsonContext.SetShowViewportSizeOnResizeCommandParameters, JsonContext.SetShowViewportSizeOnResizeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowHingeCommandParameters(HingeConfig: hingeConfig);
-        var command = new CdpCommand<SetShowHingeCommandParameters, SetShowHingeResult>("Overlay.setShowHinge", JsonContext.SetShowHingeCommandParameters, JsonContext.SetShowHingeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowHinge", @params, JsonContext.SetShowHingeCommandParameters, JsonContext.SetShowHingeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig: displayCutoutConfig);
-        var command = new CdpCommand<SetShowDisplayCutoutCommandParameters, SetShowDisplayCutoutResult>("Overlay.setShowDisplayCutout", JsonContext.SetShowDisplayCutoutCommandParameters, JsonContext.SetShowDisplayCutoutResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowDisplayCutout", @params, JsonContext.SetShowDisplayCutoutCommandParameters, JsonContext.SetShowDisplayCutoutResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowIsolatedElementsCommandParameters(IsolatedElementHighlightConfigs: isolatedElementHighlightConfigs);
-        var command = new CdpCommand<SetShowIsolatedElementsCommandParameters, SetShowIsolatedElementsResult>("Overlay.setShowIsolatedElements", JsonContext.SetShowIsolatedElementsCommandParameters, JsonContext.SetShowIsolatedElementsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowIsolatedElements", @params, JsonContext.SetShowIsolatedElementsCommandParameters, JsonContext.SetShowIsolatedElementsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig: windowControlsOverlayConfig);
-        var command = new CdpCommand<SetShowWindowControlsOverlayCommandParameters, SetShowWindowControlsOverlayResult>("Overlay.setShowWindowControlsOverlay", JsonContext.SetShowWindowControlsOverlayCommandParameters, JsonContext.SetShowWindowControlsOverlayResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Overlay.setShowWindowControlsOverlay", @params, JsonContext.SetShowWindowControlsOverlayCommandParameters, JsonContext.SetShowWindowControlsOverlayResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<InspectNodeRequestedEventArgs> InspectNodeRequested => CreateCdpEventSource(OverlayDomainEvent.InspectNodeRequested);

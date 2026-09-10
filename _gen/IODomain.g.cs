@@ -77,22 +77,19 @@ internal sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
     public async Task<CloseResult> CloseAsync(StreamHandle handle, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CloseCommandParameters(Handle: handle);
-        var command = new CdpCommand<CloseCommandParameters, CloseResult>("IO.close", JsonContext.CloseCommandParameters, JsonContext.CloseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IO.close", @params, JsonContext.CloseCommandParameters, JsonContext.CloseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = default, long? size = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReadCommandParameters(Handle: handle, Offset: offset, Size: size);
-        var command = new CdpCommand<ReadCommandParameters, ReadResult>("IO.read", JsonContext.ReadCommandParameters, JsonContext.ReadResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IO.read", @params, JsonContext.ReadCommandParameters, JsonContext.ReadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveBlobCommandParameters(ObjectId: objectId);
-        var command = new CdpCommand<ResolveBlobCommandParameters, ResolveBlobResult>("IO.resolveBlob", JsonContext.ResolveBlobCommandParameters, JsonContext.ResolveBlobResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("IO.resolveBlob", @params, JsonContext.ResolveBlobCommandParameters, JsonContext.ResolveBlobResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

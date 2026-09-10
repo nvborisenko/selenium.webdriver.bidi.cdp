@@ -115,30 +115,26 @@ internal sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDri
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DOMSnapshot.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMSnapshot.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DOMSnapshot.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMSnapshot.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, bool? includeEventListeners = default, bool? includePaintOrder = default, bool? includeUserAgentShadowTree = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSnapshotCommandParameters(ComputedStyleWhitelist: computedStyleWhitelist, IncludeEventListeners: includeEventListeners, IncludePaintOrder: includePaintOrder, IncludeUserAgentShadowTree: includeUserAgentShadowTree);
-        var command = new CdpCommand<GetSnapshotCommandParameters, GetSnapshotResult>("DOMSnapshot.getSnapshot", JsonContext.GetSnapshotCommandParameters, JsonContext.GetSnapshotResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMSnapshot.getSnapshot", @params, JsonContext.GetSnapshotCommandParameters, JsonContext.GetSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, bool? includePaintOrder = default, bool? includeDOMRects = default, bool? includeBlendedBackgroundColors = default, bool? includeTextColorOpacities = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureSnapshotCommandParameters(ComputedStyles: computedStyles, IncludePaintOrder: includePaintOrder, IncludeDOMRects: includeDOMRects, IncludeBlendedBackgroundColors: includeBlendedBackgroundColors, IncludeTextColorOpacities: includeTextColorOpacities);
-        var command = new CdpCommand<CaptureSnapshotCommandParameters, CaptureSnapshotResult>("DOMSnapshot.captureSnapshot", JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOMSnapshot.captureSnapshot", @params, JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

@@ -296,85 +296,73 @@ internal sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDr
     public async Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddInspectedHeapObjectCommandParameters(HeapObjectId: heapObjectId);
-        var command = new CdpCommand<AddInspectedHeapObjectCommandParameters, AddInspectedHeapObjectResult>("HeapProfiler.addInspectedHeapObject", JsonContext.AddInspectedHeapObjectCommandParameters, JsonContext.AddInspectedHeapObjectResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.addInspectedHeapObject", @params, JsonContext.AddInspectedHeapObjectCommandParameters, JsonContext.AddInspectedHeapObjectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CollectGarbageResult> CollectGarbageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectGarbageCommandParameters();
-        var command = new CdpCommand<CollectGarbageCommandParameters, CollectGarbageResult>("HeapProfiler.collectGarbage", JsonContext.CollectGarbageCommandParameters, JsonContext.CollectGarbageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.collectGarbage", @params, JsonContext.CollectGarbageCommandParameters, JsonContext.CollectGarbageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("HeapProfiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("HeapProfiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHeapObjectIdCommandParameters(ObjectId: objectId);
-        var command = new CdpCommand<GetHeapObjectIdCommandParameters, GetHeapObjectIdResult>("HeapProfiler.getHeapObjectId", JsonContext.GetHeapObjectIdCommandParameters, JsonContext.GetHeapObjectIdResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.getHeapObjectId", @params, JsonContext.GetHeapObjectIdCommandParameters, JsonContext.GetHeapObjectIdResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetObjectByHeapObjectIdCommandParameters(ObjectId: objectId, ObjectGroup: objectGroup);
-        var command = new CdpCommand<GetObjectByHeapObjectIdCommandParameters, GetObjectByHeapObjectIdResult>("HeapProfiler.getObjectByHeapObjectId", JsonContext.GetObjectByHeapObjectIdCommandParameters, JsonContext.GetObjectByHeapObjectIdResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.getObjectByHeapObjectId", @params, JsonContext.GetObjectByHeapObjectIdCommandParameters, JsonContext.GetObjectByHeapObjectIdResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSamplingProfileCommandParameters();
-        var command = new CdpCommand<GetSamplingProfileCommandParameters, GetSamplingProfileResult>("HeapProfiler.getSamplingProfile", JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.getSamplingProfile", @params, JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartSamplingResult> StartSamplingAsync(double? samplingInterval = default, double? stackDepth = default, bool? includeObjectsCollectedByMajorGC = default, bool? includeObjectsCollectedByMinorGC = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, StackDepth: stackDepth, IncludeObjectsCollectedByMajorGC: includeObjectsCollectedByMajorGC, IncludeObjectsCollectedByMinorGC: includeObjectsCollectedByMinorGC);
-        var command = new CdpCommand<StartSamplingCommandParameters, StartSamplingResult>("HeapProfiler.startSampling", JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.startSampling", @params, JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(bool? trackAllocations = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartTrackingHeapObjectsCommandParameters(TrackAllocations: trackAllocations);
-        var command = new CdpCommand<StartTrackingHeapObjectsCommandParameters, StartTrackingHeapObjectsResult>("HeapProfiler.startTrackingHeapObjects", JsonContext.StartTrackingHeapObjectsCommandParameters, JsonContext.StartTrackingHeapObjectsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.startTrackingHeapObjects", @params, JsonContext.StartTrackingHeapObjectsCommandParameters, JsonContext.StartTrackingHeapObjectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopSamplingCommandParameters();
-        var command = new CdpCommand<StopSamplingCommandParameters, StopSamplingResult>("HeapProfiler.stopSampling", JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.stopSampling", @params, JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopTrackingHeapObjectsCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
-        var command = new CdpCommand<StopTrackingHeapObjectsCommandParameters, StopTrackingHeapObjectsResult>("HeapProfiler.stopTrackingHeapObjects", JsonContext.StopTrackingHeapObjectsCommandParameters, JsonContext.StopTrackingHeapObjectsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.stopTrackingHeapObjects", @params, JsonContext.StopTrackingHeapObjectsCommandParameters, JsonContext.StopTrackingHeapObjectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakeHeapSnapshotCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
-        var command = new CdpCommand<TakeHeapSnapshotCommandParameters, TakeHeapSnapshotResult>("HeapProfiler.takeHeapSnapshot", JsonContext.TakeHeapSnapshotCommandParameters, JsonContext.TakeHeapSnapshotResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeapProfiler.takeHeapSnapshot", @params, JsonContext.TakeHeapSnapshotCommandParameters, JsonContext.TakeHeapSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<AddHeapSnapshotChunkEventArgs> AddHeapSnapshotChunk => CreateCdpEventSource(HeapProfilerDomainEvent.AddHeapSnapshotChunk);

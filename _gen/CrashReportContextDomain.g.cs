@@ -35,8 +35,7 @@ internal sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium
     public async Task<GetEntriesResult> GetEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEntriesCommandParameters();
-        var command = new CdpCommand<GetEntriesCommandParameters, GetEntriesResult>("CrashReportContext.getEntries", JsonContext.GetEntriesCommandParameters, JsonContext.GetEntriesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("CrashReportContext.getEntries", @params, JsonContext.GetEntriesCommandParameters, JsonContext.GetEntriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

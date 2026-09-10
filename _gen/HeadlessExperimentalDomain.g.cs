@@ -86,24 +86,21 @@ internal sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Seleni
     public async Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = default, double? interval = default, bool? noDisplayUpdates = default, ScreenshotParams? screenshot = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new BeginFrameCommandParameters(FrameTimeTicks: frameTimeTicks, Interval: interval, NoDisplayUpdates: noDisplayUpdates, Screenshot: screenshot);
-        var command = new CdpCommand<BeginFrameCommandParameters, BeginFrameResult>("HeadlessExperimental.beginFrame", JsonContext.BeginFrameCommandParameters, JsonContext.BeginFrameResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeadlessExperimental.beginFrame", @params, JsonContext.BeginFrameCommandParameters, JsonContext.BeginFrameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("HeadlessExperimental.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeadlessExperimental.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("HeadlessExperimental.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("HeadlessExperimental.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

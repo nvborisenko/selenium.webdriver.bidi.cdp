@@ -121,9 +121,7 @@ foreach (var inputFile in inputFiles)
 
                 domainBuilder.AppendLine(");");
 
-                // Built per call so that only the JsonTypeInfo of commands actually used gets materialized.
-                domainBuilder.AppendLine($"        var command = new CdpCommand<{commandInfo.Name.Dehumanize()}CommandParameters, {commandInfo.Name.Dehumanize()}Result>(\"{domainInfo.Domain}.{commandInfo.Name}\", JsonContext.{commandInfo.Name.Dehumanize()}CommandParameters, JsonContext.{commandInfo.Name.Dehumanize()}Result);");
-                domainBuilder.AppendLine($"        return await ExecuteCommandAsync(command, @params, {sessionArgName}, cancellationToken).ConfigureAwait(false);");
+                domainBuilder.AppendLine($"        return await ExecuteCommandAsync(\"{domainInfo.Domain}.{commandInfo.Name}\", @params, JsonContext.{commandInfo.Name.Dehumanize()}CommandParameters, JsonContext.{commandInfo.Name.Dehumanize()}Result, {sessionArgName}, cancellationToken).ConfigureAwait(false);");
                 domainBuilder.AppendLine("    }");
                 domainBuilder.AppendLine();
             }

@@ -20,26 +20,28 @@ internal abstract class Domain(CdpModule cdp)
     /// </summary>
     /// <typeparam name="TParameters">The type of the command parameters.</typeparam>
     /// <typeparam name="TResult">The type of the command result.</typeparam>
-    /// <param name="command">The CDP command descriptor.</param>
+    /// <param name="method">The CDP method name.</param>
     /// <param name="parameters">The command parameters to serialize and send.</param>
+    /// <param name="parametersTypeInfo">Serialization metadata for the command parameters.</param>
+    /// <param name="resultTypeInfo">Serialization metadata for the command result.</param>
     /// <param name="session">Optional CDP session override.</param>
     /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
     /// <returns>The deserialized command result.</returns>
-    private protected async Task<TResult> ExecuteCommandAsync<TParameters, TResult>(CdpCommand<TParameters, TResult> command, TParameters parameters, string? session, CancellationToken cancellationToken)
+    private protected async Task<TResult> ExecuteCommandAsync<TParameters, TResult>(string method, TParameters parameters, JsonTypeInfo<TParameters> parametersTypeInfo, JsonTypeInfo<TResult> resultTypeInfo, string? session, CancellationToken cancellationToken)
         where TParameters : Parameters
         where TResult : EmptyResult
     {
-        using var activity = ActivitySource.StartActivity(command.Method, ActivityKind.Client);
+        using var activity = ActivitySource.StartActivity(method, ActivityKind.Client);
 
-        activity?.SetTag("cdp.method", command.Method);
+        activity?.SetTag("cdp.method", method);
 
         try
         {
-            var @params = SerializeParameters(parameters, command.ParametersTypeInfo);
+            var @params = SerializeParameters(parameters, parametersTypeInfo);
 
-            var sendResult = await cdp.SendCommandAsync(command.Method, @params, session, cancellationToken).ConfigureAwait(false);
+            var sendResult = await cdp.SendCommandAsync(method, @params, session, cancellationToken).ConfigureAwait(false);
 
-            return sendResult.Result.Deserialize(command.ResultTypeInfo)!;
+            return sendResult.Result.Deserialize(resultTypeInfo)!;
         }
         catch (Exception ex)
         {
@@ -72,7 +74,3 @@ internal abstract class Domain(CdpModule cdp)
         return cdp.CreateCdpEventSource(descriptor);
     }
 }
-
-internal readonly record struct CdpCommand<TParameters, TResult>(string Method, JsonTypeInfo<TParameters> ParametersTypeInfo, JsonTypeInfo<TResult> ResultTypeInfo)
-    where TParameters : Parameters
-    where TResult : EmptyResult;

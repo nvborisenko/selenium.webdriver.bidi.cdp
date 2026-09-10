@@ -111,29 +111,25 @@ internal sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.
     public async Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartObservingCommandParameters(Service: service);
-        var command = new CdpCommand<StartObservingCommandParameters, StartObservingResult>("BackgroundService.startObserving", JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BackgroundService.startObserving", @params, JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopObservingCommandParameters(Service: service);
-        var command = new CdpCommand<StopObservingCommandParameters, StopObservingResult>("BackgroundService.stopObserving", JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BackgroundService.stopObserving", @params, JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRecordingCommandParameters(ShouldRecord: shouldRecord, Service: service);
-        var command = new CdpCommand<SetRecordingCommandParameters, SetRecordingResult>("BackgroundService.setRecording", JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BackgroundService.setRecording", @params, JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearEventsCommandParameters(Service: service);
-        var command = new CdpCommand<ClearEventsCommandParameters, ClearEventsResult>("BackgroundService.clearEvents", JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("BackgroundService.clearEvents", @params, JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<RecordingStateChangedEventArgs> RecordingStateChanged => CreateCdpEventSource(BackgroundServiceDomainEvent.RecordingStateChanged);

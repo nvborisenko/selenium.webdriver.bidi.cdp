@@ -140,29 +140,25 @@ internal sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("WebMCP.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebMCP.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("WebMCP.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebMCP.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new InvokeToolCommandParameters(FrameId: frameId, ToolName: toolName, Input: input);
-        var command = new CdpCommand<InvokeToolCommandParameters, InvokeToolResult>("WebMCP.invokeTool", JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebMCP.invokeTool", @params, JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CancelInvocationCommandParameters(InvocationId: invocationId);
-        var command = new CdpCommand<CancelInvocationCommandParameters, CancelInvocationResult>("WebMCP.cancelInvocation", JsonContext.CancelInvocationCommandParameters, JsonContext.CancelInvocationResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebMCP.cancelInvocation", @params, JsonContext.CancelInvocationCommandParameters, JsonContext.CancelInvocationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<ToolsAddedEventArgs> ToolsAdded => CreateCdpEventSource(WebMCPDomainEvent.ToolsAdded);

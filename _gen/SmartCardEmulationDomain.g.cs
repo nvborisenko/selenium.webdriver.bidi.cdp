@@ -530,85 +530,73 @@ internal sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("SmartCardEmulation.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("SmartCardEmulation.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportEstablishContextResultCommandParameters(RequestId: requestId, ContextId: contextId);
-        var command = new CdpCommand<ReportEstablishContextResultCommandParameters, ReportEstablishContextResultResult>("SmartCardEmulation.reportEstablishContextResult", JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportEstablishContextResult", @params, JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportReleaseContextResultCommandParameters(RequestId: requestId);
-        var command = new CdpCommand<ReportReleaseContextResultCommandParameters, ReportReleaseContextResultResult>("SmartCardEmulation.reportReleaseContextResult", JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportReleaseContextResult", @params, JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportListReadersResultCommandParameters(RequestId: requestId, Readers: readers);
-        var command = new CdpCommand<ReportListReadersResultCommandParameters, ReportListReadersResultResult>("SmartCardEmulation.reportListReadersResult", JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportListReadersResult", @params, JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportGetStatusChangeResultCommandParameters(RequestId: requestId, ReaderStates: readerStates);
-        var command = new CdpCommand<ReportGetStatusChangeResultCommandParameters, ReportGetStatusChangeResultResult>("SmartCardEmulation.reportGetStatusChangeResult", JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportGetStatusChangeResult", @params, JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportBeginTransactionResultCommandParameters(RequestId: requestId, Handle: handle);
-        var command = new CdpCommand<ReportBeginTransactionResultCommandParameters, ReportBeginTransactionResultResult>("SmartCardEmulation.reportBeginTransactionResult", JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportBeginTransactionResult", @params, JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportPlainResultCommandParameters(RequestId: requestId);
-        var command = new CdpCommand<ReportPlainResultCommandParameters, ReportPlainResultResult>("SmartCardEmulation.reportPlainResult", JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportPlainResult", @params, JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportConnectResultCommandParameters(RequestId: requestId, Handle: handle, ActiveProtocol: activeProtocol);
-        var command = new CdpCommand<ReportConnectResultCommandParameters, ReportConnectResultResult>("SmartCardEmulation.reportConnectResult", JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportConnectResult", @params, JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportDataResultCommandParameters(RequestId: requestId, Data: data);
-        var command = new CdpCommand<ReportDataResultCommandParameters, ReportDataResultResult>("SmartCardEmulation.reportDataResult", JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportDataResult", @params, JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportStatusResultCommandParameters(RequestId: requestId, ReaderName: readerName, State: state, Atr: atr, Protocol: protocol);
-        var command = new CdpCommand<ReportStatusResultCommandParameters, ReportStatusResultResult>("SmartCardEmulation.reportStatusResult", JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportStatusResult", @params, JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReportErrorCommandParameters(RequestId: requestId, ResultCode: resultCode);
-        var command = new CdpCommand<ReportErrorCommandParameters, ReportErrorResult>("SmartCardEmulation.reportError", JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SmartCardEmulation.reportError", @params, JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<EstablishContextRequestedEventArgs> EstablishContextRequested => CreateCdpEventSource(SmartCardEmulationDomainEvent.EstablishContextRequested);

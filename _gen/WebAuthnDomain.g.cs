@@ -326,92 +326,79 @@ internal sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver
     public async Task<EnableResult> EnableAsync(bool? enableUI = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EnableUI: enableUI);
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("WebAuthn.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("WebAuthn.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<AddVirtualAuthenticatorResult> AddVirtualAuthenticatorAsync(VirtualAuthenticatorOptions options, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddVirtualAuthenticatorCommandParameters(Options: options);
-        var command = new CdpCommand<AddVirtualAuthenticatorCommandParameters, AddVirtualAuthenticatorResult>("WebAuthn.addVirtualAuthenticator", JsonContext.AddVirtualAuthenticatorCommandParameters, JsonContext.AddVirtualAuthenticatorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.addVirtualAuthenticator", @params, JsonContext.AddVirtualAuthenticatorCommandParameters, JsonContext.AddVirtualAuthenticatorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetResponseOverrideBitsResult> SetResponseOverrideBitsAsync(AuthenticatorId authenticatorId, bool? isBogusSignature = default, bool? isBadUV = default, bool? isBadUP = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetResponseOverrideBitsCommandParameters(AuthenticatorId: authenticatorId, IsBogusSignature: isBogusSignature, IsBadUV: isBadUV, IsBadUP: isBadUP);
-        var command = new CdpCommand<SetResponseOverrideBitsCommandParameters, SetResponseOverrideBitsResult>("WebAuthn.setResponseOverrideBits", JsonContext.SetResponseOverrideBitsCommandParameters, JsonContext.SetResponseOverrideBitsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.setResponseOverrideBits", @params, JsonContext.SetResponseOverrideBitsCommandParameters, JsonContext.SetResponseOverrideBitsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveVirtualAuthenticatorCommandParameters(AuthenticatorId: authenticatorId);
-        var command = new CdpCommand<RemoveVirtualAuthenticatorCommandParameters, RemoveVirtualAuthenticatorResult>("WebAuthn.removeVirtualAuthenticator", JsonContext.RemoveVirtualAuthenticatorCommandParameters, JsonContext.RemoveVirtualAuthenticatorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.removeVirtualAuthenticator", @params, JsonContext.RemoveVirtualAuthenticatorCommandParameters, JsonContext.RemoveVirtualAuthenticatorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<AddCredentialResult> AddCredentialAsync(AuthenticatorId authenticatorId, Credential credential, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddCredentialCommandParameters(AuthenticatorId: authenticatorId, Credential: credential);
-        var command = new CdpCommand<AddCredentialCommandParameters, AddCredentialResult>("WebAuthn.addCredential", JsonContext.AddCredentialCommandParameters, JsonContext.AddCredentialResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.addCredential", @params, JsonContext.AddCredentialCommandParameters, JsonContext.AddCredentialResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetCredentialResult> GetCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCredentialCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId);
-        var command = new CdpCommand<GetCredentialCommandParameters, GetCredentialResult>("WebAuthn.getCredential", JsonContext.GetCredentialCommandParameters, JsonContext.GetCredentialResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.getCredential", @params, JsonContext.GetCredentialCommandParameters, JsonContext.GetCredentialResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetCredentialsResult> GetCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetCredentialsCommandParameters(AuthenticatorId: authenticatorId);
-        var command = new CdpCommand<GetCredentialsCommandParameters, GetCredentialsResult>("WebAuthn.getCredentials", JsonContext.GetCredentialsCommandParameters, JsonContext.GetCredentialsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.getCredentials", @params, JsonContext.GetCredentialsCommandParameters, JsonContext.GetCredentialsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveCredentialResult> RemoveCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveCredentialCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId);
-        var command = new CdpCommand<RemoveCredentialCommandParameters, RemoveCredentialResult>("WebAuthn.removeCredential", JsonContext.RemoveCredentialCommandParameters, JsonContext.RemoveCredentialResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.removeCredential", @params, JsonContext.RemoveCredentialCommandParameters, JsonContext.RemoveCredentialResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ClearCredentialsResult> ClearCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCredentialsCommandParameters(AuthenticatorId: authenticatorId);
-        var command = new CdpCommand<ClearCredentialsCommandParameters, ClearCredentialsResult>("WebAuthn.clearCredentials", JsonContext.ClearCredentialsCommandParameters, JsonContext.ClearCredentialsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.clearCredentials", @params, JsonContext.ClearCredentialsCommandParameters, JsonContext.ClearCredentialsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetUserVerifiedResult> SetUserVerifiedAsync(AuthenticatorId authenticatorId, bool isUserVerified, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserVerifiedCommandParameters(AuthenticatorId: authenticatorId, IsUserVerified: isUserVerified);
-        var command = new CdpCommand<SetUserVerifiedCommandParameters, SetUserVerifiedResult>("WebAuthn.setUserVerified", JsonContext.SetUserVerifiedCommandParameters, JsonContext.SetUserVerifiedResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.setUserVerified", @params, JsonContext.SetUserVerifiedCommandParameters, JsonContext.SetUserVerifiedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationAsync(AuthenticatorId authenticatorId, bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutomaticPresenceSimulationCommandParameters(AuthenticatorId: authenticatorId, Enabled: enabled);
-        var command = new CdpCommand<SetAutomaticPresenceSimulationCommandParameters, SetAutomaticPresenceSimulationResult>("WebAuthn.setAutomaticPresenceSimulation", JsonContext.SetAutomaticPresenceSimulationCommandParameters, JsonContext.SetAutomaticPresenceSimulationResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.setAutomaticPresenceSimulation", @params, JsonContext.SetAutomaticPresenceSimulationCommandParameters, JsonContext.SetAutomaticPresenceSimulationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, double? signCount = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: backupEligibility, BackupState: backupState, ActiveCmtgKeyIndex: activeCmtgKeyIndex, GenerateCmtgKeyOnNextOperation: generateCmtgKeyOnNextOperation, SignCount: signCount);
-        var command = new CdpCommand<SetCredentialPropertiesCommandParameters, SetCredentialPropertiesResult>("WebAuthn.setCredentialProperties", JsonContext.SetCredentialPropertiesCommandParameters, JsonContext.SetCredentialPropertiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("WebAuthn.setCredentialProperties", @params, JsonContext.SetCredentialPropertiesCommandParameters, JsonContext.SetCredentialPropertiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<CredentialAddedEventArgs> CredentialAdded => CreateCdpEventSource(WebAuthnDomainEvent.CredentialAdded);

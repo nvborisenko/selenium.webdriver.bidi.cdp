@@ -65,22 +65,19 @@ internal sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriv
     public async Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetInfoCommandParameters();
-        var command = new CdpCommand<GetInfoCommandParameters, GetInfoResult>("SystemInfo.getInfo", JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SystemInfo.getInfo", @params, JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFeatureStateCommandParameters(FeatureState: featureState);
-        var command = new CdpCommand<GetFeatureStateCommandParameters, GetFeatureStateResult>("SystemInfo.getFeatureState", JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SystemInfo.getFeatureState", @params, JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetProcessInfoCommandParameters();
-        var command = new CdpCommand<GetProcessInfoCommandParameters, GetProcessInfoResult>("SystemInfo.getProcessInfo", JsonContext.GetProcessInfoCommandParameters, JsonContext.GetProcessInfoResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("SystemInfo.getProcessInfo", @params, JsonContext.GetProcessInfoCommandParameters, JsonContext.GetProcessInfoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

@@ -35,8 +35,7 @@ internal sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriv
     public async Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDirectoryCommandParameters(BucketFileSystemLocator: bucketFileSystemLocator);
-        var command = new CdpCommand<GetDirectoryCommandParameters, GetDirectoryResult>("FileSystem.getDirectory", JsonContext.GetDirectoryCommandParameters, JsonContext.GetDirectoryResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("FileSystem.getDirectory", @params, JsonContext.GetDirectoryCommandParameters, JsonContext.GetDirectoryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
 }

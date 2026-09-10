@@ -690,168 +690,145 @@ internal sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.
     public async Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = default, bool? generatePreview = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AwaitPromiseCommandParameters(PromiseObjectId: promiseObjectId, ReturnByValue: returnByValue, GeneratePreview: generatePreview);
-        var command = new CdpCommand<AwaitPromiseCommandParameters, AwaitPromiseResult>("Runtime.awaitPromise", JsonContext.AwaitPromiseCommandParameters, JsonContext.AwaitPromiseResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.awaitPromise", @params, JsonContext.AwaitPromiseCommandParameters, JsonContext.AwaitPromiseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = default, ImmutableArray<CallArgument>? arguments = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? throwOnSideEffect = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CallFunctionOnCommandParameters(FunctionDeclaration: functionDeclaration, ObjectId: objectId, Arguments: arguments, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, ThrowOnSideEffect: throwOnSideEffect, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
-        var command = new CdpCommand<CallFunctionOnCommandParameters, CallFunctionOnResult>("Runtime.callFunctionOn", JsonContext.CallFunctionOnCommandParameters, JsonContext.CallFunctionOnResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.callFunctionOn", @params, JsonContext.CallFunctionOnCommandParameters, JsonContext.CallFunctionOnResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CompileScriptCommandParameters(Expression: expression, SourceURL: sourceURL, PersistScript: persistScript, ExecutionContextId: executionContextId);
-        var command = new CdpCommand<CompileScriptCommandParameters, CompileScriptResult>("Runtime.compileScript", JsonContext.CompileScriptCommandParameters, JsonContext.CompileScriptResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.compileScript", @params, JsonContext.CompileScriptCommandParameters, JsonContext.CompileScriptResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Runtime.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DiscardConsoleEntriesCommandParameters();
-        var command = new CdpCommand<DiscardConsoleEntriesCommandParameters, DiscardConsoleEntriesResult>("Runtime.discardConsoleEntries", JsonContext.DiscardConsoleEntriesCommandParameters, JsonContext.DiscardConsoleEntriesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.discardConsoleEntries", @params, JsonContext.DiscardConsoleEntriesCommandParameters, JsonContext.DiscardConsoleEntriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Runtime.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, ExecutionContextId? contextId = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, bool? throwOnSideEffect = default, TimeDelta? timeout = default, bool? disableBreaks = default, bool? replMode = default, bool? allowUnsafeEvalBlockedByCSP = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EvaluateCommandParameters(Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ContextId: contextId, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout, DisableBreaks: disableBreaks, ReplMode: replMode, AllowUnsafeEvalBlockedByCSP: allowUnsafeEvalBlockedByCSP, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
-        var command = new CdpCommand<EvaluateCommandParameters, EvaluateResult>("Runtime.evaluate", JsonContext.EvaluateCommandParameters, JsonContext.EvaluateResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.evaluate", @params, JsonContext.EvaluateCommandParameters, JsonContext.EvaluateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetIsolateIdCommandParameters();
-        var command = new CdpCommand<GetIsolateIdCommandParameters, GetIsolateIdResult>("Runtime.getIsolateId", JsonContext.GetIsolateIdCommandParameters, JsonContext.GetIsolateIdResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.getIsolateId", @params, JsonContext.GetIsolateIdCommandParameters, JsonContext.GetIsolateIdResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetHeapUsageCommandParameters();
-        var command = new CdpCommand<GetHeapUsageCommandParameters, GetHeapUsageResult>("Runtime.getHeapUsage", JsonContext.GetHeapUsageCommandParameters, JsonContext.GetHeapUsageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.getHeapUsage", @params, JsonContext.GetHeapUsageCommandParameters, JsonContext.GetHeapUsageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = default, bool? accessorPropertiesOnly = default, bool? generatePreview = default, bool? nonIndexedPropertiesOnly = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetPropertiesCommandParameters(ObjectId: objectId, OwnProperties: ownProperties, AccessorPropertiesOnly: accessorPropertiesOnly, GeneratePreview: generatePreview, NonIndexedPropertiesOnly: nonIndexedPropertiesOnly);
-        var command = new CdpCommand<GetPropertiesCommandParameters, GetPropertiesResult>("Runtime.getProperties", JsonContext.GetPropertiesCommandParameters, JsonContext.GetPropertiesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.getProperties", @params, JsonContext.GetPropertiesCommandParameters, JsonContext.GetPropertiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GlobalLexicalScopeNamesCommandParameters(ExecutionContextId: executionContextId);
-        var command = new CdpCommand<GlobalLexicalScopeNamesCommandParameters, GlobalLexicalScopeNamesResult>("Runtime.globalLexicalScopeNames", JsonContext.GlobalLexicalScopeNamesCommandParameters, JsonContext.GlobalLexicalScopeNamesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.globalLexicalScopeNames", @params, JsonContext.GlobalLexicalScopeNamesCommandParameters, JsonContext.GlobalLexicalScopeNamesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QueryObjectsCommandParameters(PrototypeObjectId: prototypeObjectId, ObjectGroup: objectGroup);
-        var command = new CdpCommand<QueryObjectsCommandParameters, QueryObjectsResult>("Runtime.queryObjects", JsonContext.QueryObjectsCommandParameters, JsonContext.QueryObjectsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.queryObjects", @params, JsonContext.QueryObjectsCommandParameters, JsonContext.QueryObjectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseObjectCommandParameters(ObjectId: objectId);
-        var command = new CdpCommand<ReleaseObjectCommandParameters, ReleaseObjectResult>("Runtime.releaseObject", JsonContext.ReleaseObjectCommandParameters, JsonContext.ReleaseObjectResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.releaseObject", @params, JsonContext.ReleaseObjectCommandParameters, JsonContext.ReleaseObjectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseObjectGroupCommandParameters(ObjectGroup: objectGroup);
-        var command = new CdpCommand<ReleaseObjectGroupCommandParameters, ReleaseObjectGroupResult>("Runtime.releaseObjectGroup", JsonContext.ReleaseObjectGroupCommandParameters, JsonContext.ReleaseObjectGroupResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.releaseObjectGroup", @params, JsonContext.ReleaseObjectGroupCommandParameters, JsonContext.ReleaseObjectGroupResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RunIfWaitingForDebuggerCommandParameters();
-        var command = new CdpCommand<RunIfWaitingForDebuggerCommandParameters, RunIfWaitingForDebuggerResult>("Runtime.runIfWaitingForDebugger", JsonContext.RunIfWaitingForDebuggerCommandParameters, JsonContext.RunIfWaitingForDebuggerResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.runIfWaitingForDebugger", @params, JsonContext.RunIfWaitingForDebuggerCommandParameters, JsonContext.RunIfWaitingForDebuggerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? silent = default, bool? includeCommandLineAPI = default, bool? returnByValue = default, bool? generatePreview = default, bool? awaitPromise = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RunScriptCommandParameters(ScriptId: scriptId, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, Silent: silent, IncludeCommandLineAPI: includeCommandLineAPI, ReturnByValue: returnByValue, GeneratePreview: generatePreview, AwaitPromise: awaitPromise);
-        var command = new CdpCommand<RunScriptCommandParameters, RunScriptResult>("Runtime.runScript", JsonContext.RunScriptCommandParameters, JsonContext.RunScriptResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.runScript", @params, JsonContext.RunScriptCommandParameters, JsonContext.RunScriptResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
-        var command = new CdpCommand<SetAsyncCallStackDepthCommandParameters, SetAsyncCallStackDepthResult>("Runtime.setAsyncCallStackDepth", JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.setAsyncCallStackDepth", @params, JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCustomObjectFormatterEnabledCommandParameters(Enabled: enabled);
-        var command = new CdpCommand<SetCustomObjectFormatterEnabledCommandParameters, SetCustomObjectFormatterEnabledResult>("Runtime.setCustomObjectFormatterEnabled", JsonContext.SetCustomObjectFormatterEnabledCommandParameters, JsonContext.SetCustomObjectFormatterEnabledResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.setCustomObjectFormatterEnabled", @params, JsonContext.SetCustomObjectFormatterEnabledCommandParameters, JsonContext.SetCustomObjectFormatterEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetMaxCallStackSizeToCaptureCommandParameters(Size: size);
-        var command = new CdpCommand<SetMaxCallStackSizeToCaptureCommandParameters, SetMaxCallStackSizeToCaptureResult>("Runtime.setMaxCallStackSizeToCapture", JsonContext.SetMaxCallStackSizeToCaptureCommandParameters, JsonContext.SetMaxCallStackSizeToCaptureResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.setMaxCallStackSizeToCapture", @params, JsonContext.SetMaxCallStackSizeToCaptureCommandParameters, JsonContext.SetMaxCallStackSizeToCaptureResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TerminateExecutionCommandParameters();
-        var command = new CdpCommand<TerminateExecutionCommandParameters, TerminateExecutionResult>("Runtime.terminateExecution", JsonContext.TerminateExecutionCommandParameters, JsonContext.TerminateExecutionResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.terminateExecution", @params, JsonContext.TerminateExecutionCommandParameters, JsonContext.TerminateExecutionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = default, string? executionContextName = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AddBindingCommandParameters(Name: name, ExecutionContextId: executionContextId, ExecutionContextName: executionContextName);
-        var command = new CdpCommand<AddBindingCommandParameters, AddBindingResult>("Runtime.addBinding", JsonContext.AddBindingCommandParameters, JsonContext.AddBindingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.addBinding", @params, JsonContext.AddBindingCommandParameters, JsonContext.AddBindingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveBindingCommandParameters(Name: name);
-        var command = new CdpCommand<RemoveBindingCommandParameters, RemoveBindingResult>("Runtime.removeBinding", JsonContext.RemoveBindingCommandParameters, JsonContext.RemoveBindingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.removeBinding", @params, JsonContext.RemoveBindingCommandParameters, JsonContext.RemoveBindingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetExceptionDetailsCommandParameters(ErrorObjectId: errorObjectId);
-        var command = new CdpCommand<GetExceptionDetailsCommandParameters, GetExceptionDetailsResult>("Runtime.getExceptionDetails", JsonContext.GetExceptionDetailsCommandParameters, JsonContext.GetExceptionDetailsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Runtime.getExceptionDetails", @params, JsonContext.GetExceptionDetailsCommandParameters, JsonContext.GetExceptionDetailsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]

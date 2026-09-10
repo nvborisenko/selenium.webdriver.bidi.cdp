@@ -1387,405 +1387,351 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     public async Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CollectClassNamesFromSubtreeCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<CollectClassNamesFromSubtreeCommandParameters, CollectClassNamesFromSubtreeResult>("DOM.collectClassNamesFromSubtree", JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.collectClassNamesFromSubtree", @params, JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CopyToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
-        var command = new CdpCommand<CopyToCommandParameters, CopyToResult>("DOM.copyTo", JsonContext.CopyToCommandParameters, JsonContext.CopyToResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.copyTo", @params, JsonContext.CopyToCommandParameters, JsonContext.CopyToResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DescribeNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Depth: depth, Pierce: pierce);
-        var command = new CdpCommand<DescribeNodeCommandParameters, DescribeNodeResult>("DOM.describeNode", JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.describeNode", @params, JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, Rect? rect = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ScrollIntoViewIfNeededCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Rect: rect);
-        var command = new CdpCommand<ScrollIntoViewIfNeededCommandParameters, ScrollIntoViewIfNeededResult>("DOM.scrollIntoViewIfNeeded", JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.scrollIntoViewIfNeeded", @params, JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DOM.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DiscardSearchResultsCommandParameters(SearchId: searchId);
-        var command = new CdpCommand<DiscardSearchResultsCommandParameters, DiscardSearchResultsResult>("DOM.discardSearchResults", JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.discardSearchResults", @params, JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(IncludeWhitespace: includeWhitespace);
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DOM.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<FocusResult> FocusAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new FocusCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        var command = new CdpCommand<FocusCommandParameters, FocusResult>("DOM.focus", JsonContext.FocusCommandParameters, JsonContext.FocusResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.focus", @params, JsonContext.FocusCommandParameters, JsonContext.FocusResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAttributesCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<GetAttributesCommandParameters, GetAttributesResult>("DOM.getAttributes", JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getAttributes", @params, JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBoxModelCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        var command = new CdpCommand<GetBoxModelCommandParameters, GetBoxModelResult>("DOM.getBoxModel", JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getBoxModel", @params, JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetContentQuadsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        var command = new CdpCommand<GetContentQuadsCommandParameters, GetContentQuadsResult>("DOM.getContentQuads", JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getContentQuads", @params, JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetDocumentResult> GetDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDocumentCommandParameters(Depth: depth, Pierce: pierce);
-        var command = new CdpCommand<GetDocumentCommandParameters, GetDocumentResult>("DOM.getDocument", JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getDocument", @params, JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFlattenedDocumentCommandParameters(Depth: depth, Pierce: pierce);
-        var command = new CdpCommand<GetFlattenedDocumentCommandParameters, GetFlattenedDocumentResult>("DOM.getFlattenedDocument", JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getFlattenedDocument", @params, JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodesForSubtreeByStyleCommandParameters(NodeId: nodeId, ComputedStyles: computedStyles, Pierce: pierce);
-        var command = new CdpCommand<GetNodesForSubtreeByStyleCommandParameters, GetNodesForSubtreeByStyleResult>("DOM.getNodesForSubtreeByStyle", JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getNodesForSubtreeByStyle", @params, JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = default, bool? ignorePointerEventsNone = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodeForLocationCommandParameters(X: x, Y: y, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM, IgnorePointerEventsNone: ignorePointerEventsNone);
-        var command = new CdpCommand<GetNodeForLocationCommandParameters, GetNodeForLocationResult>("DOM.getNodeForLocation", JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getNodeForLocation", @params, JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? includeShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetOuterHTMLCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, IncludeShadowDOM: includeShadowDOM);
-        var command = new CdpCommand<GetOuterHTMLCommandParameters, GetOuterHTMLResult>("DOM.getOuterHTML", JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getOuterHTML", @params, JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetRelayoutBoundaryCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<GetRelayoutBoundaryCommandParameters, GetRelayoutBoundaryResult>("DOM.getRelayoutBoundary", JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getRelayoutBoundary", @params, JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetSearchResultsCommandParameters(SearchId: searchId, FromIndex: fromIndex, ToIndex: toIndex);
-        var command = new CdpCommand<GetSearchResultsCommandParameters, GetSearchResultsResult>("DOM.getSearchResults", JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getSearchResults", @params, JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HideHighlightCommandParameters();
-        var command = new CdpCommand<HideHighlightCommandParameters, HideHighlightResult>("DOM.hideHighlight", JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.hideHighlight", @params, JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HighlightNodeResult> HighlightNodeAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightNodeCommandParameters();
-        var command = new CdpCommand<HighlightNodeCommandParameters, HighlightNodeResult>("DOM.highlightNode", JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.highlightNode", @params, JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HighlightRectResult> HighlightRectAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightRectCommandParameters();
-        var command = new CdpCommand<HighlightRectCommandParameters, HighlightRectResult>("DOM.highlightRect", JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.highlightRect", @params, JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new MarkUndoableStateCommandParameters();
-        var command = new CdpCommand<MarkUndoableStateCommandParameters, MarkUndoableStateResult>("DOM.markUndoableState", JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.markUndoableState", @params, JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new MoveToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
-        var command = new CdpCommand<MoveToCommandParameters, MoveToResult>("DOM.moveTo", JsonContext.MoveToCommandParameters, JsonContext.MoveToResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.moveTo", @params, JsonContext.MoveToCommandParameters, JsonContext.MoveToResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PerformSearchCommandParameters(Query: query, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM);
-        var command = new CdpCommand<PerformSearchCommandParameters, PerformSearchResult>("DOM.performSearch", JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.performSearch", @params, JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PushNodeByPathToFrontendCommandParameters(Path: path);
-        var command = new CdpCommand<PushNodeByPathToFrontendCommandParameters, PushNodeByPathToFrontendResult>("DOM.pushNodeByPathToFrontend", JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.pushNodeByPathToFrontend", @params, JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PushNodesByBackendIdsToFrontendCommandParameters(BackendNodeIds: backendNodeIds);
-        var command = new CdpCommand<PushNodesByBackendIdsToFrontendCommandParameters, PushNodesByBackendIdsToFrontendResult>("DOM.pushNodesByBackendIdsToFrontend", JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.pushNodesByBackendIdsToFrontend", @params, JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QuerySelectorCommandParameters(NodeId: nodeId, Selector: selector);
-        var command = new CdpCommand<QuerySelectorCommandParameters, QuerySelectorResult>("DOM.querySelector", JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.querySelector", @params, JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new QuerySelectorAllCommandParameters(NodeId: nodeId, Selector: selector);
-        var command = new CdpCommand<QuerySelectorAllCommandParameters, QuerySelectorAllResult>("DOM.querySelectorAll", JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.querySelectorAll", @params, JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetTopLayerElementsCommandParameters();
-        var command = new CdpCommand<GetTopLayerElementsCommandParameters, GetTopLayerElementsResult>("DOM.getTopLayerElements", JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getTopLayerElements", @params, JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetElementByRelationCommandParameters(NodeId: nodeId, Relation: relation);
-        var command = new CdpCommand<GetElementByRelationCommandParameters, GetElementByRelationResult>("DOM.getElementByRelation", JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getElementByRelation", @params, JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<RedoResult> RedoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RedoCommandParameters();
-        var command = new CdpCommand<RedoCommandParameters, RedoResult>("DOM.redo", JsonContext.RedoCommandParameters, JsonContext.RedoResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.redo", @params, JsonContext.RedoCommandParameters, JsonContext.RedoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveAttributeCommandParameters(NodeId: nodeId, Name: name);
-        var command = new CdpCommand<RemoveAttributeCommandParameters, RemoveAttributeResult>("DOM.removeAttribute", JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.removeAttribute", @params, JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveNodeCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<RemoveNodeCommandParameters, RemoveNodeResult>("DOM.removeNode", JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.removeNode", @params, JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestChildNodesCommandParameters(NodeId: nodeId, Depth: depth, Pierce: pierce);
-        var command = new CdpCommand<RequestChildNodesCommandParameters, RequestChildNodesResult>("DOM.requestChildNodes", JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.requestChildNodes", @params, JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RequestNodeCommandParameters(ObjectId: objectId);
-        var command = new CdpCommand<RequestNodeCommandParameters, RequestNodeResult>("DOM.requestNode", JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.requestNode", @params, JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, string? objectGroup = default, Runtime.ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectGroup: objectGroup, ExecutionContextId: executionContextId);
-        var command = new CdpCommand<ResolveNodeCommandParameters, ResolveNodeResult>("DOM.resolveNode", JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.resolveNode", @params, JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttributeValueCommandParameters(NodeId: nodeId, Name: name, Value: value);
-        var command = new CdpCommand<SetAttributeValueCommandParameters, SetAttributeValueResult>("DOM.setAttributeValue", JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setAttributeValue", @params, JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttributesAsTextCommandParameters(NodeId: nodeId, Text: text, Name: name);
-        var command = new CdpCommand<SetAttributesAsTextCommandParameters, SetAttributesAsTextResult>("DOM.setAttributesAsText", JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setAttributesAsText", @params, JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetFileInputFilesCommandParameters(Files: files, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
-        var command = new CdpCommand<SetFileInputFilesCommandParameters, SetFileInputFilesResult>("DOM.setFileInputFiles", JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setFileInputFiles", @params, JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeStackTracesEnabledCommandParameters(Enable: enable);
-        var command = new CdpCommand<SetNodeStackTracesEnabledCommandParameters, SetNodeStackTracesEnabledResult>("DOM.setNodeStackTracesEnabled", JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setNodeStackTracesEnabled", @params, JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodeStackTracesCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<GetNodeStackTracesCommandParameters, GetNodeStackTracesResult>("DOM.getNodeStackTraces", JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getNodeStackTraces", @params, JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFileInfoCommandParameters(ObjectId: objectId);
-        var command = new CdpCommand<GetFileInfoCommandParameters, GetFileInfoResult>("DOM.getFileInfo", JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getFileInfo", @params, JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDetachedDomNodesCommandParameters();
-        var command = new CdpCommand<GetDetachedDomNodesCommandParameters, GetDetachedDomNodesResult>("DOM.getDetachedDomNodes", JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getDetachedDomNodes", @params, JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInspectedNodeCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<SetInspectedNodeCommandParameters, SetInspectedNodeResult>("DOM.setInspectedNode", JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setInspectedNode", @params, JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeNameCommandParameters(NodeId: nodeId, Name: name);
-        var command = new CdpCommand<SetNodeNameCommandParameters, SetNodeNameResult>("DOM.setNodeName", JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setNodeName", @params, JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeValueCommandParameters(NodeId: nodeId, Value: value);
-        var command = new CdpCommand<SetNodeValueCommandParameters, SetNodeValueResult>("DOM.setNodeValue", JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setNodeValue", @params, JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetOuterHTMLCommandParameters(NodeId: nodeId, OuterHTML: outerHTML);
-        var command = new CdpCommand<SetOuterHTMLCommandParameters, SetOuterHTMLResult>("DOM.setOuterHTML", JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.setOuterHTML", @params, JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<UndoResult> UndoAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UndoCommandParameters();
-        var command = new CdpCommand<UndoCommandParameters, UndoResult>("DOM.undo", JsonContext.UndoCommandParameters, JsonContext.UndoResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.undo", @params, JsonContext.UndoCommandParameters, JsonContext.UndoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetFrameOwnerCommandParameters(FrameId: frameId);
-        var command = new CdpCommand<GetFrameOwnerCommandParameters, GetFrameOwnerResult>("DOM.getFrameOwner", JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getFrameOwner", @params, JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = default, PhysicalAxes? physicalAxes = default, LogicalAxes? logicalAxes = default, bool? queriesScrollState = default, bool? queriesAnchored = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: containerName, PhysicalAxes: physicalAxes, LogicalAxes: logicalAxes, QueriesScrollState: queriesScrollState, QueriesAnchored: queriesAnchored);
-        var command = new CdpCommand<GetContainerForNodeCommandParameters, GetContainerForNodeResult>("DOM.getContainerForNode", JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getContainerForNode", @params, JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetQueryingDescendantsForContainerCommandParameters(NodeId: nodeId);
-        var command = new CdpCommand<GetQueryingDescendantsForContainerCommandParameters, GetQueryingDescendantsForContainerResult>("DOM.getQueryingDescendantsForContainer", JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getQueryingDescendantsForContainer", @params, JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnchorElementCommandParameters(NodeId: nodeId, AnchorSpecifier: anchorSpecifier);
-        var command = new CdpCommand<GetAnchorElementCommandParameters, GetAnchorElementResult>("DOM.getAnchorElement", JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.getAnchorElement", @params, JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForceShowPopoverCommandParameters(NodeId: nodeId, Enable: enable, InvokerNodeId: invokerNodeId);
-        var command = new CdpCommand<ForceShowPopoverCommandParameters, ForceShowPopoverResult>("DOM.forceShowPopover", JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.forceShowPopover", @params, JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForceShowInterestCommandParameters(NodeId: nodeId, Enable: enable);
-        var command = new CdpCommand<ForceShowInterestCommandParameters, ForceShowInterestResult>("DOM.forceShowInterest", JsonContext.ForceShowInterestCommandParameters, JsonContext.ForceShowInterestResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DOM.forceShowInterest", @params, JsonContext.ForceShowInterestCommandParameters, JsonContext.ForceShowInterestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);

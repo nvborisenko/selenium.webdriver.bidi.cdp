@@ -555,142 +555,123 @@ internal sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     public async Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ActivateTargetCommandParameters(TargetId: targetId);
-        var command = new CdpCommand<ActivateTargetCommandParameters, ActivateTargetResult>("Target.activateTarget", JsonContext.ActivateTargetCommandParameters, JsonContext.ActivateTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.activateTarget", @params, JsonContext.ActivateTargetCommandParameters, JsonContext.ActivateTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AttachToTargetCommandParameters(TargetId: targetId, Flatten: flatten);
-        var command = new CdpCommand<AttachToTargetCommandParameters, AttachToTargetResult>("Target.attachToTarget", JsonContext.AttachToTargetCommandParameters, JsonContext.AttachToTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.attachToTarget", @params, JsonContext.AttachToTargetCommandParameters, JsonContext.AttachToTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AttachToBrowserTargetCommandParameters();
-        var command = new CdpCommand<AttachToBrowserTargetCommandParameters, AttachToBrowserTargetResult>("Target.attachToBrowserTarget", JsonContext.AttachToBrowserTargetCommandParameters, JsonContext.AttachToBrowserTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.attachToBrowserTarget", @params, JsonContext.AttachToBrowserTargetCommandParameters, JsonContext.AttachToBrowserTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CloseTargetCommandParameters(TargetId: targetId);
-        var command = new CdpCommand<CloseTargetCommandParameters, CloseTargetResult>("Target.closeTarget", JsonContext.CloseTargetCommandParameters, JsonContext.CloseTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.closeTarget", @params, JsonContext.CloseTargetCommandParameters, JsonContext.CloseTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = default, bool? inheritPermissions = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ExposeDevToolsProtocolCommandParameters(TargetId: targetId, BindingName: bindingName, InheritPermissions: inheritPermissions);
-        var command = new CdpCommand<ExposeDevToolsProtocolCommandParameters, ExposeDevToolsProtocolResult>("Target.exposeDevToolsProtocol", JsonContext.ExposeDevToolsProtocolCommandParameters, JsonContext.ExposeDevToolsProtocolResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.exposeDevToolsProtocol", @params, JsonContext.ExposeDevToolsProtocolCommandParameters, JsonContext.ExposeDevToolsProtocolResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = default, string? proxyServer = default, string? proxyBypassList = default, ImmutableArray<string>? originsWithUniversalNetworkAccess = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CreateBrowserContextCommandParameters(DisposeOnDetach: disposeOnDetach, ProxyServer: proxyServer, ProxyBypassList: proxyBypassList, OriginsWithUniversalNetworkAccess: originsWithUniversalNetworkAccess);
-        var command = new CdpCommand<CreateBrowserContextCommandParameters, CreateBrowserContextResult>("Target.createBrowserContext", JsonContext.CreateBrowserContextCommandParameters, JsonContext.CreateBrowserContextResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.createBrowserContext", @params, JsonContext.CreateBrowserContextCommandParameters, JsonContext.CreateBrowserContextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBrowserContextsCommandParameters();
-        var command = new CdpCommand<GetBrowserContextsCommandParameters, GetBrowserContextsResult>("Target.getBrowserContexts", JsonContext.GetBrowserContextsCommandParameters, JsonContext.GetBrowserContextsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.getBrowserContexts", @params, JsonContext.GetBrowserContextsCommandParameters, JsonContext.GetBrowserContextsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CreateTargetResult> CreateTargetAsync(string url, long? left = default, long? top = default, long? width = default, long? height = default, WindowState? windowState = default, Browser.BrowserContextID? browserContextId = default, bool? enableBeginFrameControl = default, bool? newWindow = default, bool? background = default, bool? forTab = default, bool? hidden = default, bool? focus = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CreateTargetCommandParameters(Url: url, Left: left, Top: top, Width: width, Height: height, WindowState: windowState, BrowserContextId: browserContextId, EnableBeginFrameControl: enableBeginFrameControl, NewWindow: newWindow, Background: background, ForTab: forTab, Hidden: hidden, Focus: focus);
-        var command = new CdpCommand<CreateTargetCommandParameters, CreateTargetResult>("Target.createTarget", JsonContext.CreateTargetCommandParameters, JsonContext.CreateTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.createTarget", @params, JsonContext.CreateTargetCommandParameters, JsonContext.CreateTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DetachFromTargetCommandParameters(SessionId: sessionId, TargetId: targetId);
-        var command = new CdpCommand<DetachFromTargetCommandParameters, DetachFromTargetResult>("Target.detachFromTarget", JsonContext.DetachFromTargetCommandParameters, JsonContext.DetachFromTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.detachFromTarget", @params, JsonContext.DetachFromTargetCommandParameters, JsonContext.DetachFromTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisposeBrowserContextCommandParameters(BrowserContextId: browserContextId);
-        var command = new CdpCommand<DisposeBrowserContextCommandParameters, DisposeBrowserContextResult>("Target.disposeBrowserContext", JsonContext.DisposeBrowserContextCommandParameters, JsonContext.DisposeBrowserContextResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.disposeBrowserContext", @params, JsonContext.DisposeBrowserContextCommandParameters, JsonContext.DisposeBrowserContextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetTargetInfoCommandParameters(TargetId: targetId);
-        var command = new CdpCommand<GetTargetInfoCommandParameters, GetTargetInfoResult>("Target.getTargetInfo", JsonContext.GetTargetInfoCommandParameters, JsonContext.GetTargetInfoResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.getTargetInfo", @params, JsonContext.GetTargetInfoCommandParameters, JsonContext.GetTargetInfoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetTargetsCommandParameters(Filter: filter);
-        var command = new CdpCommand<GetTargetsCommandParameters, GetTargetsResult>("Target.getTargets", JsonContext.GetTargetsCommandParameters, JsonContext.GetTargetsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.getTargets", @params, JsonContext.GetTargetsCommandParameters, JsonContext.GetTargetsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
     public async Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SendMessageToTargetCommandParameters(Message: message, SessionId: sessionId, TargetId: targetId);
-        var command = new CdpCommand<SendMessageToTargetCommandParameters, SendMessageToTargetResult>("Target.sendMessageToTarget", JsonContext.SendMessageToTargetCommandParameters, JsonContext.SendMessageToTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.sendMessageToTarget", @params, JsonContext.SendMessageToTargetCommandParameters, JsonContext.SendMessageToTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = default, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutoAttachCommandParameters(AutoAttach: autoAttach, WaitForDebuggerOnStart: waitForDebuggerOnStart, Flatten: flatten, Filter: filter);
-        var command = new CdpCommand<SetAutoAttachCommandParameters, SetAutoAttachResult>("Target.setAutoAttach", JsonContext.SetAutoAttachCommandParameters, JsonContext.SetAutoAttachResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.setAutoAttach", @params, JsonContext.SetAutoAttachCommandParameters, JsonContext.SetAutoAttachResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new AutoAttachRelatedCommandParameters(TargetId: targetId, WaitForDebuggerOnStart: waitForDebuggerOnStart, Filter: filter);
-        var command = new CdpCommand<AutoAttachRelatedCommandParameters, AutoAttachRelatedResult>("Target.autoAttachRelated", JsonContext.AutoAttachRelatedCommandParameters, JsonContext.AutoAttachRelatedResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.autoAttachRelated", @params, JsonContext.AutoAttachRelatedCommandParameters, JsonContext.AutoAttachRelatedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDiscoverTargetsCommandParameters(Discover: discover, Filter: filter);
-        var command = new CdpCommand<SetDiscoverTargetsCommandParameters, SetDiscoverTargetsResult>("Target.setDiscoverTargets", JsonContext.SetDiscoverTargetsCommandParameters, JsonContext.SetDiscoverTargetsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.setDiscoverTargets", @params, JsonContext.SetDiscoverTargetsCommandParameters, JsonContext.SetDiscoverTargetsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRemoteLocationsCommandParameters(Locations: locations);
-        var command = new CdpCommand<SetRemoteLocationsCommandParameters, SetRemoteLocationsResult>("Target.setRemoteLocations", JsonContext.SetRemoteLocationsCommandParameters, JsonContext.SetRemoteLocationsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.setRemoteLocations", @params, JsonContext.SetRemoteLocationsCommandParameters, JsonContext.SetRemoteLocationsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetDevToolsTargetCommandParameters(TargetId: targetId);
-        var command = new CdpCommand<GetDevToolsTargetCommandParameters, GetDevToolsTargetResult>("Target.getDevToolsTarget", JsonContext.GetDevToolsTargetCommandParameters, JsonContext.GetDevToolsTargetResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.getDevToolsTarget", @params, JsonContext.GetDevToolsTargetCommandParameters, JsonContext.GetDevToolsTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new OpenDevToolsCommandParameters(TargetId: targetId, PanelId: panelId);
-        var command = new CdpCommand<OpenDevToolsCommandParameters, OpenDevToolsResult>("Target.openDevTools", JsonContext.OpenDevToolsCommandParameters, JsonContext.OpenDevToolsResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Target.openDevTools", @params, JsonContext.OpenDevToolsCommandParameters, JsonContext.OpenDevToolsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]

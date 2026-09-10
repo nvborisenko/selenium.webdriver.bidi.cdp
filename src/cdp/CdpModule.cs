@@ -13,9 +13,6 @@ public partial class CdpModule : Module
     private static readonly CdpJsonSerializerContext JsonContext = CdpJsonSerializerContext.Default;
     internal string? Session { get; set; }
 
-    private static readonly Command<GetSessionParameters, GetSessionResult> GetSessionCommand = new("goog:cdp.getSession", JsonContext.GetSessionParameters, JsonContext.GetSessionResult);
-    private static readonly Command<SendCommandParameters, SendCommandResult> SendCommandCommand = new("goog:cdp.sendCommand", JsonContext.SendCommandParameters, JsonContext.SendCommandResult);
-
     /// <summary>
     /// Gets the CDP session identifier for the specified browsing context.
     /// </summary>
@@ -27,7 +24,7 @@ public partial class CdpModule : Module
     {
         var @params = new GetSessionParameters(context);
 
-        return await ExecuteAsync(GetSessionCommand, @params, options, cancellationToken).ConfigureAwait(false);
+        return await ExecuteAsync("goog:cdp.getSession", @params, JsonContext.GetSessionParameters, JsonContext.GetSessionResult, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -44,7 +41,7 @@ public partial class CdpModule : Module
 
         var @params = new SendCommandParameters(method, parameters, session);
 
-        return await ExecuteAsync(SendCommandCommand, @params, options: null, cancellationToken).ConfigureAwait(false);
+        return await ExecuteAsync("goog:cdp.sendCommand", @params, JsonContext.SendCommandParameters, JsonContext.SendCommandResult, options: null, cancellationToken).ConfigureAwait(false);
     }
 
     internal IEventSource<TParams> CreateCdpEventSource<TParams>(EventDescriptor<CdpEventArgs<TParams>> descriptor)

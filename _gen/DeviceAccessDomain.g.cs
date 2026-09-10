@@ -95,29 +95,25 @@ internal sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDr
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("DeviceAccess.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DeviceAccess.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("DeviceAccess.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DeviceAccess.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SelectPromptCommandParameters(Id: id, DeviceId: deviceId);
-        var command = new CdpCommand<SelectPromptCommandParameters, SelectPromptResult>("DeviceAccess.selectPrompt", JsonContext.SelectPromptCommandParameters, JsonContext.SelectPromptResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DeviceAccess.selectPrompt", @params, JsonContext.SelectPromptCommandParameters, JsonContext.SelectPromptResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CancelPromptCommandParameters(Id: id);
-        var command = new CdpCommand<CancelPromptCommandParameters, CancelPromptResult>("DeviceAccess.cancelPrompt", JsonContext.CancelPromptCommandParameters, JsonContext.CancelPromptResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("DeviceAccess.cancelPrompt", @params, JsonContext.CancelPromptCommandParameters, JsonContext.CancelPromptResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<DeviceRequestPromptedEventArgs> DeviceRequestPrompted => CreateCdpEventSource(DeviceAccessDomainEvent.DeviceRequestPrompted);

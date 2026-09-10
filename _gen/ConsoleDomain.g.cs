@@ -75,22 +75,19 @@ internal sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.
     public async Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ClearMessagesCommandParameters();
-        var command = new CdpCommand<ClearMessagesCommandParameters, ClearMessagesResult>("Console.clearMessages", JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Console.clearMessages", @params, JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Console.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Console.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Console.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Console.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<MessageAddedEventArgs> MessageAdded => CreateCdpEventSource(ConsoleDomainEvent.MessageAdded);

@@ -201,64 +201,55 @@ internal sealed class ProfilerDomain(CdpModule cdp) : global::Selenium.WebDriver
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("Profiler.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("Profiler.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<GetBestEffortCoverageResult> GetBestEffortCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetBestEffortCoverageCommandParameters();
-        var command = new CdpCommand<GetBestEffortCoverageCommandParameters, GetBestEffortCoverageResult>("Profiler.getBestEffortCoverage", JsonContext.GetBestEffortCoverageCommandParameters, JsonContext.GetBestEffortCoverageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.getBestEffortCoverage", @params, JsonContext.GetBestEffortCoverageCommandParameters, JsonContext.GetBestEffortCoverageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetSamplingIntervalResult> SetSamplingIntervalAsync(long interval, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSamplingIntervalCommandParameters(Interval: interval);
-        var command = new CdpCommand<SetSamplingIntervalCommandParameters, SetSamplingIntervalResult>("Profiler.setSamplingInterval", JsonContext.SetSamplingIntervalCommandParameters, JsonContext.SetSamplingIntervalResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.setSamplingInterval", @params, JsonContext.SetSamplingIntervalCommandParameters, JsonContext.SetSamplingIntervalResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartResult> StartAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartCommandParameters();
-        var command = new CdpCommand<StartCommandParameters, StartResult>("Profiler.start", JsonContext.StartCommandParameters, JsonContext.StartResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.start", @params, JsonContext.StartCommandParameters, JsonContext.StartResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartPreciseCoverageResult> StartPreciseCoverageAsync(bool? callCount = default, bool? detailed = default, bool? allowTriggeredUpdates = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartPreciseCoverageCommandParameters(CallCount: callCount, Detailed: detailed, AllowTriggeredUpdates: allowTriggeredUpdates);
-        var command = new CdpCommand<StartPreciseCoverageCommandParameters, StartPreciseCoverageResult>("Profiler.startPreciseCoverage", JsonContext.StartPreciseCoverageCommandParameters, JsonContext.StartPreciseCoverageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.startPreciseCoverage", @params, JsonContext.StartPreciseCoverageCommandParameters, JsonContext.StartPreciseCoverageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopResult> StopAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopCommandParameters();
-        var command = new CdpCommand<StopCommandParameters, StopResult>("Profiler.stop", JsonContext.StopCommandParameters, JsonContext.StopResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.stop", @params, JsonContext.StopCommandParameters, JsonContext.StopResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopPreciseCoverageResult> StopPreciseCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopPreciseCoverageCommandParameters();
-        var command = new CdpCommand<StopPreciseCoverageCommandParameters, StopPreciseCoverageResult>("Profiler.stopPreciseCoverage", JsonContext.StopPreciseCoverageCommandParameters, JsonContext.StopPreciseCoverageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.stopPreciseCoverage", @params, JsonContext.StopPreciseCoverageCommandParameters, JsonContext.StopPreciseCoverageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<TakePreciseCoverageResult> TakePreciseCoverageAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new TakePreciseCoverageCommandParameters();
-        var command = new CdpCommand<TakePreciseCoverageCommandParameters, TakePreciseCoverageResult>("Profiler.takePreciseCoverage", JsonContext.TakePreciseCoverageCommandParameters, JsonContext.TakePreciseCoverageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("Profiler.takePreciseCoverage", @params, JsonContext.TakePreciseCoverageCommandParameters, JsonContext.TakePreciseCoverageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<ConsoleProfileFinishedEventArgs> ConsoleProfileFinished => CreateCdpEventSource(ProfilerDomainEvent.ConsoleProfileFinished);

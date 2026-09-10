@@ -241,85 +241,73 @@ internal sealed class ServiceWorkerDomain(CdpModule cdp) : global::Selenium.WebD
     public async Task<DeliverPushMessageResult> DeliverPushMessageAsync(string origin, RegistrationID registrationId, string data, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DeliverPushMessageCommandParameters(Origin: origin, RegistrationId: registrationId, Data: data);
-        var command = new CdpCommand<DeliverPushMessageCommandParameters, DeliverPushMessageResult>("ServiceWorker.deliverPushMessage", JsonContext.DeliverPushMessageCommandParameters, JsonContext.DeliverPushMessageResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.deliverPushMessage", @params, JsonContext.DeliverPushMessageCommandParameters, JsonContext.DeliverPushMessageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
-        var command = new CdpCommand<DisableCommandParameters, DisableResult>("ServiceWorker.disable", JsonContext.DisableCommandParameters, JsonContext.DisableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DispatchSyncEventResult> DispatchSyncEventAsync(string origin, RegistrationID registrationId, string tag, bool lastChance, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchSyncEventCommandParameters(Origin: origin, RegistrationId: registrationId, Tag: tag, LastChance: lastChance);
-        var command = new CdpCommand<DispatchSyncEventCommandParameters, DispatchSyncEventResult>("ServiceWorker.dispatchSyncEvent", JsonContext.DispatchSyncEventCommandParameters, JsonContext.DispatchSyncEventResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.dispatchSyncEvent", @params, JsonContext.DispatchSyncEventCommandParameters, JsonContext.DispatchSyncEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<DispatchPeriodicSyncEventResult> DispatchPeriodicSyncEventAsync(string origin, RegistrationID registrationId, string tag, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchPeriodicSyncEventCommandParameters(Origin: origin, RegistrationId: registrationId, Tag: tag);
-        var command = new CdpCommand<DispatchPeriodicSyncEventCommandParameters, DispatchPeriodicSyncEventResult>("ServiceWorker.dispatchPeriodicSyncEvent", JsonContext.DispatchPeriodicSyncEventCommandParameters, JsonContext.DispatchPeriodicSyncEventResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.dispatchPeriodicSyncEvent", @params, JsonContext.DispatchPeriodicSyncEventCommandParameters, JsonContext.DispatchPeriodicSyncEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
-        var command = new CdpCommand<EnableCommandParameters, EnableResult>("ServiceWorker.enable", JsonContext.EnableCommandParameters, JsonContext.EnableResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SetForceUpdateOnPageLoadResult> SetForceUpdateOnPageLoadAsync(bool forceUpdateOnPageLoad, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetForceUpdateOnPageLoadCommandParameters(ForceUpdateOnPageLoad: forceUpdateOnPageLoad);
-        var command = new CdpCommand<SetForceUpdateOnPageLoadCommandParameters, SetForceUpdateOnPageLoadResult>("ServiceWorker.setForceUpdateOnPageLoad", JsonContext.SetForceUpdateOnPageLoadCommandParameters, JsonContext.SetForceUpdateOnPageLoadResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.setForceUpdateOnPageLoad", @params, JsonContext.SetForceUpdateOnPageLoadCommandParameters, JsonContext.SetForceUpdateOnPageLoadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<SkipWaitingResult> SkipWaitingAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SkipWaitingCommandParameters(ScopeURL: scopeURL);
-        var command = new CdpCommand<SkipWaitingCommandParameters, SkipWaitingResult>("ServiceWorker.skipWaiting", JsonContext.SkipWaitingCommandParameters, JsonContext.SkipWaitingResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.skipWaiting", @params, JsonContext.SkipWaitingCommandParameters, JsonContext.SkipWaitingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StartWorkerResult> StartWorkerAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartWorkerCommandParameters(ScopeURL: scopeURL);
-        var command = new CdpCommand<StartWorkerCommandParameters, StartWorkerResult>("ServiceWorker.startWorker", JsonContext.StartWorkerCommandParameters, JsonContext.StartWorkerResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.startWorker", @params, JsonContext.StartWorkerCommandParameters, JsonContext.StartWorkerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopAllWorkersResult> StopAllWorkersAsync(string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopAllWorkersCommandParameters();
-        var command = new CdpCommand<StopAllWorkersCommandParameters, StopAllWorkersResult>("ServiceWorker.stopAllWorkers", JsonContext.StopAllWorkersCommandParameters, JsonContext.StopAllWorkersResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.stopAllWorkers", @params, JsonContext.StopAllWorkersCommandParameters, JsonContext.StopAllWorkersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<StopWorkerResult> StopWorkerAsync(string versionId, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StopWorkerCommandParameters(VersionId: versionId);
-        var command = new CdpCommand<StopWorkerCommandParameters, StopWorkerResult>("ServiceWorker.stopWorker", JsonContext.StopWorkerCommandParameters, JsonContext.StopWorkerResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.stopWorker", @params, JsonContext.StopWorkerCommandParameters, JsonContext.StopWorkerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<UnregisterResult> UnregisterAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UnregisterCommandParameters(ScopeURL: scopeURL);
-        var command = new CdpCommand<UnregisterCommandParameters, UnregisterResult>("ServiceWorker.unregister", JsonContext.UnregisterCommandParameters, JsonContext.UnregisterResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.unregister", @params, JsonContext.UnregisterCommandParameters, JsonContext.UnregisterResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<UpdateRegistrationResult> UpdateRegistrationAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new UpdateRegistrationCommandParameters(ScopeURL: scopeURL);
-        var command = new CdpCommand<UpdateRegistrationCommandParameters, UpdateRegistrationResult>("ServiceWorker.updateRegistration", JsonContext.UpdateRegistrationCommandParameters, JsonContext.UpdateRegistrationResult);
-        return await ExecuteCommandAsync(command, @params, session, cancellationToken).ConfigureAwait(false);
+        return await ExecuteCommandAsync("ServiceWorker.updateRegistration", @params, JsonContext.UpdateRegistrationCommandParameters, JsonContext.UpdateRegistrationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     public IEventSource<WorkerErrorReportedEventArgs> WorkerErrorReported => CreateCdpEventSource(ServiceWorkerDomainEvent.WorkerErrorReported);
