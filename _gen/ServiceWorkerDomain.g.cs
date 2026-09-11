@@ -494,9 +494,7 @@ public enum ServiceWorkerVersionStatus
 
 /// <summary>
 /// Mostly corresponds to <b>RouterCondition</b> in ServiceWorker spec
-/// (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while this
-/// currently lacks support for the nested conditions ("or" and "not").
-/// TODO(crbug.com/540469610): Support recursive conditions.
+/// (https://www.w3.org/TR/service-workers/#dictdef-routercondition)
 /// </summary>
 public sealed record ServiceWorkerRouterCondition()
 {
@@ -520,6 +518,14 @@ public sealed record ServiceWorkerRouterCondition()
     /// <summary>
     /// </summary>
     public ServiceWorkerVersionRunningStatus? RunningStatus { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public ImmutableArray<ServiceWorkerRouterCondition>? Or { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public ServiceWorkerRouterCondition? Not { get; init; }
 }
 
 /// <summary>
@@ -696,6 +702,7 @@ public sealed record ServiceWorkerErrorMessage(string ErrorMessage, Registration
 [JsonSerializable(typeof(ServiceWorkerErrorMessage), TypeInfoPropertyName = "ServiceWorkerServiceWorkerErrorMessage")]
 [JsonSerializable(typeof(ImmutableArray<ServiceWorkerRegistration>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerRegistration")]
 [JsonSerializable(typeof(ImmutableArray<ServiceWorkerVersion>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerVersion")]
+[JsonSerializable(typeof(ImmutableArray<ServiceWorkerRouterCondition>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerRouterCondition")]
 [JsonSerializable(typeof(ImmutableArray<Target.TargetID>), TypeInfoPropertyName = "ImmutableArrayTargetTargetID")]
 [JsonSerializable(typeof(ImmutableArray<ServiceWorkerRouterRule>), TypeInfoPropertyName = "ImmutableArrayServiceWorkerServiceWorkerRouterRule")]
 [JsonSourceGenerationOptions(
