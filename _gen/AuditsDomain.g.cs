@@ -2251,6 +2251,46 @@ public sealed record PermissionElementIssueDetails(PermissionElementIssueType Is
 }
 
 /// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<WebInstallIssueReason>))]
+public enum WebInstallIssueReason
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ManifestParsingOrNetworkError")]
+    ManifestParsingOrNetworkError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StartUrlInvalid")]
+    StartUrlInvalid,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ManifestMissingNameOrShortName")]
+    ManifestMissingNameOrShortName,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ManifestMissingId")]
+    ManifestMissingId,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoManifest")]
+    NoManifest,
+}
+
+/// <summary>
+/// This issue reports a failure involving a web app manifest used by a Web
+/// Install operation.
+/// </summary>
+/// <param name="Reason">
+/// </param>
+public sealed record WebInstallIssueDetails(WebInstallIssueReason Reason)
+{
+    /// <summary>
+    /// </summary>
+    public string? ManifestUrl { get; init; }
+}
+
+/// <summary>
 /// The issue warns about blocked calls to privacy sensitive APIs via the
 /// Selective Permissions Intervention.
 /// </summary>
@@ -2412,6 +2452,10 @@ public enum InspectorIssueCode
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LazyLoadImageIssue")]
     LazyLoadImageIssue,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebInstallIssue")]
+    WebInstallIssue,
 }
 
 /// <summary>
@@ -2541,6 +2585,10 @@ public sealed record InspectorIssueDetails()
     /// <summary>
     /// </summary>
     public LazyLoadImageIssueDetails? LazyLoadImageIssueDetails { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public WebInstallIssueDetails? WebInstallIssueDetails { get; init; }
 }
 
 /// <summary>
@@ -2639,6 +2687,8 @@ public sealed record InspectorIssue(InspectorIssueCode Code, InspectorIssueDetai
 [JsonSerializable(typeof(UserReidentificationIssueDetails), TypeInfoPropertyName = "AuditsUserReidentificationIssueDetails")]
 [JsonSerializable(typeof(PermissionElementIssueType), TypeInfoPropertyName = "AuditsPermissionElementIssueType")]
 [JsonSerializable(typeof(PermissionElementIssueDetails), TypeInfoPropertyName = "AuditsPermissionElementIssueDetails")]
+[JsonSerializable(typeof(WebInstallIssueReason), TypeInfoPropertyName = "AuditsWebInstallIssueReason")]
+[JsonSerializable(typeof(WebInstallIssueDetails), TypeInfoPropertyName = "AuditsWebInstallIssueDetails")]
 [JsonSerializable(typeof(SelectivePermissionsInterventionIssueDetails), TypeInfoPropertyName = "AuditsSelectivePermissionsInterventionIssueDetails")]
 [JsonSerializable(typeof(LazyLoadImageIssueDetails), TypeInfoPropertyName = "AuditsLazyLoadImageIssueDetails")]
 [JsonSerializable(typeof(InspectorIssueCode), TypeInfoPropertyName = "AuditsInspectorIssueCode")]
