@@ -1129,6 +1129,24 @@ public interface IDOM
     Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Returns candidate nodes that are configured as triggers for the given popover.
+    /// </summary>
+    /// <param name="nodeId">
+    /// Id of the popover HTMLElement.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetImplicitAnchorCandidatesResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<GetImplicitAnchorCandidatesResult> GetImplicitAnchorCandidatesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// When enabling, this API forces an element to gain interest in its target,
     /// keeping interest active until disabled.
     /// </summary>
@@ -1728,6 +1746,13 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetImplicitAnchorCandidatesResult> GetImplicitAnchorCandidatesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetImplicitAnchorCandidatesCommandParameters(NodeId: nodeId);
+        return await ExecuteCommandAsync("DOM.getImplicitAnchorCandidates", @params, JsonContext.GetImplicitAnchorCandidatesCommandParameters, JsonContext.GetImplicitAnchorCandidatesResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ForceShowInterestCommandParameters(NodeId: nodeId, Enable: enable);
@@ -2243,6 +2268,16 @@ internal sealed record ForceShowPopoverCommandParameters(NodeId NodeId, bool Ena
 /// List of popovers that were closed in order to respect popover stacking order.
 /// </param>
 public sealed record ForceShowPopoverResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
+
+
+internal sealed record GetImplicitAnchorCandidatesCommandParameters(NodeId NodeId) : Parameters;
+
+/// <summary>
+/// </summary>
+/// <param name="BackendNodeIds">
+/// Candidate elements that can invoke this popover.
+/// </param>
+public sealed record GetImplicitAnchorCandidatesResult(ImmutableArray<BackendNodeId> BackendNodeIds) : EmptyResult;
 
 
 internal sealed record ForceShowInterestCommandParameters(NodeId NodeId, bool Enable) : Parameters;
@@ -3163,6 +3198,8 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 [JsonSerializable(typeof(GetAnchorElementResult), TypeInfoPropertyName = "GetAnchorElementResult")]
 [JsonSerializable(typeof(ForceShowPopoverCommandParameters), TypeInfoPropertyName = "ForceShowPopoverCommandParameters")]
 [JsonSerializable(typeof(ForceShowPopoverResult), TypeInfoPropertyName = "ForceShowPopoverResult")]
+[JsonSerializable(typeof(GetImplicitAnchorCandidatesCommandParameters), TypeInfoPropertyName = "GetImplicitAnchorCandidatesCommandParameters")]
+[JsonSerializable(typeof(GetImplicitAnchorCandidatesResult), TypeInfoPropertyName = "GetImplicitAnchorCandidatesResult")]
 [JsonSerializable(typeof(ForceShowInterestCommandParameters), TypeInfoPropertyName = "ForceShowInterestCommandParameters")]
 [JsonSerializable(typeof(ForceShowInterestResult), TypeInfoPropertyName = "ForceShowInterestResult")]
 [JsonSerializable(typeof(CdpEventArgs<AttributeModifiedEventArgs>), TypeInfoPropertyName = "AttributeModifiedCdpEventArgs")]
