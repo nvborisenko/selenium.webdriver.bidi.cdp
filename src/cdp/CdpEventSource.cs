@@ -9,16 +9,23 @@ internal sealed class CdpEventSource<TParams> : IEventSource<TParams>
 {
     private readonly IEventSource<CdpEventArgs<TParams>> _inner;
     private readonly string _eventName;
+    private readonly string? _session;
 
-    internal CdpEventSource(IEventSource<CdpEventArgs<TParams>> inner, string eventName)
+    internal CdpEventSource(IEventSource<CdpEventArgs<TParams>> inner, string eventName, string? session)
     {
         _inner = inner;
         _eventName = eventName;
+        _session = session;
     }
 
     public Task<ISubscription> SubscribeAsync(Action<TParams> handler, CancellationToken cancellationToken = default)
         => _inner.SubscribeAsync(e =>
         {
+            if (!IsForSession(e))
+            {
+                return;
+            }
+
             using var activity = StartActivity();
 
             try
@@ -36,6 +43,11 @@ internal sealed class CdpEventSource<TParams> : IEventSource<TParams>
     public Task<ISubscription> SubscribeAsync(Func<TParams, Task> handler, CancellationToken cancellationToken = default)
         => _inner.SubscribeAsync(async e =>
         {
+            if (!IsForSession(e))
+            {
+                return;
+            }
+
             using var activity = StartActivity();
 
             try
@@ -53,8 +65,11 @@ internal sealed class CdpEventSource<TParams> : IEventSource<TParams>
     public async Task<IEventStream<TParams>> StreamAsync(CancellationToken cancellationToken = default)
     {
         var innerStream = await _inner.StreamAsync(cancellationToken).ConfigureAwait(false);
-        return new CdpEventStream<TParams>(innerStream, _eventName);
+        return new CdpEventStream<TParams>(innerStream, _eventName, _session);
     }
+
+    private bool IsForSession(CdpEventArgs<TParams> eventArgs)
+        => _session is null || string.Equals(eventArgs.Session, _session, StringComparison.Ordinal);
 
     private Activity? StartActivity()
     {
@@ -75,11 +90,13 @@ public sealed class CdpEventStream<TParams> : IEventStream<TParams>
 {
     private readonly IEventStream<CdpEventArgs<TParams>> _inner;
     private readonly string _eventName;
+    private readonly string? _session;
 
-    internal CdpEventStream(IEventStream<CdpEventArgs<TParams>> inner, string eventName)
+    internal CdpEventStream(IEventStream<CdpEventArgs<TParams>> inner, string eventName, string? session)
     {
         _inner = inner;
         _eventName = eventName;
+        _session = session;
     }
 
     /// <inheritdoc/>
@@ -87,6 +104,11 @@ public sealed class CdpEventStream<TParams> : IEventStream<TParams>
     {
         await foreach (var item in _inner.ReadAllAsync(cancellationToken).ConfigureAwait(false))
         {
+            if (_session is not null && !string.Equals(item.Session, _session, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
             // The activity spans the consumer's processing of the item, until the next iteration.
             using var activity = Domain.ActivitySource.StartActivity(_eventName, ActivityKind.Consumer);
 

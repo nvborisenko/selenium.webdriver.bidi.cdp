@@ -11,7 +11,23 @@ namespace Selenium.WebDriver.BiDi.Cdp;
 public partial class CdpModule : Module
 {
     private static readonly CdpJsonSerializerContext JsonContext = CdpJsonSerializerContext.Default;
-    internal string? Session { get; set; }
+    private readonly CdpModule? _transport;
+    private readonly string? _session;
+
+    /// <summary>
+    /// Initializes an unbound CDP module associated with a BiDi connection.
+    /// </summary>
+    public CdpModule()
+    {
+    }
+
+    private CdpModule(CdpModule source, string session)
+    {
+        _transport = source;
+        _session = session;
+    }
+
+    internal CdpModule WithSession(string session) => new(this, session);
 
     /// <summary>
     /// Gets the CDP session identifier for the specified browsing context.
@@ -23,8 +39,9 @@ public partial class CdpModule : Module
     public async Task<GetSessionResult> GetSessionAsync(BrowsingContext context, GetSessionOptions? options = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetSessionParameters(context);
+        var transport = _transport ?? this;
 
-        return await ExecuteAsync("goog:cdp.getSession", @params, JsonContext.GetSessionParameters, JsonContext.GetSessionResult, options, cancellationToken).ConfigureAwait(false);
+        return await transport.ExecuteAsync("goog:cdp.getSession", @params, JsonContext.GetSessionParameters, JsonContext.GetSessionResult, options, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -37,23 +54,36 @@ public partial class CdpModule : Module
     /// <returns>The raw command result.</returns>
     public async Task<SendCommandResult> SendCommandAsync(string method, JsonElement parameters, string? session = null, CancellationToken cancellationToken = default)
     {
-        session ??= Session;
+        session ??= _session;
 
         var @params = new SendCommandParameters(method, parameters, session);
+        var transport = _transport ?? this;
 
-        return await ExecuteAsync("goog:cdp.sendCommand", @params, JsonContext.SendCommandParameters, JsonContext.SendCommandResult, options: null, cancellationToken).ConfigureAwait(false);
+        return await transport.ExecuteAsync("goog:cdp.sendCommand", @params, JsonContext.SendCommandParameters, JsonContext.SendCommandResult, options: null, cancellationToken).ConfigureAwait(false);
     }
 
     internal IEventSource<TParams> CreateCdpEventSource<TParams>(EventDescriptor<CdpEventArgs<TParams>> descriptor)
         where TParams : OpenQA.Selenium.BiDi.EventArgs
     {
+        if (_transport is not null)
+        {
+            return _transport.CreateCdpEventSource(descriptor, _session);
+        }
+
+        return CreateCdpEventSource(descriptor, session: null);
+    }
+
+    private IEventSource<TParams> CreateCdpEventSource<TParams>(EventDescriptor<CdpEventArgs<TParams>> descriptor, string? session)
+        where TParams : OpenQA.Selenium.BiDi.EventArgs
+    {
+
         const string CdpEventPrefix = "goog:cdp.";
 
         var eventName = descriptor.Name.StartsWith(CdpEventPrefix, StringComparison.Ordinal)
             ? descriptor.Name[CdpEventPrefix.Length..]
             : descriptor.Name;
 
-        return new CdpEventSource<TParams>(CreateEventSource(descriptor), eventName);
+        return new CdpEventSource<TParams>(CreateEventSource(descriptor), eventName, session);
     }
 
     /// <summary>

@@ -31,8 +31,7 @@ public static class BiDiExtensions
             var cdp = context.BiDi.AsModule<CdpModule>();
 
             var sessionResult = await cdp.GetSessionAsync(context, cancellationToken: cancellationToken).ConfigureAwait(false);
-            cdp.Session = sessionResult.Session;
-            return cdp;
+            return cdp.WithSession(sessionResult.Session);
         }
     }
 }
