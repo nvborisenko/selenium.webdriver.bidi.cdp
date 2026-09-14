@@ -14,7 +14,7 @@ public class LogTests : CdpTestFixture
         var entryAdded = await entryAddedStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(5));
 
         await Assert.That(entryAdded.Entry).IsNotNull();
-        await Assert.That(entryAdded.Entry.Level).IsEqualTo("error");
+        await Assert.That(entryAdded.Entry.Level).IsEqualTo(Log.LogEntryLevel.Error);
 
         await Cdp.Log.ClearAsync();
     }
