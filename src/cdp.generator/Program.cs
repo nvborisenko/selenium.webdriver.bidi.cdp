@@ -17,10 +17,14 @@ var inputFiles = Directory.GetFiles("spec", "*.json")
     .OrderBy(Path.GetFileName, StringComparer.Ordinal)
     .ToArray();
 
+// Parse each spec file once and reuse it for all generation passes below.
+var browserProtocols = inputFiles
+    .Select(inputFile => (InputFile: inputFile, Protocol: Parser.ParseBrowserProtocol(File.ReadAllText(inputFile))))
+    .ToArray();
+
 // Collect dictionary types (object without properties) across all protocols
-foreach (var inputFile in inputFiles)
+foreach (var (_, protocol) in browserProtocols)
 {
-    var protocol = Parser.ParseBrowserProtocol(File.ReadAllText(inputFile));
     foreach (var domain in protocol.Domains)
     {
         foreach (var type in domain.Types ?? [])
@@ -37,10 +41,8 @@ foreach (var inputFile in inputFiles)
     }
 }
 
-foreach (var inputFile in inputFiles)
+foreach (var (inputFile, browserProtocol) in browserProtocols)
 {
-    var browserProtocol = Parser.ParseBrowserProtocol(File.ReadAllText(inputFile));
-
     foreach (var domainInfo in browserProtocol.Domains)
     {
         Extensions.InlineEnums.Clear();
@@ -594,9 +596,8 @@ cdpModuleBuilder.AppendLine("#pragma warning disable BIDICDP001");
 
 // Generate fields and properties together
 var domainsToGenerate = new List<(string InputFile, DomainInfo Domain)>();
-foreach (var inputFile in inputFiles)
+foreach (var (inputFile, browserProtocol) in browserProtocols)
 {
-    var browserProtocol = Parser.ParseBrowserProtocol(File.ReadAllText(inputFile));
     foreach (var domainInfo in browserProtocol.Domains)
     {
         domainsToGenerate.Add((inputFile, domainInfo));
