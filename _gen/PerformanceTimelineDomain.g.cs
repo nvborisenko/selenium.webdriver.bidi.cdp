@@ -32,7 +32,7 @@ public interface IPerformanceTimeline
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sent when a performance timeline event is added. See reportPerformanceTimeline method.
@@ -52,7 +52,7 @@ internal sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Seleniu
 {
     private static readonly PerformanceTimelineJsonSerializerContext JsonContext = PerformanceTimelineJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(ImmutableArray<string> eventTypes, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EventTypes: eventTypes);
         return await ExecuteCommandAsync("PerformanceTimeline.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
@@ -64,6 +64,7 @@ internal sealed class PerformanceTimelineDomain(CdpModule cdp) : global::Seleniu
 internal sealed record EnableCommandParameters(ImmutableArray<string> EventTypes) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPerformanceTimeline.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 

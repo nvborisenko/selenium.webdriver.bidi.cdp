@@ -25,7 +25,7 @@ public interface ICacheStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteCacheResult"/>.
     /// </returns>
-    Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a cache entry.
@@ -45,7 +45,7 @@ public interface ICacheStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteEntryResult"/>.
     /// </returns>
-    Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests cache names.
@@ -69,7 +69,7 @@ public interface ICacheStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestCacheNamesResult"/>.
     /// </returns>
-    Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches cache entry.
@@ -92,7 +92,7 @@ public interface ICacheStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestCachedResponseResult"/>.
     /// </returns>
-    Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests data from cache.
@@ -118,7 +118,7 @@ public interface ICacheStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestEntriesResult"/>.
     /// </returns>
-    Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = default, long? pageSize = default, string? pathFilter = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = null, long? pageSize = null, string? pathFilter = null, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -127,31 +127,31 @@ internal sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDr
 {
     private static readonly CacheStorageJsonSerializerContext JsonContext = CacheStorageJsonSerializerContext.Default;
 
-    public async Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteCacheResult> DeleteCacheAsync(CacheId cacheId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCacheCommandParameters(CacheId: cacheId);
         return await ExecuteCommandAsync("CacheStorage.deleteCache", @params, JsonContext.DeleteCacheCommandParameters, JsonContext.DeleteCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteEntryResult> DeleteEntryAsync(CacheId cacheId, string request, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteEntryCommandParameters(CacheId: cacheId, Request: request);
         return await ExecuteCommandAsync("CacheStorage.deleteEntry", @params, JsonContext.DeleteEntryCommandParameters, JsonContext.DeleteEntryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestCacheNamesResult> RequestCacheNamesAsync(string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestCacheNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);
         return await ExecuteCommandAsync("CacheStorage.requestCacheNames", @params, JsonContext.RequestCacheNamesCommandParameters, JsonContext.RequestCacheNamesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestCachedResponseResult> RequestCachedResponseAsync(CacheId cacheId, string requestURL, ImmutableArray<Header> requestHeaders, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestCachedResponseCommandParameters(CacheId: cacheId, RequestURL: requestURL, RequestHeaders: requestHeaders);
         return await ExecuteCommandAsync("CacheStorage.requestCachedResponse", @params, JsonContext.RequestCachedResponseCommandParameters, JsonContext.RequestCachedResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = default, long? pageSize = default, string? pathFilter = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestEntriesResult> RequestEntriesAsync(CacheId cacheId, long? skipCount = null, long? pageSize = null, string? pathFilter = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestEntriesCommandParameters(CacheId: cacheId, SkipCount: skipCount, PageSize: pageSize, PathFilter: pathFilter);
         return await ExecuteCommandAsync("CacheStorage.requestEntries", @params, JsonContext.RequestEntriesCommandParameters, JsonContext.RequestEntriesResult, session, cancellationToken).ConfigureAwait(false);
@@ -162,6 +162,7 @@ internal sealed class CacheStorageDomain(CdpModule cdp) : global::Selenium.WebDr
 internal sealed record DeleteCacheCommandParameters(CacheId CacheId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICacheStorage.DeleteCacheAsync"/> command.
 /// </summary>
 public sealed record DeleteCacheResult() : EmptyResult;
 
@@ -169,6 +170,7 @@ public sealed record DeleteCacheResult() : EmptyResult;
 internal sealed record DeleteEntryCommandParameters(CacheId CacheId, string Request) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICacheStorage.DeleteEntryAsync"/> command.
 /// </summary>
 public sealed record DeleteEntryResult() : EmptyResult;
 
@@ -176,6 +178,7 @@ public sealed record DeleteEntryResult() : EmptyResult;
 internal sealed record RequestCacheNamesCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICacheStorage.RequestCacheNamesAsync"/> command.
 /// </summary>
 /// <param name="Caches">
 /// Caches for the security origin.
@@ -186,6 +189,7 @@ public sealed record RequestCacheNamesResult(ImmutableArray<Cache> Caches) : Emp
 internal sealed record RequestCachedResponseCommandParameters(CacheId CacheId, string RequestURL, ImmutableArray<Header> RequestHeaders) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICacheStorage.RequestCachedResponseAsync"/> command.
 /// </summary>
 /// <param name="Response">
 /// Response read from the cache.
@@ -196,6 +200,7 @@ public sealed record RequestCachedResponseResult(CachedResponse Response) : Empt
 internal sealed record RequestEntriesCommandParameters(CacheId CacheId, long? SkipCount, long? PageSize, string? PathFilter) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICacheStorage.RequestEntriesAsync"/> command.
 /// </summary>
 /// <param name="CacheDataEntries">
 /// Array of object store data entries.
@@ -223,26 +228,32 @@ public record CacheId : IStringRemoteId
 public enum CachedResponseType
 {
     /// <summary>
+    /// Corresponds to the <c>"basic"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("basic")]
     Basic,
     /// <summary>
+    /// Corresponds to the <c>"cors"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cors")]
     Cors,
     /// <summary>
+    /// Corresponds to the <c>"default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
     Default,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
     /// <summary>
+    /// Corresponds to the <c>"opaqueResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("opaqueResponse")]
     OpaqueResponse,
     /// <summary>
+    /// Corresponds to the <c>"opaqueRedirect"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("opaqueRedirect")]
     OpaqueRedirect,

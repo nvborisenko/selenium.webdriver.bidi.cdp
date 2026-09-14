@@ -30,7 +30,7 @@ public interface ICast
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? presentationUrl = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops observing for sinks and issues.
@@ -44,7 +44,7 @@ public interface ICast
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets a sink to be used when the web page requests the browser to choose a
@@ -61,7 +61,7 @@ public interface ICast
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSinkToUseResult"/>.
     /// </returns>
-    Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts mirroring the desktop to the sink.
@@ -77,7 +77,7 @@ public interface ICast
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartDesktopMirroringResult"/>.
     /// </returns>
-    Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts mirroring the tab to the sink.
@@ -93,7 +93,7 @@ public interface ICast
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartTabMirroringResult"/>.
     /// </returns>
-    Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops the active Cast session on the sink.
@@ -109,7 +109,7 @@ public interface ICast
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopCastingResult"/>.
     /// </returns>
-    Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default);
+    Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This is fired whenever the list of available sinks changes. A sink is a
@@ -142,37 +142,37 @@ internal sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 {
     private static readonly CastJsonSerializerContext JsonContext = CastJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(string? presentationUrl = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? presentationUrl = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(PresentationUrl: presentationUrl);
         return await ExecuteCommandAsync("Cast.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Cast.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSinkToUseResult> SetSinkToUseAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSinkToUseCommandParameters(SinkName: sinkName);
         return await ExecuteCommandAsync("Cast.setSinkToUse", @params, JsonContext.SetSinkToUseCommandParameters, JsonContext.SetSinkToUseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartDesktopMirroringResult> StartDesktopMirroringAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartDesktopMirroringCommandParameters(SinkName: sinkName);
         return await ExecuteCommandAsync("Cast.startDesktopMirroring", @params, JsonContext.StartDesktopMirroringCommandParameters, JsonContext.StartDesktopMirroringResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartTabMirroringResult> StartTabMirroringAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartTabMirroringCommandParameters(SinkName: sinkName);
         return await ExecuteCommandAsync("Cast.startTabMirroring", @params, JsonContext.StartTabMirroringCommandParameters, JsonContext.StartTabMirroringResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopCastingResult> StopCastingAsync(string sinkName, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopCastingCommandParameters(SinkName: sinkName);
         return await ExecuteCommandAsync("Cast.stopCasting", @params, JsonContext.StopCastingCommandParameters, JsonContext.StopCastingResult, session, cancellationToken).ConfigureAwait(false);
@@ -185,6 +185,7 @@ internal sealed class CastDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 internal sealed record EnableCommandParameters(string? PresentationUrl) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICast.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -192,6 +193,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICast.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -199,6 +201,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record SetSinkToUseCommandParameters(string SinkName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICast.SetSinkToUseAsync"/> command.
 /// </summary>
 public sealed record SetSinkToUseResult() : EmptyResult;
 
@@ -206,6 +209,7 @@ public sealed record SetSinkToUseResult() : EmptyResult;
 internal sealed record StartDesktopMirroringCommandParameters(string SinkName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICast.StartDesktopMirroringAsync"/> command.
 /// </summary>
 public sealed record StartDesktopMirroringResult() : EmptyResult;
 
@@ -213,6 +217,7 @@ public sealed record StartDesktopMirroringResult() : EmptyResult;
 internal sealed record StartTabMirroringCommandParameters(string SinkName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICast.StartTabMirroringAsync"/> command.
 /// </summary>
 public sealed record StartTabMirroringResult() : EmptyResult;
 
@@ -220,6 +225,7 @@ public sealed record StartTabMirroringResult() : EmptyResult;
 internal sealed record StopCastingCommandParameters(string SinkName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICast.StopCastingAsync"/> command.
 /// </summary>
 public sealed record StopCastingResult() : EmptyResult;
 

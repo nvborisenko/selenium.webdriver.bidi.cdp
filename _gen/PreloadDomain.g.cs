@@ -21,7 +21,7 @@ public interface IPreload
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -34,7 +34,7 @@ public interface IPreload
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Upsert. Currently, it is only emitted when a rule set added.
@@ -125,13 +125,13 @@ internal sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.
 {
     private static readonly PreloadJsonSerializerContext JsonContext = PreloadJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Preload.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Preload.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
@@ -148,6 +148,7 @@ internal sealed class PreloadDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPreload.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -155,6 +156,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPreload.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -310,14 +312,17 @@ public sealed record RuleSet(RuleSetId Id, Network.LoaderId LoaderId, string Sou
 public enum RuleSetErrorType
 {
     /// <summary>
+    /// Corresponds to the <c>"SourceIsNotJsonObject"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SourceIsNotJsonObject")]
     SourceIsNotJsonObject,
     /// <summary>
+    /// Corresponds to the <c>"InvalidRulesSkipped"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRulesSkipped")]
     InvalidRulesSkipped,
     /// <summary>
+    /// Corresponds to the <c>"InvalidRulesetLevelTag"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRulesetLevelTag")]
     InvalidRulesetLevelTag,
@@ -332,14 +337,17 @@ public enum RuleSetErrorType
 public enum SpeculationAction
 {
     /// <summary>
+    /// Corresponds to the <c>"Prefetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Prefetch")]
     Prefetch,
     /// <summary>
+    /// Corresponds to the <c>"Prerender"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Prerender")]
     Prerender,
     /// <summary>
+    /// Corresponds to the <c>"PrerenderUntilScript"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrerenderUntilScript")]
     PrerenderUntilScript,
@@ -353,10 +361,12 @@ public enum SpeculationAction
 public enum SpeculationTargetHint
 {
     /// <summary>
+    /// Corresponds to the <c>"Blank"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Blank")]
     Blank,
     /// <summary>
+    /// Corresponds to the <c>"Self"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Self")]
     Self,
@@ -426,306 +436,382 @@ public record PreloadPipelineId : IStringRemoteId
 public enum PrerenderFinalStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Activated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Activated")]
     Activated,
     /// <summary>
+    /// Corresponds to the <c>"Destroyed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Destroyed")]
     Destroyed,
     /// <summary>
+    /// Corresponds to the <c>"LowEndDevice"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LowEndDevice")]
     LowEndDevice,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSchemeRedirect"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSchemeRedirect")]
     InvalidSchemeRedirect,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSchemeNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSchemeNavigation")]
     InvalidSchemeNavigation,
     /// <summary>
+    /// Corresponds to the <c>"NavigationRequestBlockedByCsp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationRequestBlockedByCsp")]
     NavigationRequestBlockedByCsp,
     /// <summary>
+    /// Corresponds to the <c>"MojoBinderPolicy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MojoBinderPolicy")]
     MojoBinderPolicy,
     /// <summary>
+    /// Corresponds to the <c>"RendererProcessCrashed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RendererProcessCrashed")]
     RendererProcessCrashed,
     /// <summary>
+    /// Corresponds to the <c>"RendererProcessKilled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RendererProcessKilled")]
     RendererProcessKilled,
     /// <summary>
+    /// Corresponds to the <c>"Download"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Download")]
     Download,
     /// <summary>
+    /// Corresponds to the <c>"TriggerDestroyed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TriggerDestroyed")]
     TriggerDestroyed,
     /// <summary>
+    /// Corresponds to the <c>"NavigationNotCommitted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationNotCommitted")]
     NavigationNotCommitted,
     /// <summary>
+    /// Corresponds to the <c>"NavigationBadHttpStatus"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationBadHttpStatus")]
     NavigationBadHttpStatus,
     /// <summary>
+    /// Corresponds to the <c>"ClientCertRequested"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ClientCertRequested")]
     ClientCertRequested,
     /// <summary>
+    /// Corresponds to the <c>"NavigationRequestNetworkError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationRequestNetworkError")]
     NavigationRequestNetworkError,
     /// <summary>
+    /// Corresponds to the <c>"CancelAllHostsForTesting"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CancelAllHostsForTesting")]
     CancelAllHostsForTesting,
     /// <summary>
+    /// Corresponds to the <c>"DidFailLoad"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DidFailLoad")]
     DidFailLoad,
     /// <summary>
+    /// Corresponds to the <c>"Stop"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Stop")]
     Stop,
     /// <summary>
+    /// Corresponds to the <c>"SslCertificateError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SslCertificateError")]
     SslCertificateError,
     /// <summary>
+    /// Corresponds to the <c>"LoginAuthRequested"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LoginAuthRequested")]
     LoginAuthRequested,
     /// <summary>
+    /// Corresponds to the <c>"UaChangeRequiresReload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UaChangeRequiresReload")]
     UaChangeRequiresReload,
     /// <summary>
+    /// Corresponds to the <c>"BlockedByClient"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByClient")]
     BlockedByClient,
     /// <summary>
+    /// Corresponds to the <c>"AudioOutputDeviceRequested"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AudioOutputDeviceRequested")]
     AudioOutputDeviceRequested,
     /// <summary>
+    /// Corresponds to the <c>"MixedContent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MixedContent")]
     MixedContent,
     /// <summary>
+    /// Corresponds to the <c>"TriggerBackgrounded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TriggerBackgrounded")]
     TriggerBackgrounded,
     /// <summary>
+    /// Corresponds to the <c>"MemoryLimitExceeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MemoryLimitExceeded")]
     MemoryLimitExceeded,
     /// <summary>
+    /// Corresponds to the <c>"DataSaverEnabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DataSaverEnabled")]
     DataSaverEnabled,
     /// <summary>
+    /// Corresponds to the <c>"TriggerUrlHasEffectiveUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TriggerUrlHasEffectiveUrl")]
     TriggerUrlHasEffectiveUrl,
     /// <summary>
+    /// Corresponds to the <c>"ActivatedBeforeStarted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivatedBeforeStarted")]
     ActivatedBeforeStarted,
     /// <summary>
+    /// Corresponds to the <c>"InactivePageRestriction"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InactivePageRestriction")]
     InactivePageRestriction,
     /// <summary>
+    /// Corresponds to the <c>"StartFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StartFailed")]
     StartFailed,
     /// <summary>
+    /// Corresponds to the <c>"TimeoutBackgrounded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TimeoutBackgrounded")]
     TimeoutBackgrounded,
     /// <summary>
+    /// Corresponds to the <c>"CrossSiteRedirectInInitialNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossSiteRedirectInInitialNavigation")]
     CrossSiteRedirectInInitialNavigation,
     /// <summary>
+    /// Corresponds to the <c>"CrossSiteNavigationInInitialNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossSiteNavigationInInitialNavigation")]
     CrossSiteNavigationInInitialNavigation,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteCrossOriginRedirectNotOptInInInitialNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteCrossOriginRedirectNotOptInInInitialNavigation")]
     SameSiteCrossOriginRedirectNotOptInInInitialNavigation,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteCrossOriginNavigationNotOptInInInitialNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteCrossOriginNavigationNotOptInInInitialNavigation")]
     SameSiteCrossOriginNavigationNotOptInInInitialNavigation,
     /// <summary>
+    /// Corresponds to the <c>"ActivationNavigationParameterMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivationNavigationParameterMismatch")]
     ActivationNavigationParameterMismatch,
     /// <summary>
+    /// Corresponds to the <c>"ActivatedInBackground"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivatedInBackground")]
     ActivatedInBackground,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderHostDisallowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderHostDisallowed")]
     EmbedderHostDisallowed,
     /// <summary>
+    /// Corresponds to the <c>"ActivationNavigationDestroyedBeforeSuccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivationNavigationDestroyedBeforeSuccess")]
     ActivationNavigationDestroyedBeforeSuccess,
     /// <summary>
+    /// Corresponds to the <c>"TabClosedByUserGesture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TabClosedByUserGesture")]
     TabClosedByUserGesture,
     /// <summary>
+    /// Corresponds to the <c>"TabClosedWithoutUserGesture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TabClosedWithoutUserGesture")]
     TabClosedWithoutUserGesture,
     /// <summary>
+    /// Corresponds to the <c>"PrimaryMainFrameRendererProcessCrashed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrimaryMainFrameRendererProcessCrashed")]
     PrimaryMainFrameRendererProcessCrashed,
     /// <summary>
+    /// Corresponds to the <c>"PrimaryMainFrameRendererProcessKilled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrimaryMainFrameRendererProcessKilled")]
     PrimaryMainFrameRendererProcessKilled,
     /// <summary>
+    /// Corresponds to the <c>"ActivationFramePolicyNotCompatible"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivationFramePolicyNotCompatible")]
     ActivationFramePolicyNotCompatible,
     /// <summary>
+    /// Corresponds to the <c>"PreloadingDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreloadingDisabled")]
     PreloadingDisabled,
     /// <summary>
+    /// Corresponds to the <c>"BatterySaverEnabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BatterySaverEnabled")]
     BatterySaverEnabled,
     /// <summary>
+    /// Corresponds to the <c>"ActivatedDuringMainFrameNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivatedDuringMainFrameNavigation")]
     ActivatedDuringMainFrameNavigation,
     /// <summary>
+    /// Corresponds to the <c>"PreloadingUnsupportedByWebContents"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreloadingUnsupportedByWebContents")]
     PreloadingUnsupportedByWebContents,
     /// <summary>
+    /// Corresponds to the <c>"CrossSiteRedirectInMainFrameNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossSiteRedirectInMainFrameNavigation")]
     CrossSiteRedirectInMainFrameNavigation,
     /// <summary>
+    /// Corresponds to the <c>"CrossSiteNavigationInMainFrameNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossSiteNavigationInMainFrameNavigation")]
     CrossSiteNavigationInMainFrameNavigation,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation")]
     SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation")]
     SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation,
     /// <summary>
+    /// Corresponds to the <c>"MemoryPressureOnTrigger"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MemoryPressureOnTrigger")]
     MemoryPressureOnTrigger,
     /// <summary>
+    /// Corresponds to the <c>"MemoryPressureAfterTriggered"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MemoryPressureAfterTriggered")]
     MemoryPressureAfterTriggered,
     /// <summary>
+    /// Corresponds to the <c>"PrerenderingDisabledByDevTools"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrerenderingDisabledByDevTools")]
     PrerenderingDisabledByDevTools,
     /// <summary>
+    /// Corresponds to the <c>"SpeculationRuleRemoved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SpeculationRuleRemoved")]
     SpeculationRuleRemoved,
     /// <summary>
+    /// Corresponds to the <c>"ActivatedWithAuxiliaryBrowsingContexts"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivatedWithAuxiliaryBrowsingContexts")]
     ActivatedWithAuxiliaryBrowsingContexts,
     /// <summary>
+    /// Corresponds to the <c>"MaxNumOfRunningEagerPrerendersExceeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MaxNumOfRunningEagerPrerendersExceeded")]
     MaxNumOfRunningEagerPrerendersExceeded,
     /// <summary>
+    /// Corresponds to the <c>"MaxNumOfRunningNonEagerPrerendersExceeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MaxNumOfRunningNonEagerPrerendersExceeded")]
     MaxNumOfRunningNonEagerPrerendersExceeded,
     /// <summary>
+    /// Corresponds to the <c>"MaxNumOfRunningEmbedderPrerendersExceeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MaxNumOfRunningEmbedderPrerendersExceeded")]
     MaxNumOfRunningEmbedderPrerendersExceeded,
     /// <summary>
+    /// Corresponds to the <c>"PrerenderingUrlHasEffectiveUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrerenderingUrlHasEffectiveUrl")]
     PrerenderingUrlHasEffectiveUrl,
     /// <summary>
+    /// Corresponds to the <c>"RedirectedPrerenderingUrlHasEffectiveUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RedirectedPrerenderingUrlHasEffectiveUrl")]
     RedirectedPrerenderingUrlHasEffectiveUrl,
     /// <summary>
+    /// Corresponds to the <c>"ActivationUrlHasEffectiveUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivationUrlHasEffectiveUrl")]
     ActivationUrlHasEffectiveUrl,
     /// <summary>
+    /// Corresponds to the <c>"JavaScriptInterfaceAdded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JavaScriptInterfaceAdded")]
     JavaScriptInterfaceAdded,
     /// <summary>
+    /// Corresponds to the <c>"JavaScriptInterfaceRemoved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JavaScriptInterfaceRemoved")]
     JavaScriptInterfaceRemoved,
     /// <summary>
+    /// Corresponds to the <c>"AllPrerenderingCanceled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AllPrerenderingCanceled")]
     AllPrerenderingCanceled,
     /// <summary>
+    /// Corresponds to the <c>"WindowClosed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WindowClosed")]
     WindowClosed,
     /// <summary>
+    /// Corresponds to the <c>"SlowNetwork"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SlowNetwork")]
     SlowNetwork,
     /// <summary>
+    /// Corresponds to the <c>"OtherPrerenderedPageActivated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OtherPrerenderedPageActivated")]
     OtherPrerenderedPageActivated,
     /// <summary>
+    /// Corresponds to the <c>"V8OptimizerDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("V8OptimizerDisabled")]
     V8OptimizerDisabled,
     /// <summary>
+    /// Corresponds to the <c>"PrerenderFailedDuringPrefetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrerenderFailedDuringPrefetch")]
     PrerenderFailedDuringPrefetch,
     /// <summary>
+    /// Corresponds to the <c>"BrowsingDataRemoved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BrowsingDataRemoved")]
     BrowsingDataRemoved,
     /// <summary>
+    /// Corresponds to the <c>"PrerenderHostReused"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrerenderHostReused")]
     PrerenderHostReused,
     /// <summary>
+    /// Corresponds to the <c>"FormSubmitWhenPrerendering"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormSubmitWhenPrerendering")]
     FormSubmitWhenPrerendering,
     /// <summary>
+    /// Corresponds to the <c>"CrossDocumentRestart"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossDocumentRestart")]
     CrossDocumentRestart,
@@ -739,26 +825,32 @@ public enum PrerenderFinalStatus
 public enum PreloadingStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Pending"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Pending")]
     Pending,
     /// <summary>
+    /// Corresponds to the <c>"Running"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Running")]
     Running,
     /// <summary>
+    /// Corresponds to the <c>"Ready"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Ready")]
     Ready,
     /// <summary>
+    /// Corresponds to the <c>"Success"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Success")]
     Success,
     /// <summary>
+    /// Corresponds to the <c>"Failure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Failure")]
     Failure,
     /// <summary>
+    /// Corresponds to the <c>"NotSupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotSupported")]
     NotSupported,
@@ -772,150 +864,187 @@ public enum PreloadingStatus
 public enum PrefetchStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"PrefetchAllowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchAllowed")]
     PrefetchAllowed,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchFailedIneligibleRedirect"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchFailedIneligibleRedirect")]
     PrefetchFailedIneligibleRedirect,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchFailedInvalidRedirect"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchFailedInvalidRedirect")]
     PrefetchFailedInvalidRedirect,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchFailedMIMENotSupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchFailedMIMENotSupported")]
     PrefetchFailedMIMENotSupported,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchFailedNetError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchFailedNetError")]
     PrefetchFailedNetError,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchFailedNon2XX"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchFailedNon2XX")]
     PrefetchFailedNon2XX,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchEvictedAfterBrowsingDataRemoved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchEvictedAfterBrowsingDataRemoved")]
     PrefetchEvictedAfterBrowsingDataRemoved,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchEvictedAfterCandidateRemoved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchEvictedAfterCandidateRemoved")]
     PrefetchEvictedAfterCandidateRemoved,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchEvictedForNewerPrefetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchEvictedForNewerPrefetch")]
     PrefetchEvictedForNewerPrefetch,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchHeldback"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchHeldback")]
     PrefetchHeldback,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchIneligibleRetryAfter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchIneligibleRetryAfter")]
     PrefetchIneligibleRetryAfter,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchIsPrivacyDecoy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchIsPrivacyDecoy")]
     PrefetchIsPrivacyDecoy,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchIsStale"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchIsStale")]
     PrefetchIsStale,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleBlockedByConnectionAllowlist"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleBlockedByConnectionAllowlist")]
     PrefetchNotEligibleBlockedByConnectionAllowlist,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleBrowserContextOffTheRecord"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleBrowserContextOffTheRecord")]
     PrefetchNotEligibleBrowserContextOffTheRecord,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleCrossOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleCrossOrigin")]
     PrefetchNotEligibleCrossOrigin,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleDataSaverEnabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleDataSaverEnabled")]
     PrefetchNotEligibleDataSaverEnabled,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleExistingProxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleExistingProxy")]
     PrefetchNotEligibleExistingProxy,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleHostIsNonUnique"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleHostIsNonUnique")]
     PrefetchNotEligibleHostIsNonUnique,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleNonDefaultStoragePartition"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleNonDefaultStoragePartition")]
     PrefetchNotEligibleNonDefaultStoragePartition,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy")]
     PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleSchemeIsNotHttps"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleSchemeIsNotHttps")]
     PrefetchNotEligibleSchemeIsNotHttps,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleUserHasCookies"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleUserHasCookies")]
     PrefetchNotEligibleUserHasCookies,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleUserHasServiceWorker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleUserHasServiceWorker")]
     PrefetchNotEligibleUserHasServiceWorker,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler")]
     PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleRedirectFromServiceWorker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleRedirectFromServiceWorker")]
     PrefetchNotEligibleRedirectFromServiceWorker,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleRedirectToServiceWorker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleRedirectToServiceWorker")]
     PrefetchNotEligibleRedirectToServiceWorker,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligibleBatterySaverEnabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligibleBatterySaverEnabled")]
     PrefetchNotEligibleBatterySaverEnabled,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotEligiblePreloadingDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotEligiblePreloadingDisabled")]
     PrefetchNotEligiblePreloadingDisabled,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotFinishedInTime"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotFinishedInTime")]
     PrefetchNotFinishedInTime,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotStarted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotStarted")]
     PrefetchNotStarted,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotUsedCookiesChanged"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotUsedCookiesChanged")]
     PrefetchNotUsedCookiesChanged,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchProxyNotAvailable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchProxyNotAvailable")]
     PrefetchProxyNotAvailable,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchResponseUsed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchResponseUsed")]
     PrefetchResponseUsed,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchSuccessfulButNotUsed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchSuccessfulButNotUsed")]
     PrefetchSuccessfulButNotUsed,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchNotUsedProbeFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchNotUsedProbeFailed")]
     PrefetchNotUsedProbeFailed,
     /// <summary>
+    /// Corresponds to the <c>"PrefetchCancelledOnUserNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchCancelledOnUserNavigation")]
     PrefetchCancelledOnUserNavigation,

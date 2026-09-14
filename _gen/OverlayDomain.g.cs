@@ -23,7 +23,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables domain notifications.
@@ -37,7 +37,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// For testing.
@@ -66,7 +66,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetHighlightObjectForTestResult"/>.
     /// </returns>
-    Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = default, bool? includeStyle = default, ColorFormat? colorFormat = default, bool? showAccessibilityInfo = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = null, bool? includeStyle = null, ColorFormat? colorFormat = null, bool? showAccessibilityInfo = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// For Persistent Grid testing.
@@ -83,7 +83,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetGridHighlightObjectsForTestResult"/>.
     /// </returns>
-    Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// For Source Order Viewer testing.
@@ -100,7 +100,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSourceOrderHighlightObjectForTestResult"/>.
     /// </returns>
-    Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Hides any highlight.
@@ -114,7 +114,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HideHighlightResult"/>.
     /// </returns>
-    Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<HideHighlightResult> HideHighlightAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights owner element of the frame with given id.
@@ -141,7 +141,7 @@ public interface IOverlay
     /// A task representing the asynchronous operation, containing a <see cref="HighlightFrameResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = default, DOM.RGBA? contentOutlineColor = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = null, DOM.RGBA? contentOutlineColor = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights DOM node with given id or with the given JavaScript object wrapper. Either nodeId or
@@ -171,7 +171,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightNodeResult"/>.
     /// </returns>
-    Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? selector = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? selector = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights given quad. Coordinates are absolute with respect to the main frame viewport.
@@ -194,7 +194,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightQuadResult"/>.
     /// </returns>
-    Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = null, DOM.RGBA? outlineColor = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport.
@@ -229,7 +229,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightRectResult"/>.
     /// </returns>
-    Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = null, DOM.RGBA? outlineColor = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights the source order of the children of the DOM node with given id or with the given
@@ -256,7 +256,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightSourceOrderResult"/>.
     /// </returns>
-    Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enters the 'inspect' mode. In this mode, elements that user is hovering over are highlighted.
@@ -278,7 +278,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInspectModeResult"/>.
     /// </returns>
-    Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights owner element of all frames detected to be ads.
@@ -295,7 +295,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowAdHighlightsResult"/>.
     /// </returns>
-    Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -311,7 +311,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPausedInDebuggerMessageResult"/>.
     /// </returns>
-    Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows debug borders on layers
@@ -328,7 +328,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowDebugBordersResult"/>.
     /// </returns>
-    Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows the FPS counter
@@ -345,7 +345,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowFPSCounterResult"/>.
     /// </returns>
-    Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlight multiple elements with the CSS Grid overlay.
@@ -362,7 +362,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowGridOverlaysResult"/>.
     /// </returns>
-    Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -378,7 +378,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowFlexOverlaysResult"/>.
     /// </returns>
-    Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -394,7 +394,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowScrollSnapOverlaysResult"/>.
     /// </returns>
-    Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -410,7 +410,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowContainerQueryOverlaysResult"/>.
     /// </returns>
-    Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -426,7 +426,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowInspectedElementAnchorResult"/>.
     /// </returns>
-    Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows paint rectangles
@@ -443,7 +443,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowPaintRectsResult"/>.
     /// </returns>
-    Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows layout shift regions
@@ -460,7 +460,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowLayoutShiftRegionsResult"/>.
     /// </returns>
-    Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that backend shows scroll bottleneck rects
@@ -477,7 +477,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowScrollBottleneckRectsResult"/>.
     /// </returns>
-    Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated, no longer has any effect.
@@ -495,7 +495,7 @@ public interface IOverlay
     /// A task representing the asynchronous operation, containing a <see cref="SetShowHitTestBordersResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated, no longer has any effect.
@@ -512,7 +512,7 @@ public interface IOverlay
     /// A task representing the asynchronous operation, containing a <see cref="SetShowWebVitalsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Paints viewport size upon main frame resize.
@@ -529,7 +529,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowViewportSizeOnResizeResult"/>.
     /// </returns>
-    Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Add a dual screen device hinge
@@ -546,7 +546,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowHingeResult"/>.
     /// </returns>
-    Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Add a display cutout overlay.
@@ -563,7 +563,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowDisplayCutoutResult"/>.
     /// </returns>
-    Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Show elements in isolation mode with overlays.
@@ -580,7 +580,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowIsolatedElementsResult"/>.
     /// </returns>
-    Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Show Window Controls Overlay for PWA
@@ -597,7 +597,7 @@ public interface IOverlay
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetShowWindowControlsOverlayResult"/>.
     /// </returns>
-    Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when the node should be inspected. This happens after call to <b>setInspectMode</b> or when
@@ -667,190 +667,190 @@ internal sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.
 {
     private static readonly OverlayJsonSerializerContext JsonContext = OverlayJsonSerializerContext.Default;
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Overlay.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Overlay.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = default, bool? includeStyle = default, ColorFormat? colorFormat = default, bool? showAccessibilityInfo = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetHighlightObjectForTestResult> GetHighlightObjectForTestAsync(DOM.NodeId nodeId, bool? includeDistance = null, bool? includeStyle = null, ColorFormat? colorFormat = null, bool? showAccessibilityInfo = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetHighlightObjectForTestCommandParameters(NodeId: nodeId, IncludeDistance: includeDistance, IncludeStyle: includeStyle, ColorFormat: colorFormat, ShowAccessibilityInfo: showAccessibilityInfo);
         return await ExecuteCommandAsync("Overlay.getHighlightObjectForTest", @params, JsonContext.GetHighlightObjectForTestCommandParameters, JsonContext.GetHighlightObjectForTestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetGridHighlightObjectsForTestResult> GetGridHighlightObjectsForTestAsync(ImmutableArray<DOM.NodeId> nodeIds, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetGridHighlightObjectsForTestCommandParameters(NodeIds: nodeIds);
         return await ExecuteCommandAsync("Overlay.getGridHighlightObjectsForTest", @params, JsonContext.GetGridHighlightObjectsForTestCommandParameters, JsonContext.GetGridHighlightObjectsForTestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetSourceOrderHighlightObjectForTestResult> GetSourceOrderHighlightObjectForTestAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetSourceOrderHighlightObjectForTestCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("Overlay.getSourceOrderHighlightObjectForTest", @params, JsonContext.GetSourceOrderHighlightObjectForTestCommandParameters, JsonContext.GetSourceOrderHighlightObjectForTestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HideHighlightResult> HideHighlightAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HideHighlightCommandParameters();
         return await ExecuteCommandAsync("Overlay.hideHighlight", @params, JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = default, DOM.RGBA? contentOutlineColor = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightFrameResult> HighlightFrameAsync(Page.FrameId frameId, DOM.RGBA? contentColor = null, DOM.RGBA? contentOutlineColor = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightFrameCommandParameters(FrameId: frameId, ContentColor: contentColor, ContentOutlineColor: contentOutlineColor);
         return await ExecuteCommandAsync("Overlay.highlightFrame", @params, JsonContext.HighlightFrameCommandParameters, JsonContext.HighlightFrameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? selector = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightNodeResult> HighlightNodeAsync(HighlightConfig highlightConfig, DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? selector = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightNodeCommandParameters(HighlightConfig: highlightConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Selector: selector);
         return await ExecuteCommandAsync("Overlay.highlightNode", @params, JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightQuadResult> HighlightQuadAsync(ImmutableArray<double> quad, DOM.RGBA? color = null, DOM.RGBA? outlineColor = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightQuadCommandParameters(Quad: quad, Color: color, OutlineColor: outlineColor);
         return await ExecuteCommandAsync("Overlay.highlightQuad", @params, JsonContext.HighlightQuadCommandParameters, JsonContext.HighlightQuadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = default, DOM.RGBA? outlineColor = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightRectResult> HighlightRectAsync(long x, long y, long width, long height, DOM.RGBA? color = null, DOM.RGBA? outlineColor = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightRectCommandParameters(X: x, Y: y, Width: width, Height: height, Color: color, OutlineColor: outlineColor);
         return await ExecuteCommandAsync("Overlay.highlightRect", @params, JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightSourceOrderResult> HighlightSourceOrderAsync(SourceOrderConfig sourceOrderConfig, DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightSourceOrderCommandParameters(SourceOrderConfig: sourceOrderConfig, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
         return await ExecuteCommandAsync("Overlay.highlightSourceOrder", @params, JsonContext.HighlightSourceOrderCommandParameters, JsonContext.HighlightSourceOrderResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetInspectModeResult> SetInspectModeAsync(InspectMode mode, HighlightConfig? highlightConfig = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetInspectModeCommandParameters(Mode: mode, HighlightConfig: highlightConfig);
         return await ExecuteCommandAsync("Overlay.setInspectMode", @params, JsonContext.SetInspectModeCommandParameters, JsonContext.SetInspectModeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowAdHighlightsResult> SetShowAdHighlightsAsync(bool show, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowAdHighlightsCommandParameters(Show: show);
         return await ExecuteCommandAsync("Overlay.setShowAdHighlights", @params, JsonContext.SetShowAdHighlightsCommandParameters, JsonContext.SetShowAdHighlightsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPausedInDebuggerMessageResult> SetPausedInDebuggerMessageAsync(string? message = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPausedInDebuggerMessageCommandParameters(Message: message);
         return await ExecuteCommandAsync("Overlay.setPausedInDebuggerMessage", @params, JsonContext.SetPausedInDebuggerMessageCommandParameters, JsonContext.SetPausedInDebuggerMessageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowDebugBordersResult> SetShowDebugBordersAsync(bool show, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowDebugBordersCommandParameters(Show: show);
         return await ExecuteCommandAsync("Overlay.setShowDebugBorders", @params, JsonContext.SetShowDebugBordersCommandParameters, JsonContext.SetShowDebugBordersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowFPSCounterResult> SetShowFPSCounterAsync(bool show, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowFPSCounterCommandParameters(Show: show);
         return await ExecuteCommandAsync("Overlay.setShowFPSCounter", @params, JsonContext.SetShowFPSCounterCommandParameters, JsonContext.SetShowFPSCounterResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowGridOverlaysResult> SetShowGridOverlaysAsync(ImmutableArray<GridNodeHighlightConfig> gridNodeHighlightConfigs, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowGridOverlaysCommandParameters(GridNodeHighlightConfigs: gridNodeHighlightConfigs);
         return await ExecuteCommandAsync("Overlay.setShowGridOverlays", @params, JsonContext.SetShowGridOverlaysCommandParameters, JsonContext.SetShowGridOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowFlexOverlaysResult> SetShowFlexOverlaysAsync(ImmutableArray<FlexNodeHighlightConfig> flexNodeHighlightConfigs, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowFlexOverlaysCommandParameters(FlexNodeHighlightConfigs: flexNodeHighlightConfigs);
         return await ExecuteCommandAsync("Overlay.setShowFlexOverlays", @params, JsonContext.SetShowFlexOverlaysCommandParameters, JsonContext.SetShowFlexOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowScrollSnapOverlaysResult> SetShowScrollSnapOverlaysAsync(ImmutableArray<ScrollSnapHighlightConfig> scrollSnapHighlightConfigs, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowScrollSnapOverlaysCommandParameters(ScrollSnapHighlightConfigs: scrollSnapHighlightConfigs);
         return await ExecuteCommandAsync("Overlay.setShowScrollSnapOverlays", @params, JsonContext.SetShowScrollSnapOverlaysCommandParameters, JsonContext.SetShowScrollSnapOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowContainerQueryOverlaysResult> SetShowContainerQueryOverlaysAsync(ImmutableArray<ContainerQueryHighlightConfig> containerQueryHighlightConfigs, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowContainerQueryOverlaysCommandParameters(ContainerQueryHighlightConfigs: containerQueryHighlightConfigs);
         return await ExecuteCommandAsync("Overlay.setShowContainerQueryOverlays", @params, JsonContext.SetShowContainerQueryOverlaysCommandParameters, JsonContext.SetShowContainerQueryOverlaysResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowInspectedElementAnchorResult> SetShowInspectedElementAnchorAsync(InspectedElementAnchorConfig inspectedElementAnchorConfig, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig: inspectedElementAnchorConfig);
         return await ExecuteCommandAsync("Overlay.setShowInspectedElementAnchor", @params, JsonContext.SetShowInspectedElementAnchorCommandParameters, JsonContext.SetShowInspectedElementAnchorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowPaintRectsResult> SetShowPaintRectsAsync(bool result, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowPaintRectsCommandParameters(Result: result);
         return await ExecuteCommandAsync("Overlay.setShowPaintRects", @params, JsonContext.SetShowPaintRectsCommandParameters, JsonContext.SetShowPaintRectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowLayoutShiftRegionsResult> SetShowLayoutShiftRegionsAsync(bool result, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowLayoutShiftRegionsCommandParameters(Result: result);
         return await ExecuteCommandAsync("Overlay.setShowLayoutShiftRegions", @params, JsonContext.SetShowLayoutShiftRegionsCommandParameters, JsonContext.SetShowLayoutShiftRegionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowScrollBottleneckRectsResult> SetShowScrollBottleneckRectsAsync(bool show, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowScrollBottleneckRectsCommandParameters(Show: show);
         return await ExecuteCommandAsync("Overlay.setShowScrollBottleneckRects", @params, JsonContext.SetShowScrollBottleneckRectsCommandParameters, JsonContext.SetShowScrollBottleneckRectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowHitTestBordersResult> SetShowHitTestBordersAsync(bool show, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowHitTestBordersCommandParameters(Show: show);
         return await ExecuteCommandAsync("Overlay.setShowHitTestBorders", @params, JsonContext.SetShowHitTestBordersCommandParameters, JsonContext.SetShowHitTestBordersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowWebVitalsResult> SetShowWebVitalsAsync(bool show, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowWebVitalsCommandParameters(Show: show);
         return await ExecuteCommandAsync("Overlay.setShowWebVitals", @params, JsonContext.SetShowWebVitalsCommandParameters, JsonContext.SetShowWebVitalsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowViewportSizeOnResizeResult> SetShowViewportSizeOnResizeAsync(bool show, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowViewportSizeOnResizeCommandParameters(Show: show);
         return await ExecuteCommandAsync("Overlay.setShowViewportSizeOnResize", @params, JsonContext.SetShowViewportSizeOnResizeCommandParameters, JsonContext.SetShowViewportSizeOnResizeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowHingeResult> SetShowHingeAsync(HingeConfig? hingeConfig = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowHingeCommandParameters(HingeConfig: hingeConfig);
         return await ExecuteCommandAsync("Overlay.setShowHinge", @params, JsonContext.SetShowHingeCommandParameters, JsonContext.SetShowHingeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowDisplayCutoutResult> SetShowDisplayCutoutAsync(DisplayCutoutConfig? displayCutoutConfig = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig: displayCutoutConfig);
         return await ExecuteCommandAsync("Overlay.setShowDisplayCutout", @params, JsonContext.SetShowDisplayCutoutCommandParameters, JsonContext.SetShowDisplayCutoutResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowIsolatedElementsResult> SetShowIsolatedElementsAsync(ImmutableArray<IsolatedElementHighlightConfig> isolatedElementHighlightConfigs, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowIsolatedElementsCommandParameters(IsolatedElementHighlightConfigs: isolatedElementHighlightConfigs);
         return await ExecuteCommandAsync("Overlay.setShowIsolatedElements", @params, JsonContext.SetShowIsolatedElementsCommandParameters, JsonContext.SetShowIsolatedElementsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetShowWindowControlsOverlayResult> SetShowWindowControlsOverlayAsync(WindowControlsOverlayConfig? windowControlsOverlayConfig = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig: windowControlsOverlayConfig);
         return await ExecuteCommandAsync("Overlay.setShowWindowControlsOverlay", @params, JsonContext.SetShowWindowControlsOverlayCommandParameters, JsonContext.SetShowWindowControlsOverlayResult, session, cancellationToken).ConfigureAwait(false);
@@ -867,6 +867,7 @@ internal sealed class OverlayDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -874,6 +875,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -881,6 +883,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record GetHighlightObjectForTestCommandParameters(DOM.NodeId NodeId, bool? IncludeDistance, bool? IncludeStyle, ColorFormat? ColorFormat, bool? ShowAccessibilityInfo) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.GetHighlightObjectForTestAsync"/> command.
 /// </summary>
 /// <param name="Highlight">
 /// Highlight data for the node.
@@ -891,6 +894,7 @@ public sealed record GetHighlightObjectForTestResult(global::System.Text.Json.Js
 internal sealed record GetGridHighlightObjectsForTestCommandParameters(ImmutableArray<DOM.NodeId> NodeIds) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.GetGridHighlightObjectsForTestAsync"/> command.
 /// </summary>
 /// <param name="Highlights">
 /// Grid Highlight data for the node ids provided.
@@ -901,6 +905,7 @@ public sealed record GetGridHighlightObjectsForTestResult(global::System.Text.Js
 internal sealed record GetSourceOrderHighlightObjectForTestCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.GetSourceOrderHighlightObjectForTestAsync"/> command.
 /// </summary>
 /// <param name="Highlight">
 /// Source order highlight data for the node id provided.
@@ -911,6 +916,7 @@ public sealed record GetSourceOrderHighlightObjectForTestResult(global::System.T
 internal sealed record HideHighlightCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.HideHighlightAsync"/> command.
 /// </summary>
 public sealed record HideHighlightResult() : EmptyResult;
 
@@ -918,6 +924,7 @@ public sealed record HideHighlightResult() : EmptyResult;
 internal sealed record HighlightFrameCommandParameters(Page.FrameId FrameId, DOM.RGBA? ContentColor, DOM.RGBA? ContentOutlineColor) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.HighlightFrameAsync"/> command.
 /// </summary>
 public sealed record HighlightFrameResult() : EmptyResult;
 
@@ -925,6 +932,7 @@ public sealed record HighlightFrameResult() : EmptyResult;
 internal sealed record HighlightNodeCommandParameters(HighlightConfig HighlightConfig, DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, string? Selector) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.HighlightNodeAsync"/> command.
 /// </summary>
 public sealed record HighlightNodeResult() : EmptyResult;
 
@@ -932,6 +940,7 @@ public sealed record HighlightNodeResult() : EmptyResult;
 internal sealed record HighlightQuadCommandParameters(ImmutableArray<double> Quad, DOM.RGBA? Color, DOM.RGBA? OutlineColor) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.HighlightQuadAsync"/> command.
 /// </summary>
 public sealed record HighlightQuadResult() : EmptyResult;
 
@@ -939,6 +948,7 @@ public sealed record HighlightQuadResult() : EmptyResult;
 internal sealed record HighlightRectCommandParameters(long X, long Y, long Width, long Height, DOM.RGBA? Color, DOM.RGBA? OutlineColor) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.HighlightRectAsync"/> command.
 /// </summary>
 public sealed record HighlightRectResult() : EmptyResult;
 
@@ -946,6 +956,7 @@ public sealed record HighlightRectResult() : EmptyResult;
 internal sealed record HighlightSourceOrderCommandParameters(SourceOrderConfig SourceOrderConfig, DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.HighlightSourceOrderAsync"/> command.
 /// </summary>
 public sealed record HighlightSourceOrderResult() : EmptyResult;
 
@@ -953,6 +964,7 @@ public sealed record HighlightSourceOrderResult() : EmptyResult;
 internal sealed record SetInspectModeCommandParameters(InspectMode Mode, HighlightConfig? HighlightConfig) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetInspectModeAsync"/> command.
 /// </summary>
 public sealed record SetInspectModeResult() : EmptyResult;
 
@@ -960,6 +972,7 @@ public sealed record SetInspectModeResult() : EmptyResult;
 internal sealed record SetShowAdHighlightsCommandParameters(bool Show) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowAdHighlightsAsync"/> command.
 /// </summary>
 public sealed record SetShowAdHighlightsResult() : EmptyResult;
 
@@ -967,6 +980,7 @@ public sealed record SetShowAdHighlightsResult() : EmptyResult;
 internal sealed record SetPausedInDebuggerMessageCommandParameters(string? Message) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetPausedInDebuggerMessageAsync"/> command.
 /// </summary>
 public sealed record SetPausedInDebuggerMessageResult() : EmptyResult;
 
@@ -974,6 +988,7 @@ public sealed record SetPausedInDebuggerMessageResult() : EmptyResult;
 internal sealed record SetShowDebugBordersCommandParameters(bool Show) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowDebugBordersAsync"/> command.
 /// </summary>
 public sealed record SetShowDebugBordersResult() : EmptyResult;
 
@@ -981,6 +996,7 @@ public sealed record SetShowDebugBordersResult() : EmptyResult;
 internal sealed record SetShowFPSCounterCommandParameters(bool Show) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowFPSCounterAsync"/> command.
 /// </summary>
 public sealed record SetShowFPSCounterResult() : EmptyResult;
 
@@ -988,6 +1004,7 @@ public sealed record SetShowFPSCounterResult() : EmptyResult;
 internal sealed record SetShowGridOverlaysCommandParameters(ImmutableArray<GridNodeHighlightConfig> GridNodeHighlightConfigs) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowGridOverlaysAsync"/> command.
 /// </summary>
 public sealed record SetShowGridOverlaysResult() : EmptyResult;
 
@@ -995,6 +1012,7 @@ public sealed record SetShowGridOverlaysResult() : EmptyResult;
 internal sealed record SetShowFlexOverlaysCommandParameters(ImmutableArray<FlexNodeHighlightConfig> FlexNodeHighlightConfigs) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowFlexOverlaysAsync"/> command.
 /// </summary>
 public sealed record SetShowFlexOverlaysResult() : EmptyResult;
 
@@ -1002,6 +1020,7 @@ public sealed record SetShowFlexOverlaysResult() : EmptyResult;
 internal sealed record SetShowScrollSnapOverlaysCommandParameters(ImmutableArray<ScrollSnapHighlightConfig> ScrollSnapHighlightConfigs) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowScrollSnapOverlaysAsync"/> command.
 /// </summary>
 public sealed record SetShowScrollSnapOverlaysResult() : EmptyResult;
 
@@ -1009,6 +1028,7 @@ public sealed record SetShowScrollSnapOverlaysResult() : EmptyResult;
 internal sealed record SetShowContainerQueryOverlaysCommandParameters(ImmutableArray<ContainerQueryHighlightConfig> ContainerQueryHighlightConfigs) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowContainerQueryOverlaysAsync"/> command.
 /// </summary>
 public sealed record SetShowContainerQueryOverlaysResult() : EmptyResult;
 
@@ -1016,6 +1036,7 @@ public sealed record SetShowContainerQueryOverlaysResult() : EmptyResult;
 internal sealed record SetShowInspectedElementAnchorCommandParameters(InspectedElementAnchorConfig InspectedElementAnchorConfig) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowInspectedElementAnchorAsync"/> command.
 /// </summary>
 public sealed record SetShowInspectedElementAnchorResult() : EmptyResult;
 
@@ -1023,6 +1044,7 @@ public sealed record SetShowInspectedElementAnchorResult() : EmptyResult;
 internal sealed record SetShowPaintRectsCommandParameters(bool Result) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowPaintRectsAsync"/> command.
 /// </summary>
 public sealed record SetShowPaintRectsResult() : EmptyResult;
 
@@ -1030,6 +1052,7 @@ public sealed record SetShowPaintRectsResult() : EmptyResult;
 internal sealed record SetShowLayoutShiftRegionsCommandParameters(bool Result) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowLayoutShiftRegionsAsync"/> command.
 /// </summary>
 public sealed record SetShowLayoutShiftRegionsResult() : EmptyResult;
 
@@ -1037,6 +1060,7 @@ public sealed record SetShowLayoutShiftRegionsResult() : EmptyResult;
 internal sealed record SetShowScrollBottleneckRectsCommandParameters(bool Show) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowScrollBottleneckRectsAsync"/> command.
 /// </summary>
 public sealed record SetShowScrollBottleneckRectsResult() : EmptyResult;
 
@@ -1044,6 +1068,7 @@ public sealed record SetShowScrollBottleneckRectsResult() : EmptyResult;
 internal sealed record SetShowHitTestBordersCommandParameters(bool Show) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowHitTestBordersAsync"/> command.
 /// </summary>
 public sealed record SetShowHitTestBordersResult() : EmptyResult;
 
@@ -1051,6 +1076,7 @@ public sealed record SetShowHitTestBordersResult() : EmptyResult;
 internal sealed record SetShowWebVitalsCommandParameters(bool Show) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowWebVitalsAsync"/> command.
 /// </summary>
 public sealed record SetShowWebVitalsResult() : EmptyResult;
 
@@ -1058,6 +1084,7 @@ public sealed record SetShowWebVitalsResult() : EmptyResult;
 internal sealed record SetShowViewportSizeOnResizeCommandParameters(bool Show) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowViewportSizeOnResizeAsync"/> command.
 /// </summary>
 public sealed record SetShowViewportSizeOnResizeResult() : EmptyResult;
 
@@ -1065,6 +1092,7 @@ public sealed record SetShowViewportSizeOnResizeResult() : EmptyResult;
 internal sealed record SetShowHingeCommandParameters(HingeConfig? HingeConfig) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowHingeAsync"/> command.
 /// </summary>
 public sealed record SetShowHingeResult() : EmptyResult;
 
@@ -1072,6 +1100,7 @@ public sealed record SetShowHingeResult() : EmptyResult;
 internal sealed record SetShowDisplayCutoutCommandParameters(DisplayCutoutConfig? DisplayCutoutConfig) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowDisplayCutoutAsync"/> command.
 /// </summary>
 public sealed record SetShowDisplayCutoutResult() : EmptyResult;
 
@@ -1079,6 +1108,7 @@ public sealed record SetShowDisplayCutoutResult() : EmptyResult;
 internal sealed record SetShowIsolatedElementsCommandParameters(ImmutableArray<IsolatedElementHighlightConfig> IsolatedElementHighlightConfigs) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowIsolatedElementsAsync"/> command.
 /// </summary>
 public sealed record SetShowIsolatedElementsResult() : EmptyResult;
 
@@ -1086,6 +1116,7 @@ public sealed record SetShowIsolatedElementsResult() : EmptyResult;
 internal sealed record SetShowWindowControlsOverlayCommandParameters(WindowControlsOverlayConfig? WindowControlsOverlayConfig) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IOverlay.SetShowWindowControlsOverlayAsync"/> command.
 /// </summary>
 public sealed record SetShowWindowControlsOverlayResult() : EmptyResult;
 
@@ -1361,14 +1392,17 @@ public sealed record BoxStyle()
 public enum ContrastAlgorithm
 {
     /// <summary>
+    /// Corresponds to the <c>"aa"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("aa")]
     Aa,
     /// <summary>
+    /// Corresponds to the <c>"aaa"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("aaa")]
     Aaa,
     /// <summary>
+    /// Corresponds to the <c>"apca"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("apca")]
     Apca,
@@ -1481,18 +1515,22 @@ public sealed record HighlightConfig()
 public enum ColorFormat
 {
     /// <summary>
+    /// Corresponds to the <c>"rgb"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rgb")]
     Rgb,
     /// <summary>
+    /// Corresponds to the <c>"hsl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hsl")]
     Hsl,
     /// <summary>
+    /// Corresponds to the <c>"hwb"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hwb")]
     Hwb,
     /// <summary>
+    /// Corresponds to the <c>"hex"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hex")]
     Hex,
@@ -1586,18 +1624,22 @@ public sealed record HingeConfig(DOM.Rect Rect)
 public enum DisplayCutoutShape
 {
     /// <summary>
+    /// Corresponds to the <c>"pill"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pill")]
     Pill,
     /// <summary>
+    /// Corresponds to the <c>"notch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notch")]
     Notch,
     /// <summary>
+    /// Corresponds to the <c>"circle"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("circle")]
     Circle,
     /// <summary>
+    /// Corresponds to the <c>"rectangle"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rectangle")]
     Rectangle,
@@ -1731,18 +1773,22 @@ public sealed record IsolationModeHighlightConfig()
 public enum InspectMode
 {
     /// <summary>
+    /// Corresponds to the <c>"searchForNode"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("searchForNode")]
     SearchForNode,
     /// <summary>
+    /// Corresponds to the <c>"searchForUAShadowDOM"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("searchForUAShadowDOM")]
     SearchForUAShadowDOM,
     /// <summary>
+    /// Corresponds to the <c>"captureAreaScreenshot"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("captureAreaScreenshot")]
     CaptureAreaScreenshot,
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
@@ -1769,10 +1815,12 @@ public sealed record InspectedElementAnchorConfig()
 public enum LineStylePattern
 {
     /// <summary>
+    /// Corresponds to the <c>"dashed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dashed")]
     Dashed,
     /// <summary>
+    /// Corresponds to the <c>"dotted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dotted")]
     Dotted,

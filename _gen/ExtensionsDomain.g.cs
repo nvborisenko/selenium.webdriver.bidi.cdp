@@ -29,7 +29,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TriggerActionResult"/>.
     /// </returns>
-    Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, string? session = default, CancellationToken cancellationToken = default);
+    Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Installs an unpacked extension from the filesystem similar to
@@ -51,7 +51,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LoadUnpackedResult"/>.
     /// </returns>
-    Task<LoadUnpackedResult> LoadUnpackedAsync(string path, bool? enableInIncognito = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<LoadUnpackedResult> LoadUnpackedAsync(string path, bool? enableInIncognito = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a list of all unpacked extensions.
@@ -65,7 +65,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetExtensionsResult"/>.
     /// </returns>
-    Task<GetExtensionsResult> GetExtensionsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetExtensionsResult> GetExtensionsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Uninstalls an unpacked extension (others not supported) from the profile.
@@ -82,7 +82,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UninstallResult"/>.
     /// </returns>
-    Task<UninstallResult> UninstallAsync(string id, string? session = default, CancellationToken cancellationToken = default);
+    Task<UninstallResult> UninstallAsync(string id, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets data from extension storage in the given <b>storageArea</b>. If <b>keys</b> is
@@ -106,7 +106,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStorageItemsResult"/>.
     /// </returns>
-    Task<GetStorageItemsResult> GetStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string>? keys = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetStorageItemsResult> GetStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string>? keys = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes <b>keys</b> from extension storage in the given <b>storageArea</b>.
@@ -129,7 +129,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveStorageItemsResult"/>.
     /// </returns>
-    Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears extension storage in the given <b>storageArea</b>.
@@ -149,7 +149,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearStorageItemsResult"/>.
     /// </returns>
-    Task<ClearStorageItemsResult> ClearStorageItemsAsync(string id, StorageArea storageArea, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearStorageItemsResult> ClearStorageItemsAsync(string id, StorageArea storageArea, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets <b>values</b> in extension storage in the given <b>storageArea</b>. The provided <b>values</b>
@@ -173,7 +173,7 @@ public interface IExtensions
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStorageItemsResult"/>.
     /// </returns>
-    Task<SetStorageItemsResult> SetStorageItemsAsync(string id, StorageArea storageArea, global::System.Text.Json.JsonElement values, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetStorageItemsResult> SetStorageItemsAsync(string id, StorageArea storageArea, global::System.Text.Json.JsonElement values, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -182,49 +182,49 @@ internal sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriv
 {
     private static readonly ExtensionsJsonSerializerContext JsonContext = ExtensionsJsonSerializerContext.Default;
 
-    public async Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TriggerActionResult> TriggerActionAsync(string id, string targetId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TriggerActionCommandParameters(Id: id, TargetId: targetId);
         return await ExecuteCommandAsync("Extensions.triggerAction", @params, JsonContext.TriggerActionCommandParameters, JsonContext.TriggerActionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<LoadUnpackedResult> LoadUnpackedAsync(string path, bool? enableInIncognito = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<LoadUnpackedResult> LoadUnpackedAsync(string path, bool? enableInIncognito = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new LoadUnpackedCommandParameters(Path: path, EnableInIncognito: enableInIncognito);
         return await ExecuteCommandAsync("Extensions.loadUnpacked", @params, JsonContext.LoadUnpackedCommandParameters, JsonContext.LoadUnpackedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetExtensionsResult> GetExtensionsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetExtensionsResult> GetExtensionsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetExtensionsCommandParameters();
         return await ExecuteCommandAsync("Extensions.getExtensions", @params, JsonContext.GetExtensionsCommandParameters, JsonContext.GetExtensionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UninstallResult> UninstallAsync(string id, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UninstallResult> UninstallAsync(string id, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UninstallCommandParameters(Id: id);
         return await ExecuteCommandAsync("Extensions.uninstall", @params, JsonContext.UninstallCommandParameters, JsonContext.UninstallResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetStorageItemsResult> GetStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string>? keys = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetStorageItemsResult> GetStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string>? keys = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: keys);
         return await ExecuteCommandAsync("Extensions.getStorageItems", @params, JsonContext.GetStorageItemsCommandParameters, JsonContext.GetStorageItemsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveStorageItemsResult> RemoveStorageItemsAsync(string id, StorageArea storageArea, ImmutableArray<string> keys, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Keys: keys);
         return await ExecuteCommandAsync("Extensions.removeStorageItems", @params, JsonContext.RemoveStorageItemsCommandParameters, JsonContext.RemoveStorageItemsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearStorageItemsResult> ClearStorageItemsAsync(string id, StorageArea storageArea, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearStorageItemsResult> ClearStorageItemsAsync(string id, StorageArea storageArea, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearStorageItemsCommandParameters(Id: id, StorageArea: storageArea);
         return await ExecuteCommandAsync("Extensions.clearStorageItems", @params, JsonContext.ClearStorageItemsCommandParameters, JsonContext.ClearStorageItemsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetStorageItemsResult> SetStorageItemsAsync(string id, StorageArea storageArea, global::System.Text.Json.JsonElement values, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetStorageItemsResult> SetStorageItemsAsync(string id, StorageArea storageArea, global::System.Text.Json.JsonElement values, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetStorageItemsCommandParameters(Id: id, StorageArea: storageArea, Values: values);
         return await ExecuteCommandAsync("Extensions.setStorageItems", @params, JsonContext.SetStorageItemsCommandParameters, JsonContext.SetStorageItemsResult, session, cancellationToken).ConfigureAwait(false);
@@ -235,6 +235,7 @@ internal sealed class ExtensionsDomain(CdpModule cdp) : global::Selenium.WebDriv
 internal sealed record TriggerActionCommandParameters(string Id, string TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.TriggerActionAsync"/> command.
 /// </summary>
 public sealed record TriggerActionResult() : EmptyResult;
 
@@ -242,6 +243,7 @@ public sealed record TriggerActionResult() : EmptyResult;
 internal sealed record LoadUnpackedCommandParameters(string Path, bool? EnableInIncognito) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.LoadUnpackedAsync"/> command.
 /// </summary>
 /// <param name="Id">
 /// Extension id.
@@ -252,6 +254,7 @@ public sealed record LoadUnpackedResult(string Id) : EmptyResult;
 internal sealed record GetExtensionsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.GetExtensionsAsync"/> command.
 /// </summary>
 /// <param name="Extensions">
 /// </param>
@@ -261,6 +264,7 @@ public sealed record GetExtensionsResult(ImmutableArray<ExtensionInfo> Extension
 internal sealed record UninstallCommandParameters(string Id) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.UninstallAsync"/> command.
 /// </summary>
 public sealed record UninstallResult() : EmptyResult;
 
@@ -268,6 +272,7 @@ public sealed record UninstallResult() : EmptyResult;
 internal sealed record GetStorageItemsCommandParameters(string Id, StorageArea StorageArea, ImmutableArray<string>? Keys) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.GetStorageItemsAsync"/> command.
 /// </summary>
 /// <param name="Data">
 /// </param>
@@ -277,6 +282,7 @@ public sealed record GetStorageItemsResult(global::System.Text.Json.JsonElement 
 internal sealed record RemoveStorageItemsCommandParameters(string Id, StorageArea StorageArea, ImmutableArray<string> Keys) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.RemoveStorageItemsAsync"/> command.
 /// </summary>
 public sealed record RemoveStorageItemsResult() : EmptyResult;
 
@@ -284,6 +290,7 @@ public sealed record RemoveStorageItemsResult() : EmptyResult;
 internal sealed record ClearStorageItemsCommandParameters(string Id, StorageArea StorageArea) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.ClearStorageItemsAsync"/> command.
 /// </summary>
 public sealed record ClearStorageItemsResult() : EmptyResult;
 
@@ -291,6 +298,7 @@ public sealed record ClearStorageItemsResult() : EmptyResult;
 internal sealed record SetStorageItemsCommandParameters(string Id, StorageArea StorageArea, global::System.Text.Json.JsonElement Values) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IExtensions.SetStorageItemsAsync"/> command.
 /// </summary>
 public sealed record SetStorageItemsResult() : EmptyResult;
 
@@ -302,18 +310,22 @@ public sealed record SetStorageItemsResult() : EmptyResult;
 public enum StorageArea
 {
     /// <summary>
+    /// Corresponds to the <c>"session"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("session")]
     Session,
     /// <summary>
+    /// Corresponds to the <c>"local"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local")]
     Local,
     /// <summary>
+    /// Corresponds to the <c>"sync"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sync")]
     Sync,
     /// <summary>
+    /// Corresponds to the <c>"managed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("managed")]
     Managed,

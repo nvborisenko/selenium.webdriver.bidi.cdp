@@ -21,7 +21,7 @@ public interface ITracing
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EndResult"/>.
     /// </returns>
-    Task<EndResult> EndAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EndResult> EndAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets supported tracing categories.
@@ -36,7 +36,7 @@ public interface ITracing
     /// A task representing the asynchronous operation, containing a <see cref="GetCategoriesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetCategoriesResult> GetCategoriesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetCategoriesResult> GetCategoriesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Return a descriptor for all available tracing categories.
@@ -51,7 +51,7 @@ public interface ITracing
     /// A task representing the asynchronous operation, containing a <see cref="GetTrackEventDescriptorResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Record a clock sync marker in the trace.
@@ -69,7 +69,7 @@ public interface ITracing
     /// A task representing the asynchronous operation, containing a <see cref="RecordClockSyncMarkerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<RecordClockSyncMarkerResult> RecordClockSyncMarkerAsync(string syncId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RecordClockSyncMarkerResult> RecordClockSyncMarkerAsync(string syncId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Request a global memory dump.
@@ -90,7 +90,7 @@ public interface ITracing
     /// A task representing the asynchronous operation, containing a <see cref="RequestMemoryDumpResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<RequestMemoryDumpResult> RequestMemoryDumpAsync(bool? deterministic = default, MemoryDumpLevelOfDetail? levelOfDetail = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestMemoryDumpResult> RequestMemoryDumpAsync(bool? deterministic = null, MemoryDumpLevelOfDetail? levelOfDetail = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start trace events collection.
@@ -148,7 +148,7 @@ public interface ITracing
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartResult"/>.
     /// </returns>
-    Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, StartTransferMode? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartResult> StartAsync(string? categories = null, string? options = null, double? bufferUsageReportingInterval = null, StartTransferMode? transferMode = null, StreamFormat? streamFormat = null, StreamCompression? streamCompression = null, TraceConfig? traceConfig = null, string? perfettoConfig = null, TracingBackend? tracingBackend = null, long? screenshotMaxSize = null, long? screenshotMaxCount = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -198,41 +198,41 @@ internal sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.
 {
     private static readonly TracingJsonSerializerContext JsonContext = TracingJsonSerializerContext.Default;
 
-    public async Task<EndResult> EndAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EndResult> EndAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EndCommandParameters();
         return await ExecuteCommandAsync("Tracing.end", @params, JsonContext.EndCommandParameters, JsonContext.EndResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetCategoriesResult> GetCategoriesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetCategoriesResult> GetCategoriesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetCategoriesCommandParameters();
         return await ExecuteCommandAsync("Tracing.getCategories", @params, JsonContext.GetCategoriesCommandParameters, JsonContext.GetCategoriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetTrackEventDescriptorResult> GetTrackEventDescriptorAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetTrackEventDescriptorCommandParameters();
         return await ExecuteCommandAsync("Tracing.getTrackEventDescriptor", @params, JsonContext.GetTrackEventDescriptorCommandParameters, JsonContext.GetTrackEventDescriptorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<RecordClockSyncMarkerResult> RecordClockSyncMarkerAsync(string syncId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RecordClockSyncMarkerResult> RecordClockSyncMarkerAsync(string syncId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RecordClockSyncMarkerCommandParameters(SyncId: syncId);
         return await ExecuteCommandAsync("Tracing.recordClockSyncMarker", @params, JsonContext.RecordClockSyncMarkerCommandParameters, JsonContext.RecordClockSyncMarkerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<RequestMemoryDumpResult> RequestMemoryDumpAsync(bool? deterministic = default, MemoryDumpLevelOfDetail? levelOfDetail = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestMemoryDumpResult> RequestMemoryDumpAsync(bool? deterministic = null, MemoryDumpLevelOfDetail? levelOfDetail = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestMemoryDumpCommandParameters(Deterministic: deterministic, LevelOfDetail: levelOfDetail);
         return await ExecuteCommandAsync("Tracing.requestMemoryDump", @params, JsonContext.RequestMemoryDumpCommandParameters, JsonContext.RequestMemoryDumpResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, StartTransferMode? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartResult> StartAsync(string? categories = null, string? options = null, double? bufferUsageReportingInterval = null, StartTransferMode? transferMode = null, StreamFormat? streamFormat = null, StreamCompression? streamCompression = null, TraceConfig? traceConfig = null, string? perfettoConfig = null, TracingBackend? tracingBackend = null, long? screenshotMaxSize = null, long? screenshotMaxCount = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartCommandParameters(Categories: categories, Options: options, BufferUsageReportingInterval: bufferUsageReportingInterval, TransferMode: transferMode, StreamFormat: streamFormat, StreamCompression: streamCompression, TraceConfig: traceConfig, PerfettoConfig: perfettoConfig, TracingBackend: tracingBackend, ScreenshotMaxSize: screenshotMaxSize, ScreenshotMaxCount: screenshotMaxCount);
         return await ExecuteCommandAsync("Tracing.start", @params, JsonContext.StartCommandParameters, JsonContext.StartResult, session, cancellationToken).ConfigureAwait(false);
@@ -248,6 +248,7 @@ internal sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record EndCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITracing.EndAsync"/> command.
 /// </summary>
 public sealed record EndResult() : EmptyResult;
 
@@ -255,6 +256,7 @@ public sealed record EndResult() : EmptyResult;
 internal sealed record GetCategoriesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITracing.GetCategoriesAsync"/> command.
 /// </summary>
 /// <param name="Categories">
 /// A list of supported tracing categories.
@@ -265,6 +267,7 @@ public sealed record GetCategoriesResult(ImmutableArray<string> Categories) : Em
 internal sealed record GetTrackEventDescriptorCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITracing.GetTrackEventDescriptorAsync"/> command.
 /// </summary>
 /// <param name="Descriptor">
 /// Base64-encoded serialized perfetto.protos.TrackEventDescriptor protobuf message. (Encoded as a base64 string when passed over JSON)
@@ -275,6 +278,7 @@ public sealed record GetTrackEventDescriptorResult(string Descriptor) : EmptyRes
 internal sealed record RecordClockSyncMarkerCommandParameters(string SyncId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITracing.RecordClockSyncMarkerAsync"/> command.
 /// </summary>
 public sealed record RecordClockSyncMarkerResult() : EmptyResult;
 
@@ -282,6 +286,7 @@ public sealed record RecordClockSyncMarkerResult() : EmptyResult;
 internal sealed record RequestMemoryDumpCommandParameters(bool? Deterministic, MemoryDumpLevelOfDetail? LevelOfDetail) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITracing.RequestMemoryDumpAsync"/> command.
 /// </summary>
 /// <param name="DumpGuid">
 /// GUID of the resulting global memory dump.
@@ -295,6 +300,7 @@ public sealed record RequestMemoryDumpResult(string DumpGuid, bool Success) : Em
 internal sealed record StartCommandParameters(string? Categories, string? Options, double? BufferUsageReportingInterval, StartTransferMode? TransferMode, StreamFormat? StreamFormat, StreamCompression? StreamCompression, TraceConfig? TraceConfig, string? PerfettoConfig, TracingBackend? TracingBackend, long? ScreenshotMaxSize, long? ScreenshotMaxCount) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITracing.StartAsync"/> command.
 /// </summary>
 public sealed record StartResult() : EmptyResult;
 
@@ -404,10 +410,12 @@ public sealed record TraceConfig()
 public enum StreamFormat
 {
     /// <summary>
+    /// Corresponds to the <c>"json"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("json")]
     Json,
     /// <summary>
+    /// Corresponds to the <c>"proto"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proto")]
     Proto,
@@ -420,10 +428,12 @@ public enum StreamFormat
 public enum StreamCompression
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"gzip"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("gzip")]
     Gzip,
@@ -438,14 +448,17 @@ public enum StreamCompression
 public enum MemoryDumpLevelOfDetail
 {
     /// <summary>
+    /// Corresponds to the <c>"background"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("background")]
     Background,
     /// <summary>
+    /// Corresponds to the <c>"light"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("light")]
     Light,
     /// <summary>
+    /// Corresponds to the <c>"detailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("detailed")]
     Detailed,
@@ -462,14 +475,17 @@ public enum MemoryDumpLevelOfDetail
 public enum TracingBackend
 {
     /// <summary>
+    /// Corresponds to the <c>"auto"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("auto")]
     Auto,
     /// <summary>
+    /// Corresponds to the <c>"chrome"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("chrome")]
     Chrome,
     /// <summary>
+    /// Corresponds to the <c>"system"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("system")]
     System,
@@ -481,10 +497,12 @@ public enum TracingBackend
 public enum StartTransferMode
 {
     /// <summary>
+    /// Corresponds to the <c>"ReportEvents"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReportEvents")]
     ReportEvents,
     /// <summary>
+    /// Corresponds to the <c>"ReturnAsStream"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReturnAsStream")]
     ReturnAsStream,
@@ -496,18 +514,22 @@ public enum StartTransferMode
 public enum TraceConfigRecordMode
 {
     /// <summary>
+    /// Corresponds to the <c>"recordUntilFull"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recordUntilFull")]
     RecordUntilFull,
     /// <summary>
+    /// Corresponds to the <c>"recordContinuously"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recordContinuously")]
     RecordContinuously,
     /// <summary>
+    /// Corresponds to the <c>"recordAsMuchAsPossible"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recordAsMuchAsPossible")]
     RecordAsMuchAsPossible,
     /// <summary>
+    /// Corresponds to the <c>"echoToConsole"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("echoToConsole")]
     EchoToConsole,

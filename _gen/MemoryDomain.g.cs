@@ -22,7 +22,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDOMCountersResult"/>.
     /// </returns>
-    Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retruns DOM object counters after preparing renderer for leak detection.
@@ -36,7 +36,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDOMCountersForLeakDetectionResult"/>.
     /// </returns>
-    Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Prepares for leak detection by terminating workers, stopping spellcheckers,
@@ -51,7 +51,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PrepareForLeakDetectionResult"/>.
     /// </returns>
-    Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulate OomIntervention by purging V8 memory.
@@ -65,7 +65,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForciblyPurgeJavaScriptMemoryResult"/>.
     /// </returns>
-    Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable/disable suppressing memory pressure notifications in all processes.
@@ -82,7 +82,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPressureNotificationsSuppressedResult"/>.
     /// </returns>
-    Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulate a memory pressure notification in all processes.
@@ -99,7 +99,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulatePressureNotificationResult"/>.
     /// </returns>
-    Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = default, CancellationToken cancellationToken = default);
+    Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start collecting native memory profile.
@@ -119,7 +119,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartSamplingResult"/>.
     /// </returns>
-    Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = default, bool? suppressRandomness = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = null, bool? suppressRandomness = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stop collecting native memory profile.
@@ -133,7 +133,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopSamplingResult"/>.
     /// </returns>
-    Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopSamplingResult> StopSamplingAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve native memory allocations profile
@@ -148,7 +148,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAllTimeSamplingProfileResult"/>.
     /// </returns>
-    Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve native memory allocations profile
@@ -163,7 +163,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBrowserSamplingProfileResult"/>.
     /// </returns>
-    Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve native memory allocations profile collected since last
@@ -178,7 +178,7 @@ public interface IMemory
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSamplingProfileResult"/>.
     /// </returns>
-    Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -187,67 +187,67 @@ internal sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 {
     private static readonly MemoryJsonSerializerContext JsonContext = MemoryJsonSerializerContext.Default;
 
-    public async Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDOMCountersResult> GetDOMCountersAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMCountersCommandParameters();
         return await ExecuteCommandAsync("Memory.getDOMCounters", @params, JsonContext.GetDOMCountersCommandParameters, JsonContext.GetDOMCountersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDOMCountersForLeakDetectionResult> GetDOMCountersForLeakDetectionAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMCountersForLeakDetectionCommandParameters();
         return await ExecuteCommandAsync("Memory.getDOMCountersForLeakDetection", @params, JsonContext.GetDOMCountersForLeakDetectionCommandParameters, JsonContext.GetDOMCountersForLeakDetectionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PrepareForLeakDetectionResult> PrepareForLeakDetectionAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new PrepareForLeakDetectionCommandParameters();
         return await ExecuteCommandAsync("Memory.prepareForLeakDetection", @params, JsonContext.PrepareForLeakDetectionCommandParameters, JsonContext.PrepareForLeakDetectionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ForciblyPurgeJavaScriptMemoryResult> ForciblyPurgeJavaScriptMemoryAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ForciblyPurgeJavaScriptMemoryCommandParameters();
         return await ExecuteCommandAsync("Memory.forciblyPurgeJavaScriptMemory", @params, JsonContext.ForciblyPurgeJavaScriptMemoryCommandParameters, JsonContext.ForciblyPurgeJavaScriptMemoryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPressureNotificationsSuppressedResult> SetPressureNotificationsSuppressedAsync(bool suppressed, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPressureNotificationsSuppressedCommandParameters(Suppressed: suppressed);
         return await ExecuteCommandAsync("Memory.setPressureNotificationsSuppressed", @params, JsonContext.SetPressureNotificationsSuppressedCommandParameters, JsonContext.SetPressureNotificationsSuppressedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SimulatePressureNotificationResult> SimulatePressureNotificationAsync(PressureLevel level, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SimulatePressureNotificationCommandParameters(Level: level);
         return await ExecuteCommandAsync("Memory.simulatePressureNotification", @params, JsonContext.SimulatePressureNotificationCommandParameters, JsonContext.SimulatePressureNotificationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = default, bool? suppressRandomness = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartSamplingResult> StartSamplingAsync(long? samplingInterval = null, bool? suppressRandomness = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, SuppressRandomness: suppressRandomness);
         return await ExecuteCommandAsync("Memory.startSampling", @params, JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopSamplingResult> StopSamplingAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopSamplingCommandParameters();
         return await ExecuteCommandAsync("Memory.stopSampling", @params, JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAllTimeSamplingProfileResult> GetAllTimeSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAllTimeSamplingProfileCommandParameters();
         return await ExecuteCommandAsync("Memory.getAllTimeSamplingProfile", @params, JsonContext.GetAllTimeSamplingProfileCommandParameters, JsonContext.GetAllTimeSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetBrowserSamplingProfileResult> GetBrowserSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetBrowserSamplingProfileCommandParameters();
         return await ExecuteCommandAsync("Memory.getBrowserSamplingProfile", @params, JsonContext.GetBrowserSamplingProfileCommandParameters, JsonContext.GetBrowserSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetSamplingProfileCommandParameters();
         return await ExecuteCommandAsync("Memory.getSamplingProfile", @params, JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
@@ -258,6 +258,7 @@ internal sealed class MemoryDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record GetDOMCountersCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.GetDOMCountersAsync"/> command.
 /// </summary>
 /// <param name="Documents">
 /// </param>
@@ -271,6 +272,7 @@ public sealed record GetDOMCountersResult(long Documents, long Nodes, long JsEve
 internal sealed record GetDOMCountersForLeakDetectionCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.GetDOMCountersForLeakDetectionAsync"/> command.
 /// </summary>
 /// <param name="Counters">
 /// DOM object counters.
@@ -281,6 +283,7 @@ public sealed record GetDOMCountersForLeakDetectionResult(ImmutableArray<DOMCoun
 internal sealed record PrepareForLeakDetectionCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.PrepareForLeakDetectionAsync"/> command.
 /// </summary>
 public sealed record PrepareForLeakDetectionResult() : EmptyResult;
 
@@ -288,6 +291,7 @@ public sealed record PrepareForLeakDetectionResult() : EmptyResult;
 internal sealed record ForciblyPurgeJavaScriptMemoryCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.ForciblyPurgeJavaScriptMemoryAsync"/> command.
 /// </summary>
 public sealed record ForciblyPurgeJavaScriptMemoryResult() : EmptyResult;
 
@@ -295,6 +299,7 @@ public sealed record ForciblyPurgeJavaScriptMemoryResult() : EmptyResult;
 internal sealed record SetPressureNotificationsSuppressedCommandParameters(bool Suppressed) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.SetPressureNotificationsSuppressedAsync"/> command.
 /// </summary>
 public sealed record SetPressureNotificationsSuppressedResult() : EmptyResult;
 
@@ -302,6 +307,7 @@ public sealed record SetPressureNotificationsSuppressedResult() : EmptyResult;
 internal sealed record SimulatePressureNotificationCommandParameters(PressureLevel Level) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.SimulatePressureNotificationAsync"/> command.
 /// </summary>
 public sealed record SimulatePressureNotificationResult() : EmptyResult;
 
@@ -309,6 +315,7 @@ public sealed record SimulatePressureNotificationResult() : EmptyResult;
 internal sealed record StartSamplingCommandParameters(long? SamplingInterval, bool? SuppressRandomness) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.StartSamplingAsync"/> command.
 /// </summary>
 public sealed record StartSamplingResult() : EmptyResult;
 
@@ -316,6 +323,7 @@ public sealed record StartSamplingResult() : EmptyResult;
 internal sealed record StopSamplingCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.StopSamplingAsync"/> command.
 /// </summary>
 public sealed record StopSamplingResult() : EmptyResult;
 
@@ -323,6 +331,7 @@ public sealed record StopSamplingResult() : EmptyResult;
 internal sealed record GetAllTimeSamplingProfileCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.GetAllTimeSamplingProfileAsync"/> command.
 /// </summary>
 /// <param name="Profile">
 /// </param>
@@ -332,6 +341,7 @@ public sealed record GetAllTimeSamplingProfileResult(SamplingProfile Profile) : 
 internal sealed record GetBrowserSamplingProfileCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.GetBrowserSamplingProfileAsync"/> command.
 /// </summary>
 /// <param name="Profile">
 /// </param>
@@ -341,6 +351,7 @@ public sealed record GetBrowserSamplingProfileResult(SamplingProfile Profile) : 
 internal sealed record GetSamplingProfileCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IMemory.GetSamplingProfileAsync"/> command.
 /// </summary>
 /// <param name="Profile">
 /// </param>
@@ -354,10 +365,12 @@ public sealed record GetSamplingProfileResult(SamplingProfile Profile) : EmptyRe
 public enum PressureLevel
 {
     /// <summary>
+    /// Corresponds to the <c>"moderate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("moderate")]
     Moderate,
     /// <summary>
+    /// Corresponds to the <c>"critical"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("critical")]
     Critical,

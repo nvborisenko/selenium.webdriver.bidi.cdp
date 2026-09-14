@@ -28,7 +28,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ContinueToLocationResult"/>.
     /// </returns>
-    Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, ContinueToLocationTargetCallFrames? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, ContinueToLocationTargetCallFrames? targetCallFrames = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables debugger for given page.
@@ -42,7 +42,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables debugger for the given page. Clients should not assume that the debugging has been
@@ -61,7 +61,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Evaluates expression on a given call frame.
@@ -108,7 +108,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EvaluateOnCallFrameResult"/>.
     /// </returns>
-    Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, long? scopeNumber = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = null, bool? includeCommandLineAPI = null, bool? silent = null, bool? returnByValue = null, bool? generatePreview = null, bool? throwOnSideEffect = null, Runtime.TimeDelta? timeout = null, long? scopeNumber = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns possible locations for breakpoint. scriptId in start and end range locations should be
@@ -133,7 +133,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPossibleBreakpointsResult"/>.
     /// </returns>
-    Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = default, bool? restrictToFunction = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = null, bool? restrictToFunction = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns source for the script with given id.
@@ -150,7 +150,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetScriptSourceResult"/>.
     /// </returns>
-    Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -167,7 +167,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="DisassembleWasmModuleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default);
+    Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disassemble the next chunk of lines for the module corresponding to the
@@ -187,7 +187,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="NextWasmDisassemblyChunkResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = default, CancellationToken cancellationToken = default);
+    Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This command is deprecated. Use getScriptSource instead.
@@ -205,7 +205,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="GetWasmBytecodeResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns stack trace with given <b>stackTraceId</b>.
@@ -222,7 +222,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="GetStackTraceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops on the next JavaScript statement.
@@ -236,7 +236,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PauseResult"/>.
     /// </returns>
-    Task<PauseResult> PauseAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<PauseResult> PauseAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -254,7 +254,7 @@ public interface IDebugger
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = default, CancellationToken cancellationToken = default);
+    Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes JavaScript breakpoint.
@@ -270,7 +270,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveBreakpointResult"/>.
     /// </returns>
-    Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Restarts particular call frame from the beginning. The old, deprecated
@@ -303,7 +303,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RestartFrameResult"/>.
     /// </returns>
-    Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, RestartFrameMode? mode = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, RestartFrameMode? mode = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resumes JavaScript execution.
@@ -324,7 +324,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResumeResult"/>.
     /// </returns>
-    Task<ResumeResult> ResumeAsync(bool? terminateOnResume = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ResumeResult> ResumeAsync(bool? terminateOnResume = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for given string in script content.
@@ -350,7 +350,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SearchInContentResult"/>.
     /// </returns>
-    Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = null, bool? isRegex = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables or disables async call stacks tracking.
@@ -368,7 +368,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAsyncCallStackDepthResult"/>.
     /// </returns>
-    Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replace previous blackbox execution contexts with passed ones. Forces backend to skip
@@ -388,7 +388,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxExecutionContextsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
@@ -411,7 +411,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxPatternsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted
@@ -434,7 +434,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="SetBlackboxedRangesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets JavaScript breakpoint at a given location.
@@ -455,7 +455,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointResult"/>.
     /// </returns>
-    Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets instrumentation breakpoint.
@@ -472,7 +472,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInstrumentationBreakpointResult"/>.
     /// </returns>
-    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(SetInstrumentationBreakpointInstrumentation instrumentation, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(SetInstrumentationBreakpointInstrumentation instrumentation, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
@@ -509,7 +509,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointByUrlResult"/>.
     /// </returns>
-    Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = default, string? urlRegex = default, string? scriptHash = default, long? columnNumber = default, string? condition = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = null, string? urlRegex = null, string? scriptHash = null, long? columnNumber = null, string? condition = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets JavaScript breakpoint before each call to the given function.
@@ -533,7 +533,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointOnFunctionCallResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Activates / deactivates all breakpoints on the page.
@@ -550,7 +550,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBreakpointsActiveResult"/>.
     /// </returns>
-    Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions,
@@ -568,7 +568,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPauseOnExceptionsResult"/>.
     /// </returns>
-    Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(SetPauseOnExceptionsState state, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(SetPauseOnExceptionsState state, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Changes return value in top frame. Available only at return break position.
@@ -586,7 +586,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="SetReturnValueResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Live edit is no longer supported and this command always fails with a "no longer available" error.
@@ -615,7 +615,7 @@ public interface IDebugger
     /// A task representing the asynchronous operation, containing a <see cref="SetScriptSourceResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = null, bool? allowTopFrameEditing = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Makes page not interrupt on any pauses (breakpoint, exception, dom exception etc).
@@ -632,7 +632,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSkipAllPausesResult"/>.
     /// </returns>
-    Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Changes value of variable in a callframe. Object-based scopes are not supported and must be
@@ -660,7 +660,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetVariableValueResult"/>.
     /// </returns>
-    Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Steps into the function call.
@@ -681,7 +681,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepIntoResult"/>.
     /// </returns>
-    Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = default, ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = null, ImmutableArray<LocationRange>? skipList = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Steps out of the function call.
@@ -695,7 +695,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepOutResult"/>.
     /// </returns>
-    Task<StepOutResult> StepOutAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StepOutResult> StepOutAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Steps over the statement.
@@ -712,7 +712,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepOverResult"/>.
     /// </returns>
-    Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when breakpoint is resolved to an actual script and location.
@@ -816,71 +816,71 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
 {
     private static readonly DebuggerJsonSerializerContext JsonContext = DebuggerJsonSerializerContext.Default;
 
-    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, ContinueToLocationTargetCallFrames? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, ContinueToLocationTargetCallFrames? targetCallFrames = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueToLocationCommandParameters(Location: location, TargetCallFrames: targetCallFrames);
         return await ExecuteCommandAsync("Debugger.continueToLocation", @params, JsonContext.ContinueToLocationCommandParameters, JsonContext.ContinueToLocationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Debugger.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(double? maxScriptsCacheSize = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(MaxScriptsCacheSize: maxScriptsCacheSize);
         return await ExecuteCommandAsync("Debugger.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? throwOnSideEffect = default, Runtime.TimeDelta? timeout = default, long? scopeNumber = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EvaluateOnCallFrameResult> EvaluateOnCallFrameAsync(CallFrameId callFrameId, string expression, string? objectGroup = null, bool? includeCommandLineAPI = null, bool? silent = null, bool? returnByValue = null, bool? generatePreview = null, bool? throwOnSideEffect = null, Runtime.TimeDelta? timeout = null, long? scopeNumber = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EvaluateOnCallFrameCommandParameters(CallFrameId: callFrameId, Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout, ScopeNumber: scopeNumber);
         return await ExecuteCommandAsync("Debugger.evaluateOnCallFrame", @params, JsonContext.EvaluateOnCallFrameCommandParameters, JsonContext.EvaluateOnCallFrameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = default, bool? restrictToFunction = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = null, bool? restrictToFunction = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetPossibleBreakpointsCommandParameters(Start: start, End: end, RestrictToFunction: restrictToFunction);
         return await ExecuteCommandAsync("Debugger.getPossibleBreakpoints", @params, JsonContext.GetPossibleBreakpointsCommandParameters, JsonContext.GetPossibleBreakpointsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetScriptSourceCommandParameters(ScriptId: scriptId);
         return await ExecuteCommandAsync("Debugger.getScriptSource", @params, JsonContext.GetScriptSourceCommandParameters, JsonContext.GetScriptSourceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisassembleWasmModuleResult> DisassembleWasmModuleAsync(Runtime.ScriptId scriptId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisassembleWasmModuleCommandParameters(ScriptId: scriptId);
         return await ExecuteCommandAsync("Debugger.disassembleWasmModule", @params, JsonContext.DisassembleWasmModuleCommandParameters, JsonContext.DisassembleWasmModuleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<NextWasmDisassemblyChunkResult> NextWasmDisassemblyChunkAsync(string streamId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new NextWasmDisassemblyChunkCommandParameters(StreamId: streamId);
         return await ExecuteCommandAsync("Debugger.nextWasmDisassemblyChunk", @params, JsonContext.NextWasmDisassemblyChunkCommandParameters, JsonContext.NextWasmDisassemblyChunkResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetWasmBytecodeResult> GetWasmBytecodeAsync(Runtime.ScriptId scriptId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetWasmBytecodeCommandParameters(ScriptId: scriptId);
         return await ExecuteCommandAsync("Debugger.getWasmBytecode", @params, JsonContext.GetWasmBytecodeCommandParameters, JsonContext.GetWasmBytecodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetStackTraceResult> GetStackTraceAsync(Runtime.StackTraceId stackTraceId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetStackTraceCommandParameters(StackTraceId: stackTraceId);
         return await ExecuteCommandAsync("Debugger.getStackTrace", @params, JsonContext.GetStackTraceCommandParameters, JsonContext.GetStackTraceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<PauseResult> PauseAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PauseResult> PauseAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new PauseCommandParameters();
         return await ExecuteCommandAsync("Debugger.pause", @params, JsonContext.PauseCommandParameters, JsonContext.PauseResult, session, cancellationToken).ConfigureAwait(false);
@@ -888,139 +888,139 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PauseOnAsyncCallResult> PauseOnAsyncCallAsync(Runtime.StackTraceId parentStackTraceId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new PauseOnAsyncCallCommandParameters(ParentStackTraceId: parentStackTraceId);
         return await ExecuteCommandAsync("Debugger.pauseOnAsyncCall", @params, JsonContext.PauseOnAsyncCallCommandParameters, JsonContext.PauseOnAsyncCallResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveBreakpointResult> RemoveBreakpointAsync(BreakpointId breakpointId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveBreakpointCommandParameters(BreakpointId: breakpointId);
         return await ExecuteCommandAsync("Debugger.removeBreakpoint", @params, JsonContext.RemoveBreakpointCommandParameters, JsonContext.RemoveBreakpointResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, RestartFrameMode? mode = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, RestartFrameMode? mode = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RestartFrameCommandParameters(CallFrameId: callFrameId, Mode: mode);
         return await ExecuteCommandAsync("Debugger.restartFrame", @params, JsonContext.RestartFrameCommandParameters, JsonContext.RestartFrameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResumeResult> ResumeAsync(bool? terminateOnResume = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResumeResult> ResumeAsync(bool? terminateOnResume = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResumeCommandParameters(TerminateOnResume: terminateOnResume);
         return await ExecuteCommandAsync("Debugger.resume", @params, JsonContext.ResumeCommandParameters, JsonContext.ResumeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SearchInContentResult> SearchInContentAsync(Runtime.ScriptId scriptId, string query, bool? caseSensitive = null, bool? isRegex = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SearchInContentCommandParameters(ScriptId: scriptId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
         return await ExecuteCommandAsync("Debugger.searchInContent", @params, JsonContext.SearchInContentCommandParameters, JsonContext.SearchInContentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
         return await ExecuteCommandAsync("Debugger.setAsyncCallStackDepth", @params, JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxExecutionContextsResult> SetBlackboxExecutionContextsAsync(ImmutableArray<string> uniqueIds, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxExecutionContextsCommandParameters(UniqueIds: uniqueIds);
         return await ExecuteCommandAsync("Debugger.setBlackboxExecutionContexts", @params, JsonContext.SetBlackboxExecutionContextsCommandParameters, JsonContext.SetBlackboxExecutionContextsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxPatternsResult> SetBlackboxPatternsAsync(ImmutableArray<string> patterns, bool? skipAnonymous = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxPatternsCommandParameters(Patterns: patterns, SkipAnonymous: skipAnonymous);
         return await ExecuteCommandAsync("Debugger.setBlackboxPatterns", @params, JsonContext.SetBlackboxPatternsCommandParameters, JsonContext.SetBlackboxPatternsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlackboxedRangesResult> SetBlackboxedRangesAsync(Runtime.ScriptId scriptId, ImmutableArray<ScriptPosition> positions, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlackboxedRangesCommandParameters(ScriptId: scriptId, Positions: positions);
         return await ExecuteCommandAsync("Debugger.setBlackboxedRanges", @params, JsonContext.SetBlackboxedRangesCommandParameters, JsonContext.SetBlackboxedRangesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointResult> SetBreakpointAsync(Location location, string? condition = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBreakpointCommandParameters(Location: location, Condition: condition);
         return await ExecuteCommandAsync("Debugger.setBreakpoint", @params, JsonContext.SetBreakpointCommandParameters, JsonContext.SetBreakpointResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(SetInstrumentationBreakpointInstrumentation instrumentation, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(SetInstrumentationBreakpointInstrumentation instrumentation, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetInstrumentationBreakpointCommandParameters(Instrumentation: instrumentation);
         return await ExecuteCommandAsync("Debugger.setInstrumentationBreakpoint", @params, JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = default, string? urlRegex = default, string? scriptHash = default, long? columnNumber = default, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointByUrlResult> SetBreakpointByUrlAsync(long lineNumber, string? url = null, string? urlRegex = null, string? scriptHash = null, long? columnNumber = null, string? condition = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBreakpointByUrlCommandParameters(LineNumber: lineNumber, Url: url, UrlRegex: urlRegex, ScriptHash: scriptHash, ColumnNumber: columnNumber, Condition: condition);
         return await ExecuteCommandAsync("Debugger.setBreakpointByUrl", @params, JsonContext.SetBreakpointByUrlCommandParameters, JsonContext.SetBreakpointByUrlResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointOnFunctionCallResult> SetBreakpointOnFunctionCallAsync(Runtime.RemoteObjectId objectId, string? condition = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBreakpointOnFunctionCallCommandParameters(ObjectId: objectId, Condition: condition);
         return await ExecuteCommandAsync("Debugger.setBreakpointOnFunctionCall", @params, JsonContext.SetBreakpointOnFunctionCallCommandParameters, JsonContext.SetBreakpointOnFunctionCallResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBreakpointsActiveResult> SetBreakpointsActiveAsync(bool active, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBreakpointsActiveCommandParameters(Active: active);
         return await ExecuteCommandAsync("Debugger.setBreakpointsActive", @params, JsonContext.SetBreakpointsActiveCommandParameters, JsonContext.SetBreakpointsActiveResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(SetPauseOnExceptionsState state, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(SetPauseOnExceptionsState state, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPauseOnExceptionsCommandParameters(State: state);
         return await ExecuteCommandAsync("Debugger.setPauseOnExceptions", @params, JsonContext.SetPauseOnExceptionsCommandParameters, JsonContext.SetPauseOnExceptionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetReturnValueResult> SetReturnValueAsync(Runtime.CallArgument newValue, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetReturnValueCommandParameters(NewValue: newValue);
         return await ExecuteCommandAsync("Debugger.setReturnValue", @params, JsonContext.SetReturnValueCommandParameters, JsonContext.SetReturnValueResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = default, bool? allowTopFrameEditing = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetScriptSourceResult> SetScriptSourceAsync(Runtime.ScriptId scriptId, string scriptSource, bool? dryRun = null, bool? allowTopFrameEditing = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetScriptSourceCommandParameters(ScriptId: scriptId, ScriptSource: scriptSource, DryRun: dryRun, AllowTopFrameEditing: allowTopFrameEditing);
         return await ExecuteCommandAsync("Debugger.setScriptSource", @params, JsonContext.SetScriptSourceCommandParameters, JsonContext.SetScriptSourceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSkipAllPausesResult> SetSkipAllPausesAsync(bool skip, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSkipAllPausesCommandParameters(Skip: skip);
         return await ExecuteCommandAsync("Debugger.setSkipAllPauses", @params, JsonContext.SetSkipAllPausesCommandParameters, JsonContext.SetSkipAllPausesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetVariableValueResult> SetVariableValueAsync(long scopeNumber, string variableName, Runtime.CallArgument newValue, CallFrameId callFrameId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetVariableValueCommandParameters(ScopeNumber: scopeNumber, VariableName: variableName, NewValue: newValue, CallFrameId: callFrameId);
         return await ExecuteCommandAsync("Debugger.setVariableValue", @params, JsonContext.SetVariableValueCommandParameters, JsonContext.SetVariableValueResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = default, ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StepIntoResult> StepIntoAsync(bool? breakOnAsyncCall = null, ImmutableArray<LocationRange>? skipList = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StepIntoCommandParameters(BreakOnAsyncCall: breakOnAsyncCall, SkipList: skipList);
         return await ExecuteCommandAsync("Debugger.stepInto", @params, JsonContext.StepIntoCommandParameters, JsonContext.StepIntoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StepOutResult> StepOutAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StepOutResult> StepOutAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StepOutCommandParameters();
         return await ExecuteCommandAsync("Debugger.stepOut", @params, JsonContext.StepOutCommandParameters, JsonContext.StepOutResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StepOverCommandParameters(SkipList: skipList);
         return await ExecuteCommandAsync("Debugger.stepOver", @params, JsonContext.StepOverCommandParameters, JsonContext.StepOverResult, session, cancellationToken).ConfigureAwait(false);
@@ -1037,6 +1037,7 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
 internal sealed record ContinueToLocationCommandParameters(Location Location, ContinueToLocationTargetCallFrames? TargetCallFrames) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.ContinueToLocationAsync"/> command.
 /// </summary>
 public sealed record ContinueToLocationResult() : EmptyResult;
 
@@ -1044,6 +1045,7 @@ public sealed record ContinueToLocationResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -1051,6 +1053,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters(double? MaxScriptsCacheSize) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.EnableAsync"/> command.
 /// </summary>
 /// <param name="DebuggerId">
 /// Unique identifier of the debugger.
@@ -1061,6 +1064,7 @@ public sealed record EnableResult(Runtime.UniqueDebuggerId DebuggerId) : EmptyRe
 internal sealed record EvaluateOnCallFrameCommandParameters(CallFrameId CallFrameId, string Expression, string? ObjectGroup, bool? IncludeCommandLineAPI, bool? Silent, bool? ReturnByValue, bool? GeneratePreview, bool? ThrowOnSideEffect, Runtime.TimeDelta? Timeout, long? ScopeNumber) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.EvaluateOnCallFrameAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// Object wrapper for the evaluation result.
@@ -1074,6 +1078,7 @@ public sealed record EvaluateOnCallFrameResult(Runtime.RemoteObject Result, Runt
 internal sealed record GetPossibleBreakpointsCommandParameters(Location Start, Location? End, bool? RestrictToFunction) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.GetPossibleBreakpointsAsync"/> command.
 /// </summary>
 /// <param name="Locations">
 /// List of the possible breakpoint locations.
@@ -1084,6 +1089,7 @@ public sealed record GetPossibleBreakpointsResult(ImmutableArray<BreakLocation> 
 internal sealed record GetScriptSourceCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.GetScriptSourceAsync"/> command.
 /// </summary>
 /// <param name="ScriptSource">
 /// Script source (empty in case of Wasm bytecode).
@@ -1097,6 +1103,7 @@ public sealed record GetScriptSourceResult(string ScriptSource, string? Bytecode
 internal sealed record DisassembleWasmModuleCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.DisassembleWasmModuleAsync"/> command.
 /// </summary>
 /// <param name="StreamId">
 /// For large modules, return a stream from which additional chunks of
@@ -1118,6 +1125,7 @@ public sealed record DisassembleWasmModuleResult(string? StreamId, long TotalNum
 internal sealed record NextWasmDisassemblyChunkCommandParameters(string StreamId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.NextWasmDisassemblyChunkAsync"/> command.
 /// </summary>
 /// <param name="Chunk">
 /// The next chunk of disassembly.
@@ -1128,6 +1136,7 @@ public sealed record NextWasmDisassemblyChunkResult(WasmDisassemblyChunk Chunk) 
 internal sealed record GetWasmBytecodeCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.GetWasmBytecodeAsync"/> command.
 /// </summary>
 /// <param name="Bytecode">
 /// Script source. (Encoded as a base64 string when passed over JSON)
@@ -1138,6 +1147,7 @@ public sealed record GetWasmBytecodeResult(string Bytecode) : EmptyResult;
 internal sealed record GetStackTraceCommandParameters(Runtime.StackTraceId StackTraceId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.GetStackTraceAsync"/> command.
 /// </summary>
 /// <param name="StackTrace">
 /// </param>
@@ -1147,6 +1157,7 @@ public sealed record GetStackTraceResult(Runtime.StackTrace StackTrace) : EmptyR
 internal sealed record PauseCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.PauseAsync"/> command.
 /// </summary>
 public sealed record PauseResult() : EmptyResult;
 
@@ -1154,6 +1165,7 @@ public sealed record PauseResult() : EmptyResult;
 internal sealed record PauseOnAsyncCallCommandParameters(Runtime.StackTraceId ParentStackTraceId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.PauseOnAsyncCallAsync"/> command.
 /// </summary>
 public sealed record PauseOnAsyncCallResult() : EmptyResult;
 
@@ -1161,6 +1173,7 @@ public sealed record PauseOnAsyncCallResult() : EmptyResult;
 internal sealed record RemoveBreakpointCommandParameters(BreakpointId BreakpointId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.RemoveBreakpointAsync"/> command.
 /// </summary>
 public sealed record RemoveBreakpointResult() : EmptyResult;
 
@@ -1168,6 +1181,7 @@ public sealed record RemoveBreakpointResult() : EmptyResult;
 internal sealed record RestartFrameCommandParameters(CallFrameId CallFrameId, RestartFrameMode? Mode) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.RestartFrameAsync"/> command.
 /// </summary>
 /// <param name="CallFrames">
 /// New stack trace.
@@ -1184,6 +1198,7 @@ public sealed record RestartFrameResult(ImmutableArray<CallFrame> CallFrames, Ru
 internal sealed record ResumeCommandParameters(bool? TerminateOnResume) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.ResumeAsync"/> command.
 /// </summary>
 public sealed record ResumeResult() : EmptyResult;
 
@@ -1191,6 +1206,7 @@ public sealed record ResumeResult() : EmptyResult;
 internal sealed record SearchInContentCommandParameters(Runtime.ScriptId ScriptId, string Query, bool? CaseSensitive, bool? IsRegex) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SearchInContentAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// List of search matches.
@@ -1201,6 +1217,7 @@ public sealed record SearchInContentResult(ImmutableArray<SearchMatch> Result) :
 internal sealed record SetAsyncCallStackDepthCommandParameters(long MaxDepth) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetAsyncCallStackDepthAsync"/> command.
 /// </summary>
 public sealed record SetAsyncCallStackDepthResult() : EmptyResult;
 
@@ -1208,6 +1225,7 @@ public sealed record SetAsyncCallStackDepthResult() : EmptyResult;
 internal sealed record SetBlackboxExecutionContextsCommandParameters(ImmutableArray<string> UniqueIds) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetBlackboxExecutionContextsAsync"/> command.
 /// </summary>
 public sealed record SetBlackboxExecutionContextsResult() : EmptyResult;
 
@@ -1215,6 +1233,7 @@ public sealed record SetBlackboxExecutionContextsResult() : EmptyResult;
 internal sealed record SetBlackboxPatternsCommandParameters(ImmutableArray<string> Patterns, bool? SkipAnonymous) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetBlackboxPatternsAsync"/> command.
 /// </summary>
 public sealed record SetBlackboxPatternsResult() : EmptyResult;
 
@@ -1222,6 +1241,7 @@ public sealed record SetBlackboxPatternsResult() : EmptyResult;
 internal sealed record SetBlackboxedRangesCommandParameters(Runtime.ScriptId ScriptId, ImmutableArray<ScriptPosition> Positions) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetBlackboxedRangesAsync"/> command.
 /// </summary>
 public sealed record SetBlackboxedRangesResult() : EmptyResult;
 
@@ -1229,6 +1249,7 @@ public sealed record SetBlackboxedRangesResult() : EmptyResult;
 internal sealed record SetBreakpointCommandParameters(Location Location, string? Condition) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetBreakpointAsync"/> command.
 /// </summary>
 /// <param name="BreakpointId">
 /// Id of the created breakpoint for further reference.
@@ -1242,6 +1263,7 @@ public sealed record SetBreakpointResult(BreakpointId BreakpointId, Location Act
 internal sealed record SetInstrumentationBreakpointCommandParameters(SetInstrumentationBreakpointInstrumentation Instrumentation) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetInstrumentationBreakpointAsync"/> command.
 /// </summary>
 /// <param name="BreakpointId">
 /// Id of the created breakpoint for further reference.
@@ -1252,6 +1274,7 @@ public sealed record SetInstrumentationBreakpointResult(BreakpointId BreakpointI
 internal sealed record SetBreakpointByUrlCommandParameters(long LineNumber, string? Url, string? UrlRegex, string? ScriptHash, long? ColumnNumber, string? Condition) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetBreakpointByUrlAsync"/> command.
 /// </summary>
 /// <param name="BreakpointId">
 /// Id of the created breakpoint for further reference.
@@ -1265,6 +1288,7 @@ public sealed record SetBreakpointByUrlResult(BreakpointId BreakpointId, Immutab
 internal sealed record SetBreakpointOnFunctionCallCommandParameters(Runtime.RemoteObjectId ObjectId, string? Condition) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetBreakpointOnFunctionCallAsync"/> command.
 /// </summary>
 /// <param name="BreakpointId">
 /// Id of the created breakpoint for further reference.
@@ -1275,6 +1299,7 @@ public sealed record SetBreakpointOnFunctionCallResult(BreakpointId BreakpointId
 internal sealed record SetBreakpointsActiveCommandParameters(bool Active) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetBreakpointsActiveAsync"/> command.
 /// </summary>
 public sealed record SetBreakpointsActiveResult() : EmptyResult;
 
@@ -1282,6 +1307,7 @@ public sealed record SetBreakpointsActiveResult() : EmptyResult;
 internal sealed record SetPauseOnExceptionsCommandParameters(SetPauseOnExceptionsState State) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetPauseOnExceptionsAsync"/> command.
 /// </summary>
 public sealed record SetPauseOnExceptionsResult() : EmptyResult;
 
@@ -1289,6 +1315,7 @@ public sealed record SetPauseOnExceptionsResult() : EmptyResult;
 internal sealed record SetReturnValueCommandParameters(Runtime.CallArgument NewValue) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetReturnValueAsync"/> command.
 /// </summary>
 public sealed record SetReturnValueResult() : EmptyResult;
 
@@ -1296,6 +1323,7 @@ public sealed record SetReturnValueResult() : EmptyResult;
 internal sealed record SetScriptSourceCommandParameters(Runtime.ScriptId ScriptId, string ScriptSource, bool? DryRun, bool? AllowTopFrameEditing) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetScriptSourceAsync"/> command.
 /// </summary>
 /// <param name="CallFrames">
 /// New stack trace in case editing has happened while VM was stopped.
@@ -1323,6 +1351,7 @@ public sealed record SetScriptSourceResult(ImmutableArray<CallFrame>? CallFrames
 internal sealed record SetSkipAllPausesCommandParameters(bool Skip) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetSkipAllPausesAsync"/> command.
 /// </summary>
 public sealed record SetSkipAllPausesResult() : EmptyResult;
 
@@ -1330,6 +1359,7 @@ public sealed record SetSkipAllPausesResult() : EmptyResult;
 internal sealed record SetVariableValueCommandParameters(long ScopeNumber, string VariableName, Runtime.CallArgument NewValue, CallFrameId CallFrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.SetVariableValueAsync"/> command.
 /// </summary>
 public sealed record SetVariableValueResult() : EmptyResult;
 
@@ -1337,6 +1367,7 @@ public sealed record SetVariableValueResult() : EmptyResult;
 internal sealed record StepIntoCommandParameters(bool? BreakOnAsyncCall, ImmutableArray<LocationRange>? SkipList) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.StepIntoAsync"/> command.
 /// </summary>
 public sealed record StepIntoResult() : EmptyResult;
 
@@ -1344,6 +1375,7 @@ public sealed record StepIntoResult() : EmptyResult;
 internal sealed record StepOutCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.StepOutAsync"/> command.
 /// </summary>
 public sealed record StepOutResult() : EmptyResult;
 
@@ -1351,6 +1383,7 @@ public sealed record StepOutResult() : EmptyResult;
 internal sealed record StepOverCommandParameters(ImmutableArray<LocationRange>? SkipList) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDebugger.StepOverAsync"/> command.
 /// </summary>
 public sealed record StepOverResult() : EmptyResult;
 
@@ -1720,10 +1753,12 @@ public sealed record WasmDisassemblyChunk(ImmutableArray<string> Lines, Immutabl
 public enum ScriptLanguage
 {
     /// <summary>
+    /// Corresponds to the <c>"JavaScript"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JavaScript")]
     JavaScript,
     /// <summary>
+    /// Corresponds to the <c>"WebAssembly"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebAssembly")]
     WebAssembly,
@@ -1761,10 +1796,12 @@ public sealed record ResolvedBreakpoint(BreakpointId BreakpointId, Location Loca
 public enum ContinueToLocationTargetCallFrames
 {
     /// <summary>
+    /// Corresponds to the <c>"any"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("any")]
     Any,
     /// <summary>
+    /// Corresponds to the <c>"current"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("current")]
     Current,
@@ -1776,6 +1813,7 @@ public enum ContinueToLocationTargetCallFrames
 public enum RestartFrameMode
 {
     /// <summary>
+    /// Corresponds to the <c>"StepInto"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StepInto")]
     StepInto,
@@ -1787,10 +1825,12 @@ public enum RestartFrameMode
 public enum SetInstrumentationBreakpointInstrumentation
 {
     /// <summary>
+    /// Corresponds to the <c>"beforeScriptExecution"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("beforeScriptExecution")]
     BeforeScriptExecution,
     /// <summary>
+    /// Corresponds to the <c>"beforeScriptWithSourceMapExecution"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("beforeScriptWithSourceMapExecution")]
     BeforeScriptWithSourceMapExecution,
@@ -1802,18 +1842,22 @@ public enum SetInstrumentationBreakpointInstrumentation
 public enum SetPauseOnExceptionsState
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"caught"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("caught")]
     Caught,
     /// <summary>
+    /// Corresponds to the <c>"uncaught"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("uncaught")]
     Uncaught,
     /// <summary>
+    /// Corresponds to the <c>"all"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("all")]
     All,
@@ -1825,22 +1869,27 @@ public enum SetPauseOnExceptionsState
 public enum SetScriptSourceStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Ok"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Ok")]
     Ok,
     /// <summary>
+    /// Corresponds to the <c>"CompileError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CompileError")]
     CompileError,
     /// <summary>
+    /// Corresponds to the <c>"BlockedByActiveGenerator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByActiveGenerator")]
     BlockedByActiveGenerator,
     /// <summary>
+    /// Corresponds to the <c>"BlockedByActiveFunction"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByActiveFunction")]
     BlockedByActiveFunction,
     /// <summary>
+    /// Corresponds to the <c>"BlockedByTopLevelEsModuleChange"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByTopLevelEsModuleChange")]
     BlockedByTopLevelEsModuleChange,
@@ -1852,54 +1901,67 @@ public enum SetScriptSourceStatus
 public enum PausedReason
 {
     /// <summary>
+    /// Corresponds to the <c>"ambiguous"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ambiguous")]
     Ambiguous,
     /// <summary>
+    /// Corresponds to the <c>"assert"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("assert")]
     Assert,
     /// <summary>
+    /// Corresponds to the <c>"CSPViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSPViolation")]
     CSPViolation,
     /// <summary>
+    /// Corresponds to the <c>"debugCommand"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debugCommand")]
     DebugCommand,
     /// <summary>
+    /// Corresponds to the <c>"DOM"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DOM")]
     DOM,
     /// <summary>
+    /// Corresponds to the <c>"EventListener"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EventListener")]
     EventListener,
     /// <summary>
+    /// Corresponds to the <c>"exception"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exception")]
     Exception,
     /// <summary>
+    /// Corresponds to the <c>"instrumentation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("instrumentation")]
     Instrumentation,
     /// <summary>
+    /// Corresponds to the <c>"OOM"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OOM")]
     OOM,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
     /// <summary>
+    /// Corresponds to the <c>"promiseRejection"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promiseRejection")]
     PromiseRejection,
     /// <summary>
+    /// Corresponds to the <c>"XHR"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("XHR")]
     XHR,
     /// <summary>
+    /// Corresponds to the <c>"step"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("step")]
     Step,
@@ -1911,42 +1973,52 @@ public enum PausedReason
 public enum ScopeType
 {
     /// <summary>
+    /// Corresponds to the <c>"global"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("global")]
     Global,
     /// <summary>
+    /// Corresponds to the <c>"local"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local")]
     Local,
     /// <summary>
+    /// Corresponds to the <c>"with"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("with")]
     With,
     /// <summary>
+    /// Corresponds to the <c>"closure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("closure")]
     Closure,
     /// <summary>
+    /// Corresponds to the <c>"catch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("catch")]
     Catch,
     /// <summary>
+    /// Corresponds to the <c>"block"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("block")]
     Block,
     /// <summary>
+    /// Corresponds to the <c>"script"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("script")]
     Script,
     /// <summary>
+    /// Corresponds to the <c>"eval"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("eval")]
     Eval,
     /// <summary>
+    /// Corresponds to the <c>"module"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("module")]
     Module,
     /// <summary>
+    /// Corresponds to the <c>"wasm-expression-stack"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasm-expression-stack")]
     WasmExpressionStack,
@@ -1958,14 +2030,17 @@ public enum ScopeType
 public enum BreakLocationType
 {
     /// <summary>
+    /// Corresponds to the <c>"debuggerStatement"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debuggerStatement")]
     DebuggerStatement,
     /// <summary>
+    /// Corresponds to the <c>"call"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("call")]
     Call,
     /// <summary>
+    /// Corresponds to the <c>"return"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("return")]
     Return,
@@ -1977,14 +2052,17 @@ public enum BreakLocationType
 public enum DebugSymbolsType
 {
     /// <summary>
+    /// Corresponds to the <c>"SourceMap"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SourceMap")]
     SourceMap,
     /// <summary>
+    /// Corresponds to the <c>"EmbeddedDWARF"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbeddedDWARF")]
     EmbeddedDWARF,
     /// <summary>
+    /// Corresponds to the <c>"ExternalDWARF"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExternalDWARF")]
     ExternalDWARF,

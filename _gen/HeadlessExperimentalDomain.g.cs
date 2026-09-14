@@ -44,7 +44,7 @@ public interface IHeadlessExperimental
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BeginFrameResult"/>.
     /// </returns>
-    Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = default, double? interval = default, bool? noDisplayUpdates = default, ScreenshotParams? screenshot = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = null, double? interval = null, bool? noDisplayUpdates = null, ScreenshotParams? screenshot = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables headless events for the target.
@@ -59,7 +59,7 @@ public interface IHeadlessExperimental
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables headless events for the target.
@@ -74,7 +74,7 @@ public interface IHeadlessExperimental
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -83,21 +83,21 @@ internal sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Seleni
 {
     private static readonly HeadlessExperimentalJsonSerializerContext JsonContext = HeadlessExperimentalJsonSerializerContext.Default;
 
-    public async Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = default, double? interval = default, bool? noDisplayUpdates = default, ScreenshotParams? screenshot = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<BeginFrameResult> BeginFrameAsync(double? frameTimeTicks = null, double? interval = null, bool? noDisplayUpdates = null, ScreenshotParams? screenshot = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new BeginFrameCommandParameters(FrameTimeTicks: frameTimeTicks, Interval: interval, NoDisplayUpdates: noDisplayUpdates, Screenshot: screenshot);
         return await ExecuteCommandAsync("HeadlessExperimental.beginFrame", @params, JsonContext.BeginFrameCommandParameters, JsonContext.BeginFrameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("HeadlessExperimental.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("HeadlessExperimental.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
@@ -108,6 +108,7 @@ internal sealed class HeadlessExperimentalDomain(CdpModule cdp) : global::Seleni
 internal sealed record BeginFrameCommandParameters(double? FrameTimeTicks, double? Interval, bool? NoDisplayUpdates, ScreenshotParams? Screenshot) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeadlessExperimental.BeginFrameAsync"/> command.
 /// </summary>
 /// <param name="HasDamage">
 /// Whether the BeginFrame resulted in damage and, thus, a new frame was committed to the
@@ -122,6 +123,7 @@ public sealed record BeginFrameResult(bool HasDamage, string? ScreenshotData) : 
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeadlessExperimental.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -129,6 +131,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeadlessExperimental.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -160,14 +163,17 @@ public sealed record ScreenshotParams()
 public enum ScreenshotParamsFormat
 {
     /// <summary>
+    /// Corresponds to the <c>"jpeg"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
     Jpeg,
     /// <summary>
+    /// Corresponds to the <c>"png"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
     Png,
     /// <summary>
+    /// Corresponds to the <c>"webp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
     Webp,

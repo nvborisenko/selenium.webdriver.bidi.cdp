@@ -22,7 +22,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the |SmartCardEmulation| domain.
@@ -36,7 +36,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardEstablishContext| call.
@@ -58,7 +58,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportEstablishContextResultResult"/>.
     /// </returns>
-    Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardReleaseContext| call.
@@ -78,7 +78,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportReleaseContextResultResult"/>.
     /// </returns>
-    Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardListReaders| call.
@@ -100,7 +100,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportListReadersResultResult"/>.
     /// </returns>
-    Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardGetStatusChange| call.
@@ -122,7 +122,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportGetStatusChangeResultResult"/>.
     /// </returns>
-    Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the result of a |SCardBeginTransaction| call.
@@ -145,7 +145,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportBeginTransactionResultResult"/>.
     /// </returns>
-    Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a call that returns only a result code.
@@ -179,7 +179,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportPlainResultResult"/>.
     /// </returns>
-    Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardConnect| call.
@@ -203,7 +203,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportConnectResultResult"/>.
     /// </returns>
-    Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a call that sends back data on success.
@@ -235,7 +235,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportDataResultResult"/>.
     /// </returns>
-    Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports the successful result of a |SCardStatus| call.
@@ -263,7 +263,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportStatusResultResult"/>.
     /// </returns>
-    Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reports an error result for the given request.
@@ -281,7 +281,7 @@ public interface ISmartCardEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReportErrorResult"/>.
     /// </returns>
-    Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when |SCardEstablishContext| is called.
@@ -527,73 +527,73 @@ internal sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium
 {
     private static readonly SmartCardEmulationJsonSerializerContext JsonContext = SmartCardEmulationJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("SmartCardEmulation.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("SmartCardEmulation.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportEstablishContextResultResult> ReportEstablishContextResultAsync(string requestId, long contextId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportEstablishContextResultCommandParameters(RequestId: requestId, ContextId: contextId);
         return await ExecuteCommandAsync("SmartCardEmulation.reportEstablishContextResult", @params, JsonContext.ReportEstablishContextResultCommandParameters, JsonContext.ReportEstablishContextResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportReleaseContextResultResult> ReportReleaseContextResultAsync(string requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportReleaseContextResultCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("SmartCardEmulation.reportReleaseContextResult", @params, JsonContext.ReportReleaseContextResultCommandParameters, JsonContext.ReportReleaseContextResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportListReadersResultResult> ReportListReadersResultAsync(string requestId, ImmutableArray<string> readers, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportListReadersResultCommandParameters(RequestId: requestId, Readers: readers);
         return await ExecuteCommandAsync("SmartCardEmulation.reportListReadersResult", @params, JsonContext.ReportListReadersResultCommandParameters, JsonContext.ReportListReadersResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportGetStatusChangeResultResult> ReportGetStatusChangeResultAsync(string requestId, ImmutableArray<ReaderStateOut> readerStates, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportGetStatusChangeResultCommandParameters(RequestId: requestId, ReaderStates: readerStates);
         return await ExecuteCommandAsync("SmartCardEmulation.reportGetStatusChangeResult", @params, JsonContext.ReportGetStatusChangeResultCommandParameters, JsonContext.ReportGetStatusChangeResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportBeginTransactionResultResult> ReportBeginTransactionResultAsync(string requestId, long handle, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportBeginTransactionResultCommandParameters(RequestId: requestId, Handle: handle);
         return await ExecuteCommandAsync("SmartCardEmulation.reportBeginTransactionResult", @params, JsonContext.ReportBeginTransactionResultCommandParameters, JsonContext.ReportBeginTransactionResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportPlainResultResult> ReportPlainResultAsync(string requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportPlainResultCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("SmartCardEmulation.reportPlainResult", @params, JsonContext.ReportPlainResultCommandParameters, JsonContext.ReportPlainResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportConnectResultResult> ReportConnectResultAsync(string requestId, long handle, Protocol? activeProtocol = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportConnectResultCommandParameters(RequestId: requestId, Handle: handle, ActiveProtocol: activeProtocol);
         return await ExecuteCommandAsync("SmartCardEmulation.reportConnectResult", @params, JsonContext.ReportConnectResultCommandParameters, JsonContext.ReportConnectResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportDataResultResult> ReportDataResultAsync(string requestId, string data, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportDataResultCommandParameters(RequestId: requestId, Data: data);
         return await ExecuteCommandAsync("SmartCardEmulation.reportDataResult", @params, JsonContext.ReportDataResultCommandParameters, JsonContext.ReportDataResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportStatusResultResult> ReportStatusResultAsync(string requestId, string readerName, ConnectionState state, string atr, Protocol? protocol = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportStatusResultCommandParameters(RequestId: requestId, ReaderName: readerName, State: state, Atr: atr, Protocol: protocol);
         return await ExecuteCommandAsync("SmartCardEmulation.reportStatusResult", @params, JsonContext.ReportStatusResultCommandParameters, JsonContext.ReportStatusResultResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReportErrorResult> ReportErrorAsync(string requestId, ResultCode resultCode, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReportErrorCommandParameters(RequestId: requestId, ResultCode: resultCode);
         return await ExecuteCommandAsync("SmartCardEmulation.reportError", @params, JsonContext.ReportErrorCommandParameters, JsonContext.ReportErrorResult, session, cancellationToken).ConfigureAwait(false);
@@ -618,6 +618,7 @@ internal sealed class SmartCardEmulationDomain(CdpModule cdp) : global::Selenium
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -625,6 +626,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -632,6 +634,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record ReportEstablishContextResultCommandParameters(string RequestId, long ContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportEstablishContextResultAsync"/> command.
 /// </summary>
 public sealed record ReportEstablishContextResultResult() : EmptyResult;
 
@@ -639,6 +642,7 @@ public sealed record ReportEstablishContextResultResult() : EmptyResult;
 internal sealed record ReportReleaseContextResultCommandParameters(string RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportReleaseContextResultAsync"/> command.
 /// </summary>
 public sealed record ReportReleaseContextResultResult() : EmptyResult;
 
@@ -646,6 +650,7 @@ public sealed record ReportReleaseContextResultResult() : EmptyResult;
 internal sealed record ReportListReadersResultCommandParameters(string RequestId, ImmutableArray<string> Readers) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportListReadersResultAsync"/> command.
 /// </summary>
 public sealed record ReportListReadersResultResult() : EmptyResult;
 
@@ -653,6 +658,7 @@ public sealed record ReportListReadersResultResult() : EmptyResult;
 internal sealed record ReportGetStatusChangeResultCommandParameters(string RequestId, ImmutableArray<ReaderStateOut> ReaderStates) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportGetStatusChangeResultAsync"/> command.
 /// </summary>
 public sealed record ReportGetStatusChangeResultResult() : EmptyResult;
 
@@ -660,6 +666,7 @@ public sealed record ReportGetStatusChangeResultResult() : EmptyResult;
 internal sealed record ReportBeginTransactionResultCommandParameters(string RequestId, long Handle) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportBeginTransactionResultAsync"/> command.
 /// </summary>
 public sealed record ReportBeginTransactionResultResult() : EmptyResult;
 
@@ -667,6 +674,7 @@ public sealed record ReportBeginTransactionResultResult() : EmptyResult;
 internal sealed record ReportPlainResultCommandParameters(string RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportPlainResultAsync"/> command.
 /// </summary>
 public sealed record ReportPlainResultResult() : EmptyResult;
 
@@ -674,6 +682,7 @@ public sealed record ReportPlainResultResult() : EmptyResult;
 internal sealed record ReportConnectResultCommandParameters(string RequestId, long Handle, Protocol? ActiveProtocol) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportConnectResultAsync"/> command.
 /// </summary>
 public sealed record ReportConnectResultResult() : EmptyResult;
 
@@ -681,6 +690,7 @@ public sealed record ReportConnectResultResult() : EmptyResult;
 internal sealed record ReportDataResultCommandParameters(string RequestId, string Data) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportDataResultAsync"/> command.
 /// </summary>
 public sealed record ReportDataResultResult() : EmptyResult;
 
@@ -688,6 +698,7 @@ public sealed record ReportDataResultResult() : EmptyResult;
 internal sealed record ReportStatusResultCommandParameters(string RequestId, string ReaderName, ConnectionState State, string Atr, Protocol? Protocol) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportStatusResultAsync"/> command.
 /// </summary>
 public sealed record ReportStatusResultResult() : EmptyResult;
 
@@ -695,6 +706,7 @@ public sealed record ReportStatusResultResult() : EmptyResult;
 internal sealed record ReportErrorCommandParameters(string RequestId, ResultCode ResultCode) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISmartCardEmulation.ReportErrorAsync"/> command.
 /// </summary>
 public sealed record ReportErrorResult() : EmptyResult;
 
@@ -919,130 +931,162 @@ public sealed record EndTransactionRequestedEventArgs(string RequestId, long Han
 public enum ResultCode
 {
     /// <summary>
+    /// Corresponds to the <c>"success"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("success")]
     Success,
     /// <summary>
+    /// Corresponds to the <c>"removed-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("removed-card")]
     RemovedCard,
     /// <summary>
+    /// Corresponds to the <c>"reset-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reset-card")]
     ResetCard,
     /// <summary>
+    /// Corresponds to the <c>"unpowered-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unpowered-card")]
     UnpoweredCard,
     /// <summary>
+    /// Corresponds to the <c>"unresponsive-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unresponsive-card")]
     UnresponsiveCard,
     /// <summary>
+    /// Corresponds to the <c>"unsupported-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unsupported-card")]
     UnsupportedCard,
     /// <summary>
+    /// Corresponds to the <c>"reader-unavailable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reader-unavailable")]
     ReaderUnavailable,
     /// <summary>
+    /// Corresponds to the <c>"sharing-violation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sharing-violation")]
     SharingViolation,
     /// <summary>
+    /// Corresponds to the <c>"not-transacted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("not-transacted")]
     NotTransacted,
     /// <summary>
+    /// Corresponds to the <c>"no-smartcard"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-smartcard")]
     NoSmartcard,
     /// <summary>
+    /// Corresponds to the <c>"proto-mismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proto-mismatch")]
     ProtoMismatch,
     /// <summary>
+    /// Corresponds to the <c>"system-cancelled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("system-cancelled")]
     SystemCancelled,
     /// <summary>
+    /// Corresponds to the <c>"not-ready"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("not-ready")]
     NotReady,
     /// <summary>
+    /// Corresponds to the <c>"cancelled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cancelled")]
     Cancelled,
     /// <summary>
+    /// Corresponds to the <c>"insufficient-buffer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("insufficient-buffer")]
     InsufficientBuffer,
     /// <summary>
+    /// Corresponds to the <c>"invalid-handle"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("invalid-handle")]
     InvalidHandle,
     /// <summary>
+    /// Corresponds to the <c>"invalid-parameter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("invalid-parameter")]
     InvalidParameter,
     /// <summary>
+    /// Corresponds to the <c>"invalid-value"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("invalid-value")]
     InvalidValue,
     /// <summary>
+    /// Corresponds to the <c>"no-memory"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-memory")]
     NoMemory,
     /// <summary>
+    /// Corresponds to the <c>"timeout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("timeout")]
     Timeout,
     /// <summary>
+    /// Corresponds to the <c>"unknown-reader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown-reader")]
     UnknownReader,
     /// <summary>
+    /// Corresponds to the <c>"unsupported-feature"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unsupported-feature")]
     UnsupportedFeature,
     /// <summary>
+    /// Corresponds to the <c>"no-readers-available"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-readers-available")]
     NoReadersAvailable,
     /// <summary>
+    /// Corresponds to the <c>"service-stopped"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("service-stopped")]
     ServiceStopped,
     /// <summary>
+    /// Corresponds to the <c>"no-service"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-service")]
     NoService,
     /// <summary>
+    /// Corresponds to the <c>"comm-error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("comm-error")]
     CommError,
     /// <summary>
+    /// Corresponds to the <c>"internal-error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("internal-error")]
     InternalError,
     /// <summary>
+    /// Corresponds to the <c>"server-too-busy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("server-too-busy")]
     ServerTooBusy,
     /// <summary>
+    /// Corresponds to the <c>"unexpected"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unexpected")]
     Unexpected,
     /// <summary>
+    /// Corresponds to the <c>"shutdown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shutdown")]
     Shutdown,
     /// <summary>
+    /// Corresponds to the <c>"unknown-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown-card")]
     UnknownCard,
     /// <summary>
+    /// Corresponds to the <c>"unknown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown")]
     Unknown,
@@ -1055,14 +1099,17 @@ public enum ResultCode
 public enum ShareMode
 {
     /// <summary>
+    /// Corresponds to the <c>"shared"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared")]
     Shared,
     /// <summary>
+    /// Corresponds to the <c>"exclusive"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exclusive")]
     Exclusive,
     /// <summary>
+    /// Corresponds to the <c>"direct"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("direct")]
     Direct,
@@ -1075,18 +1122,22 @@ public enum ShareMode
 public enum Disposition
 {
     /// <summary>
+    /// Corresponds to the <c>"leave-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("leave-card")]
     LeaveCard,
     /// <summary>
+    /// Corresponds to the <c>"reset-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reset-card")]
     ResetCard,
     /// <summary>
+    /// Corresponds to the <c>"unpower-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unpower-card")]
     UnpowerCard,
     /// <summary>
+    /// Corresponds to the <c>"eject-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("eject-card")]
     EjectCard,
@@ -1099,26 +1150,32 @@ public enum Disposition
 public enum ConnectionState
 {
     /// <summary>
+    /// Corresponds to the <c>"absent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("absent")]
     Absent,
     /// <summary>
+    /// Corresponds to the <c>"present"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("present")]
     Present,
     /// <summary>
+    /// Corresponds to the <c>"swallowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("swallowed")]
     Swallowed,
     /// <summary>
+    /// Corresponds to the <c>"powered"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("powered")]
     Powered,
     /// <summary>
+    /// Corresponds to the <c>"negotiable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("negotiable")]
     Negotiable,
     /// <summary>
+    /// Corresponds to the <c>"specific"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("specific")]
     Specific,
@@ -1199,14 +1256,17 @@ public sealed record ProtocolSet()
 public enum Protocol
 {
     /// <summary>
+    /// Corresponds to the <c>"t0"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("t0")]
     T0,
     /// <summary>
+    /// Corresponds to the <c>"t1"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("t1")]
     T1,
     /// <summary>
+    /// Corresponds to the <c>"raw"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("raw")]
     Raw,

@@ -22,7 +22,7 @@ public interface IDeviceAccess
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disable events in this domain.
@@ -36,7 +36,7 @@ public interface IDeviceAccess
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Select a device in response to a DeviceAccess.deviceRequestPrompted event.
@@ -54,7 +54,7 @@ public interface IDeviceAccess
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SelectPromptResult"/>.
     /// </returns>
-    Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = default, CancellationToken cancellationToken = default);
+    Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event.
@@ -70,7 +70,7 @@ public interface IDeviceAccess
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CancelPromptResult"/>.
     /// </returns>
-    Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = default, CancellationToken cancellationToken = default);
+    Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// A device request opened a user prompt to select a device. Respond with the
@@ -92,25 +92,25 @@ internal sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDr
 {
     private static readonly DeviceAccessJsonSerializerContext JsonContext = DeviceAccessJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("DeviceAccess.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("DeviceAccess.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SelectPromptResult> SelectPromptAsync(RequestId id, DeviceId deviceId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SelectPromptCommandParameters(Id: id, DeviceId: deviceId);
         return await ExecuteCommandAsync("DeviceAccess.selectPrompt", @params, JsonContext.SelectPromptCommandParameters, JsonContext.SelectPromptResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CancelPromptResult> CancelPromptAsync(RequestId id, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CancelPromptCommandParameters(Id: id);
         return await ExecuteCommandAsync("DeviceAccess.cancelPrompt", @params, JsonContext.CancelPromptCommandParameters, JsonContext.CancelPromptResult, session, cancellationToken).ConfigureAwait(false);
@@ -122,6 +122,7 @@ internal sealed class DeviceAccessDomain(CdpModule cdp) : global::Selenium.WebDr
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDeviceAccess.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -129,6 +130,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDeviceAccess.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -136,6 +138,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record SelectPromptCommandParameters(RequestId Id, DeviceId DeviceId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDeviceAccess.SelectPromptAsync"/> command.
 /// </summary>
 public sealed record SelectPromptResult() : EmptyResult;
 
@@ -143,6 +146,7 @@ public sealed record SelectPromptResult() : EmptyResult;
 internal sealed record CancelPromptCommandParameters(RequestId Id) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDeviceAccess.CancelPromptAsync"/> command.
 /// </summary>
 public sealed record CancelPromptResult() : EmptyResult;
 

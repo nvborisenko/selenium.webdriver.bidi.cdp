@@ -40,7 +40,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="SetPermissionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = default, string? embeddedOrigin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = null, string? embeddedOrigin = null, BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Grant specific permissions to the given origin and reject all others. Deprecated. Use
@@ -65,7 +65,7 @@ public interface IBrowser
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = null, BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reset all permission management for all origins.
@@ -82,7 +82,7 @@ public interface IBrowser
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetPermissionsResult"/>.
     /// </returns>
-    Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set the behavior when downloading a file.
@@ -112,7 +112,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="SetDownloadBehaviorResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, BrowserContextID? browserContextId = null, string? downloadPath = null, bool? eventsEnabled = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancel a download if in progress
@@ -133,7 +133,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="CancelDownloadResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Close browser gracefully.
@@ -147,7 +147,7 @@ public interface IBrowser
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseResult"/>.
     /// </returns>
-    Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CloseResult> CloseAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Crashes browser on the main thread.
@@ -162,7 +162,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="CrashResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CrashResult> CrashAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Crashes GPU process.
@@ -177,7 +177,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="CrashGpuProcessResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns version information.
@@ -191,7 +191,7 @@ public interface IBrowser
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetVersionResult"/>.
     /// </returns>
-    Task<GetVersionResult> GetVersionAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetVersionResult> GetVersionAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the command line switches for the browser process if, and only if
@@ -207,7 +207,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="GetBrowserCommandLineResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Adds or updates a mock camera in the shared video capture device list for
@@ -229,7 +229,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="AddMockCameraResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<AddMockCameraResult> AddMockCameraAsync(string deviceId, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddMockCameraResult> AddMockCameraAsync(string deviceId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get Chrome histograms.
@@ -252,7 +252,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="GetHistogramsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetHistogramsResult> GetHistogramsAsync(string? query = default, bool? delta = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetHistogramsResult> GetHistogramsAsync(string? query = null, bool? delta = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get a Chrome histogram by name.
@@ -273,7 +273,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="GetHistogramResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get position and size of the browser window.
@@ -291,7 +291,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="GetWindowBoundsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get the browser window that contains the devtools target.
@@ -309,7 +309,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="GetWindowForTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set position and/or size of the browser window.
@@ -331,7 +331,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="SetWindowBoundsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set size of the browser contents resizing browser window as necessary.
@@ -357,7 +357,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="SetContentsSizeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = default, long? height = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = null, long? height = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set dock tile details, platform-specific.
@@ -377,7 +377,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="SetDockTileResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = default, string? image = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = null, string? image = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Invoke custom browser commands used by telemetry.
@@ -394,7 +394,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="ExecuteBrowserCommandResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows a site to use privacy sandbox features that require enrollment
@@ -411,7 +411,7 @@ public interface IBrowser
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddPrivacySandboxEnrollmentOverrideResult"/>.
     /// </returns>
-    Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the current globally-applied privacy control status
@@ -427,7 +427,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="GetGlobalPrivacyControlResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetGlobalPrivacyControlResult> GetGlobalPrivacyControlAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetGlobalPrivacyControlResult> GetGlobalPrivacyControlAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets and then gets the current globally-applied privacy control status
@@ -445,7 +445,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="SetGlobalPrivacyControlResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetGlobalPrivacyControlResult> SetGlobalPrivacyControlAsync(bool gpc, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetGlobalPrivacyControlResult> SetGlobalPrivacyControlAsync(bool gpc, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when page is about to start a download.
@@ -485,7 +485,7 @@ internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly BrowserJsonSerializerContext JsonContext = BrowserJsonSerializerContext.Default;
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = default, string? embeddedOrigin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPermissionResult> SetPermissionAsync(PermissionDescriptor permission, PermissionSetting setting, string? origin = null, string? embeddedOrigin = null, BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPermissionCommandParameters(Permission: permission, Setting: setting, Origin: origin, EmbeddedOrigin: embeddedOrigin, BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Browser.setPermission", @params, JsonContext.SetPermissionCommandParameters, JsonContext.SetPermissionResult, session, cancellationToken).ConfigureAwait(false);
@@ -493,143 +493,143 @@ internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = default, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GrantPermissionsResult> GrantPermissionsAsync(ImmutableArray<PermissionType> permissions, string? origin = null, BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GrantPermissionsCommandParameters(Permissions: permissions, Origin: origin, BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Browser.grantPermissions", @params, JsonContext.GrantPermissionsCommandParameters, JsonContext.GrantPermissionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResetPermissionsResult> ResetPermissionsAsync(BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResetPermissionsCommandParameters(BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Browser.resetPermissions", @params, JsonContext.ResetPermissionsCommandParameters, JsonContext.ResetPermissionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, BrowserContextID? browserContextId = null, string? downloadPath = null, bool? eventsEnabled = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, BrowserContextId: browserContextId, DownloadPath: downloadPath, EventsEnabled: eventsEnabled);
         return await ExecuteCommandAsync("Browser.setDownloadBehavior", @params, JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CancelDownloadResult> CancelDownloadAsync(string guid, BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CancelDownloadCommandParameters(Guid: guid, BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Browser.cancelDownload", @params, JsonContext.CancelDownloadCommandParameters, JsonContext.CancelDownloadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CloseResult> CloseAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CloseCommandParameters();
         return await ExecuteCommandAsync("Browser.close", @params, JsonContext.CloseCommandParameters, JsonContext.CloseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CrashResult> CrashAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CrashCommandParameters();
         return await ExecuteCommandAsync("Browser.crash", @params, JsonContext.CrashCommandParameters, JsonContext.CrashResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CrashGpuProcessResult> CrashGpuProcessAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CrashGpuProcessCommandParameters();
         return await ExecuteCommandAsync("Browser.crashGpuProcess", @params, JsonContext.CrashGpuProcessCommandParameters, JsonContext.CrashGpuProcessResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetVersionResult> GetVersionAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetVersionResult> GetVersionAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetVersionCommandParameters();
         return await ExecuteCommandAsync("Browser.getVersion", @params, JsonContext.GetVersionCommandParameters, JsonContext.GetVersionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetBrowserCommandLineCommandParameters();
         return await ExecuteCommandAsync("Browser.getBrowserCommandLine", @params, JsonContext.GetBrowserCommandLineCommandParameters, JsonContext.GetBrowserCommandLineResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AddMockCameraResult> AddMockCameraAsync(string deviceId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddMockCameraResult> AddMockCameraAsync(string deviceId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddMockCameraCommandParameters(DeviceId: deviceId);
         return await ExecuteCommandAsync("Browser.addMockCamera", @params, JsonContext.AddMockCameraCommandParameters, JsonContext.AddMockCameraResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetHistogramsResult> GetHistogramsAsync(string? query = default, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetHistogramsResult> GetHistogramsAsync(string? query = null, bool? delta = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetHistogramsCommandParameters(Query: query, Delta: delta);
         return await ExecuteCommandAsync("Browser.getHistograms", @params, JsonContext.GetHistogramsCommandParameters, JsonContext.GetHistogramsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetHistogramResult> GetHistogramAsync(string name, bool? delta = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetHistogramCommandParameters(Name: name, Delta: delta);
         return await ExecuteCommandAsync("Browser.getHistogram", @params, JsonContext.GetHistogramCommandParameters, JsonContext.GetHistogramResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetWindowBoundsResult> GetWindowBoundsAsync(WindowID windowId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetWindowBoundsCommandParameters(WindowId: windowId);
         return await ExecuteCommandAsync("Browser.getWindowBounds", @params, JsonContext.GetWindowBoundsCommandParameters, JsonContext.GetWindowBoundsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetWindowForTargetResult> GetWindowForTargetAsync(Target.TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetWindowForTargetCommandParameters(TargetId: targetId);
         return await ExecuteCommandAsync("Browser.getWindowForTarget", @params, JsonContext.GetWindowForTargetCommandParameters, JsonContext.GetWindowForTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetWindowBoundsResult> SetWindowBoundsAsync(WindowID windowId, Bounds bounds, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetWindowBoundsCommandParameters(WindowId: windowId, Bounds: bounds);
         return await ExecuteCommandAsync("Browser.setWindowBounds", @params, JsonContext.SetWindowBoundsCommandParameters, JsonContext.SetWindowBoundsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = default, long? height = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetContentsSizeResult> SetContentsSizeAsync(WindowID windowId, long? width = null, long? height = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetContentsSizeCommandParameters(WindowId: windowId, Width: width, Height: height);
         return await ExecuteCommandAsync("Browser.setContentsSize", @params, JsonContext.SetContentsSizeCommandParameters, JsonContext.SetContentsSizeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = default, string? image = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDockTileResult> SetDockTileAsync(string? badgeLabel = null, string? image = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDockTileCommandParameters(BadgeLabel: badgeLabel, Image: image);
         return await ExecuteCommandAsync("Browser.setDockTile", @params, JsonContext.SetDockTileCommandParameters, JsonContext.SetDockTileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ExecuteBrowserCommandCommandParameters(CommandId: commandId);
         return await ExecuteCommandAsync("Browser.executeBrowserCommand", @params, JsonContext.ExecuteBrowserCommandCommandParameters, JsonContext.ExecuteBrowserCommandResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddPrivacySandboxEnrollmentOverrideCommandParameters(Url: url);
         return await ExecuteCommandAsync("Browser.addPrivacySandboxEnrollmentOverride", @params, JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetGlobalPrivacyControlResult> GetGlobalPrivacyControlAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetGlobalPrivacyControlResult> GetGlobalPrivacyControlAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetGlobalPrivacyControlCommandParameters();
         return await ExecuteCommandAsync("Browser.getGlobalPrivacyControl", @params, JsonContext.GetGlobalPrivacyControlCommandParameters, JsonContext.GetGlobalPrivacyControlResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetGlobalPrivacyControlResult> SetGlobalPrivacyControlAsync(bool gpc, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetGlobalPrivacyControlResult> SetGlobalPrivacyControlAsync(bool gpc, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetGlobalPrivacyControlCommandParameters(Gpc: gpc);
         return await ExecuteCommandAsync("Browser.setGlobalPrivacyControl", @params, JsonContext.SetGlobalPrivacyControlCommandParameters, JsonContext.SetGlobalPrivacyControlResult, session, cancellationToken).ConfigureAwait(false);
@@ -644,6 +644,7 @@ internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record SetPermissionCommandParameters(PermissionDescriptor Permission, PermissionSetting Setting, string? Origin, string? EmbeddedOrigin, BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.SetPermissionAsync"/> command.
 /// </summary>
 public sealed record SetPermissionResult() : EmptyResult;
 
@@ -651,6 +652,7 @@ public sealed record SetPermissionResult() : EmptyResult;
 internal sealed record GrantPermissionsCommandParameters(ImmutableArray<PermissionType> Permissions, string? Origin, BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GrantPermissionsAsync"/> command.
 /// </summary>
 public sealed record GrantPermissionsResult() : EmptyResult;
 
@@ -658,6 +660,7 @@ public sealed record GrantPermissionsResult() : EmptyResult;
 internal sealed record ResetPermissionsCommandParameters(BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.ResetPermissionsAsync"/> command.
 /// </summary>
 public sealed record ResetPermissionsResult() : EmptyResult;
 
@@ -665,6 +668,7 @@ public sealed record ResetPermissionsResult() : EmptyResult;
 internal sealed record SetDownloadBehaviorCommandParameters(SetDownloadBehaviorBehavior Behavior, BrowserContextID? BrowserContextId, string? DownloadPath, bool? EventsEnabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.SetDownloadBehaviorAsync"/> command.
 /// </summary>
 public sealed record SetDownloadBehaviorResult() : EmptyResult;
 
@@ -672,6 +676,7 @@ public sealed record SetDownloadBehaviorResult() : EmptyResult;
 internal sealed record CancelDownloadCommandParameters(string Guid, BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.CancelDownloadAsync"/> command.
 /// </summary>
 public sealed record CancelDownloadResult() : EmptyResult;
 
@@ -679,6 +684,7 @@ public sealed record CancelDownloadResult() : EmptyResult;
 internal sealed record CloseCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.CloseAsync"/> command.
 /// </summary>
 public sealed record CloseResult() : EmptyResult;
 
@@ -686,6 +692,7 @@ public sealed record CloseResult() : EmptyResult;
 internal sealed record CrashCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.CrashAsync"/> command.
 /// </summary>
 public sealed record CrashResult() : EmptyResult;
 
@@ -693,6 +700,7 @@ public sealed record CrashResult() : EmptyResult;
 internal sealed record CrashGpuProcessCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.CrashGpuProcessAsync"/> command.
 /// </summary>
 public sealed record CrashGpuProcessResult() : EmptyResult;
 
@@ -700,6 +708,7 @@ public sealed record CrashGpuProcessResult() : EmptyResult;
 internal sealed record GetVersionCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GetVersionAsync"/> command.
 /// </summary>
 /// <param name="ProtocolVersion">
 /// Protocol version.
@@ -722,6 +731,7 @@ public sealed record GetVersionResult(string ProtocolVersion, string Product, st
 internal sealed record GetBrowserCommandLineCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GetBrowserCommandLineAsync"/> command.
 /// </summary>
 /// <param name="Arguments">
 /// Commandline parameters
@@ -732,6 +742,7 @@ public sealed record GetBrowserCommandLineResult(ImmutableArray<string> Argument
 internal sealed record AddMockCameraCommandParameters(string DeviceId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.AddMockCameraAsync"/> command.
 /// </summary>
 public sealed record AddMockCameraResult() : EmptyResult;
 
@@ -739,6 +750,7 @@ public sealed record AddMockCameraResult() : EmptyResult;
 internal sealed record GetHistogramsCommandParameters(string? Query, bool? Delta) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GetHistogramsAsync"/> command.
 /// </summary>
 /// <param name="Histograms">
 /// Histograms.
@@ -749,6 +761,7 @@ public sealed record GetHistogramsResult(ImmutableArray<Histogram> Histograms) :
 internal sealed record GetHistogramCommandParameters(string Name, bool? Delta) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GetHistogramAsync"/> command.
 /// </summary>
 /// <param name="Histogram">
 /// Histogram.
@@ -759,6 +772,7 @@ public sealed record GetHistogramResult(Histogram Histogram) : EmptyResult;
 internal sealed record GetWindowBoundsCommandParameters(WindowID WindowId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GetWindowBoundsAsync"/> command.
 /// </summary>
 /// <param name="Bounds">
 /// Bounds information of the window. When window state is 'minimized', the restored window
@@ -770,6 +784,7 @@ public sealed record GetWindowBoundsResult(Bounds Bounds) : EmptyResult;
 internal sealed record GetWindowForTargetCommandParameters(Target.TargetID? TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GetWindowForTargetAsync"/> command.
 /// </summary>
 /// <param name="WindowId">
 /// Browser window id.
@@ -784,6 +799,7 @@ public sealed record GetWindowForTargetResult(WindowID WindowId, Bounds Bounds) 
 internal sealed record SetWindowBoundsCommandParameters(WindowID WindowId, Bounds Bounds) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.SetWindowBoundsAsync"/> command.
 /// </summary>
 public sealed record SetWindowBoundsResult() : EmptyResult;
 
@@ -791,6 +807,7 @@ public sealed record SetWindowBoundsResult() : EmptyResult;
 internal sealed record SetContentsSizeCommandParameters(WindowID WindowId, long? Width, long? Height) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.SetContentsSizeAsync"/> command.
 /// </summary>
 public sealed record SetContentsSizeResult() : EmptyResult;
 
@@ -798,6 +815,7 @@ public sealed record SetContentsSizeResult() : EmptyResult;
 internal sealed record SetDockTileCommandParameters(string? BadgeLabel, string? Image) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.SetDockTileAsync"/> command.
 /// </summary>
 public sealed record SetDockTileResult() : EmptyResult;
 
@@ -805,6 +823,7 @@ public sealed record SetDockTileResult() : EmptyResult;
 internal sealed record ExecuteBrowserCommandCommandParameters(BrowserCommandId CommandId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.ExecuteBrowserCommandAsync"/> command.
 /// </summary>
 public sealed record ExecuteBrowserCommandResult() : EmptyResult;
 
@@ -812,6 +831,7 @@ public sealed record ExecuteBrowserCommandResult() : EmptyResult;
 internal sealed record AddPrivacySandboxEnrollmentOverrideCommandParameters(string Url) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.AddPrivacySandboxEnrollmentOverrideAsync"/> command.
 /// </summary>
 public sealed record AddPrivacySandboxEnrollmentOverrideResult() : EmptyResult;
 
@@ -819,6 +839,7 @@ public sealed record AddPrivacySandboxEnrollmentOverrideResult() : EmptyResult;
 internal sealed record GetGlobalPrivacyControlCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.GetGlobalPrivacyControlAsync"/> command.
 /// </summary>
 /// <param name="Gpc">
 /// </param>
@@ -828,6 +849,7 @@ public sealed record GetGlobalPrivacyControlResult(bool Gpc) : EmptyResult;
 internal sealed record SetGlobalPrivacyControlCommandParameters(bool Gpc) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBrowser.SetGlobalPrivacyControlAsync"/> command.
 /// </summary>
 /// <param name="Gpc">
 /// </param>
@@ -896,18 +918,22 @@ public record WindowID : INumberRemoteId
 public enum WindowState
 {
     /// <summary>
+    /// Corresponds to the <c>"normal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("normal")]
     Normal,
     /// <summary>
+    /// Corresponds to the <c>"minimized"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("minimized")]
     Minimized,
     /// <summary>
+    /// Corresponds to the <c>"maximized"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("maximized")]
     Maximized,
     /// <summary>
+    /// Corresponds to the <c>"fullscreen"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fullscreen")]
     Fullscreen,
@@ -950,158 +976,197 @@ public sealed record Bounds()
 public enum PermissionType
 {
     /// <summary>
+    /// Corresponds to the <c>"ar"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ar")]
     Ar,
     /// <summary>
+    /// Corresponds to the <c>"audioCapture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("audioCapture")]
     AudioCapture,
     /// <summary>
+    /// Corresponds to the <c>"automaticFullscreen"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("automaticFullscreen")]
     AutomaticFullscreen,
     /// <summary>
+    /// Corresponds to the <c>"backgroundFetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("backgroundFetch")]
     BackgroundFetch,
     /// <summary>
+    /// Corresponds to the <c>"backgroundSync"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("backgroundSync")]
     BackgroundSync,
     /// <summary>
+    /// Corresponds to the <c>"cameraPanTiltZoom"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cameraPanTiltZoom")]
     CameraPanTiltZoom,
     /// <summary>
+    /// Corresponds to the <c>"capturedSurfaceControl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("capturedSurfaceControl")]
     CapturedSurfaceControl,
     /// <summary>
+    /// Corresponds to the <c>"clipboardReadWrite"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clipboardReadWrite")]
     ClipboardReadWrite,
     /// <summary>
+    /// Corresponds to the <c>"clipboardSanitizedWrite"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clipboardSanitizedWrite")]
     ClipboardSanitizedWrite,
     /// <summary>
+    /// Corresponds to the <c>"displayCapture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("displayCapture")]
     DisplayCapture,
     /// <summary>
+    /// Corresponds to the <c>"durableStorage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("durableStorage")]
     DurableStorage,
     /// <summary>
+    /// Corresponds to the <c>"geolocation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("geolocation")]
     Geolocation,
     /// <summary>
+    /// Corresponds to the <c>"handTracking"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("handTracking")]
     HandTracking,
     /// <summary>
+    /// Corresponds to the <c>"idleDetection"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("idleDetection")]
     IdleDetection,
     /// <summary>
+    /// Corresponds to the <c>"keyboardLock"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyboardLock")]
     KeyboardLock,
     /// <summary>
+    /// Corresponds to the <c>"localFonts"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("localFonts")]
     LocalFonts,
     /// <summary>
+    /// Corresponds to the <c>"localNetwork"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("localNetwork")]
     LocalNetwork,
     /// <summary>
+    /// Corresponds to the <c>"localNetworkAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("localNetworkAccess")]
     LocalNetworkAccess,
     /// <summary>
+    /// Corresponds to the <c>"loopbackNetwork"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("loopbackNetwork")]
     LoopbackNetwork,
     /// <summary>
+    /// Corresponds to the <c>"midi"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("midi")]
     Midi,
     /// <summary>
+    /// Corresponds to the <c>"midiSysex"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("midiSysex")]
     MidiSysex,
     /// <summary>
+    /// Corresponds to the <c>"nfc"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("nfc")]
     Nfc,
     /// <summary>
+    /// Corresponds to the <c>"notifications"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notifications")]
     Notifications,
     /// <summary>
+    /// Corresponds to the <c>"paymentHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("paymentHandler")]
     PaymentHandler,
     /// <summary>
+    /// Corresponds to the <c>"periodicBackgroundSync"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("periodicBackgroundSync")]
     PeriodicBackgroundSync,
     /// <summary>
+    /// Corresponds to the <c>"pointerLock"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pointerLock")]
     PointerLock,
     /// <summary>
+    /// Corresponds to the <c>"protectedMediaIdentifier"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("protectedMediaIdentifier")]
     ProtectedMediaIdentifier,
     /// <summary>
+    /// Corresponds to the <c>"sensors"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sensors")]
     Sensors,
     /// <summary>
+    /// Corresponds to the <c>"smartCard"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("smartCard")]
     SmartCard,
     /// <summary>
+    /// Corresponds to the <c>"speakerSelection"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("speakerSelection")]
     SpeakerSelection,
     /// <summary>
+    /// Corresponds to the <c>"storageAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storageAccess")]
     StorageAccess,
     /// <summary>
+    /// Corresponds to the <c>"topLevelStorageAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("topLevelStorageAccess")]
     TopLevelStorageAccess,
     /// <summary>
+    /// Corresponds to the <c>"videoCapture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("videoCapture")]
     VideoCapture,
     /// <summary>
+    /// Corresponds to the <c>"vr"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("vr")]
     Vr,
     /// <summary>
+    /// Corresponds to the <c>"wakeLockScreen"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wakeLockScreen")]
     WakeLockScreen,
     /// <summary>
+    /// Corresponds to the <c>"wakeLockSystem"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wakeLockSystem")]
     WakeLockSystem,
     /// <summary>
+    /// Corresponds to the <c>"webAppInstallation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webAppInstallation")]
     WebAppInstallation,
     /// <summary>
+    /// Corresponds to the <c>"webPrinting"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webPrinting")]
     WebPrinting,
     /// <summary>
+    /// Corresponds to the <c>"windowManagement"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("windowManagement")]
     WindowManagement,
@@ -1113,14 +1178,17 @@ public enum PermissionType
 public enum PermissionSetting
 {
     /// <summary>
+    /// Corresponds to the <c>"granted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("granted")]
     Granted,
     /// <summary>
+    /// Corresponds to the <c>"denied"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("denied")]
     Denied,
     /// <summary>
+    /// Corresponds to the <c>"prompt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("prompt")]
     Prompt,
@@ -1170,14 +1238,17 @@ public sealed record PermissionDescriptor(string Name)
 public enum BrowserCommandId
 {
     /// <summary>
+    /// Corresponds to the <c>"openTabSearch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("openTabSearch")]
     OpenTabSearch,
     /// <summary>
+    /// Corresponds to the <c>"closeTabSearch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("closeTabSearch")]
     CloseTabSearch,
     /// <summary>
+    /// Corresponds to the <c>"openGlic"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("openGlic")]
     OpenGlic,
@@ -1224,18 +1295,22 @@ public sealed record Histogram(string Name, long Sum, long Count, ImmutableArray
 public enum SetDownloadBehaviorBehavior
 {
     /// <summary>
+    /// Corresponds to the <c>"deny"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deny")]
     Deny,
     /// <summary>
+    /// Corresponds to the <c>"allow"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("allow")]
     Allow,
     /// <summary>
+    /// Corresponds to the <c>"allowAndName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("allowAndName")]
     AllowAndName,
     /// <summary>
+    /// Corresponds to the <c>"default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
     Default,
@@ -1247,14 +1322,17 @@ public enum SetDownloadBehaviorBehavior
 public enum DownloadProgressState
 {
     /// <summary>
+    /// Corresponds to the <c>"inProgress"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inProgress")]
     InProgress,
     /// <summary>
+    /// Corresponds to the <c>"completed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("completed")]
     Completed,
     /// <summary>
+    /// Corresponds to the <c>"canceled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("canceled")]
     Canceled,

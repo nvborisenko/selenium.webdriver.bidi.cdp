@@ -27,7 +27,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeliverPushMessageResult"/>.
     /// </returns>
-    Task<DeliverPushMessageResult> DeliverPushMessageAsync(string origin, RegistrationID registrationId, string data, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeliverPushMessageResult> DeliverPushMessageAsync(string origin, RegistrationID registrationId, string data, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -40,7 +40,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -61,7 +61,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchSyncEventResult"/>.
     /// </returns>
-    Task<DispatchSyncEventResult> DispatchSyncEventAsync(string origin, RegistrationID registrationId, string tag, bool lastChance, string? session = default, CancellationToken cancellationToken = default);
+    Task<DispatchSyncEventResult> DispatchSyncEventAsync(string origin, RegistrationID registrationId, string tag, bool lastChance, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -80,7 +80,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchPeriodicSyncEventResult"/>.
     /// </returns>
-    Task<DispatchPeriodicSyncEventResult> DispatchPeriodicSyncEventAsync(string origin, RegistrationID registrationId, string tag, string? session = default, CancellationToken cancellationToken = default);
+    Task<DispatchPeriodicSyncEventResult> DispatchPeriodicSyncEventAsync(string origin, RegistrationID registrationId, string tag, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -93,7 +93,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -108,7 +108,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetForceUpdateOnPageLoadResult"/>.
     /// </returns>
-    Task<SetForceUpdateOnPageLoadResult> SetForceUpdateOnPageLoadAsync(bool forceUpdateOnPageLoad, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetForceUpdateOnPageLoadResult> SetForceUpdateOnPageLoadAsync(bool forceUpdateOnPageLoad, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -123,7 +123,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SkipWaitingResult"/>.
     /// </returns>
-    Task<SkipWaitingResult> SkipWaitingAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default);
+    Task<SkipWaitingResult> SkipWaitingAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -138,7 +138,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartWorkerResult"/>.
     /// </returns>
-    Task<StartWorkerResult> StartWorkerAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartWorkerResult> StartWorkerAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -151,7 +151,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopAllWorkersResult"/>.
     /// </returns>
-    Task<StopAllWorkersResult> StopAllWorkersAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopAllWorkersResult> StopAllWorkersAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -166,7 +166,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopWorkerResult"/>.
     /// </returns>
-    Task<StopWorkerResult> StopWorkerAsync(string versionId, string? session = default, CancellationToken cancellationToken = default);
+    Task<StopWorkerResult> StopWorkerAsync(string versionId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -181,7 +181,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UnregisterResult"/>.
     /// </returns>
-    Task<UnregisterResult> UnregisterAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default);
+    Task<UnregisterResult> UnregisterAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -196,7 +196,7 @@ public interface IServiceWorker
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UpdateRegistrationResult"/>.
     /// </returns>
-    Task<UpdateRegistrationResult> UpdateRegistrationAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default);
+    Task<UpdateRegistrationResult> UpdateRegistrationAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -238,73 +238,73 @@ internal sealed class ServiceWorkerDomain(CdpModule cdp) : global::Selenium.WebD
 {
     private static readonly ServiceWorkerJsonSerializerContext JsonContext = ServiceWorkerJsonSerializerContext.Default;
 
-    public async Task<DeliverPushMessageResult> DeliverPushMessageAsync(string origin, RegistrationID registrationId, string data, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeliverPushMessageResult> DeliverPushMessageAsync(string origin, RegistrationID registrationId, string data, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeliverPushMessageCommandParameters(Origin: origin, RegistrationId: registrationId, Data: data);
         return await ExecuteCommandAsync("ServiceWorker.deliverPushMessage", @params, JsonContext.DeliverPushMessageCommandParameters, JsonContext.DeliverPushMessageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("ServiceWorker.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DispatchSyncEventResult> DispatchSyncEventAsync(string origin, RegistrationID registrationId, string tag, bool lastChance, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DispatchSyncEventResult> DispatchSyncEventAsync(string origin, RegistrationID registrationId, string tag, bool lastChance, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchSyncEventCommandParameters(Origin: origin, RegistrationId: registrationId, Tag: tag, LastChance: lastChance);
         return await ExecuteCommandAsync("ServiceWorker.dispatchSyncEvent", @params, JsonContext.DispatchSyncEventCommandParameters, JsonContext.DispatchSyncEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DispatchPeriodicSyncEventResult> DispatchPeriodicSyncEventAsync(string origin, RegistrationID registrationId, string tag, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DispatchPeriodicSyncEventResult> DispatchPeriodicSyncEventAsync(string origin, RegistrationID registrationId, string tag, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchPeriodicSyncEventCommandParameters(Origin: origin, RegistrationId: registrationId, Tag: tag);
         return await ExecuteCommandAsync("ServiceWorker.dispatchPeriodicSyncEvent", @params, JsonContext.DispatchPeriodicSyncEventCommandParameters, JsonContext.DispatchPeriodicSyncEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("ServiceWorker.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetForceUpdateOnPageLoadResult> SetForceUpdateOnPageLoadAsync(bool forceUpdateOnPageLoad, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetForceUpdateOnPageLoadResult> SetForceUpdateOnPageLoadAsync(bool forceUpdateOnPageLoad, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetForceUpdateOnPageLoadCommandParameters(ForceUpdateOnPageLoad: forceUpdateOnPageLoad);
         return await ExecuteCommandAsync("ServiceWorker.setForceUpdateOnPageLoad", @params, JsonContext.SetForceUpdateOnPageLoadCommandParameters, JsonContext.SetForceUpdateOnPageLoadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SkipWaitingResult> SkipWaitingAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SkipWaitingResult> SkipWaitingAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SkipWaitingCommandParameters(ScopeURL: scopeURL);
         return await ExecuteCommandAsync("ServiceWorker.skipWaiting", @params, JsonContext.SkipWaitingCommandParameters, JsonContext.SkipWaitingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartWorkerResult> StartWorkerAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartWorkerResult> StartWorkerAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartWorkerCommandParameters(ScopeURL: scopeURL);
         return await ExecuteCommandAsync("ServiceWorker.startWorker", @params, JsonContext.StartWorkerCommandParameters, JsonContext.StartWorkerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopAllWorkersResult> StopAllWorkersAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopAllWorkersResult> StopAllWorkersAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopAllWorkersCommandParameters();
         return await ExecuteCommandAsync("ServiceWorker.stopAllWorkers", @params, JsonContext.StopAllWorkersCommandParameters, JsonContext.StopAllWorkersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopWorkerResult> StopWorkerAsync(string versionId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopWorkerResult> StopWorkerAsync(string versionId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopWorkerCommandParameters(VersionId: versionId);
         return await ExecuteCommandAsync("ServiceWorker.stopWorker", @params, JsonContext.StopWorkerCommandParameters, JsonContext.StopWorkerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UnregisterResult> UnregisterAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UnregisterResult> UnregisterAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UnregisterCommandParameters(ScopeURL: scopeURL);
         return await ExecuteCommandAsync("ServiceWorker.unregister", @params, JsonContext.UnregisterCommandParameters, JsonContext.UnregisterResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UpdateRegistrationResult> UpdateRegistrationAsync(string scopeURL, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UpdateRegistrationResult> UpdateRegistrationAsync(string scopeURL, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UpdateRegistrationCommandParameters(ScopeURL: scopeURL);
         return await ExecuteCommandAsync("ServiceWorker.updateRegistration", @params, JsonContext.UpdateRegistrationCommandParameters, JsonContext.UpdateRegistrationResult, session, cancellationToken).ConfigureAwait(false);
@@ -318,6 +318,7 @@ internal sealed class ServiceWorkerDomain(CdpModule cdp) : global::Selenium.WebD
 internal sealed record DeliverPushMessageCommandParameters(string Origin, RegistrationID RegistrationId, string Data) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.DeliverPushMessageAsync"/> command.
 /// </summary>
 public sealed record DeliverPushMessageResult() : EmptyResult;
 
@@ -325,6 +326,7 @@ public sealed record DeliverPushMessageResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -332,6 +334,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record DispatchSyncEventCommandParameters(string Origin, RegistrationID RegistrationId, string Tag, bool LastChance) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.DispatchSyncEventAsync"/> command.
 /// </summary>
 public sealed record DispatchSyncEventResult() : EmptyResult;
 
@@ -339,6 +342,7 @@ public sealed record DispatchSyncEventResult() : EmptyResult;
 internal sealed record DispatchPeriodicSyncEventCommandParameters(string Origin, RegistrationID RegistrationId, string Tag) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.DispatchPeriodicSyncEventAsync"/> command.
 /// </summary>
 public sealed record DispatchPeriodicSyncEventResult() : EmptyResult;
 
@@ -346,6 +350,7 @@ public sealed record DispatchPeriodicSyncEventResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -353,6 +358,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record SetForceUpdateOnPageLoadCommandParameters(bool ForceUpdateOnPageLoad) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.SetForceUpdateOnPageLoadAsync"/> command.
 /// </summary>
 public sealed record SetForceUpdateOnPageLoadResult() : EmptyResult;
 
@@ -360,6 +366,7 @@ public sealed record SetForceUpdateOnPageLoadResult() : EmptyResult;
 internal sealed record SkipWaitingCommandParameters(string ScopeURL) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.SkipWaitingAsync"/> command.
 /// </summary>
 public sealed record SkipWaitingResult() : EmptyResult;
 
@@ -367,6 +374,7 @@ public sealed record SkipWaitingResult() : EmptyResult;
 internal sealed record StartWorkerCommandParameters(string ScopeURL) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.StartWorkerAsync"/> command.
 /// </summary>
 public sealed record StartWorkerResult() : EmptyResult;
 
@@ -374,6 +382,7 @@ public sealed record StartWorkerResult() : EmptyResult;
 internal sealed record StopAllWorkersCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.StopAllWorkersAsync"/> command.
 /// </summary>
 public sealed record StopAllWorkersResult() : EmptyResult;
 
@@ -381,6 +390,7 @@ public sealed record StopAllWorkersResult() : EmptyResult;
 internal sealed record StopWorkerCommandParameters(string VersionId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.StopWorkerAsync"/> command.
 /// </summary>
 public sealed record StopWorkerResult() : EmptyResult;
 
@@ -388,6 +398,7 @@ public sealed record StopWorkerResult() : EmptyResult;
 internal sealed record UnregisterCommandParameters(string ScopeURL) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.UnregisterAsync"/> command.
 /// </summary>
 public sealed record UnregisterResult() : EmptyResult;
 
@@ -395,6 +406,7 @@ public sealed record UnregisterResult() : EmptyResult;
 internal sealed record UpdateRegistrationCommandParameters(string ScopeURL) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IServiceWorker.UpdateRegistrationAsync"/> command.
 /// </summary>
 public sealed record UpdateRegistrationResult() : EmptyResult;
 
@@ -444,18 +456,22 @@ public sealed record ServiceWorkerRegistration(RegistrationID RegistrationId, st
 public enum ServiceWorkerVersionRunningStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"stopped"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("stopped")]
     Stopped,
     /// <summary>
+    /// Corresponds to the <c>"starting"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("starting")]
     Starting,
     /// <summary>
+    /// Corresponds to the <c>"running"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("running")]
     Running,
     /// <summary>
+    /// Corresponds to the <c>"stopping"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("stopping")]
     Stopping,
@@ -467,26 +483,32 @@ public enum ServiceWorkerVersionRunningStatus
 public enum ServiceWorkerVersionStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"new"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("new")]
     New,
     /// <summary>
+    /// Corresponds to the <c>"installing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("installing")]
     Installing,
     /// <summary>
+    /// Corresponds to the <c>"installed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("installed")]
     Installed,
     /// <summary>
+    /// Corresponds to the <c>"activating"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activating")]
     Activating,
     /// <summary>
+    /// Corresponds to the <c>"activated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activated")]
     Activated,
     /// <summary>
+    /// Corresponds to the <c>"redundant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("redundant")]
     Redundant,
@@ -534,26 +556,32 @@ public sealed record ServiceWorkerRouterCondition()
 public enum ServiceWorkerRouterSourceType
 {
     /// <summary>
+    /// Corresponds to the <c>"cache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cache")]
     Cache,
     /// <summary>
+    /// Corresponds to the <c>"fetchEvent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fetchEvent")]
     FetchEvent,
     /// <summary>
+    /// Corresponds to the <c>"network"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
     Network,
     /// <summary>
+    /// Corresponds to the <c>"raceNetworkAndFetchHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("raceNetworkAndFetchHandler")]
     RaceNetworkAndFetchHandler,
     /// <summary>
+    /// Corresponds to the <c>"raceNetworkAndCache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("raceNetworkAndCache")]
     RaceNetworkAndCache,
     /// <summary>
+    /// Corresponds to the <c>"sourceDict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sourceDict")]
     SourceDict,

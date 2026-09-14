@@ -36,7 +36,7 @@ public interface IAutofill
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TriggerResult"/>.
     /// </returns>
-    Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = null, CreditCard? card = null, Address? address = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set addresses so that developers can verify their forms implementation.
@@ -52,7 +52,7 @@ public interface IAutofill
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAddressesResult"/>.
     /// </returns>
-    Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables autofill domain notifications.
@@ -66,7 +66,7 @@ public interface IAutofill
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables autofill domain notifications.
@@ -80,7 +80,7 @@ public interface IAutofill
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emitted when an address form is filled.
@@ -101,25 +101,25 @@ internal sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver
 {
     private static readonly AutofillJsonSerializerContext JsonContext = AutofillJsonSerializerContext.Default;
 
-    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = default, CreditCard? card = default, Address? address = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TriggerResult> TriggerAsync(DOM.BackendNodeId fieldId, Page.FrameId? frameId = null, CreditCard? card = null, Address? address = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TriggerCommandParameters(FieldId: fieldId, FrameId: frameId, Card: card, Address: address);
         return await ExecuteCommandAsync("Autofill.trigger", @params, JsonContext.TriggerCommandParameters, JsonContext.TriggerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAddressesResult> SetAddressesAsync(ImmutableArray<Address> addresses, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAddressesCommandParameters(Addresses: addresses);
         return await ExecuteCommandAsync("Autofill.setAddresses", @params, JsonContext.SetAddressesCommandParameters, JsonContext.SetAddressesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Autofill.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Autofill.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
@@ -131,6 +131,7 @@ internal sealed class AutofillDomain(CdpModule cdp) : global::Selenium.WebDriver
 internal sealed record TriggerCommandParameters(DOM.BackendNodeId FieldId, Page.FrameId? FrameId, CreditCard? Card, Address? Address) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAutofill.TriggerAsync"/> command.
 /// </summary>
 public sealed record TriggerResult() : EmptyResult;
 
@@ -138,6 +139,7 @@ public sealed record TriggerResult() : EmptyResult;
 internal sealed record SetAddressesCommandParameters(ImmutableArray<Address> Addresses) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAutofill.SetAddressesAsync"/> command.
 /// </summary>
 public sealed record SetAddressesResult() : EmptyResult;
 
@@ -145,6 +147,7 @@ public sealed record SetAddressesResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAutofill.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -152,6 +155,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAutofill.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -244,10 +248,12 @@ public sealed record AddressUI(ImmutableArray<AddressFields> AddressFields)
 public enum FillingStrategy
 {
     /// <summary>
+    /// Corresponds to the <c>"autocompleteAttribute"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autocompleteAttribute")]
     AutocompleteAttribute,
     /// <summary>
+    /// Corresponds to the <c>"autofillInferred"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autofillInferred")]
     AutofillInferred,

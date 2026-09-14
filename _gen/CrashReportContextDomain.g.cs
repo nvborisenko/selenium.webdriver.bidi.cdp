@@ -23,7 +23,7 @@ public interface ICrashReportContext
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEntriesResult"/>.
     /// </returns>
-    Task<GetEntriesResult> GetEntriesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetEntriesResult> GetEntriesAsync(string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -32,7 +32,7 @@ internal sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium
 {
     private static readonly CrashReportContextJsonSerializerContext JsonContext = CrashReportContextJsonSerializerContext.Default;
 
-    public async Task<GetEntriesResult> GetEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetEntriesResult> GetEntriesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetEntriesCommandParameters();
         return await ExecuteCommandAsync("CrashReportContext.getEntries", @params, JsonContext.GetEntriesCommandParameters, JsonContext.GetEntriesResult, session, cancellationToken).ConfigureAwait(false);
@@ -43,6 +43,7 @@ internal sealed class CrashReportContextDomain(CdpModule cdp) : global::Selenium
 internal sealed record GetEntriesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICrashReportContext.GetEntriesAsync"/> command.
 /// </summary>
 /// <param name="Entries">
 /// </param>

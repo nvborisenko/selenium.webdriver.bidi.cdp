@@ -23,7 +23,7 @@ public interface IWebMCP
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the WebMCP domain.
@@ -37,7 +37,7 @@ public interface IWebMCP
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Invokes a registered tool.
@@ -60,7 +60,7 @@ public interface IWebMCP
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="InvokeToolResult"/>.
     /// </returns>
-    Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = default, CancellationToken cancellationToken = default);
+    Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancels a pending tool invocation.
@@ -77,7 +77,7 @@ public interface IWebMCP
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CancelInvocationResult"/>.
     /// </returns>
-    Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = default, CancellationToken cancellationToken = default);
+    Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Event fired when new tools are added.
@@ -137,25 +137,25 @@ internal sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 {
     private static readonly WebMCPJsonSerializerContext JsonContext = WebMCPJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("WebMCP.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("WebMCP.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new InvokeToolCommandParameters(FrameId: frameId, ToolName: toolName, Input: input);
         return await ExecuteCommandAsync("WebMCP.invokeTool", @params, JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CancelInvocationResult> CancelInvocationAsync(string invocationId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CancelInvocationCommandParameters(InvocationId: invocationId);
         return await ExecuteCommandAsync("WebMCP.cancelInvocation", @params, JsonContext.CancelInvocationCommandParameters, JsonContext.CancelInvocationResult, session, cancellationToken).ConfigureAwait(false);
@@ -170,6 +170,7 @@ internal sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebMCP.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -177,6 +178,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebMCP.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -184,6 +186,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record InvokeToolCommandParameters(Page.FrameId FrameId, string ToolName, global::System.Text.Json.JsonElement Input) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebMCP.InvokeToolAsync"/> command.
 /// </summary>
 /// <param name="InvocationId">
 /// Unique identifier for this invocation. Response is sent before tool events.
@@ -194,6 +197,7 @@ public sealed record InvokeToolResult(string InvocationId) : EmptyResult;
 internal sealed record CancelInvocationCommandParameters(string InvocationId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebMCP.CancelInvocationAsync"/> command.
 /// </summary>
 public sealed record CancelInvocationResult() : EmptyResult;
 
@@ -285,14 +289,17 @@ public sealed record Annotation()
 public enum InvocationStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Completed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Completed")]
     Completed,
     /// <summary>
+    /// Corresponds to the <c>"Canceled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Canceled")]
     Canceled,
     /// <summary>
+    /// Corresponds to the <c>"Error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Error")]
     Error,

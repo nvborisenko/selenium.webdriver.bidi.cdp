@@ -26,7 +26,7 @@ public interface IStorage
     /// A task representing the asynchronous operation, containing a <see cref="GetStorageKeyForFrameResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns storage key for the given frame. If no frame ID is provided,
@@ -43,7 +43,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStorageKeyResult"/>.
     /// </returns>
-    Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears storage for origin.
@@ -63,7 +63,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearDataForOriginResult"/>.
     /// </returns>
-    Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears storage for storage key.
@@ -83,7 +83,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearDataForStorageKeyResult"/>.
     /// </returns>
-    Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser cookies.
@@ -100,7 +100,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCookiesResult"/>.
     /// </returns>
-    Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets given cookies.
@@ -120,7 +120,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookiesResult"/>.
     /// </returns>
-    Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears cookies.
@@ -137,7 +137,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearCookiesResult"/>.
     /// </returns>
-    Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns usage and quota in bytes.
@@ -154,7 +154,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetUsageAndQuotaResult"/>.
     /// </returns>
-    Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Override quota for the specified origin
@@ -180,7 +180,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OverrideQuotaForOriginResult"/>.
     /// </returns>
-    Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers origin to be notified when an update occurs to its cache storage list.
@@ -197,7 +197,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackCacheStorageForOriginResult"/>.
     /// </returns>
-    Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
+    Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers storage key to be notified when an update occurs to its cache storage list.
@@ -214,7 +214,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackCacheStorageForStorageKeyResult"/>.
     /// </returns>
-    Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
+    Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers origin to be notified when an update occurs to its IndexedDB.
@@ -231,7 +231,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackIndexedDBForOriginResult"/>.
     /// </returns>
-    Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
+    Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Registers storage key to be notified when an update occurs to its IndexedDB.
@@ -248,7 +248,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackIndexedDBForStorageKeyResult"/>.
     /// </returns>
-    Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
+    Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters origin from receiving notifications for cache storage.
@@ -265,7 +265,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackCacheStorageForOriginResult"/>.
     /// </returns>
-    Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
+    Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters storage key from receiving notifications for cache storage.
@@ -282,7 +282,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackCacheStorageForStorageKeyResult"/>.
     /// </returns>
-    Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
+    Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters origin from receiving notifications for IndexedDB.
@@ -299,7 +299,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackIndexedDBForOriginResult"/>.
     /// </returns>
-    Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
+    Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Unregisters storage key from receiving notifications for IndexedDB.
@@ -316,7 +316,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UntrackIndexedDBForStorageKeyResult"/>.
     /// </returns>
-    Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default);
+    Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the number of stored Trust Tokens per issuer for the
@@ -331,7 +331,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetTrustTokensResult"/>.
     /// </returns>
-    Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes all Trust Tokens issued by the provided issuerOrigin.
@@ -348,7 +348,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearTrustTokensResult"/>.
     /// </returns>
-    Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set tracking for a storage key's buckets.
@@ -366,7 +366,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStorageBucketTrackingResult"/>.
     /// </returns>
-    Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes the Storage Bucket with the given storage key and bucket name.
@@ -382,7 +382,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteStorageBucketResult"/>.
     /// </returns>
-    Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes state for sites identified as potential bounce trackers, immediately.
@@ -396,7 +396,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RunBounceTrackingMitigationsResult"/>.
     /// </returns>
-    Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the effective Related Website Sets in use by this profile for the browser
@@ -411,7 +411,7 @@ public interface IStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRelatedWebsiteSetsResult"/>.
     /// </returns>
-    Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// A cache's contents have been modified.
@@ -498,139 +498,139 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly StorageJsonSerializerContext JsonContext = StorageJsonSerializerContext.Default;
 
     [global::System.Obsolete]
-    public async Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetStorageKeyForFrameResult> GetStorageKeyForFrameAsync(Page.FrameId frameId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetStorageKeyForFrameCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("Storage.getStorageKeyForFrame", @params, JsonContext.GetStorageKeyForFrameCommandParameters, JsonContext.GetStorageKeyForFrameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetStorageKeyResult> GetStorageKeyAsync(Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetStorageKeyCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("Storage.getStorageKey", @params, JsonContext.GetStorageKeyCommandParameters, JsonContext.GetStorageKeyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDataForOriginResult> ClearDataForOriginAsync(string origin, string storageTypes, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDataForOriginCommandParameters(Origin: origin, StorageTypes: storageTypes);
         return await ExecuteCommandAsync("Storage.clearDataForOrigin", @params, JsonContext.ClearDataForOriginCommandParameters, JsonContext.ClearDataForOriginResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDataForStorageKeyResult> ClearDataForStorageKeyAsync(string storageKey, string storageTypes, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDataForStorageKeyCommandParameters(StorageKey: storageKey, StorageTypes: storageTypes);
         return await ExecuteCommandAsync("Storage.clearDataForStorageKey", @params, JsonContext.ClearDataForStorageKeyCommandParameters, JsonContext.ClearDataForStorageKeyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetCookiesResult> GetCookiesAsync(Browser.BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetCookiesCommandParameters(BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Storage.getCookies", @params, JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<Network.CookieParam> cookies, Browser.BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies, BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Storage.setCookies", @params, JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearCookiesResult> ClearCookiesAsync(Browser.BrowserContextID? browserContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCookiesCommandParameters(BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Storage.clearCookies", @params, JsonContext.ClearCookiesCommandParameters, JsonContext.ClearCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetUsageAndQuotaResult> GetUsageAndQuotaAsync(string origin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetUsageAndQuotaCommandParameters(Origin: origin);
         return await ExecuteCommandAsync("Storage.getUsageAndQuota", @params, JsonContext.GetUsageAndQuotaCommandParameters, JsonContext.GetUsageAndQuotaResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<OverrideQuotaForOriginResult> OverrideQuotaForOriginAsync(string origin, double? quotaSize = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new OverrideQuotaForOriginCommandParameters(Origin: origin, QuotaSize: quotaSize);
         return await ExecuteCommandAsync("Storage.overrideQuotaForOrigin", @params, JsonContext.OverrideQuotaForOriginCommandParameters, JsonContext.OverrideQuotaForOriginResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TrackCacheStorageForOriginResult> TrackCacheStorageForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TrackCacheStorageForOriginCommandParameters(Origin: origin);
         return await ExecuteCommandAsync("Storage.trackCacheStorageForOrigin", @params, JsonContext.TrackCacheStorageForOriginCommandParameters, JsonContext.TrackCacheStorageForOriginResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TrackCacheStorageForStorageKeyResult> TrackCacheStorageForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
         return await ExecuteCommandAsync("Storage.trackCacheStorageForStorageKey", @params, JsonContext.TrackCacheStorageForStorageKeyCommandParameters, JsonContext.TrackCacheStorageForStorageKeyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TrackIndexedDBForOriginResult> TrackIndexedDBForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TrackIndexedDBForOriginCommandParameters(Origin: origin);
         return await ExecuteCommandAsync("Storage.trackIndexedDBForOrigin", @params, JsonContext.TrackIndexedDBForOriginCommandParameters, JsonContext.TrackIndexedDBForOriginResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TrackIndexedDBForStorageKeyResult> TrackIndexedDBForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
         return await ExecuteCommandAsync("Storage.trackIndexedDBForStorageKey", @params, JsonContext.TrackIndexedDBForStorageKeyCommandParameters, JsonContext.TrackIndexedDBForStorageKeyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UntrackCacheStorageForOriginResult> UntrackCacheStorageForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackCacheStorageForOriginCommandParameters(Origin: origin);
         return await ExecuteCommandAsync("Storage.untrackCacheStorageForOrigin", @params, JsonContext.UntrackCacheStorageForOriginCommandParameters, JsonContext.UntrackCacheStorageForOriginResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UntrackCacheStorageForStorageKeyResult> UntrackCacheStorageForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackCacheStorageForStorageKeyCommandParameters(StorageKey: storageKey);
         return await ExecuteCommandAsync("Storage.untrackCacheStorageForStorageKey", @params, JsonContext.UntrackCacheStorageForStorageKeyCommandParameters, JsonContext.UntrackCacheStorageForStorageKeyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UntrackIndexedDBForOriginResult> UntrackIndexedDBForOriginAsync(string origin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackIndexedDBForOriginCommandParameters(Origin: origin);
         return await ExecuteCommandAsync("Storage.untrackIndexedDBForOrigin", @params, JsonContext.UntrackIndexedDBForOriginCommandParameters, JsonContext.UntrackIndexedDBForOriginResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UntrackIndexedDBForStorageKeyResult> UntrackIndexedDBForStorageKeyAsync(string storageKey, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UntrackIndexedDBForStorageKeyCommandParameters(StorageKey: storageKey);
         return await ExecuteCommandAsync("Storage.untrackIndexedDBForStorageKey", @params, JsonContext.UntrackIndexedDBForStorageKeyCommandParameters, JsonContext.UntrackIndexedDBForStorageKeyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetTrustTokensResult> GetTrustTokensAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetTrustTokensCommandParameters();
         return await ExecuteCommandAsync("Storage.getTrustTokens", @params, JsonContext.GetTrustTokensCommandParameters, JsonContext.GetTrustTokensResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearTrustTokensCommandParameters(IssuerOrigin: issuerOrigin);
         return await ExecuteCommandAsync("Storage.clearTrustTokens", @params, JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetStorageBucketTrackingCommandParameters(StorageKey: storageKey, Enable: enable);
         return await ExecuteCommandAsync("Storage.setStorageBucketTracking", @params, JsonContext.SetStorageBucketTrackingCommandParameters, JsonContext.SetStorageBucketTrackingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteStorageBucketResult> DeleteStorageBucketAsync(StorageBucket bucket, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteStorageBucketCommandParameters(Bucket: bucket);
         return await ExecuteCommandAsync("Storage.deleteStorageBucket", @params, JsonContext.DeleteStorageBucketCommandParameters, JsonContext.DeleteStorageBucketResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RunBounceTrackingMitigationsCommandParameters();
         return await ExecuteCommandAsync("Storage.runBounceTrackingMitigations", @params, JsonContext.RunBounceTrackingMitigationsCommandParameters, JsonContext.RunBounceTrackingMitigationsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetRelatedWebsiteSetsCommandParameters();
         return await ExecuteCommandAsync("Storage.getRelatedWebsiteSets", @params, JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult, session, cancellationToken).ConfigureAwait(false);
@@ -647,6 +647,7 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record GetStorageKeyForFrameCommandParameters(Page.FrameId FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.GetStorageKeyForFrameAsync"/> command.
 /// </summary>
 /// <param name="StorageKey">
 /// </param>
@@ -656,6 +657,7 @@ public sealed record GetStorageKeyForFrameResult(SerializedStorageKey StorageKey
 internal sealed record GetStorageKeyCommandParameters(Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.GetStorageKeyAsync"/> command.
 /// </summary>
 /// <param name="StorageKey">
 /// </param>
@@ -665,6 +667,7 @@ public sealed record GetStorageKeyResult(SerializedStorageKey StorageKey) : Empt
 internal sealed record ClearDataForOriginCommandParameters(string Origin, string StorageTypes) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.ClearDataForOriginAsync"/> command.
 /// </summary>
 public sealed record ClearDataForOriginResult() : EmptyResult;
 
@@ -672,6 +675,7 @@ public sealed record ClearDataForOriginResult() : EmptyResult;
 internal sealed record ClearDataForStorageKeyCommandParameters(string StorageKey, string StorageTypes) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.ClearDataForStorageKeyAsync"/> command.
 /// </summary>
 public sealed record ClearDataForStorageKeyResult() : EmptyResult;
 
@@ -679,6 +683,7 @@ public sealed record ClearDataForStorageKeyResult() : EmptyResult;
 internal sealed record GetCookiesCommandParameters(Browser.BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.GetCookiesAsync"/> command.
 /// </summary>
 /// <param name="Cookies">
 /// Array of cookie objects.
@@ -689,6 +694,7 @@ public sealed record GetCookiesResult(ImmutableArray<Network.Cookie> Cookies) : 
 internal sealed record SetCookiesCommandParameters(ImmutableArray<Network.CookieParam> Cookies, Browser.BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.SetCookiesAsync"/> command.
 /// </summary>
 public sealed record SetCookiesResult() : EmptyResult;
 
@@ -696,6 +702,7 @@ public sealed record SetCookiesResult() : EmptyResult;
 internal sealed record ClearCookiesCommandParameters(Browser.BrowserContextID? BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.ClearCookiesAsync"/> command.
 /// </summary>
 public sealed record ClearCookiesResult() : EmptyResult;
 
@@ -703,6 +710,7 @@ public sealed record ClearCookiesResult() : EmptyResult;
 internal sealed record GetUsageAndQuotaCommandParameters(string Origin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.GetUsageAndQuotaAsync"/> command.
 /// </summary>
 /// <param name="Usage">
 /// Storage usage (bytes).
@@ -722,6 +730,7 @@ public sealed record GetUsageAndQuotaResult(double Usage, double Quota, bool Ove
 internal sealed record OverrideQuotaForOriginCommandParameters(string Origin, double? QuotaSize) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.OverrideQuotaForOriginAsync"/> command.
 /// </summary>
 public sealed record OverrideQuotaForOriginResult() : EmptyResult;
 
@@ -729,6 +738,7 @@ public sealed record OverrideQuotaForOriginResult() : EmptyResult;
 internal sealed record TrackCacheStorageForOriginCommandParameters(string Origin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.TrackCacheStorageForOriginAsync"/> command.
 /// </summary>
 public sealed record TrackCacheStorageForOriginResult() : EmptyResult;
 
@@ -736,6 +746,7 @@ public sealed record TrackCacheStorageForOriginResult() : EmptyResult;
 internal sealed record TrackCacheStorageForStorageKeyCommandParameters(string StorageKey) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.TrackCacheStorageForStorageKeyAsync"/> command.
 /// </summary>
 public sealed record TrackCacheStorageForStorageKeyResult() : EmptyResult;
 
@@ -743,6 +754,7 @@ public sealed record TrackCacheStorageForStorageKeyResult() : EmptyResult;
 internal sealed record TrackIndexedDBForOriginCommandParameters(string Origin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.TrackIndexedDBForOriginAsync"/> command.
 /// </summary>
 public sealed record TrackIndexedDBForOriginResult() : EmptyResult;
 
@@ -750,6 +762,7 @@ public sealed record TrackIndexedDBForOriginResult() : EmptyResult;
 internal sealed record TrackIndexedDBForStorageKeyCommandParameters(string StorageKey) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.TrackIndexedDBForStorageKeyAsync"/> command.
 /// </summary>
 public sealed record TrackIndexedDBForStorageKeyResult() : EmptyResult;
 
@@ -757,6 +770,7 @@ public sealed record TrackIndexedDBForStorageKeyResult() : EmptyResult;
 internal sealed record UntrackCacheStorageForOriginCommandParameters(string Origin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.UntrackCacheStorageForOriginAsync"/> command.
 /// </summary>
 public sealed record UntrackCacheStorageForOriginResult() : EmptyResult;
 
@@ -764,6 +778,7 @@ public sealed record UntrackCacheStorageForOriginResult() : EmptyResult;
 internal sealed record UntrackCacheStorageForStorageKeyCommandParameters(string StorageKey) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.UntrackCacheStorageForStorageKeyAsync"/> command.
 /// </summary>
 public sealed record UntrackCacheStorageForStorageKeyResult() : EmptyResult;
 
@@ -771,6 +786,7 @@ public sealed record UntrackCacheStorageForStorageKeyResult() : EmptyResult;
 internal sealed record UntrackIndexedDBForOriginCommandParameters(string Origin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.UntrackIndexedDBForOriginAsync"/> command.
 /// </summary>
 public sealed record UntrackIndexedDBForOriginResult() : EmptyResult;
 
@@ -778,6 +794,7 @@ public sealed record UntrackIndexedDBForOriginResult() : EmptyResult;
 internal sealed record UntrackIndexedDBForStorageKeyCommandParameters(string StorageKey) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.UntrackIndexedDBForStorageKeyAsync"/> command.
 /// </summary>
 public sealed record UntrackIndexedDBForStorageKeyResult() : EmptyResult;
 
@@ -785,6 +802,7 @@ public sealed record UntrackIndexedDBForStorageKeyResult() : EmptyResult;
 internal sealed record GetTrustTokensCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.GetTrustTokensAsync"/> command.
 /// </summary>
 /// <param name="Tokens">
 /// </param>
@@ -794,6 +812,7 @@ public sealed record GetTrustTokensResult(ImmutableArray<TrustTokens> Tokens) : 
 internal sealed record ClearTrustTokensCommandParameters(string IssuerOrigin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.ClearTrustTokensAsync"/> command.
 /// </summary>
 /// <param name="DidDeleteTokens">
 /// True if any tokens were deleted, false otherwise.
@@ -804,6 +823,7 @@ public sealed record ClearTrustTokensResult(bool DidDeleteTokens) : EmptyResult;
 internal sealed record SetStorageBucketTrackingCommandParameters(string StorageKey, bool Enable) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.SetStorageBucketTrackingAsync"/> command.
 /// </summary>
 public sealed record SetStorageBucketTrackingResult() : EmptyResult;
 
@@ -811,6 +831,7 @@ public sealed record SetStorageBucketTrackingResult() : EmptyResult;
 internal sealed record DeleteStorageBucketCommandParameters(StorageBucket Bucket) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.DeleteStorageBucketAsync"/> command.
 /// </summary>
 public sealed record DeleteStorageBucketResult() : EmptyResult;
 
@@ -818,6 +839,7 @@ public sealed record DeleteStorageBucketResult() : EmptyResult;
 internal sealed record RunBounceTrackingMitigationsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.RunBounceTrackingMitigationsAsync"/> command.
 /// </summary>
 /// <param name="DeletedSites">
 /// </param>
@@ -827,6 +849,7 @@ public sealed record RunBounceTrackingMitigationsResult(ImmutableArray<string> D
 internal sealed record GetRelatedWebsiteSetsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IStorage.GetRelatedWebsiteSetsAsync"/> command.
 /// </summary>
 /// <param name="Sets">
 /// </param>
@@ -925,46 +948,57 @@ public record SerializedStorageKey : IStringRemoteId
 public enum StorageType
 {
     /// <summary>
+    /// Corresponds to the <c>"cookies"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cookies")]
     Cookies,
     /// <summary>
+    /// Corresponds to the <c>"file_systems"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("file_systems")]
     FileSystems,
     /// <summary>
+    /// Corresponds to the <c>"indexeddb"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("indexeddb")]
     Indexeddb,
     /// <summary>
+    /// Corresponds to the <c>"local_storage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local_storage")]
     LocalStorage,
     /// <summary>
+    /// Corresponds to the <c>"shader_cache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shader_cache")]
     ShaderCache,
     /// <summary>
+    /// Corresponds to the <c>"websql"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("websql")]
     Websql,
     /// <summary>
+    /// Corresponds to the <c>"service_workers"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("service_workers")]
     ServiceWorkers,
     /// <summary>
+    /// Corresponds to the <c>"cache_storage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cache_storage")]
     CacheStorage,
     /// <summary>
+    /// Corresponds to the <c>"storage_buckets"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storage_buckets")]
     StorageBuckets,
     /// <summary>
+    /// Corresponds to the <c>"all"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("all")]
     All,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
@@ -1001,10 +1035,12 @@ public sealed record TrustTokens(string IssuerOrigin, double Count)
 public enum StorageBucketsDurability
 {
     /// <summary>
+    /// Corresponds to the <c>"relaxed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("relaxed")]
     Relaxed,
     /// <summary>
+    /// Corresponds to the <c>"strict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("strict")]
     Strict,

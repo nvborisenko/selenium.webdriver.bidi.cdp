@@ -24,7 +24,7 @@ public interface IDOMStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearResult"/>.
     /// </returns>
-    Task<ClearResult> ClearAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearResult> ClearAsync(StorageId storageId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables storage tracking, prevents storage events from being sent to the client.
@@ -38,7 +38,7 @@ public interface IDOMStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables storage tracking, storage events will now be delivered to the client.
@@ -52,7 +52,7 @@ public interface IDOMStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -67,7 +67,7 @@ public interface IDOMStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDOMStorageItemsResult"/>.
     /// </returns>
-    Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -84,7 +84,7 @@ public interface IDOMStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveDOMStorageItemResult"/>.
     /// </returns>
-    Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -103,7 +103,7 @@ public interface IDOMStorage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDOMStorageItemResult"/>.
     /// </returns>
-    Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -162,37 +162,37 @@ internal sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
 {
     private static readonly DOMStorageJsonSerializerContext JsonContext = DOMStorageJsonSerializerContext.Default;
 
-    public async Task<ClearResult> ClearAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearResult> ClearAsync(StorageId storageId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCommandParameters(StorageId: storageId);
         return await ExecuteCommandAsync("DOMStorage.clear", @params, JsonContext.ClearCommandParameters, JsonContext.ClearResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("DOMStorage.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("DOMStorage.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDOMStorageItemsResult> GetDOMStorageItemsAsync(StorageId storageId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDOMStorageItemsCommandParameters(StorageId: storageId);
         return await ExecuteCommandAsync("DOMStorage.getDOMStorageItems", @params, JsonContext.GetDOMStorageItemsCommandParameters, JsonContext.GetDOMStorageItemsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveDOMStorageItemResult> RemoveDOMStorageItemAsync(StorageId storageId, string key, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDOMStorageItemCommandParameters(StorageId: storageId, Key: key);
         return await ExecuteCommandAsync("DOMStorage.removeDOMStorageItem", @params, JsonContext.RemoveDOMStorageItemCommandParameters, JsonContext.RemoveDOMStorageItemResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDOMStorageItemResult> SetDOMStorageItemAsync(StorageId storageId, string key, string value, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDOMStorageItemCommandParameters(StorageId: storageId, Key: key, Value: value);
         return await ExecuteCommandAsync("DOMStorage.setDOMStorageItem", @params, JsonContext.SetDOMStorageItemCommandParameters, JsonContext.SetDOMStorageItemResult, session, cancellationToken).ConfigureAwait(false);
@@ -207,6 +207,7 @@ internal sealed class DOMStorageDomain(CdpModule cdp) : global::Selenium.WebDriv
 internal sealed record ClearCommandParameters(StorageId StorageId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMStorage.ClearAsync"/> command.
 /// </summary>
 public sealed record ClearResult() : EmptyResult;
 
@@ -214,6 +215,7 @@ public sealed record ClearResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMStorage.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -221,6 +223,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMStorage.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -228,6 +231,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record GetDOMStorageItemsCommandParameters(StorageId StorageId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMStorage.GetDOMStorageItemsAsync"/> command.
 /// </summary>
 /// <param name="Entries">
 /// </param>
@@ -237,6 +241,7 @@ public sealed record GetDOMStorageItemsResult(ImmutableArray<ImmutableArray<stri
 internal sealed record RemoveDOMStorageItemCommandParameters(StorageId StorageId, string Key) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMStorage.RemoveDOMStorageItemAsync"/> command.
 /// </summary>
 public sealed record RemoveDOMStorageItemResult() : EmptyResult;
 
@@ -244,6 +249,7 @@ public sealed record RemoveDOMStorageItemResult() : EmptyResult;
 internal sealed record SetDOMStorageItemCommandParameters(StorageId StorageId, string Key, string Value) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMStorage.SetDOMStorageItemAsync"/> command.
 /// </summary>
 public sealed record SetDOMStorageItemResult() : EmptyResult;
 

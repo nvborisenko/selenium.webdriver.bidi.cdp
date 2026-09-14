@@ -32,7 +32,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="CollectClassNamesFromSubtreeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a deep copy of the specified node and places it into the target container before the
@@ -58,7 +58,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="CopyToResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Describes node given its id, does not require domain to be enabled. Does not start tracking any
@@ -90,7 +90,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DescribeNodeResult"/>.
     /// </returns>
-    Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Scrolls the specified rect of the given node into view if not already visible.
@@ -119,7 +119,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ScrollIntoViewIfNeededResult"/>.
     /// </returns>
-    Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, Rect? rect = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, Rect? rect = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables DOM agent for the given page.
@@ -133,7 +133,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Discards search results from the session with the given id. <b>getSearchResults</b> should no longer
@@ -152,7 +152,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="DiscardSearchResultsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = default, CancellationToken cancellationToken = default);
+    Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables DOM agent for the given page.
@@ -169,7 +169,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(EnableIncludeWhitespace? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(EnableIncludeWhitespace? includeWhitespace = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Focuses the given element.
@@ -192,7 +192,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="FocusResult"/>.
     /// </returns>
-    Task<FocusResult> FocusAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<FocusResult> FocusAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns attributes for the specified node.
@@ -209,7 +209,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAttributesResult"/>.
     /// </returns>
-    Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns boxes for the given node.
@@ -232,7 +232,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBoxModelResult"/>.
     /// </returns>
-    Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns quads that describe node position on the page. This method
@@ -257,7 +257,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetContentQuadsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the root DOM node (and optionally the subtree) to the caller.
@@ -280,7 +280,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDocumentResult"/>.
     /// </returns>
-    Task<GetDocumentResult> GetDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDocumentResult> GetDocumentAsync(long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the root DOM node (and optionally the subtree) to the caller.
@@ -305,7 +305,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetFlattenedDocumentResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Finds nodes with a given computed style in a subtree.
@@ -330,7 +330,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetNodesForSubtreeByStyleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is
@@ -357,7 +357,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetNodeForLocationResult"/>.
     /// </returns>
-    Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = default, bool? ignorePointerEventsNone = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = null, bool? ignorePointerEventsNone = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns node's HTML markup.
@@ -383,7 +383,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetOuterHTMLResult"/>.
     /// </returns>
-    Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? includeShadowDOM = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, bool? includeShadowDOM = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the id of the nearest ancestor that is a relayout boundary.
@@ -401,7 +401,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetRelayoutBoundaryResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns search results from given <b>fromIndex</b> to given <b>toIndex</b> from the search with the given
@@ -426,7 +426,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetSearchResultsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Hides any highlight.
@@ -440,7 +440,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HideHighlightResult"/>.
     /// </returns>
-    Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<HideHighlightResult> HideHighlightAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights DOM node.
@@ -454,7 +454,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightNodeResult"/>.
     /// </returns>
-    Task<HighlightNodeResult> HighlightNodeAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<HighlightNodeResult> HighlightNodeAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Highlights given rectangle.
@@ -468,7 +468,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HighlightRectResult"/>.
     /// </returns>
-    Task<HighlightRectResult> HighlightRectAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<HighlightRectResult> HighlightRectAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Marks last undoable state.
@@ -483,7 +483,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="MarkUndoableStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Moves node into the new container, places it before the given anchor.
@@ -507,7 +507,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="MoveToResult"/>.
     /// </returns>
-    Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for a given string in the DOM tree. Use <b>getSearchResults</b> to access search results or
@@ -529,7 +529,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="PerformSearchResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that the node is sent to the caller given its path. // FIXME, use XPath
@@ -547,7 +547,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="PushNodeByPathToFrontendResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = default, CancellationToken cancellationToken = default);
+    Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that a batch of nodes is sent to the caller given their backend node ids.
@@ -565,7 +565,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="PushNodesByBackendIdsToFrontendResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = default, CancellationToken cancellationToken = default);
+    Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Executes <b>querySelector</b> on a given node.
@@ -585,7 +585,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QuerySelectorResult"/>.
     /// </returns>
-    Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default);
+    Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Executes <b>querySelectorAll</b> on a given node.
@@ -605,7 +605,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QuerySelectorAllResult"/>.
     /// </returns>
-    Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default);
+    Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns NodeIds of current top layer elements.
@@ -622,7 +622,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetTopLayerElementsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the NodeId of the matched element according to certain relations.
@@ -643,7 +643,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetElementByRelationResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, GetElementByRelationRelation relation, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, GetElementByRelationRelation relation, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Re-does the last undone action.
@@ -658,7 +658,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="RedoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<RedoResult> RedoAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<RedoResult> RedoAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes attribute with given name from an element with given id.
@@ -678,7 +678,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveAttributeResult"/>.
     /// </returns>
-    Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes node with given id.
@@ -695,7 +695,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveNodeResult"/>.
     /// </returns>
-    Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that children of the node with given id are returned to the caller in form of
@@ -722,7 +722,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestChildNodesResult"/>.
     /// </returns>
-    Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that the node is sent to the caller given the JavaScript node object reference. All
@@ -741,7 +741,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestNodeResult"/>.
     /// </returns>
-    Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resolves the JavaScript node object for a given NodeId or BackendNodeId.
@@ -767,7 +767,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveNodeResult"/>.
     /// </returns>
-    Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, string? objectGroup = default, Runtime.ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, string? objectGroup = null, Runtime.ExecutionContextId? executionContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets attribute for an element with given id.
@@ -790,7 +790,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAttributeValueResult"/>.
     /// </returns>
-    Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets attributes on element with given id. This method is useful when user edits some existing
@@ -815,7 +815,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAttributesAsTextResult"/>.
     /// </returns>
-    Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets files for the given file input element.
@@ -841,7 +841,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetFileInputFilesResult"/>.
     /// </returns>
-    Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets if stack traces should be captured for Nodes. See <b>Node.getNodeStackTraces</b>. Default is disabled.
@@ -859,7 +859,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="SetNodeStackTracesEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets stack traces associated with a Node. As of now, only provides stack trace for Node creation.
@@ -877,7 +877,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetNodeStackTracesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns file information for the given
@@ -896,7 +896,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetFileInfoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns list of detached nodes
@@ -911,7 +911,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetDetachedDomNodesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables console to refer to the node with given id via $x (see Command Line API for more details
@@ -930,7 +930,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="SetInspectedNodeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets node name for a node with given id.
@@ -950,7 +950,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetNodeNameResult"/>.
     /// </returns>
-    Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets node value for a node with given id.
@@ -970,7 +970,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetNodeValueResult"/>.
     /// </returns>
-    Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets node HTML markup, returns new node id.
@@ -990,7 +990,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetOuterHTMLResult"/>.
     /// </returns>
-    Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Undoes the last performed action.
@@ -1005,7 +1005,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="UndoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<UndoResult> UndoAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<UndoResult> UndoAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns iframe node that owns iframe with the given domain.
@@ -1022,7 +1022,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetFrameOwnerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the query container of the given node based on container query
@@ -1053,7 +1053,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetContainerForNodeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = default, PhysicalAxes? physicalAxes = default, LogicalAxes? logicalAxes = default, bool? queriesScrollState = default, bool? queriesAnchored = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = null, PhysicalAxes? physicalAxes = null, LogicalAxes? logicalAxes = null, bool? queriesScrollState = null, bool? queriesAnchored = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the descendants of a container query container that have
@@ -1072,7 +1072,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetQueryingDescendantsForContainerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the target anchor element of the given anchor query according to
@@ -1097,7 +1097,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetAnchorElementResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// When enabling, this API force-opens the popover identified by nodeId
@@ -1126,7 +1126,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="ForceShowPopoverResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns candidate nodes that are configured as triggers for the given popover.
@@ -1144,7 +1144,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetImplicitAnchorCandidatesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetImplicitAnchorCandidatesResult> GetImplicitAnchorCandidatesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetImplicitAnchorCandidatesResult> GetImplicitAnchorCandidatesAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// When enabling, this API forces an element to gain interest in its target,
@@ -1166,7 +1166,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="ForceShowInterestResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = default, CancellationToken cancellationToken = default);
+    Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when <b>Element</b>'s attribute is modified.
@@ -1402,358 +1402,358 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     private static readonly DOMJsonSerializerContext JsonContext = DOMJsonSerializerContext.Default;
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CollectClassNamesFromSubtreeResult> CollectClassNamesFromSubtreeAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CollectClassNamesFromSubtreeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.collectClassNamesFromSubtree", @params, JsonContext.CollectClassNamesFromSubtreeCommandParameters, JsonContext.CollectClassNamesFromSubtreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CopyToResult> CopyToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CopyToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
         return await ExecuteCommandAsync("DOM.copyTo", @params, JsonContext.CopyToCommandParameters, JsonContext.CopyToResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DescribeNodeResult> DescribeNodeAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DescribeNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Depth: depth, Pierce: pierce);
         return await ExecuteCommandAsync("DOM.describeNode", @params, JsonContext.DescribeNodeCommandParameters, JsonContext.DescribeNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, Rect? rect = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ScrollIntoViewIfNeededResult> ScrollIntoViewIfNeededAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, Rect? rect = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ScrollIntoViewIfNeededCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Rect: rect);
         return await ExecuteCommandAsync("DOM.scrollIntoViewIfNeeded", @params, JsonContext.ScrollIntoViewIfNeededCommandParameters, JsonContext.ScrollIntoViewIfNeededResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("DOM.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DiscardSearchResultsResult> DiscardSearchResultsAsync(string searchId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DiscardSearchResultsCommandParameters(SearchId: searchId);
         return await ExecuteCommandAsync("DOM.discardSearchResults", @params, JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(EnableIncludeWhitespace? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(EnableIncludeWhitespace? includeWhitespace = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(IncludeWhitespace: includeWhitespace);
         return await ExecuteCommandAsync("DOM.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<FocusResult> FocusAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<FocusResult> FocusAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new FocusCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
         return await ExecuteCommandAsync("DOM.focus", @params, JsonContext.FocusCommandParameters, JsonContext.FocusResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAttributesResult> GetAttributesAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAttributesCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.getAttributes", @params, JsonContext.GetAttributesCommandParameters, JsonContext.GetAttributesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetBoxModelResult> GetBoxModelAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetBoxModelCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
         return await ExecuteCommandAsync("DOM.getBoxModel", @params, JsonContext.GetBoxModelCommandParameters, JsonContext.GetBoxModelResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetContentQuadsResult> GetContentQuadsAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetContentQuadsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
         return await ExecuteCommandAsync("DOM.getContentQuads", @params, JsonContext.GetContentQuadsCommandParameters, JsonContext.GetContentQuadsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetDocumentResult> GetDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDocumentResult> GetDocumentAsync(long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDocumentCommandParameters(Depth: depth, Pierce: pierce);
         return await ExecuteCommandAsync("DOM.getDocument", @params, JsonContext.GetDocumentCommandParameters, JsonContext.GetDocumentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetFlattenedDocumentResult> GetFlattenedDocumentAsync(long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetFlattenedDocumentCommandParameters(Depth: depth, Pierce: pierce);
         return await ExecuteCommandAsync("DOM.getFlattenedDocument", @params, JsonContext.GetFlattenedDocumentCommandParameters, JsonContext.GetFlattenedDocumentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetNodesForSubtreeByStyleResult> GetNodesForSubtreeByStyleAsync(NodeId nodeId, ImmutableArray<CSSComputedStyleProperty> computedStyles, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodesForSubtreeByStyleCommandParameters(NodeId: nodeId, ComputedStyles: computedStyles, Pierce: pierce);
         return await ExecuteCommandAsync("DOM.getNodesForSubtreeByStyle", @params, JsonContext.GetNodesForSubtreeByStyleCommandParameters, JsonContext.GetNodesForSubtreeByStyleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = default, bool? ignorePointerEventsNone = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetNodeForLocationResult> GetNodeForLocationAsync(long x, long y, bool? includeUserAgentShadowDOM = null, bool? ignorePointerEventsNone = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodeForLocationCommandParameters(X: x, Y: y, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM, IgnorePointerEventsNone: ignorePointerEventsNone);
         return await ExecuteCommandAsync("DOM.getNodeForLocation", @params, JsonContext.GetNodeForLocationCommandParameters, JsonContext.GetNodeForLocationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? includeShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetOuterHTMLResult> GetOuterHTMLAsync(NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, bool? includeShadowDOM = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetOuterHTMLCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, IncludeShadowDOM: includeShadowDOM);
         return await ExecuteCommandAsync("DOM.getOuterHTML", @params, JsonContext.GetOuterHTMLCommandParameters, JsonContext.GetOuterHTMLResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetRelayoutBoundaryResult> GetRelayoutBoundaryAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetRelayoutBoundaryCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.getRelayoutBoundary", @params, JsonContext.GetRelayoutBoundaryCommandParameters, JsonContext.GetRelayoutBoundaryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetSearchResultsResult> GetSearchResultsAsync(string searchId, long fromIndex, long toIndex, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetSearchResultsCommandParameters(SearchId: searchId, FromIndex: fromIndex, ToIndex: toIndex);
         return await ExecuteCommandAsync("DOM.getSearchResults", @params, JsonContext.GetSearchResultsCommandParameters, JsonContext.GetSearchResultsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HideHighlightResult> HideHighlightAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HideHighlightResult> HideHighlightAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HideHighlightCommandParameters();
         return await ExecuteCommandAsync("DOM.hideHighlight", @params, JsonContext.HideHighlightCommandParameters, JsonContext.HideHighlightResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HighlightNodeResult> HighlightNodeAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightNodeResult> HighlightNodeAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightNodeCommandParameters();
         return await ExecuteCommandAsync("DOM.highlightNode", @params, JsonContext.HighlightNodeCommandParameters, JsonContext.HighlightNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HighlightRectResult> HighlightRectAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HighlightRectResult> HighlightRectAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HighlightRectCommandParameters();
         return await ExecuteCommandAsync("DOM.highlightRect", @params, JsonContext.HighlightRectCommandParameters, JsonContext.HighlightRectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<MarkUndoableStateResult> MarkUndoableStateAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new MarkUndoableStateCommandParameters();
         return await ExecuteCommandAsync("DOM.markUndoableState", @params, JsonContext.MarkUndoableStateCommandParameters, JsonContext.MarkUndoableStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<MoveToResult> MoveToAsync(NodeId nodeId, NodeId targetNodeId, NodeId? insertBeforeNodeId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new MoveToCommandParameters(NodeId: nodeId, TargetNodeId: targetNodeId, InsertBeforeNodeId: insertBeforeNodeId);
         return await ExecuteCommandAsync("DOM.moveTo", @params, JsonContext.MoveToCommandParameters, JsonContext.MoveToResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PerformSearchResult> PerformSearchAsync(string query, bool? includeUserAgentShadowDOM = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new PerformSearchCommandParameters(Query: query, IncludeUserAgentShadowDOM: includeUserAgentShadowDOM);
         return await ExecuteCommandAsync("DOM.performSearch", @params, JsonContext.PerformSearchCommandParameters, JsonContext.PerformSearchResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PushNodeByPathToFrontendResult> PushNodeByPathToFrontendAsync(string path, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new PushNodeByPathToFrontendCommandParameters(Path: path);
         return await ExecuteCommandAsync("DOM.pushNodeByPathToFrontend", @params, JsonContext.PushNodeByPathToFrontendCommandParameters, JsonContext.PushNodeByPathToFrontendResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PushNodesByBackendIdsToFrontendResult> PushNodesByBackendIdsToFrontendAsync(ImmutableArray<BackendNodeId> backendNodeIds, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new PushNodesByBackendIdsToFrontendCommandParameters(BackendNodeIds: backendNodeIds);
         return await ExecuteCommandAsync("DOM.pushNodesByBackendIdsToFrontend", @params, JsonContext.PushNodesByBackendIdsToFrontendCommandParameters, JsonContext.PushNodesByBackendIdsToFrontendResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<QuerySelectorResult> QuerySelectorAsync(NodeId nodeId, string selector, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new QuerySelectorCommandParameters(NodeId: nodeId, Selector: selector);
         return await ExecuteCommandAsync("DOM.querySelector", @params, JsonContext.QuerySelectorCommandParameters, JsonContext.QuerySelectorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<QuerySelectorAllResult> QuerySelectorAllAsync(NodeId nodeId, string selector, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new QuerySelectorAllCommandParameters(NodeId: nodeId, Selector: selector);
         return await ExecuteCommandAsync("DOM.querySelectorAll", @params, JsonContext.QuerySelectorAllCommandParameters, JsonContext.QuerySelectorAllResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetTopLayerElementsResult> GetTopLayerElementsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetTopLayerElementsCommandParameters();
         return await ExecuteCommandAsync("DOM.getTopLayerElements", @params, JsonContext.GetTopLayerElementsCommandParameters, JsonContext.GetTopLayerElementsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, GetElementByRelationRelation relation, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, GetElementByRelationRelation relation, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetElementByRelationCommandParameters(NodeId: nodeId, Relation: relation);
         return await ExecuteCommandAsync("DOM.getElementByRelation", @params, JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<RedoResult> RedoAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RedoResult> RedoAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RedoCommandParameters();
         return await ExecuteCommandAsync("DOM.redo", @params, JsonContext.RedoCommandParameters, JsonContext.RedoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveAttributeResult> RemoveAttributeAsync(NodeId nodeId, string name, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveAttributeCommandParameters(NodeId: nodeId, Name: name);
         return await ExecuteCommandAsync("DOM.removeAttribute", @params, JsonContext.RemoveAttributeCommandParameters, JsonContext.RemoveAttributeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveNodeResult> RemoveNodeAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.removeNode", @params, JsonContext.RemoveNodeCommandParameters, JsonContext.RemoveNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = default, bool? pierce = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestChildNodesResult> RequestChildNodesAsync(NodeId nodeId, long? depth = null, bool? pierce = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestChildNodesCommandParameters(NodeId: nodeId, Depth: depth, Pierce: pierce);
         return await ExecuteCommandAsync("DOM.requestChildNodes", @params, JsonContext.RequestChildNodesCommandParameters, JsonContext.RequestChildNodesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestNodeResult> RequestNodeAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestNodeCommandParameters(ObjectId: objectId);
         return await ExecuteCommandAsync("DOM.requestNode", @params, JsonContext.RequestNodeCommandParameters, JsonContext.RequestNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, string? objectGroup = default, Runtime.ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveNodeResult> ResolveNodeAsync(NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, string? objectGroup = null, Runtime.ExecutionContextId? executionContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveNodeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectGroup: objectGroup, ExecutionContextId: executionContextId);
         return await ExecuteCommandAsync("DOM.resolveNode", @params, JsonContext.ResolveNodeCommandParameters, JsonContext.ResolveNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAttributeValueResult> SetAttributeValueAsync(NodeId nodeId, string name, string value, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttributeValueCommandParameters(NodeId: nodeId, Name: name, Value: value);
         return await ExecuteCommandAsync("DOM.setAttributeValue", @params, JsonContext.SetAttributeValueCommandParameters, JsonContext.SetAttributeValueResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAttributesAsTextResult> SetAttributesAsTextAsync(NodeId nodeId, string text, string? name = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttributesAsTextCommandParameters(NodeId: nodeId, Text: text, Name: name);
         return await ExecuteCommandAsync("DOM.setAttributesAsText", @params, JsonContext.SetAttributesAsTextCommandParameters, JsonContext.SetAttributesAsTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = default, BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetFileInputFilesResult> SetFileInputFilesAsync(ImmutableArray<string> files, NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetFileInputFilesCommandParameters(Files: files, NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
         return await ExecuteCommandAsync("DOM.setFileInputFiles", @params, JsonContext.SetFileInputFilesCommandParameters, JsonContext.SetFileInputFilesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetNodeStackTracesEnabledResult> SetNodeStackTracesEnabledAsync(bool enable, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeStackTracesEnabledCommandParameters(Enable: enable);
         return await ExecuteCommandAsync("DOM.setNodeStackTracesEnabled", @params, JsonContext.SetNodeStackTracesEnabledCommandParameters, JsonContext.SetNodeStackTracesEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetNodeStackTracesResult> GetNodeStackTracesAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetNodeStackTracesCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.getNodeStackTraces", @params, JsonContext.GetNodeStackTracesCommandParameters, JsonContext.GetNodeStackTracesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetFileInfoResult> GetFileInfoAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetFileInfoCommandParameters(ObjectId: objectId);
         return await ExecuteCommandAsync("DOM.getFileInfo", @params, JsonContext.GetFileInfoCommandParameters, JsonContext.GetFileInfoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDetachedDomNodesResult> GetDetachedDomNodesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDetachedDomNodesCommandParameters();
         return await ExecuteCommandAsync("DOM.getDetachedDomNodes", @params, JsonContext.GetDetachedDomNodesCommandParameters, JsonContext.GetDetachedDomNodesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetInspectedNodeResult> SetInspectedNodeAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetInspectedNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.setInspectedNode", @params, JsonContext.SetInspectedNodeCommandParameters, JsonContext.SetInspectedNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetNodeNameResult> SetNodeNameAsync(NodeId nodeId, string name, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeNameCommandParameters(NodeId: nodeId, Name: name);
         return await ExecuteCommandAsync("DOM.setNodeName", @params, JsonContext.SetNodeNameCommandParameters, JsonContext.SetNodeNameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetNodeValueResult> SetNodeValueAsync(NodeId nodeId, string value, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetNodeValueCommandParameters(NodeId: nodeId, Value: value);
         return await ExecuteCommandAsync("DOM.setNodeValue", @params, JsonContext.SetNodeValueCommandParameters, JsonContext.SetNodeValueResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetOuterHTMLResult> SetOuterHTMLAsync(NodeId nodeId, string outerHTML, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetOuterHTMLCommandParameters(NodeId: nodeId, OuterHTML: outerHTML);
         return await ExecuteCommandAsync("DOM.setOuterHTML", @params, JsonContext.SetOuterHTMLCommandParameters, JsonContext.SetOuterHTMLResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<UndoResult> UndoAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UndoResult> UndoAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UndoCommandParameters();
         return await ExecuteCommandAsync("DOM.undo", @params, JsonContext.UndoCommandParameters, JsonContext.UndoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetFrameOwnerResult> GetFrameOwnerAsync(Page.FrameId frameId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetFrameOwnerCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("DOM.getFrameOwner", @params, JsonContext.GetFrameOwnerCommandParameters, JsonContext.GetFrameOwnerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = default, PhysicalAxes? physicalAxes = default, LogicalAxes? logicalAxes = default, bool? queriesScrollState = default, bool? queriesAnchored = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetContainerForNodeResult> GetContainerForNodeAsync(NodeId nodeId, string? containerName = null, PhysicalAxes? physicalAxes = null, LogicalAxes? logicalAxes = null, bool? queriesScrollState = null, bool? queriesAnchored = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetContainerForNodeCommandParameters(NodeId: nodeId, ContainerName: containerName, PhysicalAxes: physicalAxes, LogicalAxes: logicalAxes, QueriesScrollState: queriesScrollState, QueriesAnchored: queriesAnchored);
         return await ExecuteCommandAsync("DOM.getContainerForNode", @params, JsonContext.GetContainerForNodeCommandParameters, JsonContext.GetContainerForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetQueryingDescendantsForContainerResult> GetQueryingDescendantsForContainerAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetQueryingDescendantsForContainerCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.getQueryingDescendantsForContainer", @params, JsonContext.GetQueryingDescendantsForContainerCommandParameters, JsonContext.GetQueryingDescendantsForContainerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAnchorElementResult> GetAnchorElementAsync(NodeId nodeId, string? anchorSpecifier = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnchorElementCommandParameters(NodeId: nodeId, AnchorSpecifier: anchorSpecifier);
         return await ExecuteCommandAsync("DOM.getAnchorElement", @params, JsonContext.GetAnchorElementCommandParameters, JsonContext.GetAnchorElementResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ForceShowPopoverResult> ForceShowPopoverAsync(NodeId nodeId, bool enable, BackendNodeId? invokerNodeId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ForceShowPopoverCommandParameters(NodeId: nodeId, Enable: enable, InvokerNodeId: invokerNodeId);
         return await ExecuteCommandAsync("DOM.forceShowPopover", @params, JsonContext.ForceShowPopoverCommandParameters, JsonContext.ForceShowPopoverResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetImplicitAnchorCandidatesResult> GetImplicitAnchorCandidatesAsync(NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetImplicitAnchorCandidatesResult> GetImplicitAnchorCandidatesAsync(NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetImplicitAnchorCandidatesCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("DOM.getImplicitAnchorCandidates", @params, JsonContext.GetImplicitAnchorCandidatesCommandParameters, JsonContext.GetImplicitAnchorCandidatesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ForceShowInterestCommandParameters(NodeId: nodeId, Enable: enable);
         return await ExecuteCommandAsync("DOM.forceShowInterest", @params, JsonContext.ForceShowInterestCommandParameters, JsonContext.ForceShowInterestResult, session, cancellationToken).ConfigureAwait(false);
@@ -1794,6 +1794,7 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 internal sealed record CollectClassNamesFromSubtreeCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.CollectClassNamesFromSubtreeAsync"/> command.
 /// </summary>
 /// <param name="ClassNames">
 /// Class name list.
@@ -1804,6 +1805,7 @@ public sealed record CollectClassNamesFromSubtreeResult(ImmutableArray<string> C
 internal sealed record CopyToCommandParameters(NodeId NodeId, NodeId TargetNodeId, NodeId? InsertBeforeNodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.CopyToAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// Id of the node clone.
@@ -1814,6 +1816,7 @@ public sealed record CopyToResult(NodeId NodeId) : EmptyResult;
 internal sealed record DescribeNodeCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, long? Depth, bool? Pierce) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.DescribeNodeAsync"/> command.
 /// </summary>
 /// <param name="Node">
 /// Node description.
@@ -1824,6 +1827,7 @@ public sealed record DescribeNodeResult(Node Node) : EmptyResult;
 internal sealed record ScrollIntoViewIfNeededCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, Rect? Rect) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.ScrollIntoViewIfNeededAsync"/> command.
 /// </summary>
 public sealed record ScrollIntoViewIfNeededResult() : EmptyResult;
 
@@ -1831,6 +1835,7 @@ public sealed record ScrollIntoViewIfNeededResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -1838,6 +1843,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record DiscardSearchResultsCommandParameters(string SearchId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.DiscardSearchResultsAsync"/> command.
 /// </summary>
 public sealed record DiscardSearchResultsResult() : EmptyResult;
 
@@ -1845,6 +1851,7 @@ public sealed record DiscardSearchResultsResult() : EmptyResult;
 internal sealed record EnableCommandParameters(EnableIncludeWhitespace? IncludeWhitespace) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -1852,6 +1859,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record FocusCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.FocusAsync"/> command.
 /// </summary>
 public sealed record FocusResult() : EmptyResult;
 
@@ -1859,6 +1867,7 @@ public sealed record FocusResult() : EmptyResult;
 internal sealed record GetAttributesCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetAttributesAsync"/> command.
 /// </summary>
 /// <param name="Attributes">
 /// An interleaved array of node attribute names and values.
@@ -1869,6 +1878,7 @@ public sealed record GetAttributesResult(ImmutableArray<string> Attributes) : Em
 internal sealed record GetBoxModelCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetBoxModelAsync"/> command.
 /// </summary>
 /// <param name="Model">
 /// Box model for the node.
@@ -1879,6 +1889,7 @@ public sealed record GetBoxModelResult(BoxModel Model) : EmptyResult;
 internal sealed record GetContentQuadsCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetContentQuadsAsync"/> command.
 /// </summary>
 /// <param name="Quads">
 /// Quads that describe node layout relative to viewport.
@@ -1889,6 +1900,7 @@ public sealed record GetContentQuadsResult(ImmutableArray<ImmutableArray<double>
 internal sealed record GetDocumentCommandParameters(long? Depth, bool? Pierce) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetDocumentAsync"/> command.
 /// </summary>
 /// <param name="Root">
 /// Resulting node.
@@ -1899,6 +1911,7 @@ public sealed record GetDocumentResult(Node Root) : EmptyResult;
 internal sealed record GetFlattenedDocumentCommandParameters(long? Depth, bool? Pierce) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetFlattenedDocumentAsync"/> command.
 /// </summary>
 /// <param name="Nodes">
 /// Resulting node.
@@ -1909,6 +1922,7 @@ public sealed record GetFlattenedDocumentResult(ImmutableArray<Node> Nodes) : Em
 internal sealed record GetNodesForSubtreeByStyleCommandParameters(NodeId NodeId, ImmutableArray<CSSComputedStyleProperty> ComputedStyles, bool? Pierce) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetNodesForSubtreeByStyleAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// Resulting nodes.
@@ -1919,6 +1933,7 @@ public sealed record GetNodesForSubtreeByStyleResult(ImmutableArray<NodeId> Node
 internal sealed record GetNodeForLocationCommandParameters(long X, long Y, bool? IncludeUserAgentShadowDOM, bool? IgnorePointerEventsNone) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetNodeForLocationAsync"/> command.
 /// </summary>
 /// <param name="BackendNodeId">
 /// Resulting node.
@@ -1935,6 +1950,7 @@ public sealed record GetNodeForLocationResult(BackendNodeId BackendNodeId, Page.
 internal sealed record GetOuterHTMLCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, bool? IncludeShadowDOM) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetOuterHTMLAsync"/> command.
 /// </summary>
 /// <param name="OuterHTML">
 /// Outer HTML markup.
@@ -1945,6 +1961,7 @@ public sealed record GetOuterHTMLResult(string OuterHTML) : EmptyResult;
 internal sealed record GetRelayoutBoundaryCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetRelayoutBoundaryAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// Relayout boundary node id for the given node.
@@ -1955,6 +1972,7 @@ public sealed record GetRelayoutBoundaryResult(NodeId NodeId) : EmptyResult;
 internal sealed record GetSearchResultsCommandParameters(string SearchId, long FromIndex, long ToIndex) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetSearchResultsAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// Ids of the search result nodes.
@@ -1965,6 +1983,7 @@ public sealed record GetSearchResultsResult(ImmutableArray<NodeId> NodeIds) : Em
 internal sealed record HideHighlightCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.HideHighlightAsync"/> command.
 /// </summary>
 public sealed record HideHighlightResult() : EmptyResult;
 
@@ -1972,6 +1991,7 @@ public sealed record HideHighlightResult() : EmptyResult;
 internal sealed record HighlightNodeCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.HighlightNodeAsync"/> command.
 /// </summary>
 public sealed record HighlightNodeResult() : EmptyResult;
 
@@ -1979,6 +1999,7 @@ public sealed record HighlightNodeResult() : EmptyResult;
 internal sealed record HighlightRectCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.HighlightRectAsync"/> command.
 /// </summary>
 public sealed record HighlightRectResult() : EmptyResult;
 
@@ -1986,6 +2007,7 @@ public sealed record HighlightRectResult() : EmptyResult;
 internal sealed record MarkUndoableStateCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.MarkUndoableStateAsync"/> command.
 /// </summary>
 public sealed record MarkUndoableStateResult() : EmptyResult;
 
@@ -1993,6 +2015,7 @@ public sealed record MarkUndoableStateResult() : EmptyResult;
 internal sealed record MoveToCommandParameters(NodeId NodeId, NodeId TargetNodeId, NodeId? InsertBeforeNodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.MoveToAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// New id of the moved node.
@@ -2003,6 +2026,7 @@ public sealed record MoveToResult(NodeId NodeId) : EmptyResult;
 internal sealed record PerformSearchCommandParameters(string Query, bool? IncludeUserAgentShadowDOM) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.PerformSearchAsync"/> command.
 /// </summary>
 /// <param name="SearchId">
 /// Unique search session identifier.
@@ -2016,6 +2040,7 @@ public sealed record PerformSearchResult(string SearchId, long ResultCount) : Em
 internal sealed record PushNodeByPathToFrontendCommandParameters(string Path) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.PushNodeByPathToFrontendAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// Id of the node for given path.
@@ -2026,6 +2051,7 @@ public sealed record PushNodeByPathToFrontendResult(NodeId NodeId) : EmptyResult
 internal sealed record PushNodesByBackendIdsToFrontendCommandParameters(ImmutableArray<BackendNodeId> BackendNodeIds) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.PushNodesByBackendIdsToFrontendAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// The array of ids of pushed nodes that correspond to the backend ids specified in
@@ -2037,6 +2063,7 @@ public sealed record PushNodesByBackendIdsToFrontendResult(ImmutableArray<NodeId
 internal sealed record QuerySelectorCommandParameters(NodeId NodeId, string Selector) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.QuerySelectorAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// Query selector result.
@@ -2047,6 +2074,7 @@ public sealed record QuerySelectorResult(NodeId NodeId) : EmptyResult;
 internal sealed record QuerySelectorAllCommandParameters(NodeId NodeId, string Selector) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.QuerySelectorAllAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// Query selector result.
@@ -2057,6 +2085,7 @@ public sealed record QuerySelectorAllResult(ImmutableArray<NodeId> NodeIds) : Em
 internal sealed record GetTopLayerElementsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetTopLayerElementsAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// NodeIds of top layer elements
@@ -2067,6 +2096,7 @@ public sealed record GetTopLayerElementsResult(ImmutableArray<NodeId> NodeIds) :
 internal sealed record GetElementByRelationCommandParameters(NodeId NodeId, GetElementByRelationRelation Relation) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetElementByRelationAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// NodeId of the element matching the queried relation.
@@ -2077,6 +2107,7 @@ public sealed record GetElementByRelationResult(NodeId NodeId) : EmptyResult;
 internal sealed record RedoCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.RedoAsync"/> command.
 /// </summary>
 public sealed record RedoResult() : EmptyResult;
 
@@ -2084,6 +2115,7 @@ public sealed record RedoResult() : EmptyResult;
 internal sealed record RemoveAttributeCommandParameters(NodeId NodeId, string Name) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.RemoveAttributeAsync"/> command.
 /// </summary>
 public sealed record RemoveAttributeResult() : EmptyResult;
 
@@ -2091,6 +2123,7 @@ public sealed record RemoveAttributeResult() : EmptyResult;
 internal sealed record RemoveNodeCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.RemoveNodeAsync"/> command.
 /// </summary>
 public sealed record RemoveNodeResult() : EmptyResult;
 
@@ -2098,6 +2131,7 @@ public sealed record RemoveNodeResult() : EmptyResult;
 internal sealed record RequestChildNodesCommandParameters(NodeId NodeId, long? Depth, bool? Pierce) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.RequestChildNodesAsync"/> command.
 /// </summary>
 public sealed record RequestChildNodesResult() : EmptyResult;
 
@@ -2105,6 +2139,7 @@ public sealed record RequestChildNodesResult() : EmptyResult;
 internal sealed record RequestNodeCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.RequestNodeAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// Node id for given object.
@@ -2115,6 +2150,7 @@ public sealed record RequestNodeResult(NodeId NodeId) : EmptyResult;
 internal sealed record ResolveNodeCommandParameters(NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, string? ObjectGroup, Runtime.ExecutionContextId? ExecutionContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.ResolveNodeAsync"/> command.
 /// </summary>
 /// <param name="Object">
 /// JavaScript object wrapper for given node.
@@ -2125,6 +2161,7 @@ public sealed record ResolveNodeResult(Runtime.RemoteObject Object) : EmptyResul
 internal sealed record SetAttributeValueCommandParameters(NodeId NodeId, string Name, string Value) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetAttributeValueAsync"/> command.
 /// </summary>
 public sealed record SetAttributeValueResult() : EmptyResult;
 
@@ -2132,6 +2169,7 @@ public sealed record SetAttributeValueResult() : EmptyResult;
 internal sealed record SetAttributesAsTextCommandParameters(NodeId NodeId, string Text, string? Name) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetAttributesAsTextAsync"/> command.
 /// </summary>
 public sealed record SetAttributesAsTextResult() : EmptyResult;
 
@@ -2139,6 +2177,7 @@ public sealed record SetAttributesAsTextResult() : EmptyResult;
 internal sealed record SetFileInputFilesCommandParameters(ImmutableArray<string> Files, NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetFileInputFilesAsync"/> command.
 /// </summary>
 public sealed record SetFileInputFilesResult() : EmptyResult;
 
@@ -2146,6 +2185,7 @@ public sealed record SetFileInputFilesResult() : EmptyResult;
 internal sealed record SetNodeStackTracesEnabledCommandParameters(bool Enable) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetNodeStackTracesEnabledAsync"/> command.
 /// </summary>
 public sealed record SetNodeStackTracesEnabledResult() : EmptyResult;
 
@@ -2153,6 +2193,7 @@ public sealed record SetNodeStackTracesEnabledResult() : EmptyResult;
 internal sealed record GetNodeStackTracesCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetNodeStackTracesAsync"/> command.
 /// </summary>
 /// <param name="Creation">
 /// Creation stack trace, if available.
@@ -2163,6 +2204,7 @@ public sealed record GetNodeStackTracesResult(Runtime.StackTrace? Creation) : Em
 internal sealed record GetFileInfoCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetFileInfoAsync"/> command.
 /// </summary>
 /// <param name="Path">
 /// </param>
@@ -2172,6 +2214,7 @@ public sealed record GetFileInfoResult(string Path) : EmptyResult;
 internal sealed record GetDetachedDomNodesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetDetachedDomNodesAsync"/> command.
 /// </summary>
 /// <param name="DetachedNodes">
 /// The list of detached nodes
@@ -2182,6 +2225,7 @@ public sealed record GetDetachedDomNodesResult(ImmutableArray<DetachedElementInf
 internal sealed record SetInspectedNodeCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetInspectedNodeAsync"/> command.
 /// </summary>
 public sealed record SetInspectedNodeResult() : EmptyResult;
 
@@ -2189,6 +2233,7 @@ public sealed record SetInspectedNodeResult() : EmptyResult;
 internal sealed record SetNodeNameCommandParameters(NodeId NodeId, string Name) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetNodeNameAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// New node's id.
@@ -2199,6 +2244,7 @@ public sealed record SetNodeNameResult(NodeId NodeId) : EmptyResult;
 internal sealed record SetNodeValueCommandParameters(NodeId NodeId, string Value) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetNodeValueAsync"/> command.
 /// </summary>
 public sealed record SetNodeValueResult() : EmptyResult;
 
@@ -2206,6 +2252,7 @@ public sealed record SetNodeValueResult() : EmptyResult;
 internal sealed record SetOuterHTMLCommandParameters(NodeId NodeId, string OuterHTML) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.SetOuterHTMLAsync"/> command.
 /// </summary>
 public sealed record SetOuterHTMLResult() : EmptyResult;
 
@@ -2213,6 +2260,7 @@ public sealed record SetOuterHTMLResult() : EmptyResult;
 internal sealed record UndoCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.UndoAsync"/> command.
 /// </summary>
 public sealed record UndoResult() : EmptyResult;
 
@@ -2220,6 +2268,7 @@ public sealed record UndoResult() : EmptyResult;
 internal sealed record GetFrameOwnerCommandParameters(Page.FrameId FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetFrameOwnerAsync"/> command.
 /// </summary>
 /// <param name="BackendNodeId">
 /// Resulting node.
@@ -2233,6 +2282,7 @@ public sealed record GetFrameOwnerResult(BackendNodeId BackendNodeId, NodeId? No
 internal sealed record GetContainerForNodeCommandParameters(NodeId NodeId, string? ContainerName, PhysicalAxes? PhysicalAxes, LogicalAxes? LogicalAxes, bool? QueriesScrollState, bool? QueriesAnchored) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetContainerForNodeAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// The container node for the given node, or null if not found.
@@ -2243,6 +2293,7 @@ public sealed record GetContainerForNodeResult(NodeId? NodeId) : EmptyResult;
 internal sealed record GetQueryingDescendantsForContainerCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetQueryingDescendantsForContainerAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// Descendant nodes with container queries against the given container.
@@ -2253,6 +2304,7 @@ public sealed record GetQueryingDescendantsForContainerResult(ImmutableArray<Nod
 internal sealed record GetAnchorElementCommandParameters(NodeId NodeId, string? AnchorSpecifier) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetAnchorElementAsync"/> command.
 /// </summary>
 /// <param name="NodeId">
 /// The anchor element of the given anchor query.
@@ -2263,6 +2315,7 @@ public sealed record GetAnchorElementResult(NodeId NodeId) : EmptyResult;
 internal sealed record ForceShowPopoverCommandParameters(NodeId NodeId, bool Enable, BackendNodeId? InvokerNodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.ForceShowPopoverAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// List of popovers that were closed in order to respect popover stacking order.
@@ -2273,6 +2326,7 @@ public sealed record ForceShowPopoverResult(ImmutableArray<NodeId> NodeIds) : Em
 internal sealed record GetImplicitAnchorCandidatesCommandParameters(NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.GetImplicitAnchorCandidatesAsync"/> command.
 /// </summary>
 /// <param name="BackendNodeIds">
 /// Candidate elements that can invoke this popover.
@@ -2283,6 +2337,7 @@ public sealed record GetImplicitAnchorCandidatesResult(ImmutableArray<BackendNod
 internal sealed record ForceShowInterestCommandParameters(NodeId NodeId, bool Enable) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOM.ForceShowInterestAsync"/> command.
 /// </summary>
 public sealed record ForceShowInterestResult() : EmptyResult;
 
@@ -2538,178 +2593,222 @@ public sealed record BackendNode(long NodeType, string NodeName, BackendNodeId B
 public enum PseudoType
 {
     /// <summary>
+    /// Corresponds to the <c>"first-line"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("first-line")]
     FirstLine,
     /// <summary>
+    /// Corresponds to the <c>"first-letter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("first-letter")]
     FirstLetter,
     /// <summary>
+    /// Corresponds to the <c>"checkmark"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("checkmark")]
     Checkmark,
     /// <summary>
+    /// Corresponds to the <c>"before"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("before")]
     Before,
     /// <summary>
+    /// Corresponds to the <c>"after"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("after")]
     After,
     /// <summary>
+    /// Corresponds to the <c>"expand-icon"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("expand-icon")]
     ExpandIcon,
     /// <summary>
+    /// Corresponds to the <c>"picker-icon"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("picker-icon")]
     PickerIcon,
     /// <summary>
+    /// Corresponds to the <c>"interest-button"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("interest-button")]
     InterestButton,
     /// <summary>
+    /// Corresponds to the <c>"marker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("marker")]
     Marker,
     /// <summary>
+    /// Corresponds to the <c>"backdrop"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("backdrop")]
     Backdrop,
     /// <summary>
+    /// Corresponds to the <c>"column"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("column")]
     Column,
     /// <summary>
+    /// Corresponds to the <c>"selection"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selection")]
     Selection,
     /// <summary>
+    /// Corresponds to the <c>"search-text"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("search-text")]
     SearchText,
     /// <summary>
+    /// Corresponds to the <c>"target-text"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("target-text")]
     TargetText,
     /// <summary>
+    /// Corresponds to the <c>"spelling-error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("spelling-error")]
     SpellingError,
     /// <summary>
+    /// Corresponds to the <c>"grammar-error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("grammar-error")]
     GrammarError,
     /// <summary>
+    /// Corresponds to the <c>"highlight"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("highlight")]
     Highlight,
     /// <summary>
+    /// Corresponds to the <c>"first-line-inherited"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("first-line-inherited")]
     FirstLineInherited,
     /// <summary>
+    /// Corresponds to the <c>"scroll-marker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scroll-marker")]
     ScrollMarker,
     /// <summary>
+    /// Corresponds to the <c>"scroll-marker-group"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scroll-marker-group")]
     ScrollMarkerGroup,
     /// <summary>
+    /// Corresponds to the <c>"scroll-button"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scroll-button")]
     ScrollButton,
     /// <summary>
+    /// Corresponds to the <c>"scrollbar"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar")]
     Scrollbar,
     /// <summary>
+    /// Corresponds to the <c>"scrollbar-thumb"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-thumb")]
     ScrollbarThumb,
     /// <summary>
+    /// Corresponds to the <c>"scrollbar-button"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-button")]
     ScrollbarButton,
     /// <summary>
+    /// Corresponds to the <c>"scrollbar-track"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-track")]
     ScrollbarTrack,
     /// <summary>
+    /// Corresponds to the <c>"scrollbar-track-piece"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-track-piece")]
     ScrollbarTrackPiece,
     /// <summary>
+    /// Corresponds to the <c>"scrollbar-corner"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scrollbar-corner")]
     ScrollbarCorner,
     /// <summary>
+    /// Corresponds to the <c>"resizer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("resizer")]
     Resizer,
     /// <summary>
+    /// Corresponds to the <c>"input-list-button"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("input-list-button")]
     InputListButton,
     /// <summary>
+    /// Corresponds to the <c>"view-transition"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition")]
     ViewTransition,
     /// <summary>
+    /// Corresponds to the <c>"view-transition-group"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-group")]
     ViewTransitionGroup,
     /// <summary>
+    /// Corresponds to the <c>"view-transition-image-pair"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-image-pair")]
     ViewTransitionImagePair,
     /// <summary>
+    /// Corresponds to the <c>"view-transition-group-children"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-group-children")]
     ViewTransitionGroupChildren,
     /// <summary>
+    /// Corresponds to the <c>"view-transition-old"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-old")]
     ViewTransitionOld,
     /// <summary>
+    /// Corresponds to the <c>"view-transition-new"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("view-transition-new")]
     ViewTransitionNew,
     /// <summary>
+    /// Corresponds to the <c>"placeholder"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("placeholder")]
     Placeholder,
     /// <summary>
+    /// Corresponds to the <c>"file-selector-button"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("file-selector-button")]
     FileSelectorButton,
     /// <summary>
+    /// Corresponds to the <c>"details-content"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("details-content")]
     DetailsContent,
     /// <summary>
+    /// Corresponds to the <c>"picker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("picker")]
     Picker,
     /// <summary>
+    /// Corresponds to the <c>"select-listbox"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("select-listbox")]
     SelectListbox,
     /// <summary>
+    /// Corresponds to the <c>"permission-icon"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("permission-icon")]
     PermissionIcon,
     /// <summary>
+    /// Corresponds to the <c>"overscroll-area-parent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overscroll-area-parent")]
     OverscrollAreaParent,
     /// <summary>
+    /// Corresponds to the <c>"overscroll-backdrop"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overscroll-backdrop")]
     OverscrollBackdrop,
     /// <summary>
+    /// Corresponds to the <c>"skeleton"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("skeleton")]
     Skeleton,
@@ -2722,14 +2821,17 @@ public enum PseudoType
 public enum ShadowRootType
 {
     /// <summary>
+    /// Corresponds to the <c>"user-agent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("user-agent")]
     UserAgent,
     /// <summary>
+    /// Corresponds to the <c>"open"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("open")]
     Open,
     /// <summary>
+    /// Corresponds to the <c>"closed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("closed")]
     Closed,
@@ -2742,14 +2844,17 @@ public enum ShadowRootType
 public enum CompatibilityMode
 {
     /// <summary>
+    /// Corresponds to the <c>"QuirksMode"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("QuirksMode")]
     QuirksMode,
     /// <summary>
+    /// Corresponds to the <c>"LimitedQuirksMode"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LimitedQuirksMode")]
     LimitedQuirksMode,
     /// <summary>
+    /// Corresponds to the <c>"NoQuirksMode"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoQuirksMode")]
     NoQuirksMode,
@@ -2762,14 +2867,17 @@ public enum CompatibilityMode
 public enum PhysicalAxes
 {
     /// <summary>
+    /// Corresponds to the <c>"Horizontal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Horizontal")]
     Horizontal,
     /// <summary>
+    /// Corresponds to the <c>"Vertical"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Vertical")]
     Vertical,
     /// <summary>
+    /// Corresponds to the <c>"Both"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Both")]
     Both,
@@ -2782,14 +2890,17 @@ public enum PhysicalAxes
 public enum LogicalAxes
 {
     /// <summary>
+    /// Corresponds to the <c>"Inline"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Inline")]
     Inline,
     /// <summary>
+    /// Corresponds to the <c>"Block"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Block")]
     Block,
     /// <summary>
+    /// Corresponds to the <c>"Both"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Both")]
     Both,
@@ -2802,10 +2913,12 @@ public enum LogicalAxes
 public enum ScrollOrientation
 {
     /// <summary>
+    /// Corresponds to the <c>"horizontal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("horizontal")]
     Horizontal,
     /// <summary>
+    /// Corresponds to the <c>"vertical"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("vertical")]
     Vertical,
@@ -3098,10 +3211,12 @@ public sealed record CSSComputedStyleProperty(string Name, string Value)
 public enum EnableIncludeWhitespace
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"all"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("all")]
     All,
@@ -3113,14 +3228,17 @@ public enum EnableIncludeWhitespace
 public enum GetElementByRelationRelation
 {
     /// <summary>
+    /// Corresponds to the <c>"PopoverTarget"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PopoverTarget")]
     PopoverTarget,
     /// <summary>
+    /// Corresponds to the <c>"InterestTarget"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InterestTarget")]
     InterestTarget,
     /// <summary>
+    /// Corresponds to the <c>"CommandFor"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CommandFor")]
     CommandFor,

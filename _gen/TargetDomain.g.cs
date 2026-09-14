@@ -24,7 +24,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ActivateTargetResult"/>.
     /// </returns>
-    Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Attaches to the target with given id.
@@ -45,7 +45,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AttachToTargetResult"/>.
     /// </returns>
-    Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Attaches to the browser target, only uses flat sessionId mode.
@@ -60,7 +60,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="AttachToBrowserTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Closes the target. If the target is a page that gets closed too.
@@ -76,7 +76,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseTargetResult"/>.
     /// </returns>
-    Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default);
+    Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Inject object to the target's main frame that provides a communication
@@ -106,7 +106,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="ExposeDevToolsProtocolResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = default, bool? inheritPermissions = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = null, bool? inheritPermissions = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new empty BrowserContext. Similar to an incognito profile but you can have more than
@@ -134,7 +134,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateBrowserContextResult"/>.
     /// </returns>
-    Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = default, string? proxyServer = default, string? proxyBypassList = default, ImmutableArray<string>? originsWithUniversalNetworkAccess = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = null, string? proxyServer = null, string? proxyBypassList = null, ImmutableArray<string>? originsWithUniversalNetworkAccess = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser contexts created with <b>Target.createBrowserContext</b> method.
@@ -148,7 +148,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBrowserContextsResult"/>.
     /// </returns>
-    Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new page.
@@ -210,7 +210,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateTargetResult"/>.
     /// </returns>
-    Task<CreateTargetResult> CreateTargetAsync(string url, long? left = default, long? top = default, long? width = default, long? height = default, WindowState? windowState = default, Browser.BrowserContextID? browserContextId = default, bool? enableBeginFrameControl = default, bool? newWindow = default, bool? background = default, bool? forTab = default, bool? hidden = default, bool? focus = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CreateTargetResult> CreateTargetAsync(string url, long? left = null, long? top = null, long? width = null, long? height = null, WindowState? windowState = null, Browser.BrowserContextID? browserContextId = null, bool? enableBeginFrameControl = null, bool? newWindow = null, bool? background = null, bool? forTab = null, bool? hidden = null, bool? focus = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Detaches session with given id.
@@ -230,7 +230,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DetachFromTargetResult"/>.
     /// </returns>
-    Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = null, TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a BrowserContext. All the belonging pages will be closed without calling their
@@ -247,7 +247,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisposeBrowserContextResult"/>.
     /// </returns>
-    Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = default, CancellationToken cancellationToken = default);
+    Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about a target.
@@ -264,7 +264,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="GetTargetInfoResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves a list of available targets.
@@ -283,7 +283,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetTargetsResult"/>.
     /// </returns>
-    Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sends protocol message over session with given id.
@@ -308,7 +308,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="SendMessageToTargetResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = null, TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Controls whether to automatically attach to new targets which are considered
@@ -344,7 +344,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAutoAttachResult"/>.
     /// </returns>
-    Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = default, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = null, ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Adds the specified target to the list of targets that will be monitored for any related target
@@ -372,7 +372,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="AutoAttachRelatedResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Controls whether to discover available targets and notify via
@@ -394,7 +394,7 @@ public interface ITarget
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDiscoverTargetsResult"/>.
     /// </returns>
-    Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables target discovery for the specified locations, when <b>setDiscoverTargets</b> was set to
@@ -413,7 +413,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="SetRemoteLocationsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the targetId of the DevTools page target opened for the given target
@@ -432,7 +432,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="GetDevToolsTargetResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Opens a DevTools window for the target.
@@ -455,7 +455,7 @@ public interface ITarget
     /// A task representing the asynchronous operation, containing a <see cref="OpenDevToolsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Issued when attached to target because of auto-attach or <b>attachToTarget</b> command.
@@ -552,123 +552,123 @@ internal sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 {
     private static readonly TargetJsonSerializerContext JsonContext = TargetJsonSerializerContext.Default;
 
-    public async Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ActivateTargetResult> ActivateTargetAsync(TargetID targetId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ActivateTargetCommandParameters(TargetId: targetId);
         return await ExecuteCommandAsync("Target.activateTarget", @params, JsonContext.ActivateTargetCommandParameters, JsonContext.ActivateTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AttachToTargetResult> AttachToTargetAsync(TargetID targetId, bool? flatten = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AttachToTargetCommandParameters(TargetId: targetId, Flatten: flatten);
         return await ExecuteCommandAsync("Target.attachToTarget", @params, JsonContext.AttachToTargetCommandParameters, JsonContext.AttachToTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AttachToBrowserTargetResult> AttachToBrowserTargetAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AttachToBrowserTargetCommandParameters();
         return await ExecuteCommandAsync("Target.attachToBrowserTarget", @params, JsonContext.AttachToBrowserTargetCommandParameters, JsonContext.AttachToBrowserTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CloseTargetResult> CloseTargetAsync(TargetID targetId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CloseTargetCommandParameters(TargetId: targetId);
         return await ExecuteCommandAsync("Target.closeTarget", @params, JsonContext.CloseTargetCommandParameters, JsonContext.CloseTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = default, bool? inheritPermissions = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ExposeDevToolsProtocolResult> ExposeDevToolsProtocolAsync(TargetID targetId, string? bindingName = null, bool? inheritPermissions = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ExposeDevToolsProtocolCommandParameters(TargetId: targetId, BindingName: bindingName, InheritPermissions: inheritPermissions);
         return await ExecuteCommandAsync("Target.exposeDevToolsProtocol", @params, JsonContext.ExposeDevToolsProtocolCommandParameters, JsonContext.ExposeDevToolsProtocolResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = default, string? proxyServer = default, string? proxyBypassList = default, ImmutableArray<string>? originsWithUniversalNetworkAccess = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CreateBrowserContextResult> CreateBrowserContextAsync(bool? disposeOnDetach = null, string? proxyServer = null, string? proxyBypassList = null, ImmutableArray<string>? originsWithUniversalNetworkAccess = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CreateBrowserContextCommandParameters(DisposeOnDetach: disposeOnDetach, ProxyServer: proxyServer, ProxyBypassList: proxyBypassList, OriginsWithUniversalNetworkAccess: originsWithUniversalNetworkAccess);
         return await ExecuteCommandAsync("Target.createBrowserContext", @params, JsonContext.CreateBrowserContextCommandParameters, JsonContext.CreateBrowserContextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetBrowserContextsResult> GetBrowserContextsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetBrowserContextsCommandParameters();
         return await ExecuteCommandAsync("Target.getBrowserContexts", @params, JsonContext.GetBrowserContextsCommandParameters, JsonContext.GetBrowserContextsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CreateTargetResult> CreateTargetAsync(string url, long? left = default, long? top = default, long? width = default, long? height = default, WindowState? windowState = default, Browser.BrowserContextID? browserContextId = default, bool? enableBeginFrameControl = default, bool? newWindow = default, bool? background = default, bool? forTab = default, bool? hidden = default, bool? focus = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CreateTargetResult> CreateTargetAsync(string url, long? left = null, long? top = null, long? width = null, long? height = null, WindowState? windowState = null, Browser.BrowserContextID? browserContextId = null, bool? enableBeginFrameControl = null, bool? newWindow = null, bool? background = null, bool? forTab = null, bool? hidden = null, bool? focus = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CreateTargetCommandParameters(Url: url, Left: left, Top: top, Width: width, Height: height, WindowState: windowState, BrowserContextId: browserContextId, EnableBeginFrameControl: enableBeginFrameControl, NewWindow: newWindow, Background: background, ForTab: forTab, Hidden: hidden, Focus: focus);
         return await ExecuteCommandAsync("Target.createTarget", @params, JsonContext.CreateTargetCommandParameters, JsonContext.CreateTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DetachFromTargetResult> DetachFromTargetAsync(SessionID? sessionId = null, TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DetachFromTargetCommandParameters(SessionId: sessionId, TargetId: targetId);
         return await ExecuteCommandAsync("Target.detachFromTarget", @params, JsonContext.DetachFromTargetCommandParameters, JsonContext.DetachFromTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisposeBrowserContextResult> DisposeBrowserContextAsync(Browser.BrowserContextID browserContextId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisposeBrowserContextCommandParameters(BrowserContextId: browserContextId);
         return await ExecuteCommandAsync("Target.disposeBrowserContext", @params, JsonContext.DisposeBrowserContextCommandParameters, JsonContext.DisposeBrowserContextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetTargetInfoResult> GetTargetInfoAsync(TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetTargetInfoCommandParameters(TargetId: targetId);
         return await ExecuteCommandAsync("Target.getTargetInfo", @params, JsonContext.GetTargetInfoCommandParameters, JsonContext.GetTargetInfoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetTargetsResult> GetTargetsAsync(ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetTargetsCommandParameters(Filter: filter);
         return await ExecuteCommandAsync("Target.getTargets", @params, JsonContext.GetTargetsCommandParameters, JsonContext.GetTargetsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = default, TargetID? targetId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SendMessageToTargetResult> SendMessageToTargetAsync(string message, SessionID? sessionId = null, TargetID? targetId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SendMessageToTargetCommandParameters(Message: message, SessionId: sessionId, TargetId: targetId);
         return await ExecuteCommandAsync("Target.sendMessageToTarget", @params, JsonContext.SendMessageToTargetCommandParameters, JsonContext.SendMessageToTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = default, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAutoAttachResult> SetAutoAttachAsync(bool autoAttach, bool waitForDebuggerOnStart, bool? flatten = null, ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutoAttachCommandParameters(AutoAttach: autoAttach, WaitForDebuggerOnStart: waitForDebuggerOnStart, Flatten: flatten, Filter: filter);
         return await ExecuteCommandAsync("Target.setAutoAttach", @params, JsonContext.SetAutoAttachCommandParameters, JsonContext.SetAutoAttachResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AutoAttachRelatedResult> AutoAttachRelatedAsync(TargetID targetId, bool waitForDebuggerOnStart, ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AutoAttachRelatedCommandParameters(TargetId: targetId, WaitForDebuggerOnStart: waitForDebuggerOnStart, Filter: filter);
         return await ExecuteCommandAsync("Target.autoAttachRelated", @params, JsonContext.AutoAttachRelatedCommandParameters, JsonContext.AutoAttachRelatedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDiscoverTargetsResult> SetDiscoverTargetsAsync(bool discover, ImmutableArray<FilterEntry>? filter = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDiscoverTargetsCommandParameters(Discover: discover, Filter: filter);
         return await ExecuteCommandAsync("Target.setDiscoverTargets", @params, JsonContext.SetDiscoverTargetsCommandParameters, JsonContext.SetDiscoverTargetsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetRemoteLocationsResult> SetRemoteLocationsAsync(ImmutableArray<RemoteLocation> locations, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetRemoteLocationsCommandParameters(Locations: locations);
         return await ExecuteCommandAsync("Target.setRemoteLocations", @params, JsonContext.SetRemoteLocationsCommandParameters, JsonContext.SetRemoteLocationsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDevToolsTargetResult> GetDevToolsTargetAsync(TargetID targetId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDevToolsTargetCommandParameters(TargetId: targetId);
         return await ExecuteCommandAsync("Target.getDevToolsTarget", @params, JsonContext.GetDevToolsTargetCommandParameters, JsonContext.GetDevToolsTargetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<OpenDevToolsResult> OpenDevToolsAsync(TargetID targetId, string? panelId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new OpenDevToolsCommandParameters(TargetId: targetId, PanelId: panelId);
         return await ExecuteCommandAsync("Target.openDevTools", @params, JsonContext.OpenDevToolsCommandParameters, JsonContext.OpenDevToolsResult, session, cancellationToken).ConfigureAwait(false);
@@ -688,6 +688,7 @@ internal sealed class TargetDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record ActivateTargetCommandParameters(TargetID TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.ActivateTargetAsync"/> command.
 /// </summary>
 public sealed record ActivateTargetResult() : EmptyResult;
 
@@ -695,6 +696,7 @@ public sealed record ActivateTargetResult() : EmptyResult;
 internal sealed record AttachToTargetCommandParameters(TargetID TargetId, bool? Flatten) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.AttachToTargetAsync"/> command.
 /// </summary>
 /// <param name="SessionId">
 /// Id assigned to the session.
@@ -705,6 +707,7 @@ public sealed record AttachToTargetResult(SessionID SessionId) : EmptyResult;
 internal sealed record AttachToBrowserTargetCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.AttachToBrowserTargetAsync"/> command.
 /// </summary>
 /// <param name="SessionId">
 /// Id assigned to the session.
@@ -715,6 +718,7 @@ public sealed record AttachToBrowserTargetResult(SessionID SessionId) : EmptyRes
 internal sealed record CloseTargetCommandParameters(TargetID TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.CloseTargetAsync"/> command.
 /// </summary>
 /// <param name="Success">
 /// Always set to true. If an error occurs, the response indicates protocol error.
@@ -725,6 +729,7 @@ public sealed record CloseTargetResult(bool Success) : EmptyResult;
 internal sealed record ExposeDevToolsProtocolCommandParameters(TargetID TargetId, string? BindingName, bool? InheritPermissions) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.ExposeDevToolsProtocolAsync"/> command.
 /// </summary>
 public sealed record ExposeDevToolsProtocolResult() : EmptyResult;
 
@@ -732,6 +737,7 @@ public sealed record ExposeDevToolsProtocolResult() : EmptyResult;
 internal sealed record CreateBrowserContextCommandParameters(bool? DisposeOnDetach, string? ProxyServer, string? ProxyBypassList, ImmutableArray<string>? OriginsWithUniversalNetworkAccess) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.CreateBrowserContextAsync"/> command.
 /// </summary>
 /// <param name="BrowserContextId">
 /// The id of the context created.
@@ -742,6 +748,7 @@ public sealed record CreateBrowserContextResult(Browser.BrowserContextID Browser
 internal sealed record GetBrowserContextsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.GetBrowserContextsAsync"/> command.
 /// </summary>
 /// <param name="BrowserContextIds">
 /// An array of browser context ids.
@@ -755,6 +762,7 @@ public sealed record GetBrowserContextsResult(ImmutableArray<Browser.BrowserCont
 internal sealed record CreateTargetCommandParameters(string Url, long? Left, long? Top, long? Width, long? Height, WindowState? WindowState, Browser.BrowserContextID? BrowserContextId, bool? EnableBeginFrameControl, bool? NewWindow, bool? Background, bool? ForTab, bool? Hidden, bool? Focus) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.CreateTargetAsync"/> command.
 /// </summary>
 /// <param name="TargetId">
 /// The id of the page opened.
@@ -765,6 +773,7 @@ public sealed record CreateTargetResult(TargetID TargetId) : EmptyResult;
 internal sealed record DetachFromTargetCommandParameters(SessionID? SessionId, TargetID? TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.DetachFromTargetAsync"/> command.
 /// </summary>
 public sealed record DetachFromTargetResult() : EmptyResult;
 
@@ -772,6 +781,7 @@ public sealed record DetachFromTargetResult() : EmptyResult;
 internal sealed record DisposeBrowserContextCommandParameters(Browser.BrowserContextID BrowserContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.DisposeBrowserContextAsync"/> command.
 /// </summary>
 public sealed record DisposeBrowserContextResult() : EmptyResult;
 
@@ -779,6 +789,7 @@ public sealed record DisposeBrowserContextResult() : EmptyResult;
 internal sealed record GetTargetInfoCommandParameters(TargetID? TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.GetTargetInfoAsync"/> command.
 /// </summary>
 /// <param name="TargetInfo">
 /// </param>
@@ -788,6 +799,7 @@ public sealed record GetTargetInfoResult(TargetInfo TargetInfo) : EmptyResult;
 internal sealed record GetTargetsCommandParameters(ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.GetTargetsAsync"/> command.
 /// </summary>
 /// <param name="TargetInfos">
 /// The list of targets.
@@ -798,6 +810,7 @@ public sealed record GetTargetsResult(ImmutableArray<TargetInfo> TargetInfos) : 
 internal sealed record SendMessageToTargetCommandParameters(string Message, SessionID? SessionId, TargetID? TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.SendMessageToTargetAsync"/> command.
 /// </summary>
 public sealed record SendMessageToTargetResult() : EmptyResult;
 
@@ -805,6 +818,7 @@ public sealed record SendMessageToTargetResult() : EmptyResult;
 internal sealed record SetAutoAttachCommandParameters(bool AutoAttach, bool WaitForDebuggerOnStart, bool? Flatten, ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.SetAutoAttachAsync"/> command.
 /// </summary>
 public sealed record SetAutoAttachResult() : EmptyResult;
 
@@ -812,6 +826,7 @@ public sealed record SetAutoAttachResult() : EmptyResult;
 internal sealed record AutoAttachRelatedCommandParameters(TargetID TargetId, bool WaitForDebuggerOnStart, ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.AutoAttachRelatedAsync"/> command.
 /// </summary>
 public sealed record AutoAttachRelatedResult() : EmptyResult;
 
@@ -819,6 +834,7 @@ public sealed record AutoAttachRelatedResult() : EmptyResult;
 internal sealed record SetDiscoverTargetsCommandParameters(bool Discover, ImmutableArray<FilterEntry>? Filter) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.SetDiscoverTargetsAsync"/> command.
 /// </summary>
 public sealed record SetDiscoverTargetsResult() : EmptyResult;
 
@@ -826,6 +842,7 @@ public sealed record SetDiscoverTargetsResult() : EmptyResult;
 internal sealed record SetRemoteLocationsCommandParameters(ImmutableArray<RemoteLocation> Locations) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.SetRemoteLocationsAsync"/> command.
 /// </summary>
 public sealed record SetRemoteLocationsResult() : EmptyResult;
 
@@ -833,6 +850,7 @@ public sealed record SetRemoteLocationsResult() : EmptyResult;
 internal sealed record GetDevToolsTargetCommandParameters(TargetID TargetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.GetDevToolsTargetAsync"/> command.
 /// </summary>
 /// <param name="TargetId">
 /// The targetId of DevTools page target if exists.
@@ -843,6 +861,7 @@ public sealed record GetDevToolsTargetResult(TargetID? TargetId) : EmptyResult;
 internal sealed record OpenDevToolsCommandParameters(TargetID TargetId, string? PanelId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITarget.OpenDevToolsAsync"/> command.
 /// </summary>
 /// <param name="TargetId">
 /// The targetId of DevTools page target.
@@ -1039,18 +1058,22 @@ public sealed record RemoteLocation(string Host, long Port)
 public enum WindowState
 {
     /// <summary>
+    /// Corresponds to the <c>"normal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("normal")]
     Normal,
     /// <summary>
+    /// Corresponds to the <c>"minimized"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("minimized")]
     Minimized,
     /// <summary>
+    /// Corresponds to the <c>"maximized"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("maximized")]
     Maximized,
     /// <summary>
+    /// Corresponds to the <c>"fullscreen"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fullscreen")]
     Fullscreen,

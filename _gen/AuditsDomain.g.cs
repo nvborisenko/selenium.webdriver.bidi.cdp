@@ -36,7 +36,7 @@ public interface IAudits
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEncodedResponseResult"/>.
     /// </returns>
-    Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, GetEncodedResponseEncoding encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, GetEncodedResponseEncoding encoding, double? quality = null, bool? sizeOnly = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables issues domain, prevents further issues from being reported to the client.
@@ -50,7 +50,7 @@ public interface IAudits
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables issues domain, sends the issues collected so far to the client by means of the
@@ -65,7 +65,7 @@ public interface IAudits
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Runs the form issues check for the target page. Found issues are reported
@@ -80,7 +80,7 @@ public interface IAudits
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CheckFormsIssuesResult"/>.
     /// </returns>
-    Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -100,25 +100,25 @@ internal sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 {
     private static readonly AuditsJsonSerializerContext JsonContext = AuditsJsonSerializerContext.Default;
 
-    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, GetEncodedResponseEncoding encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, GetEncodedResponseEncoding encoding, double? quality = null, bool? sizeOnly = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: quality, SizeOnly: sizeOnly);
         return await ExecuteCommandAsync("Audits.getEncodedResponse", @params, JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Audits.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Audits.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CheckFormsIssuesResult> CheckFormsIssuesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CheckFormsIssuesCommandParameters();
         return await ExecuteCommandAsync("Audits.checkFormsIssues", @params, JsonContext.CheckFormsIssuesCommandParameters, JsonContext.CheckFormsIssuesResult, session, cancellationToken).ConfigureAwait(false);
@@ -130,6 +130,7 @@ internal sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record GetEncodedResponseCommandParameters(Network.RequestId RequestId, GetEncodedResponseEncoding Encoding, double? Quality, bool? SizeOnly) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAudits.GetEncodedResponseAsync"/> command.
 /// </summary>
 /// <param name="Body">
 /// The encoded body as a base64 string. Omitted if sizeOnly is true. (Encoded as a base64 string when passed over JSON)
@@ -146,6 +147,7 @@ public sealed record GetEncodedResponseResult(string? Body, long OriginalSize, l
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAudits.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -153,6 +155,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAudits.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -160,6 +163,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record CheckFormsIssuesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAudits.CheckFormsIssuesAsync"/> command.
 /// </summary>
 /// <param name="FormIssues">
 /// </param>
@@ -214,38 +218,47 @@ public sealed record AffectedFrame(Page.FrameId FrameId)
 public enum CookieExclusionReason
 {
     /// <summary>
+    /// Corresponds to the <c>"ExcludeSameSiteUnspecifiedTreatedAsLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeSameSiteUnspecifiedTreatedAsLax")]
     ExcludeSameSiteUnspecifiedTreatedAsLax,
     /// <summary>
+    /// Corresponds to the <c>"ExcludeSameSiteNoneInsecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeSameSiteNoneInsecure")]
     ExcludeSameSiteNoneInsecure,
     /// <summary>
+    /// Corresponds to the <c>"ExcludeSameSiteLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeSameSiteLax")]
     ExcludeSameSiteLax,
     /// <summary>
+    /// Corresponds to the <c>"ExcludeSameSiteStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeSameSiteStrict")]
     ExcludeSameSiteStrict,
     /// <summary>
+    /// Corresponds to the <c>"ExcludeDomainNonASCII"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeDomainNonASCII")]
     ExcludeDomainNonASCII,
     /// <summary>
+    /// Corresponds to the <c>"ExcludeThirdPartyCookieBlockedInFirstPartySet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeThirdPartyCookieBlockedInFirstPartySet")]
     ExcludeThirdPartyCookieBlockedInFirstPartySet,
     /// <summary>
+    /// Corresponds to the <c>"ExcludeThirdPartyPhaseout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeThirdPartyPhaseout")]
     ExcludeThirdPartyPhaseout,
     /// <summary>
+    /// Corresponds to the <c>"ExcludePortMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludePortMismatch")]
     ExcludePortMismatch,
     /// <summary>
+    /// Corresponds to the <c>"ExcludeSchemeMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeSchemeMismatch")]
     ExcludeSchemeMismatch,
@@ -257,58 +270,72 @@ public enum CookieExclusionReason
 public enum CookieWarningReason
 {
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteUnspecifiedCrossSiteContext"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteUnspecifiedCrossSiteContext")]
     WarnSameSiteUnspecifiedCrossSiteContext,
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteNoneInsecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteNoneInsecure")]
     WarnSameSiteNoneInsecure,
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteUnspecifiedLaxAllowUnsafe"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteUnspecifiedLaxAllowUnsafe")]
     WarnSameSiteUnspecifiedLaxAllowUnsafe,
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteStrictLaxDowngradeStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteStrictLaxDowngradeStrict")]
     WarnSameSiteStrictLaxDowngradeStrict,
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteStrictCrossDowngradeStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteStrictCrossDowngradeStrict")]
     WarnSameSiteStrictCrossDowngradeStrict,
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteStrictCrossDowngradeLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteStrictCrossDowngradeLax")]
     WarnSameSiteStrictCrossDowngradeLax,
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteLaxCrossDowngradeStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteLaxCrossDowngradeStrict")]
     WarnSameSiteLaxCrossDowngradeStrict,
     /// <summary>
+    /// Corresponds to the <c>"WarnSameSiteLaxCrossDowngradeLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnSameSiteLaxCrossDowngradeLax")]
     WarnSameSiteLaxCrossDowngradeLax,
     /// <summary>
+    /// Corresponds to the <c>"WarnAttributeValueExceedsMaxSize"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnAttributeValueExceedsMaxSize")]
     WarnAttributeValueExceedsMaxSize,
     /// <summary>
+    /// Corresponds to the <c>"WarnDomainNonASCII"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnDomainNonASCII")]
     WarnDomainNonASCII,
     /// <summary>
+    /// Corresponds to the <c>"WarnThirdPartyPhaseout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnThirdPartyPhaseout")]
     WarnThirdPartyPhaseout,
     /// <summary>
+    /// Corresponds to the <c>"WarnCrossSiteRedirectDowngradeChangesInclusion"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnCrossSiteRedirectDowngradeChangesInclusion")]
     WarnCrossSiteRedirectDowngradeChangesInclusion,
     /// <summary>
+    /// Corresponds to the <c>"WarnDeprecationTrialMetadata"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnDeprecationTrialMetadata")]
     WarnDeprecationTrialMetadata,
     /// <summary>
+    /// Corresponds to the <c>"WarnThirdPartyCookieHeuristic"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnThirdPartyCookieHeuristic")]
     WarnThirdPartyCookieHeuristic,
@@ -320,10 +347,12 @@ public enum CookieWarningReason
 public enum CookieOperation
 {
     /// <summary>
+    /// Corresponds to the <c>"SetCookie"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SetCookie")]
     SetCookie,
     /// <summary>
+    /// Corresponds to the <c>"ReadCookie"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReadCookie")]
     ReadCookie,
@@ -336,14 +365,17 @@ public enum CookieOperation
 public enum InsightType
 {
     /// <summary>
+    /// Corresponds to the <c>"GitHubResource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("GitHubResource")]
     GitHubResource,
     /// <summary>
+    /// Corresponds to the <c>"GracePeriod"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("GracePeriod")]
     GracePeriod,
     /// <summary>
+    /// Corresponds to the <c>"Heuristics"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Heuristics")]
     Heuristics,
@@ -413,6 +445,7 @@ public sealed record CookieIssueDetails(ImmutableArray<CookieWarningReason> Cook
 public enum PerformanceIssueType
 {
     /// <summary>
+    /// Corresponds to the <c>"DocumentCookie"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DocumentCookie")]
     DocumentCookie,
@@ -436,14 +469,17 @@ public sealed record PerformanceIssueDetails(PerformanceIssueType PerformanceIss
 public enum MixedContentResolutionStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"MixedContentBlocked"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MixedContentBlocked")]
     MixedContentBlocked,
     /// <summary>
+    /// Corresponds to the <c>"MixedContentAutomaticallyUpgraded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MixedContentAutomaticallyUpgraded")]
     MixedContentAutomaticallyUpgraded,
     /// <summary>
+    /// Corresponds to the <c>"MixedContentWarning"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MixedContentWarning")]
     MixedContentWarning,
@@ -455,114 +491,142 @@ public enum MixedContentResolutionStatus
 public enum MixedContentResourceType
 {
     /// <summary>
+    /// Corresponds to the <c>"Audio"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Audio")]
     Audio,
     /// <summary>
+    /// Corresponds to the <c>"Beacon"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Beacon")]
     Beacon,
     /// <summary>
+    /// Corresponds to the <c>"CSPReport"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSPReport")]
     CSPReport,
     /// <summary>
+    /// Corresponds to the <c>"Download"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Download")]
     Download,
     /// <summary>
+    /// Corresponds to the <c>"EventSource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EventSource")]
     EventSource,
     /// <summary>
+    /// Corresponds to the <c>"Favicon"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Favicon")]
     Favicon,
     /// <summary>
+    /// Corresponds to the <c>"Font"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Font")]
     Font,
     /// <summary>
+    /// Corresponds to the <c>"Form"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Form")]
     Form,
     /// <summary>
+    /// Corresponds to the <c>"Frame"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Frame")]
     Frame,
     /// <summary>
+    /// Corresponds to the <c>"Image"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Image")]
     Image,
     /// <summary>
+    /// Corresponds to the <c>"Import"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Import")]
     Import,
     /// <summary>
+    /// Corresponds to the <c>"JSON"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JSON")]
     JSON,
     /// <summary>
+    /// Corresponds to the <c>"Manifest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Manifest")]
     Manifest,
     /// <summary>
+    /// Corresponds to the <c>"Ping"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Ping")]
     Ping,
     /// <summary>
+    /// Corresponds to the <c>"PluginData"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PluginData")]
     PluginData,
     /// <summary>
+    /// Corresponds to the <c>"PluginResource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PluginResource")]
     PluginResource,
     /// <summary>
+    /// Corresponds to the <c>"Prefetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Prefetch")]
     Prefetch,
     /// <summary>
+    /// Corresponds to the <c>"Resource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Resource")]
     Resource,
     /// <summary>
+    /// Corresponds to the <c>"Script"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Script")]
     Script,
     /// <summary>
+    /// Corresponds to the <c>"ServiceWorker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServiceWorker")]
     ServiceWorker,
     /// <summary>
+    /// Corresponds to the <c>"SharedWorker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedWorker")]
     SharedWorker,
     /// <summary>
+    /// Corresponds to the <c>"SpeculationRules"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SpeculationRules")]
     SpeculationRules,
     /// <summary>
+    /// Corresponds to the <c>"Stylesheet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Stylesheet")]
     Stylesheet,
     /// <summary>
+    /// Corresponds to the <c>"Track"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Track")]
     Track,
     /// <summary>
+    /// Corresponds to the <c>"Video"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Video")]
     Video,
     /// <summary>
+    /// Corresponds to the <c>"Worker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Worker")]
     Worker,
     /// <summary>
+    /// Corresponds to the <c>"XMLHttpRequest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("XMLHttpRequest")]
     XMLHttpRequest,
     /// <summary>
+    /// Corresponds to the <c>"XSLT"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("XSLT")]
     XSLT,
@@ -609,34 +673,42 @@ public sealed record MixedContentIssueDetails(MixedContentResolutionStatus Resol
 public enum BlockedByResponseReason
 {
     /// <summary>
+    /// Corresponds to the <c>"CoepFrameResourceNeedsCoepHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CoepFrameResourceNeedsCoepHeader")]
     CoepFrameResourceNeedsCoepHeader,
     /// <summary>
+    /// Corresponds to the <c>"CoopSandboxedIFrameCannotNavigateToCoopPage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CoopSandboxedIFrameCannotNavigateToCoopPage")]
     CoopSandboxedIFrameCannotNavigateToCoopPage,
     /// <summary>
+    /// Corresponds to the <c>"CorpNotSameOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorpNotSameOrigin")]
     CorpNotSameOrigin,
     /// <summary>
+    /// Corresponds to the <c>"CorpNotSameOriginAfterDefaultedToSameOriginByCoep"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorpNotSameOriginAfterDefaultedToSameOriginByCoep")]
     CorpNotSameOriginAfterDefaultedToSameOriginByCoep,
     /// <summary>
+    /// Corresponds to the <c>"CorpNotSameOriginAfterDefaultedToSameOriginByDip"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorpNotSameOriginAfterDefaultedToSameOriginByDip")]
     CorpNotSameOriginAfterDefaultedToSameOriginByDip,
     /// <summary>
+    /// Corresponds to the <c>"CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip")]
     CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip,
     /// <summary>
+    /// Corresponds to the <c>"CorpNotSameSite"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorpNotSameSite")]
     CorpNotSameSite,
     /// <summary>
+    /// Corresponds to the <c>"SRIMessageSignatureMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SRIMessageSignatureMismatch")]
     SRIMessageSignatureMismatch,
@@ -668,10 +740,12 @@ public sealed record BlockedByResponseIssueDetails(AffectedRequest Request, Bloc
 public enum HeavyAdResolutionStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"HeavyAdBlocked"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HeavyAdBlocked")]
     HeavyAdBlocked,
     /// <summary>
+    /// Corresponds to the <c>"HeavyAdWarning"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HeavyAdWarning")]
     HeavyAdWarning,
@@ -683,14 +757,17 @@ public enum HeavyAdResolutionStatus
 public enum HeavyAdReason
 {
     /// <summary>
+    /// Corresponds to the <c>"NetworkTotalLimit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NetworkTotalLimit")]
     NetworkTotalLimit,
     /// <summary>
+    /// Corresponds to the <c>"CpuTotalLimit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CpuTotalLimit")]
     CpuTotalLimit,
     /// <summary>
+    /// Corresponds to the <c>"CpuPeakLimit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CpuPeakLimit")]
     CpuPeakLimit,
@@ -717,30 +794,37 @@ public sealed record HeavyAdIssueDetails(HeavyAdResolutionStatus Resolution, Hea
 public enum ContentSecurityPolicyViolationType
 {
     /// <summary>
+    /// Corresponds to the <c>"kInlineViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("kInlineViolation")]
     KInlineViolation,
     /// <summary>
+    /// Corresponds to the <c>"kEvalViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("kEvalViolation")]
     KEvalViolation,
     /// <summary>
+    /// Corresponds to the <c>"kURLViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("kURLViolation")]
     KURLViolation,
     /// <summary>
+    /// Corresponds to the <c>"kSRIViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("kSRIViolation")]
     KSRIViolation,
     /// <summary>
+    /// Corresponds to the <c>"kTrustedTypesSinkViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("kTrustedTypesSinkViolation")]
     KTrustedTypesSinkViolation,
     /// <summary>
+    /// Corresponds to the <c>"kTrustedTypesPolicyViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("kTrustedTypesPolicyViolation")]
     KTrustedTypesPolicyViolation,
     /// <summary>
+    /// Corresponds to the <c>"kWasmEvalViolation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("kWasmEvalViolation")]
     KWasmEvalViolation,
@@ -796,10 +880,12 @@ public sealed record ContentSecurityPolicyIssueDetails(string ViolatedDirective,
 public enum SharedArrayBufferIssueType
 {
     /// <summary>
+    /// Corresponds to the <c>"TransferIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TransferIssue")]
     TransferIssue,
     /// <summary>
+    /// Corresponds to the <c>"CreationIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CreationIssue")]
     CreationIssue,
@@ -854,106 +940,132 @@ public sealed record CorsIssueDetails(Network.CorsErrorStatus CorsErrorStatus, b
 public enum SharedDictionaryError
 {
     /// <summary>
+    /// Corresponds to the <c>"UseErrorCrossOriginNoCorsRequest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UseErrorCrossOriginNoCorsRequest")]
     UseErrorCrossOriginNoCorsRequest,
     /// <summary>
+    /// Corresponds to the <c>"UseErrorDictionaryLoadFailure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UseErrorDictionaryLoadFailure")]
     UseErrorDictionaryLoadFailure,
     /// <summary>
+    /// Corresponds to the <c>"UseErrorMatchingDictionaryNotUsed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UseErrorMatchingDictionaryNotUsed")]
     UseErrorMatchingDictionaryNotUsed,
     /// <summary>
+    /// Corresponds to the <c>"UseErrorUnexpectedContentDictionaryHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UseErrorUnexpectedContentDictionaryHeader")]
     UseErrorUnexpectedContentDictionaryHeader,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorCossOriginNoCorsRequest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorCossOriginNoCorsRequest")]
     WriteErrorCossOriginNoCorsRequest,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorDisallowedBySettings"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorDisallowedBySettings")]
     WriteErrorDisallowedBySettings,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorExpiredResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorExpiredResponse")]
     WriteErrorExpiredResponse,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorFeatureDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorFeatureDisabled")]
     WriteErrorFeatureDisabled,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorInsufficientResources"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorInsufficientResources")]
     WriteErrorInsufficientResources,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorInvalidMatchField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorInvalidMatchField")]
     WriteErrorInvalidMatchField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorInvalidStructuredHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorInvalidStructuredHeader")]
     WriteErrorInvalidStructuredHeader,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorInvalidTTLField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorInvalidTTLField")]
     WriteErrorInvalidTTLField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNavigationRequest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNavigationRequest")]
     WriteErrorNavigationRequest,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNoMatchField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNoMatchField")]
     WriteErrorNoMatchField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNonIntegerTTLField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNonIntegerTTLField")]
     WriteErrorNonIntegerTTLField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNonListMatchDestField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNonListMatchDestField")]
     WriteErrorNonListMatchDestField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNonSecureContext"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNonSecureContext")]
     WriteErrorNonSecureContext,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNonStringIdField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNonStringIdField")]
     WriteErrorNonStringIdField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNonStringInMatchDestList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNonStringInMatchDestList")]
     WriteErrorNonStringInMatchDestList,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorInvalidMatchDestList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorInvalidMatchDestList")]
     WriteErrorInvalidMatchDestList,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNonStringMatchField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNonStringMatchField")]
     WriteErrorNonStringMatchField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorNonTokenTypeField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorNonTokenTypeField")]
     WriteErrorNonTokenTypeField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorRequestAborted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorRequestAborted")]
     WriteErrorRequestAborted,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorShuttingDown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorShuttingDown")]
     WriteErrorShuttingDown,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorTooLongIdField"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorTooLongIdField")]
     WriteErrorTooLongIdField,
     /// <summary>
+    /// Corresponds to the <c>"WriteErrorUnsupportedType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WriteErrorUnsupportedType")]
     WriteErrorUnsupportedType,
@@ -965,102 +1077,127 @@ public enum SharedDictionaryError
 public enum SRIMessageSignatureError
 {
     /// <summary>
+    /// Corresponds to the <c>"MissingSignatureHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingSignatureHeader")]
     MissingSignatureHeader,
     /// <summary>
+    /// Corresponds to the <c>"MissingSignatureInputHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingSignatureInputHeader")]
     MissingSignatureInputHeader,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSignatureHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSignatureHeader")]
     InvalidSignatureHeader,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSignatureInputHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSignatureInputHeader")]
     InvalidSignatureInputHeader,
     /// <summary>
+    /// Corresponds to the <c>"SignatureHeaderValueIsNotByteSequence"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureHeaderValueIsNotByteSequence")]
     SignatureHeaderValueIsNotByteSequence,
     /// <summary>
+    /// Corresponds to the <c>"SignatureHeaderValueIsParameterized"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureHeaderValueIsParameterized")]
     SignatureHeaderValueIsParameterized,
     /// <summary>
+    /// Corresponds to the <c>"SignatureHeaderValueIsIncorrectLength"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureHeaderValueIsIncorrectLength")]
     SignatureHeaderValueIsIncorrectLength,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderMissingLabel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderMissingLabel")]
     SignatureInputHeaderMissingLabel,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderValueNotInnerList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderValueNotInnerList")]
     SignatureInputHeaderValueNotInnerList,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderValueMissingComponents"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderValueMissingComponents")]
     SignatureInputHeaderValueMissingComponents,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderInvalidComponentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderInvalidComponentType")]
     SignatureInputHeaderInvalidComponentType,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderInvalidComponentName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderInvalidComponentName")]
     SignatureInputHeaderInvalidComponentName,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderInvalidHeaderComponentParameter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderInvalidHeaderComponentParameter")]
     SignatureInputHeaderInvalidHeaderComponentParameter,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderInvalidDerivedComponentParameter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderInvalidDerivedComponentParameter")]
     SignatureInputHeaderInvalidDerivedComponentParameter,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderKeyIdLength"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderKeyIdLength")]
     SignatureInputHeaderKeyIdLength,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderInvalidParameter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderInvalidParameter")]
     SignatureInputHeaderInvalidParameter,
     /// <summary>
+    /// Corresponds to the <c>"SignatureInputHeaderMissingRequiredParameters"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureInputHeaderMissingRequiredParameters")]
     SignatureInputHeaderMissingRequiredParameters,
     /// <summary>
+    /// Corresponds to the <c>"ValidationFailedSignatureExpired"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ValidationFailedSignatureExpired")]
     ValidationFailedSignatureExpired,
     /// <summary>
+    /// Corresponds to the <c>"ValidationFailedInvalidLength"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ValidationFailedInvalidLength")]
     ValidationFailedInvalidLength,
     /// <summary>
+    /// Corresponds to the <c>"ValidationFailedSignatureMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ValidationFailedSignatureMismatch")]
     ValidationFailedSignatureMismatch,
     /// <summary>
+    /// Corresponds to the <c>"ValidationFailedIntegrityMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ValidationFailedIntegrityMismatch")]
     ValidationFailedIntegrityMismatch,
     /// <summary>
+    /// Corresponds to the <c>"SignatureBaseUnknownDerivedComponent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureBaseUnknownDerivedComponent")]
     SignatureBaseUnknownDerivedComponent,
     /// <summary>
+    /// Corresponds to the <c>"SignatureBaseMissingHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureBaseMissingHeader")]
     SignatureBaseMissingHeader,
     /// <summary>
+    /// Corresponds to the <c>"SignatureBaseInvalidUnencodedDigest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureBaseInvalidUnencodedDigest")]
     SignatureBaseInvalidUnencodedDigest,
     /// <summary>
+    /// Corresponds to the <c>"SignatureBaseUnsupportedComponent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignatureBaseUnsupportedComponent")]
     SignatureBaseUnsupportedComponent,
@@ -1072,18 +1209,22 @@ public enum SRIMessageSignatureError
 public enum UnencodedDigestError
 {
     /// <summary>
+    /// Corresponds to the <c>"MalformedDictionary"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MalformedDictionary")]
     MalformedDictionary,
     /// <summary>
+    /// Corresponds to the <c>"UnknownAlgorithm"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnknownAlgorithm")]
     UnknownAlgorithm,
     /// <summary>
+    /// Corresponds to the <c>"IncorrectDigestType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IncorrectDigestType")]
     IncorrectDigestType,
     /// <summary>
+    /// Corresponds to the <c>"IncorrectDigestLength"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IncorrectDigestLength")]
     IncorrectDigestLength,
@@ -1095,38 +1236,47 @@ public enum UnencodedDigestError
 public enum ConnectionAllowlistError
 {
     /// <summary>
+    /// Corresponds to the <c>"InvalidHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidHeader")]
     InvalidHeader,
     /// <summary>
+    /// Corresponds to the <c>"MoreThanOneList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MoreThanOneList")]
     MoreThanOneList,
     /// <summary>
+    /// Corresponds to the <c>"ItemNotInnerList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ItemNotInnerList")]
     ItemNotInnerList,
     /// <summary>
+    /// Corresponds to the <c>"InvalidAllowlistItemType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowlistItemType")]
     InvalidAllowlistItemType,
     /// <summary>
+    /// Corresponds to the <c>"ReportingEndpointNotToken"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReportingEndpointNotToken")]
     ReportingEndpointNotToken,
     /// <summary>
+    /// Corresponds to the <c>"InvalidUrlPattern"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidUrlPattern")]
     InvalidUrlPattern,
     /// <summary>
+    /// Corresponds to the <c>"IFrameAttributeLoosensEmbeddingRequirement"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IFrameAttributeLoosensEmbeddingRequirement")]
     IFrameAttributeLoosensEmbeddingRequirement,
     /// <summary>
+    /// Corresponds to the <c>"InvalidAllowConnectionAllowlistFrom"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowConnectionAllowlistFrom")]
     InvalidAllowConnectionAllowlistFrom,
     /// <summary>
+    /// Corresponds to the <c>"EmbeddingRequirementNotSatisfied"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbeddingRequirementNotSatisfied")]
     EmbeddingRequirementNotSatisfied,
@@ -1214,86 +1364,107 @@ public sealed record ConnectionAllowlistIssueDetails(ConnectionAllowlistError Er
 public enum GenericIssueErrorType
 {
     /// <summary>
+    /// Corresponds to the <c>"FormLabelForNameError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormLabelForNameError")]
     FormLabelForNameError,
     /// <summary>
+    /// Corresponds to the <c>"FormDuplicateIdForInputError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormDuplicateIdForInputError")]
     FormDuplicateIdForInputError,
     /// <summary>
+    /// Corresponds to the <c>"FormInputWithNoLabelError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormInputWithNoLabelError")]
     FormInputWithNoLabelError,
     /// <summary>
+    /// Corresponds to the <c>"FormAutocompleteAttributeEmptyError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormAutocompleteAttributeEmptyError")]
     FormAutocompleteAttributeEmptyError,
     /// <summary>
+    /// Corresponds to the <c>"FormEmptyIdAndNameAttributesForInputError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormEmptyIdAndNameAttributesForInputError")]
     FormEmptyIdAndNameAttributesForInputError,
     /// <summary>
+    /// Corresponds to the <c>"FormAriaLabelledByToNonExistingIdError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormAriaLabelledByToNonExistingIdError")]
     FormAriaLabelledByToNonExistingIdError,
     /// <summary>
+    /// Corresponds to the <c>"FormInputAssignedAutocompleteValueToIdOrNameAttributeError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormInputAssignedAutocompleteValueToIdOrNameAttributeError")]
     FormInputAssignedAutocompleteValueToIdOrNameAttributeError,
     /// <summary>
+    /// Corresponds to the <c>"FormLabelHasNeitherForNorNestedInputError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormLabelHasNeitherForNorNestedInputError")]
     FormLabelHasNeitherForNorNestedInputError,
     /// <summary>
+    /// Corresponds to the <c>"FormLabelForMatchesNonExistingIdError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormLabelForMatchesNonExistingIdError")]
     FormLabelForMatchesNonExistingIdError,
     /// <summary>
+    /// Corresponds to the <c>"FormInputHasWrongButWellIntendedAutocompleteValueError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormInputHasWrongButWellIntendedAutocompleteValueError")]
     FormInputHasWrongButWellIntendedAutocompleteValueError,
     /// <summary>
+    /// Corresponds to the <c>"ResponseWasBlockedByORB"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ResponseWasBlockedByORB")]
     ResponseWasBlockedByORB,
     /// <summary>
+    /// Corresponds to the <c>"NavigationEntryMarkedSkippable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationEntryMarkedSkippable")]
     NavigationEntryMarkedSkippable,
     /// <summary>
+    /// Corresponds to the <c>"BackUINavigationWouldSkipAd"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BackUINavigationWouldSkipAd")]
     BackUINavigationWouldSkipAd,
     /// <summary>
+    /// Corresponds to the <c>"AutofillAndManualTextPolicyControlledFeaturesInfo"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AutofillAndManualTextPolicyControlledFeaturesInfo")]
     AutofillAndManualTextPolicyControlledFeaturesInfo,
     /// <summary>
+    /// Corresponds to the <c>"AutofillPolicyControlledFeatureInfo"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AutofillPolicyControlledFeatureInfo")]
     AutofillPolicyControlledFeatureInfo,
     /// <summary>
+    /// Corresponds to the <c>"ManualTextPolicyControlledFeatureInfo"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ManualTextPolicyControlledFeatureInfo")]
     ManualTextPolicyControlledFeatureInfo,
     /// <summary>
+    /// Corresponds to the <c>"FormModelContextParameterMissingTitleAndDescription"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormModelContextParameterMissingTitleAndDescription")]
     FormModelContextParameterMissingTitleAndDescription,
     /// <summary>
+    /// Corresponds to the <c>"FormModelContextMissingToolName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormModelContextMissingToolName")]
     FormModelContextMissingToolName,
     /// <summary>
+    /// Corresponds to the <c>"FormModelContextMissingToolDescription"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormModelContextMissingToolDescription")]
     FormModelContextMissingToolDescription,
     /// <summary>
+    /// Corresponds to the <c>"FormModelContextRequiredParameterMissingName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormModelContextRequiredParameterMissingName")]
     FormModelContextRequiredParameterMissingName,
     /// <summary>
+    /// Corresponds to the <c>"FormModelContextParameterMissingName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormModelContextParameterMissingName")]
     FormModelContextParameterMissingName,
@@ -1378,10 +1549,12 @@ public sealed record CookieDeprecationMetadataIssueDetails(ImmutableArray<string
 public enum ClientHintIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"MetaTagAllowListInvalidOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MetaTagAllowListInvalidOrigin")]
     MetaTagAllowListInvalidOrigin,
     /// <summary>
+    /// Corresponds to the <c>"MetaTagModifiedHTML"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MetaTagModifiedHTML")]
     MetaTagModifiedHTML,
@@ -1405,190 +1578,237 @@ public sealed record FederatedAuthRequestIssueDetails(FederatedAuthRequestIssueR
 public enum FederatedAuthRequestIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"ShouldEmbargo"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ShouldEmbargo")]
     ShouldEmbargo,
     /// <summary>
+    /// Corresponds to the <c>"TooManyRequests"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TooManyRequests")]
     TooManyRequests,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownHttpNotFound")]
     WellKnownHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownNoResponse")]
     WellKnownNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownBlockedByConnectionAllowlist"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownBlockedByConnectionAllowlist")]
     WellKnownBlockedByConnectionAllowlist,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownInvalidResponse")]
     WellKnownInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownListEmpty"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownListEmpty")]
     WellKnownListEmpty,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownInvalidContentType")]
     WellKnownInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"ConfigNotInWellKnown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigNotInWellKnown")]
     ConfigNotInWellKnown,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownTooBig"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownTooBig")]
     WellKnownTooBig,
     /// <summary>
+    /// Corresponds to the <c>"ConfigHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigHttpNotFound")]
     ConfigHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"ConfigNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigNoResponse")]
     ConfigNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"ConfigBlockedByConnectionAllowlist"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigBlockedByConnectionAllowlist")]
     ConfigBlockedByConnectionAllowlist,
     /// <summary>
+    /// Corresponds to the <c>"ConfigInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigInvalidResponse")]
     ConfigInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"ConfigInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfigInvalidContentType")]
     ConfigInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"IdpNotPotentiallyTrustworthy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdpNotPotentiallyTrustworthy")]
     IdpNotPotentiallyTrustworthy,
     /// <summary>
+    /// Corresponds to the <c>"DisabledInSettings"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DisabledInSettings")]
     DisabledInSettings,
     /// <summary>
+    /// Corresponds to the <c>"DisabledInFlags"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DisabledInFlags")]
     DisabledInFlags,
     /// <summary>
+    /// Corresponds to the <c>"ErrorFetchingSignin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ErrorFetchingSignin")]
     ErrorFetchingSignin,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSigninResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSigninResponse")]
     InvalidSigninResponse,
     /// <summary>
+    /// Corresponds to the <c>"AccountsHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsHttpNotFound")]
     AccountsHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"AccountsNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsNoResponse")]
     AccountsNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"AccountsBlockedByConnectionAllowlist"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsBlockedByConnectionAllowlist")]
     AccountsBlockedByConnectionAllowlist,
     /// <summary>
+    /// Corresponds to the <c>"AccountsInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsInvalidResponse")]
     AccountsInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"AccountsListEmpty"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsListEmpty")]
     AccountsListEmpty,
     /// <summary>
+    /// Corresponds to the <c>"AccountsInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsInvalidContentType")]
     AccountsInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenHttpNotFound")]
     IdTokenHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenNoResponse")]
     IdTokenNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenBlockedByConnectionAllowlist"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenBlockedByConnectionAllowlist")]
     IdTokenBlockedByConnectionAllowlist,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenInvalidResponse")]
     IdTokenInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenIdpErrorResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenIdpErrorResponse")]
     IdTokenIdpErrorResponse,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenCrossSiteIdpErrorResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenCrossSiteIdpErrorResponse")]
     IdTokenCrossSiteIdpErrorResponse,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenInvalidRequest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenInvalidRequest")]
     IdTokenInvalidRequest,
     /// <summary>
+    /// Corresponds to the <c>"IdTokenInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdTokenInvalidContentType")]
     IdTokenInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"ErrorIdToken"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ErrorIdToken")]
     ErrorIdToken,
     /// <summary>
+    /// Corresponds to the <c>"Canceled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Canceled")]
     Canceled,
     /// <summary>
+    /// Corresponds to the <c>"RpPageNotVisible"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RpPageNotVisible")]
     RpPageNotVisible,
     /// <summary>
+    /// Corresponds to the <c>"SilentMediationFailure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SilentMediationFailure")]
     SilentMediationFailure,
     /// <summary>
+    /// Corresponds to the <c>"NotSignedInWithIdp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotSignedInWithIdp")]
     NotSignedInWithIdp,
     /// <summary>
+    /// Corresponds to the <c>"MissingTransientUserActivation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingTransientUserActivation")]
     MissingTransientUserActivation,
     /// <summary>
+    /// Corresponds to the <c>"ReplacedByActiveMode"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReplacedByActiveMode")]
     ReplacedByActiveMode,
     /// <summary>
+    /// Corresponds to the <c>"RelyingPartyOriginIsOpaque"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelyingPartyOriginIsOpaque")]
     RelyingPartyOriginIsOpaque,
     /// <summary>
+    /// Corresponds to the <c>"TypeNotMatching"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TypeNotMatching")]
     TypeNotMatching,
     /// <summary>
+    /// Corresponds to the <c>"UiDismissedNoEmbargo"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UiDismissedNoEmbargo")]
     UiDismissedNoEmbargo,
     /// <summary>
+    /// Corresponds to the <c>"CorsError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorsError")]
     CorsError,
     /// <summary>
+    /// Corresponds to the <c>"SuppressedBySegmentationPlatform"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SuppressedBySegmentationPlatform")]
     SuppressedBySegmentationPlatform,
     /// <summary>
+    /// Corresponds to the <c>"PopupBlockedByConnectionAllowlist"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PopupBlockedByConnectionAllowlist")]
     PopupBlockedByConnectionAllowlist,
@@ -1611,38 +1831,47 @@ public sealed record FederatedAuthUserInfoRequestIssueDetails(FederatedAuthUserI
 public enum FederatedAuthUserInfoRequestIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"NotSameOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotSameOrigin")]
     NotSameOrigin,
     /// <summary>
+    /// Corresponds to the <c>"NotIframe"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotIframe")]
     NotIframe,
     /// <summary>
+    /// Corresponds to the <c>"NotPotentiallyTrustworthy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotPotentiallyTrustworthy")]
     NotPotentiallyTrustworthy,
     /// <summary>
+    /// Corresponds to the <c>"NoApiPermission"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoApiPermission")]
     NoApiPermission,
     /// <summary>
+    /// Corresponds to the <c>"NotSignedInWithIdp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotSignedInWithIdp")]
     NotSignedInWithIdp,
     /// <summary>
+    /// Corresponds to the <c>"NoAccountSharingPermission"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoAccountSharingPermission")]
     NoAccountSharingPermission,
     /// <summary>
+    /// Corresponds to the <c>"InvalidConfigOrWellKnown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidConfigOrWellKnown")]
     InvalidConfigOrWellKnown,
     /// <summary>
+    /// Corresponds to the <c>"InvalidAccountsResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAccountsResponse")]
     InvalidAccountsResponse,
     /// <summary>
+    /// Corresponds to the <c>"NoReturningUserFromFetchedAccounts"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoReturningUserFromFetchedAccounts")]
     NoReturningUserFromFetchedAccounts,
@@ -1665,234 +1894,292 @@ public sealed record EmailVerificationRequestIssueDetails(EmailVerificationReque
 public enum EmailVerificationRequestIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"InvalidEmail"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidEmail")]
     InvalidEmail,
     /// <summary>
+    /// Corresponds to the <c>"DnsFetchFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DnsFetchFailed")]
     DnsFetchFailed,
     /// <summary>
+    /// Corresponds to the <c>"DnsInvalidRecord"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DnsInvalidRecord")]
     DnsInvalidRecord,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownHttpNotFound")]
     WellKnownHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownNoResponse")]
     WellKnownNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownInvalidResponse")]
     WellKnownInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownListEmpty"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownListEmpty")]
     WellKnownListEmpty,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownInvalidContentType")]
     WellKnownInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownMissingIssuanceEndpoint"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownMissingIssuanceEndpoint")]
     WellKnownMissingIssuanceEndpoint,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownIssuanceEndpointCrossOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownIssuanceEndpointCrossOrigin")]
     WellKnownIssuanceEndpointCrossOrigin,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownUnsupportedSigningAlgorithm"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownUnsupportedSigningAlgorithm")]
     WellKnownUnsupportedSigningAlgorithm,
     /// <summary>
+    /// Corresponds to the <c>"TokenHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenHttpNotFound")]
     TokenHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"TokenNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenNoResponse")]
     TokenNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"TokenInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenInvalidResponse")]
     TokenInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"TokenInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenInvalidContentType")]
     TokenInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"TokenMalformedSdJwt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenMalformedSdJwt")]
     TokenMalformedSdJwt,
     /// <summary>
+    /// Corresponds to the <c>"TokenInvalidSdJwt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenInvalidSdJwt")]
     TokenInvalidSdJwt,
     /// <summary>
+    /// Corresponds to the <c>"KeyBindingSigningFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("KeyBindingSigningFailed")]
     KeyBindingSigningFailed,
     /// <summary>
+    /// Corresponds to the <c>"RpOriginIsOpaque"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RpOriginIsOpaque")]
     RpOriginIsOpaque,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownMissingAccountsEndpoint"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownMissingAccountsEndpoint")]
     WellKnownMissingAccountsEndpoint,
     /// <summary>
+    /// Corresponds to the <c>"UserLoggedOut"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UserLoggedOut")]
     UserLoggedOut,
     /// <summary>
+    /// Corresponds to the <c>"WellKnownAccountsEndpointCrossOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WellKnownAccountsEndpointCrossOrigin")]
     WellKnownAccountsEndpointCrossOrigin,
     /// <summary>
+    /// Corresponds to the <c>"AccountsHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsHttpNotFound")]
     AccountsHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"AccountsNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsNoResponse")]
     AccountsNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"AccountsInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsInvalidResponse")]
     AccountsInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"AccountsInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsInvalidContentType")]
     AccountsInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"AccountsEmptyList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountsEmptyList")]
     AccountsEmptyList,
     /// <summary>
+    /// Corresponds to the <c>"EmailVerificationWellKnownHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerificationWellKnownHttpNotFound")]
     EmailVerificationWellKnownHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"EmailVerificationWellKnownNoResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerificationWellKnownNoResponse")]
     EmailVerificationWellKnownNoResponse,
     /// <summary>
+    /// Corresponds to the <c>"EmailVerificationWellKnownInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerificationWellKnownInvalidResponse")]
     EmailVerificationWellKnownInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"EmailVerificationWellKnownInvalidContentType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerificationWellKnownInvalidContentType")]
     EmailVerificationWellKnownInvalidContentType,
     /// <summary>
+    /// Corresponds to the <c>"JwksHttpNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JwksHttpNotFound")]
     JwksHttpNotFound,
     /// <summary>
+    /// Corresponds to the <c>"JwksInvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JwksInvalidResponse")]
     JwksInvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtUnsupportedHeaderAlg"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtUnsupportedHeaderAlg")]
     TokenVerificationSdJwtUnsupportedHeaderAlg,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtInvalidTyp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtInvalidTyp")]
     TokenVerificationSdJwtInvalidTyp,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtMissingIss"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtMissingIss")]
     TokenVerificationSdJwtMissingIss,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtMissingIat"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtMissingIat")]
     TokenVerificationSdJwtMissingIat,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtMissingCnf"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtMissingCnf")]
     TokenVerificationSdJwtMissingCnf,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtMissingEmail"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtMissingEmail")]
     TokenVerificationSdJwtMissingEmail,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtInvalidIssuedAt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtInvalidIssuedAt")]
     TokenVerificationSdJwtInvalidIssuedAt,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtInvalidIssuer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtInvalidIssuer")]
     TokenVerificationSdJwtInvalidIssuer,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtJwksMissingKeys"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtJwksMissingKeys")]
     TokenVerificationSdJwtJwksMissingKeys,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtSignatureFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtSignatureFailed")]
     TokenVerificationSdJwtSignatureFailed,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtInvalidEmailVerified"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtInvalidEmailVerified")]
     TokenVerificationSdJwtInvalidEmailVerified,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtInvalidEmail"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtInvalidEmail")]
     TokenVerificationSdJwtInvalidEmail,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationSdJwtInvalidHolderKey"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationSdJwtInvalidHolderKey")]
     TokenVerificationSdJwtInvalidHolderKey,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbInvalidTyp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbInvalidTyp")]
     TokenVerificationKbInvalidTyp,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbMissingAud"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbMissingAud")]
     TokenVerificationKbMissingAud,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbMissingNonce"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbMissingNonce")]
     TokenVerificationKbMissingNonce,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbMissingIat"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbMissingIat")]
     TokenVerificationKbMissingIat,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbMissingSdHash"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbMissingSdHash")]
     TokenVerificationKbMissingSdHash,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbInvalidIssuedAt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbInvalidIssuedAt")]
     TokenVerificationKbInvalidIssuedAt,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbInvalidAudience"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbInvalidAudience")]
     TokenVerificationKbInvalidAudience,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbInvalidNonce"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbInvalidNonce")]
     TokenVerificationKbInvalidNonce,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbInvalidSdHash"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbInvalidSdHash")]
     TokenVerificationKbInvalidSdHash,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbMissingCnf"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbMissingCnf")]
     TokenVerificationKbMissingCnf,
     /// <summary>
+    /// Corresponds to the <c>"TokenVerificationKbSignatureFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenVerificationKbSignatureFailed")]
     TokenVerificationKbSignatureFailed,
     /// <summary>
+    /// Corresponds to the <c>"CrossOriginIframeNotSupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossOriginIframeNotSupported")]
     CrossOriginIframeNotSupported,
@@ -1931,10 +2218,12 @@ public sealed record FailedRequestInfo(string Url, string FailureMessage)
 public enum PartitioningBlobURLInfo
 {
     /// <summary>
+    /// Corresponds to the <c>"BlockedCrossPartitionFetching"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedCrossPartitionFetching")]
     BlockedCrossPartitionFetching,
     /// <summary>
+    /// Corresponds to the <c>"EnforceNoopenerForNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EnforceNoopenerForNavigation")]
     EnforceNoopenerForNavigation,
@@ -1958,26 +2247,32 @@ public sealed record PartitioningBlobURLIssueDetails(string Url, PartitioningBlo
 public enum ElementAccessibilityIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"DisallowedSelectChild"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DisallowedSelectChild")]
     DisallowedSelectChild,
     /// <summary>
+    /// Corresponds to the <c>"DisallowedOptGroupChild"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DisallowedOptGroupChild")]
     DisallowedOptGroupChild,
     /// <summary>
+    /// Corresponds to the <c>"NonPhrasingContentOptionChild"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonPhrasingContentOptionChild")]
     NonPhrasingContentOptionChild,
     /// <summary>
+    /// Corresponds to the <c>"InteractiveContentOptionChild"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InteractiveContentOptionChild")]
     InteractiveContentOptionChild,
     /// <summary>
+    /// Corresponds to the <c>"InteractiveContentLegendChild"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InteractiveContentLegendChild")]
     InteractiveContentLegendChild,
     /// <summary>
+    /// Corresponds to the <c>"InteractiveContentSummaryDescendant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InteractiveContentSummaryDescendant")]
     InteractiveContentSummaryDescendant,
@@ -2002,10 +2297,12 @@ public sealed record ElementAccessibilityIssueDetails(DOM.BackendNodeId NodeId, 
 public enum StyleSheetLoadingIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"LateImportRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LateImportRule")]
     LateImportRule,
     /// <summary>
+    /// Corresponds to the <c>"RequestFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestFailed")]
     RequestFailed,
@@ -2034,18 +2331,22 @@ public sealed record StylesheetLoadingIssueDetails(SourceCodeLocation SourceCode
 public enum PropertyRuleIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"InvalidSyntax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSyntax")]
     InvalidSyntax,
     /// <summary>
+    /// Corresponds to the <c>"InvalidInitialValue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidInitialValue")]
     InvalidInitialValue,
     /// <summary>
+    /// Corresponds to the <c>"InvalidInherits"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidInherits")]
     InvalidInherits,
     /// <summary>
+    /// Corresponds to the <c>"InvalidName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidName")]
     InvalidName,
@@ -2075,14 +2376,17 @@ public sealed record PropertyRuleIssueDetails(SourceCodeLocation SourceCodeLocat
 public enum UserReidentificationIssueType
 {
     /// <summary>
+    /// Corresponds to the <c>"BlockedFrameNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedFrameNavigation")]
     BlockedFrameNavigation,
     /// <summary>
+    /// Corresponds to the <c>"BlockedSubresource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedSubresource")]
     BlockedSubresource,
     /// <summary>
+    /// Corresponds to the <c>"NoisedCanvasReadback"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoisedCanvasReadback")]
     NoisedCanvasReadback,
@@ -2113,94 +2417,117 @@ public sealed record UserReidentificationIssueDetails(UserReidentificationIssueT
 public enum PermissionElementIssueType
 {
     /// <summary>
+    /// Corresponds to the <c>"InvalidType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidType")]
     InvalidType,
     /// <summary>
+    /// Corresponds to the <c>"FencedFrameDisallowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FencedFrameDisallowed")]
     FencedFrameDisallowed,
     /// <summary>
+    /// Corresponds to the <c>"CspFrameAncestorsMissing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CspFrameAncestorsMissing")]
     CspFrameAncestorsMissing,
     /// <summary>
+    /// Corresponds to the <c>"PermissionsPolicyBlocked"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PermissionsPolicyBlocked")]
     PermissionsPolicyBlocked,
     /// <summary>
+    /// Corresponds to the <c>"PaddingRightUnsupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PaddingRightUnsupported")]
     PaddingRightUnsupported,
     /// <summary>
+    /// Corresponds to the <c>"PaddingBottomUnsupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PaddingBottomUnsupported")]
     PaddingBottomUnsupported,
     /// <summary>
+    /// Corresponds to the <c>"InsetBoxShadowUnsupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InsetBoxShadowUnsupported")]
     InsetBoxShadowUnsupported,
     /// <summary>
+    /// Corresponds to the <c>"RequestInProgress"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestInProgress")]
     RequestInProgress,
     /// <summary>
+    /// Corresponds to the <c>"UntrustedEvent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UntrustedEvent")]
     UntrustedEvent,
     /// <summary>
+    /// Corresponds to the <c>"RegistrationFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RegistrationFailed")]
     RegistrationFailed,
     /// <summary>
+    /// Corresponds to the <c>"TypeNotSupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TypeNotSupported")]
     TypeNotSupported,
     /// <summary>
+    /// Corresponds to the <c>"InvalidTypeActivation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidTypeActivation")]
     InvalidTypeActivation,
     /// <summary>
+    /// Corresponds to the <c>"SecurityChecksFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SecurityChecksFailed")]
     SecurityChecksFailed,
     /// <summary>
+    /// Corresponds to the <c>"ActivationDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivationDisabled")]
     ActivationDisabled,
     /// <summary>
+    /// Corresponds to the <c>"GeolocationDeprecated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("GeolocationDeprecated")]
     GeolocationDeprecated,
     /// <summary>
+    /// Corresponds to the <c>"InvalidDisplayStyle"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidDisplayStyle")]
     InvalidDisplayStyle,
     /// <summary>
+    /// Corresponds to the <c>"NonOpaqueColor"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonOpaqueColor")]
     NonOpaqueColor,
     /// <summary>
+    /// Corresponds to the <c>"LowContrast"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LowContrast")]
     LowContrast,
     /// <summary>
+    /// Corresponds to the <c>"FontSizeTooSmall"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FontSizeTooSmall")]
     FontSizeTooSmall,
     /// <summary>
+    /// Corresponds to the <c>"FontSizeTooLarge"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FontSizeTooLarge")]
     FontSizeTooLarge,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSizeValue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSizeValue")]
     InvalidSizeValue,
     /// <summary>
+    /// Corresponds to the <c>"NonSecureContext"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonSecureContext")]
     NonSecureContext,
     /// <summary>
+    /// Corresponds to the <c>"MissingTransientUserActivation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingTransientUserActivation")]
     MissingTransientUserActivation,
@@ -2256,22 +2583,27 @@ public sealed record PermissionElementIssueDetails(PermissionElementIssueType Is
 public enum WebInstallIssueReason
 {
     /// <summary>
+    /// Corresponds to the <c>"ManifestParsingOrNetworkError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ManifestParsingOrNetworkError")]
     ManifestParsingOrNetworkError,
     /// <summary>
+    /// Corresponds to the <c>"StartUrlInvalid"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StartUrlInvalid")]
     StartUrlInvalid,
     /// <summary>
+    /// Corresponds to the <c>"ManifestMissingNameOrShortName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ManifestMissingNameOrShortName")]
     ManifestMissingNameOrShortName,
     /// <summary>
+    /// Corresponds to the <c>"ManifestMissingId"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ManifestMissingId")]
     ManifestMissingId,
     /// <summary>
+    /// Corresponds to the <c>"NoManifest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoManifest")]
     NoManifest,
@@ -2333,126 +2665,157 @@ public sealed record LazyLoadImageIssueDetails(DOM.BackendNodeId NodeId, string 
 public enum InspectorIssueCode
 {
     /// <summary>
+    /// Corresponds to the <c>"CookieIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CookieIssue")]
     CookieIssue,
     /// <summary>
+    /// Corresponds to the <c>"MixedContentIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MixedContentIssue")]
     MixedContentIssue,
     /// <summary>
+    /// Corresponds to the <c>"BlockedByResponseIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByResponseIssue")]
     BlockedByResponseIssue,
     /// <summary>
+    /// Corresponds to the <c>"HeavyAdIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HeavyAdIssue")]
     HeavyAdIssue,
     /// <summary>
+    /// Corresponds to the <c>"ContentSecurityPolicyIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentSecurityPolicyIssue")]
     ContentSecurityPolicyIssue,
     /// <summary>
+    /// Corresponds to the <c>"SharedArrayBufferIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedArrayBufferIssue")]
     SharedArrayBufferIssue,
     /// <summary>
+    /// Corresponds to the <c>"CorsIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorsIssue")]
     CorsIssue,
     /// <summary>
+    /// Corresponds to the <c>"QuirksModeIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("QuirksModeIssue")]
     QuirksModeIssue,
     /// <summary>
+    /// Corresponds to the <c>"PartitioningBlobURLIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PartitioningBlobURLIssue")]
     PartitioningBlobURLIssue,
     /// <summary>
+    /// Corresponds to the <c>"NavigatorUserAgentIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigatorUserAgentIssue")]
     NavigatorUserAgentIssue,
     /// <summary>
+    /// Corresponds to the <c>"GenericIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("GenericIssue")]
     GenericIssue,
     /// <summary>
+    /// Corresponds to the <c>"DeprecationIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DeprecationIssue")]
     DeprecationIssue,
     /// <summary>
+    /// Corresponds to the <c>"ClientHintIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ClientHintIssue")]
     ClientHintIssue,
     /// <summary>
+    /// Corresponds to the <c>"FederatedAuthRequestIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedAuthRequestIssue")]
     FederatedAuthRequestIssue,
     /// <summary>
+    /// Corresponds to the <c>"BounceTrackingIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BounceTrackingIssue")]
     BounceTrackingIssue,
     /// <summary>
+    /// Corresponds to the <c>"CookieDeprecationMetadataIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CookieDeprecationMetadataIssue")]
     CookieDeprecationMetadataIssue,
     /// <summary>
+    /// Corresponds to the <c>"StylesheetLoadingIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StylesheetLoadingIssue")]
     StylesheetLoadingIssue,
     /// <summary>
+    /// Corresponds to the <c>"FederatedAuthUserInfoRequestIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedAuthUserInfoRequestIssue")]
     FederatedAuthUserInfoRequestIssue,
     /// <summary>
+    /// Corresponds to the <c>"PropertyRuleIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PropertyRuleIssue")]
     PropertyRuleIssue,
     /// <summary>
+    /// Corresponds to the <c>"SharedDictionaryIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedDictionaryIssue")]
     SharedDictionaryIssue,
     /// <summary>
+    /// Corresponds to the <c>"ElementAccessibilityIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ElementAccessibilityIssue")]
     ElementAccessibilityIssue,
     /// <summary>
+    /// Corresponds to the <c>"SRIMessageSignatureIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SRIMessageSignatureIssue")]
     SRIMessageSignatureIssue,
     /// <summary>
+    /// Corresponds to the <c>"UnencodedDigestIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnencodedDigestIssue")]
     UnencodedDigestIssue,
     /// <summary>
+    /// Corresponds to the <c>"ConnectionAllowlistIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConnectionAllowlistIssue")]
     ConnectionAllowlistIssue,
     /// <summary>
+    /// Corresponds to the <c>"UserReidentificationIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UserReidentificationIssue")]
     UserReidentificationIssue,
     /// <summary>
+    /// Corresponds to the <c>"PermissionElementIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PermissionElementIssue")]
     PermissionElementIssue,
     /// <summary>
+    /// Corresponds to the <c>"PerformanceIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PerformanceIssue")]
     PerformanceIssue,
     /// <summary>
+    /// Corresponds to the <c>"SelectivePermissionsInterventionIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SelectivePermissionsInterventionIssue")]
     SelectivePermissionsInterventionIssue,
     /// <summary>
+    /// Corresponds to the <c>"EmailVerificationRequestIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerificationRequestIssue")]
     EmailVerificationRequestIssue,
     /// <summary>
+    /// Corresponds to the <c>"LazyLoadImageIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LazyLoadImageIssue")]
     LazyLoadImageIssue,
     /// <summary>
+    /// Corresponds to the <c>"WebInstallIssue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebInstallIssue")]
     WebInstallIssue,
@@ -2623,14 +2986,17 @@ public sealed record InspectorIssue(InspectorIssueCode Code, InspectorIssueDetai
 public enum GetEncodedResponseEncoding
 {
     /// <summary>
+    /// Corresponds to the <c>"webp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
     Webp,
     /// <summary>
+    /// Corresponds to the <c>"jpeg"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
     Jpeg,
     /// <summary>
+    /// Corresponds to the <c>"png"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
     Png,

@@ -23,7 +23,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="CanEmulateResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<CanEmulateResult> CanEmulateAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CanEmulateResult> CanEmulateAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden device metrics.
@@ -37,7 +37,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearDeviceMetricsOverrideResult"/>.
     /// </returns>
-    Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden Geolocation Position and Error.
@@ -51,7 +51,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearGeolocationOverrideResult"/>.
     /// </returns>
-    Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests that page scale factor is reset to initial values.
@@ -66,7 +66,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="ResetPageScaleFactorResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ResetPageScaleFactorResult> ResetPageScaleFactorAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ResetPageScaleFactorResult> ResetPageScaleFactorAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables or disables simulating a focused and active page.
@@ -84,7 +84,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetFocusEmulationEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetFocusEmulationEnabledResult> SetFocusEmulationEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetFocusEmulationEnabledResult> SetFocusEmulationEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Automatically render all web contents using a dark theme.
@@ -103,7 +103,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetAutoDarkModeOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetAutoDarkModeOverrideResult> SetAutoDarkModeOverrideAsync(bool? enabled = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAutoDarkModeOverrideResult> SetAutoDarkModeOverrideAsync(bool? enabled = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables CPU throttling to emulate slow CPUs.
@@ -120,7 +120,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCPUThrottlingRateResult"/>.
     /// </returns>
-    Task<SetCPUThrottlingRateResult> SetCPUThrottlingRateAsync(double rate, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCPUThrottlingRateResult> SetCPUThrottlingRateAsync(double rate, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets or clears an override of the default background color of the frame. This override is used
@@ -139,7 +139,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDefaultBackgroundColorOverrideResult"/>.
     /// </returns>
-    Task<SetDefaultBackgroundColorOverrideResult> SetDefaultBackgroundColorOverrideAsync(DOM.RGBA? color = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDefaultBackgroundColorOverrideResult> SetDefaultBackgroundColorOverrideAsync(DOM.RGBA? color = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the values for env(safe-area-inset-*) and env(safe-area-max-inset-*). Unset values will cause the
@@ -157,7 +157,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetSafeAreaInsetsOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetSafeAreaInsetsOverrideResult> SetSafeAreaInsetsOverrideAsync(SafeAreaInsets insets, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSafeAreaInsetsOverrideResult> SetSafeAreaInsetsOverrideAsync(SafeAreaInsets insets, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides virtual keyboard geometry in CSS pixels, relative to the top-level viewport. The
@@ -179,7 +179,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetVirtualKeyboardGeometryOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideAsync(DOM.Rect? keyboardRect = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideAsync(DOM.Rect? keyboardRect = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
@@ -257,7 +257,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDeviceMetricsOverrideResult"/>.
     /// </returns>
-    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, SetDeviceMetricsOverrideScrollbarType? scrollbarType = default, bool? screenOrientationLockEmulation = default, SetDeviceMetricsOverrideViewportMeta? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, ScreenOrientation? screenOrientation = null, Page.Viewport? viewport = null, DisplayFeature? displayFeature = null, DevicePosture? devicePosture = null, SetDeviceMetricsOverrideScrollbarType? scrollbarType = null, bool? screenOrientationLockEmulation = null, SetDeviceMetricsOverrideViewportMeta? viewportMeta = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start reporting the given posture value to the Device Posture API.
@@ -275,7 +275,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetDevicePostureOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDevicePostureOverrideResult> SetDevicePostureOverrideAsync(DevicePosture posture, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDevicePostureOverrideResult> SetDevicePostureOverrideAsync(DevicePosture posture, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears a device posture override set with either setDeviceMetricsOverride()
@@ -293,7 +293,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="ClearDevicePostureOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ClearDevicePostureOverrideResult> ClearDevicePostureOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDevicePostureOverrideResult> ClearDevicePostureOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start using the given display features to pupulate the Viewport Segments API.
@@ -311,7 +311,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetDisplayFeaturesOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideAsync(ImmutableArray<DisplayFeature> features, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideAsync(ImmutableArray<DisplayFeature> features, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the display features override set with either setDeviceMetricsOverride()
@@ -329,7 +329,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="ClearDisplayFeaturesOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ClearDisplayFeaturesOverrideResult> ClearDisplayFeaturesOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDisplayFeaturesOverrideResult> ClearDisplayFeaturesOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -346,7 +346,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetScrollbarsHiddenResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetScrollbarsHiddenResult> SetScrollbarsHiddenAsync(bool hidden, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetScrollbarsHiddenResult> SetScrollbarsHiddenAsync(bool hidden, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -363,7 +363,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetDocumentCookieDisabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDocumentCookieDisabledResult> SetDocumentCookieDisabledAsync(bool disabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDocumentCookieDisabledResult> SetDocumentCookieDisabledAsync(bool disabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -383,7 +383,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetEmitTouchEventsForMouseResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, SetEmitTouchEventsForMouseConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, SetEmitTouchEventsForMouseConfiguration? configuration = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emulates the given media type or media feature for CSS media queries.
@@ -403,7 +403,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetEmulatedMediaResult"/>.
     /// </returns>
-    Task<SetEmulatedMediaResult> SetEmulatedMediaAsync(string? media = default, ImmutableArray<MediaFeature>? features = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetEmulatedMediaResult> SetEmulatedMediaAsync(string? media = null, ImmutableArray<MediaFeature>? features = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emulates the given vision deficiency.
@@ -421,7 +421,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetEmulatedVisionDeficiencyResult"/>.
     /// </returns>
-    Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(SetEmulatedVisionDeficiencyType type, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(SetEmulatedVisionDeficiencyType type, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emulates the given OS text scale.
@@ -437,7 +437,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetEmulatedOSTextScaleResult"/>.
     /// </returns>
-    Task<SetEmulatedOSTextScaleResult> SetEmulatedOSTextScaleAsync(double? scale = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetEmulatedOSTextScaleResult> SetEmulatedOSTextScaleAsync(double? scale = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Geolocation Position or Error. Omitting latitude, longitude or
@@ -473,7 +473,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetGeolocationOverrideResult"/>.
     /// </returns>
-    Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, double? altitude = default, double? altitudeAccuracy = default, double? heading = default, double? speed = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = null, double? longitude = null, double? accuracy = null, double? altitude = null, double? altitudeAccuracy = null, double? heading = null, double? speed = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -489,7 +489,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="GetOverriddenSensorInformationResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetOverriddenSensorInformationResult> GetOverriddenSensorInformationAsync(SensorType type, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetOverriddenSensorInformationResult> GetOverriddenSensorInformationAsync(SensorType type, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides a platform sensor of a given type. If |enabled| is true, calls to
@@ -514,7 +514,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetSensorOverrideEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetSensorOverrideEnabledResult> SetSensorOverrideEnabledAsync(bool enabled, SensorType type, SensorMetadata? metadata = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSensorOverrideEnabledResult> SetSensorOverrideEnabledAsync(bool enabled, SensorType type, SensorMetadata? metadata = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates the sensor readings reported by a sensor type previously overridden
@@ -534,7 +534,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetSensorOverrideReadingsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetSensorOverrideReadingsResult> SetSensorOverrideReadingsAsync(SensorType type, SensorReading reading, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSensorOverrideReadingsResult> SetSensorOverrideReadingsAsync(SensorType type, SensorReading reading, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides a pressure source of a given type, as used by the Compute
@@ -558,7 +558,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetPressureSourceOverrideEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetPressureSourceOverrideEnabledResult> SetPressureSourceOverrideEnabledAsync(bool enabled, PressureSource source, PressureMetadata? metadata = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPressureSourceOverrideEnabledResult> SetPressureSourceOverrideEnabledAsync(bool enabled, PressureSource source, PressureMetadata? metadata = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Provides a given pressure state that will be processed and eventually be
@@ -579,7 +579,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetPressureStateOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetPressureStateOverrideResult> SetPressureStateOverrideAsync(PressureSource source, PressureState state, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPressureStateOverrideResult> SetPressureStateOverrideAsync(PressureSource source, PressureState state, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Idle state.
@@ -599,7 +599,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetIdleOverrideResult"/>.
     /// </returns>
-    Task<SetIdleOverrideResult> SetIdleOverrideAsync(bool isUserActive, bool isScreenUnlocked, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetIdleOverrideResult> SetIdleOverrideAsync(bool isUserActive, bool isScreenUnlocked, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears Idle state overrides.
@@ -613,7 +613,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearIdleOverrideResult"/>.
     /// </returns>
-    Task<ClearIdleOverrideResult> ClearIdleOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearIdleOverrideResult> ClearIdleOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides value returned by the javascript navigator object.
@@ -632,7 +632,7 @@ public interface IEmulation
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetNavigatorOverridesResult> SetNavigatorOverridesAsync(string platform, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetNavigatorOverridesResult> SetNavigatorOverridesAsync(string platform, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets a specified page scale factor.
@@ -650,7 +650,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetPageScaleFactorResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetPageScaleFactorResult> SetPageScaleFactorAsync(double pageScaleFactor, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPageScaleFactorResult> SetPageScaleFactorAsync(double pageScaleFactor, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Switches script execution in the page.
@@ -667,7 +667,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScriptExecutionDisabledResult"/>.
     /// </returns>
-    Task<SetScriptExecutionDisabledResult> SetScriptExecutionDisabledAsync(bool value, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetScriptExecutionDisabledResult> SetScriptExecutionDisabledAsync(bool value, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables touch on platforms which do not support them.
@@ -687,7 +687,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetTouchEmulationEnabledResult"/>.
     /// </returns>
-    Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, long? maxTouchPoints = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, long? maxTouchPoints = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets
@@ -716,7 +716,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetVirtualTimePolicyResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetVirtualTimePolicyResult> SetVirtualTimePolicyAsync(VirtualTimePolicy policy, double? budget = default, long? maxVirtualTimeTaskStarvationCount = default, Network.TimeSinceEpoch? initialVirtualTime = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetVirtualTimePolicyResult> SetVirtualTimePolicyAsync(VirtualTimePolicy policy, double? budget = null, long? maxVirtualTimeTaskStarvationCount = null, Network.TimeSinceEpoch? initialVirtualTime = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides default host system locale with the specified one.
@@ -735,7 +735,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetLocaleOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetLocaleOverrideResult> SetLocaleOverrideAsync(string? locale = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetLocaleOverrideResult> SetLocaleOverrideAsync(string? locale = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides default host system timezone with the specified one.
@@ -754,7 +754,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetTimezoneOverrideResult"/>.
     /// </returns>
-    Task<SetTimezoneOverrideResult> SetTimezoneOverrideAsync(string timezoneId, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetTimezoneOverrideResult> SetTimezoneOverrideAsync(string timezoneId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resizes the frame/viewport of the page. Note that this does not affect the frame's container
@@ -778,7 +778,7 @@ public interface IEmulation
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetVisibleSizeResult> SetVisibleSizeAsync(long width, long height, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetVisibleSizeResult> SetVisibleSizeAsync(long width, long height, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -795,7 +795,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetDisabledImageTypesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDisabledImageTypesResult> SetDisabledImageTypesAsync(ImmutableArray<DisabledImageType> imageTypes, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDisabledImageTypesResult> SetDisabledImageTypesAsync(ImmutableArray<DisabledImageType> imageTypes, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Override the value of navigator.connection.saveData
@@ -813,7 +813,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetDataSaverOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDataSaverOverrideResult> SetDataSaverOverrideAsync(bool? dataSaverEnabled = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDataSaverOverrideResult> SetDataSaverOverrideAsync(bool? dataSaverEnabled = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -830,7 +830,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetHardwareConcurrencyOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideAsync(long hardwareConcurrency, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideAsync(long hardwareConcurrency, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the value of navigator.cpuPerformance
@@ -848,7 +848,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetCPUPerformanceOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(SetCPUPerformanceOverridePerformanceTier? performanceTier = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(SetCPUPerformanceOverridePerformanceTier? performanceTier = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows overriding user agent with the given string.
@@ -875,7 +875,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetUserAgentOverrideResult"/>.
     /// </returns>
-    Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = null, string? platform = null, UserAgentMetadata? userAgentMetadata = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows overriding the automation flag.
@@ -893,7 +893,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetAutomationOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetAutomationOverrideResult> SetAutomationOverrideAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAutomationOverrideResult> SetAutomationOverrideAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows overriding the difference between the small and large viewport sizes, which determine the
@@ -913,7 +913,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetSmallViewportHeightDifferenceOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetSmallViewportHeightDifferenceOverrideResult> SetSmallViewportHeightDifferenceOverrideAsync(long difference, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSmallViewportHeightDifferenceOverrideResult> SetSmallViewportHeightDifferenceOverrideAsync(long difference, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns device's screen configuration. In headful mode, the physical screens configuration is returned,
@@ -929,7 +929,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="GetScreenInfosResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetScreenInfosResult> GetScreenInfosAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetScreenInfosResult> GetScreenInfosAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Add a new screen to the device. Only supported in headless mode.
@@ -974,7 +974,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="AddScreenResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<AddScreenResult> AddScreenAsync(long left, long top, long width, long height, WorkAreaInsets? workAreaInsets = default, double? devicePixelRatio = default, long? rotation = default, long? colorDepth = default, string? label = default, bool? isInternal = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddScreenResult> AddScreenAsync(long left, long top, long width, long height, WorkAreaInsets? workAreaInsets = null, double? devicePixelRatio = null, long? rotation = null, long? colorDepth = null, string? label = null, bool? isInternal = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates specified screen parameters. Only supported in headless mode.
@@ -1022,7 +1022,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="UpdateScreenResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<UpdateScreenResult> UpdateScreenAsync(ScreenId screenId, long? left = default, long? top = default, long? width = default, long? height = default, WorkAreaInsets? workAreaInsets = default, double? devicePixelRatio = default, long? rotation = default, long? colorDepth = default, string? label = default, bool? isInternal = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<UpdateScreenResult> UpdateScreenAsync(ScreenId screenId, long? left = null, long? top = null, long? width = null, long? height = null, WorkAreaInsets? workAreaInsets = null, double? devicePixelRatio = null, long? rotation = null, long? colorDepth = null, string? label = null, bool? isInternal = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Remove screen from the device. Only supported in headless mode.
@@ -1039,7 +1039,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="RemoveScreenResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<RemoveScreenResult> RemoveScreenAsync(ScreenId screenId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveScreenResult> RemoveScreenAsync(ScreenId screenId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set primary screen. Only supported in headless mode.
@@ -1059,7 +1059,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetPrimaryScreenResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetPrimaryScreenResult> SetPrimaryScreenAsync(ScreenId screenId, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPrimaryScreenResult> SetPrimaryScreenAsync(ScreenId screenId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Notification sent after the virtual time budget for the current VirtualTimePolicy has run out.
@@ -1089,192 +1089,192 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
     private static readonly EmulationJsonSerializerContext JsonContext = EmulationJsonSerializerContext.Default;
 
     [global::System.Obsolete]
-    public async Task<CanEmulateResult> CanEmulateAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CanEmulateResult> CanEmulateAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CanEmulateCommandParameters();
         return await ExecuteCommandAsync("Emulation.canEmulate", @params, JsonContext.CanEmulateCommandParameters, JsonContext.CanEmulateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceMetricsOverrideCommandParameters();
         return await ExecuteCommandAsync("Emulation.clearDeviceMetricsOverride", @params, JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearGeolocationOverrideCommandParameters();
         return await ExecuteCommandAsync("Emulation.clearGeolocationOverride", @params, JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ResetPageScaleFactorResult> ResetPageScaleFactorAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResetPageScaleFactorResult> ResetPageScaleFactorAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResetPageScaleFactorCommandParameters();
         return await ExecuteCommandAsync("Emulation.resetPageScaleFactor", @params, JsonContext.ResetPageScaleFactorCommandParameters, JsonContext.ResetPageScaleFactorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetFocusEmulationEnabledResult> SetFocusEmulationEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetFocusEmulationEnabledResult> SetFocusEmulationEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetFocusEmulationEnabledCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Emulation.setFocusEmulationEnabled", @params, JsonContext.SetFocusEmulationEnabledCommandParameters, JsonContext.SetFocusEmulationEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAutoDarkModeOverrideResult> SetAutoDarkModeOverrideAsync(bool? enabled = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAutoDarkModeOverrideResult> SetAutoDarkModeOverrideAsync(bool? enabled = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutoDarkModeOverrideCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Emulation.setAutoDarkModeOverride", @params, JsonContext.SetAutoDarkModeOverrideCommandParameters, JsonContext.SetAutoDarkModeOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetCPUThrottlingRateResult> SetCPUThrottlingRateAsync(double rate, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCPUThrottlingRateResult> SetCPUThrottlingRateAsync(double rate, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCPUThrottlingRateCommandParameters(Rate: rate);
         return await ExecuteCommandAsync("Emulation.setCPUThrottlingRate", @params, JsonContext.SetCPUThrottlingRateCommandParameters, JsonContext.SetCPUThrottlingRateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDefaultBackgroundColorOverrideResult> SetDefaultBackgroundColorOverrideAsync(DOM.RGBA? color = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDefaultBackgroundColorOverrideResult> SetDefaultBackgroundColorOverrideAsync(DOM.RGBA? color = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDefaultBackgroundColorOverrideCommandParameters(Color: color);
         return await ExecuteCommandAsync("Emulation.setDefaultBackgroundColorOverride", @params, JsonContext.SetDefaultBackgroundColorOverrideCommandParameters, JsonContext.SetDefaultBackgroundColorOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetSafeAreaInsetsOverrideResult> SetSafeAreaInsetsOverrideAsync(SafeAreaInsets insets, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSafeAreaInsetsOverrideResult> SetSafeAreaInsetsOverrideAsync(SafeAreaInsets insets, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSafeAreaInsetsOverrideCommandParameters(Insets: insets);
         return await ExecuteCommandAsync("Emulation.setSafeAreaInsetsOverride", @params, JsonContext.SetSafeAreaInsetsOverrideCommandParameters, JsonContext.SetSafeAreaInsetsOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideAsync(DOM.Rect? keyboardRect = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideAsync(DOM.Rect? keyboardRect = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualKeyboardGeometryOverrideCommandParameters(KeyboardRect: keyboardRect);
         return await ExecuteCommandAsync("Emulation.setVirtualKeyboardGeometryOverride", @params, JsonContext.SetVirtualKeyboardGeometryOverrideCommandParameters, JsonContext.SetVirtualKeyboardGeometryOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, SetDeviceMetricsOverrideScrollbarType? scrollbarType = default, bool? screenOrientationLockEmulation = default, SetDeviceMetricsOverrideViewportMeta? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, ScreenOrientation? screenOrientation = null, Page.Viewport? viewport = null, DisplayFeature? displayFeature = null, DevicePosture? devicePosture = null, SetDeviceMetricsOverrideScrollbarType? scrollbarType = null, bool? screenOrientationLockEmulation = null, SetDeviceMetricsOverrideViewportMeta? viewportMeta = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation, ViewportMeta: viewportMeta);
         return await ExecuteCommandAsync("Emulation.setDeviceMetricsOverride", @params, JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDevicePostureOverrideResult> SetDevicePostureOverrideAsync(DevicePosture posture, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDevicePostureOverrideResult> SetDevicePostureOverrideAsync(DevicePosture posture, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDevicePostureOverrideCommandParameters(Posture: posture);
         return await ExecuteCommandAsync("Emulation.setDevicePostureOverride", @params, JsonContext.SetDevicePostureOverrideCommandParameters, JsonContext.SetDevicePostureOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ClearDevicePostureOverrideResult> ClearDevicePostureOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDevicePostureOverrideResult> ClearDevicePostureOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDevicePostureOverrideCommandParameters();
         return await ExecuteCommandAsync("Emulation.clearDevicePostureOverride", @params, JsonContext.ClearDevicePostureOverrideCommandParameters, JsonContext.ClearDevicePostureOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideAsync(ImmutableArray<DisplayFeature> features, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDisplayFeaturesOverrideResult> SetDisplayFeaturesOverrideAsync(ImmutableArray<DisplayFeature> features, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDisplayFeaturesOverrideCommandParameters(Features: features);
         return await ExecuteCommandAsync("Emulation.setDisplayFeaturesOverride", @params, JsonContext.SetDisplayFeaturesOverrideCommandParameters, JsonContext.SetDisplayFeaturesOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ClearDisplayFeaturesOverrideResult> ClearDisplayFeaturesOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDisplayFeaturesOverrideResult> ClearDisplayFeaturesOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDisplayFeaturesOverrideCommandParameters();
         return await ExecuteCommandAsync("Emulation.clearDisplayFeaturesOverride", @params, JsonContext.ClearDisplayFeaturesOverrideCommandParameters, JsonContext.ClearDisplayFeaturesOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetScrollbarsHiddenResult> SetScrollbarsHiddenAsync(bool hidden, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetScrollbarsHiddenResult> SetScrollbarsHiddenAsync(bool hidden, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetScrollbarsHiddenCommandParameters(Hidden: hidden);
         return await ExecuteCommandAsync("Emulation.setScrollbarsHidden", @params, JsonContext.SetScrollbarsHiddenCommandParameters, JsonContext.SetScrollbarsHiddenResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDocumentCookieDisabledResult> SetDocumentCookieDisabledAsync(bool disabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDocumentCookieDisabledResult> SetDocumentCookieDisabledAsync(bool disabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDocumentCookieDisabledCommandParameters(Disabled: disabled);
         return await ExecuteCommandAsync("Emulation.setDocumentCookieDisabled", @params, JsonContext.SetDocumentCookieDisabledCommandParameters, JsonContext.SetDocumentCookieDisabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, SetEmitTouchEventsForMouseConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, SetEmitTouchEventsForMouseConfiguration? configuration = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmitTouchEventsForMouseCommandParameters(Enabled: enabled, Configuration: configuration);
         return await ExecuteCommandAsync("Emulation.setEmitTouchEventsForMouse", @params, JsonContext.SetEmitTouchEventsForMouseCommandParameters, JsonContext.SetEmitTouchEventsForMouseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetEmulatedMediaResult> SetEmulatedMediaAsync(string? media = default, ImmutableArray<MediaFeature>? features = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetEmulatedMediaResult> SetEmulatedMediaAsync(string? media = null, ImmutableArray<MediaFeature>? features = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmulatedMediaCommandParameters(Media: media, Features: features);
         return await ExecuteCommandAsync("Emulation.setEmulatedMedia", @params, JsonContext.SetEmulatedMediaCommandParameters, JsonContext.SetEmulatedMediaResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(SetEmulatedVisionDeficiencyType type, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(SetEmulatedVisionDeficiencyType type, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmulatedVisionDeficiencyCommandParameters(Type: type);
         return await ExecuteCommandAsync("Emulation.setEmulatedVisionDeficiency", @params, JsonContext.SetEmulatedVisionDeficiencyCommandParameters, JsonContext.SetEmulatedVisionDeficiencyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetEmulatedOSTextScaleResult> SetEmulatedOSTextScaleAsync(double? scale = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetEmulatedOSTextScaleResult> SetEmulatedOSTextScaleAsync(double? scale = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmulatedOSTextScaleCommandParameters(Scale: scale);
         return await ExecuteCommandAsync("Emulation.setEmulatedOSTextScale", @params, JsonContext.SetEmulatedOSTextScaleCommandParameters, JsonContext.SetEmulatedOSTextScaleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, double? altitude = default, double? altitudeAccuracy = default, double? heading = default, double? speed = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = null, double? longitude = null, double? accuracy = null, double? altitude = null, double? altitudeAccuracy = null, double? heading = null, double? speed = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetGeolocationOverrideCommandParameters(Latitude: latitude, Longitude: longitude, Accuracy: accuracy, Altitude: altitude, AltitudeAccuracy: altitudeAccuracy, Heading: heading, Speed: speed);
         return await ExecuteCommandAsync("Emulation.setGeolocationOverride", @params, JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetOverriddenSensorInformationResult> GetOverriddenSensorInformationAsync(SensorType type, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetOverriddenSensorInformationResult> GetOverriddenSensorInformationAsync(SensorType type, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetOverriddenSensorInformationCommandParameters(Type: type);
         return await ExecuteCommandAsync("Emulation.getOverriddenSensorInformation", @params, JsonContext.GetOverriddenSensorInformationCommandParameters, JsonContext.GetOverriddenSensorInformationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetSensorOverrideEnabledResult> SetSensorOverrideEnabledAsync(bool enabled, SensorType type, SensorMetadata? metadata = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSensorOverrideEnabledResult> SetSensorOverrideEnabledAsync(bool enabled, SensorType type, SensorMetadata? metadata = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSensorOverrideEnabledCommandParameters(Enabled: enabled, Type: type, Metadata: metadata);
         return await ExecuteCommandAsync("Emulation.setSensorOverrideEnabled", @params, JsonContext.SetSensorOverrideEnabledCommandParameters, JsonContext.SetSensorOverrideEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetSensorOverrideReadingsResult> SetSensorOverrideReadingsAsync(SensorType type, SensorReading reading, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSensorOverrideReadingsResult> SetSensorOverrideReadingsAsync(SensorType type, SensorReading reading, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSensorOverrideReadingsCommandParameters(Type: type, Reading: reading);
         return await ExecuteCommandAsync("Emulation.setSensorOverrideReadings", @params, JsonContext.SetSensorOverrideReadingsCommandParameters, JsonContext.SetSensorOverrideReadingsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPressureSourceOverrideEnabledResult> SetPressureSourceOverrideEnabledAsync(bool enabled, PressureSource source, PressureMetadata? metadata = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPressureSourceOverrideEnabledResult> SetPressureSourceOverrideEnabledAsync(bool enabled, PressureSource source, PressureMetadata? metadata = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPressureSourceOverrideEnabledCommandParameters(Enabled: enabled, Source: source, Metadata: metadata);
         return await ExecuteCommandAsync("Emulation.setPressureSourceOverrideEnabled", @params, JsonContext.SetPressureSourceOverrideEnabledCommandParameters, JsonContext.SetPressureSourceOverrideEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPressureStateOverrideResult> SetPressureStateOverrideAsync(PressureSource source, PressureState state, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPressureStateOverrideResult> SetPressureStateOverrideAsync(PressureSource source, PressureState state, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPressureStateOverrideCommandParameters(Source: source, State: state);
         return await ExecuteCommandAsync("Emulation.setPressureStateOverride", @params, JsonContext.SetPressureStateOverrideCommandParameters, JsonContext.SetPressureStateOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetIdleOverrideResult> SetIdleOverrideAsync(bool isUserActive, bool isScreenUnlocked, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetIdleOverrideResult> SetIdleOverrideAsync(bool isUserActive, bool isScreenUnlocked, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetIdleOverrideCommandParameters(IsUserActive: isUserActive, IsScreenUnlocked: isScreenUnlocked);
         return await ExecuteCommandAsync("Emulation.setIdleOverride", @params, JsonContext.SetIdleOverrideCommandParameters, JsonContext.SetIdleOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearIdleOverrideResult> ClearIdleOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearIdleOverrideResult> ClearIdleOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearIdleOverrideCommandParameters();
         return await ExecuteCommandAsync("Emulation.clearIdleOverride", @params, JsonContext.ClearIdleOverrideCommandParameters, JsonContext.ClearIdleOverrideResult, session, cancellationToken).ConfigureAwait(false);
@@ -1282,46 +1282,46 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetNavigatorOverridesResult> SetNavigatorOverridesAsync(string platform, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetNavigatorOverridesResult> SetNavigatorOverridesAsync(string platform, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetNavigatorOverridesCommandParameters(Platform: platform);
         return await ExecuteCommandAsync("Emulation.setNavigatorOverrides", @params, JsonContext.SetNavigatorOverridesCommandParameters, JsonContext.SetNavigatorOverridesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPageScaleFactorResult> SetPageScaleFactorAsync(double pageScaleFactor, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPageScaleFactorResult> SetPageScaleFactorAsync(double pageScaleFactor, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPageScaleFactorCommandParameters(PageScaleFactor: pageScaleFactor);
         return await ExecuteCommandAsync("Emulation.setPageScaleFactor", @params, JsonContext.SetPageScaleFactorCommandParameters, JsonContext.SetPageScaleFactorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetScriptExecutionDisabledResult> SetScriptExecutionDisabledAsync(bool value, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetScriptExecutionDisabledResult> SetScriptExecutionDisabledAsync(bool value, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetScriptExecutionDisabledCommandParameters(Value: value);
         return await ExecuteCommandAsync("Emulation.setScriptExecutionDisabled", @params, JsonContext.SetScriptExecutionDisabledCommandParameters, JsonContext.SetScriptExecutionDisabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, long? maxTouchPoints = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, long? maxTouchPoints = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetTouchEmulationEnabledCommandParameters(Enabled: enabled, MaxTouchPoints: maxTouchPoints);
         return await ExecuteCommandAsync("Emulation.setTouchEmulationEnabled", @params, JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetVirtualTimePolicyResult> SetVirtualTimePolicyAsync(VirtualTimePolicy policy, double? budget = default, long? maxVirtualTimeTaskStarvationCount = default, Network.TimeSinceEpoch? initialVirtualTime = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetVirtualTimePolicyResult> SetVirtualTimePolicyAsync(VirtualTimePolicy policy, double? budget = null, long? maxVirtualTimeTaskStarvationCount = null, Network.TimeSinceEpoch? initialVirtualTime = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualTimePolicyCommandParameters(Policy: policy, Budget: budget, MaxVirtualTimeTaskStarvationCount: maxVirtualTimeTaskStarvationCount, InitialVirtualTime: initialVirtualTime);
         return await ExecuteCommandAsync("Emulation.setVirtualTimePolicy", @params, JsonContext.SetVirtualTimePolicyCommandParameters, JsonContext.SetVirtualTimePolicyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetLocaleOverrideResult> SetLocaleOverrideAsync(string? locale = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetLocaleOverrideResult> SetLocaleOverrideAsync(string? locale = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetLocaleOverrideCommandParameters(Locale: locale);
         return await ExecuteCommandAsync("Emulation.setLocaleOverride", @params, JsonContext.SetLocaleOverrideCommandParameters, JsonContext.SetLocaleOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetTimezoneOverrideResult> SetTimezoneOverrideAsync(string timezoneId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetTimezoneOverrideResult> SetTimezoneOverrideAsync(string timezoneId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimezoneOverrideCommandParameters(TimezoneId: timezoneId);
         return await ExecuteCommandAsync("Emulation.setTimezoneOverride", @params, JsonContext.SetTimezoneOverrideCommandParameters, JsonContext.SetTimezoneOverrideResult, session, cancellationToken).ConfigureAwait(false);
@@ -1329,90 +1329,90 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetVisibleSizeResult> SetVisibleSizeAsync(long width, long height, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetVisibleSizeResult> SetVisibleSizeAsync(long width, long height, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetVisibleSizeCommandParameters(Width: width, Height: height);
         return await ExecuteCommandAsync("Emulation.setVisibleSize", @params, JsonContext.SetVisibleSizeCommandParameters, JsonContext.SetVisibleSizeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDisabledImageTypesResult> SetDisabledImageTypesAsync(ImmutableArray<DisabledImageType> imageTypes, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDisabledImageTypesResult> SetDisabledImageTypesAsync(ImmutableArray<DisabledImageType> imageTypes, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDisabledImageTypesCommandParameters(ImageTypes: imageTypes);
         return await ExecuteCommandAsync("Emulation.setDisabledImageTypes", @params, JsonContext.SetDisabledImageTypesCommandParameters, JsonContext.SetDisabledImageTypesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDataSaverOverrideResult> SetDataSaverOverrideAsync(bool? dataSaverEnabled = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDataSaverOverrideResult> SetDataSaverOverrideAsync(bool? dataSaverEnabled = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDataSaverOverrideCommandParameters(DataSaverEnabled: dataSaverEnabled);
         return await ExecuteCommandAsync("Emulation.setDataSaverOverride", @params, JsonContext.SetDataSaverOverrideCommandParameters, JsonContext.SetDataSaverOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideAsync(long hardwareConcurrency, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetHardwareConcurrencyOverrideResult> SetHardwareConcurrencyOverrideAsync(long hardwareConcurrency, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetHardwareConcurrencyOverrideCommandParameters(HardwareConcurrency: hardwareConcurrency);
         return await ExecuteCommandAsync("Emulation.setHardwareConcurrencyOverride", @params, JsonContext.SetHardwareConcurrencyOverrideCommandParameters, JsonContext.SetHardwareConcurrencyOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(SetCPUPerformanceOverridePerformanceTier? performanceTier = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(SetCPUPerformanceOverridePerformanceTier? performanceTier = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCPUPerformanceOverrideCommandParameters(PerformanceTier: performanceTier);
         return await ExecuteCommandAsync("Emulation.setCPUPerformanceOverride", @params, JsonContext.SetCPUPerformanceOverrideCommandParameters, JsonContext.SetCPUPerformanceOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = null, string? platform = null, UserAgentMetadata? userAgentMetadata = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
         return await ExecuteCommandAsync("Emulation.setUserAgentOverride", @params, JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAutomationOverrideResult> SetAutomationOverrideAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAutomationOverrideResult> SetAutomationOverrideAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutomationOverrideCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Emulation.setAutomationOverride", @params, JsonContext.SetAutomationOverrideCommandParameters, JsonContext.SetAutomationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetSmallViewportHeightDifferenceOverrideResult> SetSmallViewportHeightDifferenceOverrideAsync(long difference, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSmallViewportHeightDifferenceOverrideResult> SetSmallViewportHeightDifferenceOverrideAsync(long difference, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSmallViewportHeightDifferenceOverrideCommandParameters(Difference: difference);
         return await ExecuteCommandAsync("Emulation.setSmallViewportHeightDifferenceOverride", @params, JsonContext.SetSmallViewportHeightDifferenceOverrideCommandParameters, JsonContext.SetSmallViewportHeightDifferenceOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetScreenInfosResult> GetScreenInfosAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetScreenInfosResult> GetScreenInfosAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetScreenInfosCommandParameters();
         return await ExecuteCommandAsync("Emulation.getScreenInfos", @params, JsonContext.GetScreenInfosCommandParameters, JsonContext.GetScreenInfosResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AddScreenResult> AddScreenAsync(long left, long top, long width, long height, WorkAreaInsets? workAreaInsets = default, double? devicePixelRatio = default, long? rotation = default, long? colorDepth = default, string? label = default, bool? isInternal = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddScreenResult> AddScreenAsync(long left, long top, long width, long height, WorkAreaInsets? workAreaInsets = null, double? devicePixelRatio = null, long? rotation = null, long? colorDepth = null, string? label = null, bool? isInternal = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddScreenCommandParameters(Left: left, Top: top, Width: width, Height: height, WorkAreaInsets: workAreaInsets, DevicePixelRatio: devicePixelRatio, Rotation: rotation, ColorDepth: colorDepth, Label: label, IsInternal: isInternal);
         return await ExecuteCommandAsync("Emulation.addScreen", @params, JsonContext.AddScreenCommandParameters, JsonContext.AddScreenResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<UpdateScreenResult> UpdateScreenAsync(ScreenId screenId, long? left = default, long? top = default, long? width = default, long? height = default, WorkAreaInsets? workAreaInsets = default, double? devicePixelRatio = default, long? rotation = default, long? colorDepth = default, string? label = default, bool? isInternal = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UpdateScreenResult> UpdateScreenAsync(ScreenId screenId, long? left = null, long? top = null, long? width = null, long? height = null, WorkAreaInsets? workAreaInsets = null, double? devicePixelRatio = null, long? rotation = null, long? colorDepth = null, string? label = null, bool? isInternal = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UpdateScreenCommandParameters(ScreenId: screenId, Left: left, Top: top, Width: width, Height: height, WorkAreaInsets: workAreaInsets, DevicePixelRatio: devicePixelRatio, Rotation: rotation, ColorDepth: colorDepth, Label: label, IsInternal: isInternal);
         return await ExecuteCommandAsync("Emulation.updateScreen", @params, JsonContext.UpdateScreenCommandParameters, JsonContext.UpdateScreenResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<RemoveScreenResult> RemoveScreenAsync(ScreenId screenId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveScreenResult> RemoveScreenAsync(ScreenId screenId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveScreenCommandParameters(ScreenId: screenId);
         return await ExecuteCommandAsync("Emulation.removeScreen", @params, JsonContext.RemoveScreenCommandParameters, JsonContext.RemoveScreenResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPrimaryScreenResult> SetPrimaryScreenAsync(ScreenId screenId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPrimaryScreenResult> SetPrimaryScreenAsync(ScreenId screenId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPrimaryScreenCommandParameters(ScreenId: screenId);
         return await ExecuteCommandAsync("Emulation.setPrimaryScreen", @params, JsonContext.SetPrimaryScreenCommandParameters, JsonContext.SetPrimaryScreenResult, session, cancellationToken).ConfigureAwait(false);
@@ -1427,6 +1427,7 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
 internal sealed record CanEmulateCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.CanEmulateAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// True if emulation is supported.
@@ -1437,6 +1438,7 @@ public sealed record CanEmulateResult(bool Result) : EmptyResult;
 internal sealed record ClearDeviceMetricsOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.ClearDeviceMetricsOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearDeviceMetricsOverrideResult() : EmptyResult;
 
@@ -1444,6 +1446,7 @@ public sealed record ClearDeviceMetricsOverrideResult() : EmptyResult;
 internal sealed record ClearGeolocationOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.ClearGeolocationOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearGeolocationOverrideResult() : EmptyResult;
 
@@ -1451,6 +1454,7 @@ public sealed record ClearGeolocationOverrideResult() : EmptyResult;
 internal sealed record ResetPageScaleFactorCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.ResetPageScaleFactorAsync"/> command.
 /// </summary>
 public sealed record ResetPageScaleFactorResult() : EmptyResult;
 
@@ -1458,6 +1462,7 @@ public sealed record ResetPageScaleFactorResult() : EmptyResult;
 internal sealed record SetFocusEmulationEnabledCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetFocusEmulationEnabledAsync"/> command.
 /// </summary>
 public sealed record SetFocusEmulationEnabledResult() : EmptyResult;
 
@@ -1465,6 +1470,7 @@ public sealed record SetFocusEmulationEnabledResult() : EmptyResult;
 internal sealed record SetAutoDarkModeOverrideCommandParameters(bool? Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetAutoDarkModeOverrideAsync"/> command.
 /// </summary>
 public sealed record SetAutoDarkModeOverrideResult() : EmptyResult;
 
@@ -1472,6 +1478,7 @@ public sealed record SetAutoDarkModeOverrideResult() : EmptyResult;
 internal sealed record SetCPUThrottlingRateCommandParameters(double Rate) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetCPUThrottlingRateAsync"/> command.
 /// </summary>
 public sealed record SetCPUThrottlingRateResult() : EmptyResult;
 
@@ -1479,6 +1486,7 @@ public sealed record SetCPUThrottlingRateResult() : EmptyResult;
 internal sealed record SetDefaultBackgroundColorOverrideCommandParameters(DOM.RGBA? Color) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetDefaultBackgroundColorOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDefaultBackgroundColorOverrideResult() : EmptyResult;
 
@@ -1486,6 +1494,7 @@ public sealed record SetDefaultBackgroundColorOverrideResult() : EmptyResult;
 internal sealed record SetSafeAreaInsetsOverrideCommandParameters(SafeAreaInsets Insets) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetSafeAreaInsetsOverrideAsync"/> command.
 /// </summary>
 public sealed record SetSafeAreaInsetsOverrideResult() : EmptyResult;
 
@@ -1493,6 +1502,7 @@ public sealed record SetSafeAreaInsetsOverrideResult() : EmptyResult;
 internal sealed record SetVirtualKeyboardGeometryOverrideCommandParameters(DOM.Rect? KeyboardRect) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetVirtualKeyboardGeometryOverrideAsync"/> command.
 /// </summary>
 public sealed record SetVirtualKeyboardGeometryOverrideResult() : EmptyResult;
 
@@ -1500,6 +1510,7 @@ public sealed record SetVirtualKeyboardGeometryOverrideResult() : EmptyResult;
 internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, SetDeviceMetricsOverrideScrollbarType? ScrollbarType, bool? ScreenOrientationLockEmulation, SetDeviceMetricsOverrideViewportMeta? ViewportMeta) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetDeviceMetricsOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDeviceMetricsOverrideResult() : EmptyResult;
 
@@ -1507,6 +1518,7 @@ public sealed record SetDeviceMetricsOverrideResult() : EmptyResult;
 internal sealed record SetDevicePostureOverrideCommandParameters(DevicePosture Posture) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetDevicePostureOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDevicePostureOverrideResult() : EmptyResult;
 
@@ -1514,6 +1526,7 @@ public sealed record SetDevicePostureOverrideResult() : EmptyResult;
 internal sealed record ClearDevicePostureOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.ClearDevicePostureOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearDevicePostureOverrideResult() : EmptyResult;
 
@@ -1521,6 +1534,7 @@ public sealed record ClearDevicePostureOverrideResult() : EmptyResult;
 internal sealed record SetDisplayFeaturesOverrideCommandParameters(ImmutableArray<DisplayFeature> Features) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetDisplayFeaturesOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDisplayFeaturesOverrideResult() : EmptyResult;
 
@@ -1528,6 +1542,7 @@ public sealed record SetDisplayFeaturesOverrideResult() : EmptyResult;
 internal sealed record ClearDisplayFeaturesOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.ClearDisplayFeaturesOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearDisplayFeaturesOverrideResult() : EmptyResult;
 
@@ -1535,6 +1550,7 @@ public sealed record ClearDisplayFeaturesOverrideResult() : EmptyResult;
 internal sealed record SetScrollbarsHiddenCommandParameters(bool Hidden) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetScrollbarsHiddenAsync"/> command.
 /// </summary>
 public sealed record SetScrollbarsHiddenResult() : EmptyResult;
 
@@ -1542,6 +1558,7 @@ public sealed record SetScrollbarsHiddenResult() : EmptyResult;
 internal sealed record SetDocumentCookieDisabledCommandParameters(bool Disabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetDocumentCookieDisabledAsync"/> command.
 /// </summary>
 public sealed record SetDocumentCookieDisabledResult() : EmptyResult;
 
@@ -1549,6 +1566,7 @@ public sealed record SetDocumentCookieDisabledResult() : EmptyResult;
 internal sealed record SetEmitTouchEventsForMouseCommandParameters(bool Enabled, SetEmitTouchEventsForMouseConfiguration? Configuration) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetEmitTouchEventsForMouseAsync"/> command.
 /// </summary>
 public sealed record SetEmitTouchEventsForMouseResult() : EmptyResult;
 
@@ -1556,6 +1574,7 @@ public sealed record SetEmitTouchEventsForMouseResult() : EmptyResult;
 internal sealed record SetEmulatedMediaCommandParameters(string? Media, ImmutableArray<MediaFeature>? Features) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetEmulatedMediaAsync"/> command.
 /// </summary>
 public sealed record SetEmulatedMediaResult() : EmptyResult;
 
@@ -1563,6 +1582,7 @@ public sealed record SetEmulatedMediaResult() : EmptyResult;
 internal sealed record SetEmulatedVisionDeficiencyCommandParameters(SetEmulatedVisionDeficiencyType Type) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetEmulatedVisionDeficiencyAsync"/> command.
 /// </summary>
 public sealed record SetEmulatedVisionDeficiencyResult() : EmptyResult;
 
@@ -1570,6 +1590,7 @@ public sealed record SetEmulatedVisionDeficiencyResult() : EmptyResult;
 internal sealed record SetEmulatedOSTextScaleCommandParameters(double? Scale) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetEmulatedOSTextScaleAsync"/> command.
 /// </summary>
 public sealed record SetEmulatedOSTextScaleResult() : EmptyResult;
 
@@ -1577,6 +1598,7 @@ public sealed record SetEmulatedOSTextScaleResult() : EmptyResult;
 internal sealed record SetGeolocationOverrideCommandParameters(double? Latitude, double? Longitude, double? Accuracy, double? Altitude, double? AltitudeAccuracy, double? Heading, double? Speed) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetGeolocationOverrideAsync"/> command.
 /// </summary>
 public sealed record SetGeolocationOverrideResult() : EmptyResult;
 
@@ -1584,6 +1606,7 @@ public sealed record SetGeolocationOverrideResult() : EmptyResult;
 internal sealed record GetOverriddenSensorInformationCommandParameters(SensorType Type) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.GetOverriddenSensorInformationAsync"/> command.
 /// </summary>
 /// <param name="RequestedSamplingFrequency">
 /// </param>
@@ -1593,6 +1616,7 @@ public sealed record GetOverriddenSensorInformationResult(double RequestedSampli
 internal sealed record SetSensorOverrideEnabledCommandParameters(bool Enabled, SensorType Type, SensorMetadata? Metadata) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetSensorOverrideEnabledAsync"/> command.
 /// </summary>
 public sealed record SetSensorOverrideEnabledResult() : EmptyResult;
 
@@ -1600,6 +1624,7 @@ public sealed record SetSensorOverrideEnabledResult() : EmptyResult;
 internal sealed record SetSensorOverrideReadingsCommandParameters(SensorType Type, SensorReading Reading) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetSensorOverrideReadingsAsync"/> command.
 /// </summary>
 public sealed record SetSensorOverrideReadingsResult() : EmptyResult;
 
@@ -1607,6 +1632,7 @@ public sealed record SetSensorOverrideReadingsResult() : EmptyResult;
 internal sealed record SetPressureSourceOverrideEnabledCommandParameters(bool Enabled, PressureSource Source, PressureMetadata? Metadata) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetPressureSourceOverrideEnabledAsync"/> command.
 /// </summary>
 public sealed record SetPressureSourceOverrideEnabledResult() : EmptyResult;
 
@@ -1614,6 +1640,7 @@ public sealed record SetPressureSourceOverrideEnabledResult() : EmptyResult;
 internal sealed record SetPressureStateOverrideCommandParameters(PressureSource Source, PressureState State) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetPressureStateOverrideAsync"/> command.
 /// </summary>
 public sealed record SetPressureStateOverrideResult() : EmptyResult;
 
@@ -1621,6 +1648,7 @@ public sealed record SetPressureStateOverrideResult() : EmptyResult;
 internal sealed record SetIdleOverrideCommandParameters(bool IsUserActive, bool IsScreenUnlocked) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetIdleOverrideAsync"/> command.
 /// </summary>
 public sealed record SetIdleOverrideResult() : EmptyResult;
 
@@ -1628,6 +1656,7 @@ public sealed record SetIdleOverrideResult() : EmptyResult;
 internal sealed record ClearIdleOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.ClearIdleOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearIdleOverrideResult() : EmptyResult;
 
@@ -1635,6 +1664,7 @@ public sealed record ClearIdleOverrideResult() : EmptyResult;
 internal sealed record SetNavigatorOverridesCommandParameters(string Platform) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetNavigatorOverridesAsync"/> command.
 /// </summary>
 public sealed record SetNavigatorOverridesResult() : EmptyResult;
 
@@ -1642,6 +1672,7 @@ public sealed record SetNavigatorOverridesResult() : EmptyResult;
 internal sealed record SetPageScaleFactorCommandParameters(double PageScaleFactor) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetPageScaleFactorAsync"/> command.
 /// </summary>
 public sealed record SetPageScaleFactorResult() : EmptyResult;
 
@@ -1649,6 +1680,7 @@ public sealed record SetPageScaleFactorResult() : EmptyResult;
 internal sealed record SetScriptExecutionDisabledCommandParameters(bool Value) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetScriptExecutionDisabledAsync"/> command.
 /// </summary>
 public sealed record SetScriptExecutionDisabledResult() : EmptyResult;
 
@@ -1656,6 +1688,7 @@ public sealed record SetScriptExecutionDisabledResult() : EmptyResult;
 internal sealed record SetTouchEmulationEnabledCommandParameters(bool Enabled, long? MaxTouchPoints) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetTouchEmulationEnabledAsync"/> command.
 /// </summary>
 public sealed record SetTouchEmulationEnabledResult() : EmptyResult;
 
@@ -1663,6 +1696,7 @@ public sealed record SetTouchEmulationEnabledResult() : EmptyResult;
 internal sealed record SetVirtualTimePolicyCommandParameters(VirtualTimePolicy Policy, double? Budget, long? MaxVirtualTimeTaskStarvationCount, Network.TimeSinceEpoch? InitialVirtualTime) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetVirtualTimePolicyAsync"/> command.
 /// </summary>
 /// <param name="VirtualTimeTicksBase">
 /// Absolute timestamp at which virtual time was first enabled (up time in milliseconds).
@@ -1673,6 +1707,7 @@ public sealed record SetVirtualTimePolicyResult(double VirtualTimeTicksBase) : E
 internal sealed record SetLocaleOverrideCommandParameters(string? Locale) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetLocaleOverrideAsync"/> command.
 /// </summary>
 public sealed record SetLocaleOverrideResult() : EmptyResult;
 
@@ -1680,6 +1715,7 @@ public sealed record SetLocaleOverrideResult() : EmptyResult;
 internal sealed record SetTimezoneOverrideCommandParameters(string TimezoneId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetTimezoneOverrideAsync"/> command.
 /// </summary>
 public sealed record SetTimezoneOverrideResult() : EmptyResult;
 
@@ -1687,6 +1723,7 @@ public sealed record SetTimezoneOverrideResult() : EmptyResult;
 internal sealed record SetVisibleSizeCommandParameters(long Width, long Height) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetVisibleSizeAsync"/> command.
 /// </summary>
 public sealed record SetVisibleSizeResult() : EmptyResult;
 
@@ -1694,6 +1731,7 @@ public sealed record SetVisibleSizeResult() : EmptyResult;
 internal sealed record SetDisabledImageTypesCommandParameters(ImmutableArray<DisabledImageType> ImageTypes) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetDisabledImageTypesAsync"/> command.
 /// </summary>
 public sealed record SetDisabledImageTypesResult() : EmptyResult;
 
@@ -1701,6 +1739,7 @@ public sealed record SetDisabledImageTypesResult() : EmptyResult;
 internal sealed record SetDataSaverOverrideCommandParameters(bool? DataSaverEnabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetDataSaverOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDataSaverOverrideResult() : EmptyResult;
 
@@ -1708,6 +1747,7 @@ public sealed record SetDataSaverOverrideResult() : EmptyResult;
 internal sealed record SetHardwareConcurrencyOverrideCommandParameters(long HardwareConcurrency) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetHardwareConcurrencyOverrideAsync"/> command.
 /// </summary>
 public sealed record SetHardwareConcurrencyOverrideResult() : EmptyResult;
 
@@ -1715,6 +1755,7 @@ public sealed record SetHardwareConcurrencyOverrideResult() : EmptyResult;
 internal sealed record SetCPUPerformanceOverrideCommandParameters(SetCPUPerformanceOverridePerformanceTier? PerformanceTier) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetCPUPerformanceOverrideAsync"/> command.
 /// </summary>
 public sealed record SetCPUPerformanceOverrideResult() : EmptyResult;
 
@@ -1722,6 +1763,7 @@ public sealed record SetCPUPerformanceOverrideResult() : EmptyResult;
 internal sealed record SetUserAgentOverrideCommandParameters(string UserAgent, string? AcceptLanguage, string? Platform, UserAgentMetadata? UserAgentMetadata) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetUserAgentOverrideAsync"/> command.
 /// </summary>
 public sealed record SetUserAgentOverrideResult() : EmptyResult;
 
@@ -1729,6 +1771,7 @@ public sealed record SetUserAgentOverrideResult() : EmptyResult;
 internal sealed record SetAutomationOverrideCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetAutomationOverrideAsync"/> command.
 /// </summary>
 public sealed record SetAutomationOverrideResult() : EmptyResult;
 
@@ -1736,6 +1779,7 @@ public sealed record SetAutomationOverrideResult() : EmptyResult;
 internal sealed record SetSmallViewportHeightDifferenceOverrideCommandParameters(long Difference) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetSmallViewportHeightDifferenceOverrideAsync"/> command.
 /// </summary>
 public sealed record SetSmallViewportHeightDifferenceOverrideResult() : EmptyResult;
 
@@ -1743,6 +1787,7 @@ public sealed record SetSmallViewportHeightDifferenceOverrideResult() : EmptyRes
 internal sealed record GetScreenInfosCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.GetScreenInfosAsync"/> command.
 /// </summary>
 /// <param name="ScreenInfos">
 /// </param>
@@ -1752,6 +1797,7 @@ public sealed record GetScreenInfosResult(ImmutableArray<ScreenInfo> ScreenInfos
 internal sealed record AddScreenCommandParameters(long Left, long Top, long Width, long Height, WorkAreaInsets? WorkAreaInsets, double? DevicePixelRatio, long? Rotation, long? ColorDepth, string? Label, bool? IsInternal) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.AddScreenAsync"/> command.
 /// </summary>
 /// <param name="ScreenInfo">
 /// </param>
@@ -1761,6 +1807,7 @@ public sealed record AddScreenResult(ScreenInfo ScreenInfo) : EmptyResult;
 internal sealed record UpdateScreenCommandParameters(ScreenId ScreenId, long? Left, long? Top, long? Width, long? Height, WorkAreaInsets? WorkAreaInsets, double? DevicePixelRatio, long? Rotation, long? ColorDepth, string? Label, bool? IsInternal) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.UpdateScreenAsync"/> command.
 /// </summary>
 /// <param name="ScreenInfo">
 /// </param>
@@ -1770,6 +1817,7 @@ public sealed record UpdateScreenResult(ScreenInfo ScreenInfo) : EmptyResult;
 internal sealed record RemoveScreenCommandParameters(ScreenId ScreenId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.RemoveScreenAsync"/> command.
 /// </summary>
 public sealed record RemoveScreenResult() : EmptyResult;
 
@@ -1777,6 +1825,7 @@ public sealed record RemoveScreenResult() : EmptyResult;
 internal sealed record SetPrimaryScreenCommandParameters(ScreenId ScreenId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEmulation.SetPrimaryScreenAsync"/> command.
 /// </summary>
 public sealed record SetPrimaryScreenResult() : EmptyResult;
 
@@ -1904,14 +1953,17 @@ public sealed record MediaFeature(string Name, string Value)
 public enum VirtualTimePolicy
 {
     /// <summary>
+    /// Corresponds to the <c>"advance"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("advance")]
     Advance,
     /// <summary>
+    /// Corresponds to the <c>"pause"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pause")]
     Pause,
     /// <summary>
+    /// Corresponds to the <c>"pauseIfNetworkFetchesPending"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pauseIfNetworkFetchesPending")]
     PauseIfNetworkFetchesPending,
@@ -1982,34 +2034,42 @@ public sealed record UserAgentMetadata(string Platform, string PlatformVersion, 
 public enum SensorType
 {
     /// <summary>
+    /// Corresponds to the <c>"absolute-orientation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("absolute-orientation")]
     AbsoluteOrientation,
     /// <summary>
+    /// Corresponds to the <c>"accelerometer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("accelerometer")]
     Accelerometer,
     /// <summary>
+    /// Corresponds to the <c>"ambient-light"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ambient-light")]
     AmbientLight,
     /// <summary>
+    /// Corresponds to the <c>"gravity"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("gravity")]
     Gravity,
     /// <summary>
+    /// Corresponds to the <c>"gyroscope"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("gyroscope")]
     Gyroscope,
     /// <summary>
+    /// Corresponds to the <c>"linear-acceleration"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("linear-acceleration")]
     LinearAcceleration,
     /// <summary>
+    /// Corresponds to the <c>"magnetometer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("magnetometer")]
     Magnetometer,
     /// <summary>
+    /// Corresponds to the <c>"relative-orientation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("relative-orientation")]
     RelativeOrientation,
@@ -2089,6 +2149,7 @@ public sealed record SensorReading()
 public enum PressureSource
 {
     /// <summary>
+    /// Corresponds to the <c>"cpu"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cpu")]
     Cpu,
@@ -2100,18 +2161,22 @@ public enum PressureSource
 public enum PressureState
 {
     /// <summary>
+    /// Corresponds to the <c>"nominal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("nominal")]
     Nominal,
     /// <summary>
+    /// Corresponds to the <c>"fair"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fair")]
     Fair,
     /// <summary>
+    /// Corresponds to the <c>"serious"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("serious")]
     Serious,
     /// <summary>
+    /// Corresponds to the <c>"critical"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("critical")]
     Critical,
@@ -2222,14 +2287,17 @@ public sealed record ScreenInfo(long Left, long Top, long Width, long Height, lo
 public enum DisabledImageType
 {
     /// <summary>
+    /// Corresponds to the <c>"avif"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("avif")]
     Avif,
     /// <summary>
+    /// Corresponds to the <c>"jxl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jxl")]
     Jxl,
     /// <summary>
+    /// Corresponds to the <c>"webp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
     Webp,
@@ -2241,10 +2309,12 @@ public enum DisabledImageType
 public enum SetDeviceMetricsOverrideScrollbarType
 {
     /// <summary>
+    /// Corresponds to the <c>"overlay"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overlay")]
     Overlay,
     /// <summary>
+    /// Corresponds to the <c>"default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
     Default,
@@ -2256,10 +2326,12 @@ public enum SetDeviceMetricsOverrideScrollbarType
 public enum SetDeviceMetricsOverrideViewportMeta
 {
     /// <summary>
+    /// Corresponds to the <c>"enable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("enable")]
     Enable,
     /// <summary>
+    /// Corresponds to the <c>"default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
     Default,
@@ -2271,10 +2343,12 @@ public enum SetDeviceMetricsOverrideViewportMeta
 public enum SetEmitTouchEventsForMouseConfiguration
 {
     /// <summary>
+    /// Corresponds to the <c>"mobile"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mobile")]
     Mobile,
     /// <summary>
+    /// Corresponds to the <c>"desktop"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("desktop")]
     Desktop,
@@ -2286,30 +2360,37 @@ public enum SetEmitTouchEventsForMouseConfiguration
 public enum SetEmulatedVisionDeficiencyType
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"blurredVision"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("blurredVision")]
     BlurredVision,
     /// <summary>
+    /// Corresponds to the <c>"reducedContrast"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reducedContrast")]
     ReducedContrast,
     /// <summary>
+    /// Corresponds to the <c>"achromatopsia"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("achromatopsia")]
     Achromatopsia,
     /// <summary>
+    /// Corresponds to the <c>"deuteranopia"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deuteranopia")]
     Deuteranopia,
     /// <summary>
+    /// Corresponds to the <c>"protanopia"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("protanopia")]
     Protanopia,
     /// <summary>
+    /// Corresponds to the <c>"tritanopia"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("tritanopia")]
     Tritanopia,
@@ -2321,22 +2402,27 @@ public enum SetEmulatedVisionDeficiencyType
 public enum SetCPUPerformanceOverridePerformanceTier
 {
     /// <summary>
+    /// Corresponds to the <c>"unknown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown")]
     Unknown,
     /// <summary>
+    /// Corresponds to the <c>"low"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("low")]
     Low,
     /// <summary>
+    /// Corresponds to the <c>"mid"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mid")]
     Mid,
     /// <summary>
+    /// Corresponds to the <c>"high"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("high")]
     High,
     /// <summary>
+    /// Corresponds to the <c>"ultra"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ultra")]
     Ultra,
@@ -2348,18 +2434,22 @@ public enum SetCPUPerformanceOverridePerformanceTier
 public enum ScreenOrientationType
 {
     /// <summary>
+    /// Corresponds to the <c>"portraitPrimary"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("portraitPrimary")]
     PortraitPrimary,
     /// <summary>
+    /// Corresponds to the <c>"portraitSecondary"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("portraitSecondary")]
     PortraitSecondary,
     /// <summary>
+    /// Corresponds to the <c>"landscapePrimary"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("landscapePrimary")]
     LandscapePrimary,
     /// <summary>
+    /// Corresponds to the <c>"landscapeSecondary"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("landscapeSecondary")]
     LandscapeSecondary,
@@ -2371,10 +2461,12 @@ public enum ScreenOrientationType
 public enum DisplayFeatureOrientation
 {
     /// <summary>
+    /// Corresponds to the <c>"vertical"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("vertical")]
     Vertical,
     /// <summary>
+    /// Corresponds to the <c>"horizontal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("horizontal")]
     Horizontal,
@@ -2386,10 +2478,12 @@ public enum DisplayFeatureOrientation
 public enum DevicePostureType
 {
     /// <summary>
+    /// Corresponds to the <c>"continuous"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("continuous")]
     Continuous,
     /// <summary>
+    /// Corresponds to the <c>"folded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("folded")]
     Folded,

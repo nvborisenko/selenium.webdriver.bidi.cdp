@@ -26,7 +26,7 @@ public interface ITethering
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BindResult"/>.
     /// </returns>
-    Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default);
+    Task<BindResult> BindAsync(long port, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Request browser port unbinding.
@@ -43,7 +43,7 @@ public interface ITethering
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UnbindResult"/>.
     /// </returns>
-    Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default);
+    Task<UnbindResult> UnbindAsync(long port, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Informs that port was successfully bound and got a specified connection id.
@@ -64,13 +64,13 @@ internal sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDrive
 {
     private static readonly TetheringJsonSerializerContext JsonContext = TetheringJsonSerializerContext.Default;
 
-    public async Task<BindResult> BindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<BindResult> BindAsync(long port, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new BindCommandParameters(Port: port);
         return await ExecuteCommandAsync("Tethering.bind", @params, JsonContext.BindCommandParameters, JsonContext.BindResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UnbindResult> UnbindAsync(long port, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UnbindResult> UnbindAsync(long port, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UnbindCommandParameters(Port: port);
         return await ExecuteCommandAsync("Tethering.unbind", @params, JsonContext.UnbindCommandParameters, JsonContext.UnbindResult, session, cancellationToken).ConfigureAwait(false);
@@ -82,6 +82,7 @@ internal sealed class TetheringDomain(CdpModule cdp) : global::Selenium.WebDrive
 internal sealed record BindCommandParameters(long Port) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITethering.BindAsync"/> command.
 /// </summary>
 public sealed record BindResult() : EmptyResult;
 
@@ -89,6 +90,7 @@ public sealed record BindResult() : EmptyResult;
 internal sealed record UnbindCommandParameters(long Port) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ITethering.UnbindAsync"/> command.
 /// </summary>
 public sealed record UnbindResult() : EmptyResult;
 

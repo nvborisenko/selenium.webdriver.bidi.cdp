@@ -26,7 +26,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Evaluates given script in every frame upon creation (before loading frame's scripts).
@@ -55,7 +55,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddScriptToEvaluateOnNewDocumentResult"/>.
     /// </returns>
-    Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = default, bool? includeCommandLineAPI = default, bool? runImmediately = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = null, bool? includeCommandLineAPI = null, bool? runImmediately = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Brings page to front (activates tab).
@@ -69,7 +69,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="BringToFrontResult"/>.
     /// </returns>
-    Task<BringToFrontResult> BringToFrontAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<BringToFrontResult> BringToFrontAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Capture page screenshot.
@@ -101,7 +101,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CaptureScreenshotResult"/>.
     /// </returns>
-    Task<CaptureScreenshotResult> CaptureScreenshotAsync(CaptureScreenshotFormat? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CaptureScreenshotResult> CaptureScreenshotAsync(CaptureScreenshotFormat? format = null, long? quality = null, Viewport? clip = null, bool? fromSurface = null, bool? captureBeyondViewport = null, bool? optimizeForSpeed = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a snapshot of the page as a string. For MHTML format, the serialization includes
@@ -120,7 +120,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="CaptureSnapshotResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CaptureSnapshotResult> CaptureSnapshotAsync(CaptureSnapshotFormat? format = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CaptureSnapshotResult> CaptureSnapshotAsync(CaptureSnapshotFormat? format = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden device metrics.
@@ -136,7 +136,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden Device Orientation.
@@ -152,7 +152,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden Geolocation Position and Error.
@@ -167,7 +167,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="ClearGeolocationOverrideResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates an isolated world for the given frame.
@@ -199,7 +199,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateIsolatedWorldResult"/>.
     /// </returns>
-    Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = default, bool? grantUniveralAccess = default, string? contentSecurityPolicy = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = null, bool? grantUniveralAccess = null, string? contentSecurityPolicy = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes browser cookie with given name, domain and path.
@@ -221,7 +221,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables page domain notifications.
@@ -235,7 +235,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables page domain notifications.
@@ -253,7 +253,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the processed manifest for this current document.
@@ -273,7 +273,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAppManifestResult"/>.
     /// </returns>
-    Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -287,7 +287,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetInstallabilityErrorsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated because it's not guaranteed that the returned icon is in fact the one used for PWA installation.
@@ -303,7 +303,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the unique (PWA) app id.
@@ -319,7 +319,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetAppIdResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetAppIdResult> GetAppIdAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAppIdResult> GetAppIdAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -335,7 +335,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetAdScriptAncestryResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns present frame tree structure.
@@ -349,7 +349,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetFrameTreeResult"/>.
     /// </returns>
-    Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns metrics relating to the layouting of the page, such as viewport bounds/scale.
@@ -363,7 +363,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLayoutMetricsResult"/>.
     /// </returns>
-    Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns navigation history for the current page.
@@ -377,7 +377,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetNavigationHistoryResult"/>.
     /// </returns>
-    Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resets navigation history for the current page.
@@ -391,7 +391,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetNavigationHistoryResult"/>.
     /// </returns>
-    Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns content of the given resource.
@@ -412,7 +412,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetResourceContentResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns present frame / resource tree structure.
@@ -427,7 +427,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetResourceTreeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Accepts or dismisses a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload).
@@ -448,7 +448,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="HandleJavaScriptDialogResult"/>.
     /// </returns>
-    Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Navigates current page to the given URL.
@@ -477,7 +477,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="NavigateResult"/>.
     /// </returns>
-    Task<NavigateResult> NavigateAsync(string url, string? referrer = default, TransitionType? transitionType = default, FrameId? frameId = default, ReferrerPolicy? referrerPolicy = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<NavigateResult> NavigateAsync(string url, string? referrer = null, TransitionType? transitionType = null, FrameId? frameId = null, ReferrerPolicy? referrerPolicy = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Navigates current page to the given history entry.
@@ -494,7 +494,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="NavigateToHistoryEntryResult"/>.
     /// </returns>
-    Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = default, CancellationToken cancellationToken = default);
+    Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Print page as PDF.
@@ -575,7 +575,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PrintToPDFResult"/>.
     /// </returns>
-    Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, PrintToPDFTransferMode? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = null, bool? displayHeaderFooter = null, bool? printBackground = null, double? scale = null, double? paperWidth = null, double? paperHeight = null, double? marginTop = null, double? marginBottom = null, double? marginLeft = null, double? marginRight = null, string? pageRanges = null, string? headerTemplate = null, string? footerTemplate = null, bool? preferCSSPageSize = null, PrintToPDFTransferMode? transferMode = null, bool? generateTaggedPDF = null, bool? generateDocumentOutline = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reloads given page optionally ignoring the cache.
@@ -601,7 +601,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReloadResult"/>.
     /// </returns>
-    Task<ReloadResult> ReloadAsync(bool? ignoreCache = default, string? scriptToEvaluateOnLoad = default, Network.LoaderId? loaderId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReloadResult> ReloadAsync(bool? ignoreCache = null, string? scriptToEvaluateOnLoad = null, Network.LoaderId? loaderId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated, please use removeScriptToEvaluateOnNewDocument instead.
@@ -619,7 +619,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes given script from the list.
@@ -635,7 +635,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveScriptToEvaluateOnNewDocumentResult"/>.
     /// </returns>
-    Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Acknowledges that a screencast frame has been received by the frontend.
@@ -653,7 +653,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="ScreencastFrameAckResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for given string in resource content.
@@ -683,7 +683,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SearchInResourceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = null, bool? isRegex = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable Chrome's experimental ad filter on all sites.
@@ -701,7 +701,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetAdBlockingEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable page Content Security Policy by-passing.
@@ -718,7 +718,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBypassCSPResult"/>.
     /// </returns>
-    Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get Permissions Policy state on given frame.
@@ -735,7 +735,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetPermissionsPolicyStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get Origin Trials on given frame.
@@ -752,7 +752,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetOriginTrialsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
@@ -807,7 +807,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, Emulation.ScreenOrientation? screenOrientation = default, Viewport? viewport = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, Emulation.ScreenOrientation? screenOrientation = null, Viewport? viewport = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Device Orientation.
@@ -832,7 +832,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set generic font families.
@@ -853,7 +853,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetFontFamiliesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set default font sizes.
@@ -871,7 +871,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetFontSizesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets given markup as the document's HTML.
@@ -891,7 +891,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDocumentContentResult"/>.
     /// </returns>
-    Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set the behavior when downloading a file.
@@ -914,7 +914,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, string? downloadPath = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
@@ -939,7 +939,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetGeolocationOverrideResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = null, double? longitude = null, double? accuracy = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Controls whether page will emit lifecycle events.
@@ -956,7 +956,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetLifecycleEventsEnabledResult"/>.
     /// </returns>
-    Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Toggles mouse event-based touch event emulation.
@@ -978,7 +978,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, SetTouchEmulationEnabledConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, SetTouchEmulationEnabledConfiguration? configuration = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts sending each frame using the <b>screencastFrame</b> event.
@@ -1018,7 +1018,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="StartScreencastResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StartScreencastResult> StartScreencastAsync(StartScreencastFormat? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartScreencastResult> StartScreencastAsync(StartScreencastFormat? format = null, long? quality = null, long? maxWidth = null, long? maxHeight = null, long? everyNthFrame = null, long? maxFramesInFlight = null, bool? sendLastFrame = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts screencast video recording.
@@ -1044,7 +1044,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="StartScreenRecordingResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = default, long? maxWidth = default, long? maxHeight = default, long? frameRate = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = null, long? maxWidth = null, long? maxHeight = null, long? frameRate = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops screencast video recording.
@@ -1059,7 +1059,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="StopScreenRecordingResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StopScreenRecordingResult> StopScreenRecordingAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopScreenRecordingResult> StopScreenRecordingAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Force the page stop all navigations and pending resource fetches.
@@ -1073,7 +1073,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopLoadingResult"/>.
     /// </returns>
-    Task<StopLoadingResult> StopLoadingAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopLoadingResult> StopLoadingAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Crashes renderer on the IO thread, generates minidumps.
@@ -1088,7 +1088,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="CrashResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CrashResult> CrashAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tries to close page, running its beforeunload hooks, if any.
@@ -1102,7 +1102,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseResult"/>.
     /// </returns>
-    Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CloseResult> CloseAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tries to update the web lifecycle state of the page.
@@ -1122,7 +1122,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetWebLifecycleStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(SetWebLifecycleStateState state, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(SetWebLifecycleStateState state, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops sending each frame in the <b>screencastFrame</b>.
@@ -1137,7 +1137,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="StopScreencastResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StopScreencastResult> StopScreencastAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopScreencastResult> StopScreencastAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests backend to produce compilation cache for the specified scripts.
@@ -1159,7 +1159,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="ProduceCompilationCacheResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = default, CancellationToken cancellationToken = default);
+    Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Seeds compilation cache for given url. Compilation cache does not survive
@@ -1180,7 +1180,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="AddCompilationCacheResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears seeded compilation cache.
@@ -1195,7 +1195,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="ClearCompilationCacheResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the Secure Payment Confirmation transaction mode.
@@ -1213,7 +1213,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetSPCTransactionModeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(SetSPCTransactionModeMode mode, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(SetSPCTransactionModeMode mode, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Extensions for Custom Handlers API:
@@ -1231,7 +1231,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetRPHRegistrationModeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(SetRPHRegistrationModeMode mode, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(SetRPHRegistrationModeMode mode, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Generates a report for testing.
@@ -1252,7 +1252,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GenerateTestReportResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Pauses page execution. Can be resumed using generic Runtime.runIfWaitingForDebugger.
@@ -1267,7 +1267,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="WaitForDebuggerResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Intercept file chooser requests and transfer control to protocol clients.
@@ -1290,7 +1290,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInterceptFileChooserDialogResult"/>.
     /// </returns>
-    Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable/disable prerendering manually.
@@ -1313,7 +1313,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetPrerenderingAllowedResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get the annotated page content for the main frame.
@@ -1332,7 +1332,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="GetAnnotatedPageContentResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -1709,32 +1709,32 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddScriptToEvaluateOnLoadResult> AddScriptToEvaluateOnLoadAsync(string scriptSource, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddScriptToEvaluateOnLoadCommandParameters(ScriptSource: scriptSource);
         return await ExecuteCommandAsync("Page.addScriptToEvaluateOnLoad", @params, JsonContext.AddScriptToEvaluateOnLoadCommandParameters, JsonContext.AddScriptToEvaluateOnLoadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = default, bool? includeCommandLineAPI = default, bool? runImmediately = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddScriptToEvaluateOnNewDocumentResult> AddScriptToEvaluateOnNewDocumentAsync(string source, string? worldName = null, bool? includeCommandLineAPI = null, bool? runImmediately = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddScriptToEvaluateOnNewDocumentCommandParameters(Source: source, WorldName: worldName, IncludeCommandLineAPI: includeCommandLineAPI, RunImmediately: runImmediately);
         return await ExecuteCommandAsync("Page.addScriptToEvaluateOnNewDocument", @params, JsonContext.AddScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.AddScriptToEvaluateOnNewDocumentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<BringToFrontResult> BringToFrontAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<BringToFrontResult> BringToFrontAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new BringToFrontCommandParameters();
         return await ExecuteCommandAsync("Page.bringToFront", @params, JsonContext.BringToFrontCommandParameters, JsonContext.BringToFrontResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CaptureScreenshotResult> CaptureScreenshotAsync(CaptureScreenshotFormat? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CaptureScreenshotResult> CaptureScreenshotAsync(CaptureScreenshotFormat? format = null, long? quality = null, Viewport? clip = null, bool? fromSurface = null, bool? captureBeyondViewport = null, bool? optimizeForSpeed = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureScreenshotCommandParameters(Format: format, Quality: quality, Clip: clip, FromSurface: fromSurface, CaptureBeyondViewport: captureBeyondViewport, OptimizeForSpeed: optimizeForSpeed);
         return await ExecuteCommandAsync("Page.captureScreenshot", @params, JsonContext.CaptureScreenshotCommandParameters, JsonContext.CaptureScreenshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(CaptureSnapshotFormat? format = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(CaptureSnapshotFormat? format = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureSnapshotCommandParameters(Format: format);
         return await ExecuteCommandAsync("Page.captureSnapshot", @params, JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult, session, cancellationToken).ConfigureAwait(false);
@@ -1742,7 +1742,7 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDeviceMetricsOverrideResult> ClearDeviceMetricsOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceMetricsOverrideCommandParameters();
         return await ExecuteCommandAsync("Page.clearDeviceMetricsOverride", @params, JsonContext.ClearDeviceMetricsOverrideCommandParameters, JsonContext.ClearDeviceMetricsOverrideResult, session, cancellationToken).ConfigureAwait(false);
@@ -1750,20 +1750,20 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceOrientationOverrideCommandParameters();
         return await ExecuteCommandAsync("Page.clearDeviceOrientationOverride", @params, JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearGeolocationOverrideResult> ClearGeolocationOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearGeolocationOverrideCommandParameters();
         return await ExecuteCommandAsync("Page.clearGeolocationOverride", @params, JsonContext.ClearGeolocationOverrideCommandParameters, JsonContext.ClearGeolocationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = default, bool? grantUniveralAccess = default, string? contentSecurityPolicy = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CreateIsolatedWorldResult> CreateIsolatedWorldAsync(FrameId frameId, string? worldName = null, bool? grantUniveralAccess = null, string? contentSecurityPolicy = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CreateIsolatedWorldCommandParameters(FrameId: frameId, WorldName: worldName, GrantUniveralAccess: grantUniveralAccess, ContentSecurityPolicy: contentSecurityPolicy);
         return await ExecuteCommandAsync("Page.createIsolatedWorld", @params, JsonContext.CreateIsolatedWorldCommandParameters, JsonContext.CreateIsolatedWorldResult, session, cancellationToken).ConfigureAwait(false);
@@ -1771,32 +1771,32 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteCookieResult> DeleteCookieAsync(string cookieName, string url, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCookieCommandParameters(CookieName: cookieName, Url: url);
         return await ExecuteCommandAsync("Page.deleteCookie", @params, JsonContext.DeleteCookieCommandParameters, JsonContext.DeleteCookieResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Page.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(bool? enableFileChooserOpenedEvent = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EnableFileChooserOpenedEvent: enableFileChooserOpenedEvent);
         return await ExecuteCommandAsync("Page.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAppManifestResult> GetAppManifestAsync(string? manifestId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAppManifestCommandParameters(ManifestId: manifestId);
         return await ExecuteCommandAsync("Page.getAppManifest", @params, JsonContext.GetAppManifestCommandParameters, JsonContext.GetAppManifestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetInstallabilityErrorsResult> GetInstallabilityErrorsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetInstallabilityErrorsCommandParameters();
         return await ExecuteCommandAsync("Page.getInstallabilityErrors", @params, JsonContext.GetInstallabilityErrorsCommandParameters, JsonContext.GetInstallabilityErrorsResult, session, cancellationToken).ConfigureAwait(false);
@@ -1804,89 +1804,89 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetManifestIconsCommandParameters();
         return await ExecuteCommandAsync("Page.getManifestIcons", @params, JsonContext.GetManifestIconsCommandParameters, JsonContext.GetManifestIconsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAppIdResult> GetAppIdAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAppIdResult> GetAppIdAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAppIdCommandParameters();
         return await ExecuteCommandAsync("Page.getAppId", @params, JsonContext.GetAppIdCommandParameters, JsonContext.GetAppIdResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdScriptAncestryCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("Page.getAdScriptAncestry", @params, JsonContext.GetAdScriptAncestryCommandParameters, JsonContext.GetAdScriptAncestryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetFrameTreeCommandParameters();
         return await ExecuteCommandAsync("Page.getFrameTree", @params, JsonContext.GetFrameTreeCommandParameters, JsonContext.GetFrameTreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetLayoutMetricsResult> GetLayoutMetricsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetLayoutMetricsCommandParameters();
         return await ExecuteCommandAsync("Page.getLayoutMetrics", @params, JsonContext.GetLayoutMetricsCommandParameters, JsonContext.GetLayoutMetricsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetNavigationHistoryResult> GetNavigationHistoryAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetNavigationHistoryCommandParameters();
         return await ExecuteCommandAsync("Page.getNavigationHistory", @params, JsonContext.GetNavigationHistoryCommandParameters, JsonContext.GetNavigationHistoryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResetNavigationHistoryResult> ResetNavigationHistoryAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResetNavigationHistoryCommandParameters();
         return await ExecuteCommandAsync("Page.resetNavigationHistory", @params, JsonContext.ResetNavigationHistoryCommandParameters, JsonContext.ResetNavigationHistoryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetResourceContentResult> GetResourceContentAsync(FrameId frameId, string url, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetResourceContentCommandParameters(FrameId: frameId, Url: url);
         return await ExecuteCommandAsync("Page.getResourceContent", @params, JsonContext.GetResourceContentCommandParameters, JsonContext.GetResourceContentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetResourceTreeResult> GetResourceTreeAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetResourceTreeCommandParameters();
         return await ExecuteCommandAsync("Page.getResourceTree", @params, JsonContext.GetResourceTreeCommandParameters, JsonContext.GetResourceTreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HandleJavaScriptDialogResult> HandleJavaScriptDialogAsync(bool accept, string? promptText = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HandleJavaScriptDialogCommandParameters(Accept: accept, PromptText: promptText);
         return await ExecuteCommandAsync("Page.handleJavaScriptDialog", @params, JsonContext.HandleJavaScriptDialogCommandParameters, JsonContext.HandleJavaScriptDialogResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<NavigateResult> NavigateAsync(string url, string? referrer = default, TransitionType? transitionType = default, FrameId? frameId = default, ReferrerPolicy? referrerPolicy = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<NavigateResult> NavigateAsync(string url, string? referrer = null, TransitionType? transitionType = null, FrameId? frameId = null, ReferrerPolicy? referrerPolicy = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new NavigateCommandParameters(Url: url, Referrer: referrer, TransitionType: transitionType, FrameId: frameId, ReferrerPolicy: referrerPolicy);
         return await ExecuteCommandAsync("Page.navigate", @params, JsonContext.NavigateCommandParameters, JsonContext.NavigateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<NavigateToHistoryEntryResult> NavigateToHistoryEntryAsync(long entryId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new NavigateToHistoryEntryCommandParameters(EntryId: entryId);
         return await ExecuteCommandAsync("Page.navigateToHistoryEntry", @params, JsonContext.NavigateToHistoryEntryCommandParameters, JsonContext.NavigateToHistoryEntryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, PrintToPDFTransferMode? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = null, bool? displayHeaderFooter = null, bool? printBackground = null, double? scale = null, double? paperWidth = null, double? paperHeight = null, double? marginTop = null, double? marginBottom = null, double? marginLeft = null, double? marginRight = null, string? pageRanges = null, string? headerTemplate = null, string? footerTemplate = null, bool? preferCSSPageSize = null, PrintToPDFTransferMode? transferMode = null, bool? generateTaggedPDF = null, bool? generateDocumentOutline = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new PrintToPDFCommandParameters(Landscape: landscape, DisplayHeaderFooter: displayHeaderFooter, PrintBackground: printBackground, Scale: scale, PaperWidth: paperWidth, PaperHeight: paperHeight, MarginTop: marginTop, MarginBottom: marginBottom, MarginLeft: marginLeft, MarginRight: marginRight, PageRanges: pageRanges, HeaderTemplate: headerTemplate, FooterTemplate: footerTemplate, PreferCSSPageSize: preferCSSPageSize, TransferMode: transferMode, GenerateTaggedPDF: generateTaggedPDF, GenerateDocumentOutline: generateDocumentOutline);
         return await ExecuteCommandAsync("Page.printToPDF", @params, JsonContext.PrintToPDFCommandParameters, JsonContext.PrintToPDFResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReloadResult> ReloadAsync(bool? ignoreCache = default, string? scriptToEvaluateOnLoad = default, Network.LoaderId? loaderId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReloadResult> ReloadAsync(bool? ignoreCache = null, string? scriptToEvaluateOnLoad = null, Network.LoaderId? loaderId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReloadCommandParameters(IgnoreCache: ignoreCache, ScriptToEvaluateOnLoad: scriptToEvaluateOnLoad, LoaderId: loaderId);
         return await ExecuteCommandAsync("Page.reload", @params, JsonContext.ReloadCommandParameters, JsonContext.ReloadResult, session, cancellationToken).ConfigureAwait(false);
@@ -1894,54 +1894,54 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveScriptToEvaluateOnLoadResult> RemoveScriptToEvaluateOnLoadAsync(ScriptIdentifier identifier, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveScriptToEvaluateOnLoadCommandParameters(Identifier: identifier);
         return await ExecuteCommandAsync("Page.removeScriptToEvaluateOnLoad", @params, JsonContext.RemoveScriptToEvaluateOnLoadCommandParameters, JsonContext.RemoveScriptToEvaluateOnLoadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveScriptToEvaluateOnNewDocumentResult> RemoveScriptToEvaluateOnNewDocumentAsync(ScriptIdentifier identifier, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveScriptToEvaluateOnNewDocumentCommandParameters(Identifier: identifier);
         return await ExecuteCommandAsync("Page.removeScriptToEvaluateOnNewDocument", @params, JsonContext.RemoveScriptToEvaluateOnNewDocumentCommandParameters, JsonContext.RemoveScriptToEvaluateOnNewDocumentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ScreencastFrameAckResult> ScreencastFrameAckAsync(long sessionId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ScreencastFrameAckCommandParameters(SessionId: sessionId);
         return await ExecuteCommandAsync("Page.screencastFrameAck", @params, JsonContext.ScreencastFrameAckCommandParameters, JsonContext.ScreencastFrameAckResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SearchInResourceResult> SearchInResourceAsync(FrameId frameId, string url, string query, bool? caseSensitive = null, bool? isRegex = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SearchInResourceCommandParameters(FrameId: frameId, Url: url, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
         return await ExecuteCommandAsync("Page.searchInResource", @params, JsonContext.SearchInResourceCommandParameters, JsonContext.SearchInResourceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAdBlockingEnabledResult> SetAdBlockingEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAdBlockingEnabledCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Page.setAdBlockingEnabled", @params, JsonContext.SetAdBlockingEnabledCommandParameters, JsonContext.SetAdBlockingEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBypassCSPResult> SetBypassCSPAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBypassCSPCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Page.setBypassCSP", @params, JsonContext.SetBypassCSPCommandParameters, JsonContext.SetBypassCSPResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetPermissionsPolicyStateResult> GetPermissionsPolicyStateAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetPermissionsPolicyStateCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("Page.getPermissionsPolicyState", @params, JsonContext.GetPermissionsPolicyStateCommandParameters, JsonContext.GetPermissionsPolicyStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetOriginTrialsResult> GetOriginTrialsAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetOriginTrialsCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("Page.getOriginTrials", @params, JsonContext.GetOriginTrialsCommandParameters, JsonContext.GetOriginTrialsResult, session, cancellationToken).ConfigureAwait(false);
@@ -1949,7 +1949,7 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, Emulation.ScreenOrientation? screenOrientation = default, Viewport? viewport = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, Emulation.ScreenOrientation? screenOrientation = null, Viewport? viewport = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport);
         return await ExecuteCommandAsync("Page.setDeviceMetricsOverride", @params, JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult, session, cancellationToken).ConfigureAwait(false);
@@ -1957,27 +1957,27 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceOrientationOverrideCommandParameters(Alpha: alpha, Beta: beta, Gamma: gamma);
         return await ExecuteCommandAsync("Page.setDeviceOrientationOverride", @params, JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetFontFamiliesResult> SetFontFamiliesAsync(FontFamilies fontFamilies, ImmutableArray<ScriptFontFamilies>? forScripts = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetFontFamiliesCommandParameters(FontFamilies: fontFamilies, ForScripts: forScripts);
         return await ExecuteCommandAsync("Page.setFontFamilies", @params, JsonContext.SetFontFamiliesCommandParameters, JsonContext.SetFontFamiliesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetFontSizesResult> SetFontSizesAsync(FontSizes fontSizes, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetFontSizesCommandParameters(FontSizes: fontSizes);
         return await ExecuteCommandAsync("Page.setFontSizes", @params, JsonContext.SetFontSizesCommandParameters, JsonContext.SetFontSizesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDocumentContentResult> SetDocumentContentAsync(FrameId frameId, string html, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDocumentContentCommandParameters(FrameId: frameId, Html: html);
         return await ExecuteCommandAsync("Page.setDocumentContent", @params, JsonContext.SetDocumentContentCommandParameters, JsonContext.SetDocumentContentResult, session, cancellationToken).ConfigureAwait(false);
@@ -1985,20 +1985,20 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, string? downloadPath = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, DownloadPath: downloadPath);
         return await ExecuteCommandAsync("Page.setDownloadBehavior", @params, JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = default, double? longitude = default, double? accuracy = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetGeolocationOverrideResult> SetGeolocationOverrideAsync(double? latitude = null, double? longitude = null, double? accuracy = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetGeolocationOverrideCommandParameters(Latitude: latitude, Longitude: longitude, Accuracy: accuracy);
         return await ExecuteCommandAsync("Page.setGeolocationOverride", @params, JsonContext.SetGeolocationOverrideCommandParameters, JsonContext.SetGeolocationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetLifecycleEventsEnabledResult> SetLifecycleEventsEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetLifecycleEventsEnabledCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Page.setLifecycleEventsEnabled", @params, JsonContext.SetLifecycleEventsEnabledCommandParameters, JsonContext.SetLifecycleEventsEnabledResult, session, cancellationToken).ConfigureAwait(false);
@@ -2006,130 +2006,130 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, SetTouchEmulationEnabledConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, SetTouchEmulationEnabledConfiguration? configuration = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetTouchEmulationEnabledCommandParameters(Enabled: enabled, Configuration: configuration);
         return await ExecuteCommandAsync("Page.setTouchEmulationEnabled", @params, JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StartScreencastResult> StartScreencastAsync(StartScreencastFormat? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartScreencastResult> StartScreencastAsync(StartScreencastFormat? format = null, long? quality = null, long? maxWidth = null, long? maxHeight = null, long? everyNthFrame = null, long? maxFramesInFlight = null, bool? sendLastFrame = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartScreencastCommandParameters(Format: format, Quality: quality, MaxWidth: maxWidth, MaxHeight: maxHeight, EveryNthFrame: everyNthFrame, MaxFramesInFlight: maxFramesInFlight, SendLastFrame: sendLastFrame);
         return await ExecuteCommandAsync("Page.startScreencast", @params, JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = default, long? maxWidth = default, long? maxHeight = default, long? frameRate = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = null, long? maxWidth = null, long? maxHeight = null, long? frameRate = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartScreenRecordingCommandParameters(Audio: audio, MaxWidth: maxWidth, MaxHeight: maxHeight, FrameRate: frameRate);
         return await ExecuteCommandAsync("Page.startScreenRecording", @params, JsonContext.StartScreenRecordingCommandParameters, JsonContext.StartScreenRecordingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StopScreenRecordingResult> StopScreenRecordingAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopScreenRecordingResult> StopScreenRecordingAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopScreenRecordingCommandParameters();
         return await ExecuteCommandAsync("Page.stopScreenRecording", @params, JsonContext.StopScreenRecordingCommandParameters, JsonContext.StopScreenRecordingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopLoadingResult> StopLoadingAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopLoadingResult> StopLoadingAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopLoadingCommandParameters();
         return await ExecuteCommandAsync("Page.stopLoading", @params, JsonContext.StopLoadingCommandParameters, JsonContext.StopLoadingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CrashResult> CrashAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CrashResult> CrashAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CrashCommandParameters();
         return await ExecuteCommandAsync("Page.crash", @params, JsonContext.CrashCommandParameters, JsonContext.CrashResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CloseResult> CloseAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CloseResult> CloseAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CloseCommandParameters();
         return await ExecuteCommandAsync("Page.close", @params, JsonContext.CloseCommandParameters, JsonContext.CloseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(SetWebLifecycleStateState state, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(SetWebLifecycleStateState state, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetWebLifecycleStateCommandParameters(State: state);
         return await ExecuteCommandAsync("Page.setWebLifecycleState", @params, JsonContext.SetWebLifecycleStateCommandParameters, JsonContext.SetWebLifecycleStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StopScreencastResult> StopScreencastAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopScreencastResult> StopScreencastAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopScreencastCommandParameters();
         return await ExecuteCommandAsync("Page.stopScreencast", @params, JsonContext.StopScreencastCommandParameters, JsonContext.StopScreencastResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ProduceCompilationCacheResult> ProduceCompilationCacheAsync(ImmutableArray<CompilationCacheParams> scripts, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ProduceCompilationCacheCommandParameters(Scripts: scripts);
         return await ExecuteCommandAsync("Page.produceCompilationCache", @params, JsonContext.ProduceCompilationCacheCommandParameters, JsonContext.ProduceCompilationCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddCompilationCacheResult> AddCompilationCacheAsync(string url, string data, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddCompilationCacheCommandParameters(Url: url, Data: data);
         return await ExecuteCommandAsync("Page.addCompilationCache", @params, JsonContext.AddCompilationCacheCommandParameters, JsonContext.AddCompilationCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearCompilationCacheResult> ClearCompilationCacheAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCompilationCacheCommandParameters();
         return await ExecuteCommandAsync("Page.clearCompilationCache", @params, JsonContext.ClearCompilationCacheCommandParameters, JsonContext.ClearCompilationCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(SetSPCTransactionModeMode mode, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(SetSPCTransactionModeMode mode, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSPCTransactionModeCommandParameters(Mode: mode);
         return await ExecuteCommandAsync("Page.setSPCTransactionMode", @params, JsonContext.SetSPCTransactionModeCommandParameters, JsonContext.SetSPCTransactionModeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(SetRPHRegistrationModeMode mode, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(SetRPHRegistrationModeMode mode, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetRPHRegistrationModeCommandParameters(Mode: mode);
         return await ExecuteCommandAsync("Page.setRPHRegistrationMode", @params, JsonContext.SetRPHRegistrationModeCommandParameters, JsonContext.SetRPHRegistrationModeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GenerateTestReportResult> GenerateTestReportAsync(string message, string? group = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GenerateTestReportCommandParameters(Message: message, Group: group);
         return await ExecuteCommandAsync("Page.generateTestReport", @params, JsonContext.GenerateTestReportCommandParameters, JsonContext.GenerateTestReportResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<WaitForDebuggerResult> WaitForDebuggerAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new WaitForDebuggerCommandParameters();
         return await ExecuteCommandAsync("Page.waitForDebugger", @params, JsonContext.WaitForDebuggerCommandParameters, JsonContext.WaitForDebuggerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetInterceptFileChooserDialogResult> SetInterceptFileChooserDialogAsync(bool enabled, bool? cancel = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetInterceptFileChooserDialogCommandParameters(Enabled: enabled, Cancel: cancel);
         return await ExecuteCommandAsync("Page.setInterceptFileChooserDialog", @params, JsonContext.SetInterceptFileChooserDialogCommandParameters, JsonContext.SetInterceptFileChooserDialogResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPrerenderingAllowedResult> SetPrerenderingAllowedAsync(bool isAllowed, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPrerenderingAllowedCommandParameters(IsAllowed: isAllowed);
         return await ExecuteCommandAsync("Page.setPrerenderingAllowed", @params, JsonContext.SetPrerenderingAllowedCommandParameters, JsonContext.SetPrerenderingAllowedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnnotatedPageContentCommandParameters(IncludeActionableInformation: includeActionableInformation);
         return await ExecuteCommandAsync("Page.getAnnotatedPageContent", @params, JsonContext.GetAnnotatedPageContentCommandParameters, JsonContext.GetAnnotatedPageContentResult, session, cancellationToken).ConfigureAwait(false);
@@ -2186,6 +2186,7 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 internal sealed record AddScriptToEvaluateOnLoadCommandParameters(string ScriptSource) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.AddScriptToEvaluateOnLoadAsync"/> command.
 /// </summary>
 /// <param name="Identifier">
 /// Identifier of the added script.
@@ -2196,6 +2197,7 @@ public sealed record AddScriptToEvaluateOnLoadResult(ScriptIdentifier Identifier
 internal sealed record AddScriptToEvaluateOnNewDocumentCommandParameters(string Source, string? WorldName, bool? IncludeCommandLineAPI, bool? RunImmediately) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.AddScriptToEvaluateOnNewDocumentAsync"/> command.
 /// </summary>
 /// <param name="Identifier">
 /// Identifier of the added script.
@@ -2206,6 +2208,7 @@ public sealed record AddScriptToEvaluateOnNewDocumentResult(ScriptIdentifier Ide
 internal sealed record BringToFrontCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.BringToFrontAsync"/> command.
 /// </summary>
 public sealed record BringToFrontResult() : EmptyResult;
 
@@ -2213,6 +2216,7 @@ public sealed record BringToFrontResult() : EmptyResult;
 internal sealed record CaptureScreenshotCommandParameters(CaptureScreenshotFormat? Format, long? Quality, Viewport? Clip, bool? FromSurface, bool? CaptureBeyondViewport, bool? OptimizeForSpeed) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.CaptureScreenshotAsync"/> command.
 /// </summary>
 /// <param name="Data">
 /// Base64-encoded image data. (Encoded as a base64 string when passed over JSON)
@@ -2223,6 +2227,7 @@ public sealed record CaptureScreenshotResult(string Data) : EmptyResult;
 internal sealed record CaptureSnapshotCommandParameters(CaptureSnapshotFormat? Format) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.CaptureSnapshotAsync"/> command.
 /// </summary>
 /// <param name="Data">
 /// Serialized page data.
@@ -2233,6 +2238,7 @@ public sealed record CaptureSnapshotResult(string Data) : EmptyResult;
 internal sealed record ClearDeviceMetricsOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ClearDeviceMetricsOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearDeviceMetricsOverrideResult() : EmptyResult;
 
@@ -2240,6 +2246,7 @@ public sealed record ClearDeviceMetricsOverrideResult() : EmptyResult;
 internal sealed record ClearDeviceOrientationOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ClearDeviceOrientationOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearDeviceOrientationOverrideResult() : EmptyResult;
 
@@ -2247,6 +2254,7 @@ public sealed record ClearDeviceOrientationOverrideResult() : EmptyResult;
 internal sealed record ClearGeolocationOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ClearGeolocationOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearGeolocationOverrideResult() : EmptyResult;
 
@@ -2254,6 +2262,7 @@ public sealed record ClearGeolocationOverrideResult() : EmptyResult;
 internal sealed record CreateIsolatedWorldCommandParameters(FrameId FrameId, string? WorldName, bool? GrantUniveralAccess, string? ContentSecurityPolicy) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.CreateIsolatedWorldAsync"/> command.
 /// </summary>
 /// <param name="ExecutionContextId">
 /// Execution context of the isolated world.
@@ -2264,6 +2273,7 @@ public sealed record CreateIsolatedWorldResult(Runtime.ExecutionContextId Execut
 internal sealed record DeleteCookieCommandParameters(string CookieName, string Url) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.DeleteCookieAsync"/> command.
 /// </summary>
 public sealed record DeleteCookieResult() : EmptyResult;
 
@@ -2271,6 +2281,7 @@ public sealed record DeleteCookieResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -2278,6 +2289,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters(bool? EnableFileChooserOpenedEvent) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -2285,6 +2297,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record GetAppManifestCommandParameters(string? ManifestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetAppManifestAsync"/> command.
 /// </summary>
 /// <param name="Url">
 /// Manifest location.
@@ -2305,6 +2318,7 @@ public sealed record GetAppManifestResult(string Url, ImmutableArray<AppManifest
 internal sealed record GetInstallabilityErrorsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetInstallabilityErrorsAsync"/> command.
 /// </summary>
 /// <param name="InstallabilityErrors">
 /// </param>
@@ -2314,6 +2328,7 @@ public sealed record GetInstallabilityErrorsResult(ImmutableArray<Installability
 internal sealed record GetManifestIconsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetManifestIconsAsync"/> command.
 /// </summary>
 /// <param name="PrimaryIcon">
 /// </param>
@@ -2323,6 +2338,7 @@ public sealed record GetManifestIconsResult(string? PrimaryIcon) : EmptyResult;
 internal sealed record GetAppIdCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetAppIdAsync"/> command.
 /// </summary>
 /// <param name="AppId">
 /// App id, either from manifest's id attribute or computed from start_url
@@ -2336,6 +2352,7 @@ public sealed record GetAppIdResult(string? AppId, string? RecommendedId) : Empt
 internal sealed record GetAdScriptAncestryCommandParameters(FrameId FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetAdScriptAncestryAsync"/> command.
 /// </summary>
 /// <param name="AdScriptAncestry">
 /// The ancestry chain of ad script identifiers leading to this frame's
@@ -2350,6 +2367,7 @@ public sealed record GetAdScriptAncestryResult(Network.AdAncestry? AdScriptAnces
 internal sealed record GetFrameTreeCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetFrameTreeAsync"/> command.
 /// </summary>
 /// <param name="FrameTree">
 /// Present frame tree structure.
@@ -2360,6 +2378,7 @@ public sealed record GetFrameTreeResult(FrameTree FrameTree) : EmptyResult;
 internal sealed record GetLayoutMetricsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetLayoutMetricsAsync"/> command.
 /// </summary>
 /// <param name="LayoutViewport">
 /// Deprecated metrics relating to the layout viewport. Is in device pixels. Use <b>cssLayoutViewport</b> instead.
@@ -2385,6 +2404,7 @@ public sealed record GetLayoutMetricsResult(LayoutViewport LayoutViewport, Visua
 internal sealed record GetNavigationHistoryCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetNavigationHistoryAsync"/> command.
 /// </summary>
 /// <param name="CurrentIndex">
 /// Index of the current navigation history entry.
@@ -2398,6 +2418,7 @@ public sealed record GetNavigationHistoryResult(long CurrentIndex, ImmutableArra
 internal sealed record ResetNavigationHistoryCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ResetNavigationHistoryAsync"/> command.
 /// </summary>
 public sealed record ResetNavigationHistoryResult() : EmptyResult;
 
@@ -2405,6 +2426,7 @@ public sealed record ResetNavigationHistoryResult() : EmptyResult;
 internal sealed record GetResourceContentCommandParameters(FrameId FrameId, string Url) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetResourceContentAsync"/> command.
 /// </summary>
 /// <param name="Content">
 /// Resource content.
@@ -2418,6 +2440,7 @@ public sealed record GetResourceContentResult(string Content, bool Base64Encoded
 internal sealed record GetResourceTreeCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetResourceTreeAsync"/> command.
 /// </summary>
 /// <param name="FrameTree">
 /// Present frame / resource tree structure.
@@ -2428,6 +2451,7 @@ public sealed record GetResourceTreeResult(FrameResourceTree FrameTree) : EmptyR
 internal sealed record HandleJavaScriptDialogCommandParameters(bool Accept, string? PromptText) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.HandleJavaScriptDialogAsync"/> command.
 /// </summary>
 public sealed record HandleJavaScriptDialogResult() : EmptyResult;
 
@@ -2435,6 +2459,7 @@ public sealed record HandleJavaScriptDialogResult() : EmptyResult;
 internal sealed record NavigateCommandParameters(string Url, string? Referrer, TransitionType? TransitionType, FrameId? FrameId, ReferrerPolicy? ReferrerPolicy) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.NavigateAsync"/> command.
 /// </summary>
 /// <param name="FrameId">
 /// Frame id that has navigated (or failed to navigate)
@@ -2455,6 +2480,7 @@ public sealed record NavigateResult(FrameId FrameId, Network.LoaderId? LoaderId,
 internal sealed record NavigateToHistoryEntryCommandParameters(long EntryId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.NavigateToHistoryEntryAsync"/> command.
 /// </summary>
 public sealed record NavigateToHistoryEntryResult() : EmptyResult;
 
@@ -2462,6 +2488,7 @@ public sealed record NavigateToHistoryEntryResult() : EmptyResult;
 internal sealed record PrintToPDFCommandParameters(bool? Landscape, bool? DisplayHeaderFooter, bool? PrintBackground, double? Scale, double? PaperWidth, double? PaperHeight, double? MarginTop, double? MarginBottom, double? MarginLeft, double? MarginRight, string? PageRanges, string? HeaderTemplate, string? FooterTemplate, bool? PreferCSSPageSize, PrintToPDFTransferMode? TransferMode, bool? GenerateTaggedPDF, bool? GenerateDocumentOutline) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.PrintToPDFAsync"/> command.
 /// </summary>
 /// <param name="Data">
 /// Base64-encoded pdf data. Empty if |returnAsStream| is specified. (Encoded as a base64 string when passed over JSON)
@@ -2475,6 +2502,7 @@ public sealed record PrintToPDFResult(string Data, IO.StreamHandle? Stream) : Em
 internal sealed record ReloadCommandParameters(bool? IgnoreCache, string? ScriptToEvaluateOnLoad, Network.LoaderId? LoaderId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ReloadAsync"/> command.
 /// </summary>
 public sealed record ReloadResult() : EmptyResult;
 
@@ -2482,6 +2510,7 @@ public sealed record ReloadResult() : EmptyResult;
 internal sealed record RemoveScriptToEvaluateOnLoadCommandParameters(ScriptIdentifier Identifier) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.RemoveScriptToEvaluateOnLoadAsync"/> command.
 /// </summary>
 public sealed record RemoveScriptToEvaluateOnLoadResult() : EmptyResult;
 
@@ -2489,6 +2518,7 @@ public sealed record RemoveScriptToEvaluateOnLoadResult() : EmptyResult;
 internal sealed record RemoveScriptToEvaluateOnNewDocumentCommandParameters(ScriptIdentifier Identifier) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.RemoveScriptToEvaluateOnNewDocumentAsync"/> command.
 /// </summary>
 public sealed record RemoveScriptToEvaluateOnNewDocumentResult() : EmptyResult;
 
@@ -2496,6 +2526,7 @@ public sealed record RemoveScriptToEvaluateOnNewDocumentResult() : EmptyResult;
 internal sealed record ScreencastFrameAckCommandParameters(long SessionId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ScreencastFrameAckAsync"/> command.
 /// </summary>
 public sealed record ScreencastFrameAckResult() : EmptyResult;
 
@@ -2503,6 +2534,7 @@ public sealed record ScreencastFrameAckResult() : EmptyResult;
 internal sealed record SearchInResourceCommandParameters(FrameId FrameId, string Url, string Query, bool? CaseSensitive, bool? IsRegex) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SearchInResourceAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// List of search matches.
@@ -2513,6 +2545,7 @@ public sealed record SearchInResourceResult(ImmutableArray<Debugger.SearchMatch>
 internal sealed record SetAdBlockingEnabledCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetAdBlockingEnabledAsync"/> command.
 /// </summary>
 public sealed record SetAdBlockingEnabledResult() : EmptyResult;
 
@@ -2520,6 +2553,7 @@ public sealed record SetAdBlockingEnabledResult() : EmptyResult;
 internal sealed record SetBypassCSPCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetBypassCSPAsync"/> command.
 /// </summary>
 public sealed record SetBypassCSPResult() : EmptyResult;
 
@@ -2527,6 +2561,7 @@ public sealed record SetBypassCSPResult() : EmptyResult;
 internal sealed record GetPermissionsPolicyStateCommandParameters(FrameId FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetPermissionsPolicyStateAsync"/> command.
 /// </summary>
 /// <param name="States">
 /// </param>
@@ -2536,6 +2571,7 @@ public sealed record GetPermissionsPolicyStateResult(ImmutableArray<PermissionsP
 internal sealed record GetOriginTrialsCommandParameters(FrameId FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetOriginTrialsAsync"/> command.
 /// </summary>
 /// <param name="OriginTrials">
 /// </param>
@@ -2545,6 +2581,7 @@ public sealed record GetOriginTrialsResult(ImmutableArray<OriginTrial> OriginTri
 internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, Emulation.ScreenOrientation? ScreenOrientation, Viewport? Viewport) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetDeviceMetricsOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDeviceMetricsOverrideResult() : EmptyResult;
 
@@ -2552,6 +2589,7 @@ public sealed record SetDeviceMetricsOverrideResult() : EmptyResult;
 internal sealed record SetDeviceOrientationOverrideCommandParameters(double Alpha, double Beta, double Gamma) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetDeviceOrientationOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDeviceOrientationOverrideResult() : EmptyResult;
 
@@ -2559,6 +2597,7 @@ public sealed record SetDeviceOrientationOverrideResult() : EmptyResult;
 internal sealed record SetFontFamiliesCommandParameters(FontFamilies FontFamilies, ImmutableArray<ScriptFontFamilies>? ForScripts) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetFontFamiliesAsync"/> command.
 /// </summary>
 public sealed record SetFontFamiliesResult() : EmptyResult;
 
@@ -2566,6 +2605,7 @@ public sealed record SetFontFamiliesResult() : EmptyResult;
 internal sealed record SetFontSizesCommandParameters(FontSizes FontSizes) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetFontSizesAsync"/> command.
 /// </summary>
 public sealed record SetFontSizesResult() : EmptyResult;
 
@@ -2573,6 +2613,7 @@ public sealed record SetFontSizesResult() : EmptyResult;
 internal sealed record SetDocumentContentCommandParameters(FrameId FrameId, string Html) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetDocumentContentAsync"/> command.
 /// </summary>
 public sealed record SetDocumentContentResult() : EmptyResult;
 
@@ -2580,6 +2621,7 @@ public sealed record SetDocumentContentResult() : EmptyResult;
 internal sealed record SetDownloadBehaviorCommandParameters(SetDownloadBehaviorBehavior Behavior, string? DownloadPath) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetDownloadBehaviorAsync"/> command.
 /// </summary>
 public sealed record SetDownloadBehaviorResult() : EmptyResult;
 
@@ -2587,6 +2629,7 @@ public sealed record SetDownloadBehaviorResult() : EmptyResult;
 internal sealed record SetGeolocationOverrideCommandParameters(double? Latitude, double? Longitude, double? Accuracy) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetGeolocationOverrideAsync"/> command.
 /// </summary>
 public sealed record SetGeolocationOverrideResult() : EmptyResult;
 
@@ -2594,6 +2637,7 @@ public sealed record SetGeolocationOverrideResult() : EmptyResult;
 internal sealed record SetLifecycleEventsEnabledCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetLifecycleEventsEnabledAsync"/> command.
 /// </summary>
 public sealed record SetLifecycleEventsEnabledResult() : EmptyResult;
 
@@ -2601,6 +2645,7 @@ public sealed record SetLifecycleEventsEnabledResult() : EmptyResult;
 internal sealed record SetTouchEmulationEnabledCommandParameters(bool Enabled, SetTouchEmulationEnabledConfiguration? Configuration) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetTouchEmulationEnabledAsync"/> command.
 /// </summary>
 public sealed record SetTouchEmulationEnabledResult() : EmptyResult;
 
@@ -2608,6 +2653,7 @@ public sealed record SetTouchEmulationEnabledResult() : EmptyResult;
 internal sealed record StartScreencastCommandParameters(StartScreencastFormat? Format, long? Quality, long? MaxWidth, long? MaxHeight, long? EveryNthFrame, long? MaxFramesInFlight, bool? SendLastFrame) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.StartScreencastAsync"/> command.
 /// </summary>
 public sealed record StartScreencastResult() : EmptyResult;
 
@@ -2615,6 +2661,7 @@ public sealed record StartScreencastResult() : EmptyResult;
 internal sealed record StartScreenRecordingCommandParameters(bool? Audio, long? MaxWidth, long? MaxHeight, long? FrameRate) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.StartScreenRecordingAsync"/> command.
 /// </summary>
 /// <param name="Stream">
 /// A handle of the stream that holds resulting screencast data.
@@ -2625,6 +2672,7 @@ public sealed record StartScreenRecordingResult(IO.StreamHandle Stream) : EmptyR
 internal sealed record StopScreenRecordingCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.StopScreenRecordingAsync"/> command.
 /// </summary>
 /// <param name="Stream">
 /// A handle of the stream that holds resulting screencast data.
@@ -2635,6 +2683,7 @@ public sealed record StopScreenRecordingResult(IO.StreamHandle Stream) : EmptyRe
 internal sealed record StopLoadingCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.StopLoadingAsync"/> command.
 /// </summary>
 public sealed record StopLoadingResult() : EmptyResult;
 
@@ -2642,6 +2691,7 @@ public sealed record StopLoadingResult() : EmptyResult;
 internal sealed record CrashCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.CrashAsync"/> command.
 /// </summary>
 public sealed record CrashResult() : EmptyResult;
 
@@ -2649,6 +2699,7 @@ public sealed record CrashResult() : EmptyResult;
 internal sealed record CloseCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.CloseAsync"/> command.
 /// </summary>
 public sealed record CloseResult() : EmptyResult;
 
@@ -2656,6 +2707,7 @@ public sealed record CloseResult() : EmptyResult;
 internal sealed record SetWebLifecycleStateCommandParameters(SetWebLifecycleStateState State) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetWebLifecycleStateAsync"/> command.
 /// </summary>
 public sealed record SetWebLifecycleStateResult() : EmptyResult;
 
@@ -2663,6 +2715,7 @@ public sealed record SetWebLifecycleStateResult() : EmptyResult;
 internal sealed record StopScreencastCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.StopScreencastAsync"/> command.
 /// </summary>
 public sealed record StopScreencastResult() : EmptyResult;
 
@@ -2670,6 +2723,7 @@ public sealed record StopScreencastResult() : EmptyResult;
 internal sealed record ProduceCompilationCacheCommandParameters(ImmutableArray<CompilationCacheParams> Scripts) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ProduceCompilationCacheAsync"/> command.
 /// </summary>
 public sealed record ProduceCompilationCacheResult() : EmptyResult;
 
@@ -2677,6 +2731,7 @@ public sealed record ProduceCompilationCacheResult() : EmptyResult;
 internal sealed record AddCompilationCacheCommandParameters(string Url, string Data) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.AddCompilationCacheAsync"/> command.
 /// </summary>
 public sealed record AddCompilationCacheResult() : EmptyResult;
 
@@ -2684,6 +2739,7 @@ public sealed record AddCompilationCacheResult() : EmptyResult;
 internal sealed record ClearCompilationCacheCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.ClearCompilationCacheAsync"/> command.
 /// </summary>
 public sealed record ClearCompilationCacheResult() : EmptyResult;
 
@@ -2691,6 +2747,7 @@ public sealed record ClearCompilationCacheResult() : EmptyResult;
 internal sealed record SetSPCTransactionModeCommandParameters(SetSPCTransactionModeMode Mode) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetSPCTransactionModeAsync"/> command.
 /// </summary>
 public sealed record SetSPCTransactionModeResult() : EmptyResult;
 
@@ -2698,6 +2755,7 @@ public sealed record SetSPCTransactionModeResult() : EmptyResult;
 internal sealed record SetRPHRegistrationModeCommandParameters(SetRPHRegistrationModeMode Mode) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetRPHRegistrationModeAsync"/> command.
 /// </summary>
 public sealed record SetRPHRegistrationModeResult() : EmptyResult;
 
@@ -2705,6 +2763,7 @@ public sealed record SetRPHRegistrationModeResult() : EmptyResult;
 internal sealed record GenerateTestReportCommandParameters(string Message, string? Group) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GenerateTestReportAsync"/> command.
 /// </summary>
 public sealed record GenerateTestReportResult() : EmptyResult;
 
@@ -2712,6 +2771,7 @@ public sealed record GenerateTestReportResult() : EmptyResult;
 internal sealed record WaitForDebuggerCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.WaitForDebuggerAsync"/> command.
 /// </summary>
 public sealed record WaitForDebuggerResult() : EmptyResult;
 
@@ -2719,6 +2779,7 @@ public sealed record WaitForDebuggerResult() : EmptyResult;
 internal sealed record SetInterceptFileChooserDialogCommandParameters(bool Enabled, bool? Cancel) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetInterceptFileChooserDialogAsync"/> command.
 /// </summary>
 public sealed record SetInterceptFileChooserDialogResult() : EmptyResult;
 
@@ -2726,6 +2787,7 @@ public sealed record SetInterceptFileChooserDialogResult() : EmptyResult;
 internal sealed record SetPrerenderingAllowedCommandParameters(bool IsAllowed) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.SetPrerenderingAllowedAsync"/> command.
 /// </summary>
 public sealed record SetPrerenderingAllowedResult() : EmptyResult;
 
@@ -2733,6 +2795,7 @@ public sealed record SetPrerenderingAllowedResult() : EmptyResult;
 internal sealed record GetAnnotatedPageContentCommandParameters(bool? IncludeActionableInformation) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPage.GetAnnotatedPageContentAsync"/> command.
 /// </summary>
 /// <param name="Content">
 /// The annotated page content as a base64 encoded protobuf.
@@ -3111,14 +3174,17 @@ public record FrameId : IStringRemoteId
 public enum AdFrameType
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"child"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("child")]
     Child,
     /// <summary>
+    /// Corresponds to the <c>"root"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("root")]
     Root,
@@ -3130,14 +3196,17 @@ public enum AdFrameType
 public enum AdFrameExplanation
 {
     /// <summary>
+    /// Corresponds to the <c>"ParentIsAd"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ParentIsAd")]
     ParentIsAd,
     /// <summary>
+    /// Corresponds to the <c>"CreatedByAdScript"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CreatedByAdScript")]
     CreatedByAdScript,
     /// <summary>
+    /// Corresponds to the <c>"MatchedBlockingRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MatchedBlockingRule")]
     MatchedBlockingRule,
@@ -3162,18 +3231,22 @@ public sealed record AdFrameStatus(AdFrameType AdFrameType)
 public enum SecureContextType
 {
     /// <summary>
+    /// Corresponds to the <c>"Secure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Secure")]
     Secure,
     /// <summary>
+    /// Corresponds to the <c>"SecureLocalhost"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SecureLocalhost")]
     SecureLocalhost,
     /// <summary>
+    /// Corresponds to the <c>"InsecureScheme"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InsecureScheme")]
     InsecureScheme,
     /// <summary>
+    /// Corresponds to the <c>"InsecureAncestor"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InsecureAncestor")]
     InsecureAncestor,
@@ -3186,14 +3259,17 @@ public enum SecureContextType
 public enum CrossOriginIsolatedContextType
 {
     /// <summary>
+    /// Corresponds to the <c>"Isolated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Isolated")]
     Isolated,
     /// <summary>
+    /// Corresponds to the <c>"NotIsolated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotIsolated")]
     NotIsolated,
     /// <summary>
+    /// Corresponds to the <c>"NotIsolatedFeatureDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotIsolatedFeatureDisabled")]
     NotIsolatedFeatureDisabled,
@@ -3205,18 +3281,22 @@ public enum CrossOriginIsolatedContextType
 public enum GatedAPIFeatures
 {
     /// <summary>
+    /// Corresponds to the <c>"SharedArrayBuffers"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedArrayBuffers")]
     SharedArrayBuffers,
     /// <summary>
+    /// Corresponds to the <c>"SharedArrayBuffersTransferAllowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedArrayBuffersTransferAllowed")]
     SharedArrayBuffersTransferAllowed,
     /// <summary>
+    /// Corresponds to the <c>"PerformanceMeasureMemory"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PerformanceMeasureMemory")]
     PerformanceMeasureMemory,
     /// <summary>
+    /// Corresponds to the <c>"PerformanceProfile"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PerformanceProfile")]
     PerformanceProfile,
@@ -3231,426 +3311,532 @@ public enum GatedAPIFeatures
 public enum PermissionsPolicyFeature
 {
     /// <summary>
+    /// Corresponds to the <c>"accelerometer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("accelerometer")]
     Accelerometer,
     /// <summary>
+    /// Corresponds to the <c>"all-screens-capture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("all-screens-capture")]
     AllScreensCapture,
     /// <summary>
+    /// Corresponds to the <c>"ambient-light-sensor"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ambient-light-sensor")]
     AmbientLightSensor,
     /// <summary>
+    /// Corresponds to the <c>"aria-notify"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("aria-notify")]
     AriaNotify,
     /// <summary>
+    /// Corresponds to the <c>"autofill"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autofill")]
     Autofill,
     /// <summary>
+    /// Corresponds to the <c>"autoplay"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoplay")]
     Autoplay,
     /// <summary>
+    /// Corresponds to the <c>"bluetooth"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bluetooth")]
     Bluetooth,
     /// <summary>
+    /// Corresponds to the <c>"browsing-topics"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("browsing-topics")]
     BrowsingTopics,
     /// <summary>
+    /// Corresponds to the <c>"camera"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("camera")]
     Camera,
     /// <summary>
+    /// Corresponds to the <c>"captured-surface-control"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("captured-surface-control")]
     CapturedSurfaceControl,
     /// <summary>
+    /// Corresponds to the <c>"ch-dpr"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-dpr")]
     ChDpr,
     /// <summary>
+    /// Corresponds to the <c>"ch-device-memory"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-device-memory")]
     ChDeviceMemory,
     /// <summary>
+    /// Corresponds to the <c>"ch-downlink"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-downlink")]
     ChDownlink,
     /// <summary>
+    /// Corresponds to the <c>"ch-ect"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ect")]
     ChEct,
     /// <summary>
+    /// Corresponds to the <c>"ch-prefers-color-scheme"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-prefers-color-scheme")]
     ChPrefersColorScheme,
     /// <summary>
+    /// Corresponds to the <c>"ch-prefers-reduced-motion"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-prefers-reduced-motion")]
     ChPrefersReducedMotion,
     /// <summary>
+    /// Corresponds to the <c>"ch-prefers-reduced-transparency"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-prefers-reduced-transparency")]
     ChPrefersReducedTransparency,
     /// <summary>
+    /// Corresponds to the <c>"ch-rtt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-rtt")]
     ChRtt,
     /// <summary>
+    /// Corresponds to the <c>"ch-save-data"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-save-data")]
     ChSaveData,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua")]
     ChUa,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-arch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-arch")]
     ChUaArch,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-bitness"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-bitness")]
     ChUaBitness,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-high-entropy-values"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-high-entropy-values")]
     ChUaHighEntropyValues,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-platform"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-platform")]
     ChUaPlatform,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-model"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-model")]
     ChUaModel,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-mobile"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-mobile")]
     ChUaMobile,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-form-factors"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-form-factors")]
     ChUaFormFactors,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-full-version"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-full-version")]
     ChUaFullVersion,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-full-version-list"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-full-version-list")]
     ChUaFullVersionList,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-platform-version"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-platform-version")]
     ChUaPlatformVersion,
     /// <summary>
+    /// Corresponds to the <c>"ch-ua-wow64"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-ua-wow64")]
     ChUaWow64,
     /// <summary>
+    /// Corresponds to the <c>"ch-viewport-height"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-viewport-height")]
     ChViewportHeight,
     /// <summary>
+    /// Corresponds to the <c>"ch-viewport-width"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-viewport-width")]
     ChViewportWidth,
     /// <summary>
+    /// Corresponds to the <c>"ch-width"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ch-width")]
     ChWidth,
     /// <summary>
+    /// Corresponds to the <c>"clipboard-read"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clipboard-read")]
     ClipboardRead,
     /// <summary>
+    /// Corresponds to the <c>"clipboard-write"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clipboard-write")]
     ClipboardWrite,
     /// <summary>
+    /// Corresponds to the <c>"compute-pressure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("compute-pressure")]
     ComputePressure,
     /// <summary>
+    /// Corresponds to the <c>"controlled-frame"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("controlled-frame")]
     ControlledFrame,
     /// <summary>
+    /// Corresponds to the <c>"cross-origin-isolated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cross-origin-isolated")]
     CrossOriginIsolated,
     /// <summary>
+    /// Corresponds to the <c>"deferred-fetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferred-fetch")]
     DeferredFetch,
     /// <summary>
+    /// Corresponds to the <c>"deferred-fetch-minimal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferred-fetch-minimal")]
     DeferredFetchMinimal,
     /// <summary>
+    /// Corresponds to the <c>"device-attributes"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("device-attributes")]
     DeviceAttributes,
     /// <summary>
+    /// Corresponds to the <c>"digital-credentials-create"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("digital-credentials-create")]
     DigitalCredentialsCreate,
     /// <summary>
+    /// Corresponds to the <c>"digital-credentials-get"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("digital-credentials-get")]
     DigitalCredentialsGet,
     /// <summary>
+    /// Corresponds to the <c>"direct-sockets"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("direct-sockets")]
     DirectSockets,
     /// <summary>
+    /// Corresponds to the <c>"direct-sockets-multicast"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("direct-sockets-multicast")]
     DirectSocketsMulticast,
     /// <summary>
+    /// Corresponds to the <c>"display-capture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("display-capture")]
     DisplayCapture,
     /// <summary>
+    /// Corresponds to the <c>"document-domain"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("document-domain")]
     DocumentDomain,
     /// <summary>
+    /// Corresponds to the <c>"encrypted-media"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("encrypted-media")]
     EncryptedMedia,
     /// <summary>
+    /// Corresponds to the <c>"execution-while-out-of-viewport"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("execution-while-out-of-viewport")]
     ExecutionWhileOutOfViewport,
     /// <summary>
+    /// Corresponds to the <c>"execution-while-not-rendered"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("execution-while-not-rendered")]
     ExecutionWhileNotRendered,
     /// <summary>
+    /// Corresponds to the <c>"focus-without-user-activation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("focus-without-user-activation")]
     FocusWithoutUserActivation,
     /// <summary>
+    /// Corresponds to the <c>"fullscreen"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fullscreen")]
     Fullscreen,
     /// <summary>
+    /// Corresponds to the <c>"frobulate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("frobulate")]
     Frobulate,
     /// <summary>
+    /// Corresponds to the <c>"gamepad"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("gamepad")]
     Gamepad,
     /// <summary>
+    /// Corresponds to the <c>"geolocation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("geolocation")]
     Geolocation,
     /// <summary>
+    /// Corresponds to the <c>"gyroscope"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("gyroscope")]
     Gyroscope,
     /// <summary>
+    /// Corresponds to the <c>"haptics"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("haptics")]
     Haptics,
     /// <summary>
+    /// Corresponds to the <c>"hid"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hid")]
     Hid,
     /// <summary>
+    /// Corresponds to the <c>"identity-credentials-get"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("identity-credentials-get")]
     IdentityCredentialsGet,
     /// <summary>
+    /// Corresponds to the <c>"idle-detection"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("idle-detection")]
     IdleDetection,
     /// <summary>
+    /// Corresponds to the <c>"interest-cohort"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("interest-cohort")]
     InterestCohort,
     /// <summary>
+    /// Corresponds to the <c>"keyboard-map"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyboard-map")]
     KeyboardMap,
     /// <summary>
+    /// Corresponds to the <c>"language-detector"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("language-detector")]
     LanguageDetector,
     /// <summary>
+    /// Corresponds to the <c>"language-model"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("language-model")]
     LanguageModel,
     /// <summary>
+    /// Corresponds to the <c>"local-fonts"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local-fonts")]
     LocalFonts,
     /// <summary>
+    /// Corresponds to the <c>"local-network"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local-network")]
     LocalNetwork,
     /// <summary>
+    /// Corresponds to the <c>"local-network-access"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local-network-access")]
     LocalNetworkAccess,
     /// <summary>
+    /// Corresponds to the <c>"loopback-network"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("loopback-network")]
     LoopbackNetwork,
     /// <summary>
+    /// Corresponds to the <c>"magnetometer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("magnetometer")]
     Magnetometer,
     /// <summary>
+    /// Corresponds to the <c>"manual-text"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("manual-text")]
     ManualText,
     /// <summary>
+    /// Corresponds to the <c>"media-playback-while-not-visible"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("media-playback-while-not-visible")]
     MediaPlaybackWhileNotVisible,
     /// <summary>
+    /// Corresponds to the <c>"microphone"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("microphone")]
     Microphone,
     /// <summary>
+    /// Corresponds to the <c>"midi"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("midi")]
     Midi,
     /// <summary>
+    /// Corresponds to the <c>"on-device-speech-recognition"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("on-device-speech-recognition")]
     OnDeviceSpeechRecognition,
     /// <summary>
+    /// Corresponds to the <c>"otp-credentials"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("otp-credentials")]
     OtpCredentials,
     /// <summary>
+    /// Corresponds to the <c>"payment"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("payment")]
     Payment,
     /// <summary>
+    /// Corresponds to the <c>"picture-in-picture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("picture-in-picture")]
     PictureInPicture,
     /// <summary>
+    /// Corresponds to the <c>"private-state-token-issuance"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("private-state-token-issuance")]
     PrivateStateTokenIssuance,
     /// <summary>
+    /// Corresponds to the <c>"private-state-token-redemption"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("private-state-token-redemption")]
     PrivateStateTokenRedemption,
     /// <summary>
+    /// Corresponds to the <c>"publickey-credentials-create"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("publickey-credentials-create")]
     PublickeyCredentialsCreate,
     /// <summary>
+    /// Corresponds to the <c>"publickey-credentials-get"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("publickey-credentials-get")]
     PublickeyCredentialsGet,
     /// <summary>
+    /// Corresponds to the <c>"rewriter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rewriter")]
     Rewriter,
     /// <summary>
+    /// Corresponds to the <c>"screen-wake-lock"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("screen-wake-lock")]
     ScreenWakeLock,
     /// <summary>
+    /// Corresponds to the <c>"serial"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("serial")]
     Serial,
     /// <summary>
+    /// Corresponds to the <c>"shared-storage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared-storage")]
     SharedStorage,
     /// <summary>
+    /// Corresponds to the <c>"shared-storage-select-url"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared-storage-select-url")]
     SharedStorageSelectUrl,
     /// <summary>
+    /// Corresponds to the <c>"smart-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("smart-card")]
     SmartCard,
     /// <summary>
+    /// Corresponds to the <c>"speaker-selection"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("speaker-selection")]
     SpeakerSelection,
     /// <summary>
+    /// Corresponds to the <c>"storage-access"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storage-access")]
     StorageAccess,
     /// <summary>
+    /// Corresponds to the <c>"sub-apps"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sub-apps")]
     SubApps,
     /// <summary>
+    /// Corresponds to the <c>"summarizer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("summarizer")]
     Summarizer,
     /// <summary>
+    /// Corresponds to the <c>"sync-xhr"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sync-xhr")]
     SyncXhr,
     /// <summary>
+    /// Corresponds to the <c>"tools"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("tools")]
     Tools,
     /// <summary>
+    /// Corresponds to the <c>"translator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("translator")]
     Translator,
     /// <summary>
+    /// Corresponds to the <c>"unload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unload")]
     Unload,
     /// <summary>
+    /// Corresponds to the <c>"usb"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("usb")]
     Usb,
     /// <summary>
+    /// Corresponds to the <c>"usb-unrestricted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("usb-unrestricted")]
     UsbUnrestricted,
     /// <summary>
+    /// Corresponds to the <c>"vertical-scroll"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("vertical-scroll")]
     VerticalScroll,
     /// <summary>
+    /// Corresponds to the <c>"web-app-installation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("web-app-installation")]
     WebAppInstallation,
     /// <summary>
+    /// Corresponds to the <c>"webnn"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webnn")]
     Webnn,
     /// <summary>
+    /// Corresponds to the <c>"web-printing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("web-printing")]
     WebPrinting,
     /// <summary>
+    /// Corresponds to the <c>"web-share"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("web-share")]
     WebShare,
     /// <summary>
+    /// Corresponds to the <c>"window-management"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("window-management")]
     WindowManagement,
     /// <summary>
+    /// Corresponds to the <c>"writer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("writer")]
     Writer,
     /// <summary>
+    /// Corresponds to the <c>"xr-spatial-tracking"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("xr-spatial-tracking")]
     XrSpatialTracking,
@@ -3663,18 +3849,22 @@ public enum PermissionsPolicyFeature
 public enum PermissionsPolicyBlockReason
 {
     /// <summary>
+    /// Corresponds to the <c>"Header"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Header")]
     Header,
     /// <summary>
+    /// Corresponds to the <c>"IframeAttribute"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IframeAttribute")]
     IframeAttribute,
     /// <summary>
+    /// Corresponds to the <c>"InFencedFrameTree"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InFencedFrameTree")]
     InFencedFrameTree,
     /// <summary>
+    /// Corresponds to the <c>"InIsolatedApp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InIsolatedApp")]
     InIsolatedApp,
@@ -3711,50 +3901,62 @@ public sealed record PermissionsPolicyFeatureState(PermissionsPolicyFeature Feat
 public enum OriginTrialTokenStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Success"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Success")]
     Success,
     /// <summary>
+    /// Corresponds to the <c>"NotSupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotSupported")]
     NotSupported,
     /// <summary>
+    /// Corresponds to the <c>"Insecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Insecure")]
     Insecure,
     /// <summary>
+    /// Corresponds to the <c>"Expired"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Expired")]
     Expired,
     /// <summary>
+    /// Corresponds to the <c>"WrongOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WrongOrigin")]
     WrongOrigin,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSignature"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSignature")]
     InvalidSignature,
     /// <summary>
+    /// Corresponds to the <c>"Malformed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Malformed")]
     Malformed,
     /// <summary>
+    /// Corresponds to the <c>"WrongVersion"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WrongVersion")]
     WrongVersion,
     /// <summary>
+    /// Corresponds to the <c>"FeatureDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FeatureDisabled")]
     FeatureDisabled,
     /// <summary>
+    /// Corresponds to the <c>"TokenDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TokenDisabled")]
     TokenDisabled,
     /// <summary>
+    /// Corresponds to the <c>"FeatureDisabledForUser"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FeatureDisabledForUser")]
     FeatureDisabledForUser,
     /// <summary>
+    /// Corresponds to the <c>"UnknownTrial"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnknownTrial")]
     UnknownTrial,
@@ -3767,18 +3969,22 @@ public enum OriginTrialTokenStatus
 public enum OriginTrialStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Enabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Enabled")]
     Enabled,
     /// <summary>
+    /// Corresponds to the <c>"ValidTokenNotProvided"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ValidTokenNotProvided")]
     ValidTokenNotProvided,
     /// <summary>
+    /// Corresponds to the <c>"OSNotSupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OSNotSupported")]
     OSNotSupported,
     /// <summary>
+    /// Corresponds to the <c>"TrialNotAllowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TrialNotAllowed")]
     TrialNotAllowed,
@@ -3790,10 +3996,12 @@ public enum OriginTrialStatus
 public enum OriginTrialUsageRestriction
 {
     /// <summary>
+    /// Corresponds to the <c>"None"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("None")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"Subset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Subset")]
     Subset,
@@ -4004,54 +4212,67 @@ public record ScriptIdentifier : IStringRemoteId
 public enum TransitionType
 {
     /// <summary>
+    /// Corresponds to the <c>"link"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("link")]
     Link,
     /// <summary>
+    /// Corresponds to the <c>"typed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typed")]
     Typed,
     /// <summary>
+    /// Corresponds to the <c>"address_bar"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("address_bar")]
     AddressBar,
     /// <summary>
+    /// Corresponds to the <c>"auto_bookmark"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("auto_bookmark")]
     AutoBookmark,
     /// <summary>
+    /// Corresponds to the <c>"auto_subframe"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("auto_subframe")]
     AutoSubframe,
     /// <summary>
+    /// Corresponds to the <c>"manual_subframe"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("manual_subframe")]
     ManualSubframe,
     /// <summary>
+    /// Corresponds to the <c>"generated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generated")]
     Generated,
     /// <summary>
+    /// Corresponds to the <c>"auto_toplevel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("auto_toplevel")]
     AutoToplevel,
     /// <summary>
+    /// Corresponds to the <c>"form_submit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("form_submit")]
     FormSubmit,
     /// <summary>
+    /// Corresponds to the <c>"reload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reload")]
     Reload,
     /// <summary>
+    /// Corresponds to the <c>"keyword"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyword")]
     Keyword,
     /// <summary>
+    /// Corresponds to the <c>"keyword_generated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyword_generated")]
     KeywordGenerated,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
@@ -4115,18 +4336,22 @@ public sealed record ScreencastFrameMetadata(double OffsetTop, double PageScaleF
 public enum DialogType
 {
     /// <summary>
+    /// Corresponds to the <c>"alert"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("alert")]
     Alert,
     /// <summary>
+    /// Corresponds to the <c>"confirm"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("confirm")]
     Confirm,
     /// <summary>
+    /// Corresponds to the <c>"prompt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("prompt")]
     Prompt,
     /// <summary>
+    /// Corresponds to the <c>"beforeunload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("beforeunload")]
     Beforeunload,
@@ -4310,42 +4535,52 @@ public sealed record FontSizes()
 public enum ClientNavigationReason
 {
     /// <summary>
+    /// Corresponds to the <c>"anchorClick"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("anchorClick")]
     AnchorClick,
     /// <summary>
+    /// Corresponds to the <c>"formSubmissionGet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("formSubmissionGet")]
     FormSubmissionGet,
     /// <summary>
+    /// Corresponds to the <c>"formSubmissionPost"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("formSubmissionPost")]
     FormSubmissionPost,
     /// <summary>
+    /// Corresponds to the <c>"httpHeaderRefresh"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("httpHeaderRefresh")]
     HttpHeaderRefresh,
     /// <summary>
+    /// Corresponds to the <c>"initialFrameNavigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("initialFrameNavigation")]
     InitialFrameNavigation,
     /// <summary>
+    /// Corresponds to the <c>"metaTagRefresh"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("metaTagRefresh")]
     MetaTagRefresh,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
     /// <summary>
+    /// Corresponds to the <c>"pageBlockInterstitial"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pageBlockInterstitial")]
     PageBlockInterstitial,
     /// <summary>
+    /// Corresponds to the <c>"reload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reload")]
     Reload,
     /// <summary>
+    /// Corresponds to the <c>"scriptInitiated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("scriptInitiated")]
     ScriptInitiated,
@@ -4357,18 +4592,22 @@ public enum ClientNavigationReason
 public enum ClientNavigationDisposition
 {
     /// <summary>
+    /// Corresponds to the <c>"currentTab"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("currentTab")]
     CurrentTab,
     /// <summary>
+    /// Corresponds to the <c>"newTab"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("newTab")]
     NewTab,
     /// <summary>
+    /// Corresponds to the <c>"newWindow"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("newWindow")]
     NewWindow,
     /// <summary>
+    /// Corresponds to the <c>"download"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("download")]
     Download,
@@ -4406,34 +4645,42 @@ public sealed record InstallabilityError(string ErrorId, ImmutableArray<Installa
 public enum ReferrerPolicy
 {
     /// <summary>
+    /// Corresponds to the <c>"noReferrer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noReferrer")]
     NoReferrer,
     /// <summary>
+    /// Corresponds to the <c>"noReferrerWhenDowngrade"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("noReferrerWhenDowngrade")]
     NoReferrerWhenDowngrade,
     /// <summary>
+    /// Corresponds to the <c>"origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("origin")]
     Origin,
     /// <summary>
+    /// Corresponds to the <c>"originWhenCrossOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("originWhenCrossOrigin")]
     OriginWhenCrossOrigin,
     /// <summary>
+    /// Corresponds to the <c>"sameOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sameOrigin")]
     SameOrigin,
     /// <summary>
+    /// Corresponds to the <c>"strictOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("strictOrigin")]
     StrictOrigin,
     /// <summary>
+    /// Corresponds to the <c>"strictOriginWhenCrossOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("strictOriginWhenCrossOrigin")]
     StrictOriginWhenCrossOrigin,
     /// <summary>
+    /// Corresponds to the <c>"unsafeUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unsafeUrl")]
     UnsafeUrl,
@@ -4709,10 +4956,12 @@ public sealed record WebAppManifest()
 public enum NavigationType
 {
     /// <summary>
+    /// Corresponds to the <c>"Navigation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Navigation")]
     Navigation,
     /// <summary>
+    /// Corresponds to the <c>"BackForwardCacheRestore"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BackForwardCacheRestore")]
     BackForwardCacheRestore,
@@ -4725,598 +4974,747 @@ public enum NavigationType
 public enum BackForwardCacheNotRestoredReason
 {
     /// <summary>
+    /// Corresponds to the <c>"NotPrimaryMainFrame"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotPrimaryMainFrame")]
     NotPrimaryMainFrame,
     /// <summary>
+    /// Corresponds to the <c>"BackForwardCacheDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BackForwardCacheDisabled")]
     BackForwardCacheDisabled,
     /// <summary>
+    /// Corresponds to the <c>"RelatedActiveContentsExist"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelatedActiveContentsExist")]
     RelatedActiveContentsExist,
     /// <summary>
+    /// Corresponds to the <c>"HTTPStatusNotOK"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HTTPStatusNotOK")]
     HTTPStatusNotOK,
     /// <summary>
+    /// Corresponds to the <c>"SchemeNotHTTPOrHTTPS"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemeNotHTTPOrHTTPS")]
     SchemeNotHTTPOrHTTPS,
     /// <summary>
+    /// Corresponds to the <c>"Loading"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Loading")]
     Loading,
     /// <summary>
+    /// Corresponds to the <c>"WasGrantedMediaAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WasGrantedMediaAccess")]
     WasGrantedMediaAccess,
     /// <summary>
+    /// Corresponds to the <c>"DisableForRenderFrameHostCalled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DisableForRenderFrameHostCalled")]
     DisableForRenderFrameHostCalled,
     /// <summary>
+    /// Corresponds to the <c>"DomainNotAllowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DomainNotAllowed")]
     DomainNotAllowed,
     /// <summary>
+    /// Corresponds to the <c>"HTTPMethodNotGET"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HTTPMethodNotGET")]
     HTTPMethodNotGET,
     /// <summary>
+    /// Corresponds to the <c>"SubframeIsNavigating"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubframeIsNavigating")]
     SubframeIsNavigating,
     /// <summary>
+    /// Corresponds to the <c>"Timeout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Timeout")]
     Timeout,
     /// <summary>
+    /// Corresponds to the <c>"CacheLimit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheLimit")]
     CacheLimit,
     /// <summary>
+    /// Corresponds to the <c>"JavaScriptExecution"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JavaScriptExecution")]
     JavaScriptExecution,
     /// <summary>
+    /// Corresponds to the <c>"RendererProcessKilled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RendererProcessKilled")]
     RendererProcessKilled,
     /// <summary>
+    /// Corresponds to the <c>"RendererProcessCrashed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RendererProcessCrashed")]
     RendererProcessCrashed,
     /// <summary>
+    /// Corresponds to the <c>"SchedulerTrackedFeatureUsed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchedulerTrackedFeatureUsed")]
     SchedulerTrackedFeatureUsed,
     /// <summary>
+    /// Corresponds to the <c>"ConflictingBrowsingInstance"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConflictingBrowsingInstance")]
     ConflictingBrowsingInstance,
     /// <summary>
+    /// Corresponds to the <c>"CacheFlushed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheFlushed")]
     CacheFlushed,
     /// <summary>
+    /// Corresponds to the <c>"ServiceWorkerVersionActivation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServiceWorkerVersionActivation")]
     ServiceWorkerVersionActivation,
     /// <summary>
+    /// Corresponds to the <c>"SessionRestored"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionRestored")]
     SessionRestored,
     /// <summary>
+    /// Corresponds to the <c>"ServiceWorkerPostMessage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServiceWorkerPostMessage")]
     ServiceWorkerPostMessage,
     /// <summary>
+    /// Corresponds to the <c>"EnteredBackForwardCacheBeforeServiceWorkerHostAdded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EnteredBackForwardCacheBeforeServiceWorkerHostAdded")]
     EnteredBackForwardCacheBeforeServiceWorkerHostAdded,
     /// <summary>
+    /// Corresponds to the <c>"RenderFrameHostReused_SameSite"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RenderFrameHostReused_SameSite")]
     RenderFrameHostReusedSameSite,
     /// <summary>
+    /// Corresponds to the <c>"RenderFrameHostReused_CrossSite"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RenderFrameHostReused_CrossSite")]
     RenderFrameHostReusedCrossSite,
     /// <summary>
+    /// Corresponds to the <c>"ServiceWorkerClaim"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServiceWorkerClaim")]
     ServiceWorkerClaim,
     /// <summary>
+    /// Corresponds to the <c>"IgnoreEventAndEvict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IgnoreEventAndEvict")]
     IgnoreEventAndEvict,
     /// <summary>
+    /// Corresponds to the <c>"HaveInnerContents"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HaveInnerContents")]
     HaveInnerContents,
     /// <summary>
+    /// Corresponds to the <c>"TimeoutPuttingInCache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TimeoutPuttingInCache")]
     TimeoutPuttingInCache,
     /// <summary>
+    /// Corresponds to the <c>"BackForwardCacheDisabledByLowMemory"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BackForwardCacheDisabledByLowMemory")]
     BackForwardCacheDisabledByLowMemory,
     /// <summary>
+    /// Corresponds to the <c>"BackForwardCacheDisabledByCommandLine"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BackForwardCacheDisabledByCommandLine")]
     BackForwardCacheDisabledByCommandLine,
     /// <summary>
+    /// Corresponds to the <c>"NetworkRequestDatapipeDrainedAsBytesConsumer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NetworkRequestDatapipeDrainedAsBytesConsumer")]
     NetworkRequestDatapipeDrainedAsBytesConsumer,
     /// <summary>
+    /// Corresponds to the <c>"NetworkRequestRedirected"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NetworkRequestRedirected")]
     NetworkRequestRedirected,
     /// <summary>
+    /// Corresponds to the <c>"NetworkRequestTimeout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NetworkRequestTimeout")]
     NetworkRequestTimeout,
     /// <summary>
+    /// Corresponds to the <c>"NetworkExceedsBufferLimit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NetworkExceedsBufferLimit")]
     NetworkExceedsBufferLimit,
     /// <summary>
+    /// Corresponds to the <c>"NavigationCancelledWhileRestoring"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationCancelledWhileRestoring")]
     NavigationCancelledWhileRestoring,
     /// <summary>
+    /// Corresponds to the <c>"NotMostRecentNavigationEntry"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotMostRecentNavigationEntry")]
     NotMostRecentNavigationEntry,
     /// <summary>
+    /// Corresponds to the <c>"BackForwardCacheDisabledForPrerender"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BackForwardCacheDisabledForPrerender")]
     BackForwardCacheDisabledForPrerender,
     /// <summary>
+    /// Corresponds to the <c>"UserAgentOverrideDiffers"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UserAgentOverrideDiffers")]
     UserAgentOverrideDiffers,
     /// <summary>
+    /// Corresponds to the <c>"ForegroundCacheLimit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ForegroundCacheLimit")]
     ForegroundCacheLimit,
     /// <summary>
+    /// Corresponds to the <c>"ForwardCacheDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ForwardCacheDisabled")]
     ForwardCacheDisabled,
     /// <summary>
+    /// Corresponds to the <c>"BrowsingInstanceNotSwapped"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BrowsingInstanceNotSwapped")]
     BrowsingInstanceNotSwapped,
     /// <summary>
+    /// Corresponds to the <c>"BackForwardCacheDisabledForDelegate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BackForwardCacheDisabledForDelegate")]
     BackForwardCacheDisabledForDelegate,
     /// <summary>
+    /// Corresponds to the <c>"UnloadHandlerExistsInMainFrame"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnloadHandlerExistsInMainFrame")]
     UnloadHandlerExistsInMainFrame,
     /// <summary>
+    /// Corresponds to the <c>"UnloadHandlerExistsInSubFrame"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnloadHandlerExistsInSubFrame")]
     UnloadHandlerExistsInSubFrame,
     /// <summary>
+    /// Corresponds to the <c>"ServiceWorkerUnregistration"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServiceWorkerUnregistration")]
     ServiceWorkerUnregistration,
     /// <summary>
+    /// Corresponds to the <c>"CacheControlNoStore"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheControlNoStore")]
     CacheControlNoStore,
     /// <summary>
+    /// Corresponds to the <c>"CacheControlNoStoreCookieModified"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheControlNoStoreCookieModified")]
     CacheControlNoStoreCookieModified,
     /// <summary>
+    /// Corresponds to the <c>"CacheControlNoStoreHTTPOnlyCookieModified"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheControlNoStoreHTTPOnlyCookieModified")]
     CacheControlNoStoreHTTPOnlyCookieModified,
     /// <summary>
+    /// Corresponds to the <c>"NoResponseHead"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoResponseHead")]
     NoResponseHead,
     /// <summary>
+    /// Corresponds to the <c>"Unknown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Unknown")]
     Unknown,
     /// <summary>
+    /// Corresponds to the <c>"ActivationNavigationsDisallowedForBug1234857"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ActivationNavigationsDisallowedForBug1234857")]
     ActivationNavigationsDisallowedForBug1234857,
     /// <summary>
+    /// Corresponds to the <c>"ErrorDocument"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ErrorDocument")]
     ErrorDocument,
     /// <summary>
+    /// Corresponds to the <c>"FencedFramesEmbedder"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FencedFramesEmbedder")]
     FencedFramesEmbedder,
     /// <summary>
+    /// Corresponds to the <c>"CookieDisabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CookieDisabled")]
     CookieDisabled,
     /// <summary>
+    /// Corresponds to the <c>"HTTPAuthRequired"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HTTPAuthRequired")]
     HTTPAuthRequired,
     /// <summary>
+    /// Corresponds to the <c>"CookieFlushed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CookieFlushed")]
     CookieFlushed,
     /// <summary>
+    /// Corresponds to the <c>"BroadcastChannelOnMessage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BroadcastChannelOnMessage")]
     BroadcastChannelOnMessage,
     /// <summary>
+    /// Corresponds to the <c>"WebViewSettingsChanged"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebViewSettingsChanged")]
     WebViewSettingsChanged,
     /// <summary>
+    /// Corresponds to the <c>"WebViewJavaScriptObjectChanged"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebViewJavaScriptObjectChanged")]
     WebViewJavaScriptObjectChanged,
     /// <summary>
+    /// Corresponds to the <c>"WebViewMessageListenerInjected"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebViewMessageListenerInjected")]
     WebViewMessageListenerInjected,
     /// <summary>
+    /// Corresponds to the <c>"WebViewSafeBrowsingAllowlistChanged"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebViewSafeBrowsingAllowlistChanged")]
     WebViewSafeBrowsingAllowlistChanged,
     /// <summary>
+    /// Corresponds to the <c>"WebViewDocumentStartJavascriptChanged"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebViewDocumentStartJavascriptChanged")]
     WebViewDocumentStartJavascriptChanged,
     /// <summary>
+    /// Corresponds to the <c>"WebSocket"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebSocket")]
     WebSocket,
     /// <summary>
+    /// Corresponds to the <c>"WebTransport"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebTransport")]
     WebTransport,
     /// <summary>
+    /// Corresponds to the <c>"WebRTC"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebRTC")]
     WebRTC,
     /// <summary>
+    /// Corresponds to the <c>"MainResourceHasCacheControlNoStore"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MainResourceHasCacheControlNoStore")]
     MainResourceHasCacheControlNoStore,
     /// <summary>
+    /// Corresponds to the <c>"MainResourceHasCacheControlNoCache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MainResourceHasCacheControlNoCache")]
     MainResourceHasCacheControlNoCache,
     /// <summary>
+    /// Corresponds to the <c>"SubresourceHasCacheControlNoStore"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubresourceHasCacheControlNoStore")]
     SubresourceHasCacheControlNoStore,
     /// <summary>
+    /// Corresponds to the <c>"SubresourceHasCacheControlNoCache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubresourceHasCacheControlNoCache")]
     SubresourceHasCacheControlNoCache,
     /// <summary>
+    /// Corresponds to the <c>"ContainsPlugins"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContainsPlugins")]
     ContainsPlugins,
     /// <summary>
+    /// Corresponds to the <c>"DocumentLoaded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DocumentLoaded")]
     DocumentLoaded,
     /// <summary>
+    /// Corresponds to the <c>"OutstandingNetworkRequestOthers"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OutstandingNetworkRequestOthers")]
     OutstandingNetworkRequestOthers,
     /// <summary>
+    /// Corresponds to the <c>"RequestedMIDIPermission"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedMIDIPermission")]
     RequestedMIDIPermission,
     /// <summary>
+    /// Corresponds to the <c>"RequestedAudioCapturePermission"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedAudioCapturePermission")]
     RequestedAudioCapturePermission,
     /// <summary>
+    /// Corresponds to the <c>"RequestedVideoCapturePermission"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedVideoCapturePermission")]
     RequestedVideoCapturePermission,
     /// <summary>
+    /// Corresponds to the <c>"RequestedBackForwardCacheBlockedSensors"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedBackForwardCacheBlockedSensors")]
     RequestedBackForwardCacheBlockedSensors,
     /// <summary>
+    /// Corresponds to the <c>"RequestedBackgroundWorkPermission"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedBackgroundWorkPermission")]
     RequestedBackgroundWorkPermission,
     /// <summary>
+    /// Corresponds to the <c>"BroadcastChannel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BroadcastChannel")]
     BroadcastChannel,
     /// <summary>
+    /// Corresponds to the <c>"WebXR"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebXR")]
     WebXR,
     /// <summary>
+    /// Corresponds to the <c>"SharedWorker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedWorker")]
     SharedWorker,
     /// <summary>
+    /// Corresponds to the <c>"SharedWorkerMessage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedWorkerMessage")]
     SharedWorkerMessage,
     /// <summary>
+    /// Corresponds to the <c>"SharedWorkerWithNoActiveClient"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SharedWorkerWithNoActiveClient")]
     SharedWorkerWithNoActiveClient,
     /// <summary>
+    /// Corresponds to the <c>"WebLocks"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebLocks")]
     WebLocks,
     /// <summary>
+    /// Corresponds to the <c>"WebLocksContention"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebLocksContention")]
     WebLocksContention,
     /// <summary>
+    /// Corresponds to the <c>"WebHID"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebHID")]
     WebHID,
     /// <summary>
+    /// Corresponds to the <c>"WebBluetooth"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebBluetooth")]
     WebBluetooth,
     /// <summary>
+    /// Corresponds to the <c>"WebShare"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebShare")]
     WebShare,
     /// <summary>
+    /// Corresponds to the <c>"RequestedStorageAccessGrant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedStorageAccessGrant")]
     RequestedStorageAccessGrant,
     /// <summary>
+    /// Corresponds to the <c>"WebNfc"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebNfc")]
     WebNfc,
     /// <summary>
+    /// Corresponds to the <c>"OutstandingNetworkRequestFetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OutstandingNetworkRequestFetch")]
     OutstandingNetworkRequestFetch,
     /// <summary>
+    /// Corresponds to the <c>"OutstandingNetworkRequestXHR"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OutstandingNetworkRequestXHR")]
     OutstandingNetworkRequestXHR,
     /// <summary>
+    /// Corresponds to the <c>"AppBanner"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AppBanner")]
     AppBanner,
     /// <summary>
+    /// Corresponds to the <c>"Printing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Printing")]
     Printing,
     /// <summary>
+    /// Corresponds to the <c>"WebDatabase"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebDatabase")]
     WebDatabase,
     /// <summary>
+    /// Corresponds to the <c>"PictureInPicture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PictureInPicture")]
     PictureInPicture,
     /// <summary>
+    /// Corresponds to the <c>"SpeechRecognizer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SpeechRecognizer")]
     SpeechRecognizer,
     /// <summary>
+    /// Corresponds to the <c>"IdleManager"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IdleManager")]
     IdleManager,
     /// <summary>
+    /// Corresponds to the <c>"PaymentManager"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PaymentManager")]
     PaymentManager,
     /// <summary>
+    /// Corresponds to the <c>"SpeechSynthesis"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SpeechSynthesis")]
     SpeechSynthesis,
     /// <summary>
+    /// Corresponds to the <c>"KeyboardLock"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("KeyboardLock")]
     KeyboardLock,
     /// <summary>
+    /// Corresponds to the <c>"WebOTPService"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebOTPService")]
     WebOTPService,
     /// <summary>
+    /// Corresponds to the <c>"OutstandingNetworkRequestDirectSocket"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OutstandingNetworkRequestDirectSocket")]
     OutstandingNetworkRequestDirectSocket,
     /// <summary>
+    /// Corresponds to the <c>"InjectedJavascript"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InjectedJavascript")]
     InjectedJavascript,
     /// <summary>
+    /// Corresponds to the <c>"InjectedStyleSheet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InjectedStyleSheet")]
     InjectedStyleSheet,
     /// <summary>
+    /// Corresponds to the <c>"KeepaliveRequest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("KeepaliveRequest")]
     KeepaliveRequest,
     /// <summary>
+    /// Corresponds to the <c>"IndexedDBEvent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("IndexedDBEvent")]
     IndexedDBEvent,
     /// <summary>
+    /// Corresponds to the <c>"Dummy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Dummy")]
     Dummy,
     /// <summary>
+    /// Corresponds to the <c>"JsNetworkRequestReceivedCacheControlNoStoreResource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("JsNetworkRequestReceivedCacheControlNoStoreResource")]
     JsNetworkRequestReceivedCacheControlNoStoreResource,
     /// <summary>
+    /// Corresponds to the <c>"WebRTCUsedWithCCNS"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebRTCUsedWithCCNS")]
     WebRTCUsedWithCCNS,
     /// <summary>
+    /// Corresponds to the <c>"WebTransportUsedWithCCNS"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebTransportUsedWithCCNS")]
     WebTransportUsedWithCCNS,
     /// <summary>
+    /// Corresponds to the <c>"WebSocketUsedWithCCNS"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebSocketUsedWithCCNS")]
     WebSocketUsedWithCCNS,
     /// <summary>
+    /// Corresponds to the <c>"SmartCard"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SmartCard")]
     SmartCard,
     /// <summary>
+    /// Corresponds to the <c>"LiveMediaStreamTrack"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LiveMediaStreamTrack")]
     LiveMediaStreamTrack,
     /// <summary>
+    /// Corresponds to the <c>"UnloadHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnloadHandler")]
     UnloadHandler,
     /// <summary>
+    /// Corresponds to the <c>"ParserAborted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ParserAborted")]
     ParserAborted,
     /// <summary>
+    /// Corresponds to the <c>"ContentSecurityHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentSecurityHandler")]
     ContentSecurityHandler,
     /// <summary>
+    /// Corresponds to the <c>"ContentWebAuthenticationAPI"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentWebAuthenticationAPI")]
     ContentWebAuthenticationAPI,
     /// <summary>
+    /// Corresponds to the <c>"ContentFileChooser"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentFileChooser")]
     ContentFileChooser,
     /// <summary>
+    /// Corresponds to the <c>"ContentSerial"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentSerial")]
     ContentSerial,
     /// <summary>
+    /// Corresponds to the <c>"ContentFileSystemAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentFileSystemAccess")]
     ContentFileSystemAccess,
     /// <summary>
+    /// Corresponds to the <c>"ContentMediaDevicesDispatcherHost"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentMediaDevicesDispatcherHost")]
     ContentMediaDevicesDispatcherHost,
     /// <summary>
+    /// Corresponds to the <c>"ContentWebBluetooth"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentWebBluetooth")]
     ContentWebBluetooth,
     /// <summary>
+    /// Corresponds to the <c>"ContentWebUSB"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentWebUSB")]
     ContentWebUSB,
     /// <summary>
+    /// Corresponds to the <c>"ContentMediaSessionService"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentMediaSessionService")]
     ContentMediaSessionService,
     /// <summary>
+    /// Corresponds to the <c>"ContentScreenReader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentScreenReader")]
     ContentScreenReader,
     /// <summary>
+    /// Corresponds to the <c>"ContentDiscarded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContentDiscarded")]
     ContentDiscarded,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderPopupBlockerTabHelper"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderPopupBlockerTabHelper")]
     EmbedderPopupBlockerTabHelper,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderSafeBrowsingTriggeredPopupBlocker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderSafeBrowsingTriggeredPopupBlocker")]
     EmbedderSafeBrowsingTriggeredPopupBlocker,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderSafeBrowsingThreatDetails"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderSafeBrowsingThreatDetails")]
     EmbedderSafeBrowsingThreatDetails,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderAppBannerManager"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderAppBannerManager")]
     EmbedderAppBannerManager,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderDomDistillerViewerSource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderDomDistillerViewerSource")]
     EmbedderDomDistillerViewerSource,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderDomDistillerSelfDeletingRequestDelegate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderDomDistillerSelfDeletingRequestDelegate")]
     EmbedderDomDistillerSelfDeletingRequestDelegate,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderOomInterventionTabHelper"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderOomInterventionTabHelper")]
     EmbedderOomInterventionTabHelper,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderOfflinePage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderOfflinePage")]
     EmbedderOfflinePage,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderChromePasswordManagerClientBindCredentialManager"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderChromePasswordManagerClientBindCredentialManager")]
     EmbedderChromePasswordManagerClientBindCredentialManager,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderPermissionRequestManager"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderPermissionRequestManager")]
     EmbedderPermissionRequestManager,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderModalDialog"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderModalDialog")]
     EmbedderModalDialog,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderExtensions"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderExtensions")]
     EmbedderExtensions,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderExtensionMessaging"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderExtensionMessaging")]
     EmbedderExtensionMessaging,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderExtensionMessagingForOpenPort"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderExtensionMessagingForOpenPort")]
     EmbedderExtensionMessagingForOpenPort,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderExtensionSentMessageToCachedFrame"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderExtensionSentMessageToCachedFrame")]
     EmbedderExtensionSentMessageToCachedFrame,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderExtensionFrame"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderExtensionFrame")]
     EmbedderExtensionFrame,
     /// <summary>
+    /// Corresponds to the <c>"EmbedderPrivilegedWebContents"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbedderPrivilegedWebContents")]
     EmbedderPrivilegedWebContents,
     /// <summary>
+    /// Corresponds to the <c>"RequestedByWebViewClient"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequestedByWebViewClient")]
     RequestedByWebViewClient,
     /// <summary>
+    /// Corresponds to the <c>"PostMessageByWebViewClient"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PostMessageByWebViewClient")]
     PostMessageByWebViewClient,
     /// <summary>
+    /// Corresponds to the <c>"CacheControlNoStoreDeviceBoundSessionTerminated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheControlNoStoreDeviceBoundSessionTerminated")]
     CacheControlNoStoreDeviceBoundSessionTerminated,
     /// <summary>
+    /// Corresponds to the <c>"CacheLimitPrunedOnModerateMemoryPressure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheLimitPrunedOnModerateMemoryPressure")]
     CacheLimitPrunedOnModerateMemoryPressure,
     /// <summary>
+    /// Corresponds to the <c>"CacheLimitPrunedOnCriticalMemoryPressure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CacheLimitPrunedOnCriticalMemoryPressure")]
     CacheLimitPrunedOnCriticalMemoryPressure,
@@ -5329,14 +5727,17 @@ public enum BackForwardCacheNotRestoredReason
 public enum BackForwardCacheNotRestoredReasonType
 {
     /// <summary>
+    /// Corresponds to the <c>"SupportPending"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SupportPending")]
     SupportPending,
     /// <summary>
+    /// Corresponds to the <c>"PageSupportNeeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PageSupportNeeded")]
     PageSupportNeeded,
     /// <summary>
+    /// Corresponds to the <c>"Circumstantial"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Circumstantial")]
     Circumstantial,
@@ -5406,14 +5807,17 @@ public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, Immu
 public enum CaptureScreenshotFormat
 {
     /// <summary>
+    /// Corresponds to the <c>"jpeg"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
     Jpeg,
     /// <summary>
+    /// Corresponds to the <c>"png"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
     Png,
     /// <summary>
+    /// Corresponds to the <c>"webp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
     Webp,
@@ -5425,6 +5829,7 @@ public enum CaptureScreenshotFormat
 public enum CaptureSnapshotFormat
 {
     /// <summary>
+    /// Corresponds to the <c>"mhtml"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mhtml")]
     Mhtml,
@@ -5436,10 +5841,12 @@ public enum CaptureSnapshotFormat
 public enum PrintToPDFTransferMode
 {
     /// <summary>
+    /// Corresponds to the <c>"ReturnAsBase64"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReturnAsBase64")]
     ReturnAsBase64,
     /// <summary>
+    /// Corresponds to the <c>"ReturnAsStream"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReturnAsStream")]
     ReturnAsStream,
@@ -5451,14 +5858,17 @@ public enum PrintToPDFTransferMode
 public enum SetDownloadBehaviorBehavior
 {
     /// <summary>
+    /// Corresponds to the <c>"deny"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deny")]
     Deny,
     /// <summary>
+    /// Corresponds to the <c>"allow"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("allow")]
     Allow,
     /// <summary>
+    /// Corresponds to the <c>"default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
     Default,
@@ -5470,10 +5880,12 @@ public enum SetDownloadBehaviorBehavior
 public enum SetTouchEmulationEnabledConfiguration
 {
     /// <summary>
+    /// Corresponds to the <c>"mobile"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mobile")]
     Mobile,
     /// <summary>
+    /// Corresponds to the <c>"desktop"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("desktop")]
     Desktop,
@@ -5485,10 +5897,12 @@ public enum SetTouchEmulationEnabledConfiguration
 public enum StartScreencastFormat
 {
     /// <summary>
+    /// Corresponds to the <c>"jpeg"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
     Jpeg,
     /// <summary>
+    /// Corresponds to the <c>"png"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
     Png,
@@ -5500,10 +5914,12 @@ public enum StartScreencastFormat
 public enum SetWebLifecycleStateState
 {
     /// <summary>
+    /// Corresponds to the <c>"frozen"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("frozen")]
     Frozen,
     /// <summary>
+    /// Corresponds to the <c>"active"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("active")]
     Active,
@@ -5515,22 +5931,27 @@ public enum SetWebLifecycleStateState
 public enum SetSPCTransactionModeMode
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"autoAccept"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoAccept")]
     AutoAccept,
     /// <summary>
+    /// Corresponds to the <c>"autoChooseToAuthAnotherWay"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoChooseToAuthAnotherWay")]
     AutoChooseToAuthAnotherWay,
     /// <summary>
+    /// Corresponds to the <c>"autoReject"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoReject")]
     AutoReject,
     /// <summary>
+    /// Corresponds to the <c>"autoOptOut"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoOptOut")]
     AutoOptOut,
@@ -5542,14 +5963,17 @@ public enum SetSPCTransactionModeMode
 public enum SetRPHRegistrationModeMode
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"autoAccept"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoAccept")]
     AutoAccept,
     /// <summary>
+    /// Corresponds to the <c>"autoReject"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoReject")]
     AutoReject,
@@ -5561,10 +5985,12 @@ public enum SetRPHRegistrationModeMode
 public enum FileChooserOpenedMode
 {
     /// <summary>
+    /// Corresponds to the <c>"selectSingle"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selectSingle")]
     SelectSingle,
     /// <summary>
+    /// Corresponds to the <c>"selectMultiple"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selectMultiple")]
     SelectMultiple,
@@ -5576,10 +6002,12 @@ public enum FileChooserOpenedMode
 public enum FrameDetachedReason
 {
     /// <summary>
+    /// Corresponds to the <c>"remove"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("remove")]
     Remove,
     /// <summary>
+    /// Corresponds to the <c>"swap"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("swap")]
     Swap,
@@ -5591,34 +6019,42 @@ public enum FrameDetachedReason
 public enum FrameStartedNavigatingNavigationType
 {
     /// <summary>
+    /// Corresponds to the <c>"reload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reload")]
     Reload,
     /// <summary>
+    /// Corresponds to the <c>"reloadBypassingCache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reloadBypassingCache")]
     ReloadBypassingCache,
     /// <summary>
+    /// Corresponds to the <c>"restore"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("restore")]
     Restore,
     /// <summary>
+    /// Corresponds to the <c>"restoreWithPost"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("restoreWithPost")]
     RestoreWithPost,
     /// <summary>
+    /// Corresponds to the <c>"historySameDocument"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("historySameDocument")]
     HistorySameDocument,
     /// <summary>
+    /// Corresponds to the <c>"historyDifferentDocument"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("historyDifferentDocument")]
     HistoryDifferentDocument,
     /// <summary>
+    /// Corresponds to the <c>"sameDocument"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sameDocument")]
     SameDocument,
     /// <summary>
+    /// Corresponds to the <c>"differentDocument"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("differentDocument")]
     DifferentDocument,
@@ -5630,14 +6066,17 @@ public enum FrameStartedNavigatingNavigationType
 public enum DownloadProgressState
 {
     /// <summary>
+    /// Corresponds to the <c>"inProgress"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inProgress")]
     InProgress,
     /// <summary>
+    /// Corresponds to the <c>"completed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("completed")]
     Completed,
     /// <summary>
+    /// Corresponds to the <c>"canceled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("canceled")]
     Canceled,
@@ -5649,14 +6088,17 @@ public enum DownloadProgressState
 public enum NavigatedWithinDocumentNavigationType
 {
     /// <summary>
+    /// Corresponds to the <c>"fragment"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fragment")]
     Fragment,
     /// <summary>
+    /// Corresponds to the <c>"historyApi"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("historyApi")]
     HistoryApi,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,

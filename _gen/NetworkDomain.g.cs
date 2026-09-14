@@ -24,7 +24,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="CanClearBrowserCacheResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tells whether clearing browser cookies is supported.
@@ -39,7 +39,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="CanClearBrowserCookiesResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tells whether emulation of network conditions is supported.
@@ -54,7 +54,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="CanEmulateNetworkConditionsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears browser cache.
@@ -68,7 +68,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearBrowserCacheResult"/>.
     /// </returns>
-    Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears browser cookies.
@@ -82,7 +82,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearBrowserCookiesResult"/>.
     /// </returns>
-    Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes browser cookies with matching name and url or domain/path/partitionKey pair.
@@ -113,7 +113,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteCookiesResult"/>.
     /// </returns>
-    Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = null, string? domain = null, string? path = null, CookiePartitionKey? partitionKey = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables network tracking, prevents network events from being sent to the client.
@@ -127,7 +127,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Activates emulation of network conditions. This command is deprecated in favor of the emulateNetworkConditionsByRule
@@ -167,7 +167,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = null, double? packetLoss = null, long? packetQueueLength = null, bool? packetReordering = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Activates emulation of network conditions for individual requests using URL match patterns. Unlike the deprecated
@@ -196,7 +196,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="EmulateNetworkConditionsByRuleResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = null, bool? emulateOfflineServiceWorker = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Override the state of navigator.onLine and navigator.connection.
@@ -226,7 +226,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="OverrideNetworkStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables network tracking, network events will now be delivered to the client.
@@ -261,7 +261,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(long? maxTotalBufferSize = null, long? maxResourceBufferSize = null, long? maxPostDataSize = null, bool? reportDirectSocketTraffic = null, bool? enableDurableMessages = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Configures storing response bodies outside of renderer, so that these survive
@@ -284,7 +284,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="ConfigureDurableMessagesResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = null, long? maxResourceBufferSize = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser cookies. Depending on the backend support, will return detailed cookie
@@ -301,7 +301,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="GetAllCookiesResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the DER-encoded certificate.
@@ -319,7 +319,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="GetCertificateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all browser cookies for the current URL. Depending on the backend support, will return
@@ -339,7 +339,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCookiesResult"/>.
     /// </returns>
-    Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns content served for the given request.
@@ -356,7 +356,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetResponseBodyResult"/>.
     /// </returns>
-    Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns post data sent with the request. Returns an error when no data was sent with the request.
@@ -373,7 +373,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRequestPostDataResult"/>.
     /// </returns>
-    Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method sends a new XMLHttpRequest which is identical to the original one. The following
@@ -393,7 +393,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="ReplayXHRResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Searches for given string in response content.
@@ -420,7 +420,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="SearchInResponseBodyResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = null, bool? isRegex = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Blocks URLs from loading.
@@ -442,7 +442,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="SetBlockedURLsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = null, ImmutableArray<string>? urls = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Toggles ignoring of service worker for each request.
@@ -459,7 +459,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetBypassServiceWorkerResult"/>.
     /// </returns>
-    Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Toggles ignoring cache for each request. If <b>true</b>, cache will not be used.
@@ -476,7 +476,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCacheDisabledResult"/>.
     /// </returns>
-    Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
@@ -532,7 +532,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookieResult"/>.
     /// </returns>
-    Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = null, string? domain = null, string? path = null, bool? secure = null, bool? httpOnly = null, CookieSameSite? sameSite = null, TimeSinceEpoch? expires = null, CookiePriority? priority = null, CookieSourceScheme? sourceScheme = null, long? sourcePort = null, CookiePartitionKey? partitionKey = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets given cookies.
@@ -549,7 +549,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCookiesResult"/>.
     /// </returns>
-    Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Specifies whether to always send extra HTTP headers with the requests from this page.
@@ -566,7 +566,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetExtraHTTPHeadersResult"/>.
     /// </returns>
-    Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Specifies whether to attach a page script stack id in requests
@@ -584,7 +584,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="SetAttachDebugStackResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows overriding user agent with the given string.
@@ -610,7 +610,7 @@ public interface INetwork
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetUserAgentOverrideResult"/>.
     /// </returns>
-    Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = null, string? platform = null, Emulation.UserAgentMetadata? userAgentMetadata = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables streaming of the response for the given requestId.
@@ -629,7 +629,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="StreamResourceContentResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about the COEP/COOP isolation status.
@@ -647,7 +647,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="GetSecurityIsolationStatusResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables tracking for the Reporting API, events generated by the Reporting API will now be delivered to the client.
@@ -666,7 +666,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="EnableReportingApiResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets up tracking device bound sessions and fetching of initial set of sessions.
@@ -684,7 +684,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="EnableDeviceBoundSessionsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a device bound session.
@@ -701,7 +701,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="DeleteDeviceBoundSessionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches the schemeful site for a specific origin.
@@ -719,7 +719,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="FetchSchemefulSiteResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default);
+    Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches the resource and returns the content.
@@ -744,7 +744,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="LoadNetworkResourceResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets Controls for third-party cookie access
@@ -763,7 +763,7 @@ public interface INetwork
     /// A task representing the asynchronous operation, containing a <see cref="SetCookieControlsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when data chunk was received over the network.
@@ -1395,231 +1395,231 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
     private static readonly NetworkJsonSerializerContext JsonContext = NetworkJsonSerializerContext.Default;
 
     [global::System.Obsolete]
-    public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CanClearBrowserCacheResult> CanClearBrowserCacheAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCacheCommandParameters();
         return await ExecuteCommandAsync("Network.canClearBrowserCache", @params, JsonContext.CanClearBrowserCacheCommandParameters, JsonContext.CanClearBrowserCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CanClearBrowserCookiesResult> CanClearBrowserCookiesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CanClearBrowserCookiesCommandParameters();
         return await ExecuteCommandAsync("Network.canClearBrowserCookies", @params, JsonContext.CanClearBrowserCookiesCommandParameters, JsonContext.CanClearBrowserCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CanEmulateNetworkConditionsResult> CanEmulateNetworkConditionsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CanEmulateNetworkConditionsCommandParameters();
         return await ExecuteCommandAsync("Network.canEmulateNetworkConditions", @params, JsonContext.CanEmulateNetworkConditionsCommandParameters, JsonContext.CanEmulateNetworkConditionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearBrowserCacheResult> ClearBrowserCacheAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCacheCommandParameters();
         return await ExecuteCommandAsync("Network.clearBrowserCache", @params, JsonContext.ClearBrowserCacheCommandParameters, JsonContext.ClearBrowserCacheResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearBrowserCookiesResult> ClearBrowserCookiesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearBrowserCookiesCommandParameters();
         return await ExecuteCommandAsync("Network.clearBrowserCookies", @params, JsonContext.ClearBrowserCookiesCommandParameters, JsonContext.ClearBrowserCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = default, string? domain = default, string? path = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteCookiesResult> DeleteCookiesAsync(string name, string? url = null, string? domain = null, string? path = null, CookiePartitionKey? partitionKey = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteCookiesCommandParameters(Name: name, Url: url, Domain: domain, Path: path, PartitionKey: partitionKey);
         return await ExecuteCommandAsync("Network.deleteCookies", @params, JsonContext.DeleteCookiesCommandParameters, JsonContext.DeleteCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Network.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, double? packetLoss = default, long? packetQueueLength = default, bool? packetReordering = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EmulateNetworkConditionsResult> EmulateNetworkConditionsAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = null, double? packetLoss = null, long? packetQueueLength = null, bool? packetReordering = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType, PacketLoss: packetLoss, PacketQueueLength: packetQueueLength, PacketReordering: packetReordering);
         return await ExecuteCommandAsync("Network.emulateNetworkConditions", @params, JsonContext.EmulateNetworkConditionsCommandParameters, JsonContext.EmulateNetworkConditionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = default, bool? emulateOfflineServiceWorker = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EmulateNetworkConditionsByRuleResult> EmulateNetworkConditionsByRuleAsync(ImmutableArray<NetworkConditions> matchedNetworkConditions, bool? offline = null, bool? emulateOfflineServiceWorker = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateNetworkConditionsByRuleCommandParameters(Offline: offline, EmulateOfflineServiceWorker: emulateOfflineServiceWorker, MatchedNetworkConditions: matchedNetworkConditions);
         return await ExecuteCommandAsync("Network.emulateNetworkConditionsByRule", @params, JsonContext.EmulateNetworkConditionsByRuleCommandParameters, JsonContext.EmulateNetworkConditionsByRuleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<OverrideNetworkStateResult> OverrideNetworkStateAsync(bool offline, double latency, double downloadThroughput, double uploadThroughput, ConnectionType? connectionType = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new OverrideNetworkStateCommandParameters(Offline: offline, Latency: latency, DownloadThroughput: downloadThroughput, UploadThroughput: uploadThroughput, ConnectionType: connectionType);
         return await ExecuteCommandAsync("Network.overrideNetworkState", @params, JsonContext.OverrideNetworkStateCommandParameters, JsonContext.OverrideNetworkStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, long? maxPostDataSize = default, bool? reportDirectSocketTraffic = default, bool? enableDurableMessages = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(long? maxTotalBufferSize = null, long? maxResourceBufferSize = null, long? maxPostDataSize = null, bool? reportDirectSocketTraffic = null, bool? enableDurableMessages = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize, MaxPostDataSize: maxPostDataSize, ReportDirectSocketTraffic: reportDirectSocketTraffic, EnableDurableMessages: enableDurableMessages);
         return await ExecuteCommandAsync("Network.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = default, long? maxResourceBufferSize = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ConfigureDurableMessagesResult> ConfigureDurableMessagesAsync(long? maxTotalBufferSize = null, long? maxResourceBufferSize = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ConfigureDurableMessagesCommandParameters(MaxTotalBufferSize: maxTotalBufferSize, MaxResourceBufferSize: maxResourceBufferSize);
         return await ExecuteCommandAsync("Network.configureDurableMessages", @params, JsonContext.ConfigureDurableMessagesCommandParameters, JsonContext.ConfigureDurableMessagesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAllCookiesResult> GetAllCookiesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAllCookiesCommandParameters();
         return await ExecuteCommandAsync("Network.getAllCookies", @params, JsonContext.GetAllCookiesCommandParameters, JsonContext.GetAllCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetCertificateResult> GetCertificateAsync(string origin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetCertificateCommandParameters(Origin: origin);
         return await ExecuteCommandAsync("Network.getCertificate", @params, JsonContext.GetCertificateCommandParameters, JsonContext.GetCertificateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetCookiesResult> GetCookiesAsync(ImmutableArray<string>? urls = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetCookiesCommandParameters(Urls: urls);
         return await ExecuteCommandAsync("Network.getCookies", @params, JsonContext.GetCookiesCommandParameters, JsonContext.GetCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("Network.getResponseBody", @params, JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetRequestPostDataResult> GetRequestPostDataAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetRequestPostDataCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("Network.getRequestPostData", @params, JsonContext.GetRequestPostDataCommandParameters, JsonContext.GetRequestPostDataResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReplayXHRResult> ReplayXHRAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReplayXHRCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("Network.replayXHR", @params, JsonContext.ReplayXHRCommandParameters, JsonContext.ReplayXHRResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = default, bool? isRegex = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SearchInResponseBodyResult> SearchInResponseBodyAsync(RequestId requestId, string query, bool? caseSensitive = null, bool? isRegex = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SearchInResponseBodyCommandParameters(RequestId: requestId, Query: query, CaseSensitive: caseSensitive, IsRegex: isRegex);
         return await ExecuteCommandAsync("Network.searchInResponseBody", @params, JsonContext.SearchInResponseBodyCommandParameters, JsonContext.SearchInResponseBodyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = default, ImmutableArray<string>? urls = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBlockedURLsResult> SetBlockedURLsAsync(ImmutableArray<BlockPattern>? urlPatterns = null, ImmutableArray<string>? urls = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBlockedURLsCommandParameters(UrlPatterns: urlPatterns, Urls: urls);
         return await ExecuteCommandAsync("Network.setBlockedURLs", @params, JsonContext.SetBlockedURLsCommandParameters, JsonContext.SetBlockedURLsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetBypassServiceWorkerResult> SetBypassServiceWorkerAsync(bool bypass, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetBypassServiceWorkerCommandParameters(Bypass: bypass);
         return await ExecuteCommandAsync("Network.setBypassServiceWorker", @params, JsonContext.SetBypassServiceWorkerCommandParameters, JsonContext.SetBypassServiceWorkerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCacheDisabledResult> SetCacheDisabledAsync(bool cacheDisabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCacheDisabledCommandParameters(CacheDisabled: cacheDisabled);
         return await ExecuteCommandAsync("Network.setCacheDisabled", @params, JsonContext.SetCacheDisabledCommandParameters, JsonContext.SetCacheDisabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = default, string? domain = default, string? path = default, bool? secure = default, bool? httpOnly = default, CookieSameSite? sameSite = default, TimeSinceEpoch? expires = default, CookiePriority? priority = default, CookieSourceScheme? sourceScheme = default, long? sourcePort = default, CookiePartitionKey? partitionKey = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookieResult> SetCookieAsync(string name, string value, string? url = null, string? domain = null, string? path = null, bool? secure = null, bool? httpOnly = null, CookieSameSite? sameSite = null, TimeSinceEpoch? expires = null, CookiePriority? priority = null, CookieSourceScheme? sourceScheme = null, long? sourcePort = null, CookiePartitionKey? partitionKey = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookieCommandParameters(Name: name, Value: value, Url: url, Domain: domain, Path: path, Secure: secure, HttpOnly: httpOnly, SameSite: sameSite, Expires: expires, Priority: priority, SourceScheme: sourceScheme, SourcePort: sourcePort, PartitionKey: partitionKey);
         return await ExecuteCommandAsync("Network.setCookie", @params, JsonContext.SetCookieCommandParameters, JsonContext.SetCookieResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookiesResult> SetCookiesAsync(ImmutableArray<CookieParam> cookies, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookiesCommandParameters(Cookies: cookies);
         return await ExecuteCommandAsync("Network.setCookies", @params, JsonContext.SetCookiesCommandParameters, JsonContext.SetCookiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetExtraHTTPHeadersResult> SetExtraHTTPHeadersAsync(global::System.Collections.Generic.IReadOnlyDictionary<string, string> headers, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetExtraHTTPHeadersCommandParameters(Headers: headers);
         return await ExecuteCommandAsync("Network.setExtraHTTPHeaders", @params, JsonContext.SetExtraHTTPHeadersCommandParameters, JsonContext.SetExtraHTTPHeadersResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAttachDebugStackResult> SetAttachDebugStackAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAttachDebugStackCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Network.setAttachDebugStack", @params, JsonContext.SetAttachDebugStackCommandParameters, JsonContext.SetAttachDebugStackResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = default, string? platform = default, Emulation.UserAgentMetadata? userAgentMetadata = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetUserAgentOverrideResult> SetUserAgentOverrideAsync(string userAgent, string? acceptLanguage = null, string? platform = null, Emulation.UserAgentMetadata? userAgentMetadata = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserAgentOverrideCommandParameters(UserAgent: userAgent, AcceptLanguage: acceptLanguage, Platform: platform, UserAgentMetadata: userAgentMetadata);
         return await ExecuteCommandAsync("Network.setUserAgentOverride", @params, JsonContext.SetUserAgentOverrideCommandParameters, JsonContext.SetUserAgentOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StreamResourceContentResult> StreamResourceContentAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StreamResourceContentCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("Network.streamResourceContent", @params, JsonContext.StreamResourceContentCommandParameters, JsonContext.StreamResourceContentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetSecurityIsolationStatusResult> GetSecurityIsolationStatusAsync(Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetSecurityIsolationStatusCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("Network.getSecurityIsolationStatus", @params, JsonContext.GetSecurityIsolationStatusCommandParameters, JsonContext.GetSecurityIsolationStatusResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableReportingApiResult> EnableReportingApiAsync(bool enable, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableReportingApiCommandParameters(Enable: enable);
         return await ExecuteCommandAsync("Network.enableReportingApi", @params, JsonContext.EnableReportingApiCommandParameters, JsonContext.EnableReportingApiResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableDeviceBoundSessionsResult> EnableDeviceBoundSessionsAsync(bool enable, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableDeviceBoundSessionsCommandParameters(Enable: enable);
         return await ExecuteCommandAsync("Network.enableDeviceBoundSessions", @params, JsonContext.EnableDeviceBoundSessionsCommandParameters, JsonContext.EnableDeviceBoundSessionsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteDeviceBoundSessionResult> DeleteDeviceBoundSessionAsync(DeviceBoundSessionKey key, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteDeviceBoundSessionCommandParameters(Key: key);
         return await ExecuteCommandAsync("Network.deleteDeviceBoundSession", @params, JsonContext.DeleteDeviceBoundSessionCommandParameters, JsonContext.DeleteDeviceBoundSessionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<FetchSchemefulSiteResult> FetchSchemefulSiteAsync(string origin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new FetchSchemefulSiteCommandParameters(Origin: origin);
         return await ExecuteCommandAsync("Network.fetchSchemefulSite", @params, JsonContext.FetchSchemefulSiteCommandParameters, JsonContext.FetchSchemefulSiteResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<LoadNetworkResourceResult> LoadNetworkResourceAsync(string url, LoadNetworkResourceOptions options, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new LoadNetworkResourceCommandParameters(FrameId: frameId, Url: url, Options: options);
         return await ExecuteCommandAsync("Network.loadNetworkResource", @params, JsonContext.LoadNetworkResourceCommandParameters, JsonContext.LoadNetworkResourceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCookieControlsResult> SetCookieControlsAsync(bool enableThirdPartyCookieRestriction, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCookieControlsCommandParameters(EnableThirdPartyCookieRestriction: enableThirdPartyCookieRestriction);
         return await ExecuteCommandAsync("Network.setCookieControls", @params, JsonContext.SetCookieControlsCommandParameters, JsonContext.SetCookieControlsResult, session, cancellationToken).ConfigureAwait(false);
@@ -1699,6 +1699,7 @@ internal sealed class NetworkDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record CanClearBrowserCacheCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.CanClearBrowserCacheAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// True if browser cache can be cleared.
@@ -1709,6 +1710,7 @@ public sealed record CanClearBrowserCacheResult(bool Result) : EmptyResult;
 internal sealed record CanClearBrowserCookiesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.CanClearBrowserCookiesAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// True if browser cookies can be cleared.
@@ -1719,6 +1721,7 @@ public sealed record CanClearBrowserCookiesResult(bool Result) : EmptyResult;
 internal sealed record CanEmulateNetworkConditionsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.CanEmulateNetworkConditionsAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// True if emulation of network conditions is supported.
@@ -1729,6 +1732,7 @@ public sealed record CanEmulateNetworkConditionsResult(bool Result) : EmptyResul
 internal sealed record ClearBrowserCacheCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.ClearBrowserCacheAsync"/> command.
 /// </summary>
 public sealed record ClearBrowserCacheResult() : EmptyResult;
 
@@ -1736,6 +1740,7 @@ public sealed record ClearBrowserCacheResult() : EmptyResult;
 internal sealed record ClearBrowserCookiesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.ClearBrowserCookiesAsync"/> command.
 /// </summary>
 public sealed record ClearBrowserCookiesResult() : EmptyResult;
 
@@ -1743,6 +1748,7 @@ public sealed record ClearBrowserCookiesResult() : EmptyResult;
 internal sealed record DeleteCookiesCommandParameters(string Name, string? Url, string? Domain, string? Path, CookiePartitionKey? PartitionKey) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.DeleteCookiesAsync"/> command.
 /// </summary>
 public sealed record DeleteCookiesResult() : EmptyResult;
 
@@ -1750,6 +1756,7 @@ public sealed record DeleteCookiesResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -1757,6 +1764,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EmulateNetworkConditionsCommandParameters(bool Offline, double Latency, double DownloadThroughput, double UploadThroughput, ConnectionType? ConnectionType, double? PacketLoss, long? PacketQueueLength, bool? PacketReordering) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.EmulateNetworkConditionsAsync"/> command.
 /// </summary>
 public sealed record EmulateNetworkConditionsResult() : EmptyResult;
 
@@ -1764,6 +1772,7 @@ public sealed record EmulateNetworkConditionsResult() : EmptyResult;
 internal sealed record EmulateNetworkConditionsByRuleCommandParameters(bool? Offline, bool? EmulateOfflineServiceWorker, ImmutableArray<NetworkConditions> MatchedNetworkConditions) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.EmulateNetworkConditionsByRuleAsync"/> command.
 /// </summary>
 /// <param name="RuleIds">
 /// An id for each entry in matchedNetworkConditions. The id will be included in the requestWillBeSentExtraInfo for
@@ -1775,6 +1784,7 @@ public sealed record EmulateNetworkConditionsByRuleResult(ImmutableArray<string>
 internal sealed record OverrideNetworkStateCommandParameters(bool Offline, double Latency, double DownloadThroughput, double UploadThroughput, ConnectionType? ConnectionType) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.OverrideNetworkStateAsync"/> command.
 /// </summary>
 public sealed record OverrideNetworkStateResult() : EmptyResult;
 
@@ -1782,6 +1792,7 @@ public sealed record OverrideNetworkStateResult() : EmptyResult;
 internal sealed record EnableCommandParameters(long? MaxTotalBufferSize, long? MaxResourceBufferSize, long? MaxPostDataSize, bool? ReportDirectSocketTraffic, bool? EnableDurableMessages) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -1789,6 +1800,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record ConfigureDurableMessagesCommandParameters(long? MaxTotalBufferSize, long? MaxResourceBufferSize) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.ConfigureDurableMessagesAsync"/> command.
 /// </summary>
 public sealed record ConfigureDurableMessagesResult() : EmptyResult;
 
@@ -1796,6 +1808,7 @@ public sealed record ConfigureDurableMessagesResult() : EmptyResult;
 internal sealed record GetAllCookiesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.GetAllCookiesAsync"/> command.
 /// </summary>
 /// <param name="Cookies">
 /// Array of cookie objects.
@@ -1806,6 +1819,7 @@ public sealed record GetAllCookiesResult(ImmutableArray<Cookie> Cookies) : Empty
 internal sealed record GetCertificateCommandParameters(string Origin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.GetCertificateAsync"/> command.
 /// </summary>
 /// <param name="TableNames">
 /// </param>
@@ -1815,6 +1829,7 @@ public sealed record GetCertificateResult(ImmutableArray<string> TableNames) : E
 internal sealed record GetCookiesCommandParameters(ImmutableArray<string>? Urls) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.GetCookiesAsync"/> command.
 /// </summary>
 /// <param name="Cookies">
 /// Array of cookie objects.
@@ -1825,6 +1840,7 @@ public sealed record GetCookiesResult(ImmutableArray<Cookie> Cookies) : EmptyRes
 internal sealed record GetResponseBodyCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.GetResponseBodyAsync"/> command.
 /// </summary>
 /// <param name="Body">
 /// Response body.
@@ -1838,6 +1854,7 @@ public sealed record GetResponseBodyResult(string Body, bool Base64Encoded) : Em
 internal sealed record GetRequestPostDataCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.GetRequestPostDataAsync"/> command.
 /// </summary>
 /// <param name="PostData">
 /// Request body string, omitting files from multipart requests
@@ -1851,6 +1868,7 @@ public sealed record GetRequestPostDataResult(string PostData, bool Base64Encode
 internal sealed record ReplayXHRCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.ReplayXHRAsync"/> command.
 /// </summary>
 public sealed record ReplayXHRResult() : EmptyResult;
 
@@ -1858,6 +1876,7 @@ public sealed record ReplayXHRResult() : EmptyResult;
 internal sealed record SearchInResponseBodyCommandParameters(RequestId RequestId, string Query, bool? CaseSensitive, bool? IsRegex) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SearchInResponseBodyAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// List of search matches.
@@ -1868,6 +1887,7 @@ public sealed record SearchInResponseBodyResult(ImmutableArray<Debugger.SearchMa
 internal sealed record SetBlockedURLsCommandParameters(ImmutableArray<BlockPattern>? UrlPatterns, ImmutableArray<string>? Urls) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetBlockedURLsAsync"/> command.
 /// </summary>
 public sealed record SetBlockedURLsResult() : EmptyResult;
 
@@ -1875,6 +1895,7 @@ public sealed record SetBlockedURLsResult() : EmptyResult;
 internal sealed record SetBypassServiceWorkerCommandParameters(bool Bypass) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetBypassServiceWorkerAsync"/> command.
 /// </summary>
 public sealed record SetBypassServiceWorkerResult() : EmptyResult;
 
@@ -1882,6 +1903,7 @@ public sealed record SetBypassServiceWorkerResult() : EmptyResult;
 internal sealed record SetCacheDisabledCommandParameters(bool CacheDisabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetCacheDisabledAsync"/> command.
 /// </summary>
 public sealed record SetCacheDisabledResult() : EmptyResult;
 
@@ -1889,6 +1911,7 @@ public sealed record SetCacheDisabledResult() : EmptyResult;
 internal sealed record SetCookieCommandParameters(string Name, string Value, string? Url, string? Domain, string? Path, bool? Secure, bool? HttpOnly, CookieSameSite? SameSite, TimeSinceEpoch? Expires, CookiePriority? Priority, CookieSourceScheme? SourceScheme, long? SourcePort, CookiePartitionKey? PartitionKey) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetCookieAsync"/> command.
 /// </summary>
 /// <param name="Success">
 /// Always set to true. If an error occurs, the response indicates protocol error.
@@ -1899,6 +1922,7 @@ public sealed record SetCookieResult(bool Success) : EmptyResult;
 internal sealed record SetCookiesCommandParameters(ImmutableArray<CookieParam> Cookies) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetCookiesAsync"/> command.
 /// </summary>
 public sealed record SetCookiesResult() : EmptyResult;
 
@@ -1906,6 +1930,7 @@ public sealed record SetCookiesResult() : EmptyResult;
 internal sealed record SetExtraHTTPHeadersCommandParameters(global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetExtraHTTPHeadersAsync"/> command.
 /// </summary>
 public sealed record SetExtraHTTPHeadersResult() : EmptyResult;
 
@@ -1913,6 +1938,7 @@ public sealed record SetExtraHTTPHeadersResult() : EmptyResult;
 internal sealed record SetAttachDebugStackCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetAttachDebugStackAsync"/> command.
 /// </summary>
 public sealed record SetAttachDebugStackResult() : EmptyResult;
 
@@ -1920,6 +1946,7 @@ public sealed record SetAttachDebugStackResult() : EmptyResult;
 internal sealed record SetUserAgentOverrideCommandParameters(string UserAgent, string? AcceptLanguage, string? Platform, Emulation.UserAgentMetadata? UserAgentMetadata) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetUserAgentOverrideAsync"/> command.
 /// </summary>
 public sealed record SetUserAgentOverrideResult() : EmptyResult;
 
@@ -1927,6 +1954,7 @@ public sealed record SetUserAgentOverrideResult() : EmptyResult;
 internal sealed record StreamResourceContentCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.StreamResourceContentAsync"/> command.
 /// </summary>
 /// <param name="BufferedData">
 /// Data that has been buffered until streaming is enabled. (Encoded as a base64 string when passed over JSON)
@@ -1937,6 +1965,7 @@ public sealed record StreamResourceContentResult(string BufferedData) : EmptyRes
 internal sealed record GetSecurityIsolationStatusCommandParameters(Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.GetSecurityIsolationStatusAsync"/> command.
 /// </summary>
 /// <param name="Status">
 /// </param>
@@ -1946,6 +1975,7 @@ public sealed record GetSecurityIsolationStatusResult(SecurityIsolationStatus St
 internal sealed record EnableReportingApiCommandParameters(bool Enable) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.EnableReportingApiAsync"/> command.
 /// </summary>
 public sealed record EnableReportingApiResult() : EmptyResult;
 
@@ -1953,6 +1983,7 @@ public sealed record EnableReportingApiResult() : EmptyResult;
 internal sealed record EnableDeviceBoundSessionsCommandParameters(bool Enable) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.EnableDeviceBoundSessionsAsync"/> command.
 /// </summary>
 public sealed record EnableDeviceBoundSessionsResult() : EmptyResult;
 
@@ -1960,6 +1991,7 @@ public sealed record EnableDeviceBoundSessionsResult() : EmptyResult;
 internal sealed record DeleteDeviceBoundSessionCommandParameters(DeviceBoundSessionKey Key) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.DeleteDeviceBoundSessionAsync"/> command.
 /// </summary>
 public sealed record DeleteDeviceBoundSessionResult() : EmptyResult;
 
@@ -1967,6 +1999,7 @@ public sealed record DeleteDeviceBoundSessionResult() : EmptyResult;
 internal sealed record FetchSchemefulSiteCommandParameters(string Origin) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.FetchSchemefulSiteAsync"/> command.
 /// </summary>
 /// <param name="SchemefulSite">
 /// The corresponding schemeful site.
@@ -1977,6 +2010,7 @@ public sealed record FetchSchemefulSiteResult(string SchemefulSite) : EmptyResul
 internal sealed record LoadNetworkResourceCommandParameters(Page.FrameId? FrameId, string Url, LoadNetworkResourceOptions Options) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.LoadNetworkResourceAsync"/> command.
 /// </summary>
 /// <param name="Resource">
 /// </param>
@@ -1986,6 +2020,7 @@ public sealed record LoadNetworkResourceResult(LoadNetworkResourcePageResult Res
 internal sealed record SetCookieControlsCommandParameters(bool EnableThirdPartyCookieRestriction) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="INetwork.SetCookieControlsAsync"/> command.
 /// </summary>
 public sealed record SetCookieControlsResult() : EmptyResult;
 
@@ -2674,78 +2709,97 @@ public sealed record DeviceBoundSessionEventOccurredEventArgs(DeviceBoundSession
 public enum ResourceType
 {
     /// <summary>
+    /// Corresponds to the <c>"Document"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Document")]
     Document,
     /// <summary>
+    /// Corresponds to the <c>"Stylesheet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Stylesheet")]
     Stylesheet,
     /// <summary>
+    /// Corresponds to the <c>"Image"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Image")]
     Image,
     /// <summary>
+    /// Corresponds to the <c>"Media"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Media")]
     Media,
     /// <summary>
+    /// Corresponds to the <c>"Font"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Font")]
     Font,
     /// <summary>
+    /// Corresponds to the <c>"Script"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Script")]
     Script,
     /// <summary>
+    /// Corresponds to the <c>"TextTrack"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TextTrack")]
     TextTrack,
     /// <summary>
+    /// Corresponds to the <c>"XHR"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("XHR")]
     XHR,
     /// <summary>
+    /// Corresponds to the <c>"Fetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Fetch")]
     Fetch,
     /// <summary>
+    /// Corresponds to the <c>"Prefetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Prefetch")]
     Prefetch,
     /// <summary>
+    /// Corresponds to the <c>"EventSource"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EventSource")]
     EventSource,
     /// <summary>
+    /// Corresponds to the <c>"WebSocket"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebSocket")]
     WebSocket,
     /// <summary>
+    /// Corresponds to the <c>"Manifest"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Manifest")]
     Manifest,
     /// <summary>
+    /// Corresponds to the <c>"SignedExchange"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignedExchange")]
     SignedExchange,
     /// <summary>
+    /// Corresponds to the <c>"Ping"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Ping")]
     Ping,
     /// <summary>
+    /// Corresponds to the <c>"CSPViolationReport"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSPViolationReport")]
     CSPViolationReport,
     /// <summary>
+    /// Corresponds to the <c>"Preflight"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Preflight")]
     Preflight,
     /// <summary>
+    /// Corresponds to the <c>"FedCM"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FedCM")]
     FedCM,
     /// <summary>
+    /// Corresponds to the <c>"Other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Other")]
     Other,
@@ -2778,58 +2832,72 @@ public record RequestId : IStringRemoteId
 public enum ErrorReason
 {
     /// <summary>
+    /// Corresponds to the <c>"Failed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Failed")]
     Failed,
     /// <summary>
+    /// Corresponds to the <c>"Aborted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Aborted")]
     Aborted,
     /// <summary>
+    /// Corresponds to the <c>"TimedOut"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TimedOut")]
     TimedOut,
     /// <summary>
+    /// Corresponds to the <c>"AccessDenied"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccessDenied")]
     AccessDenied,
     /// <summary>
+    /// Corresponds to the <c>"ConnectionClosed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConnectionClosed")]
     ConnectionClosed,
     /// <summary>
+    /// Corresponds to the <c>"ConnectionReset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConnectionReset")]
     ConnectionReset,
     /// <summary>
+    /// Corresponds to the <c>"ConnectionRefused"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConnectionRefused")]
     ConnectionRefused,
     /// <summary>
+    /// Corresponds to the <c>"ConnectionAborted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConnectionAborted")]
     ConnectionAborted,
     /// <summary>
+    /// Corresponds to the <c>"ConnectionFailed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConnectionFailed")]
     ConnectionFailed,
     /// <summary>
+    /// Corresponds to the <c>"NameNotResolved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NameNotResolved")]
     NameNotResolved,
     /// <summary>
+    /// Corresponds to the <c>"InternetDisconnected"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InternetDisconnected")]
     InternetDisconnected,
     /// <summary>
+    /// Corresponds to the <c>"AddressUnreachable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AddressUnreachable")]
     AddressUnreachable,
     /// <summary>
+    /// Corresponds to the <c>"BlockedByClient"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByClient")]
     BlockedByClient,
     /// <summary>
+    /// Corresponds to the <c>"BlockedByResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByResponse")]
     BlockedByResponse,
@@ -2864,38 +2932,47 @@ public record MonotonicTime : INumberRemoteId
 public enum ConnectionType
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"cellular2g"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cellular2g")]
     Cellular2g,
     /// <summary>
+    /// Corresponds to the <c>"cellular3g"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cellular3g")]
     Cellular3g,
     /// <summary>
+    /// Corresponds to the <c>"cellular4g"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cellular4g")]
     Cellular4g,
     /// <summary>
+    /// Corresponds to the <c>"bluetooth"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bluetooth")]
     Bluetooth,
     /// <summary>
+    /// Corresponds to the <c>"ethernet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ethernet")]
     Ethernet,
     /// <summary>
+    /// Corresponds to the <c>"wifi"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wifi")]
     Wifi,
     /// <summary>
+    /// Corresponds to the <c>"wimax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wimax")]
     Wimax,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
@@ -2909,14 +2986,17 @@ public enum ConnectionType
 public enum CookieSameSite
 {
     /// <summary>
+    /// Corresponds to the <c>"Strict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Strict")]
     Strict,
     /// <summary>
+    /// Corresponds to the <c>"Lax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Lax")]
     Lax,
     /// <summary>
+    /// Corresponds to the <c>"None"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("None")]
     None,
@@ -2930,14 +3010,17 @@ public enum CookieSameSite
 public enum CookiePriority
 {
     /// <summary>
+    /// Corresponds to the <c>"Low"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Low")]
     Low,
     /// <summary>
+    /// Corresponds to the <c>"Medium"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Medium")]
     Medium,
     /// <summary>
+    /// Corresponds to the <c>"High"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("High")]
     High,
@@ -2952,14 +3035,17 @@ public enum CookiePriority
 public enum CookieSourceScheme
 {
     /// <summary>
+    /// Corresponds to the <c>"Unset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Unset")]
     Unset,
     /// <summary>
+    /// Corresponds to the <c>"NonSecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonSecure")]
     NonSecure,
     /// <summary>
+    /// Corresponds to the <c>"Secure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Secure")]
     Secure,
@@ -3046,22 +3132,27 @@ public sealed record ResourceTiming(double RequestTime, double ProxyStart, doubl
 public enum ResourcePriority
 {
     /// <summary>
+    /// Corresponds to the <c>"VeryLow"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("VeryLow")]
     VeryLow,
     /// <summary>
+    /// Corresponds to the <c>"Low"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Low")]
     Low,
     /// <summary>
+    /// Corresponds to the <c>"Medium"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Medium")]
     Medium,
     /// <summary>
+    /// Corresponds to the <c>"High"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("High")]
     High,
     /// <summary>
+    /// Corresponds to the <c>"VeryHigh"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("VeryHigh")]
     VeryHigh,
@@ -3074,22 +3165,27 @@ public enum ResourcePriority
 public enum RenderBlockingBehavior
 {
     /// <summary>
+    /// Corresponds to the <c>"Blocking"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Blocking")]
     Blocking,
     /// <summary>
+    /// Corresponds to the <c>"InBodyParserBlocking"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InBodyParserBlocking")]
     InBodyParserBlocking,
     /// <summary>
+    /// Corresponds to the <c>"NonBlocking"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonBlocking")]
     NonBlocking,
     /// <summary>
+    /// Corresponds to the <c>"NonBlockingDynamic"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NonBlockingDynamic")]
     NonBlockingDynamic,
     /// <summary>
+    /// Corresponds to the <c>"PotentiallyBlocking"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PotentiallyBlocking")]
     PotentiallyBlocking,
@@ -3273,14 +3369,17 @@ public sealed record SecurityDetails(string Protocol, string KeyExchange, string
 public enum CertificateTransparencyCompliance
 {
     /// <summary>
+    /// Corresponds to the <c>"unknown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown")]
     Unknown,
     /// <summary>
+    /// Corresponds to the <c>"not-compliant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("not-compliant")]
     NotCompliant,
     /// <summary>
+    /// Corresponds to the <c>"compliant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("compliant")]
     Compliant,
@@ -3293,66 +3392,82 @@ public enum CertificateTransparencyCompliance
 public enum BlockedReason
 {
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
     /// <summary>
+    /// Corresponds to the <c>"csp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("csp")]
     Csp,
     /// <summary>
+    /// Corresponds to the <c>"mixed-content"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mixed-content")]
     MixedContent,
     /// <summary>
+    /// Corresponds to the <c>"origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("origin")]
     Origin,
     /// <summary>
+    /// Corresponds to the <c>"inspector"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inspector")]
     Inspector,
     /// <summary>
+    /// Corresponds to the <c>"integrity"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("integrity")]
     Integrity,
     /// <summary>
+    /// Corresponds to the <c>"subresource-filter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("subresource-filter")]
     SubresourceFilter,
     /// <summary>
+    /// Corresponds to the <c>"content-type"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("content-type")]
     ContentType,
     /// <summary>
+    /// Corresponds to the <c>"coep-frame-resource-needs-coep-header"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("coep-frame-resource-needs-coep-header")]
     CoepFrameResourceNeedsCoepHeader,
     /// <summary>
+    /// Corresponds to the <c>"coop-sandboxed-iframe-cannot-navigate-to-coop-page"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("coop-sandboxed-iframe-cannot-navigate-to-coop-page")]
     CoopSandboxedIframeCannotNavigateToCoopPage,
     /// <summary>
+    /// Corresponds to the <c>"corp-not-same-origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("corp-not-same-origin")]
     CorpNotSameOrigin,
     /// <summary>
+    /// Corresponds to the <c>"corp-not-same-origin-after-defaulted-to-same-origin-by-coep"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("corp-not-same-origin-after-defaulted-to-same-origin-by-coep")]
     CorpNotSameOriginAfterDefaultedToSameOriginByCoep,
     /// <summary>
+    /// Corresponds to the <c>"corp-not-same-origin-after-defaulted-to-same-origin-by-dip"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("corp-not-same-origin-after-defaulted-to-same-origin-by-dip")]
     CorpNotSameOriginAfterDefaultedToSameOriginByDip,
     /// <summary>
+    /// Corresponds to the <c>"corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip")]
     CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip,
     /// <summary>
+    /// Corresponds to the <c>"corp-not-same-site"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("corp-not-same-site")]
     CorpNotSameSite,
     /// <summary>
+    /// Corresponds to the <c>"sri-message-signature-mismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sri-message-signature-mismatch")]
     SriMessageSignatureMismatch,
@@ -3365,114 +3480,142 @@ public enum BlockedReason
 public enum CorsError
 {
     /// <summary>
+    /// Corresponds to the <c>"DisallowedByMode"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DisallowedByMode")]
     DisallowedByMode,
     /// <summary>
+    /// Corresponds to the <c>"InvalidResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidResponse")]
     InvalidResponse,
     /// <summary>
+    /// Corresponds to the <c>"WildcardOriginNotAllowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WildcardOriginNotAllowed")]
     WildcardOriginNotAllowed,
     /// <summary>
+    /// Corresponds to the <c>"MissingAllowOriginHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingAllowOriginHeader")]
     MissingAllowOriginHeader,
     /// <summary>
+    /// Corresponds to the <c>"MultipleAllowOriginValues"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MultipleAllowOriginValues")]
     MultipleAllowOriginValues,
     /// <summary>
+    /// Corresponds to the <c>"InvalidAllowOriginValue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowOriginValue")]
     InvalidAllowOriginValue,
     /// <summary>
+    /// Corresponds to the <c>"AllowOriginMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AllowOriginMismatch")]
     AllowOriginMismatch,
     /// <summary>
+    /// Corresponds to the <c>"InvalidAllowCredentials"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowCredentials")]
     InvalidAllowCredentials,
     /// <summary>
+    /// Corresponds to the <c>"CorsDisabledScheme"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CorsDisabledScheme")]
     CorsDisabledScheme,
     /// <summary>
+    /// Corresponds to the <c>"PreflightInvalidStatus"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightInvalidStatus")]
     PreflightInvalidStatus,
     /// <summary>
+    /// Corresponds to the <c>"PreflightDisallowedRedirect"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightDisallowedRedirect")]
     PreflightDisallowedRedirect,
     /// <summary>
+    /// Corresponds to the <c>"PreflightWildcardOriginNotAllowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightWildcardOriginNotAllowed")]
     PreflightWildcardOriginNotAllowed,
     /// <summary>
+    /// Corresponds to the <c>"PreflightMissingAllowOriginHeader"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightMissingAllowOriginHeader")]
     PreflightMissingAllowOriginHeader,
     /// <summary>
+    /// Corresponds to the <c>"PreflightMultipleAllowOriginValues"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightMultipleAllowOriginValues")]
     PreflightMultipleAllowOriginValues,
     /// <summary>
+    /// Corresponds to the <c>"PreflightInvalidAllowOriginValue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightInvalidAllowOriginValue")]
     PreflightInvalidAllowOriginValue,
     /// <summary>
+    /// Corresponds to the <c>"PreflightAllowOriginMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightAllowOriginMismatch")]
     PreflightAllowOriginMismatch,
     /// <summary>
+    /// Corresponds to the <c>"PreflightInvalidAllowCredentials"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightInvalidAllowCredentials")]
     PreflightInvalidAllowCredentials,
     /// <summary>
+    /// Corresponds to the <c>"PreflightMissingAllowExternal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightMissingAllowExternal")]
     PreflightMissingAllowExternal,
     /// <summary>
+    /// Corresponds to the <c>"PreflightInvalidAllowExternal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreflightInvalidAllowExternal")]
     PreflightInvalidAllowExternal,
     /// <summary>
+    /// Corresponds to the <c>"InvalidAllowMethodsPreflightResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowMethodsPreflightResponse")]
     InvalidAllowMethodsPreflightResponse,
     /// <summary>
+    /// Corresponds to the <c>"InvalidAllowHeadersPreflightResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidAllowHeadersPreflightResponse")]
     InvalidAllowHeadersPreflightResponse,
     /// <summary>
+    /// Corresponds to the <c>"MethodDisallowedByPreflightResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MethodDisallowedByPreflightResponse")]
     MethodDisallowedByPreflightResponse,
     /// <summary>
+    /// Corresponds to the <c>"HeaderDisallowedByPreflightResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HeaderDisallowedByPreflightResponse")]
     HeaderDisallowedByPreflightResponse,
     /// <summary>
+    /// Corresponds to the <c>"RedirectContainsCredentials"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RedirectContainsCredentials")]
     RedirectContainsCredentials,
     /// <summary>
+    /// Corresponds to the <c>"InsecureLocalNetwork"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InsecureLocalNetwork")]
     InsecureLocalNetwork,
     /// <summary>
+    /// Corresponds to the <c>"InvalidLocalNetworkAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidLocalNetworkAccess")]
     InvalidLocalNetworkAccess,
     /// <summary>
+    /// Corresponds to the <c>"NoCorsRedirectModeNotFollow"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoCorsRedirectModeNotFollow")]
     NoCorsRedirectModeNotFollow,
     /// <summary>
+    /// Corresponds to the <c>"LocalNetworkAccessPermissionDenied"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LocalNetworkAccessPermissionDenied")]
     LocalNetworkAccessPermissionDenied,
@@ -3495,18 +3638,22 @@ public sealed record CorsErrorStatus(CorsError CorsError, string FailedParameter
 public enum ServiceWorkerResponseSource
 {
     /// <summary>
+    /// Corresponds to the <c>"cache-storage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cache-storage")]
     CacheStorage,
     /// <summary>
+    /// Corresponds to the <c>"http-cache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("http-cache")]
     HttpCache,
     /// <summary>
+    /// Corresponds to the <c>"fallback-code"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fallback-code")]
     FallbackCode,
     /// <summary>
+    /// Corresponds to the <c>"network"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
     Network,
@@ -3538,14 +3685,17 @@ public sealed record TrustTokenParams(TrustTokenOperationType Operation, TrustTo
 public enum TrustTokenOperationType
 {
     /// <summary>
+    /// Corresponds to the <c>"Issuance"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Issuance")]
     Issuance,
     /// <summary>
+    /// Corresponds to the <c>"Redemption"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Redemption")]
     Redemption,
     /// <summary>
+    /// Corresponds to the <c>"Signing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Signing")]
     Signing,
@@ -3558,34 +3708,42 @@ public enum TrustTokenOperationType
 public enum AlternateProtocolUsage
 {
     /// <summary>
+    /// Corresponds to the <c>"alternativeJobWonWithoutRace"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("alternativeJobWonWithoutRace")]
     AlternativeJobWonWithoutRace,
     /// <summary>
+    /// Corresponds to the <c>"alternativeJobWonRace"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("alternativeJobWonRace")]
     AlternativeJobWonRace,
     /// <summary>
+    /// Corresponds to the <c>"mainJobWonRace"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mainJobWonRace")]
     MainJobWonRace,
     /// <summary>
+    /// Corresponds to the <c>"mappingMissing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mappingMissing")]
     MappingMissing,
     /// <summary>
+    /// Corresponds to the <c>"broken"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("broken")]
     Broken,
     /// <summary>
+    /// Corresponds to the <c>"dnsAlpnH3JobWonWithoutRace"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dnsAlpnH3JobWonWithoutRace")]
     DnsAlpnH3JobWonWithoutRace,
     /// <summary>
+    /// Corresponds to the <c>"dnsAlpnH3JobWonRace"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dnsAlpnH3JobWonRace")]
     DnsAlpnH3JobWonRace,
     /// <summary>
+    /// Corresponds to the <c>"unspecifiedReason"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unspecifiedReason")]
     UnspecifiedReason,
@@ -3598,22 +3756,27 @@ public enum AlternateProtocolUsage
 public enum ServiceWorkerRouterSource
 {
     /// <summary>
+    /// Corresponds to the <c>"network"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
     Network,
     /// <summary>
+    /// Corresponds to the <c>"cache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cache")]
     Cache,
     /// <summary>
+    /// Corresponds to the <c>"fetch-event"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fetch-event")]
     FetchEvent,
     /// <summary>
+    /// Corresponds to the <c>"race-network-and-fetch-handler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("race-network-and-fetch-handler")]
     RaceNetworkAndFetchHandler,
     /// <summary>
+    /// Corresponds to the <c>"race-network-and-cache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("race-network-and-cache")]
     RaceNetworkAndCache,
@@ -3966,82 +4129,102 @@ public sealed record Cookie(string Name, string Value, string Domain, string Pat
 public enum SetCookieBlockedReason
 {
     /// <summary>
+    /// Corresponds to the <c>"SecureOnly"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SecureOnly")]
     SecureOnly,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteStrict")]
     SameSiteStrict,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteLax")]
     SameSiteLax,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteUnspecifiedTreatedAsLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteUnspecifiedTreatedAsLax")]
     SameSiteUnspecifiedTreatedAsLax,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteNoneInsecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteNoneInsecure")]
     SameSiteNoneInsecure,
     /// <summary>
+    /// Corresponds to the <c>"UserPreferences"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UserPreferences")]
     UserPreferences,
     /// <summary>
+    /// Corresponds to the <c>"ThirdPartyPhaseout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyPhaseout")]
     ThirdPartyPhaseout,
     /// <summary>
+    /// Corresponds to the <c>"ThirdPartyBlockedInFirstPartySet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyBlockedInFirstPartySet")]
     ThirdPartyBlockedInFirstPartySet,
     /// <summary>
+    /// Corresponds to the <c>"SyntaxError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SyntaxError")]
     SyntaxError,
     /// <summary>
+    /// Corresponds to the <c>"SchemeNotSupported"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemeNotSupported")]
     SchemeNotSupported,
     /// <summary>
+    /// Corresponds to the <c>"OverwriteSecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OverwriteSecure")]
     OverwriteSecure,
     /// <summary>
+    /// Corresponds to the <c>"InvalidDomain"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidDomain")]
     InvalidDomain,
     /// <summary>
+    /// Corresponds to the <c>"InvalidPrefix"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidPrefix")]
     InvalidPrefix,
     /// <summary>
+    /// Corresponds to the <c>"UnknownError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnknownError")]
     UnknownError,
     /// <summary>
+    /// Corresponds to the <c>"SchemefulSameSiteStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemefulSameSiteStrict")]
     SchemefulSameSiteStrict,
     /// <summary>
+    /// Corresponds to the <c>"SchemefulSameSiteLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemefulSameSiteLax")]
     SchemefulSameSiteLax,
     /// <summary>
+    /// Corresponds to the <c>"SchemefulSameSiteUnspecifiedTreatedAsLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemefulSameSiteUnspecifiedTreatedAsLax")]
     SchemefulSameSiteUnspecifiedTreatedAsLax,
     /// <summary>
+    /// Corresponds to the <c>"NameValuePairExceedsMaxSize"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NameValuePairExceedsMaxSize")]
     NameValuePairExceedsMaxSize,
     /// <summary>
+    /// Corresponds to the <c>"DisallowedCharacter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DisallowedCharacter")]
     DisallowedCharacter,
     /// <summary>
+    /// Corresponds to the <c>"NoCookieContent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoCookieContent")]
     NoCookieContent,
@@ -4054,74 +4237,92 @@ public enum SetCookieBlockedReason
 public enum CookieBlockedReason
 {
     /// <summary>
+    /// Corresponds to the <c>"SecureOnly"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SecureOnly")]
     SecureOnly,
     /// <summary>
+    /// Corresponds to the <c>"NotOnPath"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotOnPath")]
     NotOnPath,
     /// <summary>
+    /// Corresponds to the <c>"DomainMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DomainMismatch")]
     DomainMismatch,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteStrict")]
     SameSiteStrict,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteLax")]
     SameSiteLax,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteUnspecifiedTreatedAsLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteUnspecifiedTreatedAsLax")]
     SameSiteUnspecifiedTreatedAsLax,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteNoneInsecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteNoneInsecure")]
     SameSiteNoneInsecure,
     /// <summary>
+    /// Corresponds to the <c>"UserPreferences"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UserPreferences")]
     UserPreferences,
     /// <summary>
+    /// Corresponds to the <c>"ThirdPartyPhaseout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyPhaseout")]
     ThirdPartyPhaseout,
     /// <summary>
+    /// Corresponds to the <c>"ThirdPartyBlockedInFirstPartySet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyBlockedInFirstPartySet")]
     ThirdPartyBlockedInFirstPartySet,
     /// <summary>
+    /// Corresponds to the <c>"UnknownError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnknownError")]
     UnknownError,
     /// <summary>
+    /// Corresponds to the <c>"SchemefulSameSiteStrict"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemefulSameSiteStrict")]
     SchemefulSameSiteStrict,
     /// <summary>
+    /// Corresponds to the <c>"SchemefulSameSiteLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemefulSameSiteLax")]
     SchemefulSameSiteLax,
     /// <summary>
+    /// Corresponds to the <c>"SchemefulSameSiteUnspecifiedTreatedAsLax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemefulSameSiteUnspecifiedTreatedAsLax")]
     SchemefulSameSiteUnspecifiedTreatedAsLax,
     /// <summary>
+    /// Corresponds to the <c>"NameValuePairExceedsMaxSize"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NameValuePairExceedsMaxSize")]
     NameValuePairExceedsMaxSize,
     /// <summary>
+    /// Corresponds to the <c>"PortMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PortMismatch")]
     PortMismatch,
     /// <summary>
+    /// Corresponds to the <c>"SchemeMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SchemeMismatch")]
     SchemeMismatch,
     /// <summary>
+    /// Corresponds to the <c>"AnonymousContext"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AnonymousContext")]
     AnonymousContext,
@@ -4134,30 +4335,37 @@ public enum CookieBlockedReason
 public enum CookieExemptionReason
 {
     /// <summary>
+    /// Corresponds to the <c>"None"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("None")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"UserSetting"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UserSetting")]
     UserSetting,
     /// <summary>
+    /// Corresponds to the <c>"EnterprisePolicy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EnterprisePolicy")]
     EnterprisePolicy,
     /// <summary>
+    /// Corresponds to the <c>"StorageAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StorageAccess")]
     StorageAccess,
     /// <summary>
+    /// Corresponds to the <c>"TopLevelStorageAccess"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TopLevelStorageAccess")]
     TopLevelStorageAccess,
     /// <summary>
+    /// Corresponds to the <c>"Scheme"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Scheme")]
     Scheme,
     /// <summary>
+    /// Corresponds to the <c>"SameSiteNoneCookiesInSandbox"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameSiteNoneCookiesInSandbox")]
     SameSiteNoneCookiesInSandbox,
@@ -4402,26 +4610,32 @@ public sealed record SignedExchangeHeader(string RequestUrl, long ResponseCode, 
 public enum SignedExchangeErrorField
 {
     /// <summary>
+    /// Corresponds to the <c>"signatureSig"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("signatureSig")]
     SignatureSig,
     /// <summary>
+    /// Corresponds to the <c>"signatureIntegrity"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("signatureIntegrity")]
     SignatureIntegrity,
     /// <summary>
+    /// Corresponds to the <c>"signatureCertUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("signatureCertUrl")]
     SignatureCertUrl,
     /// <summary>
+    /// Corresponds to the <c>"signatureCertSha256"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("signatureCertSha256")]
     SignatureCertSha256,
     /// <summary>
+    /// Corresponds to the <c>"signatureValidityUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("signatureValidityUrl")]
     SignatureValidityUrl,
     /// <summary>
+    /// Corresponds to the <c>"signatureTimestamps"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("signatureTimestamps")]
     SignatureTimestamps,
@@ -4538,10 +4752,12 @@ public sealed record BlockPattern(string UrlPattern, bool Block)
 public enum DirectSocketDnsQueryType
 {
     /// <summary>
+    /// Corresponds to the <c>"ipv4"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ipv4")]
     Ipv4,
     /// <summary>
+    /// Corresponds to the <c>"ipv6"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ipv6")]
     Ipv6,
@@ -4648,22 +4864,27 @@ public sealed record DirectUDPMessage(string Data)
 public enum LocalNetworkAccessRequestPolicy
 {
     /// <summary>
+    /// Corresponds to the <c>"Allow"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Allow")]
     Allow,
     /// <summary>
+    /// Corresponds to the <c>"BlockFromInsecureToMorePrivate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockFromInsecureToMorePrivate")]
     BlockFromInsecureToMorePrivate,
     /// <summary>
+    /// Corresponds to the <c>"WarnFromInsecureToMorePrivate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WarnFromInsecureToMorePrivate")]
     WarnFromInsecureToMorePrivate,
     /// <summary>
+    /// Corresponds to the <c>"PermissionBlock"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PermissionBlock")]
     PermissionBlock,
     /// <summary>
+    /// Corresponds to the <c>"PermissionWarn"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PermissionWarn")]
     PermissionWarn,
@@ -4675,18 +4896,22 @@ public enum LocalNetworkAccessRequestPolicy
 public enum IPAddressSpace
 {
     /// <summary>
+    /// Corresponds to the <c>"Loopback"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Loopback")]
     Loopback,
     /// <summary>
+    /// Corresponds to the <c>"Local"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Local")]
     Local,
     /// <summary>
+    /// Corresponds to the <c>"Public"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Public")]
     Public,
     /// <summary>
+    /// Corresponds to the <c>"Unknown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Unknown")]
     Unknown,
@@ -4783,30 +5008,37 @@ public sealed record AdProvenance()
 public enum CrossOriginOpenerPolicyValue
 {
     /// <summary>
+    /// Corresponds to the <c>"SameOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameOrigin")]
     SameOrigin,
     /// <summary>
+    /// Corresponds to the <c>"SameOriginAllowPopups"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameOriginAllowPopups")]
     SameOriginAllowPopups,
     /// <summary>
+    /// Corresponds to the <c>"RestrictProperties"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RestrictProperties")]
     RestrictProperties,
     /// <summary>
+    /// Corresponds to the <c>"UnsafeNone"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnsafeNone")]
     UnsafeNone,
     /// <summary>
+    /// Corresponds to the <c>"SameOriginPlusCoep"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SameOriginPlusCoep")]
     SameOriginPlusCoep,
     /// <summary>
+    /// Corresponds to the <c>"RestrictPropertiesPlusCoep"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RestrictPropertiesPlusCoep")]
     RestrictPropertiesPlusCoep,
     /// <summary>
+    /// Corresponds to the <c>"NoopenerAllowPopups"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoopenerAllowPopups")]
     NoopenerAllowPopups,
@@ -4835,14 +5067,17 @@ public sealed record CrossOriginOpenerPolicyStatus(CrossOriginOpenerPolicyValue 
 public enum CrossOriginEmbedderPolicyValue
 {
     /// <summary>
+    /// Corresponds to the <c>"None"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("None")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"Credentialless"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Credentialless")]
     Credentialless,
     /// <summary>
+    /// Corresponds to the <c>"RequireCorp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RequireCorp")]
     RequireCorp,
@@ -4871,10 +5106,12 @@ public sealed record CrossOriginEmbedderPolicyStatus(CrossOriginEmbedderPolicyVa
 public enum ContentSecurityPolicySource
 {
     /// <summary>
+    /// Corresponds to the <c>"HTTP"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("HTTP")]
     HTTP,
     /// <summary>
+    /// Corresponds to the <c>"Meta"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Meta")]
     Meta,
@@ -4916,18 +5153,22 @@ public sealed record SecurityIsolationStatus()
 public enum ReportStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Queued"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Queued")]
     Queued,
     /// <summary>
+    /// Corresponds to the <c>"Pending"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Pending")]
     Pending,
     /// <summary>
+    /// Corresponds to the <c>"MarkedForRemoval"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MarkedForRemoval")]
     MarkedForRemoval,
     /// <summary>
+    /// Corresponds to the <c>"Success"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Success")]
     Success,
@@ -5116,306 +5357,382 @@ public record DeviceBoundSessionEventId : IStringRemoteId
 public enum DeviceBoundSessionFetchResult
 {
     /// <summary>
+    /// Corresponds to the <c>"Success"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Success")]
     Success,
     /// <summary>
+    /// Corresponds to the <c>"SigningKeyGenerationError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningKeyGenerationError")]
     SigningKeyGenerationError,
     /// <summary>
+    /// Corresponds to the <c>"AttestationKeyGenerationError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttestationKeyGenerationError")]
     AttestationKeyGenerationError,
     /// <summary>
+    /// Corresponds to the <c>"SigningError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningError")]
     SigningError,
     /// <summary>
+    /// Corresponds to the <c>"TransientSigningError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TransientSigningError")]
     TransientSigningError,
     /// <summary>
+    /// Corresponds to the <c>"ServerRequestedTermination"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServerRequestedTermination")]
     ServerRequestedTermination,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSessionId"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSessionId")]
     InvalidSessionId,
     /// <summary>
+    /// Corresponds to the <c>"InvalidChallenge"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidChallenge")]
     InvalidChallenge,
     /// <summary>
+    /// Corresponds to the <c>"TooManyChallenges"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TooManyChallenges")]
     TooManyChallenges,
     /// <summary>
+    /// Corresponds to the <c>"InvalidFetcherUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFetcherUrl")]
     InvalidFetcherUrl,
     /// <summary>
+    /// Corresponds to the <c>"InvalidRefreshUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidRefreshUrl")]
     InvalidRefreshUrl,
     /// <summary>
+    /// Corresponds to the <c>"TransientHttpError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TransientHttpError")]
     TransientHttpError,
     /// <summary>
+    /// Corresponds to the <c>"ScopeOriginSameSiteMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeOriginSameSiteMismatch")]
     ScopeOriginSameSiteMismatch,
     /// <summary>
+    /// Corresponds to the <c>"RefreshUrlSameSiteMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshUrlSameSiteMismatch")]
     RefreshUrlSameSiteMismatch,
     /// <summary>
+    /// Corresponds to the <c>"MismatchedSessionId"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MismatchedSessionId")]
     MismatchedSessionId,
     /// <summary>
+    /// Corresponds to the <c>"MissingScope"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingScope")]
     MissingScope,
     /// <summary>
+    /// Corresponds to the <c>"NoCredentials"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoCredentials")]
     NoCredentials,
     /// <summary>
+    /// Corresponds to the <c>"SubdomainRegistrationWellKnownUnavailable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubdomainRegistrationWellKnownUnavailable")]
     SubdomainRegistrationWellKnownUnavailable,
     /// <summary>
+    /// Corresponds to the <c>"SubdomainRegistrationUnauthorized"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubdomainRegistrationUnauthorized")]
     SubdomainRegistrationUnauthorized,
     /// <summary>
+    /// Corresponds to the <c>"SubdomainRegistrationWellKnownMalformed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SubdomainRegistrationWellKnownMalformed")]
     SubdomainRegistrationWellKnownMalformed,
     /// <summary>
+    /// Corresponds to the <c>"SessionProviderWellKnownUnavailable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionProviderWellKnownUnavailable")]
     SessionProviderWellKnownUnavailable,
     /// <summary>
+    /// Corresponds to the <c>"RelyingPartyWellKnownUnavailable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelyingPartyWellKnownUnavailable")]
     RelyingPartyWellKnownUnavailable,
     /// <summary>
+    /// Corresponds to the <c>"FederatedKeyThumbprintMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedKeyThumbprintMismatch")]
     FederatedKeyThumbprintMismatch,
     /// <summary>
+    /// Corresponds to the <c>"InvalidFederatedSessionUrl"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionUrl")]
     InvalidFederatedSessionUrl,
     /// <summary>
+    /// Corresponds to the <c>"InvalidFederatedKey"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedKey")]
     InvalidFederatedKey,
     /// <summary>
+    /// Corresponds to the <c>"TooManyRelyingOriginLabels"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TooManyRelyingOriginLabels")]
     TooManyRelyingOriginLabels,
     /// <summary>
+    /// Corresponds to the <c>"BoundCookieSetForbidden"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BoundCookieSetForbidden")]
     BoundCookieSetForbidden,
     /// <summary>
+    /// Corresponds to the <c>"NetError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NetError")]
     NetError,
     /// <summary>
+    /// Corresponds to the <c>"ProxyError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProxyError")]
     ProxyError,
     /// <summary>
+    /// Corresponds to the <c>"EmptySessionConfig"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmptySessionConfig")]
     EmptySessionConfig,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsConfig"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsConfig")]
     InvalidCredentialsConfig,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsType")]
     InvalidCredentialsType,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsEmptyName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsEmptyName")]
     InvalidCredentialsEmptyName,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsCookie"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookie")]
     InvalidCredentialsCookie,
     /// <summary>
+    /// Corresponds to the <c>"PersistentHttpError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PersistentHttpError")]
     PersistentHttpError,
     /// <summary>
+    /// Corresponds to the <c>"RegistrationAttemptedChallenge"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RegistrationAttemptedChallenge")]
     RegistrationAttemptedChallenge,
     /// <summary>
+    /// Corresponds to the <c>"InvalidScopeOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeOrigin")]
     InvalidScopeOrigin,
     /// <summary>
+    /// Corresponds to the <c>"ScopeOriginContainsPath"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeOriginContainsPath")]
     ScopeOriginContainsPath,
     /// <summary>
+    /// Corresponds to the <c>"RefreshInitiatorNotString"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshInitiatorNotString")]
     RefreshInitiatorNotString,
     /// <summary>
+    /// Corresponds to the <c>"RefreshInitiatorInvalidHostPattern"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshInitiatorInvalidHostPattern")]
     RefreshInitiatorInvalidHostPattern,
     /// <summary>
+    /// Corresponds to the <c>"InvalidScopeSpecification"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeSpecification")]
     InvalidScopeSpecification,
     /// <summary>
+    /// Corresponds to the <c>"MissingScopeSpecificationType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingScopeSpecificationType")]
     MissingScopeSpecificationType,
     /// <summary>
+    /// Corresponds to the <c>"EmptyScopeSpecificationDomain"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmptyScopeSpecificationDomain")]
     EmptyScopeSpecificationDomain,
     /// <summary>
+    /// Corresponds to the <c>"EmptyScopeSpecificationPath"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmptyScopeSpecificationPath")]
     EmptyScopeSpecificationPath,
     /// <summary>
+    /// Corresponds to the <c>"InvalidScopeSpecificationType"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeSpecificationType")]
     InvalidScopeSpecificationType,
     /// <summary>
+    /// Corresponds to the <c>"InvalidScopeIncludeSite"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeIncludeSite")]
     InvalidScopeIncludeSite,
     /// <summary>
+    /// Corresponds to the <c>"MissingScopeIncludeSite"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingScopeIncludeSite")]
     MissingScopeIncludeSite,
     /// <summary>
+    /// Corresponds to the <c>"FederatedNotAuthorizedByProvider"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedNotAuthorizedByProvider")]
     FederatedNotAuthorizedByProvider,
     /// <summary>
+    /// Corresponds to the <c>"FederatedNotAuthorizedByRelyingParty"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedNotAuthorizedByRelyingParty")]
     FederatedNotAuthorizedByRelyingParty,
     /// <summary>
+    /// Corresponds to the <c>"SessionProviderWellKnownMalformed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionProviderWellKnownMalformed")]
     SessionProviderWellKnownMalformed,
     /// <summary>
+    /// Corresponds to the <c>"SessionProviderWellKnownHasProviderOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionProviderWellKnownHasProviderOrigin")]
     SessionProviderWellKnownHasProviderOrigin,
     /// <summary>
+    /// Corresponds to the <c>"RelyingPartyWellKnownMalformed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelyingPartyWellKnownMalformed")]
     RelyingPartyWellKnownMalformed,
     /// <summary>
+    /// Corresponds to the <c>"RelyingPartyWellKnownHasRelyingOrigins"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RelyingPartyWellKnownHasRelyingOrigins")]
     RelyingPartyWellKnownHasRelyingOrigins,
     /// <summary>
+    /// Corresponds to the <c>"InvalidFederatedSessionProviderSessionMissing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionProviderSessionMissing")]
     InvalidFederatedSessionProviderSessionMissing,
     /// <summary>
+    /// Corresponds to the <c>"InvalidFederatedSessionWrongProviderOrigin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionWrongProviderOrigin")]
     InvalidFederatedSessionWrongProviderOrigin,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsCookieCreationTime"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieCreationTime")]
     InvalidCredentialsCookieCreationTime,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsCookieName"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieName")]
     InvalidCredentialsCookieName,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsCookieParsing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieParsing")]
     InvalidCredentialsCookieParsing,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsCookieUnpermittedAttribute"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieUnpermittedAttribute")]
     InvalidCredentialsCookieUnpermittedAttribute,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsCookieInvalidDomain"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookieInvalidDomain")]
     InvalidCredentialsCookieInvalidDomain,
     /// <summary>
+    /// Corresponds to the <c>"InvalidCredentialsCookiePrefix"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidCredentialsCookiePrefix")]
     InvalidCredentialsCookiePrefix,
     /// <summary>
+    /// Corresponds to the <c>"InvalidScopeRulePath"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeRulePath")]
     InvalidScopeRulePath,
     /// <summary>
+    /// Corresponds to the <c>"InvalidScopeRuleHostPattern"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidScopeRuleHostPattern")]
     InvalidScopeRuleHostPattern,
     /// <summary>
+    /// Corresponds to the <c>"ScopeRuleOriginScopedHostPatternMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeRuleOriginScopedHostPatternMismatch")]
     ScopeRuleOriginScopedHostPatternMismatch,
     /// <summary>
+    /// Corresponds to the <c>"ScopeRuleSiteScopedHostPatternMismatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeRuleSiteScopedHostPatternMismatch")]
     ScopeRuleSiteScopedHostPatternMismatch,
     /// <summary>
+    /// Corresponds to the <c>"SigningQuotaExceeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningQuotaExceeded")]
     SigningQuotaExceeded,
     /// <summary>
+    /// Corresponds to the <c>"InvalidConfigJson"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidConfigJson")]
     InvalidConfigJson,
     /// <summary>
+    /// Corresponds to the <c>"InvalidFederatedSessionProviderFailedToRestoreKey"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidFederatedSessionProviderFailedToRestoreKey")]
     InvalidFederatedSessionProviderFailedToRestoreKey,
     /// <summary>
+    /// Corresponds to the <c>"FailedToUnwrapKey"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedToUnwrapKey")]
     FailedToUnwrapKey,
     /// <summary>
+    /// Corresponds to the <c>"SessionDeletedDuringRefresh"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SessionDeletedDuringRefresh")]
     SessionDeletedDuringRefresh,
     /// <summary>
+    /// Corresponds to the <c>"CrossOriginRegistrationSiteNotIncluded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossOriginRegistrationSiteNotIncluded")]
     CrossOriginRegistrationSiteNotIncluded,
     /// <summary>
+    /// Corresponds to the <c>"InvalidPreProvisionedKeyInitiatorMissing"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidPreProvisionedKeyInitiatorMissing")]
     InvalidPreProvisionedKeyInitiatorMissing,
     /// <summary>
+    /// Corresponds to the <c>"PreProvisionedKeyAccessNotGranted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreProvisionedKeyAccessNotGranted")]
     PreProvisionedKeyAccessNotGranted,
     /// <summary>
+    /// Corresponds to the <c>"PreProvisionedKeyNotFound"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PreProvisionedKeyNotFound")]
     PreProvisionedKeyNotFound,
     /// <summary>
+    /// Corresponds to the <c>"AttestationCertificationError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttestationCertificationError")]
     AttestationCertificationError,
     /// <summary>
+    /// Corresponds to the <c>"AttestationSigningError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttestationSigningError")]
     AttestationSigningError,
@@ -5571,54 +5888,67 @@ public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeC
 public enum TrustTokenOperationDoneStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"Ok"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Ok")]
     Ok,
     /// <summary>
+    /// Corresponds to the <c>"InvalidArgument"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidArgument")]
     InvalidArgument,
     /// <summary>
+    /// Corresponds to the <c>"MissingIssuerKeys"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingIssuerKeys")]
     MissingIssuerKeys,
     /// <summary>
+    /// Corresponds to the <c>"FailedPrecondition"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedPrecondition")]
     FailedPrecondition,
     /// <summary>
+    /// Corresponds to the <c>"ResourceExhausted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ResourceExhausted")]
     ResourceExhausted,
     /// <summary>
+    /// Corresponds to the <c>"AlreadyExists"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AlreadyExists")]
     AlreadyExists,
     /// <summary>
+    /// Corresponds to the <c>"ResourceLimited"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ResourceLimited")]
     ResourceLimited,
     /// <summary>
+    /// Corresponds to the <c>"Unauthorized"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Unauthorized")]
     Unauthorized,
     /// <summary>
+    /// Corresponds to the <c>"BadResponse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BadResponse")]
     BadResponse,
     /// <summary>
+    /// Corresponds to the <c>"InternalError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InternalError")]
     InternalError,
     /// <summary>
+    /// Corresponds to the <c>"UnknownError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnknownError")]
     UnknownError,
     /// <summary>
+    /// Corresponds to the <c>"FulfilledLocally"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FulfilledLocally")]
     FulfilledLocally,
     /// <summary>
+    /// Corresponds to the <c>"SiteIssuerLimit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SiteIssuerLimit")]
     SiteIssuerLimit,
@@ -5630,34 +5960,42 @@ public enum TrustTokenOperationDoneStatus
 public enum RequestReferrerPolicy
 {
     /// <summary>
+    /// Corresponds to the <c>"unsafe-url"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unsafe-url")]
     UnsafeUrl,
     /// <summary>
+    /// Corresponds to the <c>"no-referrer-when-downgrade"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-referrer-when-downgrade")]
     NoReferrerWhenDowngrade,
     /// <summary>
+    /// Corresponds to the <c>"no-referrer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-referrer")]
     NoReferrer,
     /// <summary>
+    /// Corresponds to the <c>"origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("origin")]
     Origin,
     /// <summary>
+    /// Corresponds to the <c>"origin-when-cross-origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("origin-when-cross-origin")]
     OriginWhenCrossOrigin,
     /// <summary>
+    /// Corresponds to the <c>"same-origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("same-origin")]
     SameOrigin,
     /// <summary>
+    /// Corresponds to the <c>"strict-origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("strict-origin")]
     StrictOrigin,
     /// <summary>
+    /// Corresponds to the <c>"strict-origin-when-cross-origin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("strict-origin-when-cross-origin")]
     StrictOriginWhenCrossOrigin,
@@ -5669,10 +6007,12 @@ public enum RequestReferrerPolicy
 public enum TrustTokenParamsRefreshPolicy
 {
     /// <summary>
+    /// Corresponds to the <c>"UseCached"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UseCached")]
     UseCached,
     /// <summary>
+    /// Corresponds to the <c>"Refresh"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Refresh")]
     Refresh,
@@ -5684,30 +6024,37 @@ public enum TrustTokenParamsRefreshPolicy
 public enum InitiatorType
 {
     /// <summary>
+    /// Corresponds to the <c>"parser"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("parser")]
     Parser,
     /// <summary>
+    /// Corresponds to the <c>"script"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("script")]
     Script,
     /// <summary>
+    /// Corresponds to the <c>"preload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("preload")]
     Preload,
     /// <summary>
+    /// Corresponds to the <c>"SignedExchange"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignedExchange")]
     SignedExchange,
     /// <summary>
+    /// Corresponds to the <c>"preflight"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("preflight")]
     Preflight,
     /// <summary>
+    /// Corresponds to the <c>"FedCM"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FedCM")]
     FedCM,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
@@ -5719,10 +6066,12 @@ public enum InitiatorType
 public enum AuthChallengeSource
 {
     /// <summary>
+    /// Corresponds to the <c>"Server"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Server")]
     Server,
     /// <summary>
+    /// Corresponds to the <c>"Proxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Proxy")]
     Proxy,
@@ -5734,14 +6083,17 @@ public enum AuthChallengeSource
 public enum AuthChallengeResponseResponse
 {
     /// <summary>
+    /// Corresponds to the <c>"Default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Default")]
     Default,
     /// <summary>
+    /// Corresponds to the <c>"CancelAuth"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CancelAuth")]
     CancelAuth,
     /// <summary>
+    /// Corresponds to the <c>"ProvideCredentials"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProvideCredentials")]
     ProvideCredentials,
@@ -5753,26 +6105,32 @@ public enum AuthChallengeResponseResponse
 public enum DeviceBoundSessionWithUsageUsage
 {
     /// <summary>
+    /// Corresponds to the <c>"NotInScope"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotInScope")]
     NotInScope,
     /// <summary>
+    /// Corresponds to the <c>"InScopeRefreshNotYetNeeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InScopeRefreshNotYetNeeded")]
     InScopeRefreshNotYetNeeded,
     /// <summary>
+    /// Corresponds to the <c>"InScopeRefreshNotAllowed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InScopeRefreshNotAllowed")]
     InScopeRefreshNotAllowed,
     /// <summary>
+    /// Corresponds to the <c>"ProactiveRefreshNotPossible"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProactiveRefreshNotPossible")]
     ProactiveRefreshNotPossible,
     /// <summary>
+    /// Corresponds to the <c>"ProactiveRefreshAttempted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProactiveRefreshAttempted")]
     ProactiveRefreshAttempted,
     /// <summary>
+    /// Corresponds to the <c>"Deferred"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Deferred")]
     Deferred,
@@ -5784,10 +6142,12 @@ public enum DeviceBoundSessionWithUsageUsage
 public enum DeviceBoundSessionUrlRuleRuleType
 {
     /// <summary>
+    /// Corresponds to the <c>"Exclude"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Exclude")]
     Exclude,
     /// <summary>
+    /// Corresponds to the <c>"Include"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Include")]
     Include,
@@ -5799,38 +6159,47 @@ public enum DeviceBoundSessionUrlRuleRuleType
 public enum RefreshEventDetailsRefreshResult
 {
     /// <summary>
+    /// Corresponds to the <c>"Refreshed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Refreshed")]
     Refreshed,
     /// <summary>
+    /// Corresponds to the <c>"InitializedService"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InitializedService")]
     InitializedService,
     /// <summary>
+    /// Corresponds to the <c>"Unreachable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Unreachable")]
     Unreachable,
     /// <summary>
+    /// Corresponds to the <c>"ServerError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServerError")]
     ServerError,
     /// <summary>
+    /// Corresponds to the <c>"FatalError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FatalError")]
     FatalError,
     /// <summary>
+    /// Corresponds to the <c>"SigningQuotaExceeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningQuotaExceeded")]
     SigningQuotaExceeded,
     /// <summary>
+    /// Corresponds to the <c>"RefreshedAsWaiter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshedAsWaiter")]
     RefreshedAsWaiter,
     /// <summary>
+    /// Corresponds to the <c>"TransientSigningError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TransientSigningError")]
     TransientSigningError,
     /// <summary>
+    /// Corresponds to the <c>"InScopeRefreshNotYetNeeded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InScopeRefreshNotYetNeeded")]
     InScopeRefreshNotYetNeeded,
@@ -5842,42 +6211,52 @@ public enum RefreshEventDetailsRefreshResult
 public enum TerminationEventDetailsDeletionReason
 {
     /// <summary>
+    /// Corresponds to the <c>"Expired"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Expired")]
     Expired,
     /// <summary>
+    /// Corresponds to the <c>"FailedToRestoreKey"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedToRestoreKey")]
     FailedToRestoreKey,
     /// <summary>
+    /// Corresponds to the <c>"FailedToUnwrapKey"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedToUnwrapKey")]
     FailedToUnwrapKey,
     /// <summary>
+    /// Corresponds to the <c>"StoragePartitionCleared"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StoragePartitionCleared")]
     StoragePartitionCleared,
     /// <summary>
+    /// Corresponds to the <c>"ClearBrowsingData"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ClearBrowsingData")]
     ClearBrowsingData,
     /// <summary>
+    /// Corresponds to the <c>"ServerRequested"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServerRequested")]
     ServerRequested,
     /// <summary>
+    /// Corresponds to the <c>"InvalidSessionParams"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSessionParams")]
     InvalidSessionParams,
     /// <summary>
+    /// Corresponds to the <c>"RefreshFatalError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshFatalError")]
     RefreshFatalError,
     /// <summary>
+    /// Corresponds to the <c>"DevTools"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DevTools")]
     DevTools,
     /// <summary>
+    /// Corresponds to the <c>"Replaced"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Replaced")]
     Replaced,
@@ -5889,18 +6268,22 @@ public enum TerminationEventDetailsDeletionReason
 public enum ChallengeEventDetailsChallengeResult
 {
     /// <summary>
+    /// Corresponds to the <c>"Success"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Success")]
     Success,
     /// <summary>
+    /// Corresponds to the <c>"NoSessionId"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoSessionId")]
     NoSessionId,
     /// <summary>
+    /// Corresponds to the <c>"NoSessionMatch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoSessionMatch")]
     NoSessionMatch,
     /// <summary>
+    /// Corresponds to the <c>"CantSetBoundCookie"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CantSetBoundCookie")]
     CantSetBoundCookie,

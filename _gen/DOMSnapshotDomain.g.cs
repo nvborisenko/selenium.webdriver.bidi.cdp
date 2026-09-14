@@ -23,7 +23,7 @@ public interface IDOMSnapshot
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables DOM snapshot agent for the given page.
@@ -37,7 +37,7 @@ public interface IDOMSnapshot
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a document snapshot, including the full DOM tree of the root node (including iframes,
@@ -67,7 +67,7 @@ public interface IDOMSnapshot
     /// A task representing the asynchronous operation, containing a <see cref="GetSnapshotResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, bool? includeEventListeners = default, bool? includePaintOrder = default, bool? includeUserAgentShadowTree = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, bool? includeEventListeners = null, bool? includePaintOrder = null, bool? includeUserAgentShadowTree = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a document snapshot, including the full DOM tree of the root node (including iframes,
@@ -103,7 +103,7 @@ public interface IDOMSnapshot
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CaptureSnapshotResult"/>.
     /// </returns>
-    Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, bool? includePaintOrder = default, bool? includeDOMRects = default, bool? includeBlendedBackgroundColors = default, bool? includeTextColorOpacities = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, bool? includePaintOrder = null, bool? includeDOMRects = null, bool? includeBlendedBackgroundColors = null, bool? includeTextColorOpacities = null, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -112,26 +112,26 @@ internal sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDri
 {
     private static readonly DOMSnapshotJsonSerializerContext JsonContext = DOMSnapshotJsonSerializerContext.Default;
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("DOMSnapshot.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("DOMSnapshot.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, bool? includeEventListeners = default, bool? includePaintOrder = default, bool? includeUserAgentShadowTree = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetSnapshotResult> GetSnapshotAsync(ImmutableArray<string> computedStyleWhitelist, bool? includeEventListeners = null, bool? includePaintOrder = null, bool? includeUserAgentShadowTree = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetSnapshotCommandParameters(ComputedStyleWhitelist: computedStyleWhitelist, IncludeEventListeners: includeEventListeners, IncludePaintOrder: includePaintOrder, IncludeUserAgentShadowTree: includeUserAgentShadowTree);
         return await ExecuteCommandAsync("DOMSnapshot.getSnapshot", @params, JsonContext.GetSnapshotCommandParameters, JsonContext.GetSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, bool? includePaintOrder = default, bool? includeDOMRects = default, bool? includeBlendedBackgroundColors = default, bool? includeTextColorOpacities = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(ImmutableArray<string> computedStyles, bool? includePaintOrder = null, bool? includeDOMRects = null, bool? includeBlendedBackgroundColors = null, bool? includeTextColorOpacities = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureSnapshotCommandParameters(ComputedStyles: computedStyles, IncludePaintOrder: includePaintOrder, IncludeDOMRects: includeDOMRects, IncludeBlendedBackgroundColors: includeBlendedBackgroundColors, IncludeTextColorOpacities: includeTextColorOpacities);
         return await ExecuteCommandAsync("DOMSnapshot.captureSnapshot", @params, JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult, session, cancellationToken).ConfigureAwait(false);
@@ -142,6 +142,7 @@ internal sealed class DOMSnapshotDomain(CdpModule cdp) : global::Selenium.WebDri
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMSnapshot.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -149,6 +150,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMSnapshot.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -156,6 +158,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record GetSnapshotCommandParameters(ImmutableArray<string> ComputedStyleWhitelist, bool? IncludeEventListeners, bool? IncludePaintOrder, bool? IncludeUserAgentShadowTree) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMSnapshot.GetSnapshotAsync"/> command.
 /// </summary>
 /// <param name="DomNodes">
 /// The nodes in the DOM tree. The DOMNode at index 0 corresponds to the root document.
@@ -172,6 +175,7 @@ public sealed record GetSnapshotResult(ImmutableArray<DOMNode> DomNodes, Immutab
 internal sealed record CaptureSnapshotCommandParameters(ImmutableArray<string> ComputedStyles, bool? IncludePaintOrder, bool? IncludeDOMRects, bool? IncludeBlendedBackgroundColors, bool? IncludeTextColorOpacities) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDOMSnapshot.CaptureSnapshotAsync"/> command.
 /// </summary>
 /// <param name="Documents">
 /// The nodes in the DOM tree. The DOMNode at index 0 corresponds to the root document.

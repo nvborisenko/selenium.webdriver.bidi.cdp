@@ -21,7 +21,7 @@ public interface ISecurity
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables tracking security state changes.
@@ -35,7 +35,7 @@ public interface ISecurity
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable/disable whether all certificate errors should be ignored.
@@ -52,7 +52,7 @@ public interface ISecurity
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetIgnoreCertificateErrorsResult"/>.
     /// </returns>
-    Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Handles a certificate error that fired a certificateError event.
@@ -73,7 +73,7 @@ public interface ISecurity
     /// A task representing the asynchronous operation, containing a <see cref="HandleCertificateErrorResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, string? session = default, CancellationToken cancellationToken = default);
+    Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable/disable overriding certificate errors. If enabled, all certificate error events need to
@@ -92,7 +92,7 @@ public interface ISecurity
     /// A task representing the asynchronous operation, containing a <see cref="SetOverrideCertificateErrorsResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// There is a certificate error. If overriding certificate errors is enabled, then it should be
@@ -145,33 +145,33 @@ internal sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver
 {
     private static readonly SecurityJsonSerializerContext JsonContext = SecurityJsonSerializerContext.Default;
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Security.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Security.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetIgnoreCertificateErrorsResult> SetIgnoreCertificateErrorsAsync(bool ignore, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetIgnoreCertificateErrorsCommandParameters(Ignore: ignore);
         return await ExecuteCommandAsync("Security.setIgnoreCertificateErrors", @params, JsonContext.SetIgnoreCertificateErrorsCommandParameters, JsonContext.SetIgnoreCertificateErrorsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<HandleCertificateErrorResult> HandleCertificateErrorAsync(long eventId, CertificateErrorAction action, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new HandleCertificateErrorCommandParameters(EventId: eventId, Action: action);
         return await ExecuteCommandAsync("Security.handleCertificateError", @params, JsonContext.HandleCertificateErrorCommandParameters, JsonContext.HandleCertificateErrorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetOverrideCertificateErrorsResult> SetOverrideCertificateErrorsAsync(bool @override, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetOverrideCertificateErrorsCommandParameters(Override: @override);
         return await ExecuteCommandAsync("Security.setOverrideCertificateErrors", @params, JsonContext.SetOverrideCertificateErrorsCommandParameters, JsonContext.SetOverrideCertificateErrorsResult, session, cancellationToken).ConfigureAwait(false);
@@ -188,6 +188,7 @@ internal sealed class SecurityDomain(CdpModule cdp) : global::Selenium.WebDriver
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISecurity.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -195,6 +196,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISecurity.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -202,6 +204,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record SetIgnoreCertificateErrorsCommandParameters(bool Ignore) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISecurity.SetIgnoreCertificateErrorsAsync"/> command.
 /// </summary>
 public sealed record SetIgnoreCertificateErrorsResult() : EmptyResult;
 
@@ -209,6 +212,7 @@ public sealed record SetIgnoreCertificateErrorsResult() : EmptyResult;
 internal sealed record HandleCertificateErrorCommandParameters(long EventId, CertificateErrorAction Action) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISecurity.HandleCertificateErrorAsync"/> command.
 /// </summary>
 public sealed record HandleCertificateErrorResult() : EmptyResult;
 
@@ -216,6 +220,7 @@ public sealed record HandleCertificateErrorResult() : EmptyResult;
 internal sealed record SetOverrideCertificateErrorsCommandParameters(bool Override) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISecurity.SetOverrideCertificateErrorsAsync"/> command.
 /// </summary>
 public sealed record SetOverrideCertificateErrorsResult() : EmptyResult;
 
@@ -283,14 +288,17 @@ public record CertificateId : INumberRemoteId
 public enum MixedContentType
 {
     /// <summary>
+    /// Corresponds to the <c>"blockable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("blockable")]
     Blockable,
     /// <summary>
+    /// Corresponds to the <c>"optionally-blockable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("optionally-blockable")]
     OptionallyBlockable,
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
@@ -303,26 +311,32 @@ public enum MixedContentType
 public enum SecurityState
 {
     /// <summary>
+    /// Corresponds to the <c>"unknown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown")]
     Unknown,
     /// <summary>
+    /// Corresponds to the <c>"neutral"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("neutral")]
     Neutral,
     /// <summary>
+    /// Corresponds to the <c>"insecure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("insecure")]
     Insecure,
     /// <summary>
+    /// Corresponds to the <c>"secure"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("secure")]
     Secure,
     /// <summary>
+    /// Corresponds to the <c>"info"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
     Info,
     /// <summary>
+    /// Corresponds to the <c>"insecure-broken"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("insecure-broken")]
     InsecureBroken,
@@ -400,10 +414,12 @@ public sealed record CertificateSecurityState(string Protocol, string KeyExchang
 public enum SafetyTipStatus
 {
     /// <summary>
+    /// Corresponds to the <c>"badReputation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("badReputation")]
     BadReputation,
     /// <summary>
+    /// Corresponds to the <c>"lookalike"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("lookalike")]
     Lookalike,
@@ -510,10 +526,12 @@ public sealed record InsecureContentStatus(bool RanMixedContent, bool DisplayedM
 public enum CertificateErrorAction
 {
     /// <summary>
+    /// Corresponds to the <c>"continue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("continue")]
     Continue,
     /// <summary>
+    /// Corresponds to the <c>"cancel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cancel")]
     Cancel,

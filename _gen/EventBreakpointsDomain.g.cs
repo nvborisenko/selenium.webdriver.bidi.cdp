@@ -28,7 +28,7 @@ public interface IEventBreakpoints
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInstrumentationBreakpointResult"/>.
     /// </returns>
-    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes breakpoint on particular native event.
@@ -45,7 +45,7 @@ public interface IEventBreakpoints
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveInstrumentationBreakpointResult"/>.
     /// </returns>
-    Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes all breakpoints
@@ -59,7 +59,7 @@ public interface IEventBreakpoints
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -68,19 +68,19 @@ internal sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.W
 {
     private static readonly EventBreakpointsJsonSerializerContext JsonContext = EventBreakpointsJsonSerializerContext.Default;
 
-    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string eventName, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetInstrumentationBreakpointCommandParameters(EventName: eventName);
         return await ExecuteCommandAsync("EventBreakpoints.setInstrumentationBreakpoint", @params, JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveInstrumentationBreakpointResult> RemoveInstrumentationBreakpointAsync(string eventName, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveInstrumentationBreakpointCommandParameters(EventName: eventName);
         return await ExecuteCommandAsync("EventBreakpoints.removeInstrumentationBreakpoint", @params, JsonContext.RemoveInstrumentationBreakpointCommandParameters, JsonContext.RemoveInstrumentationBreakpointResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("EventBreakpoints.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
@@ -91,6 +91,7 @@ internal sealed class EventBreakpointsDomain(CdpModule cdp) : global::Selenium.W
 internal sealed record SetInstrumentationBreakpointCommandParameters(string EventName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEventBreakpoints.SetInstrumentationBreakpointAsync"/> command.
 /// </summary>
 public sealed record SetInstrumentationBreakpointResult() : EmptyResult;
 
@@ -98,6 +99,7 @@ public sealed record SetInstrumentationBreakpointResult() : EmptyResult;
 internal sealed record RemoveInstrumentationBreakpointCommandParameters(string EventName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEventBreakpoints.RemoveInstrumentationBreakpointAsync"/> command.
 /// </summary>
 public sealed record RemoveInstrumentationBreakpointResult() : EmptyResult;
 
@@ -105,6 +107,7 @@ public sealed record RemoveInstrumentationBreakpointResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IEventBreakpoints.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 

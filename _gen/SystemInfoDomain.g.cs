@@ -23,7 +23,7 @@ public interface ISystemInfo
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetInfoResult"/>.
     /// </returns>
-    Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetInfoResult> GetInfoAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about the feature state.
@@ -39,7 +39,7 @@ public interface ISystemInfo
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetFeatureStateResult"/>.
     /// </returns>
-    Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns information about all running processes.
@@ -53,7 +53,7 @@ public interface ISystemInfo
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetProcessInfoResult"/>.
     /// </returns>
-    Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -62,19 +62,19 @@ internal sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriv
 {
     private static readonly SystemInfoJsonSerializerContext JsonContext = SystemInfoJsonSerializerContext.Default;
 
-    public async Task<GetInfoResult> GetInfoAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetInfoResult> GetInfoAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetInfoCommandParameters();
         return await ExecuteCommandAsync("SystemInfo.getInfo", @params, JsonContext.GetInfoCommandParameters, JsonContext.GetInfoResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetFeatureStateResult> GetFeatureStateAsync(string featureState, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetFeatureStateCommandParameters(FeatureState: featureState);
         return await ExecuteCommandAsync("SystemInfo.getFeatureState", @params, JsonContext.GetFeatureStateCommandParameters, JsonContext.GetFeatureStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetProcessInfoResult> GetProcessInfoAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetProcessInfoCommandParameters();
         return await ExecuteCommandAsync("SystemInfo.getProcessInfo", @params, JsonContext.GetProcessInfoCommandParameters, JsonContext.GetProcessInfoResult, session, cancellationToken).ConfigureAwait(false);
@@ -85,6 +85,7 @@ internal sealed class SystemInfoDomain(CdpModule cdp) : global::Selenium.WebDriv
 internal sealed record GetInfoCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISystemInfo.GetInfoAsync"/> command.
 /// </summary>
 /// <param name="Gpu">
 /// Information about the GPUs on the system.
@@ -107,6 +108,7 @@ public sealed record GetInfoResult(GPUInfo Gpu, string ModelName, string ModelVe
 internal sealed record GetFeatureStateCommandParameters(string FeatureState) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISystemInfo.GetFeatureStateAsync"/> command.
 /// </summary>
 /// <param name="FeatureEnabled">
 /// </param>
@@ -116,6 +118,7 @@ public sealed record GetFeatureStateResult(bool FeatureEnabled) : EmptyResult;
 internal sealed record GetProcessInfoCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISystemInfo.GetProcessInfoAsync"/> command.
 /// </summary>
 /// <param name="ProcessInfo">
 /// An array of process info blocks.
@@ -215,14 +218,17 @@ public sealed record VideoEncodeAcceleratorCapability(string Profile, Size MaxRe
 public enum SubsamplingFormat
 {
     /// <summary>
+    /// Corresponds to the <c>"yuv420"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("yuv420")]
     Yuv420,
     /// <summary>
+    /// Corresponds to the <c>"yuv422"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("yuv422")]
     Yuv422,
     /// <summary>
+    /// Corresponds to the <c>"yuv444"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("yuv444")]
     Yuv444,
@@ -235,14 +241,17 @@ public enum SubsamplingFormat
 public enum ImageType
 {
     /// <summary>
+    /// Corresponds to the <c>"jpeg"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
     Jpeg,
     /// <summary>
+    /// Corresponds to the <c>"webp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
     Webp,
     /// <summary>
+    /// Corresponds to the <c>"unknown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown")]
     Unknown,

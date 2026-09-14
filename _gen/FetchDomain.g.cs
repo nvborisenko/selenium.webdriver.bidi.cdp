@@ -22,7 +22,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables issuing of requestPaused events. A request will be paused until client
@@ -46,7 +46,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(ImmutableArray<RequestPattern>? patterns = default, bool? handleAuthRequests = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(ImmutableArray<RequestPattern>? patterns = null, bool? handleAuthRequests = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Causes the request to fail with specified reason.
@@ -66,7 +66,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="FailRequestResult"/>.
     /// </returns>
-    Task<FailRequestResult> FailRequestAsync(RequestId requestId, Network.ErrorReason errorReason, string? session = default, CancellationToken cancellationToken = default);
+    Task<FailRequestResult> FailRequestAsync(RequestId requestId, Network.ErrorReason errorReason, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Provides response to the request.
@@ -104,7 +104,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="FulfillRequestResult"/>.
     /// </returns>
-    Task<FulfillRequestResult> FulfillRequestAsync(RequestId requestId, long responseCode, ImmutableArray<HeaderEntry>? responseHeaders = default, string? binaryResponseHeaders = default, string? body = default, string? responsePhrase = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<FulfillRequestResult> FulfillRequestAsync(RequestId requestId, long responseCode, ImmutableArray<HeaderEntry>? responseHeaders = null, string? binaryResponseHeaders = null, string? body = null, string? responsePhrase = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Continues the request, optionally modifying some of its parameters.
@@ -138,7 +138,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ContinueRequestResult"/>.
     /// </returns>
-    Task<ContinueRequestResult> ContinueRequestAsync(RequestId requestId, string? url = default, string? method = default, string? postData = default, ImmutableArray<HeaderEntry>? headers = default, bool? interceptResponse = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ContinueRequestResult> ContinueRequestAsync(RequestId requestId, string? url = null, string? method = null, string? postData = null, ImmutableArray<HeaderEntry>? headers = null, bool? interceptResponse = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Continues a request supplying authChallengeResponse following authRequired event.
@@ -158,7 +158,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ContinueWithAuthResult"/>.
     /// </returns>
-    Task<ContinueWithAuthResult> ContinueWithAuthAsync(RequestId requestId, AuthChallengeResponse authChallengeResponse, string? session = default, CancellationToken cancellationToken = default);
+    Task<ContinueWithAuthResult> ContinueWithAuthAsync(RequestId requestId, AuthChallengeResponse authChallengeResponse, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Continues loading of the paused response, optionally modifying the
@@ -194,7 +194,7 @@ public interface IFetch
     /// A task representing the asynchronous operation, containing a <see cref="ContinueResponseResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ContinueResponseResult> ContinueResponseAsync(RequestId requestId, long? responseCode = default, string? responsePhrase = default, ImmutableArray<HeaderEntry>? responseHeaders = default, string? binaryResponseHeaders = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ContinueResponseResult> ContinueResponseAsync(RequestId requestId, long? responseCode = null, string? responsePhrase = null, ImmutableArray<HeaderEntry>? responseHeaders = null, string? binaryResponseHeaders = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Causes the body of the response to be received from the server and
@@ -220,7 +220,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetResponseBodyResult"/>.
     /// </returns>
-    Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a handle to the stream representing the response body.
@@ -245,7 +245,7 @@ public interface IFetch
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeResponseBodyAsStreamResult"/>.
     /// </returns>
-    Task<TakeResponseBodyAsStreamResult> TakeResponseBodyAsStreamAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<TakeResponseBodyAsStreamResult> TakeResponseBodyAsStreamAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Issued when the domain is enabled and the request URL matches the
@@ -299,56 +299,56 @@ internal sealed class FetchDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 {
     private static readonly FetchJsonSerializerContext JsonContext = FetchJsonSerializerContext.Default;
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Fetch.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(ImmutableArray<RequestPattern>? patterns = default, bool? handleAuthRequests = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(ImmutableArray<RequestPattern>? patterns = null, bool? handleAuthRequests = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(Patterns: patterns, HandleAuthRequests: handleAuthRequests);
         return await ExecuteCommandAsync("Fetch.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<FailRequestResult> FailRequestAsync(RequestId requestId, Network.ErrorReason errorReason, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<FailRequestResult> FailRequestAsync(RequestId requestId, Network.ErrorReason errorReason, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new FailRequestCommandParameters(RequestId: requestId, ErrorReason: errorReason);
         return await ExecuteCommandAsync("Fetch.failRequest", @params, JsonContext.FailRequestCommandParameters, JsonContext.FailRequestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<FulfillRequestResult> FulfillRequestAsync(RequestId requestId, long responseCode, ImmutableArray<HeaderEntry>? responseHeaders = default, string? binaryResponseHeaders = default, string? body = default, string? responsePhrase = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<FulfillRequestResult> FulfillRequestAsync(RequestId requestId, long responseCode, ImmutableArray<HeaderEntry>? responseHeaders = null, string? binaryResponseHeaders = null, string? body = null, string? responsePhrase = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new FulfillRequestCommandParameters(RequestId: requestId, ResponseCode: responseCode, ResponseHeaders: responseHeaders, BinaryResponseHeaders: binaryResponseHeaders, Body: body, ResponsePhrase: responsePhrase);
         return await ExecuteCommandAsync("Fetch.fulfillRequest", @params, JsonContext.FulfillRequestCommandParameters, JsonContext.FulfillRequestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ContinueRequestResult> ContinueRequestAsync(RequestId requestId, string? url = default, string? method = default, string? postData = default, ImmutableArray<HeaderEntry>? headers = default, bool? interceptResponse = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ContinueRequestResult> ContinueRequestAsync(RequestId requestId, string? url = null, string? method = null, string? postData = null, ImmutableArray<HeaderEntry>? headers = null, bool? interceptResponse = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueRequestCommandParameters(RequestId: requestId, Url: url, Method: method, PostData: postData, Headers: headers, InterceptResponse: interceptResponse);
         return await ExecuteCommandAsync("Fetch.continueRequest", @params, JsonContext.ContinueRequestCommandParameters, JsonContext.ContinueRequestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ContinueWithAuthResult> ContinueWithAuthAsync(RequestId requestId, AuthChallengeResponse authChallengeResponse, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ContinueWithAuthResult> ContinueWithAuthAsync(RequestId requestId, AuthChallengeResponse authChallengeResponse, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueWithAuthCommandParameters(RequestId: requestId, AuthChallengeResponse: authChallengeResponse);
         return await ExecuteCommandAsync("Fetch.continueWithAuth", @params, JsonContext.ContinueWithAuthCommandParameters, JsonContext.ContinueWithAuthResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ContinueResponseResult> ContinueResponseAsync(RequestId requestId, long? responseCode = default, string? responsePhrase = default, ImmutableArray<HeaderEntry>? responseHeaders = default, string? binaryResponseHeaders = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ContinueResponseResult> ContinueResponseAsync(RequestId requestId, long? responseCode = null, string? responsePhrase = null, ImmutableArray<HeaderEntry>? responseHeaders = null, string? binaryResponseHeaders = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueResponseCommandParameters(RequestId: requestId, ResponseCode: responseCode, ResponsePhrase: responsePhrase, ResponseHeaders: responseHeaders, BinaryResponseHeaders: binaryResponseHeaders);
         return await ExecuteCommandAsync("Fetch.continueResponse", @params, JsonContext.ContinueResponseCommandParameters, JsonContext.ContinueResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetResponseBodyResult> GetResponseBodyAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetResponseBodyCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("Fetch.getResponseBody", @params, JsonContext.GetResponseBodyCommandParameters, JsonContext.GetResponseBodyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TakeResponseBodyAsStreamResult> TakeResponseBodyAsStreamAsync(RequestId requestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TakeResponseBodyAsStreamResult> TakeResponseBodyAsStreamAsync(RequestId requestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TakeResponseBodyAsStreamCommandParameters(RequestId: requestId);
         return await ExecuteCommandAsync("Fetch.takeResponseBodyAsStream", @params, JsonContext.TakeResponseBodyAsStreamCommandParameters, JsonContext.TakeResponseBodyAsStreamResult, session, cancellationToken).ConfigureAwait(false);
@@ -361,6 +361,7 @@ internal sealed class FetchDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -368,6 +369,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters(ImmutableArray<RequestPattern>? Patterns, bool? HandleAuthRequests) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -375,6 +377,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record FailRequestCommandParameters(RequestId RequestId, Network.ErrorReason ErrorReason) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.FailRequestAsync"/> command.
 /// </summary>
 public sealed record FailRequestResult() : EmptyResult;
 
@@ -382,6 +385,7 @@ public sealed record FailRequestResult() : EmptyResult;
 internal sealed record FulfillRequestCommandParameters(RequestId RequestId, long ResponseCode, ImmutableArray<HeaderEntry>? ResponseHeaders, string? BinaryResponseHeaders, string? Body, string? ResponsePhrase) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.FulfillRequestAsync"/> command.
 /// </summary>
 public sealed record FulfillRequestResult() : EmptyResult;
 
@@ -389,6 +393,7 @@ public sealed record FulfillRequestResult() : EmptyResult;
 internal sealed record ContinueRequestCommandParameters(RequestId RequestId, string? Url, string? Method, string? PostData, ImmutableArray<HeaderEntry>? Headers, bool? InterceptResponse) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.ContinueRequestAsync"/> command.
 /// </summary>
 public sealed record ContinueRequestResult() : EmptyResult;
 
@@ -396,6 +401,7 @@ public sealed record ContinueRequestResult() : EmptyResult;
 internal sealed record ContinueWithAuthCommandParameters(RequestId RequestId, AuthChallengeResponse AuthChallengeResponse) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.ContinueWithAuthAsync"/> command.
 /// </summary>
 public sealed record ContinueWithAuthResult() : EmptyResult;
 
@@ -403,6 +409,7 @@ public sealed record ContinueWithAuthResult() : EmptyResult;
 internal sealed record ContinueResponseCommandParameters(RequestId RequestId, long? ResponseCode, string? ResponsePhrase, ImmutableArray<HeaderEntry>? ResponseHeaders, string? BinaryResponseHeaders) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.ContinueResponseAsync"/> command.
 /// </summary>
 public sealed record ContinueResponseResult() : EmptyResult;
 
@@ -410,6 +417,7 @@ public sealed record ContinueResponseResult() : EmptyResult;
 internal sealed record GetResponseBodyCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.GetResponseBodyAsync"/> command.
 /// </summary>
 /// <param name="Body">
 /// Response body.
@@ -423,6 +431,7 @@ public sealed record GetResponseBodyResult(string Body, bool Base64Encoded) : Em
 internal sealed record TakeResponseBodyAsStreamCommandParameters(RequestId RequestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFetch.TakeResponseBodyAsStreamAsync"/> command.
 /// </summary>
 /// <param name="Stream">
 /// </param>
@@ -519,10 +528,12 @@ public record RequestId : IStringRemoteId
 public enum RequestStage
 {
     /// <summary>
+    /// Corresponds to the <c>"Request"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Request")]
     Request,
     /// <summary>
+    /// Corresponds to the <c>"Response"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Response")]
     Response,
@@ -609,10 +620,12 @@ public sealed record AuthChallengeResponse(AuthChallengeResponseResponse Respons
 public enum AuthChallengeSource
 {
     /// <summary>
+    /// Corresponds to the <c>"Server"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Server")]
     Server,
     /// <summary>
+    /// Corresponds to the <c>"Proxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Proxy")]
     Proxy,
@@ -624,14 +637,17 @@ public enum AuthChallengeSource
 public enum AuthChallengeResponseResponse
 {
     /// <summary>
+    /// Corresponds to the <c>"Default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Default")]
     Default,
     /// <summary>
+    /// Corresponds to the <c>"CancelAuth"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CancelAuth")]
     CancelAuth,
     /// <summary>
+    /// Corresponds to the <c>"ProvideCredentials"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProvideCredentials")]
     ProvideCredentials,

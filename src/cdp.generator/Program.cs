@@ -174,6 +174,7 @@ foreach (var inputFile in inputFiles)
 
                 // result summary
                 domainBuilder.AppendLine("/// <summary>");
+                domainBuilder.AppendLine($"/// Result of the <see cref=\"I{domainInfo.Domain}.{commandInfo.Name.Dehumanize()}Async\"/> command.");
                 domainBuilder.AppendLine("/// </summary>");
 
                 if (commandInfo.Returns is not null)
@@ -321,6 +322,7 @@ foreach (var inputFile in inputFiles)
                     foreach (var enumValue in typeInfo.Enum!)
                     {
                         domainBuilder.AppendLine("    /// <summary>");
+                        domainBuilder.AppendLine($"    /// Corresponds to the <c>\"{enumValue}\"</c> wire value.");
                         domainBuilder.AppendLine("    /// </summary>");
                         domainBuilder.AppendLine($"    [global::System.Text.Json.Serialization.JsonStringEnumMemberName(\"{enumValue}\")]");
                         domainBuilder.AppendLine($"    {enumValue.Dehumanize()},");
@@ -441,6 +443,7 @@ foreach (var inputFile in inputFiles)
             foreach (var enumValue in enumValues)
             {
                 domainBuilder.AppendLine("    /// <summary>");
+                domainBuilder.AppendLine($"    /// Corresponds to the <c>\"{enumValue}\"</c> wire value.");
                 domainBuilder.AppendLine("    /// </summary>");
                 domainBuilder.AppendLine($"    [global::System.Text.Json.Serialization.JsonStringEnumMemberName(\"{enumValue}\")]");
                 domainBuilder.AppendLine($"    {enumValue.Dehumanize()},");
@@ -745,12 +748,12 @@ static string GetCommandSignature(CommandInfo commandInfo, bool includeDefaultVa
 
         foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is true))
         {
-            var defaultValue = includeDefaultValues ? " = default" : string.Empty;
+            var defaultValue = includeDefaultValues ? " = null" : string.Empty;
             parameters.Add($"{parameterInfo.AsCSharpType(commandInfo.Name)} {EscapeIdentifier(parameterInfo.Name)}{defaultValue}");
         }
     }
 
-    var sessionDefault = includeDefaultValues ? " = default" : string.Empty;
+    var sessionDefault = includeDefaultValues ? " = null" : string.Empty;
     parameters.Add($"string? {GetSessionArgumentName(commandInfo)}{sessionDefault}");
     parameters.Add(includeDefaultValues
         ? "CancellationToken cancellationToken = default"

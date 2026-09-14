@@ -22,7 +22,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables animation domain notifications.
@@ -36,7 +36,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the current time of the an animation.
@@ -53,7 +53,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCurrentTimeResult"/>.
     /// </returns>
-    Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the playback rate of the document timeline.
@@ -67,7 +67,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPlaybackRateResult"/>.
     /// </returns>
-    Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases a set of animations to no longer be manipulated.
@@ -84,7 +84,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseAnimationsResult"/>.
     /// </returns>
-    Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets the remote object of the Animation.
@@ -101,7 +101,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveAnimationResult"/>.
     /// </returns>
-    Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Seek a set of animations to a particular time within each animation.
@@ -121,7 +121,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SeekAnimationsResult"/>.
     /// </returns>
-    Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = default, CancellationToken cancellationToken = default);
+    Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the paused state of a set of animations.
@@ -141,7 +141,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPausedResult"/>.
     /// </returns>
-    Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the playback rate of the document timeline.
@@ -158,7 +158,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPlaybackRateResult"/>.
     /// </returns>
-    Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the timing of an animation node.
@@ -181,7 +181,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetTimingResult"/>.
     /// </returns>
-    Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Event for when an animation has been cancelled.
@@ -234,61 +234,61 @@ internal sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDrive
 {
     private static readonly AnimationJsonSerializerContext JsonContext = AnimationJsonSerializerContext.Default;
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Animation.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Animation.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetCurrentTimeResult> GetCurrentTimeAsync(string id, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetCurrentTimeCommandParameters(Id: id);
         return await ExecuteCommandAsync("Animation.getCurrentTime", @params, JsonContext.GetCurrentTimeCommandParameters, JsonContext.GetCurrentTimeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetPlaybackRateResult> GetPlaybackRateAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetPlaybackRateCommandParameters();
         return await ExecuteCommandAsync("Animation.getPlaybackRate", @params, JsonContext.GetPlaybackRateCommandParameters, JsonContext.GetPlaybackRateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReleaseAnimationsResult> ReleaseAnimationsAsync(ImmutableArray<string> animations, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseAnimationsCommandParameters(Animations: animations);
         return await ExecuteCommandAsync("Animation.releaseAnimations", @params, JsonContext.ReleaseAnimationsCommandParameters, JsonContext.ReleaseAnimationsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveAnimationResult> ResolveAnimationAsync(string animationId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveAnimationCommandParameters(AnimationId: animationId);
         return await ExecuteCommandAsync("Animation.resolveAnimation", @params, JsonContext.ResolveAnimationCommandParameters, JsonContext.ResolveAnimationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime);
         return await ExecuteCommandAsync("Animation.seekAnimations", @params, JsonContext.SeekAnimationsCommandParameters, JsonContext.SeekAnimationsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPausedResult> SetPausedAsync(ImmutableArray<string> animations, bool paused, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPausedCommandParameters(Animations: animations, Paused: paused);
         return await ExecuteCommandAsync("Animation.setPaused", @params, JsonContext.SetPausedCommandParameters, JsonContext.SetPausedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPlaybackRateResult> SetPlaybackRateAsync(double playbackRate, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPlaybackRateCommandParameters(PlaybackRate: playbackRate);
         return await ExecuteCommandAsync("Animation.setPlaybackRate", @params, JsonContext.SetPlaybackRateCommandParameters, JsonContext.SetPlaybackRateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetTimingResult> SetTimingAsync(string animationId, double duration, double delay, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimingCommandParameters(AnimationId: animationId, Duration: duration, Delay: delay);
         return await ExecuteCommandAsync("Animation.setTiming", @params, JsonContext.SetTimingCommandParameters, JsonContext.SetTimingResult, session, cancellationToken).ConfigureAwait(false);
@@ -303,6 +303,7 @@ internal sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDrive
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -310,6 +311,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -317,6 +319,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record GetCurrentTimeCommandParameters(string Id) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.GetCurrentTimeAsync"/> command.
 /// </summary>
 /// <param name="CurrentTime">
 /// Current time of the page.
@@ -327,6 +330,7 @@ public sealed record GetCurrentTimeResult(double CurrentTime) : EmptyResult;
 internal sealed record GetPlaybackRateCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.GetPlaybackRateAsync"/> command.
 /// </summary>
 /// <param name="PlaybackRate">
 /// Playback rate for animations on page.
@@ -337,6 +341,7 @@ public sealed record GetPlaybackRateResult(double PlaybackRate) : EmptyResult;
 internal sealed record ReleaseAnimationsCommandParameters(ImmutableArray<string> Animations) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.ReleaseAnimationsAsync"/> command.
 /// </summary>
 public sealed record ReleaseAnimationsResult() : EmptyResult;
 
@@ -344,6 +349,7 @@ public sealed record ReleaseAnimationsResult() : EmptyResult;
 internal sealed record ResolveAnimationCommandParameters(string AnimationId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.ResolveAnimationAsync"/> command.
 /// </summary>
 /// <param name="RemoteObject">
 /// Corresponding remote object.
@@ -354,6 +360,7 @@ public sealed record ResolveAnimationResult(Runtime.RemoteObject RemoteObject) :
 internal sealed record SeekAnimationsCommandParameters(ImmutableArray<string> Animations, double CurrentTime) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.SeekAnimationsAsync"/> command.
 /// </summary>
 public sealed record SeekAnimationsResult() : EmptyResult;
 
@@ -361,6 +368,7 @@ public sealed record SeekAnimationsResult() : EmptyResult;
 internal sealed record SetPausedCommandParameters(ImmutableArray<string> Animations, bool Paused) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.SetPausedAsync"/> command.
 /// </summary>
 public sealed record SetPausedResult() : EmptyResult;
 
@@ -368,6 +376,7 @@ public sealed record SetPausedResult() : EmptyResult;
 internal sealed record SetPlaybackRateCommandParameters(double PlaybackRate) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.SetPlaybackRateAsync"/> command.
 /// </summary>
 public sealed record SetPlaybackRateResult() : EmptyResult;
 
@@ -375,6 +384,7 @@ public sealed record SetPlaybackRateResult() : EmptyResult;
 internal sealed record SetTimingCommandParameters(string AnimationId, double Duration, double Delay) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAnimation.SetTimingAsync"/> command.
 /// </summary>
 public sealed record SetTimingResult() : EmptyResult;
 
@@ -571,14 +581,17 @@ public sealed record KeyframeStyle(string Offset, string Easing)
 public enum AnimationType
 {
     /// <summary>
+    /// Corresponds to the <c>"CSSTransition"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSSTransition")]
     CSSTransition,
     /// <summary>
+    /// Corresponds to the <c>"CSSAnimation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSSAnimation")]
     CSSAnimation,
     /// <summary>
+    /// Corresponds to the <c>"WebAnimation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebAnimation")]
     WebAnimation,

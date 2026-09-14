@@ -43,7 +43,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddRuleResult"/>.
     /// </returns>
-    Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all class names from specified stylesheet.
@@ -59,7 +59,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CollectClassNamesResult"/>.
     /// </returns>
-    Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default);
+    Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates a new special "via-inspector" stylesheet in the frame with given <b>frameId</b>.
@@ -82,7 +82,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CreateStyleSheetResult"/>.
     /// </returns>
-    Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the CSS agent for the given page.
@@ -96,7 +96,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables the CSS agent for the given page. Clients should not assume that the CSS agent has been
@@ -111,7 +111,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Ensures that the given node will have specified pseudo-classes whenever its style is computed by
@@ -132,7 +132,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForcePseudoStateResult"/>.
     /// </returns>
-    Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = default, CancellationToken cancellationToken = default);
+    Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Ensures that the given node is in its starting-style state.
@@ -152,7 +152,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ForceStartingStyleResult"/>.
     /// </returns>
-    Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = default, CancellationToken cancellationToken = default);
+    Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -168,7 +168,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetBackgroundColorsResult"/>.
     /// </returns>
-    Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the computed style for a DOM node identified by <b>nodeId</b>.
@@ -184,7 +184,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetComputedStyleForNodeResult"/>.
     /// </returns>
-    Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resolve the specified values in the context of the provided element.
@@ -224,7 +224,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveValuesResult"/>.
     /// </returns>
-    Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = default, DOM.PseudoType? pseudoType = default, string? pseudoIdentifier = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = null, DOM.PseudoType? pseudoType = null, string? pseudoIdentifier = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -241,7 +241,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLonghandPropertiesResult"/>.
     /// </returns>
-    Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM
@@ -258,7 +258,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetInlineStylesForNodeResult"/>.
     /// </returns>
-    Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the styles coming from animations &amp; transitions
@@ -275,7 +275,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAnimatedStylesForNodeResult"/>.
     /// </returns>
-    Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns requested styles for a DOM node identified by <b>nodeId</b>.
@@ -291,7 +291,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMatchedStylesForNodeResult"/>.
     /// </returns>
-    Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the values of the default UA-defined environment variables used in env()
@@ -305,7 +305,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEnvironmentVariablesResult"/>.
     /// </returns>
-    Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all media queries parsed by the rendering engine.
@@ -319,7 +319,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMediaQueriesResult"/>.
     /// </returns>
-    Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests information about platform fonts which we used to render child TextNodes in the given
@@ -336,7 +336,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPlatformFontsForNodeResult"/>.
     /// </returns>
-    Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the current textual content for a stylesheet.
@@ -352,7 +352,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetStyleSheetTextResult"/>.
     /// </returns>
-    Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all layers parsed by the rendering engine for the tree scope of a node.
@@ -371,7 +371,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLayersForNodeResult"/>.
     /// </returns>
-    Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Given a CSS selector text and a style sheet ID, getLocationForSelector
@@ -390,7 +390,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetLocationForSelectorResult"/>.
     /// </returns>
-    Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts tracking the given node for the computed style updates
@@ -411,7 +411,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackComputedStyleUpdatesForNodeResult"/>.
     /// </returns>
-    Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts tracking the given computed styles for updates. The specified array of properties
@@ -432,7 +432,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TrackComputedStyleUpdatesResult"/>.
     /// </returns>
-    Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = default, CancellationToken cancellationToken = default);
+    Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Polls the next batch of computed style updates.
@@ -446,7 +446,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeComputedStyleUpdatesResult"/>.
     /// </returns>
-    Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Find a rule with the given active property for the given node and set the new value for this
@@ -468,7 +468,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetEffectivePropertyValueForNodeResult"/>.
     /// </returns>
-    Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the property rule property name.
@@ -488,7 +488,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPropertyRulePropertyNameResult"/>.
     /// </returns>
-    Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the keyframe rule key text.
@@ -508,7 +508,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetKeyframeKeyResult"/>.
     /// </returns>
-    Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the rule selector.
@@ -528,7 +528,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetMediaTextResult"/>.
     /// </returns>
-    Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a container query.
@@ -550,7 +550,7 @@ public interface ICSS
     /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryTextResult"/>.
     /// </returns>
     [global::System.Obsolete]
-    Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -569,7 +569,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetContainerQueryConditionTextResult"/>.
     /// </returns>
-    Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a supports at-rule.
@@ -589,7 +589,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSupportsTextResult"/>.
     /// </returns>
-    Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a navigation at-rule.
@@ -609,7 +609,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetNavigationTextResult"/>.
     /// </returns>
-    Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the expression of a scope at-rule.
@@ -629,7 +629,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetScopeTextResult"/>.
     /// </returns>
-    Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Modifies the rule selector.
@@ -649,7 +649,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetRuleSelectorResult"/>.
     /// </returns>
-    Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the new stylesheet text.
@@ -667,7 +667,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleSheetTextResult"/>.
     /// </returns>
-    Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Applies specified style edits one after another in the given order.
@@ -688,7 +688,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetStyleTextsResult"/>.
     /// </returns>
-    Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables the selector recording.
@@ -702,7 +702,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartRuleUsageTrackingResult"/>.
     /// </returns>
-    Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stop tracking rule usage and return the list of rules that were used since last call to
@@ -717,7 +717,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopRuleUsageTrackingResult"/>.
     /// </returns>
-    Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Obtain list of rules that became used since last call to this method (or since start of coverage
@@ -732,7 +732,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeCoverageDeltaResult"/>.
     /// </returns>
-    Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables/disables rendering of local CSS fonts (enabled by default).
@@ -749,7 +749,7 @@ public interface ICSS
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetLocalFontsEnabledResult"/>.
     /// </returns>
-    Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
@@ -820,236 +820,236 @@ internal sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 {
     private static readonly CSSJsonSerializerContext JsonContext = CSSJsonSerializerContext.Default;
 
-    public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddRuleResult> AddRuleAsync(DOM.StyleSheetId styleSheetId, string ruleText, SourceRange location, DOM.NodeId? nodeForPropertySyntaxValidation = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddRuleCommandParameters(StyleSheetId: styleSheetId, RuleText: ruleText, Location: location, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
         return await ExecuteCommandAsync("CSS.addRule", @params, JsonContext.AddRuleCommandParameters, JsonContext.AddRuleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CollectClassNamesResult> CollectClassNamesAsync(DOM.StyleSheetId styleSheetId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CollectClassNamesCommandParameters(StyleSheetId: styleSheetId);
         return await ExecuteCommandAsync("CSS.collectClassNames", @params, JsonContext.CollectClassNamesCommandParameters, JsonContext.CollectClassNamesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CreateStyleSheetResult> CreateStyleSheetAsync(Page.FrameId frameId, bool? force = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CreateStyleSheetCommandParameters(FrameId: frameId, Force: force);
         return await ExecuteCommandAsync("CSS.createStyleSheet", @params, JsonContext.CreateStyleSheetCommandParameters, JsonContext.CreateStyleSheetResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("CSS.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("CSS.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ForcePseudoStateResult> ForcePseudoStateAsync(DOM.NodeId nodeId, ImmutableArray<string> forcedPseudoClasses, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ForcePseudoStateCommandParameters(NodeId: nodeId, ForcedPseudoClasses: forcedPseudoClasses);
         return await ExecuteCommandAsync("CSS.forcePseudoState", @params, JsonContext.ForcePseudoStateCommandParameters, JsonContext.ForcePseudoStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ForceStartingStyleCommandParameters(NodeId: nodeId, Forced: forced);
         return await ExecuteCommandAsync("CSS.forceStartingStyle", @params, JsonContext.ForceStartingStyleCommandParameters, JsonContext.ForceStartingStyleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetBackgroundColorsCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.getBackgroundColors", @params, JsonContext.GetBackgroundColorsCommandParameters, JsonContext.GetBackgroundColorsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetComputedStyleForNodeResult> GetComputedStyleForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetComputedStyleForNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.getComputedStyleForNode", @params, JsonContext.GetComputedStyleForNodeCommandParameters, JsonContext.GetComputedStyleForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = default, DOM.PseudoType? pseudoType = default, string? pseudoIdentifier = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveValuesResult> ResolveValuesAsync(ImmutableArray<string> values, DOM.NodeId nodeId, string? propertyName = null, DOM.PseudoType? pseudoType = null, string? pseudoIdentifier = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveValuesCommandParameters(Values: values, NodeId: nodeId, PropertyName: propertyName, PseudoType: pseudoType, PseudoIdentifier: pseudoIdentifier);
         return await ExecuteCommandAsync("CSS.resolveValues", @params, JsonContext.ResolveValuesCommandParameters, JsonContext.ResolveValuesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetLonghandPropertiesResult> GetLonghandPropertiesAsync(string shorthandName, string value, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetLonghandPropertiesCommandParameters(ShorthandName: shorthandName, Value: value);
         return await ExecuteCommandAsync("CSS.getLonghandProperties", @params, JsonContext.GetLonghandPropertiesCommandParameters, JsonContext.GetLonghandPropertiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetInlineStylesForNodeResult> GetInlineStylesForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetInlineStylesForNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.getInlineStylesForNode", @params, JsonContext.GetInlineStylesForNodeCommandParameters, JsonContext.GetInlineStylesForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAnimatedStylesForNodeResult> GetAnimatedStylesForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAnimatedStylesForNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.getAnimatedStylesForNode", @params, JsonContext.GetAnimatedStylesForNodeCommandParameters, JsonContext.GetAnimatedStylesForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetMatchedStylesForNodeResult> GetMatchedStylesForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetMatchedStylesForNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.getMatchedStylesForNode", @params, JsonContext.GetMatchedStylesForNodeCommandParameters, JsonContext.GetMatchedStylesForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetEnvironmentVariablesResult> GetEnvironmentVariablesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetEnvironmentVariablesCommandParameters();
         return await ExecuteCommandAsync("CSS.getEnvironmentVariables", @params, JsonContext.GetEnvironmentVariablesCommandParameters, JsonContext.GetEnvironmentVariablesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetMediaQueriesResult> GetMediaQueriesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetMediaQueriesCommandParameters();
         return await ExecuteCommandAsync("CSS.getMediaQueries", @params, JsonContext.GetMediaQueriesCommandParameters, JsonContext.GetMediaQueriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetPlatformFontsForNodeResult> GetPlatformFontsForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetPlatformFontsForNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.getPlatformFontsForNode", @params, JsonContext.GetPlatformFontsForNodeCommandParameters, JsonContext.GetPlatformFontsForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetStyleSheetTextResult> GetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId);
         return await ExecuteCommandAsync("CSS.getStyleSheetText", @params, JsonContext.GetStyleSheetTextCommandParameters, JsonContext.GetStyleSheetTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetLayersForNodeResult> GetLayersForNodeAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetLayersForNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.getLayersForNode", @params, JsonContext.GetLayersForNodeCommandParameters, JsonContext.GetLayersForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetLocationForSelectorResult> GetLocationForSelectorAsync(DOM.StyleSheetId styleSheetId, string selectorText, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetLocationForSelectorCommandParameters(StyleSheetId: styleSheetId, SelectorText: selectorText);
         return await ExecuteCommandAsync("CSS.getLocationForSelector", @params, JsonContext.GetLocationForSelectorCommandParameters, JsonContext.GetLocationForSelectorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TrackComputedStyleUpdatesForNodeResult> TrackComputedStyleUpdatesForNodeAsync(DOM.NodeId? nodeId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TrackComputedStyleUpdatesForNodeCommandParameters(NodeId: nodeId);
         return await ExecuteCommandAsync("CSS.trackComputedStyleUpdatesForNode", @params, JsonContext.TrackComputedStyleUpdatesForNodeCommandParameters, JsonContext.TrackComputedStyleUpdatesForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TrackComputedStyleUpdatesResult> TrackComputedStyleUpdatesAsync(ImmutableArray<CSSComputedStyleProperty> propertiesToTrack, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TrackComputedStyleUpdatesCommandParameters(PropertiesToTrack: propertiesToTrack);
         return await ExecuteCommandAsync("CSS.trackComputedStyleUpdates", @params, JsonContext.TrackComputedStyleUpdatesCommandParameters, JsonContext.TrackComputedStyleUpdatesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TakeComputedStyleUpdatesResult> TakeComputedStyleUpdatesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TakeComputedStyleUpdatesCommandParameters();
         return await ExecuteCommandAsync("CSS.takeComputedStyleUpdates", @params, JsonContext.TakeComputedStyleUpdatesCommandParameters, JsonContext.TakeComputedStyleUpdatesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetEffectivePropertyValueForNodeResult> SetEffectivePropertyValueForNodeAsync(DOM.NodeId nodeId, string propertyName, string value, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetEffectivePropertyValueForNodeCommandParameters(NodeId: nodeId, PropertyName: propertyName, Value: value);
         return await ExecuteCommandAsync("CSS.setEffectivePropertyValueForNode", @params, JsonContext.SetEffectivePropertyValueForNodeCommandParameters, JsonContext.SetEffectivePropertyValueForNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPropertyRulePropertyNameResult> SetPropertyRulePropertyNameAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string propertyName, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetPropertyRulePropertyNameCommandParameters(StyleSheetId: styleSheetId, Range: range, PropertyName: propertyName);
         return await ExecuteCommandAsync("CSS.setPropertyRulePropertyName", @params, JsonContext.SetPropertyRulePropertyNameCommandParameters, JsonContext.SetPropertyRulePropertyNameResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetKeyframeKeyResult> SetKeyframeKeyAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string keyText, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetKeyframeKeyCommandParameters(StyleSheetId: styleSheetId, Range: range, KeyText: keyText);
         return await ExecuteCommandAsync("CSS.setKeyframeKey", @params, JsonContext.SetKeyframeKeyCommandParameters, JsonContext.SetKeyframeKeyResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetMediaTextResult> SetMediaTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetMediaTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync("CSS.setMediaText", @params, JsonContext.SetMediaTextCommandParameters, JsonContext.SetMediaTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Obsolete]
-    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetContainerQueryTextResult> SetContainerQueryTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetContainerQueryTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync("CSS.setContainerQueryText", @params, JsonContext.SetContainerQueryTextCommandParameters, JsonContext.SetContainerQueryTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetContainerQueryConditionTextResult> SetContainerQueryConditionTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetContainerQueryConditionTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync("CSS.setContainerQueryConditionText", @params, JsonContext.SetContainerQueryConditionTextCommandParameters, JsonContext.SetContainerQueryConditionTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSupportsTextResult> SetSupportsTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSupportsTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync("CSS.setSupportsText", @params, JsonContext.SetSupportsTextCommandParameters, JsonContext.SetSupportsTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetNavigationTextResult> SetNavigationTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetNavigationTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync("CSS.setNavigationText", @params, JsonContext.SetNavigationTextCommandParameters, JsonContext.SetNavigationTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetScopeTextResult> SetScopeTextAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetScopeTextCommandParameters(StyleSheetId: styleSheetId, Range: range, Text: text);
         return await ExecuteCommandAsync("CSS.setScopeText", @params, JsonContext.SetScopeTextCommandParameters, JsonContext.SetScopeTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetRuleSelectorResult> SetRuleSelectorAsync(DOM.StyleSheetId styleSheetId, SourceRange range, string selector, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetRuleSelectorCommandParameters(StyleSheetId: styleSheetId, Range: range, Selector: selector);
         return await ExecuteCommandAsync("CSS.setRuleSelector", @params, JsonContext.SetRuleSelectorCommandParameters, JsonContext.SetRuleSelectorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetStyleSheetTextResult> SetStyleSheetTextAsync(DOM.StyleSheetId styleSheetId, string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetStyleSheetTextCommandParameters(StyleSheetId: styleSheetId, Text: text);
         return await ExecuteCommandAsync("CSS.setStyleSheetText", @params, JsonContext.SetStyleSheetTextCommandParameters, JsonContext.SetStyleSheetTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetStyleTextsResult> SetStyleTextsAsync(ImmutableArray<StyleDeclarationEdit> edits, DOM.NodeId? nodeForPropertySyntaxValidation = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetStyleTextsCommandParameters(Edits: edits, NodeForPropertySyntaxValidation: nodeForPropertySyntaxValidation);
         return await ExecuteCommandAsync("CSS.setStyleTexts", @params, JsonContext.SetStyleTextsCommandParameters, JsonContext.SetStyleTextsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartRuleUsageTrackingResult> StartRuleUsageTrackingAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartRuleUsageTrackingCommandParameters();
         return await ExecuteCommandAsync("CSS.startRuleUsageTracking", @params, JsonContext.StartRuleUsageTrackingCommandParameters, JsonContext.StartRuleUsageTrackingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopRuleUsageTrackingResult> StopRuleUsageTrackingAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopRuleUsageTrackingCommandParameters();
         return await ExecuteCommandAsync("CSS.stopRuleUsageTracking", @params, JsonContext.StopRuleUsageTrackingCommandParameters, JsonContext.StopRuleUsageTrackingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TakeCoverageDeltaResult> TakeCoverageDeltaAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TakeCoverageDeltaCommandParameters();
         return await ExecuteCommandAsync("CSS.takeCoverageDelta", @params, JsonContext.TakeCoverageDeltaCommandParameters, JsonContext.TakeCoverageDeltaResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetLocalFontsEnabledResult> SetLocalFontsEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetLocalFontsEnabledCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("CSS.setLocalFontsEnabled", @params, JsonContext.SetLocalFontsEnabledCommandParameters, JsonContext.SetLocalFontsEnabledResult, session, cancellationToken).ConfigureAwait(false);
@@ -1066,6 +1066,7 @@ internal sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 internal sealed record AddRuleCommandParameters(DOM.StyleSheetId StyleSheetId, string RuleText, SourceRange Location, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.AddRuleAsync"/> command.
 /// </summary>
 /// <param name="Rule">
 /// The newly created rule.
@@ -1076,6 +1077,7 @@ public sealed record AddRuleResult(CSSRule Rule) : EmptyResult;
 internal sealed record CollectClassNamesCommandParameters(DOM.StyleSheetId StyleSheetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.CollectClassNamesAsync"/> command.
 /// </summary>
 /// <param name="ClassNames">
 /// Class name list.
@@ -1086,6 +1088,7 @@ public sealed record CollectClassNamesResult(ImmutableArray<string> ClassNames) 
 internal sealed record CreateStyleSheetCommandParameters(Page.FrameId FrameId, bool? Force) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.CreateStyleSheetAsync"/> command.
 /// </summary>
 /// <param name="StyleSheetId">
 /// Identifier of the created "via-inspector" stylesheet.
@@ -1096,6 +1099,7 @@ public sealed record CreateStyleSheetResult(DOM.StyleSheetId StyleSheetId) : Emp
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -1103,6 +1107,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -1110,6 +1115,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record ForcePseudoStateCommandParameters(DOM.NodeId NodeId, ImmutableArray<string> ForcedPseudoClasses) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.ForcePseudoStateAsync"/> command.
 /// </summary>
 public sealed record ForcePseudoStateResult() : EmptyResult;
 
@@ -1117,6 +1123,7 @@ public sealed record ForcePseudoStateResult() : EmptyResult;
 internal sealed record ForceStartingStyleCommandParameters(DOM.NodeId NodeId, bool Forced) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.ForceStartingStyleAsync"/> command.
 /// </summary>
 public sealed record ForceStartingStyleResult() : EmptyResult;
 
@@ -1124,6 +1131,7 @@ public sealed record ForceStartingStyleResult() : EmptyResult;
 internal sealed record GetBackgroundColorsCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetBackgroundColorsAsync"/> command.
 /// </summary>
 /// <param name="BackgroundColors">
 /// The range of background colors behind this element, if it contains any visible text. If no
@@ -1145,6 +1153,7 @@ public sealed record GetBackgroundColorsResult(ImmutableArray<string>? Backgroun
 internal sealed record GetComputedStyleForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetComputedStyleForNodeAsync"/> command.
 /// </summary>
 /// <param name="ComputedStyle">
 /// Computed style for the specified DOM node.
@@ -1159,6 +1168,7 @@ public sealed record GetComputedStyleForNodeResult(ImmutableArray<CSSComputedSty
 internal sealed record ResolveValuesCommandParameters(ImmutableArray<string> Values, DOM.NodeId NodeId, string? PropertyName, DOM.PseudoType? PseudoType, string? PseudoIdentifier) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.ResolveValuesAsync"/> command.
 /// </summary>
 /// <param name="Results">
 /// </param>
@@ -1168,6 +1178,7 @@ public sealed record ResolveValuesResult(ImmutableArray<string> Results) : Empty
 internal sealed record GetLonghandPropertiesCommandParameters(string ShorthandName, string Value) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetLonghandPropertiesAsync"/> command.
 /// </summary>
 /// <param name="LonghandProperties">
 /// </param>
@@ -1177,6 +1188,7 @@ public sealed record GetLonghandPropertiesResult(ImmutableArray<CSSProperty> Lon
 internal sealed record GetInlineStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetInlineStylesForNodeAsync"/> command.
 /// </summary>
 /// <param name="InlineStyle">
 /// Inline style for the specified DOM node.
@@ -1190,6 +1202,7 @@ public sealed record GetInlineStylesForNodeResult(CSSStyle? InlineStyle, CSSStyl
 internal sealed record GetAnimatedStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetAnimatedStylesForNodeAsync"/> command.
 /// </summary>
 /// <param name="AnimationStyles">
 /// Styles coming from animations.
@@ -1207,6 +1220,7 @@ public sealed record GetAnimatedStylesForNodeResult(ImmutableArray<CSSAnimationS
 internal sealed record GetMatchedStylesForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetMatchedStylesForNodeAsync"/> command.
 /// </summary>
 /// <param name="InlineStyle">
 /// Inline style for the specified DOM node.
@@ -1257,6 +1271,7 @@ public sealed record GetMatchedStylesForNodeResult(CSSStyle? InlineStyle, CSSSty
 internal sealed record GetEnvironmentVariablesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetEnvironmentVariablesAsync"/> command.
 /// </summary>
 /// <param name="EnvironmentVariables">
 /// </param>
@@ -1266,6 +1281,7 @@ public sealed record GetEnvironmentVariablesResult(global::System.Text.Json.Json
 internal sealed record GetMediaQueriesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetMediaQueriesAsync"/> command.
 /// </summary>
 /// <param name="Medias">
 /// </param>
@@ -1275,6 +1291,7 @@ public sealed record GetMediaQueriesResult(ImmutableArray<CSSMedia> Medias) : Em
 internal sealed record GetPlatformFontsForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetPlatformFontsForNodeAsync"/> command.
 /// </summary>
 /// <param name="Fonts">
 /// Usage statistics for every employed platform font.
@@ -1285,6 +1302,7 @@ public sealed record GetPlatformFontsForNodeResult(ImmutableArray<PlatformFontUs
 internal sealed record GetStyleSheetTextCommandParameters(DOM.StyleSheetId StyleSheetId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetStyleSheetTextAsync"/> command.
 /// </summary>
 /// <param name="Text">
 /// The stylesheet text.
@@ -1295,6 +1313,7 @@ public sealed record GetStyleSheetTextResult(string Text) : EmptyResult;
 internal sealed record GetLayersForNodeCommandParameters(DOM.NodeId NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetLayersForNodeAsync"/> command.
 /// </summary>
 /// <param name="RootLayer">
 /// </param>
@@ -1304,6 +1323,7 @@ public sealed record GetLayersForNodeResult(CSSLayerData RootLayer) : EmptyResul
 internal sealed record GetLocationForSelectorCommandParameters(DOM.StyleSheetId StyleSheetId, string SelectorText) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.GetLocationForSelectorAsync"/> command.
 /// </summary>
 /// <param name="Ranges">
 /// </param>
@@ -1313,6 +1333,7 @@ public sealed record GetLocationForSelectorResult(ImmutableArray<SourceRange> Ra
 internal sealed record TrackComputedStyleUpdatesForNodeCommandParameters(DOM.NodeId? NodeId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.TrackComputedStyleUpdatesForNodeAsync"/> command.
 /// </summary>
 public sealed record TrackComputedStyleUpdatesForNodeResult() : EmptyResult;
 
@@ -1320,6 +1341,7 @@ public sealed record TrackComputedStyleUpdatesForNodeResult() : EmptyResult;
 internal sealed record TrackComputedStyleUpdatesCommandParameters(ImmutableArray<CSSComputedStyleProperty> PropertiesToTrack) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.TrackComputedStyleUpdatesAsync"/> command.
 /// </summary>
 public sealed record TrackComputedStyleUpdatesResult() : EmptyResult;
 
@@ -1327,6 +1349,7 @@ public sealed record TrackComputedStyleUpdatesResult() : EmptyResult;
 internal sealed record TakeComputedStyleUpdatesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.TakeComputedStyleUpdatesAsync"/> command.
 /// </summary>
 /// <param name="NodeIds">
 /// The list of node Ids that have their tracked computed styles updated.
@@ -1337,6 +1360,7 @@ public sealed record TakeComputedStyleUpdatesResult(ImmutableArray<DOM.NodeId> N
 internal sealed record SetEffectivePropertyValueForNodeCommandParameters(DOM.NodeId NodeId, string PropertyName, string Value) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetEffectivePropertyValueForNodeAsync"/> command.
 /// </summary>
 public sealed record SetEffectivePropertyValueForNodeResult() : EmptyResult;
 
@@ -1344,6 +1368,7 @@ public sealed record SetEffectivePropertyValueForNodeResult() : EmptyResult;
 internal sealed record SetPropertyRulePropertyNameCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string PropertyName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetPropertyRulePropertyNameAsync"/> command.
 /// </summary>
 /// <param name="PropertyName">
 /// The resulting key text after modification.
@@ -1354,6 +1379,7 @@ public sealed record SetPropertyRulePropertyNameResult(Value PropertyName) : Emp
 internal sealed record SetKeyframeKeyCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string KeyText) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetKeyframeKeyAsync"/> command.
 /// </summary>
 /// <param name="KeyText">
 /// The resulting key text after modification.
@@ -1364,6 +1390,7 @@ public sealed record SetKeyframeKeyResult(Value KeyText) : EmptyResult;
 internal sealed record SetMediaTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetMediaTextAsync"/> command.
 /// </summary>
 /// <param name="Media">
 /// The resulting CSS media rule after modification.
@@ -1374,6 +1401,7 @@ public sealed record SetMediaTextResult(CSSMedia Media) : EmptyResult;
 internal sealed record SetContainerQueryTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetContainerQueryTextAsync"/> command.
 /// </summary>
 /// <param name="ContainerQuery">
 /// The resulting CSS container query rule after modification.
@@ -1384,6 +1412,7 @@ public sealed record SetContainerQueryTextResult(CSSContainerQuery ContainerQuer
 internal sealed record SetContainerQueryConditionTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetContainerQueryConditionTextAsync"/> command.
 /// </summary>
 /// <param name="ContainerQuery">
 /// The resulting CSS container query rule after modification.
@@ -1394,6 +1423,7 @@ public sealed record SetContainerQueryConditionTextResult(CSSContainerQuery Cont
 internal sealed record SetSupportsTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetSupportsTextAsync"/> command.
 /// </summary>
 /// <param name="Supports">
 /// The resulting CSS Supports rule after modification.
@@ -1404,6 +1434,7 @@ public sealed record SetSupportsTextResult(CSSSupports Supports) : EmptyResult;
 internal sealed record SetNavigationTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetNavigationTextAsync"/> command.
 /// </summary>
 /// <param name="Navigation">
 /// The resulting CSS Navigation rule after modification.
@@ -1414,6 +1445,7 @@ public sealed record SetNavigationTextResult(CSSNavigation Navigation) : EmptyRe
 internal sealed record SetScopeTextCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetScopeTextAsync"/> command.
 /// </summary>
 /// <param name="Scope">
 /// The resulting CSS Scope rule after modification.
@@ -1424,6 +1456,7 @@ public sealed record SetScopeTextResult(CSSScope Scope) : EmptyResult;
 internal sealed record SetRuleSelectorCommandParameters(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Selector) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetRuleSelectorAsync"/> command.
 /// </summary>
 /// <param name="SelectorList">
 /// The resulting selector list after modification.
@@ -1434,6 +1467,7 @@ public sealed record SetRuleSelectorResult(SelectorList SelectorList) : EmptyRes
 internal sealed record SetStyleSheetTextCommandParameters(DOM.StyleSheetId StyleSheetId, string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetStyleSheetTextAsync"/> command.
 /// </summary>
 /// <param name="SourceMapURL">
 /// URL of source map associated with script (if any).
@@ -1444,6 +1478,7 @@ public sealed record SetStyleSheetTextResult(string? SourceMapURL) : EmptyResult
 internal sealed record SetStyleTextsCommandParameters(ImmutableArray<StyleDeclarationEdit> Edits, DOM.NodeId? NodeForPropertySyntaxValidation) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetStyleTextsAsync"/> command.
 /// </summary>
 /// <param name="Styles">
 /// The resulting styles after modification.
@@ -1454,6 +1489,7 @@ public sealed record SetStyleTextsResult(ImmutableArray<CSSStyle> Styles) : Empt
 internal sealed record StartRuleUsageTrackingCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.StartRuleUsageTrackingAsync"/> command.
 /// </summary>
 public sealed record StartRuleUsageTrackingResult() : EmptyResult;
 
@@ -1461,6 +1497,7 @@ public sealed record StartRuleUsageTrackingResult() : EmptyResult;
 internal sealed record StopRuleUsageTrackingCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.StopRuleUsageTrackingAsync"/> command.
 /// </summary>
 /// <param name="RuleUsage">
 /// </param>
@@ -1470,6 +1507,7 @@ public sealed record StopRuleUsageTrackingResult(ImmutableArray<RuleUsage> RuleU
 internal sealed record TakeCoverageDeltaCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.TakeCoverageDeltaAsync"/> command.
 /// </summary>
 /// <param name="Coverage">
 /// </param>
@@ -1482,6 +1520,7 @@ public sealed record TakeCoverageDeltaResult(ImmutableArray<RuleUsage> Coverage,
 internal sealed record SetLocalFontsEnabledCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ICSS.SetLocalFontsEnabledAsync"/> command.
 /// </summary>
 public sealed record SetLocalFontsEnabledResult() : EmptyResult;
 
@@ -1540,18 +1579,22 @@ public sealed record ComputedStyleUpdatedEventArgs(DOM.NodeId NodeId) : OpenQA.S
 public enum StyleSheetOrigin
 {
     /// <summary>
+    /// Corresponds to the <c>"injected"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("injected")]
     Injected,
     /// <summary>
+    /// Corresponds to the <c>"user-agent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("user-agent")]
     UserAgent,
     /// <summary>
+    /// Corresponds to the <c>"inspector"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inspector")]
     Inspector,
     /// <summary>
+    /// Corresponds to the <c>"regular"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regular")]
     Regular,
@@ -1875,34 +1918,42 @@ public sealed record CSSRule(SelectorList SelectorList, StyleSheetOrigin Origin,
 public enum CSSRuleType
 {
     /// <summary>
+    /// Corresponds to the <c>"MediaRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MediaRule")]
     MediaRule,
     /// <summary>
+    /// Corresponds to the <c>"SupportsRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SupportsRule")]
     SupportsRule,
     /// <summary>
+    /// Corresponds to the <c>"ContainerRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ContainerRule")]
     ContainerRule,
     /// <summary>
+    /// Corresponds to the <c>"LayerRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("LayerRule")]
     LayerRule,
     /// <summary>
+    /// Corresponds to the <c>"ScopeRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ScopeRule")]
     ScopeRule,
     /// <summary>
+    /// Corresponds to the <c>"StyleRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StyleRule")]
     StyleRule,
     /// <summary>
+    /// Corresponds to the <c>"StartingStyleRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StartingStyleRule")]
     StartingStyleRule,
     /// <summary>
+    /// Corresponds to the <c>"NavigationRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NavigationRule")]
     NavigationRule,
@@ -2646,18 +2697,22 @@ public sealed record StyleDeclarationEdit(DOM.StyleSheetId StyleSheetId, SourceR
 public enum CSSMediaSource
 {
     /// <summary>
+    /// Corresponds to the <c>"mediaRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mediaRule")]
     MediaRule,
     /// <summary>
+    /// Corresponds to the <c>"importRule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("importRule")]
     ImportRule,
     /// <summary>
+    /// Corresponds to the <c>"linkedSheet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("linkedSheet")]
     LinkedSheet,
     /// <summary>
+    /// Corresponds to the <c>"inlineSheet"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inlineSheet")]
     InlineSheet,
@@ -2669,18 +2724,22 @@ public enum CSSMediaSource
 public enum CSSAtRuleType
 {
     /// <summary>
+    /// Corresponds to the <c>"font-face"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("font-face")]
     FontFace,
     /// <summary>
+    /// Corresponds to the <c>"font-feature-values"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("font-feature-values")]
     FontFeatureValues,
     /// <summary>
+    /// Corresponds to the <c>"font-palette-values"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("font-palette-values")]
     FontPaletteValues,
     /// <summary>
+    /// Corresponds to the <c>"counter-style"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("counter-style")]
     CounterStyle,
@@ -2692,26 +2751,32 @@ public enum CSSAtRuleType
 public enum CSSAtRuleSubsection
 {
     /// <summary>
+    /// Corresponds to the <c>"swash"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("swash")]
     Swash,
     /// <summary>
+    /// Corresponds to the <c>"annotation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("annotation")]
     Annotation,
     /// <summary>
+    /// Corresponds to the <c>"ornaments"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ornaments")]
     Ornaments,
     /// <summary>
+    /// Corresponds to the <c>"stylistic"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("stylistic")]
     Stylistic,
     /// <summary>
+    /// Corresponds to the <c>"styleset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("styleset")]
     Styleset,
     /// <summary>
+    /// Corresponds to the <c>"character-variant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("character-variant")]
     CharacterVariant,

@@ -35,7 +35,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AwaitPromiseResult"/>.
     /// </returns>
-    Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = default, bool? generatePreview = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = null, bool? generatePreview = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Calls function with given declaration on the given object. Object group of the result is
@@ -102,7 +102,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CallFunctionOnResult"/>.
     /// </returns>
-    Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = default, ImmutableArray<CallArgument>? arguments = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? throwOnSideEffect = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = null, ImmutableArray<CallArgument>? arguments = null, bool? silent = null, bool? returnByValue = null, bool? generatePreview = null, bool? userGesture = null, bool? awaitPromise = null, ExecutionContextId? executionContextId = null, string? objectGroup = null, bool? throwOnSideEffect = null, string? uniqueContextId = null, SerializationOptions? serializationOptions = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Compiles expression.
@@ -129,7 +129,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CompileScriptResult"/>.
     /// </returns>
-    Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables reporting of execution contexts creation.
@@ -143,7 +143,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Discards collected exceptions and console API calls.
@@ -157,7 +157,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DiscardConsoleEntriesResult"/>.
     /// </returns>
-    Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables reporting of execution contexts creation by means of <b>executionContextCreated</b> event.
@@ -173,7 +173,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Evaluates expression on global object.
@@ -253,7 +253,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EvaluateResult"/>.
     /// </returns>
-    Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, ExecutionContextId? contextId = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, bool? throwOnSideEffect = default, TimeDelta? timeout = default, bool? disableBreaks = default, bool? replMode = default, bool? allowUnsafeEvalBlockedByCSP = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = null, bool? includeCommandLineAPI = null, bool? silent = null, ExecutionContextId? contextId = null, bool? returnByValue = null, bool? generatePreview = null, bool? userGesture = null, bool? awaitPromise = null, bool? throwOnSideEffect = null, TimeDelta? timeout = null, bool? disableBreaks = null, bool? replMode = null, bool? allowUnsafeEvalBlockedByCSP = null, string? uniqueContextId = null, SerializationOptions? serializationOptions = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the isolate id.
@@ -268,7 +268,7 @@ public interface IRuntime
     /// A task representing the asynchronous operation, containing a <see cref="GetIsolateIdResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the JavaScript heap usage.
@@ -284,7 +284,7 @@ public interface IRuntime
     /// A task representing the asynchronous operation, containing a <see cref="GetHeapUsageResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns properties of a given object. Object group of the result is inherited from the target
@@ -316,7 +316,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPropertiesResult"/>.
     /// </returns>
-    Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = default, bool? accessorPropertiesOnly = default, bool? generatePreview = default, bool? nonIndexedPropertiesOnly = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = null, bool? accessorPropertiesOnly = null, bool? generatePreview = null, bool? nonIndexedPropertiesOnly = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all let, const and class variables from global scope.
@@ -333,7 +333,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GlobalLexicalScopeNamesResult"/>.
     /// </returns>
-    Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -352,7 +352,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QueryObjectsResult"/>.
     /// </returns>
-    Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases remote object with given id.
@@ -369,7 +369,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseObjectResult"/>.
     /// </returns>
-    Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases all remote objects that belong to a given group.
@@ -386,7 +386,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseObjectGroupResult"/>.
     /// </returns>
-    Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Tells inspected instance to run if it was waiting for debugger to attach.
@@ -400,7 +400,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RunIfWaitingForDebuggerResult"/>.
     /// </returns>
-    Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Runs script with given id in a given context.
@@ -441,7 +441,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RunScriptResult"/>.
     /// </returns>
-    Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? silent = default, bool? includeCommandLineAPI = default, bool? returnByValue = default, bool? generatePreview = default, bool? awaitPromise = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = null, string? objectGroup = null, bool? silent = null, bool? includeCommandLineAPI = null, bool? returnByValue = null, bool? generatePreview = null, bool? awaitPromise = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables or disables async call stacks tracking.
@@ -459,7 +459,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAsyncCallStackDepthResult"/>.
     /// </returns>
-    Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -475,7 +475,7 @@ public interface IRuntime
     /// A task representing the asynchronous operation, containing a <see cref="SetCustomObjectFormatterEnabledResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -491,7 +491,7 @@ public interface IRuntime
     /// A task representing the asynchronous operation, containing a <see cref="SetMaxCallStackSizeToCaptureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Terminate current or next JavaScript execution.
@@ -507,7 +507,7 @@ public interface IRuntime
     /// A task representing the asynchronous operation, containing a <see cref="TerminateExecutionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// If executionContextId is empty, adds binding with the given name on the
@@ -544,7 +544,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddBindingResult"/>.
     /// </returns>
-    Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = default, string? executionContextName = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = null, string? executionContextName = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method does not remove binding function from global object but
@@ -561,7 +561,7 @@ public interface IRuntime
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveBindingResult"/>.
     /// </returns>
-    Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method tries to lookup and populate exception details for a
@@ -583,7 +583,7 @@ public interface IRuntime
     /// A task representing the asynchronous operation, containing a <see cref="GetExceptionDetailsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Notification is issued every time when binding is called.
@@ -687,145 +687,145 @@ internal sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.
 {
     private static readonly RuntimeJsonSerializerContext JsonContext = RuntimeJsonSerializerContext.Default;
 
-    public async Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = default, bool? generatePreview = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AwaitPromiseResult> AwaitPromiseAsync(RemoteObjectId promiseObjectId, bool? returnByValue = null, bool? generatePreview = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AwaitPromiseCommandParameters(PromiseObjectId: promiseObjectId, ReturnByValue: returnByValue, GeneratePreview: generatePreview);
         return await ExecuteCommandAsync("Runtime.awaitPromise", @params, JsonContext.AwaitPromiseCommandParameters, JsonContext.AwaitPromiseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = default, ImmutableArray<CallArgument>? arguments = default, bool? silent = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? throwOnSideEffect = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CallFunctionOnResult> CallFunctionOnAsync(string functionDeclaration, RemoteObjectId? objectId = null, ImmutableArray<CallArgument>? arguments = null, bool? silent = null, bool? returnByValue = null, bool? generatePreview = null, bool? userGesture = null, bool? awaitPromise = null, ExecutionContextId? executionContextId = null, string? objectGroup = null, bool? throwOnSideEffect = null, string? uniqueContextId = null, SerializationOptions? serializationOptions = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CallFunctionOnCommandParameters(FunctionDeclaration: functionDeclaration, ObjectId: objectId, Arguments: arguments, Silent: silent, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, ThrowOnSideEffect: throwOnSideEffect, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
         return await ExecuteCommandAsync("Runtime.callFunctionOn", @params, JsonContext.CallFunctionOnCommandParameters, JsonContext.CallFunctionOnResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CompileScriptResult> CompileScriptAsync(string expression, string sourceURL, bool persistScript, ExecutionContextId? executionContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CompileScriptCommandParameters(Expression: expression, SourceURL: sourceURL, PersistScript: persistScript, ExecutionContextId: executionContextId);
         return await ExecuteCommandAsync("Runtime.compileScript", @params, JsonContext.CompileScriptCommandParameters, JsonContext.CompileScriptResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Runtime.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DiscardConsoleEntriesResult> DiscardConsoleEntriesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DiscardConsoleEntriesCommandParameters();
         return await ExecuteCommandAsync("Runtime.discardConsoleEntries", @params, JsonContext.DiscardConsoleEntriesCommandParameters, JsonContext.DiscardConsoleEntriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Runtime.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = default, bool? includeCommandLineAPI = default, bool? silent = default, ExecutionContextId? contextId = default, bool? returnByValue = default, bool? generatePreview = default, bool? userGesture = default, bool? awaitPromise = default, bool? throwOnSideEffect = default, TimeDelta? timeout = default, bool? disableBreaks = default, bool? replMode = default, bool? allowUnsafeEvalBlockedByCSP = default, string? uniqueContextId = default, SerializationOptions? serializationOptions = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EvaluateResult> EvaluateAsync(string expression, string? objectGroup = null, bool? includeCommandLineAPI = null, bool? silent = null, ExecutionContextId? contextId = null, bool? returnByValue = null, bool? generatePreview = null, bool? userGesture = null, bool? awaitPromise = null, bool? throwOnSideEffect = null, TimeDelta? timeout = null, bool? disableBreaks = null, bool? replMode = null, bool? allowUnsafeEvalBlockedByCSP = null, string? uniqueContextId = null, SerializationOptions? serializationOptions = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EvaluateCommandParameters(Expression: expression, ObjectGroup: objectGroup, IncludeCommandLineAPI: includeCommandLineAPI, Silent: silent, ContextId: contextId, ReturnByValue: returnByValue, GeneratePreview: generatePreview, UserGesture: userGesture, AwaitPromise: awaitPromise, ThrowOnSideEffect: throwOnSideEffect, Timeout: timeout, DisableBreaks: disableBreaks, ReplMode: replMode, AllowUnsafeEvalBlockedByCSP: allowUnsafeEvalBlockedByCSP, UniqueContextId: uniqueContextId, SerializationOptions: serializationOptions);
         return await ExecuteCommandAsync("Runtime.evaluate", @params, JsonContext.EvaluateCommandParameters, JsonContext.EvaluateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetIsolateIdResult> GetIsolateIdAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetIsolateIdCommandParameters();
         return await ExecuteCommandAsync("Runtime.getIsolateId", @params, JsonContext.GetIsolateIdCommandParameters, JsonContext.GetIsolateIdResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetHeapUsageResult> GetHeapUsageAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetHeapUsageCommandParameters();
         return await ExecuteCommandAsync("Runtime.getHeapUsage", @params, JsonContext.GetHeapUsageCommandParameters, JsonContext.GetHeapUsageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = default, bool? accessorPropertiesOnly = default, bool? generatePreview = default, bool? nonIndexedPropertiesOnly = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetPropertiesResult> GetPropertiesAsync(RemoteObjectId objectId, bool? ownProperties = null, bool? accessorPropertiesOnly = null, bool? generatePreview = null, bool? nonIndexedPropertiesOnly = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetPropertiesCommandParameters(ObjectId: objectId, OwnProperties: ownProperties, AccessorPropertiesOnly: accessorPropertiesOnly, GeneratePreview: generatePreview, NonIndexedPropertiesOnly: nonIndexedPropertiesOnly);
         return await ExecuteCommandAsync("Runtime.getProperties", @params, JsonContext.GetPropertiesCommandParameters, JsonContext.GetPropertiesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GlobalLexicalScopeNamesResult> GlobalLexicalScopeNamesAsync(ExecutionContextId? executionContextId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GlobalLexicalScopeNamesCommandParameters(ExecutionContextId: executionContextId);
         return await ExecuteCommandAsync("Runtime.globalLexicalScopeNames", @params, JsonContext.GlobalLexicalScopeNamesCommandParameters, JsonContext.GlobalLexicalScopeNamesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<QueryObjectsResult> QueryObjectsAsync(RemoteObjectId prototypeObjectId, string? objectGroup = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new QueryObjectsCommandParameters(PrototypeObjectId: prototypeObjectId, ObjectGroup: objectGroup);
         return await ExecuteCommandAsync("Runtime.queryObjects", @params, JsonContext.QueryObjectsCommandParameters, JsonContext.QueryObjectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReleaseObjectResult> ReleaseObjectAsync(RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseObjectCommandParameters(ObjectId: objectId);
         return await ExecuteCommandAsync("Runtime.releaseObject", @params, JsonContext.ReleaseObjectCommandParameters, JsonContext.ReleaseObjectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReleaseObjectGroupResult> ReleaseObjectGroupAsync(string objectGroup, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseObjectGroupCommandParameters(ObjectGroup: objectGroup);
         return await ExecuteCommandAsync("Runtime.releaseObjectGroup", @params, JsonContext.ReleaseObjectGroupCommandParameters, JsonContext.ReleaseObjectGroupResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RunIfWaitingForDebuggerResult> RunIfWaitingForDebuggerAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RunIfWaitingForDebuggerCommandParameters();
         return await ExecuteCommandAsync("Runtime.runIfWaitingForDebugger", @params, JsonContext.RunIfWaitingForDebuggerCommandParameters, JsonContext.RunIfWaitingForDebuggerResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = default, string? objectGroup = default, bool? silent = default, bool? includeCommandLineAPI = default, bool? returnByValue = default, bool? generatePreview = default, bool? awaitPromise = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RunScriptResult> RunScriptAsync(ScriptId scriptId, ExecutionContextId? executionContextId = null, string? objectGroup = null, bool? silent = null, bool? includeCommandLineAPI = null, bool? returnByValue = null, bool? generatePreview = null, bool? awaitPromise = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RunScriptCommandParameters(ScriptId: scriptId, ExecutionContextId: executionContextId, ObjectGroup: objectGroup, Silent: silent, IncludeCommandLineAPI: includeCommandLineAPI, ReturnByValue: returnByValue, GeneratePreview: generatePreview, AwaitPromise: awaitPromise);
         return await ExecuteCommandAsync("Runtime.runScript", @params, JsonContext.RunScriptCommandParameters, JsonContext.RunScriptResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAsyncCallStackDepthResult> SetAsyncCallStackDepthAsync(long maxDepth, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAsyncCallStackDepthCommandParameters(MaxDepth: maxDepth);
         return await ExecuteCommandAsync("Runtime.setAsyncCallStackDepth", @params, JsonContext.SetAsyncCallStackDepthCommandParameters, JsonContext.SetAsyncCallStackDepthResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCustomObjectFormatterEnabledResult> SetCustomObjectFormatterEnabledAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCustomObjectFormatterEnabledCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Runtime.setCustomObjectFormatterEnabled", @params, JsonContext.SetCustomObjectFormatterEnabledCommandParameters, JsonContext.SetCustomObjectFormatterEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetMaxCallStackSizeToCaptureResult> SetMaxCallStackSizeToCaptureAsync(long size, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetMaxCallStackSizeToCaptureCommandParameters(Size: size);
         return await ExecuteCommandAsync("Runtime.setMaxCallStackSizeToCapture", @params, JsonContext.SetMaxCallStackSizeToCaptureCommandParameters, JsonContext.SetMaxCallStackSizeToCaptureResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TerminateExecutionResult> TerminateExecutionAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TerminateExecutionCommandParameters();
         return await ExecuteCommandAsync("Runtime.terminateExecution", @params, JsonContext.TerminateExecutionCommandParameters, JsonContext.TerminateExecutionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = default, string? executionContextName = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddBindingResult> AddBindingAsync(string name, ExecutionContextId? executionContextId = null, string? executionContextName = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddBindingCommandParameters(Name: name, ExecutionContextId: executionContextId, ExecutionContextName: executionContextName);
         return await ExecuteCommandAsync("Runtime.addBinding", @params, JsonContext.AddBindingCommandParameters, JsonContext.AddBindingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveBindingResult> RemoveBindingAsync(string name, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveBindingCommandParameters(Name: name);
         return await ExecuteCommandAsync("Runtime.removeBinding", @params, JsonContext.RemoveBindingCommandParameters, JsonContext.RemoveBindingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetExceptionDetailsResult> GetExceptionDetailsAsync(RemoteObjectId errorObjectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetExceptionDetailsCommandParameters(ErrorObjectId: errorObjectId);
         return await ExecuteCommandAsync("Runtime.getExceptionDetails", @params, JsonContext.GetExceptionDetailsCommandParameters, JsonContext.GetExceptionDetailsResult, session, cancellationToken).ConfigureAwait(false);
@@ -845,6 +845,7 @@ internal sealed class RuntimeDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record AwaitPromiseCommandParameters(RemoteObjectId PromiseObjectId, bool? ReturnByValue, bool? GeneratePreview) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.AwaitPromiseAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// Promise result. Will contain rejected value if promise was rejected.
@@ -858,6 +859,7 @@ public sealed record AwaitPromiseResult(RemoteObject Result, ExceptionDetails? E
 internal sealed record CallFunctionOnCommandParameters(string FunctionDeclaration, RemoteObjectId? ObjectId, ImmutableArray<CallArgument>? Arguments, bool? Silent, bool? ReturnByValue, bool? GeneratePreview, bool? UserGesture, bool? AwaitPromise, ExecutionContextId? ExecutionContextId, string? ObjectGroup, bool? ThrowOnSideEffect, string? UniqueContextId, SerializationOptions? SerializationOptions) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.CallFunctionOnAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// Call result.
@@ -871,6 +873,7 @@ public sealed record CallFunctionOnResult(RemoteObject Result, ExceptionDetails?
 internal sealed record CompileScriptCommandParameters(string Expression, string SourceURL, bool PersistScript, ExecutionContextId? ExecutionContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.CompileScriptAsync"/> command.
 /// </summary>
 /// <param name="ScriptId">
 /// Id of the script.
@@ -884,6 +887,7 @@ public sealed record CompileScriptResult(ScriptId? ScriptId, ExceptionDetails? E
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -891,6 +895,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record DiscardConsoleEntriesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.DiscardConsoleEntriesAsync"/> command.
 /// </summary>
 public sealed record DiscardConsoleEntriesResult() : EmptyResult;
 
@@ -898,6 +903,7 @@ public sealed record DiscardConsoleEntriesResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -905,6 +911,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record EvaluateCommandParameters(string Expression, string? ObjectGroup, bool? IncludeCommandLineAPI, bool? Silent, ExecutionContextId? ContextId, bool? ReturnByValue, bool? GeneratePreview, bool? UserGesture, bool? AwaitPromise, bool? ThrowOnSideEffect, TimeDelta? Timeout, bool? DisableBreaks, bool? ReplMode, bool? AllowUnsafeEvalBlockedByCSP, string? UniqueContextId, SerializationOptions? SerializationOptions) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.EvaluateAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// Evaluation result.
@@ -918,6 +925,7 @@ public sealed record EvaluateResult(RemoteObject Result, ExceptionDetails? Excep
 internal sealed record GetIsolateIdCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.GetIsolateIdAsync"/> command.
 /// </summary>
 /// <param name="Id">
 /// The isolate id.
@@ -928,6 +936,7 @@ public sealed record GetIsolateIdResult(string Id) : EmptyResult;
 internal sealed record GetHeapUsageCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.GetHeapUsageAsync"/> command.
 /// </summary>
 /// <param name="UsedSize">
 /// Used JavaScript heap size in bytes.
@@ -947,6 +956,7 @@ public sealed record GetHeapUsageResult(double UsedSize, double TotalSize, doubl
 internal sealed record GetPropertiesCommandParameters(RemoteObjectId ObjectId, bool? OwnProperties, bool? AccessorPropertiesOnly, bool? GeneratePreview, bool? NonIndexedPropertiesOnly) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.GetPropertiesAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// Object properties.
@@ -966,6 +976,7 @@ public sealed record GetPropertiesResult(ImmutableArray<PropertyDescriptor> Resu
 internal sealed record GlobalLexicalScopeNamesCommandParameters(ExecutionContextId? ExecutionContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.GlobalLexicalScopeNamesAsync"/> command.
 /// </summary>
 /// <param name="Names">
 /// </param>
@@ -975,6 +986,7 @@ public sealed record GlobalLexicalScopeNamesResult(ImmutableArray<string> Names)
 internal sealed record QueryObjectsCommandParameters(RemoteObjectId PrototypeObjectId, string? ObjectGroup) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.QueryObjectsAsync"/> command.
 /// </summary>
 /// <param name="Objects">
 /// Array with objects.
@@ -985,6 +997,7 @@ public sealed record QueryObjectsResult(RemoteObject Objects) : EmptyResult;
 internal sealed record ReleaseObjectCommandParameters(RemoteObjectId ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.ReleaseObjectAsync"/> command.
 /// </summary>
 public sealed record ReleaseObjectResult() : EmptyResult;
 
@@ -992,6 +1005,7 @@ public sealed record ReleaseObjectResult() : EmptyResult;
 internal sealed record ReleaseObjectGroupCommandParameters(string ObjectGroup) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.ReleaseObjectGroupAsync"/> command.
 /// </summary>
 public sealed record ReleaseObjectGroupResult() : EmptyResult;
 
@@ -999,6 +1013,7 @@ public sealed record ReleaseObjectGroupResult() : EmptyResult;
 internal sealed record RunIfWaitingForDebuggerCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.RunIfWaitingForDebuggerAsync"/> command.
 /// </summary>
 public sealed record RunIfWaitingForDebuggerResult() : EmptyResult;
 
@@ -1006,6 +1021,7 @@ public sealed record RunIfWaitingForDebuggerResult() : EmptyResult;
 internal sealed record RunScriptCommandParameters(ScriptId ScriptId, ExecutionContextId? ExecutionContextId, string? ObjectGroup, bool? Silent, bool? IncludeCommandLineAPI, bool? ReturnByValue, bool? GeneratePreview, bool? AwaitPromise) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.RunScriptAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// Run result.
@@ -1019,6 +1035,7 @@ public sealed record RunScriptResult(RemoteObject Result, ExceptionDetails? Exce
 internal sealed record SetAsyncCallStackDepthCommandParameters(long MaxDepth) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.SetAsyncCallStackDepthAsync"/> command.
 /// </summary>
 public sealed record SetAsyncCallStackDepthResult() : EmptyResult;
 
@@ -1026,6 +1043,7 @@ public sealed record SetAsyncCallStackDepthResult() : EmptyResult;
 internal sealed record SetCustomObjectFormatterEnabledCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.SetCustomObjectFormatterEnabledAsync"/> command.
 /// </summary>
 public sealed record SetCustomObjectFormatterEnabledResult() : EmptyResult;
 
@@ -1033,6 +1051,7 @@ public sealed record SetCustomObjectFormatterEnabledResult() : EmptyResult;
 internal sealed record SetMaxCallStackSizeToCaptureCommandParameters(long Size) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.SetMaxCallStackSizeToCaptureAsync"/> command.
 /// </summary>
 public sealed record SetMaxCallStackSizeToCaptureResult() : EmptyResult;
 
@@ -1040,6 +1059,7 @@ public sealed record SetMaxCallStackSizeToCaptureResult() : EmptyResult;
 internal sealed record TerminateExecutionCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.TerminateExecutionAsync"/> command.
 /// </summary>
 public sealed record TerminateExecutionResult() : EmptyResult;
 
@@ -1047,6 +1067,7 @@ public sealed record TerminateExecutionResult() : EmptyResult;
 internal sealed record AddBindingCommandParameters(string Name, ExecutionContextId? ExecutionContextId, string? ExecutionContextName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.AddBindingAsync"/> command.
 /// </summary>
 public sealed record AddBindingResult() : EmptyResult;
 
@@ -1054,6 +1075,7 @@ public sealed record AddBindingResult() : EmptyResult;
 internal sealed record RemoveBindingCommandParameters(string Name) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.RemoveBindingAsync"/> command.
 /// </summary>
 public sealed record RemoveBindingResult() : EmptyResult;
 
@@ -1061,6 +1083,7 @@ public sealed record RemoveBindingResult() : EmptyResult;
 internal sealed record GetExceptionDetailsCommandParameters(RemoteObjectId ErrorObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IRuntime.GetExceptionDetailsAsync"/> command.
 /// </summary>
 /// <param name="ExceptionDetails">
 /// </param>
@@ -1671,74 +1694,92 @@ public sealed record StackTraceId(string Id)
 public enum ConsoleAPICalledType
 {
     /// <summary>
+    /// Corresponds to the <c>"log"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("log")]
     Log,
     /// <summary>
+    /// Corresponds to the <c>"debug"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debug")]
     Debug,
     /// <summary>
+    /// Corresponds to the <c>"info"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
     Info,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
     /// <summary>
+    /// Corresponds to the <c>"warning"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("warning")]
     Warning,
     /// <summary>
+    /// Corresponds to the <c>"dir"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dir")]
     Dir,
     /// <summary>
+    /// Corresponds to the <c>"dirxml"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dirxml")]
     Dirxml,
     /// <summary>
+    /// Corresponds to the <c>"table"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("table")]
     Table,
     /// <summary>
+    /// Corresponds to the <c>"trace"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trace")]
     Trace,
     /// <summary>
+    /// Corresponds to the <c>"clear"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clear")]
     Clear,
     /// <summary>
+    /// Corresponds to the <c>"startGroup"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("startGroup")]
     StartGroup,
     /// <summary>
+    /// Corresponds to the <c>"startGroupCollapsed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("startGroupCollapsed")]
     StartGroupCollapsed,
     /// <summary>
+    /// Corresponds to the <c>"endGroup"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("endGroup")]
     EndGroup,
     /// <summary>
+    /// Corresponds to the <c>"assert"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("assert")]
     Assert,
     /// <summary>
+    /// Corresponds to the <c>"profile"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("profile")]
     Profile,
     /// <summary>
+    /// Corresponds to the <c>"profileEnd"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("profileEnd")]
     ProfileEnd,
     /// <summary>
+    /// Corresponds to the <c>"count"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("count")]
     Count,
     /// <summary>
+    /// Corresponds to the <c>"timeEnd"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("timeEnd")]
     TimeEnd,
@@ -1750,14 +1791,17 @@ public enum ConsoleAPICalledType
 public enum SerializationOptionsSerialization
 {
     /// <summary>
+    /// Corresponds to the <c>"deep"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deep")]
     Deep,
     /// <summary>
+    /// Corresponds to the <c>"json"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("json")]
     Json,
     /// <summary>
+    /// Corresponds to the <c>"idOnly"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("idOnly")]
     IdOnly,
@@ -1769,98 +1813,122 @@ public enum SerializationOptionsSerialization
 public enum DeepSerializedValueType
 {
     /// <summary>
+    /// Corresponds to the <c>"undefined"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
     Undefined,
     /// <summary>
+    /// Corresponds to the <c>"null"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
     Null,
     /// <summary>
+    /// Corresponds to the <c>"string"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
     String,
     /// <summary>
+    /// Corresponds to the <c>"number"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
     Number,
     /// <summary>
+    /// Corresponds to the <c>"boolean"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
     Boolean,
     /// <summary>
+    /// Corresponds to the <c>"bigint"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
     Bigint,
     /// <summary>
+    /// Corresponds to the <c>"regexp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
     Regexp,
     /// <summary>
+    /// Corresponds to the <c>"date"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
     Date,
     /// <summary>
+    /// Corresponds to the <c>"symbol"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
     Symbol,
     /// <summary>
+    /// Corresponds to the <c>"array"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
     Array,
     /// <summary>
+    /// Corresponds to the <c>"object"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
     Object,
     /// <summary>
+    /// Corresponds to the <c>"function"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
     Function,
     /// <summary>
+    /// Corresponds to the <c>"map"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
     Map,
     /// <summary>
+    /// Corresponds to the <c>"set"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
     Set,
     /// <summary>
+    /// Corresponds to the <c>"weakmap"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
     Weakmap,
     /// <summary>
+    /// Corresponds to the <c>"weakset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
     Weakset,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
     /// <summary>
+    /// Corresponds to the <c>"proxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
     Proxy,
     /// <summary>
+    /// Corresponds to the <c>"promise"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
     Promise,
     /// <summary>
+    /// Corresponds to the <c>"typedarray"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
     Typedarray,
     /// <summary>
+    /// Corresponds to the <c>"arraybuffer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
     Arraybuffer,
     /// <summary>
+    /// Corresponds to the <c>"node"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
     Node,
     /// <summary>
+    /// Corresponds to the <c>"window"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("window")]
     Window,
     /// <summary>
+    /// Corresponds to the <c>"generator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
     Generator,
@@ -1872,34 +1940,42 @@ public enum DeepSerializedValueType
 public enum RemoteObjectType
 {
     /// <summary>
+    /// Corresponds to the <c>"object"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
     Object,
     /// <summary>
+    /// Corresponds to the <c>"function"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
     Function,
     /// <summary>
+    /// Corresponds to the <c>"undefined"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
     Undefined,
     /// <summary>
+    /// Corresponds to the <c>"string"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
     String,
     /// <summary>
+    /// Corresponds to the <c>"number"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
     Number,
     /// <summary>
+    /// Corresponds to the <c>"boolean"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
     Boolean,
     /// <summary>
+    /// Corresponds to the <c>"symbol"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
     Symbol,
     /// <summary>
+    /// Corresponds to the <c>"bigint"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
     Bigint,
@@ -1911,86 +1987,107 @@ public enum RemoteObjectType
 public enum RemoteObjectSubtype
 {
     /// <summary>
+    /// Corresponds to the <c>"array"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
     Array,
     /// <summary>
+    /// Corresponds to the <c>"null"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
     Null,
     /// <summary>
+    /// Corresponds to the <c>"node"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
     Node,
     /// <summary>
+    /// Corresponds to the <c>"regexp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
     Regexp,
     /// <summary>
+    /// Corresponds to the <c>"date"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
     Date,
     /// <summary>
+    /// Corresponds to the <c>"map"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
     Map,
     /// <summary>
+    /// Corresponds to the <c>"set"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
     Set,
     /// <summary>
+    /// Corresponds to the <c>"weakmap"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
     Weakmap,
     /// <summary>
+    /// Corresponds to the <c>"weakset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
     Weakset,
     /// <summary>
+    /// Corresponds to the <c>"iterator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("iterator")]
     Iterator,
     /// <summary>
+    /// Corresponds to the <c>"generator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
     Generator,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
     /// <summary>
+    /// Corresponds to the <c>"proxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
     Proxy,
     /// <summary>
+    /// Corresponds to the <c>"promise"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
     Promise,
     /// <summary>
+    /// Corresponds to the <c>"typedarray"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
     Typedarray,
     /// <summary>
+    /// Corresponds to the <c>"arraybuffer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
     Arraybuffer,
     /// <summary>
+    /// Corresponds to the <c>"dataview"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dataview")]
     Dataview,
     /// <summary>
+    /// Corresponds to the <c>"webassemblymemory"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webassemblymemory")]
     Webassemblymemory,
     /// <summary>
+    /// Corresponds to the <c>"wasmvalue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasmvalue")]
     Wasmvalue,
     /// <summary>
+    /// Corresponds to the <c>"deferredmodule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferredmodule")]
     Deferredmodule,
     /// <summary>
+    /// Corresponds to the <c>"trustedtype"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trustedtype")]
     Trustedtype,
@@ -2002,34 +2099,42 @@ public enum RemoteObjectSubtype
 public enum ObjectPreviewType
 {
     /// <summary>
+    /// Corresponds to the <c>"object"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
     Object,
     /// <summary>
+    /// Corresponds to the <c>"function"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
     Function,
     /// <summary>
+    /// Corresponds to the <c>"undefined"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
     Undefined,
     /// <summary>
+    /// Corresponds to the <c>"string"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
     String,
     /// <summary>
+    /// Corresponds to the <c>"number"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
     Number,
     /// <summary>
+    /// Corresponds to the <c>"boolean"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
     Boolean,
     /// <summary>
+    /// Corresponds to the <c>"symbol"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
     Symbol,
     /// <summary>
+    /// Corresponds to the <c>"bigint"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
     Bigint,
@@ -2041,86 +2146,107 @@ public enum ObjectPreviewType
 public enum ObjectPreviewSubtype
 {
     /// <summary>
+    /// Corresponds to the <c>"array"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
     Array,
     /// <summary>
+    /// Corresponds to the <c>"null"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
     Null,
     /// <summary>
+    /// Corresponds to the <c>"node"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
     Node,
     /// <summary>
+    /// Corresponds to the <c>"regexp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
     Regexp,
     /// <summary>
+    /// Corresponds to the <c>"date"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
     Date,
     /// <summary>
+    /// Corresponds to the <c>"map"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
     Map,
     /// <summary>
+    /// Corresponds to the <c>"set"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
     Set,
     /// <summary>
+    /// Corresponds to the <c>"weakmap"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
     Weakmap,
     /// <summary>
+    /// Corresponds to the <c>"weakset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
     Weakset,
     /// <summary>
+    /// Corresponds to the <c>"iterator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("iterator")]
     Iterator,
     /// <summary>
+    /// Corresponds to the <c>"generator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
     Generator,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
     /// <summary>
+    /// Corresponds to the <c>"proxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
     Proxy,
     /// <summary>
+    /// Corresponds to the <c>"promise"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
     Promise,
     /// <summary>
+    /// Corresponds to the <c>"typedarray"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
     Typedarray,
     /// <summary>
+    /// Corresponds to the <c>"arraybuffer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
     Arraybuffer,
     /// <summary>
+    /// Corresponds to the <c>"dataview"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dataview")]
     Dataview,
     /// <summary>
+    /// Corresponds to the <c>"webassemblymemory"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webassemblymemory")]
     Webassemblymemory,
     /// <summary>
+    /// Corresponds to the <c>"wasmvalue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasmvalue")]
     Wasmvalue,
     /// <summary>
+    /// Corresponds to the <c>"deferredmodule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferredmodule")]
     Deferredmodule,
     /// <summary>
+    /// Corresponds to the <c>"trustedtype"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trustedtype")]
     Trustedtype,
@@ -2132,38 +2258,47 @@ public enum ObjectPreviewSubtype
 public enum PropertyPreviewType
 {
     /// <summary>
+    /// Corresponds to the <c>"object"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
     Object,
     /// <summary>
+    /// Corresponds to the <c>"function"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
     Function,
     /// <summary>
+    /// Corresponds to the <c>"undefined"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
     Undefined,
     /// <summary>
+    /// Corresponds to the <c>"string"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
     String,
     /// <summary>
+    /// Corresponds to the <c>"number"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
     Number,
     /// <summary>
+    /// Corresponds to the <c>"boolean"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
     Boolean,
     /// <summary>
+    /// Corresponds to the <c>"symbol"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
     Symbol,
     /// <summary>
+    /// Corresponds to the <c>"accessor"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("accessor")]
     Accessor,
     /// <summary>
+    /// Corresponds to the <c>"bigint"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
     Bigint,
@@ -2175,86 +2310,107 @@ public enum PropertyPreviewType
 public enum PropertyPreviewSubtype
 {
     /// <summary>
+    /// Corresponds to the <c>"array"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
     Array,
     /// <summary>
+    /// Corresponds to the <c>"null"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
     Null,
     /// <summary>
+    /// Corresponds to the <c>"node"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
     Node,
     /// <summary>
+    /// Corresponds to the <c>"regexp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
     Regexp,
     /// <summary>
+    /// Corresponds to the <c>"date"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
     Date,
     /// <summary>
+    /// Corresponds to the <c>"map"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
     Map,
     /// <summary>
+    /// Corresponds to the <c>"set"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
     Set,
     /// <summary>
+    /// Corresponds to the <c>"weakmap"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
     Weakmap,
     /// <summary>
+    /// Corresponds to the <c>"weakset"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
     Weakset,
     /// <summary>
+    /// Corresponds to the <c>"iterator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("iterator")]
     Iterator,
     /// <summary>
+    /// Corresponds to the <c>"generator"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
     Generator,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
     /// <summary>
+    /// Corresponds to the <c>"proxy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
     Proxy,
     /// <summary>
+    /// Corresponds to the <c>"promise"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
     Promise,
     /// <summary>
+    /// Corresponds to the <c>"typedarray"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
     Typedarray,
     /// <summary>
+    /// Corresponds to the <c>"arraybuffer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
     Arraybuffer,
     /// <summary>
+    /// Corresponds to the <c>"dataview"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dataview")]
     Dataview,
     /// <summary>
+    /// Corresponds to the <c>"webassemblymemory"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webassemblymemory")]
     Webassemblymemory,
     /// <summary>
+    /// Corresponds to the <c>"wasmvalue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasmvalue")]
     Wasmvalue,
     /// <summary>
+    /// Corresponds to the <c>"deferredmodule"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferredmodule")]
     Deferredmodule,
     /// <summary>
+    /// Corresponds to the <c>"trustedtype"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trustedtype")]
     Trustedtype,

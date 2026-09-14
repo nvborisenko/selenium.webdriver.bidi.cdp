@@ -21,7 +21,7 @@ public interface IPerformance
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enable collecting and reporting metrics.
@@ -38,7 +38,7 @@ public interface IPerformance
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(EnableTimeDomain? timeDomain = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(EnableTimeDomain? timeDomain = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets time domain to use for collecting and reporting duration metrics.
@@ -59,7 +59,7 @@ public interface IPerformance
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetTimeDomainResult> SetTimeDomainAsync(SetTimeDomainTimeDomain timeDomain, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetTimeDomainResult> SetTimeDomainAsync(SetTimeDomainTimeDomain timeDomain, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve current values of run-time metrics.
@@ -73,7 +73,7 @@ public interface IPerformance
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMetricsResult"/>.
     /// </returns>
-    Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetMetricsResult> GetMetricsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Current values of the metrics.
@@ -93,13 +93,13 @@ internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDri
 {
     private static readonly PerformanceJsonSerializerContext JsonContext = PerformanceJsonSerializerContext.Default;
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Performance.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(EnableTimeDomain? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(EnableTimeDomain? timeDomain = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(TimeDomain: timeDomain);
         return await ExecuteCommandAsync("Performance.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
@@ -107,13 +107,13 @@ internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDri
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetTimeDomainResult> SetTimeDomainAsync(SetTimeDomainTimeDomain timeDomain, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetTimeDomainResult> SetTimeDomainAsync(SetTimeDomainTimeDomain timeDomain, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
         return await ExecuteCommandAsync("Performance.setTimeDomain", @params, JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetMetricsResult> GetMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetMetricsResult> GetMetricsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetMetricsCommandParameters();
         return await ExecuteCommandAsync("Performance.getMetrics", @params, JsonContext.GetMetricsCommandParameters, JsonContext.GetMetricsResult, session, cancellationToken).ConfigureAwait(false);
@@ -125,6 +125,7 @@ internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDri
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPerformance.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -132,6 +133,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters(EnableTimeDomain? TimeDomain) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPerformance.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -139,6 +141,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record SetTimeDomainCommandParameters(SetTimeDomainTimeDomain TimeDomain) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPerformance.SetTimeDomainAsync"/> command.
 /// </summary>
 public sealed record SetTimeDomainResult() : EmptyResult;
 
@@ -146,6 +149,7 @@ public sealed record SetTimeDomainResult() : EmptyResult;
 internal sealed record GetMetricsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPerformance.GetMetricsAsync"/> command.
 /// </summary>
 /// <param name="Metrics">
 /// Current values for run-time metrics.
@@ -183,10 +187,12 @@ public sealed record Metric(string Name, double Value)
 public enum EnableTimeDomain
 {
     /// <summary>
+    /// Corresponds to the <c>"timeTicks"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("timeTicks")]
     TimeTicks,
     /// <summary>
+    /// Corresponds to the <c>"threadTicks"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("threadTicks")]
     ThreadTicks,
@@ -198,10 +204,12 @@ public enum EnableTimeDomain
 public enum SetTimeDomainTimeDomain
 {
     /// <summary>
+    /// Corresponds to the <c>"timeTicks"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("timeTicks")]
     TimeTicks,
     /// <summary>
+    /// Corresponds to the <c>"threadTicks"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("threadTicks")]
     ThreadTicks,

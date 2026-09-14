@@ -23,7 +23,7 @@ public interface IAds
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAdMetricsResult"/>.
     /// </returns>
-    Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieves ad scripts for the current page. To minimize payload size, this
@@ -39,7 +39,7 @@ public interface IAds
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAdScriptsResult"/>.
     /// </returns>
-    Task<GetAdScriptsResult> GetAdScriptsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAdScriptsResult> GetAdScriptsAsync(string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -48,13 +48,13 @@ internal sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 {
     private static readonly AdsJsonSerializerContext JsonContext = AdsJsonSerializerContext.Default;
 
-    public async Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAdMetricsResult> GetAdMetricsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdMetricsCommandParameters();
         return await ExecuteCommandAsync("Ads.getAdMetrics", @params, JsonContext.GetAdMetricsCommandParameters, JsonContext.GetAdMetricsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetAdScriptsResult> GetAdScriptsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAdScriptsResult> GetAdScriptsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdScriptsCommandParameters();
         return await ExecuteCommandAsync("Ads.getAdScripts", @params, JsonContext.GetAdScriptsCommandParameters, JsonContext.GetAdScriptsResult, session, cancellationToken).ConfigureAwait(false);
@@ -65,6 +65,7 @@ internal sealed class AdsDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 internal sealed record GetAdMetricsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAds.GetAdMetricsAsync"/> command.
 /// </summary>
 /// <param name="Metrics">
 /// </param>
@@ -74,6 +75,7 @@ public sealed record GetAdMetricsResult(AdMetrics Metrics) : EmptyResult;
 internal sealed record GetAdScriptsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAds.GetAdScriptsAsync"/> command.
 /// </summary>
 /// <param name="NewScripts">
 /// </param>

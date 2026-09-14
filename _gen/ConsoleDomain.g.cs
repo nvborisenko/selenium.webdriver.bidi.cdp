@@ -23,7 +23,7 @@ public interface IConsole
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearMessagesResult"/>.
     /// </returns>
-    Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearMessagesResult> ClearMessagesAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables console domain, prevents further console messages from being reported to the client.
@@ -37,7 +37,7 @@ public interface IConsole
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables console domain, sends the messages collected so far to the client by means of the
@@ -52,7 +52,7 @@ public interface IConsole
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Issued when new console message is added.
@@ -72,19 +72,19 @@ internal sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.
 {
     private static readonly ConsoleJsonSerializerContext JsonContext = ConsoleJsonSerializerContext.Default;
 
-    public async Task<ClearMessagesResult> ClearMessagesAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearMessagesResult> ClearMessagesAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearMessagesCommandParameters();
         return await ExecuteCommandAsync("Console.clearMessages", @params, JsonContext.ClearMessagesCommandParameters, JsonContext.ClearMessagesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Console.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Console.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
@@ -96,6 +96,7 @@ internal sealed class ConsoleDomain(CdpModule cdp) : global::Selenium.WebDriver.
 internal sealed record ClearMessagesCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IConsole.ClearMessagesAsync"/> command.
 /// </summary>
 public sealed record ClearMessagesResult() : EmptyResult;
 
@@ -103,6 +104,7 @@ public sealed record ClearMessagesResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IConsole.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -110,6 +112,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IConsole.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -158,46 +161,57 @@ public sealed record ConsoleMessage(ConsoleMessageSource Source, ConsoleMessageL
 public enum ConsoleMessageSource
 {
     /// <summary>
+    /// Corresponds to the <c>"xml"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("xml")]
     Xml,
     /// <summary>
+    /// Corresponds to the <c>"javascript"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("javascript")]
     Javascript,
     /// <summary>
+    /// Corresponds to the <c>"network"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
     Network,
     /// <summary>
+    /// Corresponds to the <c>"console-api"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("console-api")]
     ConsoleApi,
     /// <summary>
+    /// Corresponds to the <c>"storage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storage")]
     Storage,
     /// <summary>
+    /// Corresponds to the <c>"appcache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("appcache")]
     Appcache,
     /// <summary>
+    /// Corresponds to the <c>"rendering"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rendering")]
     Rendering,
     /// <summary>
+    /// Corresponds to the <c>"security"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("security")]
     Security,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
     /// <summary>
+    /// Corresponds to the <c>"deprecation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deprecation")]
     Deprecation,
     /// <summary>
+    /// Corresponds to the <c>"worker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("worker")]
     Worker,
@@ -209,22 +223,27 @@ public enum ConsoleMessageSource
 public enum ConsoleMessageLevel
 {
     /// <summary>
+    /// Corresponds to the <c>"log"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("log")]
     Log,
     /// <summary>
+    /// Corresponds to the <c>"warning"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("warning")]
     Warning,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
     /// <summary>
+    /// Corresponds to the <c>"debug"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debug")]
     Debug,
     /// <summary>
+    /// Corresponds to the <c>"info"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
     Info,

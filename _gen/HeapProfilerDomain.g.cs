@@ -26,7 +26,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddInspectedHeapObjectResult"/>.
     /// </returns>
-    Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -39,7 +39,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CollectGarbageResult"/>.
     /// </returns>
-    Task<CollectGarbageResult> CollectGarbageAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CollectGarbageResult> CollectGarbageAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -52,7 +52,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -65,7 +65,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -81,7 +81,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetHeapObjectIdResult"/>.
     /// </returns>
-    Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -99,7 +99,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetObjectByHeapObjectIdResult"/>.
     /// </returns>
-    Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, string? objectGroup = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -112,7 +112,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetSamplingProfileResult"/>.
     /// </returns>
-    Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -150,7 +150,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartSamplingResult"/>.
     /// </returns>
-    Task<StartSamplingResult> StartSamplingAsync(double? samplingInterval = default, double? stackDepth = default, bool? includeObjectsCollectedByMajorGC = default, bool? includeObjectsCollectedByMinorGC = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartSamplingResult> StartSamplingAsync(double? samplingInterval = null, double? stackDepth = null, bool? includeObjectsCollectedByMajorGC = null, bool? includeObjectsCollectedByMinorGC = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -165,7 +165,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartTrackingHeapObjectsResult"/>.
     /// </returns>
-    Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(bool? trackAllocations = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(bool? trackAllocations = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -178,7 +178,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopSamplingResult"/>.
     /// </returns>
-    Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopSamplingResult> StopSamplingAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -204,7 +204,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopTrackingHeapObjectsResult"/>.
     /// </returns>
-    Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(bool? reportProgress = null, bool? treatGlobalObjectsAsRoots = null, bool? captureNumericValue = null, bool? exposeInternals = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -230,7 +230,7 @@ public interface IHeapProfiler
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="TakeHeapSnapshotResult"/>.
     /// </returns>
-    Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(bool? reportProgress = null, bool? treatGlobalObjectsAsRoots = null, bool? captureNumericValue = null, bool? exposeInternals = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -293,73 +293,73 @@ internal sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDr
 {
     private static readonly HeapProfilerJsonSerializerContext JsonContext = HeapProfilerJsonSerializerContext.Default;
 
-    public async Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddInspectedHeapObjectResult> AddInspectedHeapObjectAsync(HeapSnapshotObjectId heapObjectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddInspectedHeapObjectCommandParameters(HeapObjectId: heapObjectId);
         return await ExecuteCommandAsync("HeapProfiler.addInspectedHeapObject", @params, JsonContext.AddInspectedHeapObjectCommandParameters, JsonContext.AddInspectedHeapObjectResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CollectGarbageResult> CollectGarbageAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CollectGarbageResult> CollectGarbageAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CollectGarbageCommandParameters();
         return await ExecuteCommandAsync("HeapProfiler.collectGarbage", @params, JsonContext.CollectGarbageCommandParameters, JsonContext.CollectGarbageResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("HeapProfiler.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("HeapProfiler.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetHeapObjectIdResult> GetHeapObjectIdAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetHeapObjectIdCommandParameters(ObjectId: objectId);
         return await ExecuteCommandAsync("HeapProfiler.getHeapObjectId", @params, JsonContext.GetHeapObjectIdCommandParameters, JsonContext.GetHeapObjectIdResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, string? objectGroup = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetObjectByHeapObjectIdResult> GetObjectByHeapObjectIdAsync(HeapSnapshotObjectId objectId, string? objectGroup = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetObjectByHeapObjectIdCommandParameters(ObjectId: objectId, ObjectGroup: objectGroup);
         return await ExecuteCommandAsync("HeapProfiler.getObjectByHeapObjectId", @params, JsonContext.GetObjectByHeapObjectIdCommandParameters, JsonContext.GetObjectByHeapObjectIdResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetSamplingProfileResult> GetSamplingProfileAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetSamplingProfileCommandParameters();
         return await ExecuteCommandAsync("HeapProfiler.getSamplingProfile", @params, JsonContext.GetSamplingProfileCommandParameters, JsonContext.GetSamplingProfileResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartSamplingResult> StartSamplingAsync(double? samplingInterval = default, double? stackDepth = default, bool? includeObjectsCollectedByMajorGC = default, bool? includeObjectsCollectedByMinorGC = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartSamplingResult> StartSamplingAsync(double? samplingInterval = null, double? stackDepth = null, bool? includeObjectsCollectedByMajorGC = null, bool? includeObjectsCollectedByMinorGC = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartSamplingCommandParameters(SamplingInterval: samplingInterval, StackDepth: stackDepth, IncludeObjectsCollectedByMajorGC: includeObjectsCollectedByMajorGC, IncludeObjectsCollectedByMinorGC: includeObjectsCollectedByMinorGC);
         return await ExecuteCommandAsync("HeapProfiler.startSampling", @params, JsonContext.StartSamplingCommandParameters, JsonContext.StartSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(bool? trackAllocations = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartTrackingHeapObjectsResult> StartTrackingHeapObjectsAsync(bool? trackAllocations = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartTrackingHeapObjectsCommandParameters(TrackAllocations: trackAllocations);
         return await ExecuteCommandAsync("HeapProfiler.startTrackingHeapObjects", @params, JsonContext.StartTrackingHeapObjectsCommandParameters, JsonContext.StartTrackingHeapObjectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopSamplingResult> StopSamplingAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopSamplingResult> StopSamplingAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopSamplingCommandParameters();
         return await ExecuteCommandAsync("HeapProfiler.stopSampling", @params, JsonContext.StopSamplingCommandParameters, JsonContext.StopSamplingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopTrackingHeapObjectsResult> StopTrackingHeapObjectsAsync(bool? reportProgress = null, bool? treatGlobalObjectsAsRoots = null, bool? captureNumericValue = null, bool? exposeInternals = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopTrackingHeapObjectsCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
         return await ExecuteCommandAsync("HeapProfiler.stopTrackingHeapObjects", @params, JsonContext.StopTrackingHeapObjectsCommandParameters, JsonContext.StopTrackingHeapObjectsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(bool? reportProgress = default, bool? treatGlobalObjectsAsRoots = default, bool? captureNumericValue = default, bool? exposeInternals = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<TakeHeapSnapshotResult> TakeHeapSnapshotAsync(bool? reportProgress = null, bool? treatGlobalObjectsAsRoots = null, bool? captureNumericValue = null, bool? exposeInternals = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new TakeHeapSnapshotCommandParameters(ReportProgress: reportProgress, TreatGlobalObjectsAsRoots: treatGlobalObjectsAsRoots, CaptureNumericValue: captureNumericValue, ExposeInternals: exposeInternals);
         return await ExecuteCommandAsync("HeapProfiler.takeHeapSnapshot", @params, JsonContext.TakeHeapSnapshotCommandParameters, JsonContext.TakeHeapSnapshotResult, session, cancellationToken).ConfigureAwait(false);
@@ -375,6 +375,7 @@ internal sealed class HeapProfilerDomain(CdpModule cdp) : global::Selenium.WebDr
 internal sealed record AddInspectedHeapObjectCommandParameters(HeapSnapshotObjectId HeapObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.AddInspectedHeapObjectAsync"/> command.
 /// </summary>
 public sealed record AddInspectedHeapObjectResult() : EmptyResult;
 
@@ -382,6 +383,7 @@ public sealed record AddInspectedHeapObjectResult() : EmptyResult;
 internal sealed record CollectGarbageCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.CollectGarbageAsync"/> command.
 /// </summary>
 public sealed record CollectGarbageResult() : EmptyResult;
 
@@ -389,6 +391,7 @@ public sealed record CollectGarbageResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -396,6 +399,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -403,6 +407,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record GetHeapObjectIdCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.GetHeapObjectIdAsync"/> command.
 /// </summary>
 /// <param name="HeapSnapshotObjectId">
 /// Id of the heap snapshot object corresponding to the passed remote object id.
@@ -413,6 +418,7 @@ public sealed record GetHeapObjectIdResult(HeapSnapshotObjectId HeapSnapshotObje
 internal sealed record GetObjectByHeapObjectIdCommandParameters(HeapSnapshotObjectId ObjectId, string? ObjectGroup) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.GetObjectByHeapObjectIdAsync"/> command.
 /// </summary>
 /// <param name="Result">
 /// Evaluation result.
@@ -423,6 +429,7 @@ public sealed record GetObjectByHeapObjectIdResult(Runtime.RemoteObject Result) 
 internal sealed record GetSamplingProfileCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.GetSamplingProfileAsync"/> command.
 /// </summary>
 /// <param name="Profile">
 /// Return the sampling profile being collected.
@@ -433,6 +440,7 @@ public sealed record GetSamplingProfileResult(SamplingHeapProfile Profile) : Emp
 internal sealed record StartSamplingCommandParameters(double? SamplingInterval, double? StackDepth, bool? IncludeObjectsCollectedByMajorGC, bool? IncludeObjectsCollectedByMinorGC) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.StartSamplingAsync"/> command.
 /// </summary>
 public sealed record StartSamplingResult() : EmptyResult;
 
@@ -440,6 +448,7 @@ public sealed record StartSamplingResult() : EmptyResult;
 internal sealed record StartTrackingHeapObjectsCommandParameters(bool? TrackAllocations) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.StartTrackingHeapObjectsAsync"/> command.
 /// </summary>
 public sealed record StartTrackingHeapObjectsResult() : EmptyResult;
 
@@ -447,6 +456,7 @@ public sealed record StartTrackingHeapObjectsResult() : EmptyResult;
 internal sealed record StopSamplingCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.StopSamplingAsync"/> command.
 /// </summary>
 /// <param name="Profile">
 /// Recorded sampling heap profile.
@@ -457,6 +467,7 @@ public sealed record StopSamplingResult(SamplingHeapProfile Profile) : EmptyResu
 internal sealed record StopTrackingHeapObjectsCommandParameters(bool? ReportProgress, bool? TreatGlobalObjectsAsRoots, bool? CaptureNumericValue, bool? ExposeInternals) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.StopTrackingHeapObjectsAsync"/> command.
 /// </summary>
 public sealed record StopTrackingHeapObjectsResult() : EmptyResult;
 
@@ -464,6 +475,7 @@ public sealed record StopTrackingHeapObjectsResult() : EmptyResult;
 internal sealed record TakeHeapSnapshotCommandParameters(bool? ReportProgress, bool? TreatGlobalObjectsAsRoots, bool? CaptureNumericValue, bool? ExposeInternals) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IHeapProfiler.TakeHeapSnapshotAsync"/> command.
 /// </summary>
 public sealed record TakeHeapSnapshotResult() : EmptyResult;
 

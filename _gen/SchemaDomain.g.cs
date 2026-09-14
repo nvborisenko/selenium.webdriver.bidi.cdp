@@ -23,7 +23,7 @@ public interface ISchema
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDomainsResult"/>.
     /// </returns>
-    Task<GetDomainsResult> GetDomainsAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDomainsResult> GetDomainsAsync(string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -32,7 +32,7 @@ internal sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 {
     private static readonly SchemaJsonSerializerContext JsonContext = SchemaJsonSerializerContext.Default;
 
-    public async Task<GetDomainsResult> GetDomainsAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDomainsResult> GetDomainsAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDomainsCommandParameters();
         return await ExecuteCommandAsync("Schema.getDomains", @params, JsonContext.GetDomainsCommandParameters, JsonContext.GetDomainsResult, session, cancellationToken).ConfigureAwait(false);
@@ -43,6 +43,7 @@ internal sealed class SchemaDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 internal sealed record GetDomainsCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ISchema.GetDomainsAsync"/> command.
 /// </summary>
 /// <param name="Domains">
 /// List of supported domains.

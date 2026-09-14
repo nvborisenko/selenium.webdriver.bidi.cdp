@@ -22,7 +22,7 @@ public interface ILog
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearResult"/>.
     /// </returns>
-    Task<ClearResult> ClearAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearResult> ClearAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables log domain, prevents further log entries from being reported to the client.
@@ -36,7 +36,7 @@ public interface ILog
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables log domain, sends the entries collected so far to the client by means of the
@@ -51,7 +51,7 @@ public interface ILog
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// start violation reporting.
@@ -68,7 +68,7 @@ public interface ILog
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartViolationsReportResult"/>.
     /// </returns>
-    Task<StartViolationsReportResult> StartViolationsReportAsync(ImmutableArray<ViolationSetting> config, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartViolationsReportResult> StartViolationsReportAsync(ImmutableArray<ViolationSetting> config, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stop violation reporting.
@@ -82,7 +82,7 @@ public interface ILog
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopViolationsReportResult"/>.
     /// </returns>
-    Task<StopViolationsReportResult> StopViolationsReportAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<StopViolationsReportResult> StopViolationsReportAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Issued when new message was logged.
@@ -101,31 +101,31 @@ internal sealed class LogDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 {
     private static readonly LogJsonSerializerContext JsonContext = LogJsonSerializerContext.Default;
 
-    public async Task<ClearResult> ClearAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearResult> ClearAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCommandParameters();
         return await ExecuteCommandAsync("Log.clear", @params, JsonContext.ClearCommandParameters, JsonContext.ClearResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Log.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Log.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartViolationsReportResult> StartViolationsReportAsync(ImmutableArray<ViolationSetting> config, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartViolationsReportResult> StartViolationsReportAsync(ImmutableArray<ViolationSetting> config, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartViolationsReportCommandParameters(Config: config);
         return await ExecuteCommandAsync("Log.startViolationsReport", @params, JsonContext.StartViolationsReportCommandParameters, JsonContext.StartViolationsReportResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopViolationsReportResult> StopViolationsReportAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopViolationsReportResult> StopViolationsReportAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopViolationsReportCommandParameters();
         return await ExecuteCommandAsync("Log.stopViolationsReport", @params, JsonContext.StopViolationsReportCommandParameters, JsonContext.StopViolationsReportResult, session, cancellationToken).ConfigureAwait(false);
@@ -137,6 +137,7 @@ internal sealed class LogDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 internal sealed record ClearCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILog.ClearAsync"/> command.
 /// </summary>
 public sealed record ClearResult() : EmptyResult;
 
@@ -144,6 +145,7 @@ public sealed record ClearResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILog.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -151,6 +153,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILog.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -158,6 +161,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record StartViolationsReportCommandParameters(ImmutableArray<ViolationSetting> Config) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILog.StartViolationsReportAsync"/> command.
 /// </summary>
 public sealed record StartViolationsReportResult() : EmptyResult;
 
@@ -165,6 +169,7 @@ public sealed record StartViolationsReportResult() : EmptyResult;
 internal sealed record StopViolationsReportCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILog.StopViolationsReportAsync"/> command.
 /// </summary>
 public sealed record StopViolationsReportResult() : EmptyResult;
 
@@ -248,54 +253,67 @@ public sealed record ViolationSetting(ViolationSettingName Name, double Threshol
 public enum LogEntrySource
 {
     /// <summary>
+    /// Corresponds to the <c>"xml"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("xml")]
     Xml,
     /// <summary>
+    /// Corresponds to the <c>"javascript"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("javascript")]
     Javascript,
     /// <summary>
+    /// Corresponds to the <c>"network"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
     Network,
     /// <summary>
+    /// Corresponds to the <c>"storage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storage")]
     Storage,
     /// <summary>
+    /// Corresponds to the <c>"appcache"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("appcache")]
     Appcache,
     /// <summary>
+    /// Corresponds to the <c>"rendering"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rendering")]
     Rendering,
     /// <summary>
+    /// Corresponds to the <c>"security"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("security")]
     Security,
     /// <summary>
+    /// Corresponds to the <c>"deprecation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deprecation")]
     Deprecation,
     /// <summary>
+    /// Corresponds to the <c>"worker"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("worker")]
     Worker,
     /// <summary>
+    /// Corresponds to the <c>"violation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("violation")]
     Violation,
     /// <summary>
+    /// Corresponds to the <c>"intervention"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("intervention")]
     Intervention,
     /// <summary>
+    /// Corresponds to the <c>"recommendation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recommendation")]
     Recommendation,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
@@ -307,18 +325,22 @@ public enum LogEntrySource
 public enum LogEntryLevel
 {
     /// <summary>
+    /// Corresponds to the <c>"verbose"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("verbose")]
     Verbose,
     /// <summary>
+    /// Corresponds to the <c>"info"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
     Info,
     /// <summary>
+    /// Corresponds to the <c>"warning"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("warning")]
     Warning,
     /// <summary>
+    /// Corresponds to the <c>"error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
     Error,
@@ -330,6 +352,7 @@ public enum LogEntryLevel
 public enum LogEntryCategory
 {
     /// <summary>
+    /// Corresponds to the <c>"cors"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cors")]
     Cors,
@@ -341,30 +364,37 @@ public enum LogEntryCategory
 public enum ViolationSettingName
 {
     /// <summary>
+    /// Corresponds to the <c>"longTask"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("longTask")]
     LongTask,
     /// <summary>
+    /// Corresponds to the <c>"longLayout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("longLayout")]
     LongLayout,
     /// <summary>
+    /// Corresponds to the <c>"blockedEvent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("blockedEvent")]
     BlockedEvent,
     /// <summary>
+    /// Corresponds to the <c>"blockedParser"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("blockedParser")]
     BlockedParser,
     /// <summary>
+    /// Corresponds to the <c>"discouragedAPIUse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("discouragedAPIUse")]
     DiscouragedAPIUse,
     /// <summary>
+    /// Corresponds to the <c>"handler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("handler")]
     Handler,
     /// <summary>
+    /// Corresponds to the <c>"recurringHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recurringHandler")]
     RecurringHandler,

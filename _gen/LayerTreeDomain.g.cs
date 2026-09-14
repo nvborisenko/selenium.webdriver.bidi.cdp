@@ -25,7 +25,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CompositingReasonsResult"/>.
     /// </returns>
-    Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default);
+    Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables compositing tree inspection.
@@ -39,7 +39,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables compositing tree inspection.
@@ -53,7 +53,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the snapshot identifier.
@@ -70,7 +70,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LoadSnapshotResult"/>.
     /// </returns>
-    Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = default, CancellationToken cancellationToken = default);
+    Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns the layer snapshot identifier.
@@ -87,7 +87,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="MakeSnapshotResult"/>.
     /// </returns>
-    Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default);
+    Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -112,7 +112,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ProfileSnapshotResult"/>.
     /// </returns>
-    Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = default, double? minDuration = default, DOM.Rect? clipRect = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = null, double? minDuration = null, DOM.Rect? clipRect = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Releases layer snapshot captured by the back-end.
@@ -129,7 +129,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReleaseSnapshotResult"/>.
     /// </returns>
-    Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replays the layer snapshot and returns the resulting bitmap.
@@ -155,7 +155,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReplaySnapshotResult"/>.
     /// </returns>
-    Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = default, long? toStep = default, double? scale = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = null, long? toStep = null, double? scale = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Replays the layer snapshot and returns canvas log.
@@ -172,7 +172,7 @@ public interface ILayerTree
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SnapshotCommandLogResult"/>.
     /// </returns>
-    Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default);
+    Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -204,55 +204,55 @@ internal sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDrive
 {
     private static readonly LayerTreeJsonSerializerContext JsonContext = LayerTreeJsonSerializerContext.Default;
 
-    public async Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CompositingReasonsResult> CompositingReasonsAsync(LayerId layerId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CompositingReasonsCommandParameters(LayerId: layerId);
         return await ExecuteCommandAsync("LayerTree.compositingReasons", @params, JsonContext.CompositingReasonsCommandParameters, JsonContext.CompositingReasonsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("LayerTree.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("LayerTree.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<LoadSnapshotResult> LoadSnapshotAsync(ImmutableArray<PictureTile> tiles, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new LoadSnapshotCommandParameters(Tiles: tiles);
         return await ExecuteCommandAsync("LayerTree.loadSnapshot", @params, JsonContext.LoadSnapshotCommandParameters, JsonContext.LoadSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<MakeSnapshotResult> MakeSnapshotAsync(LayerId layerId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new MakeSnapshotCommandParameters(LayerId: layerId);
         return await ExecuteCommandAsync("LayerTree.makeSnapshot", @params, JsonContext.MakeSnapshotCommandParameters, JsonContext.MakeSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = default, double? minDuration = default, DOM.Rect? clipRect = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ProfileSnapshotResult> ProfileSnapshotAsync(SnapshotId snapshotId, long? minRepeatCount = null, double? minDuration = null, DOM.Rect? clipRect = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ProfileSnapshotCommandParameters(SnapshotId: snapshotId, MinRepeatCount: minRepeatCount, MinDuration: minDuration, ClipRect: clipRect);
         return await ExecuteCommandAsync("LayerTree.profileSnapshot", @params, JsonContext.ProfileSnapshotCommandParameters, JsonContext.ProfileSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReleaseSnapshotResult> ReleaseSnapshotAsync(SnapshotId snapshotId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReleaseSnapshotCommandParameters(SnapshotId: snapshotId);
         return await ExecuteCommandAsync("LayerTree.releaseSnapshot", @params, JsonContext.ReleaseSnapshotCommandParameters, JsonContext.ReleaseSnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = default, long? toStep = default, double? scale = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReplaySnapshotResult> ReplaySnapshotAsync(SnapshotId snapshotId, long? fromStep = null, long? toStep = null, double? scale = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReplaySnapshotCommandParameters(SnapshotId: snapshotId, FromStep: fromStep, ToStep: toStep, Scale: scale);
         return await ExecuteCommandAsync("LayerTree.replaySnapshot", @params, JsonContext.ReplaySnapshotCommandParameters, JsonContext.ReplaySnapshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SnapshotCommandLogResult> SnapshotCommandLogAsync(SnapshotId snapshotId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SnapshotCommandLogCommandParameters(SnapshotId: snapshotId);
         return await ExecuteCommandAsync("LayerTree.snapshotCommandLog", @params, JsonContext.SnapshotCommandLogCommandParameters, JsonContext.SnapshotCommandLogResult, session, cancellationToken).ConfigureAwait(false);
@@ -265,6 +265,7 @@ internal sealed class LayerTreeDomain(CdpModule cdp) : global::Selenium.WebDrive
 internal sealed record CompositingReasonsCommandParameters(LayerId LayerId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.CompositingReasonsAsync"/> command.
 /// </summary>
 /// <param name="CompositingReasons">
 /// A list of strings specifying reasons for the given layer to become composited.
@@ -278,6 +279,7 @@ public sealed record CompositingReasonsResult(ImmutableArray<string> Compositing
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -285,6 +287,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -292,6 +295,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record LoadSnapshotCommandParameters(ImmutableArray<PictureTile> Tiles) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.LoadSnapshotAsync"/> command.
 /// </summary>
 /// <param name="SnapshotId">
 /// The id of the snapshot.
@@ -302,6 +306,7 @@ public sealed record LoadSnapshotResult(SnapshotId SnapshotId) : EmptyResult;
 internal sealed record MakeSnapshotCommandParameters(LayerId LayerId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.MakeSnapshotAsync"/> command.
 /// </summary>
 /// <param name="SnapshotId">
 /// The id of the layer snapshot.
@@ -312,6 +317,7 @@ public sealed record MakeSnapshotResult(SnapshotId SnapshotId) : EmptyResult;
 internal sealed record ProfileSnapshotCommandParameters(SnapshotId SnapshotId, long? MinRepeatCount, double? MinDuration, DOM.Rect? ClipRect) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.ProfileSnapshotAsync"/> command.
 /// </summary>
 /// <param name="Timings">
 /// The array of paint profiles, one per run.
@@ -322,6 +328,7 @@ public sealed record ProfileSnapshotResult(ImmutableArray<ImmutableArray<double>
 internal sealed record ReleaseSnapshotCommandParameters(SnapshotId SnapshotId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.ReleaseSnapshotAsync"/> command.
 /// </summary>
 public sealed record ReleaseSnapshotResult() : EmptyResult;
 
@@ -329,6 +336,7 @@ public sealed record ReleaseSnapshotResult() : EmptyResult;
 internal sealed record ReplaySnapshotCommandParameters(SnapshotId SnapshotId, long? FromStep, long? ToStep, double? Scale) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.ReplaySnapshotAsync"/> command.
 /// </summary>
 /// <param name="DataURL">
 /// A data: URL for resulting image.
@@ -339,6 +347,7 @@ public sealed record ReplaySnapshotResult(string DataURL) : EmptyResult;
 internal sealed record SnapshotCommandLogCommandParameters(SnapshotId SnapshotId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="ILayerTree.SnapshotCommandLogAsync"/> command.
 /// </summary>
 /// <param name="CommandLog">
 /// The array of canvas function calls.
@@ -515,14 +524,17 @@ public sealed record Layer(LayerId LayerId, double OffsetX, double OffsetY, doub
 public enum ScrollRectType
 {
     /// <summary>
+    /// Corresponds to the <c>"RepaintsOnScroll"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RepaintsOnScroll")]
     RepaintsOnScroll,
     /// <summary>
+    /// Corresponds to the <c>"TouchEventHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TouchEventHandler")]
     TouchEventHandler,
     /// <summary>
+    /// Corresponds to the <c>"WheelEventHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WheelEventHandler")]
     WheelEventHandler,

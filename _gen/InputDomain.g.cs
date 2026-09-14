@@ -38,7 +38,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="DispatchDragEventResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<DispatchDragEventResult> DispatchDragEventAsync(DispatchDragEventType type, double x, double y, DragData data, long? modifiers = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DispatchDragEventResult> DispatchDragEventAsync(DispatchDragEventType type, double x, double y, DragData data, long? modifiers = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Dispatches a key event to the page.
@@ -104,7 +104,7 @@ public interface IInput
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchKeyEventResult"/>.
     /// </returns>
-    Task<DispatchKeyEventResult> DispatchKeyEventAsync(DispatchKeyEventType type, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? text = default, string? unmodifiedText = default, string? keyIdentifier = default, string? code = default, string? key = default, long? windowsVirtualKeyCode = default, long? nativeVirtualKeyCode = default, bool? autoRepeat = default, bool? isKeypad = default, bool? isSystemKey = default, long? location = default, ImmutableArray<string>? commands = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DispatchKeyEventResult> DispatchKeyEventAsync(DispatchKeyEventType type, long? modifiers = null, TimeSinceEpoch? timestamp = null, string? text = null, string? unmodifiedText = null, string? keyIdentifier = null, string? code = null, string? key = null, long? windowsVirtualKeyCode = null, long? nativeVirtualKeyCode = null, bool? autoRepeat = null, bool? isKeypad = null, bool? isSystemKey = null, long? location = null, ImmutableArray<string>? commands = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method emulates inserting text that doesn't come from a key press,
@@ -123,7 +123,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="InsertTextResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<InsertTextResult> InsertTextAsync(string text, string? session = default, CancellationToken cancellationToken = default);
+    Task<InsertTextResult> InsertTextAsync(string text, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// This method sets the current candidate text for IME.
@@ -155,7 +155,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="ImeSetCompositionResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<ImeSetCompositionResult> ImeSetCompositionAsync(string text, long selectionStart, long selectionEnd, long? replacementStart = default, long? replacementEnd = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ImeSetCompositionResult> ImeSetCompositionAsync(string text, long selectionStart, long selectionEnd, long? replacementStart = null, long? replacementEnd = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Dispatches a mouse event to the page.
@@ -220,7 +220,7 @@ public interface IInput
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchMouseEventResult"/>.
     /// </returns>
-    Task<DispatchMouseEventResult> DispatchMouseEventAsync(DispatchMouseEventType type, double x, double y, long? modifiers = default, TimeSinceEpoch? timestamp = default, MouseButton? button = default, long? buttons = default, long? clickCount = default, double? force = default, double? tangentialPressure = default, double? tiltX = default, double? tiltY = default, long? twist = default, double? deltaX = default, double? deltaY = default, DispatchMouseEventPointerType? pointerType = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DispatchMouseEventResult> DispatchMouseEventAsync(DispatchMouseEventType type, double x, double y, long? modifiers = null, TimeSinceEpoch? timestamp = null, MouseButton? button = null, long? buttons = null, long? clickCount = null, double? force = null, double? tangentialPressure = null, double? tiltX = null, double? tiltY = null, long? twist = null, double? deltaX = null, double? deltaY = null, DispatchMouseEventPointerType? pointerType = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Dispatches a touch event to the page.
@@ -250,7 +250,7 @@ public interface IInput
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DispatchTouchEventResult"/>.
     /// </returns>
-    Task<DispatchTouchEventResult> DispatchTouchEventAsync(DispatchTouchEventType type, ImmutableArray<TouchPoint> touchPoints, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DispatchTouchEventResult> DispatchTouchEventAsync(DispatchTouchEventType type, ImmutableArray<TouchPoint> touchPoints, long? modifiers = null, TimeSinceEpoch? timestamp = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancels any active dragging in the page.
@@ -264,7 +264,7 @@ public interface IInput
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CancelDraggingResult"/>.
     /// </returns>
-    Task<CancelDraggingResult> CancelDraggingAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<CancelDraggingResult> CancelDraggingAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emulates touch event from the mouse event parameters.
@@ -307,7 +307,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="EmulateTouchFromMouseEventResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventAsync(EmulateTouchFromMouseEventType type, long x, long y, MouseButton button, TimeSinceEpoch? timestamp = default, double? deltaX = default, double? deltaY = default, long? modifiers = default, long? clickCount = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventAsync(EmulateTouchFromMouseEventType type, long x, long y, MouseButton button, TimeSinceEpoch? timestamp = null, double? deltaX = null, double? deltaY = null, long? modifiers = null, long? clickCount = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Ignores input events (useful while auditing page).
@@ -324,7 +324,7 @@ public interface IInput
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetIgnoreInputEventsResult"/>.
     /// </returns>
-    Task<SetIgnoreInputEventsResult> SetIgnoreInputEventsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetIgnoreInputEventsResult> SetIgnoreInputEventsAsync(bool ignore, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Prevents default drag and drop behavior and instead emits <b>Input.dragIntercepted</b> events.
@@ -342,7 +342,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="SetInterceptDragsResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetInterceptDragsResult> SetInterceptDragsAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetInterceptDragsResult> SetInterceptDragsAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Synthesizes a pinch gesture over a time period by issuing appropriate touch events.
@@ -373,7 +373,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="SynthesizePinchGestureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SynthesizePinchGestureResult> SynthesizePinchGestureAsync(double x, double y, double scaleFactor, long? relativeSpeed = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SynthesizePinchGestureResult> SynthesizePinchGestureAsync(double x, double y, double scaleFactor, long? relativeSpeed = null, GestureSourceType? gestureSourceType = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Synthesizes a scroll gesture over a time period by issuing appropriate touch events.
@@ -427,7 +427,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="SynthesizeScrollGestureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SynthesizeScrollGestureResult> SynthesizeScrollGestureAsync(double x, double y, double? xDistance = default, double? yDistance = default, double? xOverscroll = default, double? yOverscroll = default, bool? preventFling = default, long? speed = default, GestureSourceType? gestureSourceType = default, long? repeatCount = default, long? repeatDelayMs = default, string? interactionMarkerName = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SynthesizeScrollGestureResult> SynthesizeScrollGestureAsync(double x, double y, double? xDistance = null, double? yDistance = null, double? xOverscroll = null, double? yOverscroll = null, bool? preventFling = null, long? speed = null, GestureSourceType? gestureSourceType = null, long? repeatCount = null, long? repeatDelayMs = null, string? interactionMarkerName = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Synthesizes a tap gesture over a time period by issuing appropriate touch events.
@@ -458,7 +458,7 @@ public interface IInput
     /// A task representing the asynchronous operation, containing a <see cref="SynthesizeTapGestureResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SynthesizeTapGestureResult> SynthesizeTapGestureAsync(double x, double y, long? duration = default, long? tapCount = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SynthesizeTapGestureResult> SynthesizeTapGestureAsync(double x, double y, long? duration = null, long? tapCount = null, GestureSourceType? gestureSourceType = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emitted only when <b>Input.setInterceptDrags</b> is enabled. Use this data with <b>Input.dispatchDragEvent</b> to
@@ -480,86 +480,86 @@ internal sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
     private static readonly InputJsonSerializerContext JsonContext = InputJsonSerializerContext.Default;
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<DispatchDragEventResult> DispatchDragEventAsync(DispatchDragEventType type, double x, double y, DragData data, long? modifiers = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DispatchDragEventResult> DispatchDragEventAsync(DispatchDragEventType type, double x, double y, DragData data, long? modifiers = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchDragEventCommandParameters(Type: type, X: x, Y: y, Data: data, Modifiers: modifiers);
         return await ExecuteCommandAsync("Input.dispatchDragEvent", @params, JsonContext.DispatchDragEventCommandParameters, JsonContext.DispatchDragEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DispatchKeyEventResult> DispatchKeyEventAsync(DispatchKeyEventType type, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? text = default, string? unmodifiedText = default, string? keyIdentifier = default, string? code = default, string? key = default, long? windowsVirtualKeyCode = default, long? nativeVirtualKeyCode = default, bool? autoRepeat = default, bool? isKeypad = default, bool? isSystemKey = default, long? location = default, ImmutableArray<string>? commands = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DispatchKeyEventResult> DispatchKeyEventAsync(DispatchKeyEventType type, long? modifiers = null, TimeSinceEpoch? timestamp = null, string? text = null, string? unmodifiedText = null, string? keyIdentifier = null, string? code = null, string? key = null, long? windowsVirtualKeyCode = null, long? nativeVirtualKeyCode = null, bool? autoRepeat = null, bool? isKeypad = null, bool? isSystemKey = null, long? location = null, ImmutableArray<string>? commands = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchKeyEventCommandParameters(Type: type, Modifiers: modifiers, Timestamp: timestamp, Text: text, UnmodifiedText: unmodifiedText, KeyIdentifier: keyIdentifier, Code: code, Key: key, WindowsVirtualKeyCode: windowsVirtualKeyCode, NativeVirtualKeyCode: nativeVirtualKeyCode, AutoRepeat: autoRepeat, IsKeypad: isKeypad, IsSystemKey: isSystemKey, Location: location, Commands: commands);
         return await ExecuteCommandAsync("Input.dispatchKeyEvent", @params, JsonContext.DispatchKeyEventCommandParameters, JsonContext.DispatchKeyEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<InsertTextResult> InsertTextAsync(string text, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<InsertTextResult> InsertTextAsync(string text, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new InsertTextCommandParameters(Text: text);
         return await ExecuteCommandAsync("Input.insertText", @params, JsonContext.InsertTextCommandParameters, JsonContext.InsertTextResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<ImeSetCompositionResult> ImeSetCompositionAsync(string text, long selectionStart, long selectionEnd, long? replacementStart = default, long? replacementEnd = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ImeSetCompositionResult> ImeSetCompositionAsync(string text, long selectionStart, long selectionEnd, long? replacementStart = null, long? replacementEnd = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ImeSetCompositionCommandParameters(Text: text, SelectionStart: selectionStart, SelectionEnd: selectionEnd, ReplacementStart: replacementStart, ReplacementEnd: replacementEnd);
         return await ExecuteCommandAsync("Input.imeSetComposition", @params, JsonContext.ImeSetCompositionCommandParameters, JsonContext.ImeSetCompositionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DispatchMouseEventResult> DispatchMouseEventAsync(DispatchMouseEventType type, double x, double y, long? modifiers = default, TimeSinceEpoch? timestamp = default, MouseButton? button = default, long? buttons = default, long? clickCount = default, double? force = default, double? tangentialPressure = default, double? tiltX = default, double? tiltY = default, long? twist = default, double? deltaX = default, double? deltaY = default, DispatchMouseEventPointerType? pointerType = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DispatchMouseEventResult> DispatchMouseEventAsync(DispatchMouseEventType type, double x, double y, long? modifiers = null, TimeSinceEpoch? timestamp = null, MouseButton? button = null, long? buttons = null, long? clickCount = null, double? force = null, double? tangentialPressure = null, double? tiltX = null, double? tiltY = null, long? twist = null, double? deltaX = null, double? deltaY = null, DispatchMouseEventPointerType? pointerType = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchMouseEventCommandParameters(Type: type, X: x, Y: y, Modifiers: modifiers, Timestamp: timestamp, Button: button, Buttons: buttons, ClickCount: clickCount, Force: force, TangentialPressure: tangentialPressure, TiltX: tiltX, TiltY: tiltY, Twist: twist, DeltaX: deltaX, DeltaY: deltaY, PointerType: pointerType);
         return await ExecuteCommandAsync("Input.dispatchMouseEvent", @params, JsonContext.DispatchMouseEventCommandParameters, JsonContext.DispatchMouseEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DispatchTouchEventResult> DispatchTouchEventAsync(DispatchTouchEventType type, ImmutableArray<TouchPoint> touchPoints, long? modifiers = default, TimeSinceEpoch? timestamp = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DispatchTouchEventResult> DispatchTouchEventAsync(DispatchTouchEventType type, ImmutableArray<TouchPoint> touchPoints, long? modifiers = null, TimeSinceEpoch? timestamp = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DispatchTouchEventCommandParameters(Type: type, TouchPoints: touchPoints, Modifiers: modifiers, Timestamp: timestamp);
         return await ExecuteCommandAsync("Input.dispatchTouchEvent", @params, JsonContext.DispatchTouchEventCommandParameters, JsonContext.DispatchTouchEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CancelDraggingResult> CancelDraggingAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CancelDraggingResult> CancelDraggingAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CancelDraggingCommandParameters();
         return await ExecuteCommandAsync("Input.cancelDragging", @params, JsonContext.CancelDraggingCommandParameters, JsonContext.CancelDraggingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventAsync(EmulateTouchFromMouseEventType type, long x, long y, MouseButton button, TimeSinceEpoch? timestamp = default, double? deltaX = default, double? deltaY = default, long? modifiers = default, long? clickCount = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EmulateTouchFromMouseEventResult> EmulateTouchFromMouseEventAsync(EmulateTouchFromMouseEventType type, long x, long y, MouseButton button, TimeSinceEpoch? timestamp = null, double? deltaX = null, double? deltaY = null, long? modifiers = null, long? clickCount = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EmulateTouchFromMouseEventCommandParameters(Type: type, X: x, Y: y, Button: button, Timestamp: timestamp, DeltaX: deltaX, DeltaY: deltaY, Modifiers: modifiers, ClickCount: clickCount);
         return await ExecuteCommandAsync("Input.emulateTouchFromMouseEvent", @params, JsonContext.EmulateTouchFromMouseEventCommandParameters, JsonContext.EmulateTouchFromMouseEventResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetIgnoreInputEventsResult> SetIgnoreInputEventsAsync(bool ignore, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetIgnoreInputEventsResult> SetIgnoreInputEventsAsync(bool ignore, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetIgnoreInputEventsCommandParameters(Ignore: ignore);
         return await ExecuteCommandAsync("Input.setIgnoreInputEvents", @params, JsonContext.SetIgnoreInputEventsCommandParameters, JsonContext.SetIgnoreInputEventsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetInterceptDragsResult> SetInterceptDragsAsync(bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetInterceptDragsResult> SetInterceptDragsAsync(bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetInterceptDragsCommandParameters(Enabled: enabled);
         return await ExecuteCommandAsync("Input.setInterceptDrags", @params, JsonContext.SetInterceptDragsCommandParameters, JsonContext.SetInterceptDragsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SynthesizePinchGestureResult> SynthesizePinchGestureAsync(double x, double y, double scaleFactor, long? relativeSpeed = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SynthesizePinchGestureResult> SynthesizePinchGestureAsync(double x, double y, double scaleFactor, long? relativeSpeed = null, GestureSourceType? gestureSourceType = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SynthesizePinchGestureCommandParameters(X: x, Y: y, ScaleFactor: scaleFactor, RelativeSpeed: relativeSpeed, GestureSourceType: gestureSourceType);
         return await ExecuteCommandAsync("Input.synthesizePinchGesture", @params, JsonContext.SynthesizePinchGestureCommandParameters, JsonContext.SynthesizePinchGestureResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SynthesizeScrollGestureResult> SynthesizeScrollGestureAsync(double x, double y, double? xDistance = default, double? yDistance = default, double? xOverscroll = default, double? yOverscroll = default, bool? preventFling = default, long? speed = default, GestureSourceType? gestureSourceType = default, long? repeatCount = default, long? repeatDelayMs = default, string? interactionMarkerName = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SynthesizeScrollGestureResult> SynthesizeScrollGestureAsync(double x, double y, double? xDistance = null, double? yDistance = null, double? xOverscroll = null, double? yOverscroll = null, bool? preventFling = null, long? speed = null, GestureSourceType? gestureSourceType = null, long? repeatCount = null, long? repeatDelayMs = null, string? interactionMarkerName = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SynthesizeScrollGestureCommandParameters(X: x, Y: y, XDistance: xDistance, YDistance: yDistance, XOverscroll: xOverscroll, YOverscroll: yOverscroll, PreventFling: preventFling, Speed: speed, GestureSourceType: gestureSourceType, RepeatCount: repeatCount, RepeatDelayMs: repeatDelayMs, InteractionMarkerName: interactionMarkerName);
         return await ExecuteCommandAsync("Input.synthesizeScrollGesture", @params, JsonContext.SynthesizeScrollGestureCommandParameters, JsonContext.SynthesizeScrollGestureResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SynthesizeTapGestureResult> SynthesizeTapGestureAsync(double x, double y, long? duration = default, long? tapCount = default, GestureSourceType? gestureSourceType = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SynthesizeTapGestureResult> SynthesizeTapGestureAsync(double x, double y, long? duration = null, long? tapCount = null, GestureSourceType? gestureSourceType = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SynthesizeTapGestureCommandParameters(X: x, Y: y, Duration: duration, TapCount: tapCount, GestureSourceType: gestureSourceType);
         return await ExecuteCommandAsync("Input.synthesizeTapGesture", @params, JsonContext.SynthesizeTapGestureCommandParameters, JsonContext.SynthesizeTapGestureResult, session, cancellationToken).ConfigureAwait(false);
@@ -572,6 +572,7 @@ internal sealed class InputDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record DispatchDragEventCommandParameters(DispatchDragEventType Type, double X, double Y, DragData Data, long? Modifiers) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.DispatchDragEventAsync"/> command.
 /// </summary>
 public sealed record DispatchDragEventResult() : EmptyResult;
 
@@ -579,6 +580,7 @@ public sealed record DispatchDragEventResult() : EmptyResult;
 internal sealed record DispatchKeyEventCommandParameters(DispatchKeyEventType Type, long? Modifiers, TimeSinceEpoch? Timestamp, string? Text, string? UnmodifiedText, string? KeyIdentifier, string? Code, string? Key, long? WindowsVirtualKeyCode, long? NativeVirtualKeyCode, bool? AutoRepeat, bool? IsKeypad, bool? IsSystemKey, long? Location, ImmutableArray<string>? Commands) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.DispatchKeyEventAsync"/> command.
 /// </summary>
 public sealed record DispatchKeyEventResult() : EmptyResult;
 
@@ -586,6 +588,7 @@ public sealed record DispatchKeyEventResult() : EmptyResult;
 internal sealed record InsertTextCommandParameters(string Text) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.InsertTextAsync"/> command.
 /// </summary>
 public sealed record InsertTextResult() : EmptyResult;
 
@@ -593,6 +596,7 @@ public sealed record InsertTextResult() : EmptyResult;
 internal sealed record ImeSetCompositionCommandParameters(string Text, long SelectionStart, long SelectionEnd, long? ReplacementStart, long? ReplacementEnd) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.ImeSetCompositionAsync"/> command.
 /// </summary>
 public sealed record ImeSetCompositionResult() : EmptyResult;
 
@@ -600,6 +604,7 @@ public sealed record ImeSetCompositionResult() : EmptyResult;
 internal sealed record DispatchMouseEventCommandParameters(DispatchMouseEventType Type, double X, double Y, long? Modifiers, TimeSinceEpoch? Timestamp, MouseButton? Button, long? Buttons, long? ClickCount, double? Force, double? TangentialPressure, double? TiltX, double? TiltY, long? Twist, double? DeltaX, double? DeltaY, DispatchMouseEventPointerType? PointerType) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.DispatchMouseEventAsync"/> command.
 /// </summary>
 public sealed record DispatchMouseEventResult() : EmptyResult;
 
@@ -607,6 +612,7 @@ public sealed record DispatchMouseEventResult() : EmptyResult;
 internal sealed record DispatchTouchEventCommandParameters(DispatchTouchEventType Type, ImmutableArray<TouchPoint> TouchPoints, long? Modifiers, TimeSinceEpoch? Timestamp) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.DispatchTouchEventAsync"/> command.
 /// </summary>
 public sealed record DispatchTouchEventResult() : EmptyResult;
 
@@ -614,6 +620,7 @@ public sealed record DispatchTouchEventResult() : EmptyResult;
 internal sealed record CancelDraggingCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.CancelDraggingAsync"/> command.
 /// </summary>
 public sealed record CancelDraggingResult() : EmptyResult;
 
@@ -621,6 +628,7 @@ public sealed record CancelDraggingResult() : EmptyResult;
 internal sealed record EmulateTouchFromMouseEventCommandParameters(EmulateTouchFromMouseEventType Type, long X, long Y, MouseButton Button, TimeSinceEpoch? Timestamp, double? DeltaX, double? DeltaY, long? Modifiers, long? ClickCount) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.EmulateTouchFromMouseEventAsync"/> command.
 /// </summary>
 public sealed record EmulateTouchFromMouseEventResult() : EmptyResult;
 
@@ -628,6 +636,7 @@ public sealed record EmulateTouchFromMouseEventResult() : EmptyResult;
 internal sealed record SetIgnoreInputEventsCommandParameters(bool Ignore) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.SetIgnoreInputEventsAsync"/> command.
 /// </summary>
 public sealed record SetIgnoreInputEventsResult() : EmptyResult;
 
@@ -635,6 +644,7 @@ public sealed record SetIgnoreInputEventsResult() : EmptyResult;
 internal sealed record SetInterceptDragsCommandParameters(bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.SetInterceptDragsAsync"/> command.
 /// </summary>
 public sealed record SetInterceptDragsResult() : EmptyResult;
 
@@ -642,6 +652,7 @@ public sealed record SetInterceptDragsResult() : EmptyResult;
 internal sealed record SynthesizePinchGestureCommandParameters(double X, double Y, double ScaleFactor, long? RelativeSpeed, GestureSourceType? GestureSourceType) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.SynthesizePinchGestureAsync"/> command.
 /// </summary>
 public sealed record SynthesizePinchGestureResult() : EmptyResult;
 
@@ -649,6 +660,7 @@ public sealed record SynthesizePinchGestureResult() : EmptyResult;
 internal sealed record SynthesizeScrollGestureCommandParameters(double X, double Y, double? XDistance, double? YDistance, double? XOverscroll, double? YOverscroll, bool? PreventFling, long? Speed, GestureSourceType? GestureSourceType, long? RepeatCount, long? RepeatDelayMs, string? InteractionMarkerName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.SynthesizeScrollGestureAsync"/> command.
 /// </summary>
 public sealed record SynthesizeScrollGestureResult() : EmptyResult;
 
@@ -656,6 +668,7 @@ public sealed record SynthesizeScrollGestureResult() : EmptyResult;
 internal sealed record SynthesizeTapGestureCommandParameters(double X, double Y, long? Duration, long? TapCount, GestureSourceType? GestureSourceType) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IInput.SynthesizeTapGestureAsync"/> command.
 /// </summary>
 public sealed record SynthesizeTapGestureResult() : EmptyResult;
 
@@ -731,14 +744,17 @@ public sealed record TouchPoint(double X, double Y)
 public enum GestureSourceType
 {
     /// <summary>
+    /// Corresponds to the <c>"default"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
     Default,
     /// <summary>
+    /// Corresponds to the <c>"touch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("touch")]
     Touch,
     /// <summary>
+    /// Corresponds to the <c>"mouse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouse")]
     Mouse,
@@ -750,26 +766,32 @@ public enum GestureSourceType
 public enum MouseButton
 {
     /// <summary>
+    /// Corresponds to the <c>"none"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
     None,
     /// <summary>
+    /// Corresponds to the <c>"left"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("left")]
     Left,
     /// <summary>
+    /// Corresponds to the <c>"middle"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("middle")]
     Middle,
     /// <summary>
+    /// Corresponds to the <c>"right"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("right")]
     Right,
     /// <summary>
+    /// Corresponds to the <c>"back"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("back")]
     Back,
     /// <summary>
+    /// Corresponds to the <c>"forward"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("forward")]
     Forward,
@@ -828,18 +850,22 @@ public sealed record DragData(ImmutableArray<DragDataItem> Items, long DragOpera
 public enum DispatchDragEventType
 {
     /// <summary>
+    /// Corresponds to the <c>"dragEnter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dragEnter")]
     DragEnter,
     /// <summary>
+    /// Corresponds to the <c>"dragOver"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dragOver")]
     DragOver,
     /// <summary>
+    /// Corresponds to the <c>"drop"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("drop")]
     Drop,
     /// <summary>
+    /// Corresponds to the <c>"dragCancel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dragCancel")]
     DragCancel,
@@ -851,18 +877,22 @@ public enum DispatchDragEventType
 public enum DispatchKeyEventType
 {
     /// <summary>
+    /// Corresponds to the <c>"keyDown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyDown")]
     KeyDown,
     /// <summary>
+    /// Corresponds to the <c>"keyUp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyUp")]
     KeyUp,
     /// <summary>
+    /// Corresponds to the <c>"rawKeyDown"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rawKeyDown")]
     RawKeyDown,
     /// <summary>
+    /// Corresponds to the <c>"char"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("char")]
     Char,
@@ -874,18 +904,22 @@ public enum DispatchKeyEventType
 public enum DispatchMouseEventType
 {
     /// <summary>
+    /// Corresponds to the <c>"mousePressed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mousePressed")]
     MousePressed,
     /// <summary>
+    /// Corresponds to the <c>"mouseReleased"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouseReleased")]
     MouseReleased,
     /// <summary>
+    /// Corresponds to the <c>"mouseMoved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouseMoved")]
     MouseMoved,
     /// <summary>
+    /// Corresponds to the <c>"mouseWheel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouseWheel")]
     MouseWheel,
@@ -897,10 +931,12 @@ public enum DispatchMouseEventType
 public enum DispatchMouseEventPointerType
 {
     /// <summary>
+    /// Corresponds to the <c>"mouse"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouse")]
     Mouse,
     /// <summary>
+    /// Corresponds to the <c>"pen"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pen")]
     Pen,
@@ -912,18 +948,22 @@ public enum DispatchMouseEventPointerType
 public enum DispatchTouchEventType
 {
     /// <summary>
+    /// Corresponds to the <c>"touchStart"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("touchStart")]
     TouchStart,
     /// <summary>
+    /// Corresponds to the <c>"touchEnd"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("touchEnd")]
     TouchEnd,
     /// <summary>
+    /// Corresponds to the <c>"touchMove"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("touchMove")]
     TouchMove,
     /// <summary>
+    /// Corresponds to the <c>"touchCancel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("touchCancel")]
     TouchCancel,
@@ -935,18 +975,22 @@ public enum DispatchTouchEventType
 public enum EmulateTouchFromMouseEventType
 {
     /// <summary>
+    /// Corresponds to the <c>"mousePressed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mousePressed")]
     MousePressed,
     /// <summary>
+    /// Corresponds to the <c>"mouseReleased"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouseReleased")]
     MouseReleased,
     /// <summary>
+    /// Corresponds to the <c>"mouseMoved"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouseMoved")]
     MouseMoved,
     /// <summary>
+    /// Corresponds to the <c>"mouseWheel"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mouseWheel")]
     MouseWheel,

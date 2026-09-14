@@ -25,7 +25,7 @@ public interface IIO
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CloseResult"/>.
     /// </returns>
-    Task<CloseResult> CloseAsync(StreamHandle handle, string? session = default, CancellationToken cancellationToken = default);
+    Task<CloseResult> CloseAsync(StreamHandle handle, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Read a chunk of the stream
@@ -49,7 +49,7 @@ public interface IIO
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReadResult"/>.
     /// </returns>
-    Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = default, long? size = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = null, long? size = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Return UUID of Blob object specified by a remote object id.
@@ -66,7 +66,7 @@ public interface IIO
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveBlobResult"/>.
     /// </returns>
-    Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -74,19 +74,19 @@ internal sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
 {
     private static readonly IOJsonSerializerContext JsonContext = IOJsonSerializerContext.Default;
 
-    public async Task<CloseResult> CloseAsync(StreamHandle handle, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CloseResult> CloseAsync(StreamHandle handle, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new CloseCommandParameters(Handle: handle);
         return await ExecuteCommandAsync("IO.close", @params, JsonContext.CloseCommandParameters, JsonContext.CloseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = default, long? size = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ReadResult> ReadAsync(StreamHandle handle, long? offset = null, long? size = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ReadCommandParameters(Handle: handle, Offset: offset, Size: size);
         return await ExecuteCommandAsync("IO.read", @params, JsonContext.ReadCommandParameters, JsonContext.ReadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveBlobCommandParameters(ObjectId: objectId);
         return await ExecuteCommandAsync("IO.resolveBlob", @params, JsonContext.ResolveBlobCommandParameters, JsonContext.ResolveBlobResult, session, cancellationToken).ConfigureAwait(false);
@@ -97,6 +97,7 @@ internal sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
 internal sealed record CloseCommandParameters(StreamHandle Handle) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIO.CloseAsync"/> command.
 /// </summary>
 public sealed record CloseResult() : EmptyResult;
 
@@ -104,6 +105,7 @@ public sealed record CloseResult() : EmptyResult;
 internal sealed record ReadCommandParameters(StreamHandle Handle, long? Offset, long? Size) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIO.ReadAsync"/> command.
 /// </summary>
 /// <param name="Base64Encoded">
 /// Set if the data is base64-encoded
@@ -120,6 +122,7 @@ public sealed record ReadResult(bool? Base64Encoded, string Data, bool Eof) : Em
 internal sealed record ResolveBlobCommandParameters(Runtime.RemoteObjectId ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIO.ResolveBlobAsync"/> command.
 /// </summary>
 /// <param name="Uuid">
 /// UUID of the specified Blob.

@@ -22,7 +22,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables the accessibility domain which causes <b>AXNodeId</b>s to remain consistent between method calls.
@@ -37,7 +37,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches the accessibility node and partial accessibility tree for this DOM node, if it exists.
@@ -63,7 +63,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetPartialAXTreeResult"/>.
     /// </returns>
-    Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? fetchRelatives = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, bool? fetchRelatives = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches the entire accessibility tree for the root Document
@@ -85,7 +85,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetFullAXTreeResult"/>.
     /// </returns>
-    Task<GetFullAXTreeResult> GetFullAXTreeAsync(long? depth = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetFullAXTreeResult> GetFullAXTreeAsync(long? depth = null, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches the root node.
@@ -104,7 +104,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRootAXNodeResult"/>.
     /// </returns>
-    Task<GetRootAXNodeResult> GetRootAXNodeAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetRootAXNodeResult> GetRootAXNodeAsync(Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches a node and all ancestors up to and including the root.
@@ -128,7 +128,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetAXNodeAndAncestorsResult"/>.
     /// </returns>
-    Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetches a particular accessibility node by AXNodeId.
@@ -149,7 +149,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetChildAXNodesResult"/>.
     /// </returns>
-    Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Query a DOM node's accessibility subtree for accessible name and role.
@@ -182,7 +182,7 @@ public interface IAccessibility
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="QueryAXTreeResult"/>.
     /// </returns>
-    Task<QueryAXTreeResult> QueryAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? accessibleName = default, string? role = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<QueryAXTreeResult> QueryAXTreeAsync(DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? accessibleName = null, string? role = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// The loadComplete event mirrors the load complete event sent by the browser to assistive
@@ -214,49 +214,49 @@ internal sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebD
 {
     private static readonly AccessibilityJsonSerializerContext JsonContext = AccessibilityJsonSerializerContext.Default;
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("Accessibility.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("Accessibility.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, bool? fetchRelatives = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetPartialAXTreeResult> GetPartialAXTreeAsync(DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, bool? fetchRelatives = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetPartialAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, FetchRelatives: fetchRelatives);
         return await ExecuteCommandAsync("Accessibility.getPartialAXTree", @params, JsonContext.GetPartialAXTreeCommandParameters, JsonContext.GetPartialAXTreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetFullAXTreeResult> GetFullAXTreeAsync(long? depth = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetFullAXTreeResult> GetFullAXTreeAsync(long? depth = null, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetFullAXTreeCommandParameters(Depth: depth, FrameId: frameId);
         return await ExecuteCommandAsync("Accessibility.getFullAXTree", @params, JsonContext.GetFullAXTreeCommandParameters, JsonContext.GetFullAXTreeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetRootAXNodeResult> GetRootAXNodeAsync(Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetRootAXNodeResult> GetRootAXNodeAsync(Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetRootAXNodeCommandParameters(FrameId: frameId);
         return await ExecuteCommandAsync("Accessibility.getRootAXNode", @params, JsonContext.GetRootAXNodeCommandParameters, JsonContext.GetRootAXNodeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetAXNodeAndAncestorsResult> GetAXNodeAndAncestorsAsync(DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAXNodeAndAncestorsCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId);
         return await ExecuteCommandAsync("Accessibility.getAXNodeAndAncestors", @params, JsonContext.GetAXNodeAndAncestorsCommandParameters, JsonContext.GetAXNodeAndAncestorsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetChildAXNodesResult> GetChildAXNodesAsync(AXNodeId id, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetChildAXNodesCommandParameters(Id: id, FrameId: frameId);
         return await ExecuteCommandAsync("Accessibility.getChildAXNodes", @params, JsonContext.GetChildAXNodesCommandParameters, JsonContext.GetChildAXNodesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<QueryAXTreeResult> QueryAXTreeAsync(DOM.NodeId? nodeId = default, DOM.BackendNodeId? backendNodeId = default, Runtime.RemoteObjectId? objectId = default, string? accessibleName = default, string? role = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<QueryAXTreeResult> QueryAXTreeAsync(DOM.NodeId? nodeId = null, DOM.BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? accessibleName = null, string? role = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new QueryAXTreeCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, AccessibleName: accessibleName, Role: role);
         return await ExecuteCommandAsync("Accessibility.queryAXTree", @params, JsonContext.QueryAXTreeCommandParameters, JsonContext.QueryAXTreeResult, session, cancellationToken).ConfigureAwait(false);
@@ -269,6 +269,7 @@ internal sealed class AccessibilityDomain(CdpModule cdp) : global::Selenium.WebD
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -276,6 +277,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -283,6 +285,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record GetPartialAXTreeCommandParameters(DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, bool? FetchRelatives) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.GetPartialAXTreeAsync"/> command.
 /// </summary>
 /// <param name="Nodes">
 /// The <b>Accessibility.AXNode</b> for this DOM node, if it exists, plus its ancestors, siblings and
@@ -294,6 +297,7 @@ public sealed record GetPartialAXTreeResult(ImmutableArray<AXNode> Nodes) : Empt
 internal sealed record GetFullAXTreeCommandParameters(long? Depth, Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.GetFullAXTreeAsync"/> command.
 /// </summary>
 /// <param name="Nodes">
 /// </param>
@@ -303,6 +307,7 @@ public sealed record GetFullAXTreeResult(ImmutableArray<AXNode> Nodes) : EmptyRe
 internal sealed record GetRootAXNodeCommandParameters(Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.GetRootAXNodeAsync"/> command.
 /// </summary>
 /// <param name="Node">
 /// </param>
@@ -312,6 +317,7 @@ public sealed record GetRootAXNodeResult(AXNode Node) : EmptyResult;
 internal sealed record GetAXNodeAndAncestorsCommandParameters(DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.GetAXNodeAndAncestorsAsync"/> command.
 /// </summary>
 /// <param name="Nodes">
 /// </param>
@@ -321,6 +327,7 @@ public sealed record GetAXNodeAndAncestorsResult(ImmutableArray<AXNode> Nodes) :
 internal sealed record GetChildAXNodesCommandParameters(AXNodeId Id, Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.GetChildAXNodesAsync"/> command.
 /// </summary>
 /// <param name="Nodes">
 /// </param>
@@ -330,6 +337,7 @@ public sealed record GetChildAXNodesResult(ImmutableArray<AXNode> Nodes) : Empty
 internal sealed record QueryAXTreeCommandParameters(DOM.NodeId? NodeId, DOM.BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, string? AccessibleName, string? Role) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IAccessibility.QueryAXTreeAsync"/> command.
 /// </summary>
 /// <param name="Nodes">
 /// A list of <b>Accessibility.AXNode</b> matching the specified attributes,
@@ -371,70 +379,87 @@ public record AXNodeId : IStringRemoteId
 public enum AXValueType
 {
     /// <summary>
+    /// Corresponds to the <c>"boolean"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
     Boolean,
     /// <summary>
+    /// Corresponds to the <c>"tristate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("tristate")]
     Tristate,
     /// <summary>
+    /// Corresponds to the <c>"booleanOrUndefined"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("booleanOrUndefined")]
     BooleanOrUndefined,
     /// <summary>
+    /// Corresponds to the <c>"idref"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("idref")]
     Idref,
     /// <summary>
+    /// Corresponds to the <c>"idrefList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("idrefList")]
     IdrefList,
     /// <summary>
+    /// Corresponds to the <c>"integer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("integer")]
     Integer,
     /// <summary>
+    /// Corresponds to the <c>"node"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
     Node,
     /// <summary>
+    /// Corresponds to the <c>"nodeList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("nodeList")]
     NodeList,
     /// <summary>
+    /// Corresponds to the <c>"number"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
     Number,
     /// <summary>
+    /// Corresponds to the <c>"string"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
     String,
     /// <summary>
+    /// Corresponds to the <c>"computedString"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("computedString")]
     ComputedString,
     /// <summary>
+    /// Corresponds to the <c>"token"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("token")]
     Token,
     /// <summary>
+    /// Corresponds to the <c>"tokenList"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("tokenList")]
     TokenList,
     /// <summary>
+    /// Corresponds to the <c>"domRelation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("domRelation")]
     DomRelation,
     /// <summary>
+    /// Corresponds to the <c>"role"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("role")]
     Role,
     /// <summary>
+    /// Corresponds to the <c>"internalRole"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("internalRole")]
     InternalRole,
     /// <summary>
+    /// Corresponds to the <c>"valueUndefined"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("valueUndefined")]
     ValueUndefined,
@@ -447,26 +472,32 @@ public enum AXValueType
 public enum AXValueSourceType
 {
     /// <summary>
+    /// Corresponds to the <c>"attribute"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("attribute")]
     Attribute,
     /// <summary>
+    /// Corresponds to the <c>"implicit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("implicit")]
     Implicit,
     /// <summary>
+    /// Corresponds to the <c>"style"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("style")]
     Style,
     /// <summary>
+    /// Corresponds to the <c>"contents"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("contents")]
     Contents,
     /// <summary>
+    /// Corresponds to the <c>"placeholder"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("placeholder")]
     Placeholder,
     /// <summary>
+    /// Corresponds to the <c>"relatedElement"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("relatedElement")]
     RelatedElement,
@@ -479,42 +510,52 @@ public enum AXValueSourceType
 public enum AXValueNativeSourceType
 {
     /// <summary>
+    /// Corresponds to the <c>"description"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("description")]
     Description,
     /// <summary>
+    /// Corresponds to the <c>"figcaption"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("figcaption")]
     Figcaption,
     /// <summary>
+    /// Corresponds to the <c>"label"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("label")]
     Label,
     /// <summary>
+    /// Corresponds to the <c>"labelfor"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("labelfor")]
     Labelfor,
     /// <summary>
+    /// Corresponds to the <c>"labelwrapped"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("labelwrapped")]
     Labelwrapped,
     /// <summary>
+    /// Corresponds to the <c>"legend"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("legend")]
     Legend,
     /// <summary>
+    /// Corresponds to the <c>"rubyannotation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rubyannotation")]
     Rubyannotation,
     /// <summary>
+    /// Corresponds to the <c>"tablecaption"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("tablecaption")]
     Tablecaption,
     /// <summary>
+    /// Corresponds to the <c>"title"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("title")]
     Title,
     /// <summary>
+    /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
     Other,
@@ -636,234 +677,292 @@ public sealed record AXValue(AXValueType Type)
 public enum AXPropertyName
 {
     /// <summary>
+    /// Corresponds to the <c>"actions"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("actions")]
     Actions,
     /// <summary>
+    /// Corresponds to the <c>"busy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("busy")]
     Busy,
     /// <summary>
+    /// Corresponds to the <c>"disabled"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("disabled")]
     Disabled,
     /// <summary>
+    /// Corresponds to the <c>"editable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("editable")]
     Editable,
     /// <summary>
+    /// Corresponds to the <c>"focusable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("focusable")]
     Focusable,
     /// <summary>
+    /// Corresponds to the <c>"focused"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("focused")]
     Focused,
     /// <summary>
+    /// Corresponds to the <c>"hidden"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hidden")]
     Hidden,
     /// <summary>
+    /// Corresponds to the <c>"hiddenRoot"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hiddenRoot")]
     HiddenRoot,
     /// <summary>
+    /// Corresponds to the <c>"invalid"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("invalid")]
     Invalid,
     /// <summary>
+    /// Corresponds to the <c>"keyshortcuts"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("keyshortcuts")]
     Keyshortcuts,
     /// <summary>
+    /// Corresponds to the <c>"settable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("settable")]
     Settable,
     /// <summary>
+    /// Corresponds to the <c>"roledescription"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("roledescription")]
     Roledescription,
     /// <summary>
+    /// Corresponds to the <c>"live"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("live")]
     Live,
     /// <summary>
+    /// Corresponds to the <c>"atomic"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("atomic")]
     Atomic,
     /// <summary>
+    /// Corresponds to the <c>"relevant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("relevant")]
     Relevant,
     /// <summary>
+    /// Corresponds to the <c>"root"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("root")]
     Root,
     /// <summary>
+    /// Corresponds to the <c>"autocomplete"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autocomplete")]
     Autocomplete,
     /// <summary>
+    /// Corresponds to the <c>"hasPopup"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hasPopup")]
     HasPopup,
     /// <summary>
+    /// Corresponds to the <c>"level"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("level")]
     Level,
     /// <summary>
+    /// Corresponds to the <c>"multiselectable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("multiselectable")]
     Multiselectable,
     /// <summary>
+    /// Corresponds to the <c>"orientation"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("orientation")]
     Orientation,
     /// <summary>
+    /// Corresponds to the <c>"multiline"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("multiline")]
     Multiline,
     /// <summary>
+    /// Corresponds to the <c>"readonly"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("readonly")]
     Readonly,
     /// <summary>
+    /// Corresponds to the <c>"required"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("required")]
     Required,
     /// <summary>
+    /// Corresponds to the <c>"valuemin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("valuemin")]
     Valuemin,
     /// <summary>
+    /// Corresponds to the <c>"valuemax"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("valuemax")]
     Valuemax,
     /// <summary>
+    /// Corresponds to the <c>"valuetext"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("valuetext")]
     Valuetext,
     /// <summary>
+    /// Corresponds to the <c>"checked"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("checked")]
     Checked,
     /// <summary>
+    /// Corresponds to the <c>"expanded"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("expanded")]
     Expanded,
     /// <summary>
+    /// Corresponds to the <c>"modal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("modal")]
     Modal,
     /// <summary>
+    /// Corresponds to the <c>"pressed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pressed")]
     Pressed,
     /// <summary>
+    /// Corresponds to the <c>"selected"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selected")]
     Selected,
     /// <summary>
+    /// Corresponds to the <c>"activedescendant"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activedescendant")]
     Activedescendant,
     /// <summary>
+    /// Corresponds to the <c>"controls"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("controls")]
     Controls,
     /// <summary>
+    /// Corresponds to the <c>"describedby"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("describedby")]
     Describedby,
     /// <summary>
+    /// Corresponds to the <c>"details"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("details")]
     Details,
     /// <summary>
+    /// Corresponds to the <c>"errormessage"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("errormessage")]
     Errormessage,
     /// <summary>
+    /// Corresponds to the <c>"flowto"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("flowto")]
     Flowto,
     /// <summary>
+    /// Corresponds to the <c>"labelledby"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("labelledby")]
     Labelledby,
     /// <summary>
+    /// Corresponds to the <c>"owns"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("owns")]
     Owns,
     /// <summary>
+    /// Corresponds to the <c>"url"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("url")]
     Url,
     /// <summary>
+    /// Corresponds to the <c>"activeFullscreenElement"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activeFullscreenElement")]
     ActiveFullscreenElement,
     /// <summary>
+    /// Corresponds to the <c>"activeModalDialog"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activeModalDialog")]
     ActiveModalDialog,
     /// <summary>
+    /// Corresponds to the <c>"activeAriaModalDialog"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("activeAriaModalDialog")]
     ActiveAriaModalDialog,
     /// <summary>
+    /// Corresponds to the <c>"ariaHiddenElement"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ariaHiddenElement")]
     AriaHiddenElement,
     /// <summary>
+    /// Corresponds to the <c>"ariaHiddenSubtree"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ariaHiddenSubtree")]
     AriaHiddenSubtree,
     /// <summary>
+    /// Corresponds to the <c>"emptyAlt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("emptyAlt")]
     EmptyAlt,
     /// <summary>
+    /// Corresponds to the <c>"emptyText"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("emptyText")]
     EmptyText,
     /// <summary>
+    /// Corresponds to the <c>"inertElement"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inertElement")]
     InertElement,
     /// <summary>
+    /// Corresponds to the <c>"inertSubtree"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inertSubtree")]
     InertSubtree,
     /// <summary>
+    /// Corresponds to the <c>"labelContainer"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("labelContainer")]
     LabelContainer,
     /// <summary>
+    /// Corresponds to the <c>"labelFor"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("labelFor")]
     LabelFor,
     /// <summary>
+    /// Corresponds to the <c>"notRendered"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notRendered")]
     NotRendered,
     /// <summary>
+    /// Corresponds to the <c>"notVisible"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notVisible")]
     NotVisible,
     /// <summary>
+    /// Corresponds to the <c>"presentationalRole"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("presentationalRole")]
     PresentationalRole,
     /// <summary>
+    /// Corresponds to the <c>"probablyPresentational"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("probablyPresentational")]
     ProbablyPresentational,
     /// <summary>
+    /// Corresponds to the <c>"inactiveCarouselTabContent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inactiveCarouselTabContent")]
     InactiveCarouselTabContent,
     /// <summary>
+    /// Corresponds to the <c>"uninteresting"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("uninteresting")]
     Uninteresting,

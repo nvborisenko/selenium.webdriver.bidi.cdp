@@ -22,7 +22,7 @@ public interface IDeviceOrientation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearDeviceOrientationOverrideResult"/>.
     /// </returns>
-    Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Device Orientation.
@@ -45,7 +45,7 @@ public interface IDeviceOrientation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDeviceOrientationOverrideResult"/>.
     /// </returns>
-    Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -54,13 +54,13 @@ internal sealed class DeviceOrientationDomain(CdpModule cdp) : global::Selenium.
 {
     private static readonly DeviceOrientationJsonSerializerContext JsonContext = DeviceOrientationJsonSerializerContext.Default;
 
-    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearDeviceOrientationOverrideResult> ClearDeviceOrientationOverrideAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearDeviceOrientationOverrideCommandParameters();
         return await ExecuteCommandAsync("DeviceOrientation.clearDeviceOrientationOverride", @params, JsonContext.ClearDeviceOrientationOverrideCommandParameters, JsonContext.ClearDeviceOrientationOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDeviceOrientationOverrideResult> SetDeviceOrientationOverrideAsync(double alpha, double beta, double gamma, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceOrientationOverrideCommandParameters(Alpha: alpha, Beta: beta, Gamma: gamma);
         return await ExecuteCommandAsync("DeviceOrientation.setDeviceOrientationOverride", @params, JsonContext.SetDeviceOrientationOverrideCommandParameters, JsonContext.SetDeviceOrientationOverrideResult, session, cancellationToken).ConfigureAwait(false);
@@ -71,6 +71,7 @@ internal sealed class DeviceOrientationDomain(CdpModule cdp) : global::Selenium.
 internal sealed record ClearDeviceOrientationOverrideCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDeviceOrientation.ClearDeviceOrientationOverrideAsync"/> command.
 /// </summary>
 public sealed record ClearDeviceOrientationOverrideResult() : EmptyResult;
 
@@ -78,6 +79,7 @@ public sealed record ClearDeviceOrientationOverrideResult() : EmptyResult;
 internal sealed record SetDeviceOrientationOverrideCommandParameters(double Alpha, double Beta, double Gamma) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDeviceOrientation.SetDeviceOrientationOverrideAsync"/> command.
 /// </summary>
 public sealed record SetDeviceOrientationOverrideResult() : EmptyResult;
 

@@ -28,7 +28,7 @@ public interface IPWA
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetOsAppStateResult"/>.
     /// </returns>
-    Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Installs the given manifest identity, optionally using the given installUrlOrBundleUrl
@@ -73,7 +73,7 @@ public interface IPWA
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="InstallResult"/>.
     /// </returns>
-    Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Uninstalls the given manifest_id and closes any opened app windows.
@@ -89,7 +89,7 @@ public interface IPWA
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="UninstallResult"/>.
     /// </returns>
-    Task<UninstallResult> UninstallAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<UninstallResult> UninstallAsync(string manifestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Launches the installed web app, or an url in the same web app instead of the
@@ -109,7 +109,7 @@ public interface IPWA
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LaunchResult"/>.
     /// </returns>
-    Task<LaunchResult> LaunchAsync(string manifestId, string? url = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<LaunchResult> LaunchAsync(string manifestId, string? url = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Opens one or more local files from an installed web app identified by its
@@ -139,7 +139,7 @@ public interface IPWA
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="LaunchFilesInAppResult"/>.
     /// </returns>
-    Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = default, CancellationToken cancellationToken = default);
+    Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Opens the current page in its web app identified by the manifest id, needs
@@ -157,7 +157,7 @@ public interface IPWA
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OpenCurrentPageInAppResult"/>.
     /// </returns>
-    Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default);
+    Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Changes user settings of the web app identified by its manifestId. If the
@@ -196,7 +196,7 @@ public interface IPWA
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ChangeAppUserSettingsResult"/>.
     /// </returns>
-    Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = default, DisplayMode? displayMode = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = null, DisplayMode? displayMode = null, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -205,43 +205,43 @@ internal sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 {
     private static readonly PWAJsonSerializerContext JsonContext = PWAJsonSerializerContext.Default;
 
-    public async Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetOsAppStateResult> GetOsAppStateAsync(string manifestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetOsAppStateCommandParameters(ManifestId: manifestId);
         return await ExecuteCommandAsync("PWA.getOsAppState", @params, JsonContext.GetOsAppStateCommandParameters, JsonContext.GetOsAppStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<InstallResult> InstallAsync(string manifestId, string? installUrlOrBundleUrl = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new InstallCommandParameters(ManifestId: manifestId, InstallUrlOrBundleUrl: installUrlOrBundleUrl);
         return await ExecuteCommandAsync("PWA.install", @params, JsonContext.InstallCommandParameters, JsonContext.InstallResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<UninstallResult> UninstallAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<UninstallResult> UninstallAsync(string manifestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new UninstallCommandParameters(ManifestId: manifestId);
         return await ExecuteCommandAsync("PWA.uninstall", @params, JsonContext.UninstallCommandParameters, JsonContext.UninstallResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<LaunchResult> LaunchAsync(string manifestId, string? url = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<LaunchResult> LaunchAsync(string manifestId, string? url = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new LaunchCommandParameters(ManifestId: manifestId, Url: url);
         return await ExecuteCommandAsync("PWA.launch", @params, JsonContext.LaunchCommandParameters, JsonContext.LaunchResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<LaunchFilesInAppResult> LaunchFilesInAppAsync(string manifestId, ImmutableArray<string> files, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new LaunchFilesInAppCommandParameters(ManifestId: manifestId, Files: files);
         return await ExecuteCommandAsync("PWA.launchFilesInApp", @params, JsonContext.LaunchFilesInAppCommandParameters, JsonContext.LaunchFilesInAppResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<OpenCurrentPageInAppResult> OpenCurrentPageInAppAsync(string manifestId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new OpenCurrentPageInAppCommandParameters(ManifestId: manifestId);
         return await ExecuteCommandAsync("PWA.openCurrentPageInApp", @params, JsonContext.OpenCurrentPageInAppCommandParameters, JsonContext.OpenCurrentPageInAppResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = default, DisplayMode? displayMode = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ChangeAppUserSettingsResult> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = null, DisplayMode? displayMode = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ChangeAppUserSettingsCommandParameters(ManifestId: manifestId, LinkCapturing: linkCapturing, DisplayMode: displayMode);
         return await ExecuteCommandAsync("PWA.changeAppUserSettings", @params, JsonContext.ChangeAppUserSettingsCommandParameters, JsonContext.ChangeAppUserSettingsResult, session, cancellationToken).ConfigureAwait(false);
@@ -252,6 +252,7 @@ internal sealed class PWADomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
 internal sealed record GetOsAppStateCommandParameters(string ManifestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPWA.GetOsAppStateAsync"/> command.
 /// </summary>
 /// <param name="BadgeCount">
 /// </param>
@@ -263,6 +264,7 @@ public sealed record GetOsAppStateResult(long BadgeCount, ImmutableArray<FileHan
 internal sealed record InstallCommandParameters(string ManifestId, string? InstallUrlOrBundleUrl) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPWA.InstallAsync"/> command.
 /// </summary>
 public sealed record InstallResult() : EmptyResult;
 
@@ -270,6 +272,7 @@ public sealed record InstallResult() : EmptyResult;
 internal sealed record UninstallCommandParameters(string ManifestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPWA.UninstallAsync"/> command.
 /// </summary>
 public sealed record UninstallResult() : EmptyResult;
 
@@ -277,6 +280,7 @@ public sealed record UninstallResult() : EmptyResult;
 internal sealed record LaunchCommandParameters(string ManifestId, string? Url) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPWA.LaunchAsync"/> command.
 /// </summary>
 /// <param name="TargetId">
 /// ID of the tab target created as a result.
@@ -287,6 +291,7 @@ public sealed record LaunchResult(Target.TargetID TargetId) : EmptyResult;
 internal sealed record LaunchFilesInAppCommandParameters(string ManifestId, ImmutableArray<string> Files) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPWA.LaunchFilesInAppAsync"/> command.
 /// </summary>
 /// <param name="TargetIds">
 /// IDs of the tab targets created as the result.
@@ -297,6 +302,7 @@ public sealed record LaunchFilesInAppResult(ImmutableArray<Target.TargetID> Targ
 internal sealed record OpenCurrentPageInAppCommandParameters(string ManifestId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPWA.OpenCurrentPageInAppAsync"/> command.
 /// </summary>
 public sealed record OpenCurrentPageInAppResult() : EmptyResult;
 
@@ -304,6 +310,7 @@ public sealed record OpenCurrentPageInAppResult() : EmptyResult;
 internal sealed record ChangeAppUserSettingsCommandParameters(string ManifestId, bool? LinkCapturing, DisplayMode? DisplayMode) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IPWA.ChangeAppUserSettingsAsync"/> command.
 /// </summary>
 public sealed record ChangeAppUserSettingsResult() : EmptyResult;
 
@@ -341,10 +348,12 @@ public sealed record FileHandler(string Action, ImmutableArray<FileHandlerAccept
 public enum DisplayMode
 {
     /// <summary>
+    /// Corresponds to the <c>"standalone"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("standalone")]
     Standalone,
     /// <summary>
+    /// Corresponds to the <c>"browser"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("browser")]
     Browser,

@@ -38,7 +38,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearObjectStoreResult"/>.
     /// </returns>
-    Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a database.
@@ -65,7 +65,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteDatabaseResult"/>.
     /// </returns>
-    Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete a range of entries from an object store
@@ -96,7 +96,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DeleteObjectStoreEntriesResult"/>.
     /// </returns>
-    Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables events from backend.
@@ -110,7 +110,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Enables events from backend.
@@ -124,7 +124,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests data from object store or index.
@@ -166,7 +166,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestDataResult"/>.
     /// </returns>
-    Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? indexName = default, KeyRange? keyRange = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? indexName = null, KeyRange? keyRange = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets metadata of an object store.
@@ -196,7 +196,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetMetadataResult"/>.
     /// </returns>
-    Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests database with given name in given frame.
@@ -223,7 +223,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestDatabaseResult"/>.
     /// </returns>
-    Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Requests database names for given security origin.
@@ -247,7 +247,7 @@ public interface IIndexedDB
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RequestDatabaseNamesResult"/>.
     /// </returns>
-    Task<RequestDatabaseNamesResult> RequestDatabaseNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RequestDatabaseNamesResult> RequestDatabaseNamesAsync(string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -256,55 +256,55 @@ internal sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDrive
 {
     private static readonly IndexedDBJsonSerializerContext JsonContext = IndexedDBJsonSerializerContext.Default;
 
-    public async Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearObjectStoreResult> ClearObjectStoreAsync(string databaseName, string objectStoreName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearObjectStoreCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
         return await ExecuteCommandAsync("IndexedDB.clearObjectStore", @params, JsonContext.ClearObjectStoreCommandParameters, JsonContext.ClearObjectStoreResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteDatabaseResult> DeleteDatabaseAsync(string databaseName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
         return await ExecuteCommandAsync("IndexedDB.deleteDatabase", @params, JsonContext.DeleteDatabaseCommandParameters, JsonContext.DeleteDatabaseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DeleteObjectStoreEntriesResult> DeleteObjectStoreEntriesAsync(string databaseName, string objectStoreName, KeyRange keyRange, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DeleteObjectStoreEntriesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, KeyRange: keyRange);
         return await ExecuteCommandAsync("IndexedDB.deleteObjectStoreEntries", @params, JsonContext.DeleteObjectStoreEntriesCommandParameters, JsonContext.DeleteObjectStoreEntriesResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("IndexedDB.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("IndexedDB.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? indexName = default, KeyRange? keyRange = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestDataResult> RequestDataAsync(string databaseName, string objectStoreName, long skipCount, long pageSize, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? indexName = null, KeyRange? keyRange = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestDataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName, IndexName: indexName, SkipCount: skipCount, PageSize: pageSize, KeyRange: keyRange);
         return await ExecuteCommandAsync("IndexedDB.requestData", @params, JsonContext.RequestDataCommandParameters, JsonContext.RequestDataResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetMetadataResult> GetMetadataAsync(string databaseName, string objectStoreName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetMetadataCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName, ObjectStoreName: objectStoreName);
         return await ExecuteCommandAsync("IndexedDB.getMetadata", @params, JsonContext.GetMetadataCommandParameters, JsonContext.GetMetadataResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestDatabaseResult> RequestDatabaseAsync(string databaseName, string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestDatabaseCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket, DatabaseName: databaseName);
         return await ExecuteCommandAsync("IndexedDB.requestDatabase", @params, JsonContext.RequestDatabaseCommandParameters, JsonContext.RequestDatabaseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RequestDatabaseNamesResult> RequestDatabaseNamesAsync(string? securityOrigin = default, string? storageKey = default, Storage.StorageBucket? storageBucket = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RequestDatabaseNamesResult> RequestDatabaseNamesAsync(string? securityOrigin = null, string? storageKey = null, Storage.StorageBucket? storageBucket = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RequestDatabaseNamesCommandParameters(SecurityOrigin: securityOrigin, StorageKey: storageKey, StorageBucket: storageBucket);
         return await ExecuteCommandAsync("IndexedDB.requestDatabaseNames", @params, JsonContext.RequestDatabaseNamesCommandParameters, JsonContext.RequestDatabaseNamesResult, session, cancellationToken).ConfigureAwait(false);
@@ -315,6 +315,7 @@ internal sealed class IndexedDBDomain(CdpModule cdp) : global::Selenium.WebDrive
 internal sealed record ClearObjectStoreCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName, string ObjectStoreName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.ClearObjectStoreAsync"/> command.
 /// </summary>
 public sealed record ClearObjectStoreResult() : EmptyResult;
 
@@ -322,6 +323,7 @@ public sealed record ClearObjectStoreResult() : EmptyResult;
 internal sealed record DeleteDatabaseCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.DeleteDatabaseAsync"/> command.
 /// </summary>
 public sealed record DeleteDatabaseResult() : EmptyResult;
 
@@ -329,6 +331,7 @@ public sealed record DeleteDatabaseResult() : EmptyResult;
 internal sealed record DeleteObjectStoreEntriesCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName, string ObjectStoreName, KeyRange KeyRange) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.DeleteObjectStoreEntriesAsync"/> command.
 /// </summary>
 public sealed record DeleteObjectStoreEntriesResult() : EmptyResult;
 
@@ -336,6 +339,7 @@ public sealed record DeleteObjectStoreEntriesResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -343,6 +347,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -350,6 +355,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record RequestDataCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName, string ObjectStoreName, string? IndexName, long SkipCount, long PageSize, KeyRange? KeyRange) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.RequestDataAsync"/> command.
 /// </summary>
 /// <param name="ObjectStoreDataEntries">
 /// Array of object store data entries.
@@ -363,6 +369,7 @@ public sealed record RequestDataResult(ImmutableArray<DataEntry> ObjectStoreData
 internal sealed record GetMetadataCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName, string ObjectStoreName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.GetMetadataAsync"/> command.
 /// </summary>
 /// <param name="EntriesCount">
 /// the entries count
@@ -378,6 +385,7 @@ public sealed record GetMetadataResult(double EntriesCount, double KeyGeneratorV
 internal sealed record RequestDatabaseCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket, string DatabaseName) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.RequestDatabaseAsync"/> command.
 /// </summary>
 /// <param name="DatabaseWithObjectStores">
 /// Database with an array of object stores.
@@ -388,6 +396,7 @@ public sealed record RequestDatabaseResult(DatabaseWithObjectStores DatabaseWith
 internal sealed record RequestDatabaseNamesCommandParameters(string? SecurityOrigin, string? StorageKey, Storage.StorageBucket? StorageBucket) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IIndexedDB.RequestDatabaseNamesAsync"/> command.
 /// </summary>
 /// <param name="DatabaseNames">
 /// Database names for origin.
@@ -542,18 +551,22 @@ public sealed record KeyPath(KeyPathType Type)
 public enum KeyType
 {
     /// <summary>
+    /// Corresponds to the <c>"number"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
     Number,
     /// <summary>
+    /// Corresponds to the <c>"string"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
     String,
     /// <summary>
+    /// Corresponds to the <c>"date"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
     Date,
     /// <summary>
+    /// Corresponds to the <c>"array"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
     Array,
@@ -565,14 +578,17 @@ public enum KeyType
 public enum KeyPathType
 {
     /// <summary>
+    /// Corresponds to the <c>"null"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
     Null,
     /// <summary>
+    /// Corresponds to the <c>"string"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
     String,
     /// <summary>
+    /// Corresponds to the <c>"array"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
     Array,

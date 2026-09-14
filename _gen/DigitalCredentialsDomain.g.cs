@@ -38,7 +38,7 @@ public interface IDigitalCredentials
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetVirtualWalletBehaviorResult"/>.
     /// </returns>
-    Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = default, global::System.Text.Json.JsonElement? response = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = null, global::System.Text.Json.JsonElement? response = null, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -47,7 +47,7 @@ internal sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium
 {
     private static readonly DigitalCredentialsJsonSerializerContext JsonContext = DigitalCredentialsJsonSerializerContext.Default;
 
-    public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = default, global::System.Text.Json.JsonElement? response = default, Page.FrameId? frameId = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetVirtualWalletBehaviorResult> SetVirtualWalletBehaviorAsync(VirtualWalletAction action, string? protocol = null, global::System.Text.Json.JsonElement? response = null, Page.FrameId? frameId = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetVirtualWalletBehaviorCommandParameters(Action: action, Protocol: protocol, Response: response, FrameId: frameId);
         return await ExecuteCommandAsync("DigitalCredentials.setVirtualWalletBehavior", @params, JsonContext.SetVirtualWalletBehaviorCommandParameters, JsonContext.SetVirtualWalletBehaviorResult, session, cancellationToken).ConfigureAwait(false);
@@ -58,6 +58,7 @@ internal sealed class DigitalCredentialsDomain(CdpModule cdp) : global::Selenium
 internal sealed record SetVirtualWalletBehaviorCommandParameters(VirtualWalletAction Action, string? Protocol, global::System.Text.Json.JsonElement? Response, Page.FrameId? FrameId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IDigitalCredentials.SetVirtualWalletBehaviorAsync"/> command.
 /// </summary>
 public sealed record SetVirtualWalletBehaviorResult() : EmptyResult;
 
@@ -69,18 +70,22 @@ public sealed record SetVirtualWalletBehaviorResult() : EmptyResult;
 public enum VirtualWalletAction
 {
     /// <summary>
+    /// Corresponds to the <c>"respond"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("respond")]
     Respond,
     /// <summary>
+    /// Corresponds to the <c>"decline"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("decline")]
     Decline,
     /// <summary>
+    /// Corresponds to the <c>"wait"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wait")]
     Wait,
     /// <summary>
+    /// Corresponds to the <c>"clear"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clear")]
     Clear,

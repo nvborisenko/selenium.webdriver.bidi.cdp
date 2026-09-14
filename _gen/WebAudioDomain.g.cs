@@ -24,7 +24,7 @@ public interface IWebAudio
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables the WebAudio domain.
@@ -38,7 +38,7 @@ public interface IWebAudio
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fetch the realtime data from the registered contexts.
@@ -54,7 +54,7 @@ public interface IWebAudio
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetRealtimeDataResult"/>.
     /// </returns>
-    Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Notifies that a new BaseAudioContext has been created.
@@ -224,19 +224,19 @@ internal sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver
 {
     private static readonly WebAudioJsonSerializerContext JsonContext = WebAudioJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters();
         return await ExecuteCommandAsync("WebAudio.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("WebAudio.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetRealtimeDataResult> GetRealtimeDataAsync(GraphObjectId contextId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetRealtimeDataCommandParameters(ContextId: contextId);
         return await ExecuteCommandAsync("WebAudio.getRealtimeData", @params, JsonContext.GetRealtimeDataCommandParameters, JsonContext.GetRealtimeDataResult, session, cancellationToken).ConfigureAwait(false);
@@ -260,6 +260,7 @@ internal sealed class WebAudioDomain(CdpModule cdp) : global::Selenium.WebDriver
 internal sealed record EnableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAudio.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -267,6 +268,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAudio.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -274,6 +276,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record GetRealtimeDataCommandParameters(GraphObjectId ContextId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAudio.GetRealtimeDataAsync"/> command.
 /// </summary>
 /// <param name="RealtimeData">
 /// </param>
@@ -423,10 +426,12 @@ public record GraphObjectId : IStringRemoteId
 public enum ContextType
 {
     /// <summary>
+    /// Corresponds to the <c>"realtime"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("realtime")]
     Realtime,
     /// <summary>
+    /// Corresponds to the <c>"offline"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("offline")]
     Offline,
@@ -439,18 +444,22 @@ public enum ContextType
 public enum ContextState
 {
     /// <summary>
+    /// Corresponds to the <c>"suspended"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("suspended")]
     Suspended,
     /// <summary>
+    /// Corresponds to the <c>"running"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("running")]
     Running,
     /// <summary>
+    /// Corresponds to the <c>"closed"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("closed")]
     Closed,
     /// <summary>
+    /// Corresponds to the <c>"interrupted"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("interrupted")]
     Interrupted,
@@ -472,14 +481,17 @@ public record NodeType : IStringRemoteId
 public enum ChannelCountMode
 {
     /// <summary>
+    /// Corresponds to the <c>"clamped-max"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clamped-max")]
     ClampedMax,
     /// <summary>
+    /// Corresponds to the <c>"explicit"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("explicit")]
     Explicit,
     /// <summary>
+    /// Corresponds to the <c>"max"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("max")]
     Max,
@@ -492,10 +504,12 @@ public enum ChannelCountMode
 public enum ChannelInterpretation
 {
     /// <summary>
+    /// Corresponds to the <c>"discrete"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("discrete")]
     Discrete,
     /// <summary>
+    /// Corresponds to the <c>"speakers"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("speakers")]
     Speakers,
@@ -517,10 +531,12 @@ public record ParamType : IStringRemoteId
 public enum AutomationRate
 {
     /// <summary>
+    /// Corresponds to the <c>"a-rate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("a-rate")]
     ARate,
     /// <summary>
+    /// Corresponds to the <c>"k-rate"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("k-rate")]
     KRate,

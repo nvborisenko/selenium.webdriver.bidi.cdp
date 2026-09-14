@@ -23,7 +23,7 @@ public interface IFileSystem
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetDirectoryResult"/>.
     /// </returns>
-    Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = null, CancellationToken cancellationToken = default);
 
 }
 
@@ -32,7 +32,7 @@ internal sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriv
 {
     private static readonly FileSystemJsonSerializerContext JsonContext = FileSystemJsonSerializerContext.Default;
 
-    public async Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetDirectoryResult> GetDirectoryAsync(BucketFileSystemLocator bucketFileSystemLocator, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetDirectoryCommandParameters(BucketFileSystemLocator: bucketFileSystemLocator);
         return await ExecuteCommandAsync("FileSystem.getDirectory", @params, JsonContext.GetDirectoryCommandParameters, JsonContext.GetDirectoryResult, session, cancellationToken).ConfigureAwait(false);
@@ -43,6 +43,7 @@ internal sealed class FileSystemDomain(CdpModule cdp) : global::Selenium.WebDriv
 internal sealed record GetDirectoryCommandParameters(BucketFileSystemLocator BucketFileSystemLocator) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFileSystem.GetDirectoryAsync"/> command.
 /// </summary>
 /// <param name="Directory">
 /// Returns the directory object at the path.

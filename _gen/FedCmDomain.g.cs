@@ -27,7 +27,7 @@ public interface IFedCm
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(bool? disableRejectionDelay = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(bool? disableRejectionDelay = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -40,7 +40,7 @@ public interface IFedCm
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -57,7 +57,7 @@ public interface IFedCm
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SelectAccountResult"/>.
     /// </returns>
-    Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = default, CancellationToken cancellationToken = default);
+    Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -74,7 +74,7 @@ public interface IFedCm
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClickDialogButtonResult"/>.
     /// </returns>
-    Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -93,7 +93,7 @@ public interface IFedCm
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="OpenUrlResult"/>.
     /// </returns>
-    Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = default, CancellationToken cancellationToken = default);
+    Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -110,7 +110,7 @@ public interface IFedCm
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DismissDialogResult"/>.
     /// </returns>
-    Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resets the cooldown time, if any, to allow the next FedCM call to show
@@ -125,7 +125,7 @@ public interface IFedCm
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResetCooldownResult"/>.
     /// </returns>
-    Task<ResetCooldownResult> ResetCooldownAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<ResetCooldownResult> ResetCooldownAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -161,43 +161,43 @@ internal sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 {
     private static readonly FedCmJsonSerializerContext JsonContext = FedCmJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(bool? disableRejectionDelay = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(bool? disableRejectionDelay = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(DisableRejectionDelay: disableRejectionDelay);
         return await ExecuteCommandAsync("FedCm.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("FedCm.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SelectAccountResult> SelectAccountAsync(string dialogId, long accountIndex, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SelectAccountCommandParameters(DialogId: dialogId, AccountIndex: accountIndex);
         return await ExecuteCommandAsync("FedCm.selectAccount", @params, JsonContext.SelectAccountCommandParameters, JsonContext.SelectAccountResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClickDialogButtonResult> ClickDialogButtonAsync(string dialogId, DialogButton dialogButton, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClickDialogButtonCommandParameters(DialogId: dialogId, DialogButton: dialogButton);
         return await ExecuteCommandAsync("FedCm.clickDialogButton", @params, JsonContext.ClickDialogButtonCommandParameters, JsonContext.ClickDialogButtonResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<OpenUrlResult> OpenUrlAsync(string dialogId, long accountIndex, AccountUrlType accountUrlType, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new OpenUrlCommandParameters(DialogId: dialogId, AccountIndex: accountIndex, AccountUrlType: accountUrlType);
         return await ExecuteCommandAsync("FedCm.openUrl", @params, JsonContext.OpenUrlCommandParameters, JsonContext.OpenUrlResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DismissDialogResult> DismissDialogAsync(string dialogId, bool? triggerCooldown = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DismissDialogCommandParameters(DialogId: dialogId, TriggerCooldown: triggerCooldown);
         return await ExecuteCommandAsync("FedCm.dismissDialog", @params, JsonContext.DismissDialogCommandParameters, JsonContext.DismissDialogResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ResetCooldownResult> ResetCooldownAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ResetCooldownResult> ResetCooldownAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResetCooldownCommandParameters();
         return await ExecuteCommandAsync("FedCm.resetCooldown", @params, JsonContext.ResetCooldownCommandParameters, JsonContext.ResetCooldownResult, session, cancellationToken).ConfigureAwait(false);
@@ -210,6 +210,7 @@ internal sealed class FedCmDomain(CdpModule cdp) : global::Selenium.WebDriver.Bi
 internal sealed record EnableCommandParameters(bool? DisableRejectionDelay) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFedCm.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -217,6 +218,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFedCm.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -224,6 +226,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record SelectAccountCommandParameters(string DialogId, long AccountIndex) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFedCm.SelectAccountAsync"/> command.
 /// </summary>
 public sealed record SelectAccountResult() : EmptyResult;
 
@@ -231,6 +234,7 @@ public sealed record SelectAccountResult() : EmptyResult;
 internal sealed record ClickDialogButtonCommandParameters(string DialogId, DialogButton DialogButton) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFedCm.ClickDialogButtonAsync"/> command.
 /// </summary>
 public sealed record ClickDialogButtonResult() : EmptyResult;
 
@@ -238,6 +242,7 @@ public sealed record ClickDialogButtonResult() : EmptyResult;
 internal sealed record OpenUrlCommandParameters(string DialogId, long AccountIndex, AccountUrlType AccountUrlType) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFedCm.OpenUrlAsync"/> command.
 /// </summary>
 public sealed record OpenUrlResult() : EmptyResult;
 
@@ -245,6 +250,7 @@ public sealed record OpenUrlResult() : EmptyResult;
 internal sealed record DismissDialogCommandParameters(string DialogId, bool? TriggerCooldown) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFedCm.DismissDialogAsync"/> command.
 /// </summary>
 public sealed record DismissDialogResult() : EmptyResult;
 
@@ -252,6 +258,7 @@ public sealed record DismissDialogResult() : EmptyResult;
 internal sealed record ResetCooldownCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IFedCm.ResetCooldownAsync"/> command.
 /// </summary>
 public sealed record ResetCooldownResult() : EmptyResult;
 
@@ -288,10 +295,12 @@ public sealed record DialogClosedEventArgs(string DialogId) : OpenQA.Selenium.Bi
 public enum LoginState
 {
     /// <summary>
+    /// Corresponds to the <c>"SignIn"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignIn")]
     SignIn,
     /// <summary>
+    /// Corresponds to the <c>"SignUp"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignUp")]
     SignUp,
@@ -304,18 +313,22 @@ public enum LoginState
 public enum DialogType
 {
     /// <summary>
+    /// Corresponds to the <c>"AccountChooser"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AccountChooser")]
     AccountChooser,
     /// <summary>
+    /// Corresponds to the <c>"AutoReauthn"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AutoReauthn")]
     AutoReauthn,
     /// <summary>
+    /// Corresponds to the <c>"ConfirmIdpLogin"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfirmIdpLogin")]
     ConfirmIdpLogin,
     /// <summary>
+    /// Corresponds to the <c>"Error"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Error")]
     Error,
@@ -328,14 +341,17 @@ public enum DialogType
 public enum DialogButton
 {
     /// <summary>
+    /// Corresponds to the <c>"ConfirmIdpLoginContinue"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ConfirmIdpLoginContinue")]
     ConfirmIdpLoginContinue,
     /// <summary>
+    /// Corresponds to the <c>"ErrorGotIt"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ErrorGotIt")]
     ErrorGotIt,
     /// <summary>
+    /// Corresponds to the <c>"ErrorMoreDetails"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ErrorMoreDetails")]
     ErrorMoreDetails,
@@ -348,10 +364,12 @@ public enum DialogButton
 public enum AccountUrlType
 {
     /// <summary>
+    /// Corresponds to the <c>"TermsOfService"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TermsOfService")]
     TermsOfService,
     /// <summary>
+    /// Corresponds to the <c>"PrivacyPolicy"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrivacyPolicy")]
     PrivacyPolicy,

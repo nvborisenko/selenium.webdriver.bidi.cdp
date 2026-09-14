@@ -32,7 +32,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(bool? enableUI = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(bool? enableUI = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disable the WebAuthn domain.
@@ -46,7 +46,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates and adds a virtual authenticator.
@@ -62,7 +62,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddVirtualAuthenticatorResult"/>.
     /// </returns>
-    Task<AddVirtualAuthenticatorResult> AddVirtualAuthenticatorAsync(VirtualAuthenticatorOptions options, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddVirtualAuthenticatorResult> AddVirtualAuthenticatorAsync(VirtualAuthenticatorOptions options, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resets parameters isBogusSignature, isBadUV, isBadUP to false if they are not present.
@@ -90,7 +90,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetResponseOverrideBitsResult"/>.
     /// </returns>
-    Task<SetResponseOverrideBitsResult> SetResponseOverrideBitsAsync(AuthenticatorId authenticatorId, bool? isBogusSignature = default, bool? isBadUV = default, bool? isBadUP = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetResponseOverrideBitsResult> SetResponseOverrideBitsAsync(AuthenticatorId authenticatorId, bool? isBogusSignature = null, bool? isBadUV = null, bool? isBadUP = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the given authenticator.
@@ -106,7 +106,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveVirtualAuthenticatorResult"/>.
     /// </returns>
-    Task<RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorAsync(AuthenticatorId authenticatorId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Adds the credential to the specified authenticator.
@@ -124,7 +124,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddCredentialResult"/>.
     /// </returns>
-    Task<AddCredentialResult> AddCredentialAsync(AuthenticatorId authenticatorId, Credential credential, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddCredentialResult> AddCredentialAsync(AuthenticatorId authenticatorId, Credential credential, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a single credential stored in the given virtual authenticator that
@@ -143,7 +143,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCredentialResult"/>.
     /// </returns>
-    Task<GetCredentialResult> GetCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetCredentialResult> GetCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns all the credentials stored in the given virtual authenticator.
@@ -159,7 +159,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetCredentialsResult"/>.
     /// </returns>
-    Task<GetCredentialsResult> GetCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetCredentialsResult> GetCredentialsAsync(AuthenticatorId authenticatorId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes a credential from the authenticator.
@@ -177,7 +177,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveCredentialResult"/>.
     /// </returns>
-    Task<RemoveCredentialResult> RemoveCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveCredentialResult> RemoveCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears all the credentials from the specified device.
@@ -193,7 +193,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearCredentialsResult"/>.
     /// </returns>
-    Task<ClearCredentialsResult> ClearCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearCredentialsResult> ClearCredentialsAsync(AuthenticatorId authenticatorId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets whether User Verification succeeds or fails for an authenticator.
@@ -212,7 +212,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetUserVerifiedResult"/>.
     /// </returns>
-    Task<SetUserVerifiedResult> SetUserVerifiedAsync(AuthenticatorId authenticatorId, bool isUserVerified, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetUserVerifiedResult> SetUserVerifiedAsync(AuthenticatorId authenticatorId, bool isUserVerified, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets whether tests of user presence will succeed immediately (if true) or fail to resolve (if false) for an authenticator.
@@ -231,7 +231,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetAutomaticPresenceSimulationResult"/>.
     /// </returns>
-    Task<SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationAsync(AuthenticatorId authenticatorId, bool enabled, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationAsync(AuthenticatorId authenticatorId, bool enabled, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows setting credential properties.
@@ -264,7 +264,7 @@ public interface IWebAuthn
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetCredentialPropertiesResult"/>.
     /// </returns>
-    Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, double? signCount = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = null, bool? backupState = null, long? activeCmtgKeyIndex = null, bool? generateCmtgKeyOnNextOperation = null, double? signCount = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Triggered when a credential is added to an authenticator.
@@ -323,79 +323,79 @@ internal sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver
 {
     private static readonly WebAuthnJsonSerializerContext JsonContext = WebAuthnJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(bool? enableUI = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(bool? enableUI = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(EnableUI: enableUI);
         return await ExecuteCommandAsync("WebAuthn.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("WebAuthn.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddVirtualAuthenticatorResult> AddVirtualAuthenticatorAsync(VirtualAuthenticatorOptions options, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddVirtualAuthenticatorResult> AddVirtualAuthenticatorAsync(VirtualAuthenticatorOptions options, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddVirtualAuthenticatorCommandParameters(Options: options);
         return await ExecuteCommandAsync("WebAuthn.addVirtualAuthenticator", @params, JsonContext.AddVirtualAuthenticatorCommandParameters, JsonContext.AddVirtualAuthenticatorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetResponseOverrideBitsResult> SetResponseOverrideBitsAsync(AuthenticatorId authenticatorId, bool? isBogusSignature = default, bool? isBadUV = default, bool? isBadUP = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetResponseOverrideBitsResult> SetResponseOverrideBitsAsync(AuthenticatorId authenticatorId, bool? isBogusSignature = null, bool? isBadUV = null, bool? isBadUP = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetResponseOverrideBitsCommandParameters(AuthenticatorId: authenticatorId, IsBogusSignature: isBogusSignature, IsBadUV: isBadUV, IsBadUP: isBadUP);
         return await ExecuteCommandAsync("WebAuthn.setResponseOverrideBits", @params, JsonContext.SetResponseOverrideBitsCommandParameters, JsonContext.SetResponseOverrideBitsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveVirtualAuthenticatorResult> RemoveVirtualAuthenticatorAsync(AuthenticatorId authenticatorId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveVirtualAuthenticatorCommandParameters(AuthenticatorId: authenticatorId);
         return await ExecuteCommandAsync("WebAuthn.removeVirtualAuthenticator", @params, JsonContext.RemoveVirtualAuthenticatorCommandParameters, JsonContext.RemoveVirtualAuthenticatorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddCredentialResult> AddCredentialAsync(AuthenticatorId authenticatorId, Credential credential, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddCredentialResult> AddCredentialAsync(AuthenticatorId authenticatorId, Credential credential, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddCredentialCommandParameters(AuthenticatorId: authenticatorId, Credential: credential);
         return await ExecuteCommandAsync("WebAuthn.addCredential", @params, JsonContext.AddCredentialCommandParameters, JsonContext.AddCredentialResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetCredentialResult> GetCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetCredentialResult> GetCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetCredentialCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId);
         return await ExecuteCommandAsync("WebAuthn.getCredential", @params, JsonContext.GetCredentialCommandParameters, JsonContext.GetCredentialResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetCredentialsResult> GetCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetCredentialsResult> GetCredentialsAsync(AuthenticatorId authenticatorId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetCredentialsCommandParameters(AuthenticatorId: authenticatorId);
         return await ExecuteCommandAsync("WebAuthn.getCredentials", @params, JsonContext.GetCredentialsCommandParameters, JsonContext.GetCredentialsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveCredentialResult> RemoveCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveCredentialResult> RemoveCredentialAsync(AuthenticatorId authenticatorId, string credentialId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveCredentialCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId);
         return await ExecuteCommandAsync("WebAuthn.removeCredential", @params, JsonContext.RemoveCredentialCommandParameters, JsonContext.RemoveCredentialResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearCredentialsResult> ClearCredentialsAsync(AuthenticatorId authenticatorId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearCredentialsResult> ClearCredentialsAsync(AuthenticatorId authenticatorId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearCredentialsCommandParameters(AuthenticatorId: authenticatorId);
         return await ExecuteCommandAsync("WebAuthn.clearCredentials", @params, JsonContext.ClearCredentialsCommandParameters, JsonContext.ClearCredentialsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetUserVerifiedResult> SetUserVerifiedAsync(AuthenticatorId authenticatorId, bool isUserVerified, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetUserVerifiedResult> SetUserVerifiedAsync(AuthenticatorId authenticatorId, bool isUserVerified, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetUserVerifiedCommandParameters(AuthenticatorId: authenticatorId, IsUserVerified: isUserVerified);
         return await ExecuteCommandAsync("WebAuthn.setUserVerified", @params, JsonContext.SetUserVerifiedCommandParameters, JsonContext.SetUserVerifiedResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationAsync(AuthenticatorId authenticatorId, bool enabled, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetAutomaticPresenceSimulationResult> SetAutomaticPresenceSimulationAsync(AuthenticatorId authenticatorId, bool enabled, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetAutomaticPresenceSimulationCommandParameters(AuthenticatorId: authenticatorId, Enabled: enabled);
         return await ExecuteCommandAsync("WebAuthn.setAutomaticPresenceSimulation", @params, JsonContext.SetAutomaticPresenceSimulationCommandParameters, JsonContext.SetAutomaticPresenceSimulationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = default, bool? backupState = default, long? activeCmtgKeyIndex = default, bool? generateCmtgKeyOnNextOperation = default, double? signCount = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCredentialPropertiesResult> SetCredentialPropertiesAsync(AuthenticatorId authenticatorId, string credentialId, bool? backupEligibility = null, bool? backupState = null, long? activeCmtgKeyIndex = null, bool? generateCmtgKeyOnNextOperation = null, double? signCount = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetCredentialPropertiesCommandParameters(AuthenticatorId: authenticatorId, CredentialId: credentialId, BackupEligibility: backupEligibility, BackupState: backupState, ActiveCmtgKeyIndex: activeCmtgKeyIndex, GenerateCmtgKeyOnNextOperation: generateCmtgKeyOnNextOperation, SignCount: signCount);
         return await ExecuteCommandAsync("WebAuthn.setCredentialProperties", @params, JsonContext.SetCredentialPropertiesCommandParameters, JsonContext.SetCredentialPropertiesResult, session, cancellationToken).ConfigureAwait(false);
@@ -410,6 +410,7 @@ internal sealed class WebAuthnDomain(CdpModule cdp) : global::Selenium.WebDriver
 internal sealed record EnableCommandParameters(bool? EnableUI) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -417,6 +418,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -424,6 +426,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record AddVirtualAuthenticatorCommandParameters(VirtualAuthenticatorOptions Options) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.AddVirtualAuthenticatorAsync"/> command.
 /// </summary>
 /// <param name="AuthenticatorId">
 /// </param>
@@ -433,6 +436,7 @@ public sealed record AddVirtualAuthenticatorResult(AuthenticatorId Authenticator
 internal sealed record SetResponseOverrideBitsCommandParameters(AuthenticatorId AuthenticatorId, bool? IsBogusSignature, bool? IsBadUV, bool? IsBadUP) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.SetResponseOverrideBitsAsync"/> command.
 /// </summary>
 public sealed record SetResponseOverrideBitsResult() : EmptyResult;
 
@@ -440,6 +444,7 @@ public sealed record SetResponseOverrideBitsResult() : EmptyResult;
 internal sealed record RemoveVirtualAuthenticatorCommandParameters(AuthenticatorId AuthenticatorId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.RemoveVirtualAuthenticatorAsync"/> command.
 /// </summary>
 public sealed record RemoveVirtualAuthenticatorResult() : EmptyResult;
 
@@ -447,6 +452,7 @@ public sealed record RemoveVirtualAuthenticatorResult() : EmptyResult;
 internal sealed record AddCredentialCommandParameters(AuthenticatorId AuthenticatorId, Credential Credential) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.AddCredentialAsync"/> command.
 /// </summary>
 public sealed record AddCredentialResult() : EmptyResult;
 
@@ -454,6 +460,7 @@ public sealed record AddCredentialResult() : EmptyResult;
 internal sealed record GetCredentialCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.GetCredentialAsync"/> command.
 /// </summary>
 /// <param name="Credential">
 /// </param>
@@ -463,6 +470,7 @@ public sealed record GetCredentialResult(Credential Credential) : EmptyResult;
 internal sealed record GetCredentialsCommandParameters(AuthenticatorId AuthenticatorId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.GetCredentialsAsync"/> command.
 /// </summary>
 /// <param name="Credentials">
 /// </param>
@@ -472,6 +480,7 @@ public sealed record GetCredentialsResult(ImmutableArray<Credential> Credentials
 internal sealed record RemoveCredentialCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.RemoveCredentialAsync"/> command.
 /// </summary>
 public sealed record RemoveCredentialResult() : EmptyResult;
 
@@ -479,6 +488,7 @@ public sealed record RemoveCredentialResult() : EmptyResult;
 internal sealed record ClearCredentialsCommandParameters(AuthenticatorId AuthenticatorId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.ClearCredentialsAsync"/> command.
 /// </summary>
 public sealed record ClearCredentialsResult() : EmptyResult;
 
@@ -486,6 +496,7 @@ public sealed record ClearCredentialsResult() : EmptyResult;
 internal sealed record SetUserVerifiedCommandParameters(AuthenticatorId AuthenticatorId, bool IsUserVerified) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.SetUserVerifiedAsync"/> command.
 /// </summary>
 public sealed record SetUserVerifiedResult() : EmptyResult;
 
@@ -493,6 +504,7 @@ public sealed record SetUserVerifiedResult() : EmptyResult;
 internal sealed record SetAutomaticPresenceSimulationCommandParameters(AuthenticatorId AuthenticatorId, bool Enabled) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.SetAutomaticPresenceSimulationAsync"/> command.
 /// </summary>
 public sealed record SetAutomaticPresenceSimulationResult() : EmptyResult;
 
@@ -500,6 +512,7 @@ public sealed record SetAutomaticPresenceSimulationResult() : EmptyResult;
 internal sealed record SetCredentialPropertiesCommandParameters(AuthenticatorId AuthenticatorId, string CredentialId, bool? BackupEligibility, bool? BackupState, long? ActiveCmtgKeyIndex, bool? GenerateCmtgKeyOnNextOperation, double? SignCount) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IWebAuthn.SetCredentialPropertiesAsync"/> command.
 /// </summary>
 public sealed record SetCredentialPropertiesResult() : EmptyResult;
 
@@ -556,10 +569,12 @@ public record AuthenticatorId : IStringRemoteId
 public enum AuthenticatorProtocol
 {
     /// <summary>
+    /// Corresponds to the <c>"u2f"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("u2f")]
     U2f,
     /// <summary>
+    /// Corresponds to the <c>"ctap2"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ctap2")]
     Ctap2,
@@ -571,14 +586,17 @@ public enum AuthenticatorProtocol
 public enum Ctap2Version
 {
     /// <summary>
+    /// Corresponds to the <c>"ctap2_0"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ctap2_0")]
     Ctap20,
     /// <summary>
+    /// Corresponds to the <c>"ctap2_1"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ctap2_1")]
     Ctap21,
     /// <summary>
+    /// Corresponds to the <c>"ctap2_2"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ctap2_2")]
     Ctap22,
@@ -591,30 +609,37 @@ public enum Ctap2Version
 public enum AuthenticatorTransport
 {
     /// <summary>
+    /// Corresponds to the <c>"usb"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("usb")]
     Usb,
     /// <summary>
+    /// Corresponds to the <c>"nfc"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("nfc")]
     Nfc,
     /// <summary>
+    /// Corresponds to the <c>"ble"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ble")]
     Ble,
     /// <summary>
+    /// Corresponds to the <c>"cable"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cable")]
     Cable,
     /// <summary>
+    /// Corresponds to the <c>"hybrid"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("hybrid")]
     Hybrid,
     /// <summary>
+    /// Corresponds to the <c>"smart-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("smart-card")]
     SmartCard,
     /// <summary>
+    /// Corresponds to the <c>"internal"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("internal")]
     Internal,

@@ -30,7 +30,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(CentralState state, bool leSupported, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(CentralState state, bool leSupported, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set the state of the simulated central.
@@ -47,7 +47,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetSimulatedCentralStateResult"/>.
     /// </returns>
-    Task<SetSimulatedCentralStateResult> SetSimulatedCentralStateAsync(CentralState state, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSimulatedCentralStateResult> SetSimulatedCentralStateAsync(CentralState state, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disable the BluetoothEmulation domain.
@@ -61,7 +61,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="DisableResult"/>.
     /// </returns>
-    Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default);
+    Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulates a peripheral with |address|, |name| and |knownServiceUuids|
@@ -84,7 +84,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulatePreconnectedPeripheralResult"/>.
     /// </returns>
-    Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, string? session = default, CancellationToken cancellationToken = default);
+    Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulates an advertisement packet described in |entry| being received by
@@ -101,7 +101,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateAdvertisementResult"/>.
     /// </returns>
-    Task<SimulateAdvertisementResult> SimulateAdvertisementAsync(ScanEntry entry, string? session = default, CancellationToken cancellationToken = default);
+    Task<SimulateAdvertisementResult> SimulateAdvertisementAsync(ScanEntry entry, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulates the response code from the peripheral with |address| for a
@@ -123,7 +123,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateGATTOperationResponseResult"/>.
     /// </returns>
-    Task<SimulateGATTOperationResponseResult> SimulateGATTOperationResponseAsync(string address, GATTOperationType type, long code, string? session = default, CancellationToken cancellationToken = default);
+    Task<SimulateGATTOperationResponseResult> SimulateGATTOperationResponseAsync(string address, GATTOperationType type, long code, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulates the response from the characteristic with |characteristicId| for a
@@ -149,7 +149,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateCharacteristicOperationResponseResult"/>.
     /// </returns>
-    Task<SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseAsync(string characteristicId, CharacteristicOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseAsync(string characteristicId, CharacteristicOperationType type, long code, string? data = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulates the response from the descriptor with |descriptorId| for a
@@ -175,7 +175,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateDescriptorOperationResponseResult"/>.
     /// </returns>
-    Task<SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseAsync(string descriptorId, DescriptorOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseAsync(string descriptorId, DescriptorOperationType type, long code, string? data = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Adds a service with |serviceUuid| to the peripheral with |address|.
@@ -193,7 +193,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddServiceResult"/>.
     /// </returns>
-    Task<AddServiceResult> AddServiceAsync(string address, string serviceUuid, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddServiceResult> AddServiceAsync(string address, string serviceUuid, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the service respresented by |serviceId| from the simulated central.
@@ -209,7 +209,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveServiceResult"/>.
     /// </returns>
-    Task<RemoveServiceResult> RemoveServiceAsync(string serviceId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveServiceResult> RemoveServiceAsync(string serviceId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Adds a characteristic with |characteristicUuid| and |properties| to the
@@ -230,7 +230,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddCharacteristicResult"/>.
     /// </returns>
-    Task<AddCharacteristicResult> AddCharacteristicAsync(string serviceId, string characteristicUuid, CharacteristicProperties properties, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddCharacteristicResult> AddCharacteristicAsync(string serviceId, string characteristicUuid, CharacteristicProperties properties, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the characteristic respresented by |characteristicId| from the
@@ -247,7 +247,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveCharacteristicResult"/>.
     /// </returns>
-    Task<RemoveCharacteristicResult> RemoveCharacteristicAsync(string characteristicId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveCharacteristicResult> RemoveCharacteristicAsync(string characteristicId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Adds a descriptor with |descriptorUuid| to the characteristic respresented
@@ -266,7 +266,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="AddDescriptorResult"/>.
     /// </returns>
-    Task<AddDescriptorResult> AddDescriptorAsync(string characteristicId, string descriptorUuid, string? session = default, CancellationToken cancellationToken = default);
+    Task<AddDescriptorResult> AddDescriptorAsync(string characteristicId, string descriptorUuid, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Removes the descriptor with |descriptorId| from the simulated central.
@@ -282,7 +282,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RemoveDescriptorResult"/>.
     /// </returns>
-    Task<RemoveDescriptorResult> RemoveDescriptorAsync(string descriptorId, string? session = default, CancellationToken cancellationToken = default);
+    Task<RemoveDescriptorResult> RemoveDescriptorAsync(string descriptorId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Simulates a GATT disconnection from the peripheral with |address|.
@@ -298,7 +298,7 @@ public interface IBluetoothEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SimulateGATTDisconnectionResult"/>.
     /// </returns>
-    Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, string? session = default, CancellationToken cancellationToken = default);
+    Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Event for when a GATT operation of |type| to the peripheral with |address|
@@ -351,91 +351,91 @@ internal sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium
 {
     private static readonly BluetoothEmulationJsonSerializerContext JsonContext = BluetoothEmulationJsonSerializerContext.Default;
 
-    public async Task<EnableResult> EnableAsync(CentralState state, bool leSupported, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(CentralState state, bool leSupported, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(State: state, LeSupported: leSupported);
         return await ExecuteCommandAsync("BluetoothEmulation.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetSimulatedCentralStateResult> SetSimulatedCentralStateAsync(CentralState state, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSimulatedCentralStateResult> SetSimulatedCentralStateAsync(CentralState state, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetSimulatedCentralStateCommandParameters(State: state);
         return await ExecuteCommandAsync("BluetoothEmulation.setSimulatedCentralState", @params, JsonContext.SetSimulatedCentralStateCommandParameters, JsonContext.SetSimulatedCentralStateResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<DisableResult> DisableAsync(string? session = default, CancellationToken cancellationToken = default)
+    public async Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new DisableCommandParameters();
         return await ExecuteCommandAsync("BluetoothEmulation.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SimulatePreconnectedPeripheralResult> SimulatePreconnectedPeripheralAsync(string address, string name, ImmutableArray<ManufacturerData> manufacturerData, ImmutableArray<string> knownServiceUuids, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SimulatePreconnectedPeripheralCommandParameters(Address: address, Name: name, ManufacturerData: manufacturerData, KnownServiceUuids: knownServiceUuids);
         return await ExecuteCommandAsync("BluetoothEmulation.simulatePreconnectedPeripheral", @params, JsonContext.SimulatePreconnectedPeripheralCommandParameters, JsonContext.SimulatePreconnectedPeripheralResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SimulateAdvertisementResult> SimulateAdvertisementAsync(ScanEntry entry, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateAdvertisementResult> SimulateAdvertisementAsync(ScanEntry entry, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateAdvertisementCommandParameters(Entry: entry);
         return await ExecuteCommandAsync("BluetoothEmulation.simulateAdvertisement", @params, JsonContext.SimulateAdvertisementCommandParameters, JsonContext.SimulateAdvertisementResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SimulateGATTOperationResponseResult> SimulateGATTOperationResponseAsync(string address, GATTOperationType type, long code, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateGATTOperationResponseResult> SimulateGATTOperationResponseAsync(string address, GATTOperationType type, long code, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateGATTOperationResponseCommandParameters(Address: address, Type: type, Code: code);
         return await ExecuteCommandAsync("BluetoothEmulation.simulateGATTOperationResponse", @params, JsonContext.SimulateGATTOperationResponseCommandParameters, JsonContext.SimulateGATTOperationResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseAsync(string characteristicId, CharacteristicOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateCharacteristicOperationResponseResult> SimulateCharacteristicOperationResponseAsync(string characteristicId, CharacteristicOperationType type, long code, string? data = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateCharacteristicOperationResponseCommandParameters(CharacteristicId: characteristicId, Type: type, Code: code, Data: data);
         return await ExecuteCommandAsync("BluetoothEmulation.simulateCharacteristicOperationResponse", @params, JsonContext.SimulateCharacteristicOperationResponseCommandParameters, JsonContext.SimulateCharacteristicOperationResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseAsync(string descriptorId, DescriptorOperationType type, long code, string? data = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateDescriptorOperationResponseResult> SimulateDescriptorOperationResponseAsync(string descriptorId, DescriptorOperationType type, long code, string? data = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateDescriptorOperationResponseCommandParameters(DescriptorId: descriptorId, Type: type, Code: code, Data: data);
         return await ExecuteCommandAsync("BluetoothEmulation.simulateDescriptorOperationResponse", @params, JsonContext.SimulateDescriptorOperationResponseCommandParameters, JsonContext.SimulateDescriptorOperationResponseResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddServiceResult> AddServiceAsync(string address, string serviceUuid, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddServiceResult> AddServiceAsync(string address, string serviceUuid, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddServiceCommandParameters(Address: address, ServiceUuid: serviceUuid);
         return await ExecuteCommandAsync("BluetoothEmulation.addService", @params, JsonContext.AddServiceCommandParameters, JsonContext.AddServiceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveServiceResult> RemoveServiceAsync(string serviceId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveServiceResult> RemoveServiceAsync(string serviceId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveServiceCommandParameters(ServiceId: serviceId);
         return await ExecuteCommandAsync("BluetoothEmulation.removeService", @params, JsonContext.RemoveServiceCommandParameters, JsonContext.RemoveServiceResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddCharacteristicResult> AddCharacteristicAsync(string serviceId, string characteristicUuid, CharacteristicProperties properties, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddCharacteristicResult> AddCharacteristicAsync(string serviceId, string characteristicUuid, CharacteristicProperties properties, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddCharacteristicCommandParameters(ServiceId: serviceId, CharacteristicUuid: characteristicUuid, Properties: properties);
         return await ExecuteCommandAsync("BluetoothEmulation.addCharacteristic", @params, JsonContext.AddCharacteristicCommandParameters, JsonContext.AddCharacteristicResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveCharacteristicResult> RemoveCharacteristicAsync(string characteristicId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveCharacteristicResult> RemoveCharacteristicAsync(string characteristicId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveCharacteristicCommandParameters(CharacteristicId: characteristicId);
         return await ExecuteCommandAsync("BluetoothEmulation.removeCharacteristic", @params, JsonContext.RemoveCharacteristicCommandParameters, JsonContext.RemoveCharacteristicResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<AddDescriptorResult> AddDescriptorAsync(string characteristicId, string descriptorUuid, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<AddDescriptorResult> AddDescriptorAsync(string characteristicId, string descriptorUuid, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new AddDescriptorCommandParameters(CharacteristicId: characteristicId, DescriptorUuid: descriptorUuid);
         return await ExecuteCommandAsync("BluetoothEmulation.addDescriptor", @params, JsonContext.AddDescriptorCommandParameters, JsonContext.AddDescriptorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RemoveDescriptorResult> RemoveDescriptorAsync(string descriptorId, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RemoveDescriptorResult> RemoveDescriptorAsync(string descriptorId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new RemoveDescriptorCommandParameters(DescriptorId: descriptorId);
         return await ExecuteCommandAsync("BluetoothEmulation.removeDescriptor", @params, JsonContext.RemoveDescriptorCommandParameters, JsonContext.RemoveDescriptorResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SimulateGATTDisconnectionCommandParameters(Address: address);
         return await ExecuteCommandAsync("BluetoothEmulation.simulateGATTDisconnection", @params, JsonContext.SimulateGATTDisconnectionCommandParameters, JsonContext.SimulateGATTDisconnectionResult, session, cancellationToken).ConfigureAwait(false);
@@ -449,6 +449,7 @@ internal sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium
 internal sealed record EnableCommandParameters(CentralState State, bool LeSupported) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.EnableAsync"/> command.
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
@@ -456,6 +457,7 @@ public sealed record EnableResult() : EmptyResult;
 internal sealed record SetSimulatedCentralStateCommandParameters(CentralState State) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SetSimulatedCentralStateAsync"/> command.
 /// </summary>
 public sealed record SetSimulatedCentralStateResult() : EmptyResult;
 
@@ -463,6 +465,7 @@ public sealed record SetSimulatedCentralStateResult() : EmptyResult;
 internal sealed record DisableCommandParameters() : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.DisableAsync"/> command.
 /// </summary>
 public sealed record DisableResult() : EmptyResult;
 
@@ -470,6 +473,7 @@ public sealed record DisableResult() : EmptyResult;
 internal sealed record SimulatePreconnectedPeripheralCommandParameters(string Address, string Name, ImmutableArray<ManufacturerData> ManufacturerData, ImmutableArray<string> KnownServiceUuids) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SimulatePreconnectedPeripheralAsync"/> command.
 /// </summary>
 public sealed record SimulatePreconnectedPeripheralResult() : EmptyResult;
 
@@ -477,6 +481,7 @@ public sealed record SimulatePreconnectedPeripheralResult() : EmptyResult;
 internal sealed record SimulateAdvertisementCommandParameters(ScanEntry Entry) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SimulateAdvertisementAsync"/> command.
 /// </summary>
 public sealed record SimulateAdvertisementResult() : EmptyResult;
 
@@ -484,6 +489,7 @@ public sealed record SimulateAdvertisementResult() : EmptyResult;
 internal sealed record SimulateGATTOperationResponseCommandParameters(string Address, GATTOperationType Type, long Code) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SimulateGATTOperationResponseAsync"/> command.
 /// </summary>
 public sealed record SimulateGATTOperationResponseResult() : EmptyResult;
 
@@ -491,6 +497,7 @@ public sealed record SimulateGATTOperationResponseResult() : EmptyResult;
 internal sealed record SimulateCharacteristicOperationResponseCommandParameters(string CharacteristicId, CharacteristicOperationType Type, long Code, string? Data) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SimulateCharacteristicOperationResponseAsync"/> command.
 /// </summary>
 public sealed record SimulateCharacteristicOperationResponseResult() : EmptyResult;
 
@@ -498,6 +505,7 @@ public sealed record SimulateCharacteristicOperationResponseResult() : EmptyResu
 internal sealed record SimulateDescriptorOperationResponseCommandParameters(string DescriptorId, DescriptorOperationType Type, long Code, string? Data) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SimulateDescriptorOperationResponseAsync"/> command.
 /// </summary>
 public sealed record SimulateDescriptorOperationResponseResult() : EmptyResult;
 
@@ -505,6 +513,7 @@ public sealed record SimulateDescriptorOperationResponseResult() : EmptyResult;
 internal sealed record AddServiceCommandParameters(string Address, string ServiceUuid) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.AddServiceAsync"/> command.
 /// </summary>
 /// <param name="ServiceId">
 /// An identifier that uniquely represents this service.
@@ -515,6 +524,7 @@ public sealed record AddServiceResult(string ServiceId) : EmptyResult;
 internal sealed record RemoveServiceCommandParameters(string ServiceId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.RemoveServiceAsync"/> command.
 /// </summary>
 public sealed record RemoveServiceResult() : EmptyResult;
 
@@ -522,6 +532,7 @@ public sealed record RemoveServiceResult() : EmptyResult;
 internal sealed record AddCharacteristicCommandParameters(string ServiceId, string CharacteristicUuid, CharacteristicProperties Properties) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.AddCharacteristicAsync"/> command.
 /// </summary>
 /// <param name="CharacteristicId">
 /// An identifier that uniquely represents this characteristic.
@@ -532,6 +543,7 @@ public sealed record AddCharacteristicResult(string CharacteristicId) : EmptyRes
 internal sealed record RemoveCharacteristicCommandParameters(string CharacteristicId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.RemoveCharacteristicAsync"/> command.
 /// </summary>
 public sealed record RemoveCharacteristicResult() : EmptyResult;
 
@@ -539,6 +551,7 @@ public sealed record RemoveCharacteristicResult() : EmptyResult;
 internal sealed record AddDescriptorCommandParameters(string CharacteristicId, string DescriptorUuid) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.AddDescriptorAsync"/> command.
 /// </summary>
 /// <param name="DescriptorId">
 /// An identifier that uniquely represents this descriptor.
@@ -549,6 +562,7 @@ public sealed record AddDescriptorResult(string DescriptorId) : EmptyResult;
 internal sealed record RemoveDescriptorCommandParameters(string DescriptorId) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.RemoveDescriptorAsync"/> command.
 /// </summary>
 public sealed record RemoveDescriptorResult() : EmptyResult;
 
@@ -556,6 +570,7 @@ public sealed record RemoveDescriptorResult() : EmptyResult;
 internal sealed record SimulateGATTDisconnectionCommandParameters(string Address) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SimulateGATTDisconnectionAsync"/> command.
 /// </summary>
 public sealed record SimulateGATTDisconnectionResult() : EmptyResult;
 
@@ -605,14 +620,17 @@ public sealed record DescriptorOperationReceivedEventArgs(string DescriptorId, D
 public enum CentralState
 {
     /// <summary>
+    /// Corresponds to the <c>"absent"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("absent")]
     Absent,
     /// <summary>
+    /// Corresponds to the <c>"powered-off"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("powered-off")]
     PoweredOff,
     /// <summary>
+    /// Corresponds to the <c>"powered-on"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("powered-on")]
     PoweredOn,
@@ -625,10 +643,12 @@ public enum CentralState
 public enum GATTOperationType
 {
     /// <summary>
+    /// Corresponds to the <c>"connection"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("connection")]
     Connection,
     /// <summary>
+    /// Corresponds to the <c>"discovery"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("discovery")]
     Discovery,
@@ -641,14 +661,17 @@ public enum GATTOperationType
 public enum CharacteristicWriteType
 {
     /// <summary>
+    /// Corresponds to the <c>"write-default-deprecated"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("write-default-deprecated")]
     WriteDefaultDeprecated,
     /// <summary>
+    /// Corresponds to the <c>"write-with-response"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("write-with-response")]
     WriteWithResponse,
     /// <summary>
+    /// Corresponds to the <c>"write-without-response"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("write-without-response")]
     WriteWithoutResponse,
@@ -661,18 +684,22 @@ public enum CharacteristicWriteType
 public enum CharacteristicOperationType
 {
     /// <summary>
+    /// Corresponds to the <c>"read"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("read")]
     Read,
     /// <summary>
+    /// Corresponds to the <c>"write"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("write")]
     Write,
     /// <summary>
+    /// Corresponds to the <c>"subscribe-to-notifications"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("subscribe-to-notifications")]
     SubscribeToNotifications,
     /// <summary>
+    /// Corresponds to the <c>"unsubscribe-from-notifications"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unsubscribe-from-notifications")]
     UnsubscribeFromNotifications,
@@ -685,10 +712,12 @@ public enum CharacteristicOperationType
 public enum DescriptorOperationType
 {
     /// <summary>
+    /// Corresponds to the <c>"read"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("read")]
     Read,
     /// <summary>
+    /// Corresponds to the <c>"write"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("write")]
     Write,

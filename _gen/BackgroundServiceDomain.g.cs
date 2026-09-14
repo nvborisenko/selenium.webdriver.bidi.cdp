@@ -25,7 +25,7 @@ public interface IBackgroundService
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartObservingResult"/>.
     /// </returns>
-    Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables event updates for the service.
@@ -41,7 +41,7 @@ public interface IBackgroundService
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StopObservingResult"/>.
     /// </returns>
-    Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default);
+    Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Set the recording state for the service.
@@ -59,7 +59,7 @@ public interface IBackgroundService
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetRecordingResult"/>.
     /// </returns>
-    Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears all stored data for the service.
@@ -75,7 +75,7 @@ public interface IBackgroundService
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ClearEventsResult"/>.
     /// </returns>
-    Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default);
+    Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Called when the recording state for the service has been updated.
@@ -108,25 +108,25 @@ internal sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.
 {
     private static readonly BackgroundServiceJsonSerializerContext JsonContext = BackgroundServiceJsonSerializerContext.Default;
 
-    public async Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartObservingResult> StartObservingAsync(ServiceName service, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StartObservingCommandParameters(Service: service);
         return await ExecuteCommandAsync("BackgroundService.startObserving", @params, JsonContext.StartObservingCommandParameters, JsonContext.StartObservingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StopObservingResult> StopObservingAsync(ServiceName service, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new StopObservingCommandParameters(Service: service);
         return await ExecuteCommandAsync("BackgroundService.stopObserving", @params, JsonContext.StopObservingCommandParameters, JsonContext.StopObservingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetRecordingResult> SetRecordingAsync(bool shouldRecord, ServiceName service, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetRecordingCommandParameters(ShouldRecord: shouldRecord, Service: service);
         return await ExecuteCommandAsync("BackgroundService.setRecording", @params, JsonContext.SetRecordingCommandParameters, JsonContext.SetRecordingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ClearEventsResult> ClearEventsAsync(ServiceName service, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearEventsCommandParameters(Service: service);
         return await ExecuteCommandAsync("BackgroundService.clearEvents", @params, JsonContext.ClearEventsCommandParameters, JsonContext.ClearEventsResult, session, cancellationToken).ConfigureAwait(false);
@@ -139,6 +139,7 @@ internal sealed class BackgroundServiceDomain(CdpModule cdp) : global::Selenium.
 internal sealed record StartObservingCommandParameters(ServiceName Service) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBackgroundService.StartObservingAsync"/> command.
 /// </summary>
 public sealed record StartObservingResult() : EmptyResult;
 
@@ -146,6 +147,7 @@ public sealed record StartObservingResult() : EmptyResult;
 internal sealed record StopObservingCommandParameters(ServiceName Service) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBackgroundService.StopObservingAsync"/> command.
 /// </summary>
 public sealed record StopObservingResult() : EmptyResult;
 
@@ -153,6 +155,7 @@ public sealed record StopObservingResult() : EmptyResult;
 internal sealed record SetRecordingCommandParameters(bool ShouldRecord, ServiceName Service) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBackgroundService.SetRecordingAsync"/> command.
 /// </summary>
 public sealed record SetRecordingResult() : EmptyResult;
 
@@ -160,6 +163,7 @@ public sealed record SetRecordingResult() : EmptyResult;
 internal sealed record ClearEventsCommandParameters(ServiceName Service) : Parameters;
 
 /// <summary>
+/// Result of the <see cref="IBackgroundService.ClearEventsAsync"/> command.
 /// </summary>
 public sealed record ClearEventsResult() : EmptyResult;
 
@@ -190,26 +194,32 @@ public sealed record BackgroundServiceEventReceivedEventArgs(BackgroundServiceEv
 public enum ServiceName
 {
     /// <summary>
+    /// Corresponds to the <c>"backgroundFetch"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("backgroundFetch")]
     BackgroundFetch,
     /// <summary>
+    /// Corresponds to the <c>"backgroundSync"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("backgroundSync")]
     BackgroundSync,
     /// <summary>
+    /// Corresponds to the <c>"pushMessaging"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("pushMessaging")]
     PushMessaging,
     /// <summary>
+    /// Corresponds to the <c>"notifications"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("notifications")]
     Notifications,
     /// <summary>
+    /// Corresponds to the <c>"paymentHandler"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("paymentHandler")]
     PaymentHandler,
     /// <summary>
+    /// Corresponds to the <c>"periodicBackgroundSync"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("periodicBackgroundSync")]
     PeriodicBackgroundSync,
