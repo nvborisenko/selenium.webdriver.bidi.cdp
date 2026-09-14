@@ -36,7 +36,7 @@ public interface IAudits
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="GetEncodedResponseResult"/>.
     /// </returns>
-    Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, GetEncodedResponseEncoding encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables issues domain, prevents further issues from being reported to the client.
@@ -100,7 +100,7 @@ internal sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.B
 {
     private static readonly AuditsJsonSerializerContext JsonContext = AuditsJsonSerializerContext.Default;
 
-    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, string encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetEncodedResponseResult> GetEncodedResponseAsync(Network.RequestId requestId, GetEncodedResponseEncoding encoding, double? quality = default, bool? sizeOnly = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetEncodedResponseCommandParameters(RequestId: requestId, Encoding: encoding, Quality: quality, SizeOnly: sizeOnly);
         return await ExecuteCommandAsync("Audits.getEncodedResponse", @params, JsonContext.GetEncodedResponseCommandParameters, JsonContext.GetEncodedResponseResult, session, cancellationToken).ConfigureAwait(false);
@@ -127,7 +127,7 @@ internal sealed class AuditsDomain(CdpModule cdp) : global::Selenium.WebDriver.B
     public IEventSource<IssueAddedEventArgs> IssueAdded => CreateCdpEventSource(AuditsDomainEvent.IssueAdded);
 }
 
-internal sealed record GetEncodedResponseCommandParameters(Network.RequestId RequestId, string Encoding, double? Quality, bool? SizeOnly) : Parameters;
+internal sealed record GetEncodedResponseCommandParameters(Network.RequestId RequestId, GetEncodedResponseEncoding Encoding, double? Quality, bool? SizeOnly) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2615,6 +2615,25 @@ public sealed record InspectorIssue(InspectorIssueCode Code, InspectorIssueDetai
     /// exception, CDP message, etc.) is referencing this issue.
     /// </summary>
     public IssueId? IssueId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<GetEncodedResponseEncoding>))]
+public enum GetEncodedResponseEncoding
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
+    Webp,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
+    Jpeg,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
+    Png,
 }
 
 [JsonSerializable(typeof(GetEncodedResponseCommandParameters), TypeInfoPropertyName = "GetEncodedResponseCommandParameters")]

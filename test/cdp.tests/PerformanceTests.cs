@@ -23,7 +23,7 @@ public class PerformanceTests : CdpTestFixture
     public async Task SetTimeDomainTimeTickPerformance()
     {
         await Cdp.Performance.DisableAsync();
-        await Cdp.Performance.SetTimeDomainAsync("timeTicks");
+        await Cdp.Performance.SetTimeDomainAsync(Performance.SetTimeDomainTimeDomain.TimeTicks);
         await Cdp.Performance.EnableAsync();
         await Cdp.Page.NavigateAsync(SimpleTestPage);
     }
@@ -32,7 +32,7 @@ public class PerformanceTests : CdpTestFixture
     public async Task SetTimeDomainThreadTicksPerformance()
     {
         await Cdp.Performance.DisableAsync();
-        await Cdp.Performance.SetTimeDomainAsync("threadTicks");
+        await Cdp.Performance.SetTimeDomainAsync(Performance.SetTimeDomainTimeDomain.ThreadTicks);
         await Cdp.Performance.EnableAsync();
         await Cdp.Page.NavigateAsync(SimpleTestPage);
     }
@@ -40,7 +40,7 @@ public class PerformanceTests : CdpTestFixture
     [Test]
     public async Task GetMetricsByTimeTicks()
     {
-        await Cdp.Performance.SetTimeDomainAsync("timeTicks");
+        await Cdp.Performance.SetTimeDomainAsync(Performance.SetTimeDomainTimeDomain.TimeTicks);
         await Cdp.Performance.EnableAsync();
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 
@@ -53,7 +53,7 @@ public class PerformanceTests : CdpTestFixture
     [Test]
     public async Task GetMetricsByThreadTicks()
     {
-        await Cdp.Performance.SetTimeDomainAsync("threadTicks");
+        await Cdp.Performance.SetTimeDomainAsync(Performance.SetTimeDomainTimeDomain.ThreadTicks);
         await Cdp.Performance.EnableAsync();
         await Cdp.Page.NavigateAsync(SimpleTestPage);
 

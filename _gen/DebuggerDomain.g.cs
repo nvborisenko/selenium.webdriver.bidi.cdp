@@ -28,7 +28,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ContinueToLocationResult"/>.
     /// </returns>
-    Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, string? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, ContinueToLocationTargetCallFrames? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Disables debugger for given page.
@@ -303,7 +303,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="RestartFrameResult"/>.
     /// </returns>
-    Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, string? mode = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, RestartFrameMode? mode = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Resumes JavaScript execution.
@@ -472,7 +472,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetInstrumentationBreakpointResult"/>.
     /// </returns>
-    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string instrumentation, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(SetInstrumentationBreakpointInstrumentation instrumentation, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
@@ -568,7 +568,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetPauseOnExceptionsResult"/>.
     /// </returns>
-    Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(string state, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(SetPauseOnExceptionsState state, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Changes return value in top frame. Available only at return break position.
@@ -816,7 +816,7 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
 {
     private static readonly DebuggerJsonSerializerContext JsonContext = DebuggerJsonSerializerContext.Default;
 
-    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, string? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<ContinueToLocationResult> ContinueToLocationAsync(Location location, ContinueToLocationTargetCallFrames? targetCallFrames = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new ContinueToLocationCommandParameters(Location: location, TargetCallFrames: targetCallFrames);
         return await ExecuteCommandAsync("Debugger.continueToLocation", @params, JsonContext.ContinueToLocationCommandParameters, JsonContext.ContinueToLocationResult, session, cancellationToken).ConfigureAwait(false);
@@ -900,7 +900,7 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
         return await ExecuteCommandAsync("Debugger.removeBreakpoint", @params, JsonContext.RemoveBreakpointCommandParameters, JsonContext.RemoveBreakpointResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, string? mode = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<RestartFrameResult> RestartFrameAsync(CallFrameId callFrameId, RestartFrameMode? mode = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new RestartFrameCommandParameters(CallFrameId: callFrameId, Mode: mode);
         return await ExecuteCommandAsync("Debugger.restartFrame", @params, JsonContext.RestartFrameCommandParameters, JsonContext.RestartFrameResult, session, cancellationToken).ConfigureAwait(false);
@@ -951,7 +951,7 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
         return await ExecuteCommandAsync("Debugger.setBreakpoint", @params, JsonContext.SetBreakpointCommandParameters, JsonContext.SetBreakpointResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(string instrumentation, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetInstrumentationBreakpointResult> SetInstrumentationBreakpointAsync(SetInstrumentationBreakpointInstrumentation instrumentation, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetInstrumentationBreakpointCommandParameters(Instrumentation: instrumentation);
         return await ExecuteCommandAsync("Debugger.setInstrumentationBreakpoint", @params, JsonContext.SetInstrumentationBreakpointCommandParameters, JsonContext.SetInstrumentationBreakpointResult, session, cancellationToken).ConfigureAwait(false);
@@ -976,7 +976,7 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
         return await ExecuteCommandAsync("Debugger.setBreakpointsActive", @params, JsonContext.SetBreakpointsActiveCommandParameters, JsonContext.SetBreakpointsActiveResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(string state, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetPauseOnExceptionsResult> SetPauseOnExceptionsAsync(SetPauseOnExceptionsState state, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetPauseOnExceptionsCommandParameters(State: state);
         return await ExecuteCommandAsync("Debugger.setPauseOnExceptions", @params, JsonContext.SetPauseOnExceptionsCommandParameters, JsonContext.SetPauseOnExceptionsResult, session, cancellationToken).ConfigureAwait(false);
@@ -1034,7 +1034,7 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
     public IEventSource<ScriptParsedEventArgs> ScriptParsed => CreateCdpEventSource(DebuggerDomainEvent.ScriptParsed);
 }
 
-internal sealed record ContinueToLocationCommandParameters(Location Location, string? TargetCallFrames) : Parameters;
+internal sealed record ContinueToLocationCommandParameters(Location Location, ContinueToLocationTargetCallFrames? TargetCallFrames) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1165,7 +1165,7 @@ internal sealed record RemoveBreakpointCommandParameters(BreakpointId Breakpoint
 public sealed record RemoveBreakpointResult() : EmptyResult;
 
 
-internal sealed record RestartFrameCommandParameters(CallFrameId CallFrameId, string? Mode) : Parameters;
+internal sealed record RestartFrameCommandParameters(CallFrameId CallFrameId, RestartFrameMode? Mode) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1239,7 +1239,7 @@ internal sealed record SetBreakpointCommandParameters(Location Location, string?
 public sealed record SetBreakpointResult(BreakpointId BreakpointId, Location ActualLocation) : EmptyResult;
 
 
-internal sealed record SetInstrumentationBreakpointCommandParameters(string Instrumentation) : Parameters;
+internal sealed record SetInstrumentationBreakpointCommandParameters(SetInstrumentationBreakpointInstrumentation Instrumentation) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1279,7 +1279,7 @@ internal sealed record SetBreakpointsActiveCommandParameters(bool Active) : Para
 public sealed record SetBreakpointsActiveResult() : EmptyResult;
 
 
-internal sealed record SetPauseOnExceptionsCommandParameters(string State) : Parameters;
+internal sealed record SetPauseOnExceptionsCommandParameters(SetPauseOnExceptionsState State) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1317,7 +1317,7 @@ internal sealed record SetScriptSourceCommandParameters(Runtime.ScriptId ScriptI
 /// <param name="ExceptionDetails">
 /// Exception details if any. Only present when <b>status</b> is <b>CompileError</b>.
 /// </param>
-public sealed record SetScriptSourceResult(ImmutableArray<CallFrame>? CallFrames, bool? StackChanged, Runtime.StackTrace? AsyncStackTrace, Runtime.StackTraceId? AsyncStackTraceId, string Status, Runtime.ExceptionDetails? ExceptionDetails) : EmptyResult;
+public sealed record SetScriptSourceResult(ImmutableArray<CallFrame>? CallFrames, bool? StackChanged, Runtime.StackTrace? AsyncStackTrace, Runtime.StackTraceId? AsyncStackTraceId, SetScriptSourceStatus Status, Runtime.ExceptionDetails? ExceptionDetails) : EmptyResult;
 
 
 internal sealed record SetSkipAllPausesCommandParameters(bool Skip) : Parameters;
@@ -1391,7 +1391,7 @@ public sealed record BreakpointResolvedEventArgs(BreakpointId BreakpointId, Loca
 /// <param name="AsyncCallStackTraceId">
 /// Never present, will be removed.
 /// </param>
-public sealed record PausedEventArgs(ImmutableArray<CallFrame> CallFrames, string Reason, global::System.Text.Json.JsonElement? Data = null, ImmutableArray<string>? HitBreakpoints = null, Runtime.StackTrace? AsyncStackTrace = null, Runtime.StackTraceId? AsyncStackTraceId = null, Runtime.StackTraceId? AsyncCallStackTraceId = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PausedEventArgs(ImmutableArray<CallFrame> CallFrames, PausedReason Reason, global::System.Text.Json.JsonElement? Data = null, ImmutableArray<string>? HitBreakpoints = null, Runtime.StackTrace? AsyncStackTrace = null, Runtime.StackTraceId? AsyncStackTraceId = null, Runtime.StackTraceId? AsyncCallStackTraceId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when the virtual machine resumed execution.
@@ -1642,7 +1642,7 @@ public sealed record CallFrame(CallFrameId CallFrameId, string FunctionName, Loc
 /// object; for the rest of the scopes, it is artificial transient object enumerating scope
 /// variables as its properties.
 /// </param>
-public sealed record Scope(string Type, Runtime.RemoteObject Object)
+public sealed record Scope(ScopeType Type, Runtime.RemoteObject Object)
 {
     /// <summary>
     /// </summary>
@@ -1698,7 +1698,7 @@ public sealed record BreakLocation(Runtime.ScriptId ScriptId, long LineNumber)
 
     /// <summary>
     /// </summary>
-    public string? Type { get; init; }
+    public BreakLocationType? Type { get; init; }
 }
 
 /// <summary>
@@ -1735,7 +1735,7 @@ public enum ScriptLanguage
 /// <param name="Type">
 /// Type of the debug symbols.
 /// </param>
-public sealed record DebugSymbols(string Type)
+public sealed record DebugSymbols(DebugSymbolsType Type)
 {
     /// <summary>
     /// URL of the external symbol source.
@@ -1753,6 +1753,241 @@ public sealed record DebugSymbols(string Type)
 /// </param>
 public sealed record ResolvedBreakpoint(BreakpointId BreakpointId, Location Location)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ContinueToLocationTargetCallFrames>))]
+public enum ContinueToLocationTargetCallFrames
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("any")]
+    Any,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("current")]
+    Current,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<RestartFrameMode>))]
+public enum RestartFrameMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StepInto")]
+    StepInto,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetInstrumentationBreakpointInstrumentation>))]
+public enum SetInstrumentationBreakpointInstrumentation
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("beforeScriptExecution")]
+    BeforeScriptExecution,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("beforeScriptWithSourceMapExecution")]
+    BeforeScriptWithSourceMapExecution,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetPauseOnExceptionsState>))]
+public enum SetPauseOnExceptionsState
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
+    None,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("caught")]
+    Caught,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("uncaught")]
+    Uncaught,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("all")]
+    All,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetScriptSourceStatus>))]
+public enum SetScriptSourceStatus
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Ok")]
+    Ok,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CompileError")]
+    CompileError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByActiveGenerator")]
+    BlockedByActiveGenerator,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByActiveFunction")]
+    BlockedByActiveFunction,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BlockedByTopLevelEsModuleChange")]
+    BlockedByTopLevelEsModuleChange,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PausedReason>))]
+public enum PausedReason
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ambiguous")]
+    Ambiguous,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("assert")]
+    Assert,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSPViolation")]
+    CSPViolation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debugCommand")]
+    DebugCommand,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DOM")]
+    DOM,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EventListener")]
+    EventListener,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("exception")]
+    Exception,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("instrumentation")]
+    Instrumentation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("OOM")]
+    OOM,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
+    Other,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promiseRejection")]
+    PromiseRejection,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("XHR")]
+    XHR,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("step")]
+    Step,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ScopeType>))]
+public enum ScopeType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("global")]
+    Global,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("local")]
+    Local,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("with")]
+    With,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("closure")]
+    Closure,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("catch")]
+    Catch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("block")]
+    Block,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("script")]
+    Script,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("eval")]
+    Eval,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("module")]
+    Module,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasm-expression-stack")]
+    WasmExpressionStack,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<BreakLocationType>))]
+public enum BreakLocationType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debuggerStatement")]
+    DebuggerStatement,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("call")]
+    Call,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("return")]
+    Return,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DebugSymbolsType>))]
+public enum DebugSymbolsType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SourceMap")]
+    SourceMap,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmbeddedDWARF")]
+    EmbeddedDWARF,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExternalDWARF")]
+    ExternalDWARF,
 }
 
 [JsonSerializable(typeof(ContinueToLocationCommandParameters), TypeInfoPropertyName = "ContinueToLocationCommandParameters")]

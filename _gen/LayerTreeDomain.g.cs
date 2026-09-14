@@ -390,7 +390,7 @@ public record SnapshotId : IStringRemoteId
 /// <param name="Type">
 /// Reason for rectangle to force scrolling on the main thread
 /// </param>
-public sealed record ScrollRect(DOM.Rect Rect, string Type)
+public sealed record ScrollRect(DOM.Rect Rect, ScrollRectType Type)
 {
 }
 
@@ -508,6 +508,25 @@ public sealed record Layer(LayerId LayerId, double OffsetX, double OffsetY, doub
 /// <summary>
 /// Array of timings, one per paint step.
 /// </summary>
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ScrollRectType>))]
+public enum ScrollRectType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RepaintsOnScroll")]
+    RepaintsOnScroll,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TouchEventHandler")]
+    TouchEventHandler,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WheelEventHandler")]
+    WheelEventHandler,
+}
 
 [JsonSerializable(typeof(CompositingReasonsCommandParameters), TypeInfoPropertyName = "CompositingReasonsCommandParameters")]
 [JsonSerializable(typeof(CompositingReasonsResult), TypeInfoPropertyName = "CompositingReasonsResult")]

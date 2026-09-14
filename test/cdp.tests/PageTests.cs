@@ -50,7 +50,7 @@ public class PageTests : CdpTestFixture
         await NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var result = await Cdp.Page.CaptureScreenshotAsync(
-            format: "png",
+            format: Page.CaptureScreenshotFormat.Png,
             clip: new Page.Viewport(0, 0, 800, 600, 1));
 
         await Assert.That(result.Data).IsNotNull();
@@ -71,7 +71,7 @@ public class PageTests : CdpTestFixture
         await NavigateAndWaitForLoadAsync("https://www.example.com");
 
         var result = await Cdp.Page.CaptureScreenshotAsync(
-            format: "jpeg",
+            format: Page.CaptureScreenshotFormat.Jpeg,
             quality: 80);
 
         await Assert.That(result.Data).IsNotNull();
@@ -99,7 +99,7 @@ public class PageTests : CdpTestFixture
         var height = dimensions.GetProperty("height").GetDouble();
 
         var result = await Cdp.Page.CaptureScreenshotAsync(
-            format: "png",
+            format: Page.CaptureScreenshotFormat.Png,
             clip: new Page.Viewport(0, 0, width, height, 1),
             captureBeyondViewport: true);
 
@@ -113,7 +113,7 @@ public class PageTests : CdpTestFixture
     {
         await using var screencastFrameStream = await Cdp.Page.ScreencastFrame.StreamAsync();
 
-        await Cdp.Page.StartScreencastAsync(format: "png", everyNthFrame: 1);
+        await Cdp.Page.StartScreencastAsync(format: Page.StartScreencastFormat.Png, everyNthFrame: 1);
 
         var frame = await screencastFrameStream.ReadAllAsync().FirstAsync().AsTask().WaitAsync(TimeSpan.FromSeconds(10));
 

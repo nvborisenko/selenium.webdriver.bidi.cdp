@@ -223,7 +223,7 @@ public record Timestamp : INumberRemoteId
 /// </param>
 /// <param name="Message">
 /// </param>
-public sealed record PlayerMessage(string Level, string Message)
+public sealed record PlayerMessage(PlayerMessageLevel Level, string Message)
 {
 }
 
@@ -293,6 +293,29 @@ public sealed record Player(PlayerId PlayerId)
     /// <summary>
     /// </summary>
     public DOM.BackendNodeId? DomNodeId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PlayerMessageLevel>))]
+public enum PlayerMessageLevel
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("warning")]
+    Warning,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
+    Info,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debug")]
+    Debug,
 }
 
 [JsonSerializable(typeof(EnableCommandParameters), TypeInfoPropertyName = "EnableCommandParameters")]

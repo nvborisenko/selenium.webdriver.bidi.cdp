@@ -441,7 +441,7 @@ public sealed record AnimationUpdatedEventArgs(Animation Animation) : OpenQA.Sel
 /// <param name="Type">
 /// Animation type of <b>Animation</b>.
 /// </param>
-public sealed record Animation(string Id, string Name, bool PausedState, string PlayState, double PlaybackRate, double StartTime, double CurrentTime, string Type)
+public sealed record Animation(string Id, string Name, bool PausedState, string PlayState, double PlaybackRate, double StartTime, double CurrentTime, AnimationType Type)
 {
     /// <summary>
     /// <b>Animation</b>'s source animation node.
@@ -563,6 +563,25 @@ public sealed record KeyframesRule(ImmutableArray<KeyframeStyle> Keyframes)
 /// </param>
 public sealed record KeyframeStyle(string Offset, string Easing)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AnimationType>))]
+public enum AnimationType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSSTransition")]
+    CSSTransition,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CSSAnimation")]
+    CSSAnimation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebAnimation")]
+    WebAnimation,
 }
 
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]

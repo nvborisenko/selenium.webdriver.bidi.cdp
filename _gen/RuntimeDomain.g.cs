@@ -1104,7 +1104,7 @@ public sealed record BindingCalledEventArgs(string Name, string Payload, Executi
 /// 'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
 /// on named context.
 /// </param>
-public sealed record ConsoleAPICalledEventArgs(string Type, ImmutableArray<RemoteObject> Args, ExecutionContextId ExecutionContextId, Timestamp Timestamp, StackTrace? StackTrace = null, string? Context = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record ConsoleAPICalledEventArgs(ConsoleAPICalledType Type, ImmutableArray<RemoteObject> Args, ExecutionContextId ExecutionContextId, Timestamp Timestamp, StackTrace? StackTrace = null, string? Context = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Issued when unhandled exception was revoked.
@@ -1178,7 +1178,7 @@ public record ScriptId : IStringRemoteId
 /// </summary>
 /// <param name="Serialization">
 /// </param>
-public sealed record SerializationOptions(string Serialization)
+public sealed record SerializationOptions(SerializationOptionsSerialization Serialization)
 {
     /// <summary>
     /// Deep serialization depth. Default is full depth. Respected only in <b>deep</b> serialization mode.
@@ -1198,7 +1198,7 @@ public sealed record SerializationOptions(string Serialization)
 /// </summary>
 /// <param name="Type">
 /// </param>
-public sealed record DeepSerializedValue(string Type)
+public sealed record DeepSerializedValue(DeepSerializedValueType Type)
 {
     /// <summary>
     /// </summary>
@@ -1241,14 +1241,14 @@ public record UnserializableValue : IStringRemoteId
 /// <param name="Type">
 /// Object type.
 /// </param>
-public sealed record RemoteObject(string Type)
+public sealed record RemoteObject(RemoteObjectType Type)
 {
     /// <summary>
     /// Object subtype hint. Specified for <b>object</b> type values only.
     /// NOTE: If you change anything here, make sure to also update
     /// <b>subtype</b> in <b>ObjectPreview</b> and <b>PropertyPreview</b> below.
     /// </summary>
-    public string? Subtype { get; init; }
+    public RemoteObjectSubtype? Subtype { get; init; }
 
     /// <summary>
     /// Object class (constructor) name. Specified for <b>object</b> type values only.
@@ -1319,12 +1319,12 @@ public sealed record CustomPreview(string Header)
 /// <param name="Properties">
 /// List of the properties.
 /// </param>
-public sealed record ObjectPreview(string Type, bool Overflow, ImmutableArray<PropertyPreview> Properties)
+public sealed record ObjectPreview(ObjectPreviewType Type, bool Overflow, ImmutableArray<PropertyPreview> Properties)
 {
     /// <summary>
     /// Object subtype hint. Specified for <b>object</b> type values only.
     /// </summary>
-    public string? Subtype { get; init; }
+    public ObjectPreviewSubtype? Subtype { get; init; }
 
     /// <summary>
     /// String representation of the object.
@@ -1345,7 +1345,7 @@ public sealed record ObjectPreview(string Type, bool Overflow, ImmutableArray<Pr
 /// <param name="Type">
 /// Object type. Accessor means that the property itself is an accessor property.
 /// </param>
-public sealed record PropertyPreview(string Name, string Type)
+public sealed record PropertyPreview(string Name, PropertyPreviewType Type)
 {
     /// <summary>
     /// User-friendly property value string.
@@ -1360,7 +1360,7 @@ public sealed record PropertyPreview(string Name, string Type)
     /// <summary>
     /// Object subtype hint. Specified for <b>object</b> type values only.
     /// </summary>
-    public string? Subtype { get; init; }
+    public PropertyPreviewSubtype? Subtype { get; init; }
 }
 
 /// <summary>
@@ -1663,6 +1663,601 @@ public sealed record StackTraceId(string Id)
     /// <summary>
     /// </summary>
     public UniqueDebuggerId? DebuggerId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ConsoleAPICalledType>))]
+public enum ConsoleAPICalledType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("log")]
+    Log,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debug")]
+    Debug,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
+    Info,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("warning")]
+    Warning,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dir")]
+    Dir,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dirxml")]
+    Dirxml,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("table")]
+    Table,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trace")]
+    Trace,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("clear")]
+    Clear,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("startGroup")]
+    StartGroup,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("startGroupCollapsed")]
+    StartGroupCollapsed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("endGroup")]
+    EndGroup,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("assert")]
+    Assert,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("profile")]
+    Profile,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("profileEnd")]
+    ProfileEnd,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("count")]
+    Count,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("timeEnd")]
+    TimeEnd,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SerializationOptionsSerialization>))]
+public enum SerializationOptionsSerialization
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deep")]
+    Deep,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("json")]
+    Json,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("idOnly")]
+    IdOnly,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DeepSerializedValueType>))]
+public enum DeepSerializedValueType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
+    Undefined,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
+    Null,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
+    String,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
+    Number,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
+    Boolean,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
+    Bigint,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
+    Regexp,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
+    Date,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
+    Symbol,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
+    Array,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
+    Object,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
+    Function,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
+    Map,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
+    Set,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
+    Weakmap,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
+    Weakset,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
+    Proxy,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
+    Promise,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
+    Typedarray,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
+    Arraybuffer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
+    Node,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("window")]
+    Window,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
+    Generator,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<RemoteObjectType>))]
+public enum RemoteObjectType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
+    Object,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
+    Function,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
+    Undefined,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
+    String,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
+    Number,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
+    Boolean,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
+    Symbol,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
+    Bigint,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<RemoteObjectSubtype>))]
+public enum RemoteObjectSubtype
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
+    Array,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
+    Null,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
+    Node,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
+    Regexp,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
+    Date,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
+    Map,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
+    Set,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
+    Weakmap,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
+    Weakset,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("iterator")]
+    Iterator,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
+    Generator,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
+    Proxy,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
+    Promise,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
+    Typedarray,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
+    Arraybuffer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dataview")]
+    Dataview,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webassemblymemory")]
+    Webassemblymemory,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasmvalue")]
+    Wasmvalue,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferredmodule")]
+    Deferredmodule,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trustedtype")]
+    Trustedtype,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ObjectPreviewType>))]
+public enum ObjectPreviewType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
+    Object,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
+    Function,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
+    Undefined,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
+    String,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
+    Number,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
+    Boolean,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
+    Symbol,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
+    Bigint,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ObjectPreviewSubtype>))]
+public enum ObjectPreviewSubtype
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
+    Array,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
+    Null,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
+    Node,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
+    Regexp,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
+    Date,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
+    Map,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
+    Set,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
+    Weakmap,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
+    Weakset,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("iterator")]
+    Iterator,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
+    Generator,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
+    Proxy,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
+    Promise,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
+    Typedarray,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
+    Arraybuffer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dataview")]
+    Dataview,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webassemblymemory")]
+    Webassemblymemory,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasmvalue")]
+    Wasmvalue,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferredmodule")]
+    Deferredmodule,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trustedtype")]
+    Trustedtype,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PropertyPreviewType>))]
+public enum PropertyPreviewType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("object")]
+    Object,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("function")]
+    Function,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("undefined")]
+    Undefined,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
+    String,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
+    Number,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("boolean")]
+    Boolean,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("symbol")]
+    Symbol,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("accessor")]
+    Accessor,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bigint")]
+    Bigint,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PropertyPreviewSubtype>))]
+public enum PropertyPreviewSubtype
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
+    Array,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
+    Null,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("node")]
+    Node,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("regexp")]
+    Regexp,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
+    Date,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("map")]
+    Map,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("set")]
+    Set,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakmap")]
+    Weakmap,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("weakset")]
+    Weakset,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("iterator")]
+    Iterator,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("generator")]
+    Generator,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("proxy")]
+    Proxy,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("promise")]
+    Promise,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("typedarray")]
+    Typedarray,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("arraybuffer")]
+    Arraybuffer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dataview")]
+    Dataview,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webassemblymemory")]
+    Webassemblymemory,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasmvalue")]
+    Wasmvalue,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deferredmodule")]
+    Deferredmodule,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("trustedtype")]
+    Trustedtype,
 }
 
 [JsonSerializable(typeof(AwaitPromiseCommandParameters), TypeInfoPropertyName = "AwaitPromiseCommandParameters")]

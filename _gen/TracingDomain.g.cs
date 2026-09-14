@@ -148,7 +148,7 @@ public interface ITracing
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StartResult"/>.
     /// </returns>
-    Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, string? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, StartTransferMode? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -232,7 +232,7 @@ internal sealed class TracingDomain(CdpModule cdp) : global::Selenium.WebDriver.
         return await ExecuteCommandAsync("Tracing.requestMemoryDump", @params, JsonContext.RequestMemoryDumpCommandParameters, JsonContext.RequestMemoryDumpResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, string? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartResult> StartAsync(string? categories = default, string? options = default, double? bufferUsageReportingInterval = default, StartTransferMode? transferMode = default, StreamFormat? streamFormat = default, StreamCompression? streamCompression = default, TraceConfig? traceConfig = default, string? perfettoConfig = default, TracingBackend? tracingBackend = default, long? screenshotMaxSize = default, long? screenshotMaxCount = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartCommandParameters(Categories: categories, Options: options, BufferUsageReportingInterval: bufferUsageReportingInterval, TransferMode: transferMode, StreamFormat: streamFormat, StreamCompression: streamCompression, TraceConfig: traceConfig, PerfettoConfig: perfettoConfig, TracingBackend: tracingBackend, ScreenshotMaxSize: screenshotMaxSize, ScreenshotMaxCount: screenshotMaxCount);
         return await ExecuteCommandAsync("Tracing.start", @params, JsonContext.StartCommandParameters, JsonContext.StartResult, session, cancellationToken).ConfigureAwait(false);
@@ -292,7 +292,7 @@ internal sealed record RequestMemoryDumpCommandParameters(bool? Deterministic, M
 public sealed record RequestMemoryDumpResult(string DumpGuid, bool Success) : EmptyResult;
 
 
-internal sealed record StartCommandParameters(string? Categories, string? Options, double? BufferUsageReportingInterval, string? TransferMode, StreamFormat? StreamFormat, StreamCompression? StreamCompression, TraceConfig? TraceConfig, string? PerfettoConfig, TracingBackend? TracingBackend, long? ScreenshotMaxSize, long? ScreenshotMaxCount) : Parameters;
+internal sealed record StartCommandParameters(string? Categories, string? Options, double? BufferUsageReportingInterval, StartTransferMode? TransferMode, StreamFormat? StreamFormat, StreamCompression? StreamCompression, TraceConfig? TraceConfig, string? PerfettoConfig, TracingBackend? TracingBackend, long? ScreenshotMaxSize, long? ScreenshotMaxCount) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -352,7 +352,7 @@ public sealed record TraceConfig()
     /// <summary>
     /// Controls how the trace buffer stores data. The default is <b>recordUntilFull</b>.
     /// </summary>
-    public string? RecordMode { get; init; }
+    public TraceConfigRecordMode? RecordMode { get; init; }
 
     /// <summary>
     /// Size of the trace buffer in kilobytes. If not specified or zero is passed, a default value
@@ -473,6 +473,44 @@ public enum TracingBackend
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("system")]
     System,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<StartTransferMode>))]
+public enum StartTransferMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReportEvents")]
+    ReportEvents,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReturnAsStream")]
+    ReturnAsStream,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<TraceConfigRecordMode>))]
+public enum TraceConfigRecordMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recordUntilFull")]
+    RecordUntilFull,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recordContinuously")]
+    RecordContinuously,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recordAsMuchAsPossible")]
+    RecordAsMuchAsPossible,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("echoToConsole")]
+    EchoToConsole,
 }
 
 [JsonSerializable(typeof(EndCommandParameters), TypeInfoPropertyName = "EndCommandParameters")]

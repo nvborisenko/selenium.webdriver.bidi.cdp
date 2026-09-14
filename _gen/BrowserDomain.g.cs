@@ -112,7 +112,7 @@ public interface IBrowser
     /// A task representing the asynchronous operation, containing a <see cref="SetDownloadBehaviorResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancel a download if in progress
@@ -506,7 +506,7 @@ internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, BrowserContextID? browserContextId = default, string? downloadPath = default, bool? eventsEnabled = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, BrowserContextId: browserContextId, DownloadPath: downloadPath, EventsEnabled: eventsEnabled);
         return await ExecuteCommandAsync("Browser.setDownloadBehavior", @params, JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult, session, cancellationToken).ConfigureAwait(false);
@@ -662,7 +662,7 @@ internal sealed record ResetPermissionsCommandParameters(BrowserContextID? Brows
 public sealed record ResetPermissionsResult() : EmptyResult;
 
 
-internal sealed record SetDownloadBehaviorCommandParameters(string Behavior, BrowserContextID? BrowserContextId, string? DownloadPath, bool? EventsEnabled) : Parameters;
+internal sealed record SetDownloadBehaviorCommandParameters(SetDownloadBehaviorBehavior Behavior, BrowserContextID? BrowserContextId, string? DownloadPath, bool? EventsEnabled) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -871,7 +871,7 @@ public sealed record DownloadWillBeginEventArgs(Page.FrameId FrameId, string Gui
 /// Depending on the platform, it is not guaranteed to be set, nor the file
 /// is guaranteed to exist.
 /// </param>
-public sealed record DownloadProgressEventArgs(string Guid, double TotalBytes, double ReceivedBytes, string State, string? FilePath = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DownloadProgressEventArgs(string Guid, double TotalBytes, double ReceivedBytes, DownloadProgressState State, string? FilePath = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>
@@ -1216,6 +1216,48 @@ public sealed record Bucket(long Low, long High, long Count)
 /// </param>
 public sealed record Histogram(string Name, long Sum, long Count, ImmutableArray<Bucket> Buckets)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetDownloadBehaviorBehavior>))]
+public enum SetDownloadBehaviorBehavior
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deny")]
+    Deny,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("allow")]
+    Allow,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("allowAndName")]
+    AllowAndName,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
+    Default,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DownloadProgressState>))]
+public enum DownloadProgressState
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inProgress")]
+    InProgress,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("completed")]
+    Completed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("canceled")]
+    Canceled,
 }
 
 [JsonSerializable(typeof(SetPermissionCommandParameters), TypeInfoPropertyName = "SetPermissionCommandParameters")]

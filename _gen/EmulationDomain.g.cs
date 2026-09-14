@@ -257,7 +257,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDeviceMetricsOverrideResult"/>.
     /// </returns>
-    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, string? scrollbarType = default, bool? screenOrientationLockEmulation = default, string? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, SetDeviceMetricsOverrideScrollbarType? scrollbarType = default, bool? screenOrientationLockEmulation = default, SetDeviceMetricsOverrideViewportMeta? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start reporting the given posture value to the Device Posture API.
@@ -383,7 +383,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetEmitTouchEventsForMouseResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, SetEmitTouchEventsForMouseConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emulates the given media type or media feature for CSS media queries.
@@ -421,7 +421,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetEmulatedVisionDeficiencyResult"/>.
     /// </returns>
-    Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(string type, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(SetEmulatedVisionDeficiencyType type, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Emulates the given OS text scale.
@@ -848,7 +848,7 @@ public interface IEmulation
     /// A task representing the asynchronous operation, containing a <see cref="SetCPUPerformanceOverrideResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(string? performanceTier = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(SetCPUPerformanceOverridePerformanceTier? performanceTier = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Allows overriding user agent with the given string.
@@ -1154,7 +1154,7 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
         return await ExecuteCommandAsync("Emulation.setVirtualKeyboardGeometryOverride", @params, JsonContext.SetVirtualKeyboardGeometryOverrideCommandParameters, JsonContext.SetVirtualKeyboardGeometryOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, string? scrollbarType = default, bool? screenOrientationLockEmulation = default, string? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = default, long? screenWidth = default, long? screenHeight = default, long? positionX = default, long? positionY = default, bool? dontSetVisibleSize = default, ScreenOrientation? screenOrientation = default, Page.Viewport? viewport = default, DisplayFeature? displayFeature = default, DevicePosture? devicePosture = default, SetDeviceMetricsOverrideScrollbarType? scrollbarType = default, bool? screenOrientationLockEmulation = default, SetDeviceMetricsOverrideViewportMeta? viewportMeta = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation, ViewportMeta: viewportMeta);
         return await ExecuteCommandAsync("Emulation.setDeviceMetricsOverride", @params, JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult, session, cancellationToken).ConfigureAwait(false);
@@ -1203,7 +1203,7 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetEmitTouchEventsForMouseResult> SetEmitTouchEventsForMouseAsync(bool enabled, SetEmitTouchEventsForMouseConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmitTouchEventsForMouseCommandParameters(Enabled: enabled, Configuration: configuration);
         return await ExecuteCommandAsync("Emulation.setEmitTouchEventsForMouse", @params, JsonContext.SetEmitTouchEventsForMouseCommandParameters, JsonContext.SetEmitTouchEventsForMouseResult, session, cancellationToken).ConfigureAwait(false);
@@ -1215,7 +1215,7 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
         return await ExecuteCommandAsync("Emulation.setEmulatedMedia", @params, JsonContext.SetEmulatedMediaCommandParameters, JsonContext.SetEmulatedMediaResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(string type, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetEmulatedVisionDeficiencyResult> SetEmulatedVisionDeficiencyAsync(SetEmulatedVisionDeficiencyType type, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetEmulatedVisionDeficiencyCommandParameters(Type: type);
         return await ExecuteCommandAsync("Emulation.setEmulatedVisionDeficiency", @params, JsonContext.SetEmulatedVisionDeficiencyCommandParameters, JsonContext.SetEmulatedVisionDeficiencyResult, session, cancellationToken).ConfigureAwait(false);
@@ -1357,7 +1357,7 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(string? performanceTier = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetCPUPerformanceOverrideResult> SetCPUPerformanceOverrideAsync(SetCPUPerformanceOverridePerformanceTier? performanceTier = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetCPUPerformanceOverrideCommandParameters(PerformanceTier: performanceTier);
         return await ExecuteCommandAsync("Emulation.setCPUPerformanceOverride", @params, JsonContext.SetCPUPerformanceOverrideCommandParameters, JsonContext.SetCPUPerformanceOverrideResult, session, cancellationToken).ConfigureAwait(false);
@@ -1497,7 +1497,7 @@ internal sealed record SetVirtualKeyboardGeometryOverrideCommandParameters(DOM.R
 public sealed record SetVirtualKeyboardGeometryOverrideResult() : EmptyResult;
 
 
-internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, string? ScrollbarType, bool? ScreenOrientationLockEmulation, string? ViewportMeta) : Parameters;
+internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, SetDeviceMetricsOverrideScrollbarType? ScrollbarType, bool? ScreenOrientationLockEmulation, SetDeviceMetricsOverrideViewportMeta? ViewportMeta) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1546,7 +1546,7 @@ internal sealed record SetDocumentCookieDisabledCommandParameters(bool Disabled)
 public sealed record SetDocumentCookieDisabledResult() : EmptyResult;
 
 
-internal sealed record SetEmitTouchEventsForMouseCommandParameters(bool Enabled, string? Configuration) : Parameters;
+internal sealed record SetEmitTouchEventsForMouseCommandParameters(bool Enabled, SetEmitTouchEventsForMouseConfiguration? Configuration) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1560,7 +1560,7 @@ internal sealed record SetEmulatedMediaCommandParameters(string? Media, Immutabl
 public sealed record SetEmulatedMediaResult() : EmptyResult;
 
 
-internal sealed record SetEmulatedVisionDeficiencyCommandParameters(string Type) : Parameters;
+internal sealed record SetEmulatedVisionDeficiencyCommandParameters(SetEmulatedVisionDeficiencyType Type) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1712,7 +1712,7 @@ internal sealed record SetHardwareConcurrencyOverrideCommandParameters(long Hard
 public sealed record SetHardwareConcurrencyOverrideResult() : EmptyResult;
 
 
-internal sealed record SetCPUPerformanceOverrideCommandParameters(string? PerformanceTier) : Parameters;
+internal sealed record SetCPUPerformanceOverrideCommandParameters(SetCPUPerformanceOverridePerformanceTier? PerformanceTier) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -1853,7 +1853,7 @@ public sealed record SafeAreaInsets()
 /// <param name="Angle">
 /// Orientation angle.
 /// </param>
-public sealed record ScreenOrientation(string Type, long Angle)
+public sealed record ScreenOrientation(ScreenOrientationType Type, long Angle)
 {
 }
 
@@ -1871,7 +1871,7 @@ public sealed record ScreenOrientation(string Type, long Angle)
 /// displayed - this length along with the offset describes this area.
 /// A display feature that only splits content will have a 0 mask_length.
 /// </param>
-public sealed record DisplayFeature(string Orientation, long Offset, long MaskLength)
+public sealed record DisplayFeature(DisplayFeatureOrientation Orientation, long Offset, long MaskLength)
 {
 }
 
@@ -1880,7 +1880,7 @@ public sealed record DisplayFeature(string Orientation, long Offset, long MaskLe
 /// <param name="Type">
 /// Current posture of the device
 /// </param>
-public sealed record DevicePosture(string Type)
+public sealed record DevicePosture(DevicePostureType Type)
 {
 }
 
@@ -2233,6 +2233,166 @@ public enum DisabledImageType
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
     Webp,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetDeviceMetricsOverrideScrollbarType>))]
+public enum SetDeviceMetricsOverrideScrollbarType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overlay")]
+    Overlay,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
+    Default,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetDeviceMetricsOverrideViewportMeta>))]
+public enum SetDeviceMetricsOverrideViewportMeta
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("enable")]
+    Enable,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
+    Default,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetEmitTouchEventsForMouseConfiguration>))]
+public enum SetEmitTouchEventsForMouseConfiguration
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mobile")]
+    Mobile,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("desktop")]
+    Desktop,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetEmulatedVisionDeficiencyType>))]
+public enum SetEmulatedVisionDeficiencyType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
+    None,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("blurredVision")]
+    BlurredVision,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reducedContrast")]
+    ReducedContrast,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("achromatopsia")]
+    Achromatopsia,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deuteranopia")]
+    Deuteranopia,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("protanopia")]
+    Protanopia,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("tritanopia")]
+    Tritanopia,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetCPUPerformanceOverridePerformanceTier>))]
+public enum SetCPUPerformanceOverridePerformanceTier
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unknown")]
+    Unknown,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("low")]
+    Low,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mid")]
+    Mid,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("high")]
+    High,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ultra")]
+    Ultra,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ScreenOrientationType>))]
+public enum ScreenOrientationType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("portraitPrimary")]
+    PortraitPrimary,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("portraitSecondary")]
+    PortraitSecondary,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("landscapePrimary")]
+    LandscapePrimary,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("landscapeSecondary")]
+    LandscapeSecondary,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DisplayFeatureOrientation>))]
+public enum DisplayFeatureOrientation
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("vertical")]
+    Vertical,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("horizontal")]
+    Horizontal,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DevicePostureType>))]
+public enum DevicePostureType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("continuous")]
+    Continuous,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("folded")]
+    Folded,
 }
 
 [JsonSerializable(typeof(CanEmulateCommandParameters), TypeInfoPropertyName = "CanEmulateCommandParameters")]

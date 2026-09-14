@@ -21,6 +21,9 @@ internal record PropertyInfo(string Name)
 
     [JsonInclude]
     public bool? Deprecated { get; internal set; }
+
+    [JsonInclude]
+    public IReadOnlyList<string>? Enum { get; internal set; }
 }
 
 internal record PropertyInfoItem()

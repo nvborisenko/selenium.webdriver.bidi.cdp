@@ -169,7 +169,7 @@ public interface IDOM
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(EnableIncludeWhitespace? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Focuses the given element.
@@ -643,7 +643,7 @@ public interface IDOM
     /// A task representing the asynchronous operation, containing a <see cref="GetElementByRelationResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, string? session = default, CancellationToken cancellationToken = default);
+    Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, GetElementByRelationRelation relation, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Re-does the last undone action.
@@ -1440,7 +1440,7 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
         return await ExecuteCommandAsync("DOM.discardSearchResults", @params, JsonContext.DiscardSearchResultsCommandParameters, JsonContext.DiscardSearchResultsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(EnableIncludeWhitespace? includeWhitespace = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(IncludeWhitespace: includeWhitespace);
         return await ExecuteCommandAsync("DOM.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
@@ -1589,7 +1589,7 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, string relation, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<GetElementByRelationResult> GetElementByRelationAsync(NodeId nodeId, GetElementByRelationRelation relation, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new GetElementByRelationCommandParameters(NodeId: nodeId, Relation: relation);
         return await ExecuteCommandAsync("DOM.getElementByRelation", @params, JsonContext.GetElementByRelationCommandParameters, JsonContext.GetElementByRelationResult, session, cancellationToken).ConfigureAwait(false);
@@ -1842,7 +1842,7 @@ internal sealed record DiscardSearchResultsCommandParameters(string SearchId) : 
 public sealed record DiscardSearchResultsResult() : EmptyResult;
 
 
-internal sealed record EnableCommandParameters(string? IncludeWhitespace) : Parameters;
+internal sealed record EnableCommandParameters(EnableIncludeWhitespace? IncludeWhitespace) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2064,7 +2064,7 @@ internal sealed record GetTopLayerElementsCommandParameters() : Parameters;
 public sealed record GetTopLayerElementsResult(ImmutableArray<NodeId> NodeIds) : EmptyResult;
 
 
-internal sealed record GetElementByRelationCommandParameters(NodeId NodeId, string Relation) : Parameters;
+internal sealed record GetElementByRelationCommandParameters(NodeId NodeId, GetElementByRelationRelation Relation) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -3090,6 +3090,40 @@ public sealed record Rect(double X, double Y, double Width, double Height)
 /// </param>
 public sealed record CSSComputedStyleProperty(string Name, string Value)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<EnableIncludeWhitespace>))]
+public enum EnableIncludeWhitespace
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
+    None,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("all")]
+    All,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<GetElementByRelationRelation>))]
+public enum GetElementByRelationRelation
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PopoverTarget")]
+    PopoverTarget,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InterestTarget")]
+    InterestTarget,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CommandFor")]
+    CommandFor,
 }
 
 [JsonSerializable(typeof(CollectClassNamesFromSubtreeCommandParameters), TypeInfoPropertyName = "CollectClassNamesFromSubtreeCommandParameters")]

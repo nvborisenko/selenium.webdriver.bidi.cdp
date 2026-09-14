@@ -2074,7 +2074,7 @@ public sealed record CSSProperty(string Name, string Value)
 /// stylesheet's LINK tag, "inlineSheet" if specified by a "media" attribute in an inline
 /// stylesheet's STYLE tag.
 /// </param>
-public sealed record CSSMedia(string Text, string Source)
+public sealed record CSSMedia(string Text, CSSMediaSource Source)
 {
     /// <summary>
     /// URL of the document containing the media query description.
@@ -2472,12 +2472,12 @@ public sealed record CSSPropertyRegistration(string PropertyName, bool Inherits,
 /// <param name="Style">
 /// Associated style declaration.
 /// </param>
-public sealed record CSSAtRule(string Type, StyleSheetOrigin Origin, CSSStyle Style)
+public sealed record CSSAtRule(CSSAtRuleType Type, StyleSheetOrigin Origin, CSSStyle Style)
 {
     /// <summary>
     /// Subsection of font-feature-values, if this is a subsection.
     /// </summary>
-    public string? Subsection { get; init; }
+    public CSSAtRuleSubsection? Subsection { get; init; }
 
     /// <summary>
     /// LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)
@@ -2638,6 +2638,83 @@ public sealed record CSSKeyframeRule(StyleSheetOrigin Origin, Value KeyText, CSS
 /// </param>
 public sealed record StyleDeclarationEdit(DOM.StyleSheetId StyleSheetId, SourceRange Range, string Text)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<CSSMediaSource>))]
+public enum CSSMediaSource
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mediaRule")]
+    MediaRule,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("importRule")]
+    ImportRule,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("linkedSheet")]
+    LinkedSheet,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inlineSheet")]
+    InlineSheet,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<CSSAtRuleType>))]
+public enum CSSAtRuleType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("font-face")]
+    FontFace,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("font-feature-values")]
+    FontFeatureValues,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("font-palette-values")]
+    FontPaletteValues,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("counter-style")]
+    CounterStyle,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<CSSAtRuleSubsection>))]
+public enum CSSAtRuleSubsection
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("swash")]
+    Swash,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("annotation")]
+    Annotation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ornaments")]
+    Ornaments,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("stylistic")]
+    Stylistic,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("styleset")]
+    Styleset,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("character-variant")]
+    CharacterVariant,
 }
 
 [JsonSerializable(typeof(AddRuleCommandParameters), TypeInfoPropertyName = "AddRuleCommandParameters")]

@@ -141,7 +141,7 @@ public sealed record ScreenshotParams()
     /// <summary>
     /// Image compression format (defaults to png).
     /// </summary>
-    public string? Format { get; init; }
+    public ScreenshotParamsFormat? Format { get; init; }
 
     /// <summary>
     /// Compression quality from range [0..100] (jpeg and webp only).
@@ -152,6 +152,25 @@ public sealed record ScreenshotParams()
     /// Optimize image encoding for speed, not for resulting size (defaults to false)
     /// </summary>
     public bool? OptimizeForSpeed { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ScreenshotParamsFormat>))]
+public enum ScreenshotParamsFormat
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
+    Jpeg,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
+    Png,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
+    Webp,
 }
 
 [JsonSerializable(typeof(BeginFrameCommandParameters), TypeInfoPropertyName = "BeginFrameCommandParameters")]

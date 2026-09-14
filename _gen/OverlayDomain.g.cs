@@ -1336,7 +1336,7 @@ public sealed record LineStyle()
     /// <summary>
     /// The line pattern (default: solid)
     /// </summary>
-    public string? Pattern { get; init; }
+    public LineStylePattern? Pattern { get; init; }
 }
 
 /// <summary>
@@ -1761,6 +1761,21 @@ public sealed record InspectedElementAnchorConfig()
     /// Identifier of the backend node to highlight.
     /// </summary>
     public DOM.BackendNodeId? BackendNodeId { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<LineStylePattern>))]
+public enum LineStylePattern
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dashed")]
+    Dashed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("dotted")]
+    Dotted,
 }
 
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]

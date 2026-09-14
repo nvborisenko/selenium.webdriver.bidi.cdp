@@ -39,6 +39,9 @@ internal record ParameterInfo(string Name)
 
     [JsonInclude]
     public bool? Deprecated { get; internal set; }
+
+    [JsonInclude]
+    public IReadOnlyList<string>? Enum { get; internal set; }
 }
 
 internal record ParameterInfoItem()
@@ -66,6 +69,9 @@ internal record ReturnInfo(string Name)
 
     [JsonInclude]
     public ReturnInfoItem? Items { get; internal set; }
+
+    [JsonInclude]
+    public IReadOnlyList<string>? Enum { get; internal set; }
 }
 
 internal record ReturnInfoItem()

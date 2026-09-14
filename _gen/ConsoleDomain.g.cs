@@ -134,7 +134,7 @@ public sealed record MessageAddedEventArgs(ConsoleMessage Message) : OpenQA.Sele
 /// <param name="Text">
 /// Message text.
 /// </param>
-public sealed record ConsoleMessage(string Source, string Level, string Text)
+public sealed record ConsoleMessage(ConsoleMessageSource Source, ConsoleMessageLevel Level, string Text)
 {
     /// <summary>
     /// URL of the message origin.
@@ -150,6 +150,84 @@ public sealed record ConsoleMessage(string Source, string Level, string Text)
     /// Column number in the resource that generated this message (1-based).
     /// </summary>
     public long? Column { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ConsoleMessageSource>))]
+public enum ConsoleMessageSource
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("xml")]
+    Xml,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("javascript")]
+    Javascript,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
+    Network,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("console-api")]
+    ConsoleApi,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storage")]
+    Storage,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("appcache")]
+    Appcache,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rendering")]
+    Rendering,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("security")]
+    Security,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
+    Other,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deprecation")]
+    Deprecation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("worker")]
+    Worker,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ConsoleMessageLevel>))]
+public enum ConsoleMessageLevel
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("log")]
+    Log,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("warning")]
+    Warning,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("debug")]
+    Debug,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
+    Info,
 }
 
 [JsonSerializable(typeof(ClearMessagesCommandParameters), TypeInfoPropertyName = "ClearMessagesCommandParameters")]

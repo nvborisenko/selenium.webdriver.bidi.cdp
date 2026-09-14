@@ -43,6 +43,8 @@ foreach (var inputFile in inputFiles)
 
     foreach (var domainInfo in browserProtocol.Domains)
     {
+        Extensions.InlineEnums.Clear();
+
         var domainBuilder = new StringBuilder();
 
         domainBuilder.AppendLine("#nullable enable");
@@ -158,7 +160,7 @@ foreach (var inputFile in inputFiles)
                     {
                         var parameterInfo = commandInfo.Parameters[i];
 
-                        domainBuilder.Append($"{parameterInfo.AsCSharpType()} {parameterInfo.Name.Dehumanize()}");
+                        domainBuilder.Append($"{parameterInfo.AsCSharpType(commandInfo.Name)} {parameterInfo.Name.Dehumanize()}");
 
                         if (i != commandInfo.Parameters.Count - 1)
                         {
@@ -198,7 +200,7 @@ foreach (var inputFile in inputFiles)
                     {
                         var returnType = commandInfo.Returns[i];
 
-                        domainBuilder.Append($"{returnType.AsCSharpType()} {returnType.Name.Dehumanize()}");
+                        domainBuilder.Append($"{returnType.AsCSharpType(commandInfo.Name)} {returnType.Name.Dehumanize()}");
 
                         if (i != commandInfo.Returns.Count - 1) // not last yet
                         {
@@ -252,8 +254,8 @@ foreach (var inputFile in inputFiles)
                     {
                         var parameterInfo = allParams[i];
                         var type = parameterInfo.Optional is true
-                            ? parameterInfo.AsCSharpType().TrimEnd('?') + "?"
-                            : parameterInfo.AsCSharpType();
+                            ? parameterInfo.AsCSharpType(eventInfo.Name).TrimEnd('?') + "?"
+                            : parameterInfo.AsCSharpType(eventInfo.Name);
                         var defaultValue = parameterInfo.Optional is true ? " = null" : "";
                         domainBuilder.Append($"{type} {parameterInfo.Name.Dehumanize()}{defaultValue}");
                         if (i != allParams.Count - 1) domainBuilder.Append(", ");
@@ -377,7 +379,7 @@ foreach (var inputFile in inputFiles)
                         {
                             var propertyInfo = requiredProperties[i];
 
-                            domainBuilder.Append($"{propertyInfo.AsCSharpType()} {propertyInfo.Name.Dehumanize()}");
+                            domainBuilder.Append($"{propertyInfo.AsCSharpType(typeInfo.GetTypeName())} {propertyInfo.Name.Dehumanize()}");
 
                             if (i != requiredProperties.Count - 1)
                             {
@@ -412,7 +414,7 @@ foreach (var inputFile in inputFiles)
                                 domainBuilder.AppendLine("    [global::System.Obsolete]");
                             }
 
-                            domainBuilder.AppendLine($"    public {propertyInfo.AsCSharpType()} {propertyInfo.Name.Dehumanize()} {{ get; init; }}");
+                            domainBuilder.AppendLine($"    public {propertyInfo.AsCSharpType(typeInfo.GetTypeName())} {propertyInfo.Name.Dehumanize()} {{ get; init; }}");
 
                             if (i != optionalProperties.Count - 1)
                             {
@@ -424,6 +426,27 @@ foreach (var inputFile in inputFiles)
                     domainBuilder.AppendLine("}");
                 }
             }
+        }
+
+        // Inline Enum Types (enums declared directly on a parameter/property/return rather than as a named type)
+        foreach (var (enumTypeName, enumValues) in Extensions.InlineEnums)
+        {
+            domainBuilder.AppendLine();
+            domainBuilder.AppendLine("/// <summary>");
+            domainBuilder.AppendLine("/// </summary>");
+            domainBuilder.AppendLine($"[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<{enumTypeName}>))]");
+            domainBuilder.AppendLine($"public enum {enumTypeName}");
+            domainBuilder.AppendLine("{");
+
+            foreach (var enumValue in enumValues)
+            {
+                domainBuilder.AppendLine("    /// <summary>");
+                domainBuilder.AppendLine("    /// </summary>");
+                domainBuilder.AppendLine($"    [global::System.Text.Json.Serialization.JsonStringEnumMemberName(\"{enumValue}\")]");
+                domainBuilder.AppendLine($"    {enumValue.Dehumanize()},");
+            }
+
+            domainBuilder.AppendLine("}");
         }
 
         // Json Context
@@ -717,13 +740,13 @@ static string GetCommandSignature(CommandInfo commandInfo, bool includeDefaultVa
     {
         foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is not true))
         {
-            parameters.Add($"{parameterInfo.AsCSharpType()} {EscapeIdentifier(parameterInfo.Name)}");
+            parameters.Add($"{parameterInfo.AsCSharpType(commandInfo.Name)} {EscapeIdentifier(parameterInfo.Name)}");
         }
 
         foreach (var parameterInfo in commandInfo.Parameters.Where(p => p.Optional is true))
         {
             var defaultValue = includeDefaultValues ? " = default" : string.Empty;
-            parameters.Add($"{parameterInfo.AsCSharpType()} {EscapeIdentifier(parameterInfo.Name)}{defaultValue}");
+            parameters.Add($"{parameterInfo.AsCSharpType(commandInfo.Name)} {EscapeIdentifier(parameterInfo.Name)}{defaultValue}");
         }
     }
 
@@ -771,8 +794,29 @@ static class Extensions
     public static readonly HashSet<string> DictionaryTypes = new();
     public static readonly Dictionary<string, PropertyInfoItem> ArrayTypes = new();
 
-    public static string AsCSharpType(this ReturnInfo returnInfo)
+    // Inline enums (declared directly on a parameter/property/return rather than as a named type) collected per-domain.
+    public static readonly List<(string TypeName, IReadOnlyList<string> Values)> InlineEnums = new();
+
+    public static string RegisterInlineEnum(string ownerName, string memberName, IReadOnlyList<string> values)
     {
+        var typeName = $"{ownerName.Dehumanize()}{memberName.Dehumanize()}";
+
+        if (InlineEnums.All(e => e.TypeName != typeName))
+        {
+            InlineEnums.Add((typeName, values));
+        }
+
+        return typeName;
+    }
+
+    public static string AsCSharpType(this ReturnInfo returnInfo, string ownerName)
+    {
+        if (returnInfo.Enum is not null)
+        {
+            var enumTypeName = RegisterInlineEnum(ownerName, returnInfo.Name, returnInfo.Enum);
+            return returnInfo.Optional is true ? enumTypeName + "?" : enumTypeName;
+        }
+
         var res = GetPrimitiveCSharpType(returnInfo.Type, returnInfo.Ref);
 
         if (res is null)
@@ -795,8 +839,14 @@ static class Extensions
         return res;
     }
 
-    public static string AsCSharpType(this ParameterInfo parameterInfo)
+    public static string AsCSharpType(this ParameterInfo parameterInfo, string ownerName)
     {
+        if (parameterInfo.Enum is not null)
+        {
+            var enumTypeName = RegisterInlineEnum(ownerName, parameterInfo.Name, parameterInfo.Enum);
+            return parameterInfo.Optional is true ? enumTypeName + "?" : enumTypeName;
+        }
+
         var res = GetPrimitiveCSharpType(parameterInfo.Type, parameterInfo.Ref);
 
         if (res is null)
@@ -819,8 +869,14 @@ static class Extensions
         return res;
     }
 
-    public static string AsCSharpType(this PropertyInfo propertyInfo)
+    public static string AsCSharpType(this PropertyInfo propertyInfo, string ownerName)
     {
+        if (propertyInfo.Enum is not null)
+        {
+            var enumTypeName = RegisterInlineEnum(ownerName, propertyInfo.Name, propertyInfo.Enum);
+            return propertyInfo.Optional is true ? enumTypeName + "?" : enumTypeName;
+        }
+
         var res = GetPrimitiveCSharpType(propertyInfo.Type, propertyInfo.Ref);
 
         if (res is null)

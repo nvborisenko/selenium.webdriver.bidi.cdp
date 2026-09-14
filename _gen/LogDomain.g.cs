@@ -192,11 +192,11 @@ public sealed record EntryAddedEventArgs(LogEntry Entry) : OpenQA.Selenium.BiDi.
 /// <param name="Timestamp">
 /// Timestamp when this entry was added.
 /// </param>
-public sealed record LogEntry(string Source, string Level, string Text, Runtime.Timestamp Timestamp)
+public sealed record LogEntry(LogEntrySource Source, LogEntryLevel Level, string Text, Runtime.Timestamp Timestamp)
 {
     /// <summary>
     /// </summary>
-    public string? Category { get; init; }
+    public LogEntryCategory? Category { get; init; }
 
     /// <summary>
     /// URL of the resource if known.
@@ -238,8 +238,136 @@ public sealed record LogEntry(string Source, string Level, string Text, Runtime.
 /// <param name="Threshold">
 /// Time threshold to trigger upon.
 /// </param>
-public sealed record ViolationSetting(string Name, double Threshold)
+public sealed record ViolationSetting(ViolationSettingName Name, double Threshold)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<LogEntrySource>))]
+public enum LogEntrySource
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("xml")]
+    Xml,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("javascript")]
+    Javascript,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("network")]
+    Network,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storage")]
+    Storage,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("appcache")]
+    Appcache,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rendering")]
+    Rendering,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("security")]
+    Security,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deprecation")]
+    Deprecation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("worker")]
+    Worker,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("violation")]
+    Violation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("intervention")]
+    Intervention,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recommendation")]
+    Recommendation,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
+    Other,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<LogEntryLevel>))]
+public enum LogEntryLevel
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("verbose")]
+    Verbose,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("info")]
+    Info,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("warning")]
+    Warning,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("error")]
+    Error,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<LogEntryCategory>))]
+public enum LogEntryCategory
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("cors")]
+    Cors,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ViolationSettingName>))]
+public enum ViolationSettingName
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("longTask")]
+    LongTask,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("longLayout")]
+    LongLayout,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("blockedEvent")]
+    BlockedEvent,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("blockedParser")]
+    BlockedParser,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("discouragedAPIUse")]
+    DiscouragedAPIUse,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("handler")]
+    Handler,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("recurringHandler")]
+    RecurringHandler,
 }
 
 [JsonSerializable(typeof(ClearCommandParameters), TypeInfoPropertyName = "ClearCommandParameters")]

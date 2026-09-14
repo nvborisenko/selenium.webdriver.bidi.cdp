@@ -2602,7 +2602,7 @@ public sealed record ResponseReceivedEarlyHintsEventArgs(RequestId RequestId, gl
 /// <param name="IssuedTokenCount">
 /// The number of obtained Trust Tokens on a successful "Issuance" operation.
 /// </param>
-public sealed record TrustTokenOperationDoneEventArgs(string Status, TrustTokenOperationType Type, RequestId RequestId, string? TopLevelOrigin = null, string? IssuerOrigin = null, long? IssuedTokenCount = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record TrustTokenOperationDoneEventArgs(TrustTokenOperationDoneStatus Status, TrustTokenOperationType Type, RequestId RequestId, string? TopLevelOrigin = null, string? IssuerOrigin = null, long? IssuedTokenCount = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired once security policy has been updated.
@@ -3123,7 +3123,7 @@ public sealed record PostDataEntry()
 /// <param name="ReferrerPolicy">
 /// The referrer policy of the request, as defined in https://www.w3.org/TR/referrer-policy/
 /// </param>
-public sealed record Request(string Url, string Method, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, ResourcePriority InitialPriority, string ReferrerPolicy)
+public sealed record Request(string Url, string Method, global::System.Collections.Generic.IReadOnlyDictionary<string, string> Headers, ResourcePriority InitialPriority, RequestReferrerPolicy ReferrerPolicy)
 {
     /// <summary>
     /// Fragment of the requested URL starting with hash, if present.
@@ -3523,7 +3523,7 @@ public enum ServiceWorkerResponseSource
 /// Only set for "token-redemption" operation and determine whether
 /// to request a fresh SRR or use a still valid cached SRR.
 /// </param>
-public sealed record TrustTokenParams(TrustTokenOperationType Operation, string RefreshPolicy)
+public sealed record TrustTokenParams(TrustTokenOperationType Operation, TrustTokenParamsRefreshPolicy RefreshPolicy)
 {
     /// <summary>
     /// Origins of issuers from whom to request tokens or redemption
@@ -3851,7 +3851,7 @@ public sealed record CachedResource(string Url, ResourceType Type, double BodySi
 /// <param name="Type">
 /// Type of this initiator.
 /// </param>
-public sealed record Initiator(string Type)
+public sealed record Initiator(InitiatorType Type)
 {
     /// <summary>
     /// Initiator JavaScript stack trace, set for Script only.
@@ -4306,7 +4306,7 @@ public sealed record AuthChallenge(string Origin, string Scheme, string Realm)
     /// <summary>
     /// Source of the authentication challenge.
     /// </summary>
-    public string? Source { get; init; }
+    public AuthChallengeSource? Source { get; init; }
 }
 
 /// <summary>
@@ -4317,7 +4317,7 @@ public sealed record AuthChallenge(string Origin, string Scheme, string Realm)
 /// deferring to the default behavior of the net stack, which will likely either the Cancel
 /// authentication or display a popup dialog box.
 /// </param>
-public sealed record AuthChallengeResponse(string Response)
+public sealed record AuthChallengeResponse(AuthChallengeResponseResponse Response)
 {
     /// <summary>
     /// The username to provide, possibly empty. Should only be set if response is
@@ -5006,7 +5006,7 @@ public sealed record DeviceBoundSessionKey(string Site, string Id)
 /// <param name="Usage">
 /// How the session was used (or not used).
 /// </param>
-public sealed record DeviceBoundSessionWithUsage(DeviceBoundSessionKey SessionKey, string Usage)
+public sealed record DeviceBoundSessionWithUsage(DeviceBoundSessionKey SessionKey, DeviceBoundSessionWithUsageUsage Usage)
 {
 }
 
@@ -5048,7 +5048,7 @@ public sealed record DeviceBoundSessionCookieCraving(string Name, string Domain,
 /// <param name="PathPrefix">
 /// See comments on <b>net::device_bound_sessions::SessionInclusionRules::UrlRule::path_prefix</b>.
 /// </param>
-public sealed record DeviceBoundSessionUrlRule(string RuleType, string HostPattern, string PathPrefix)
+public sealed record DeviceBoundSessionUrlRule(DeviceBoundSessionUrlRuleRuleType RuleType, string HostPattern, string PathPrefix)
 {
 }
 
@@ -5478,7 +5478,7 @@ public sealed record CreationEventDetails(DeviceBoundSessionFetchResult FetchRes
 /// <param name="WasFullyProactiveRefresh">
 /// See comments on <b>net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh</b>.
 /// </param>
-public sealed record RefreshEventDetails(string RefreshResult, bool WasFullyProactiveRefresh)
+public sealed record RefreshEventDetails(RefreshEventDetailsRefreshResult RefreshResult, bool WasFullyProactiveRefresh)
 {
     /// <summary>
     /// LINT.ThenChange(//net/device_bound_sessions/refresh_result.h:DeviceBoundSessionRefreshResult,//content/browser/devtools/protocol/network_handler.cc:DeviceBoundSessionRefreshResult)
@@ -5505,7 +5505,7 @@ public sealed record RefreshEventDetails(string RefreshResult, bool WasFullyProa
 /// <param name="DeletionReason">
 /// The reason for a session being deleted.
 /// </param>
-public sealed record TerminationEventDetails(string DeletionReason)
+public sealed record TerminationEventDetails(TerminationEventDetailsDeletionReason DeletionReason)
 {
 }
 
@@ -5518,7 +5518,7 @@ public sealed record TerminationEventDetails(string DeletionReason)
 /// <param name="Challenge">
 /// The challenge set.
 /// </param>
-public sealed record ChallengeEventDetails(string ChallengeResult, string Challenge)
+public sealed record ChallengeEventDetails(ChallengeEventDetailsChallengeResult ChallengeResult, string Challenge)
 {
 }
 
@@ -5563,6 +5563,347 @@ public sealed record LoadNetworkResourcePageResult(bool Success)
 /// </param>
 public sealed record LoadNetworkResourceOptions(bool DisableCache, bool IncludeCredentials)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<TrustTokenOperationDoneStatus>))]
+public enum TrustTokenOperationDoneStatus
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Ok")]
+    Ok,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidArgument")]
+    InvalidArgument,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("MissingIssuerKeys")]
+    MissingIssuerKeys,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedPrecondition")]
+    FailedPrecondition,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ResourceExhausted")]
+    ResourceExhausted,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AlreadyExists")]
+    AlreadyExists,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ResourceLimited")]
+    ResourceLimited,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Unauthorized")]
+    Unauthorized,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("BadResponse")]
+    BadResponse,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InternalError")]
+    InternalError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnknownError")]
+    UnknownError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FulfilledLocally")]
+    FulfilledLocally,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SiteIssuerLimit")]
+    SiteIssuerLimit,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<RequestReferrerPolicy>))]
+public enum RequestReferrerPolicy
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unsafe-url")]
+    UnsafeUrl,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-referrer-when-downgrade")]
+    NoReferrerWhenDowngrade,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-referrer")]
+    NoReferrer,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("origin")]
+    Origin,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("origin-when-cross-origin")]
+    OriginWhenCrossOrigin,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("same-origin")]
+    SameOrigin,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("strict-origin")]
+    StrictOrigin,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("strict-origin-when-cross-origin")]
+    StrictOriginWhenCrossOrigin,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<TrustTokenParamsRefreshPolicy>))]
+public enum TrustTokenParamsRefreshPolicy
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UseCached")]
+    UseCached,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Refresh")]
+    Refresh,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<InitiatorType>))]
+public enum InitiatorType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("parser")]
+    Parser,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("script")]
+    Script,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("preload")]
+    Preload,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SignedExchange")]
+    SignedExchange,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("preflight")]
+    Preflight,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FedCM")]
+    FedCM,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
+    Other,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AuthChallengeSource>))]
+public enum AuthChallengeSource
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Server")]
+    Server,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Proxy")]
+    Proxy,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AuthChallengeResponseResponse>))]
+public enum AuthChallengeResponseResponse
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Default")]
+    Default,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CancelAuth")]
+    CancelAuth,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProvideCredentials")]
+    ProvideCredentials,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DeviceBoundSessionWithUsageUsage>))]
+public enum DeviceBoundSessionWithUsageUsage
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NotInScope")]
+    NotInScope,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InScopeRefreshNotYetNeeded")]
+    InScopeRefreshNotYetNeeded,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InScopeRefreshNotAllowed")]
+    InScopeRefreshNotAllowed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProactiveRefreshNotPossible")]
+    ProactiveRefreshNotPossible,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProactiveRefreshAttempted")]
+    ProactiveRefreshAttempted,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Deferred")]
+    Deferred,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DeviceBoundSessionUrlRuleRuleType>))]
+public enum DeviceBoundSessionUrlRuleRuleType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Exclude")]
+    Exclude,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Include")]
+    Include,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<RefreshEventDetailsRefreshResult>))]
+public enum RefreshEventDetailsRefreshResult
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Refreshed")]
+    Refreshed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InitializedService")]
+    InitializedService,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Unreachable")]
+    Unreachable,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServerError")]
+    ServerError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FatalError")]
+    FatalError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SigningQuotaExceeded")]
+    SigningQuotaExceeded,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshedAsWaiter")]
+    RefreshedAsWaiter,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TransientSigningError")]
+    TransientSigningError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InScopeRefreshNotYetNeeded")]
+    InScopeRefreshNotYetNeeded,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<TerminationEventDetailsDeletionReason>))]
+public enum TerminationEventDetailsDeletionReason
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Expired")]
+    Expired,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedToRestoreKey")]
+    FailedToRestoreKey,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FailedToUnwrapKey")]
+    FailedToUnwrapKey,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("StoragePartitionCleared")]
+    StoragePartitionCleared,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ClearBrowsingData")]
+    ClearBrowsingData,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ServerRequested")]
+    ServerRequested,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InvalidSessionParams")]
+    InvalidSessionParams,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("RefreshFatalError")]
+    RefreshFatalError,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("DevTools")]
+    DevTools,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Replaced")]
+    Replaced,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ChallengeEventDetailsChallengeResult>))]
+public enum ChallengeEventDetailsChallengeResult
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Success")]
+    Success,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoSessionId")]
+    NoSessionId,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("NoSessionMatch")]
+    NoSessionMatch,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CantSetBoundCookie")]
+    CantSetBoundCookie,
 }
 
 [JsonSerializable(typeof(CanClearBrowserCacheCommandParameters), TypeInfoPropertyName = "CanClearBrowserCacheCommandParameters")]

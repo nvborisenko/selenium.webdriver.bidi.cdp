@@ -456,7 +456,7 @@ public sealed record ObjectStoreIndex(string Name, KeyPath KeyPath, bool Unique,
 /// <param name="Type">
 /// Key type.
 /// </param>
-public sealed record Key(string Type)
+public sealed record Key(KeyType Type)
 {
     /// <summary>
     /// Number value.
@@ -523,7 +523,7 @@ public sealed record DataEntry(Runtime.RemoteObject Key, Runtime.RemoteObject Pr
 /// <param name="Type">
 /// Key path type.
 /// </param>
-public sealed record KeyPath(string Type)
+public sealed record KeyPath(KeyPathType Type)
 {
     /// <summary>
     /// String value.
@@ -534,6 +534,48 @@ public sealed record KeyPath(string Type)
     /// Array value.
     /// </summary>
     public ImmutableArray<string>? Array { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<KeyType>))]
+public enum KeyType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("number")]
+    Number,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
+    String,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("date")]
+    Date,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
+    Array,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<KeyPathType>))]
+public enum KeyPathType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("null")]
+    Null,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("string")]
+    String,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("array")]
+    Array,
 }
 
 [JsonSerializable(typeof(ClearObjectStoreCommandParameters), TypeInfoPropertyName = "ClearObjectStoreCommandParameters")]

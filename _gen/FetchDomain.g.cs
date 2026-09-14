@@ -577,7 +577,7 @@ public sealed record AuthChallenge(string Origin, string Scheme, string Realm)
     /// <summary>
     /// Source of the authentication challenge.
     /// </summary>
-    public string? Source { get; init; }
+    public AuthChallengeSource? Source { get; init; }
 }
 
 /// <summary>
@@ -588,7 +588,7 @@ public sealed record AuthChallenge(string Origin, string Scheme, string Realm)
 /// deferring to the default behavior of the net stack, which will likely either the Cancel
 /// authentication or display a popup dialog box.
 /// </param>
-public sealed record AuthChallengeResponse(string Response)
+public sealed record AuthChallengeResponse(AuthChallengeResponseResponse Response)
 {
     /// <summary>
     /// The username to provide, possibly empty. Should only be set if response is
@@ -601,6 +601,40 @@ public sealed record AuthChallengeResponse(string Response)
     /// ProvideCredentials.
     /// </summary>
     public string? Password { get; init; }
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AuthChallengeSource>))]
+public enum AuthChallengeSource
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Server")]
+    Server,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Proxy")]
+    Proxy,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<AuthChallengeResponseResponse>))]
+public enum AuthChallengeResponseResponse
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Default")]
+    Default,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CancelAuth")]
+    CancelAuth,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ProvideCredentials")]
+    ProvideCredentials,
 }
 
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]

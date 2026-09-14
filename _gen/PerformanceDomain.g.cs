@@ -38,7 +38,7 @@ public interface IPerformance
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="EnableResult"/>.
     /// </returns>
-    Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<EnableResult> EnableAsync(EnableTimeDomain? timeDomain = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets time domain to use for collecting and reporting duration metrics.
@@ -59,7 +59,7 @@ public interface IPerformance
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetTimeDomainResult> SetTimeDomainAsync(SetTimeDomainTimeDomain timeDomain, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Retrieve current values of run-time metrics.
@@ -99,7 +99,7 @@ internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDri
         return await ExecuteCommandAsync("Performance.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<EnableResult> EnableAsync(string? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<EnableResult> EnableAsync(EnableTimeDomain? timeDomain = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new EnableCommandParameters(TimeDomain: timeDomain);
         return await ExecuteCommandAsync("Performance.enable", @params, JsonContext.EnableCommandParameters, JsonContext.EnableResult, session, cancellationToken).ConfigureAwait(false);
@@ -107,7 +107,7 @@ internal sealed class PerformanceDomain(CdpModule cdp) : global::Selenium.WebDri
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetTimeDomainResult> SetTimeDomainAsync(string timeDomain, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetTimeDomainResult> SetTimeDomainAsync(SetTimeDomainTimeDomain timeDomain, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTimeDomainCommandParameters(TimeDomain: timeDomain);
         return await ExecuteCommandAsync("Performance.setTimeDomain", @params, JsonContext.SetTimeDomainCommandParameters, JsonContext.SetTimeDomainResult, session, cancellationToken).ConfigureAwait(false);
@@ -129,14 +129,14 @@ internal sealed record DisableCommandParameters() : Parameters;
 public sealed record DisableResult() : EmptyResult;
 
 
-internal sealed record EnableCommandParameters(string? TimeDomain) : Parameters;
+internal sealed record EnableCommandParameters(EnableTimeDomain? TimeDomain) : Parameters;
 
 /// <summary>
 /// </summary>
 public sealed record EnableResult() : EmptyResult;
 
 
-internal sealed record SetTimeDomainCommandParameters(string TimeDomain) : Parameters;
+internal sealed record SetTimeDomainCommandParameters(SetTimeDomainTimeDomain TimeDomain) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -175,6 +175,36 @@ public sealed record MetricsEventArgs(ImmutableArray<Metric> Metrics, string Tit
 /// </param>
 public sealed record Metric(string Name, double Value)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<EnableTimeDomain>))]
+public enum EnableTimeDomain
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("timeTicks")]
+    TimeTicks,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("threadTicks")]
+    ThreadTicks,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetTimeDomainTimeDomain>))]
+public enum SetTimeDomainTimeDomain
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("timeTicks")]
+    TimeTicks,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("threadTicks")]
+    ThreadTicks,
 }
 
 [JsonSerializable(typeof(DisableCommandParameters), TypeInfoPropertyName = "DisableCommandParameters")]

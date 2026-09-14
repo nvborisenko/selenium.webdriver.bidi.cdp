@@ -101,7 +101,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="CaptureScreenshotResult"/>.
     /// </returns>
-    Task<CaptureScreenshotResult> CaptureScreenshotAsync(string? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CaptureScreenshotResult> CaptureScreenshotAsync(CaptureScreenshotFormat? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a snapshot of the page as a string. For MHTML format, the serialization includes
@@ -120,7 +120,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="CaptureSnapshotResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<CaptureSnapshotResult> CaptureSnapshotAsync(string? format = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<CaptureSnapshotResult> CaptureSnapshotAsync(CaptureSnapshotFormat? format = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Clears the overridden device metrics.
@@ -575,7 +575,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="PrintToPDFResult"/>.
     /// </returns>
-    Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, string? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, PrintToPDFTransferMode? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reloads given page optionally ignoring the cache.
@@ -914,7 +914,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
@@ -978,7 +978,7 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, SetTouchEmulationEnabledConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts sending each frame using the <b>screencastFrame</b> event.
@@ -1018,7 +1018,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="StartScreencastResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default);
+    Task<StartScreencastResult> StartScreencastAsync(StartScreencastFormat? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Starts screencast video recording.
@@ -1122,7 +1122,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetWebLifecycleStateResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(string state, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(SetWebLifecycleStateState state, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops sending each frame in the <b>screencastFrame</b>.
@@ -1213,7 +1213,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetSPCTransactionModeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(SetSPCTransactionModeMode mode, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Extensions for Custom Handlers API:
@@ -1231,7 +1231,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="SetRPHRegistrationModeResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default);
+    Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(SetRPHRegistrationModeMode mode, string? session = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Generates a report for testing.
@@ -1727,14 +1727,14 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
         return await ExecuteCommandAsync("Page.bringToFront", @params, JsonContext.BringToFrontCommandParameters, JsonContext.BringToFrontResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<CaptureScreenshotResult> CaptureScreenshotAsync(string? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CaptureScreenshotResult> CaptureScreenshotAsync(CaptureScreenshotFormat? format = default, long? quality = default, Viewport? clip = default, bool? fromSurface = default, bool? captureBeyondViewport = default, bool? optimizeForSpeed = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureScreenshotCommandParameters(Format: format, Quality: quality, Clip: clip, FromSurface: fromSurface, CaptureBeyondViewport: captureBeyondViewport, OptimizeForSpeed: optimizeForSpeed);
         return await ExecuteCommandAsync("Page.captureScreenshot", @params, JsonContext.CaptureScreenshotCommandParameters, JsonContext.CaptureScreenshotResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(string? format = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<CaptureSnapshotResult> CaptureSnapshotAsync(CaptureSnapshotFormat? format = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new CaptureSnapshotCommandParameters(Format: format);
         return await ExecuteCommandAsync("Page.captureSnapshot", @params, JsonContext.CaptureSnapshotCommandParameters, JsonContext.CaptureSnapshotResult, session, cancellationToken).ConfigureAwait(false);
@@ -1880,7 +1880,7 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
         return await ExecuteCommandAsync("Page.navigateToHistoryEntry", @params, JsonContext.NavigateToHistoryEntryCommandParameters, JsonContext.NavigateToHistoryEntryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, string? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<PrintToPDFResult> PrintToPDFAsync(bool? landscape = default, bool? displayHeaderFooter = default, bool? printBackground = default, double? scale = default, double? paperWidth = default, double? paperHeight = default, double? marginTop = default, double? marginBottom = default, double? marginLeft = default, double? marginRight = default, string? pageRanges = default, string? headerTemplate = default, string? footerTemplate = default, bool? preferCSSPageSize = default, PrintToPDFTransferMode? transferMode = default, bool? generateTaggedPDF = default, bool? generateDocumentOutline = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new PrintToPDFCommandParameters(Landscape: landscape, DisplayHeaderFooter: displayHeaderFooter, PrintBackground: printBackground, Scale: scale, PaperWidth: paperWidth, PaperHeight: paperHeight, MarginTop: marginTop, MarginBottom: marginBottom, MarginLeft: marginLeft, MarginRight: marginRight, PageRanges: pageRanges, HeaderTemplate: headerTemplate, FooterTemplate: footerTemplate, PreferCSSPageSize: preferCSSPageSize, TransferMode: transferMode, GenerateTaggedPDF: generateTaggedPDF, GenerateDocumentOutline: generateDocumentOutline);
         return await ExecuteCommandAsync("Page.printToPDF", @params, JsonContext.PrintToPDFCommandParameters, JsonContext.PrintToPDFResult, session, cancellationToken).ConfigureAwait(false);
@@ -1985,7 +1985,7 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(string behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetDownloadBehaviorResult> SetDownloadBehaviorAsync(SetDownloadBehaviorBehavior behavior, string? downloadPath = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetDownloadBehaviorCommandParameters(Behavior: behavior, DownloadPath: downloadPath);
         return await ExecuteCommandAsync("Page.setDownloadBehavior", @params, JsonContext.SetDownloadBehaviorCommandParameters, JsonContext.SetDownloadBehaviorResult, session, cancellationToken).ConfigureAwait(false);
@@ -2006,14 +2006,14 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     [global::System.Obsolete]
-    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, string? configuration = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetTouchEmulationEnabledResult> SetTouchEmulationEnabledAsync(bool enabled, SetTouchEmulationEnabledConfiguration? configuration = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetTouchEmulationEnabledCommandParameters(Enabled: enabled, Configuration: configuration);
         return await ExecuteCommandAsync("Page.setTouchEmulationEnabled", @params, JsonContext.SetTouchEmulationEnabledCommandParameters, JsonContext.SetTouchEmulationEnabledResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StartScreencastResult> StartScreencastAsync(string? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<StartScreencastResult> StartScreencastAsync(StartScreencastFormat? format = default, long? quality = default, long? maxWidth = default, long? maxHeight = default, long? everyNthFrame = default, long? maxFramesInFlight = default, bool? sendLastFrame = default, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new StartScreencastCommandParameters(Format: format, Quality: quality, MaxWidth: maxWidth, MaxHeight: maxHeight, EveryNthFrame: everyNthFrame, MaxFramesInFlight: maxFramesInFlight, SendLastFrame: sendLastFrame);
         return await ExecuteCommandAsync("Page.startScreencast", @params, JsonContext.StartScreencastCommandParameters, JsonContext.StartScreencastResult, session, cancellationToken).ConfigureAwait(false);
@@ -2053,7 +2053,7 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(string state, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetWebLifecycleStateResult> SetWebLifecycleStateAsync(SetWebLifecycleStateState state, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetWebLifecycleStateCommandParameters(State: state);
         return await ExecuteCommandAsync("Page.setWebLifecycleState", @params, JsonContext.SetWebLifecycleStateCommandParameters, JsonContext.SetWebLifecycleStateResult, session, cancellationToken).ConfigureAwait(false);
@@ -2088,14 +2088,14 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetSPCTransactionModeResult> SetSPCTransactionModeAsync(SetSPCTransactionModeMode mode, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetSPCTransactionModeCommandParameters(Mode: mode);
         return await ExecuteCommandAsync("Page.setSPCTransactionMode", @params, JsonContext.SetSPCTransactionModeCommandParameters, JsonContext.SetSPCTransactionModeResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(string mode, string? session = default, CancellationToken cancellationToken = default)
+    public async Task<SetRPHRegistrationModeResult> SetRPHRegistrationModeAsync(SetRPHRegistrationModeMode mode, string? session = default, CancellationToken cancellationToken = default)
     {
         var @params = new SetRPHRegistrationModeCommandParameters(Mode: mode);
         return await ExecuteCommandAsync("Page.setRPHRegistrationMode", @params, JsonContext.SetRPHRegistrationModeCommandParameters, JsonContext.SetRPHRegistrationModeResult, session, cancellationToken).ConfigureAwait(false);
@@ -2210,7 +2210,7 @@ internal sealed record BringToFrontCommandParameters() : Parameters;
 public sealed record BringToFrontResult() : EmptyResult;
 
 
-internal sealed record CaptureScreenshotCommandParameters(string? Format, long? Quality, Viewport? Clip, bool? FromSurface, bool? CaptureBeyondViewport, bool? OptimizeForSpeed) : Parameters;
+internal sealed record CaptureScreenshotCommandParameters(CaptureScreenshotFormat? Format, long? Quality, Viewport? Clip, bool? FromSurface, bool? CaptureBeyondViewport, bool? OptimizeForSpeed) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2220,7 +2220,7 @@ internal sealed record CaptureScreenshotCommandParameters(string? Format, long? 
 public sealed record CaptureScreenshotResult(string Data) : EmptyResult;
 
 
-internal sealed record CaptureSnapshotCommandParameters(string? Format) : Parameters;
+internal sealed record CaptureSnapshotCommandParameters(CaptureSnapshotFormat? Format) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2459,7 +2459,7 @@ internal sealed record NavigateToHistoryEntryCommandParameters(long EntryId) : P
 public sealed record NavigateToHistoryEntryResult() : EmptyResult;
 
 
-internal sealed record PrintToPDFCommandParameters(bool? Landscape, bool? DisplayHeaderFooter, bool? PrintBackground, double? Scale, double? PaperWidth, double? PaperHeight, double? MarginTop, double? MarginBottom, double? MarginLeft, double? MarginRight, string? PageRanges, string? HeaderTemplate, string? FooterTemplate, bool? PreferCSSPageSize, string? TransferMode, bool? GenerateTaggedPDF, bool? GenerateDocumentOutline) : Parameters;
+internal sealed record PrintToPDFCommandParameters(bool? Landscape, bool? DisplayHeaderFooter, bool? PrintBackground, double? Scale, double? PaperWidth, double? PaperHeight, double? MarginTop, double? MarginBottom, double? MarginLeft, double? MarginRight, string? PageRanges, string? HeaderTemplate, string? FooterTemplate, bool? PreferCSSPageSize, PrintToPDFTransferMode? TransferMode, bool? GenerateTaggedPDF, bool? GenerateDocumentOutline) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2577,7 +2577,7 @@ internal sealed record SetDocumentContentCommandParameters(FrameId FrameId, stri
 public sealed record SetDocumentContentResult() : EmptyResult;
 
 
-internal sealed record SetDownloadBehaviorCommandParameters(string Behavior, string? DownloadPath) : Parameters;
+internal sealed record SetDownloadBehaviorCommandParameters(SetDownloadBehaviorBehavior Behavior, string? DownloadPath) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2598,14 +2598,14 @@ internal sealed record SetLifecycleEventsEnabledCommandParameters(bool Enabled) 
 public sealed record SetLifecycleEventsEnabledResult() : EmptyResult;
 
 
-internal sealed record SetTouchEmulationEnabledCommandParameters(bool Enabled, string? Configuration) : Parameters;
+internal sealed record SetTouchEmulationEnabledCommandParameters(bool Enabled, SetTouchEmulationEnabledConfiguration? Configuration) : Parameters;
 
 /// <summary>
 /// </summary>
 public sealed record SetTouchEmulationEnabledResult() : EmptyResult;
 
 
-internal sealed record StartScreencastCommandParameters(string? Format, long? Quality, long? MaxWidth, long? MaxHeight, long? EveryNthFrame, long? MaxFramesInFlight, bool? SendLastFrame) : Parameters;
+internal sealed record StartScreencastCommandParameters(StartScreencastFormat? Format, long? Quality, long? MaxWidth, long? MaxHeight, long? EveryNthFrame, long? MaxFramesInFlight, bool? SendLastFrame) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2653,7 +2653,7 @@ internal sealed record CloseCommandParameters() : Parameters;
 public sealed record CloseResult() : EmptyResult;
 
 
-internal sealed record SetWebLifecycleStateCommandParameters(string State) : Parameters;
+internal sealed record SetWebLifecycleStateCommandParameters(SetWebLifecycleStateState State) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2688,14 +2688,14 @@ internal sealed record ClearCompilationCacheCommandParameters() : Parameters;
 public sealed record ClearCompilationCacheResult() : EmptyResult;
 
 
-internal sealed record SetSPCTransactionModeCommandParameters(string Mode) : Parameters;
+internal sealed record SetSPCTransactionModeCommandParameters(SetSPCTransactionModeMode Mode) : Parameters;
 
 /// <summary>
 /// </summary>
 public sealed record SetSPCTransactionModeResult() : EmptyResult;
 
 
-internal sealed record SetRPHRegistrationModeCommandParameters(string Mode) : Parameters;
+internal sealed record SetRPHRegistrationModeCommandParameters(SetRPHRegistrationModeMode Mode) : Parameters;
 
 /// <summary>
 /// </summary>
@@ -2760,7 +2760,7 @@ public sealed record DomContentEventFiredEventArgs(Network.MonotonicTime Timesta
 /// <param name="BackendNodeId">
 /// Input node id. Only present for file choosers opened via an <b>&lt;input type="file"&gt;</b> element.
 /// </param>
-public sealed record FileChooserOpenedEventArgs(FrameId FrameId, string Mode, DOM.BackendNodeId? BackendNodeId = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record FileChooserOpenedEventArgs(FrameId FrameId, FileChooserOpenedMode Mode, DOM.BackendNodeId? BackendNodeId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when frame has been attached to its parent.
@@ -2792,7 +2792,7 @@ public sealed record FrameClearedScheduledNavigationEventArgs(FrameId FrameId) :
 /// </param>
 /// <param name="Reason">
 /// </param>
-public sealed record FrameDetachedEventArgs(FrameId FrameId, string Reason) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record FrameDetachedEventArgs(FrameId FrameId, FrameDetachedReason Reason) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired before frame subtree is detached. Emitted before any frame of the
@@ -2848,7 +2848,7 @@ public sealed record FrameResizedEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
 /// </param>
 /// <param name="NavigationType">
 /// </param>
-public sealed record FrameStartedNavigatingEventArgs(FrameId FrameId, string Url, Network.LoaderId LoaderId, string NavigationType) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record FrameStartedNavigatingEventArgs(FrameId FrameId, string Url, Network.LoaderId LoaderId, FrameStartedNavigatingNavigationType NavigationType) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when a renderer-initiated navigation is requested.
@@ -2936,7 +2936,7 @@ public sealed record DownloadWillBeginEventArgs(FrameId FrameId, string Guid, st
 /// <param name="State">
 /// Download status.
 /// </param>
-public sealed record DownloadProgressEventArgs(string Guid, double TotalBytes, double ReceivedBytes, string State) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record DownloadProgressEventArgs(string Guid, double TotalBytes, double ReceivedBytes, DownloadProgressState State) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired when interstitial page was hidden
@@ -3043,7 +3043,7 @@ public sealed record LoadEventFiredEventArgs(Network.MonotonicTime Timestamp) : 
 /// <param name="NavigationType">
 /// Navigation type
 /// </param>
-public sealed record NavigatedWithinDocumentEventArgs(FrameId FrameId, string Url, string NavigationType) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record NavigatedWithinDocumentEventArgs(FrameId FrameId, string Url, NavigatedWithinDocumentNavigationType NavigationType) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Compressed image data requested by the <b>startScreencast</b>.
@@ -5398,6 +5398,268 @@ public sealed record BackForwardCacheNotRestoredExplanation(BackForwardCacheNotR
 /// </param>
 public sealed record BackForwardCacheNotRestoredExplanationTree(string Url, ImmutableArray<BackForwardCacheNotRestoredExplanation> Explanations, ImmutableArray<BackForwardCacheNotRestoredExplanationTree> Children)
 {
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<CaptureScreenshotFormat>))]
+public enum CaptureScreenshotFormat
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
+    Jpeg,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
+    Png,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("webp")]
+    Webp,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<CaptureSnapshotFormat>))]
+public enum CaptureSnapshotFormat
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mhtml")]
+    Mhtml,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<PrintToPDFTransferMode>))]
+public enum PrintToPDFTransferMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReturnAsBase64")]
+    ReturnAsBase64,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ReturnAsStream")]
+    ReturnAsStream,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetDownloadBehaviorBehavior>))]
+public enum SetDownloadBehaviorBehavior
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("deny")]
+    Deny,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("allow")]
+    Allow,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
+    Default,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetTouchEmulationEnabledConfiguration>))]
+public enum SetTouchEmulationEnabledConfiguration
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mobile")]
+    Mobile,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("desktop")]
+    Desktop,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<StartScreencastFormat>))]
+public enum StartScreencastFormat
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("jpeg")]
+    Jpeg,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
+    Png,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetWebLifecycleStateState>))]
+public enum SetWebLifecycleStateState
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("frozen")]
+    Frozen,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("active")]
+    Active,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetSPCTransactionModeMode>))]
+public enum SetSPCTransactionModeMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
+    None,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoAccept")]
+    AutoAccept,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoChooseToAuthAnotherWay")]
+    AutoChooseToAuthAnotherWay,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoReject")]
+    AutoReject,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoOptOut")]
+    AutoOptOut,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetRPHRegistrationModeMode>))]
+public enum SetRPHRegistrationModeMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("none")]
+    None,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoAccept")]
+    AutoAccept,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("autoReject")]
+    AutoReject,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<FileChooserOpenedMode>))]
+public enum FileChooserOpenedMode
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selectSingle")]
+    SelectSingle,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("selectMultiple")]
+    SelectMultiple,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<FrameDetachedReason>))]
+public enum FrameDetachedReason
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("remove")]
+    Remove,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("swap")]
+    Swap,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<FrameStartedNavigatingNavigationType>))]
+public enum FrameStartedNavigatingNavigationType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reload")]
+    Reload,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("reloadBypassingCache")]
+    ReloadBypassingCache,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("restore")]
+    Restore,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("restoreWithPost")]
+    RestoreWithPost,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("historySameDocument")]
+    HistorySameDocument,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("historyDifferentDocument")]
+    HistoryDifferentDocument,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("sameDocument")]
+    SameDocument,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("differentDocument")]
+    DifferentDocument,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<DownloadProgressState>))]
+public enum DownloadProgressState
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("inProgress")]
+    InProgress,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("completed")]
+    Completed,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("canceled")]
+    Canceled,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<NavigatedWithinDocumentNavigationType>))]
+public enum NavigatedWithinDocumentNavigationType
+{
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("fragment")]
+    Fragment,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("historyApi")]
+    HistoryApi,
+    /// <summary>
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("other")]
+    Other,
 }
 
 [JsonSerializable(typeof(AddScriptToEvaluateOnLoadCommandParameters), TypeInfoPropertyName = "AddScriptToEvaluateOnLoadCommandParameters")]
