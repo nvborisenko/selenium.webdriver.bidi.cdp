@@ -57,7 +57,8 @@ internal abstract class Domain(CdpModule cdp)
 #if NET8_0_OR_GREATER
         return JsonSerializer.SerializeToElement(parameters, parametersTypeInfo);
 #else
-        using var json = JsonDocument.Parse(JsonSerializer.Serialize(parameters, parametersTypeInfo));
+        var utf8Json = JsonSerializer.SerializeToUtf8Bytes(parameters, parametersTypeInfo);
+        using var json = JsonDocument.Parse(utf8Json);
         return json.RootElement.Clone();
 #endif
     }
