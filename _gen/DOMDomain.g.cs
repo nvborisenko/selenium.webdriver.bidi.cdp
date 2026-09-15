@@ -1169,6 +1169,62 @@ public interface IDOM
     Task<ForceShowInterestResult> ForceShowInterestAsync(NodeId nodeId, bool enable, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Sets a spelling or grammar error marker on the given range of text.
+    /// See https://github.com/Igalia/explainers/blob/main/force-spelling-grammar-markers/README.md
+    /// Note: exactly one between nodeId, backendNodeId and objectId should be passed
+    /// to identify the node.
+    /// </summary>
+    /// <param name="type">
+    /// The type of marker to set on the given range of text.
+    /// </param>
+    /// <param name="start">
+    /// Start offset into the element's rendered text in UTF-16 code units.
+    /// For a text control, an offset into the control's value.
+    /// Offsets count text in DOM order and do not enter shadow trees.
+    /// To mark text inside a shadow tree, pass the element inside the shadow tree.
+    /// </param>
+    /// <param name="end">
+    /// End offset (exclusive) in the same units and space as start.
+    /// </param>
+    /// <param name="nodeId">
+    /// Identifier of the node.
+    /// </param>
+    /// <param name="backendNodeId">
+    /// Identifier of the backend node.
+    /// </param>
+    /// <param name="objectId">
+    /// JavaScript object id of the node wrapper.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetTextMarkerResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<SetTextMarkerResult> SetTextMarkerAsync(SetTextMarkerType type, long start, long end, NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Clears the spelling and grammar error text markers overlapping the ranges
+    /// set by setTextMarker in this session. These markers are also removed when
+    /// the DOM domain is disabled or the session ends.
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ClearTextMarkersResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<ClearTextMarkersResult> ClearTextMarkersAsync(string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Fired when <b>Element</b>'s attribute is modified.
     /// </summary>
     /// <remarks>
@@ -1759,6 +1815,20 @@ internal sealed class DOMDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
         return await ExecuteCommandAsync("DOM.forceShowInterest", @params, JsonContext.ForceShowInterestCommandParameters, JsonContext.ForceShowInterestResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetTextMarkerResult> SetTextMarkerAsync(SetTextMarkerType type, long start, long end, NodeId? nodeId = null, BackendNodeId? backendNodeId = null, Runtime.RemoteObjectId? objectId = null, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetTextMarkerCommandParameters(NodeId: nodeId, BackendNodeId: backendNodeId, ObjectId: objectId, Type: type, Start: start, End: end);
+        return await ExecuteCommandAsync("DOM.setTextMarker", @params, JsonContext.SetTextMarkerCommandParameters, JsonContext.SetTextMarkerResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<ClearTextMarkersResult> ClearTextMarkersAsync(string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearTextMarkersCommandParameters();
+        return await ExecuteCommandAsync("DOM.clearTextMarkers", @params, JsonContext.ClearTextMarkersCommandParameters, JsonContext.ClearTextMarkersResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public IEventSource<AttributeModifiedEventArgs> AttributeModified => CreateCdpEventSource(DOMDomainEvent.AttributeModified);
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public IEventSource<AdoptedStyleSheetsModifiedEventArgs> AdoptedStyleSheetsModified => CreateCdpEventSource(DOMDomainEvent.AdoptedStyleSheetsModified);
@@ -2340,6 +2410,22 @@ internal sealed record ForceShowInterestCommandParameters(NodeId NodeId, bool En
 /// Result of the <see cref="IDOM.ForceShowInterestAsync"/> command.
 /// </summary>
 public sealed record ForceShowInterestResult() : EmptyResult;
+
+
+internal sealed record SetTextMarkerCommandParameters(NodeId? NodeId, BackendNodeId? BackendNodeId, Runtime.RemoteObjectId? ObjectId, SetTextMarkerType Type, long Start, long End) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IDOM.SetTextMarkerAsync"/> command.
+/// </summary>
+public sealed record SetTextMarkerResult() : EmptyResult;
+
+
+internal sealed record ClearTextMarkersCommandParameters() : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IDOM.ClearTextMarkersAsync"/> command.
+/// </summary>
+public sealed record ClearTextMarkersResult() : EmptyResult;
 
 
 /// <summary>
@@ -3244,6 +3330,23 @@ public enum GetElementByRelationRelation
     CommandFor,
 }
 
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetTextMarkerType>))]
+public enum SetTextMarkerType
+{
+    /// <summary>
+    /// Corresponds to the <c>"spelling"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("spelling")]
+    Spelling,
+    /// <summary>
+    /// Corresponds to the <c>"grammar"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("grammar")]
+    Grammar,
+}
+
 [JsonSerializable(typeof(CollectClassNamesFromSubtreeCommandParameters), TypeInfoPropertyName = "CollectClassNamesFromSubtreeCommandParameters")]
 [JsonSerializable(typeof(CollectClassNamesFromSubtreeResult), TypeInfoPropertyName = "CollectClassNamesFromSubtreeResult")]
 [JsonSerializable(typeof(CopyToCommandParameters), TypeInfoPropertyName = "CopyToCommandParameters")]
@@ -3354,6 +3457,10 @@ public enum GetElementByRelationRelation
 [JsonSerializable(typeof(GetImplicitAnchorCandidatesResult), TypeInfoPropertyName = "GetImplicitAnchorCandidatesResult")]
 [JsonSerializable(typeof(ForceShowInterestCommandParameters), TypeInfoPropertyName = "ForceShowInterestCommandParameters")]
 [JsonSerializable(typeof(ForceShowInterestResult), TypeInfoPropertyName = "ForceShowInterestResult")]
+[JsonSerializable(typeof(SetTextMarkerCommandParameters), TypeInfoPropertyName = "SetTextMarkerCommandParameters")]
+[JsonSerializable(typeof(SetTextMarkerResult), TypeInfoPropertyName = "SetTextMarkerResult")]
+[JsonSerializable(typeof(ClearTextMarkersCommandParameters), TypeInfoPropertyName = "ClearTextMarkersCommandParameters")]
+[JsonSerializable(typeof(ClearTextMarkersResult), TypeInfoPropertyName = "ClearTextMarkersResult")]
 [JsonSerializable(typeof(CdpEventArgs<AttributeModifiedEventArgs>), TypeInfoPropertyName = "AttributeModifiedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<AdoptedStyleSheetsModifiedEventArgs>), TypeInfoPropertyName = "AdoptedStyleSheetsModifiedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<AttributeRemovedEventArgs>), TypeInfoPropertyName = "AttributeRemovedCdpEventArgs")]
