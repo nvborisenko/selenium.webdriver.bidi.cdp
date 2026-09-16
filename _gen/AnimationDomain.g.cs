@@ -110,7 +110,12 @@ public interface IAnimation
     /// List of animation ids to seek.
     /// </param>
     /// <param name="currentTime">
-    /// Set the current time of each animation.
+    /// Set each animation to the same time.
+    /// </param>
+    /// <param name="currentTimes">
+    /// Set each animation to a different time. If set, should have the same
+    /// length as animations. Exactly one of currentTime or currentTimes should
+    /// be set.
     /// </param>
     /// <param name="session">
     /// Optional CDP session override.
@@ -121,7 +126,7 @@ public interface IAnimation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SeekAnimationsResult"/>.
     /// </returns>
-    Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = null, CancellationToken cancellationToken = default);
+    Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double? currentTime = null, ImmutableArray<double>? currentTimes = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets the paused state of a set of animations.
@@ -270,9 +275,9 @@ internal sealed class AnimationDomain(CdpModule cdp) : global::Selenium.WebDrive
         return await ExecuteCommandAsync("Animation.resolveAnimation", @params, JsonContext.ResolveAnimationCommandParameters, JsonContext.ResolveAnimationResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double currentTime, string? session = null, CancellationToken cancellationToken = default)
+    public async Task<SeekAnimationsResult> SeekAnimationsAsync(ImmutableArray<string> animations, double? currentTime = null, ImmutableArray<double>? currentTimes = null, string? session = null, CancellationToken cancellationToken = default)
     {
-        var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime);
+        var @params = new SeekAnimationsCommandParameters(Animations: animations, CurrentTime: currentTime, CurrentTimes: currentTimes);
         return await ExecuteCommandAsync("Animation.seekAnimations", @params, JsonContext.SeekAnimationsCommandParameters, JsonContext.SeekAnimationsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
@@ -357,7 +362,7 @@ internal sealed record ResolveAnimationCommandParameters(string AnimationId) : P
 public sealed record ResolveAnimationResult(Runtime.RemoteObject RemoteObject) : EmptyResult;
 
 
-internal sealed record SeekAnimationsCommandParameters(ImmutableArray<string> Animations, double CurrentTime) : Parameters;
+internal sealed record SeekAnimationsCommandParameters(ImmutableArray<string> Animations, double? CurrentTime, ImmutableArray<double>? CurrentTimes) : Parameters;
 
 /// <summary>
 /// Result of the <see cref="IAnimation.SeekAnimationsAsync"/> command.
