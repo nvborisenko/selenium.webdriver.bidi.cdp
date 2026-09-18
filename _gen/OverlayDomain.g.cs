@@ -1409,6 +1409,57 @@ public enum ContrastAlgorithm
 }
 
 /// <summary>
+/// Configuration for Inset-Modified Containing Block (IMCB) and CSS Anchor Positioning highlight.
+/// </summary>
+public sealed record ImcbHighlightConfig()
+{
+    /// <summary>
+    /// Border color for the Inset-Modified Containing Block (default: transparent).
+    /// </summary>
+    public DOM.RGBA? ImcbBorderColor { get; init; }
+
+    /// <summary>
+    /// Background fill color for the Inset-Modified Containing Block (default: transparent).
+    /// </summary>
+    public DOM.RGBA? ImcbBackgroundColor { get; init; }
+
+    /// <summary>
+    /// Fill color for the inset modifiers area (difference between CB and IMCB).
+    /// </summary>
+    public DOM.RGBA? InsetsBackgroundColor { get; init; }
+
+    /// <summary>
+    /// Hatch color for the inset modifiers area.
+    /// </summary>
+    public DOM.RGBA? InsetsHatchColor { get; init; }
+
+    /// <summary>
+    /// Border color for the referenced target anchor element(s) (when element is anchor-positioned).
+    /// </summary>
+    public DOM.RGBA? AnchorBorderColor { get; init; }
+
+    /// <summary>
+    /// Background fill color for the referenced target anchor element(s) (when element is anchor-positioned).
+    /// </summary>
+    public DOM.RGBA? AnchorBackgroundColor { get; init; }
+
+    /// <summary>
+    /// Whether to render the 3x3 position-area grid lines when position-area is used.
+    /// </summary>
+    public bool? ShowPositionAreaGrid { get; init; }
+
+    /// <summary>
+    /// Line color for the 3x3 position-area grid lines.
+    /// </summary>
+    public DOM.RGBA? PositionAreaGridLineColor { get; init; }
+
+    /// <summary>
+    /// Fill color for the active region within the position-area grid.
+    /// </summary>
+    public DOM.RGBA? PositionAreaActiveRegionColor { get; init; }
+}
+
+/// <summary>
 /// Configuration data for the highlighting of page elements.
 /// </summary>
 public sealed record HighlightConfig()
@@ -1507,6 +1558,11 @@ public sealed record HighlightConfig()
     /// The container query container highlight configuration (default: all transparent).
     /// </summary>
     public ContainerQueryContainerHighlightConfig? ContainerQueryContainerHighlightConfig { get; init; }
+
+    /// <summary>
+    /// The IMCB highlight configuration (default: all transparent).
+    /// </summary>
+    public ImcbHighlightConfig? ImcbHighlightConfig { get; init; }
 }
 
 /// <summary>
@@ -1901,6 +1957,7 @@ public enum LineStylePattern
 [JsonSerializable(typeof(LineStyle), TypeInfoPropertyName = "OverlayLineStyle")]
 [JsonSerializable(typeof(BoxStyle), TypeInfoPropertyName = "OverlayBoxStyle")]
 [JsonSerializable(typeof(ContrastAlgorithm), TypeInfoPropertyName = "OverlayContrastAlgorithm")]
+[JsonSerializable(typeof(ImcbHighlightConfig), TypeInfoPropertyName = "OverlayImcbHighlightConfig")]
 [JsonSerializable(typeof(HighlightConfig), TypeInfoPropertyName = "OverlayHighlightConfig")]
 [JsonSerializable(typeof(ColorFormat), TypeInfoPropertyName = "OverlayColorFormat")]
 [JsonSerializable(typeof(GridNodeHighlightConfig), TypeInfoPropertyName = "OverlayGridNodeHighlightConfig")]

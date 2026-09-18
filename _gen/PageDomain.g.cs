@@ -306,7 +306,7 @@ public interface IPage
     Task<GetManifestIconsResult> GetManifestIconsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Returns the unique (PWA) app id.
+    /// Returns the unique (PWA) app id, along with IWA bundle ID and parent app info.
     /// Only returns values if the feature flag 'WebAppEnableManifestId' is enabled
     /// </summary>
     /// <param name="session">
@@ -320,6 +320,36 @@ public interface IPage
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     Task<GetAppIdResult> GetAppIdAsync(string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns the list of installed child Sub-Apps for the inspected parent app.
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetSubAppsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<GetSubAppsResult> GetSubAppsAsync(string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns the list of sibling Sub-Apps sharing the same parent app if the inspected context is a Sub-App.
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetSiblingSubAppsResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<GetSiblingSubAppsResult> GetSiblingSubAppsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// </summary>
@@ -1818,6 +1848,20 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetSubAppsResult> GetSubAppsAsync(string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSubAppsCommandParameters();
+        return await ExecuteCommandAsync("Page.getSubApps", @params, JsonContext.GetSubAppsCommandParameters, JsonContext.GetSubAppsResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetSiblingSubAppsResult> GetSiblingSubAppsAsync(string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSiblingSubAppsCommandParameters();
+        return await ExecuteCommandAsync("Page.getSiblingSubApps", @params, JsonContext.GetSiblingSubAppsCommandParameters, JsonContext.GetSiblingSubAppsResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public async Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetAdScriptAncestryCommandParameters(FrameId: frameId);
@@ -2346,7 +2390,33 @@ internal sealed record GetAppIdCommandParameters() : Parameters;
 /// <param name="RecommendedId">
 /// Recommendation for manifest's id attribute to match current id computed from start_url
 /// </param>
-public sealed record GetAppIdResult(string? AppId, string? RecommendedId) : EmptyResult;
+/// <param name="BundleId">
+/// The bundle ID for an Isolated Web App (IWA)
+/// </param>
+/// <param name="ParentAppName">
+/// The name of the parent app if this app is a Sub-App
+/// </param>
+public sealed record GetAppIdResult(string? AppId, string? RecommendedId, string? BundleId, string? ParentAppName) : EmptyResult;
+
+
+internal sealed record GetSubAppsCommandParameters() : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IPage.GetSubAppsAsync"/> command.
+/// </summary>
+/// <param name="SubApps">
+/// </param>
+public sealed record GetSubAppsResult(ImmutableArray<SubApp> SubApps) : EmptyResult;
+
+
+internal sealed record GetSiblingSubAppsCommandParameters() : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IPage.GetSiblingSubAppsAsync"/> command.
+/// </summary>
+/// <param name="SubApps">
+/// </param>
+public sealed record GetSiblingSubAppsResult(ImmutableArray<SubApp> SubApps) : EmptyResult;
 
 
 internal sealed record GetAdScriptAncestryCommandParameters(FrameId FrameId) : Parameters;
@@ -4950,6 +5020,24 @@ public sealed record WebAppManifest()
 }
 
 /// <summary>
+/// </summary>
+/// <param name="Name">
+/// Display name of the sub-app.
+/// </param>
+/// <param name="Scope">
+/// Scope of the sub-app.
+/// </param>
+/// <param name="ManifestId">
+/// Manifest id of the sub-app.
+/// </param>
+/// <param name="StartUrl">
+/// Start URL of the sub-app.
+/// </param>
+public sealed record SubApp(string Name, string Scope, string ManifestId, string StartUrl)
+{
+}
+
+/// <summary>
 /// The type of a frameNavigated event.
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<NavigationType>))]
@@ -6136,6 +6224,10 @@ public enum NavigatedWithinDocumentNavigationType
 [JsonSerializable(typeof(GetManifestIconsResult), TypeInfoPropertyName = "GetManifestIconsResult")]
 [JsonSerializable(typeof(GetAppIdCommandParameters), TypeInfoPropertyName = "GetAppIdCommandParameters")]
 [JsonSerializable(typeof(GetAppIdResult), TypeInfoPropertyName = "GetAppIdResult")]
+[JsonSerializable(typeof(GetSubAppsCommandParameters), TypeInfoPropertyName = "GetSubAppsCommandParameters")]
+[JsonSerializable(typeof(GetSubAppsResult), TypeInfoPropertyName = "GetSubAppsResult")]
+[JsonSerializable(typeof(GetSiblingSubAppsCommandParameters), TypeInfoPropertyName = "GetSiblingSubAppsCommandParameters")]
+[JsonSerializable(typeof(GetSiblingSubAppsResult), TypeInfoPropertyName = "GetSiblingSubAppsResult")]
 [JsonSerializable(typeof(GetAdScriptAncestryCommandParameters), TypeInfoPropertyName = "GetAdScriptAncestryCommandParameters")]
 [JsonSerializable(typeof(GetAdScriptAncestryResult), TypeInfoPropertyName = "GetAdScriptAncestryResult")]
 [JsonSerializable(typeof(GetFrameTreeCommandParameters), TypeInfoPropertyName = "GetFrameTreeCommandParameters")]
@@ -6310,6 +6402,7 @@ public enum NavigatedWithinDocumentNavigationType
 [JsonSerializable(typeof(ShareTarget), TypeInfoPropertyName = "PageShareTarget")]
 [JsonSerializable(typeof(Shortcut), TypeInfoPropertyName = "PageShortcut")]
 [JsonSerializable(typeof(WebAppManifest), TypeInfoPropertyName = "PageWebAppManifest")]
+[JsonSerializable(typeof(SubApp), TypeInfoPropertyName = "PageSubApp")]
 [JsonSerializable(typeof(NavigationType), TypeInfoPropertyName = "PageNavigationType")]
 [JsonSerializable(typeof(BackForwardCacheNotRestoredReason), TypeInfoPropertyName = "PageBackForwardCacheNotRestoredReason")]
 [JsonSerializable(typeof(BackForwardCacheNotRestoredReasonType), TypeInfoPropertyName = "PageBackForwardCacheNotRestoredReasonType")]
@@ -6318,6 +6411,7 @@ public enum NavigatedWithinDocumentNavigationType
 [JsonSerializable(typeof(BackForwardCacheNotRestoredExplanationTree), TypeInfoPropertyName = "PageBackForwardCacheNotRestoredExplanationTree")]
 [JsonSerializable(typeof(ImmutableArray<AppManifestError>), TypeInfoPropertyName = "ImmutableArrayPageAppManifestError")]
 [JsonSerializable(typeof(ImmutableArray<InstallabilityError>), TypeInfoPropertyName = "ImmutableArrayPageInstallabilityError")]
+[JsonSerializable(typeof(ImmutableArray<SubApp>), TypeInfoPropertyName = "ImmutableArrayPageSubApp")]
 [JsonSerializable(typeof(ImmutableArray<NavigationEntry>), TypeInfoPropertyName = "ImmutableArrayPageNavigationEntry")]
 [JsonSerializable(typeof(ImmutableArray<Debugger.SearchMatch>), TypeInfoPropertyName = "ImmutableArrayDebuggerSearchMatch")]
 [JsonSerializable(typeof(ImmutableArray<PermissionsPolicyFeatureState>), TypeInfoPropertyName = "ImmutableArrayPagePermissionsPolicyFeatureState")]
