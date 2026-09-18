@@ -351,6 +351,69 @@ public interface IStorage
     Task<ClearTrustTokensResult> ClearTrustTokensAsync(string issuerOrigin, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Returns all stored Private Verification Tokens for the current browsing
+    /// context.
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetPrivateVerificationTokensResult"/>.
+    /// </returns>
+    Task<GetPrivateVerificationTokensResult> GetPrivateVerificationTokensAsync(string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Removes all Private Verification Tokens issued by the provided issuerOrigin.
+    /// </summary>
+    /// <param name="issuerOrigin">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ClearPrivateVerificationTokensResult"/>.
+    /// </returns>
+    Task<ClearPrivateVerificationTokensResult> ClearPrivateVerificationTokensAsync(string issuerOrigin, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Removes a specific Private Verification Token by its ID.
+    /// </summary>
+    /// <param name="tokenId">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="DeletePrivateVerificationTokenResult"/>.
+    /// </returns>
+    Task<DeletePrivateVerificationTokenResult> DeletePrivateVerificationTokenAsync(string tokenId, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Set tracking for Private Verification Tokens.
+    /// </summary>
+    /// <param name="enable">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetPrivateVerificationTokensTrackingResult"/>.
+    /// </returns>
+    Task<SetPrivateVerificationTokensTrackingResult> SetPrivateVerificationTokensTrackingAsync(bool enable, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Set tracking for a storage key's buckets.
     /// </summary>
     /// <param name="storageKey">
@@ -490,6 +553,11 @@ public interface IStorage
     /// </remarks>
     IEventSource<StorageBucketDeletedEventArgs> StorageBucketDeleted { get; }
 
+    /// <summary>
+    /// Private Verification Tokens have been stored or deleted.
+    /// </summary>
+    IEventSource<PrivateVerificationTokensUpdatedEventArgs> PrivateVerificationTokensUpdated { get; }
+
 }
 
 [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -612,6 +680,30 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
         return await ExecuteCommandAsync("Storage.clearTrustTokens", @params, JsonContext.ClearTrustTokensCommandParameters, JsonContext.ClearTrustTokensResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    public async Task<GetPrivateVerificationTokensResult> GetPrivateVerificationTokensAsync(string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetPrivateVerificationTokensCommandParameters();
+        return await ExecuteCommandAsync("Storage.getPrivateVerificationTokens", @params, JsonContext.GetPrivateVerificationTokensCommandParameters, JsonContext.GetPrivateVerificationTokensResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
+    public async Task<ClearPrivateVerificationTokensResult> ClearPrivateVerificationTokensAsync(string issuerOrigin, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new ClearPrivateVerificationTokensCommandParameters(IssuerOrigin: issuerOrigin);
+        return await ExecuteCommandAsync("Storage.clearPrivateVerificationTokens", @params, JsonContext.ClearPrivateVerificationTokensCommandParameters, JsonContext.ClearPrivateVerificationTokensResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
+    public async Task<DeletePrivateVerificationTokenResult> DeletePrivateVerificationTokenAsync(string tokenId, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new DeletePrivateVerificationTokenCommandParameters(TokenId: tokenId);
+        return await ExecuteCommandAsync("Storage.deletePrivateVerificationToken", @params, JsonContext.DeletePrivateVerificationTokenCommandParameters, JsonContext.DeletePrivateVerificationTokenResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
+    public async Task<SetPrivateVerificationTokensTrackingResult> SetPrivateVerificationTokensTrackingAsync(bool enable, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetPrivateVerificationTokensTrackingCommandParameters(Enable: enable);
+        return await ExecuteCommandAsync("Storage.setPrivateVerificationTokensTracking", @params, JsonContext.SetPrivateVerificationTokensTrackingCommandParameters, JsonContext.SetPrivateVerificationTokensTrackingResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public async Task<SetStorageBucketTrackingResult> SetStorageBucketTrackingAsync(string storageKey, bool enable, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetStorageBucketTrackingCommandParameters(StorageKey: storageKey, Enable: enable);
@@ -642,6 +734,7 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
     public IEventSource<IndexedDBListUpdatedEventArgs> IndexedDBListUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBListUpdated);
     public IEventSource<StorageBucketCreatedOrUpdatedEventArgs> StorageBucketCreatedOrUpdated => CreateCdpEventSource(StorageDomainEvent.StorageBucketCreatedOrUpdated);
     public IEventSource<StorageBucketDeletedEventArgs> StorageBucketDeleted => CreateCdpEventSource(StorageDomainEvent.StorageBucketDeleted);
+    public IEventSource<PrivateVerificationTokensUpdatedEventArgs> PrivateVerificationTokensUpdated => CreateCdpEventSource(StorageDomainEvent.PrivateVerificationTokensUpdated);
 }
 
 internal sealed record GetStorageKeyForFrameCommandParameters(Page.FrameId FrameId) : Parameters;
@@ -820,6 +913,40 @@ internal sealed record ClearTrustTokensCommandParameters(string IssuerOrigin) : 
 public sealed record ClearTrustTokensResult(bool DidDeleteTokens) : EmptyResult;
 
 
+internal sealed record GetPrivateVerificationTokensCommandParameters() : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IStorage.GetPrivateVerificationTokensAsync"/> command.
+/// </summary>
+/// <param name="Tokens">
+/// </param>
+public sealed record GetPrivateVerificationTokensResult(ImmutableArray<PrivateVerificationToken> Tokens) : EmptyResult;
+
+
+internal sealed record ClearPrivateVerificationTokensCommandParameters(string IssuerOrigin) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IStorage.ClearPrivateVerificationTokensAsync"/> command.
+/// </summary>
+public sealed record ClearPrivateVerificationTokensResult() : EmptyResult;
+
+
+internal sealed record DeletePrivateVerificationTokenCommandParameters(string TokenId) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IStorage.DeletePrivateVerificationTokenAsync"/> command.
+/// </summary>
+public sealed record DeletePrivateVerificationTokenResult() : EmptyResult;
+
+
+internal sealed record SetPrivateVerificationTokensTrackingCommandParameters(bool Enable) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IStorage.SetPrivateVerificationTokensTrackingAsync"/> command.
+/// </summary>
+public sealed record SetPrivateVerificationTokensTrackingResult() : EmptyResult;
+
+
 internal sealed record SetStorageBucketTrackingCommandParameters(string StorageKey, bool Enable) : Parameters;
 
 /// <summary>
@@ -934,6 +1061,11 @@ public sealed record StorageBucketCreatedOrUpdatedEventArgs(StorageBucketInfo Bu
 public sealed record StorageBucketDeletedEventArgs(string BucketId) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
+/// Private Verification Tokens have been stored or deleted.
+/// </summary>
+public sealed record PrivateVerificationTokensUpdatedEventArgs() : OpenQA.Selenium.BiDi.EventArgs;
+
+/// <summary>
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<SerializedStorageKey>))]
 public record SerializedStorageKey : IStringRemoteId
@@ -1026,6 +1158,34 @@ public sealed record UsageForType(StorageType StorageType, double Usage)
 /// <param name="Count">
 /// </param>
 public sealed record TrustTokens(string IssuerOrigin, double Count)
+{
+}
+
+/// <summary>
+/// Details of a stored Private Verification Token.
+/// </summary>
+/// <param name="Id">
+/// Unique identifier of the token in the database.
+/// </param>
+/// <param name="IssuerOrigin">
+/// Origin of the token issuer.
+/// </param>
+/// <param name="KeyId">
+/// Public key ID used to issue the token.
+/// </param>
+/// <param name="Expiration">
+/// Expiration timestamp in seconds since the epoch.
+/// </param>
+/// <param name="CreationTime">
+/// Token creation timestamp in seconds since the epoch.
+/// </param>
+/// <param name="Version">
+/// Token protocol version.
+/// </param>
+/// <param name="Token">
+/// Base64-encoded serialized token.
+/// </param>
+public sealed record PrivateVerificationToken(string Id, string IssuerOrigin, long KeyId, Network.TimeSinceEpoch Expiration, Network.TimeSinceEpoch CreationTime, long Version, string Token)
 {
 }
 
@@ -1131,6 +1291,14 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(GetTrustTokensResult), TypeInfoPropertyName = "GetTrustTokensResult")]
 [JsonSerializable(typeof(ClearTrustTokensCommandParameters), TypeInfoPropertyName = "ClearTrustTokensCommandParameters")]
 [JsonSerializable(typeof(ClearTrustTokensResult), TypeInfoPropertyName = "ClearTrustTokensResult")]
+[JsonSerializable(typeof(GetPrivateVerificationTokensCommandParameters), TypeInfoPropertyName = "GetPrivateVerificationTokensCommandParameters")]
+[JsonSerializable(typeof(GetPrivateVerificationTokensResult), TypeInfoPropertyName = "GetPrivateVerificationTokensResult")]
+[JsonSerializable(typeof(ClearPrivateVerificationTokensCommandParameters), TypeInfoPropertyName = "ClearPrivateVerificationTokensCommandParameters")]
+[JsonSerializable(typeof(ClearPrivateVerificationTokensResult), TypeInfoPropertyName = "ClearPrivateVerificationTokensResult")]
+[JsonSerializable(typeof(DeletePrivateVerificationTokenCommandParameters), TypeInfoPropertyName = "DeletePrivateVerificationTokenCommandParameters")]
+[JsonSerializable(typeof(DeletePrivateVerificationTokenResult), TypeInfoPropertyName = "DeletePrivateVerificationTokenResult")]
+[JsonSerializable(typeof(SetPrivateVerificationTokensTrackingCommandParameters), TypeInfoPropertyName = "SetPrivateVerificationTokensTrackingCommandParameters")]
+[JsonSerializable(typeof(SetPrivateVerificationTokensTrackingResult), TypeInfoPropertyName = "SetPrivateVerificationTokensTrackingResult")]
 [JsonSerializable(typeof(SetStorageBucketTrackingCommandParameters), TypeInfoPropertyName = "SetStorageBucketTrackingCommandParameters")]
 [JsonSerializable(typeof(SetStorageBucketTrackingResult), TypeInfoPropertyName = "SetStorageBucketTrackingResult")]
 [JsonSerializable(typeof(DeleteStorageBucketCommandParameters), TypeInfoPropertyName = "DeleteStorageBucketCommandParameters")]
@@ -1145,10 +1313,12 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(CdpEventArgs<IndexedDBListUpdatedEventArgs>), TypeInfoPropertyName = "IndexedDBListUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StorageBucketCreatedOrUpdatedEventArgs>), TypeInfoPropertyName = "StorageBucketCreatedOrUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<StorageBucketDeletedEventArgs>), TypeInfoPropertyName = "StorageBucketDeletedCdpEventArgs")]
+[JsonSerializable(typeof(CdpEventArgs<PrivateVerificationTokensUpdatedEventArgs>), TypeInfoPropertyName = "PrivateVerificationTokensUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(SerializedStorageKey), TypeInfoPropertyName = "StorageSerializedStorageKey")]
 [JsonSerializable(typeof(StorageType), TypeInfoPropertyName = "StorageStorageType")]
 [JsonSerializable(typeof(UsageForType), TypeInfoPropertyName = "StorageUsageForType")]
 [JsonSerializable(typeof(TrustTokens), TypeInfoPropertyName = "StorageTrustTokens")]
+[JsonSerializable(typeof(PrivateVerificationToken), TypeInfoPropertyName = "StoragePrivateVerificationToken")]
 [JsonSerializable(typeof(StorageBucketsDurability), TypeInfoPropertyName = "StorageStorageBucketsDurability")]
 [JsonSerializable(typeof(StorageBucket), TypeInfoPropertyName = "StorageStorageBucket")]
 [JsonSerializable(typeof(StorageBucketInfo), TypeInfoPropertyName = "StorageStorageBucketInfo")]
@@ -1157,6 +1327,7 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(ImmutableArray<Network.CookieParam>), TypeInfoPropertyName = "ImmutableArrayNetworkCookieParam")]
 [JsonSerializable(typeof(ImmutableArray<UsageForType>), TypeInfoPropertyName = "ImmutableArrayStorageUsageForType")]
 [JsonSerializable(typeof(ImmutableArray<TrustTokens>), TypeInfoPropertyName = "ImmutableArrayStorageTrustTokens")]
+[JsonSerializable(typeof(ImmutableArray<PrivateVerificationToken>), TypeInfoPropertyName = "ImmutableArrayStoragePrivateVerificationToken")]
 [JsonSerializable(typeof(ImmutableArray<RelatedWebsiteSet>), TypeInfoPropertyName = "ImmutableArrayStorageRelatedWebsiteSet")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
@@ -1221,5 +1392,14 @@ public static class StorageDomainEvent
             "goog:cdp.Storage.storageBucketDeleted",
             StorageJsonSerializerContext.Default.StorageBucketDeletedCdpEventArgs), null) ?? _storageBucketDeleted;
     private static EventDescriptor<CdpEventArgs<StorageBucketDeletedEventArgs>>? _storageBucketDeleted;
+
+    /// <summary>
+    /// Private Verification Tokens have been stored or deleted.
+    /// </summary>
+    public static EventDescriptor<CdpEventArgs<PrivateVerificationTokensUpdatedEventArgs>> PrivateVerificationTokensUpdated =>
+        _privateVerificationTokensUpdated ?? global::System.Threading.Interlocked.CompareExchange(ref _privateVerificationTokensUpdated, EventDescriptor<CdpEventArgs<PrivateVerificationTokensUpdatedEventArgs>>.Create(
+            "goog:cdp.Storage.privateVerificationTokensUpdated",
+            StorageJsonSerializerContext.Default.PrivateVerificationTokensUpdatedCdpEventArgs), null) ?? _privateVerificationTokensUpdated;
+    private static EventDescriptor<CdpEventArgs<PrivateVerificationTokensUpdatedEventArgs>>? _privateVerificationTokensUpdated;
 
 }
