@@ -277,6 +277,11 @@ public sealed record Annotation()
     public bool? Consequential { get; init; }
 
     /// <summary>
+    /// If true, indicates that the tool is intended for debugging and developer tooling rather than end-user interactions.
+    /// </summary>
+    public bool? Debugging { get; init; }
+
+    /// <summary>
     /// If the declarative tool was declared with the autosubmit attribute.
     /// </summary>
     public bool? Autosubmit { get; init; }
