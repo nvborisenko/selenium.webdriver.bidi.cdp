@@ -243,11 +243,6 @@ public enum CookieExclusionReason
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeDomainNonASCII")]
     ExcludeDomainNonASCII,
     /// <summary>
-    /// Corresponds to the <c>"ExcludeThirdPartyCookieBlockedInFirstPartySet"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeThirdPartyCookieBlockedInFirstPartySet")]
-    ExcludeThirdPartyCookieBlockedInFirstPartySet,
-    /// <summary>
     /// Corresponds to the <c>"ExcludeThirdPartyPhaseout"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ExcludeThirdPartyPhaseout")]
