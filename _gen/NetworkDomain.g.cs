@@ -4164,11 +4164,6 @@ public enum SetCookieBlockedReason
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyPhaseout")]
     ThirdPartyPhaseout,
     /// <summary>
-    /// Corresponds to the <c>"ThirdPartyBlockedInFirstPartySet"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyBlockedInFirstPartySet")]
-    ThirdPartyBlockedInFirstPartySet,
-    /// <summary>
     /// Corresponds to the <c>"SyntaxError"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("SyntaxError")]
@@ -4281,11 +4276,6 @@ public enum CookieBlockedReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyPhaseout")]
     ThirdPartyPhaseout,
-    /// <summary>
-    /// Corresponds to the <c>"ThirdPartyBlockedInFirstPartySet"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ThirdPartyBlockedInFirstPartySet")]
-    ThirdPartyBlockedInFirstPartySet,
     /// <summary>
     /// Corresponds to the <c>"UnknownError"</c> wire value.
     /// </summary>

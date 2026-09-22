@@ -462,21 +462,6 @@ public interface IStorage
     Task<RunBounceTrackingMitigationsResult> RunBounceTrackingMitigationsAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Returns the effective Related Website Sets in use by this profile for the browser
-    /// session. The effective Related Website Sets will not change during a browser session.
-    /// </summary>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="GetRelatedWebsiteSetsResult"/>.
-    /// </returns>
-    Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = null, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// A cache's contents have been modified.
     /// </summary>
     /// <remarks>
@@ -722,12 +707,6 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
         return await ExecuteCommandAsync("Storage.runBounceTrackingMitigations", @params, JsonContext.RunBounceTrackingMitigationsCommandParameters, JsonContext.RunBounceTrackingMitigationsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<GetRelatedWebsiteSetsResult> GetRelatedWebsiteSetsAsync(string? session = null, CancellationToken cancellationToken = default)
-    {
-        var @params = new GetRelatedWebsiteSetsCommandParameters();
-        return await ExecuteCommandAsync("Storage.getRelatedWebsiteSets", @params, JsonContext.GetRelatedWebsiteSetsCommandParameters, JsonContext.GetRelatedWebsiteSetsResult, session, cancellationToken).ConfigureAwait(false);
-    }
-
     public IEventSource<CacheStorageContentUpdatedEventArgs> CacheStorageContentUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageContentUpdated);
     public IEventSource<CacheStorageListUpdatedEventArgs> CacheStorageListUpdated => CreateCdpEventSource(StorageDomainEvent.CacheStorageListUpdated);
     public IEventSource<IndexedDBContentUpdatedEventArgs> IndexedDBContentUpdated => CreateCdpEventSource(StorageDomainEvent.IndexedDBContentUpdated);
@@ -971,16 +950,6 @@ internal sealed record RunBounceTrackingMitigationsCommandParameters() : Paramet
 /// <param name="DeletedSites">
 /// </param>
 public sealed record RunBounceTrackingMitigationsResult(ImmutableArray<string> DeletedSites) : EmptyResult;
-
-
-internal sealed record GetRelatedWebsiteSetsCommandParameters() : Parameters;
-
-/// <summary>
-/// Result of the <see cref="IStorage.GetRelatedWebsiteSetsAsync"/> command.
-/// </summary>
-/// <param name="Sets">
-/// </param>
-public sealed record GetRelatedWebsiteSetsResult(ImmutableArray<RelatedWebsiteSet> Sets) : EmptyResult;
 
 
 /// <summary>
@@ -1237,22 +1206,6 @@ public sealed record StorageBucketInfo(StorageBucket Bucket, string Id, Network.
 {
 }
 
-/// <summary>
-/// A single Related Website Set object.
-/// </summary>
-/// <param name="PrimarySites">
-/// The primary site of this set, along with the ccTLDs if there is any.
-/// </param>
-/// <param name="AssociatedSites">
-/// The associated sites of this set, along with the ccTLDs if there is any.
-/// </param>
-/// <param name="ServiceSites">
-/// The service sites of this set, along with the ccTLDs if there is any.
-/// </param>
-public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, ImmutableArray<string> AssociatedSites, ImmutableArray<string> ServiceSites)
-{
-}
-
 [JsonSerializable(typeof(GetStorageKeyForFrameCommandParameters), TypeInfoPropertyName = "GetStorageKeyForFrameCommandParameters")]
 [JsonSerializable(typeof(GetStorageKeyForFrameResult), TypeInfoPropertyName = "GetStorageKeyForFrameResult")]
 [JsonSerializable(typeof(GetStorageKeyCommandParameters), TypeInfoPropertyName = "GetStorageKeyCommandParameters")]
@@ -1305,8 +1258,6 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(DeleteStorageBucketResult), TypeInfoPropertyName = "DeleteStorageBucketResult")]
 [JsonSerializable(typeof(RunBounceTrackingMitigationsCommandParameters), TypeInfoPropertyName = "RunBounceTrackingMitigationsCommandParameters")]
 [JsonSerializable(typeof(RunBounceTrackingMitigationsResult), TypeInfoPropertyName = "RunBounceTrackingMitigationsResult")]
-[JsonSerializable(typeof(GetRelatedWebsiteSetsCommandParameters), TypeInfoPropertyName = "GetRelatedWebsiteSetsCommandParameters")]
-[JsonSerializable(typeof(GetRelatedWebsiteSetsResult), TypeInfoPropertyName = "GetRelatedWebsiteSetsResult")]
 [JsonSerializable(typeof(CdpEventArgs<CacheStorageContentUpdatedEventArgs>), TypeInfoPropertyName = "CacheStorageContentUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<CacheStorageListUpdatedEventArgs>), TypeInfoPropertyName = "CacheStorageListUpdatedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<IndexedDBContentUpdatedEventArgs>), TypeInfoPropertyName = "IndexedDBContentUpdatedCdpEventArgs")]
@@ -1322,13 +1273,11 @@ public sealed record RelatedWebsiteSet(ImmutableArray<string> PrimarySites, Immu
 [JsonSerializable(typeof(StorageBucketsDurability), TypeInfoPropertyName = "StorageStorageBucketsDurability")]
 [JsonSerializable(typeof(StorageBucket), TypeInfoPropertyName = "StorageStorageBucket")]
 [JsonSerializable(typeof(StorageBucketInfo), TypeInfoPropertyName = "StorageStorageBucketInfo")]
-[JsonSerializable(typeof(RelatedWebsiteSet), TypeInfoPropertyName = "StorageRelatedWebsiteSet")]
 [JsonSerializable(typeof(ImmutableArray<Network.Cookie>), TypeInfoPropertyName = "ImmutableArrayNetworkCookie")]
 [JsonSerializable(typeof(ImmutableArray<Network.CookieParam>), TypeInfoPropertyName = "ImmutableArrayNetworkCookieParam")]
 [JsonSerializable(typeof(ImmutableArray<UsageForType>), TypeInfoPropertyName = "ImmutableArrayStorageUsageForType")]
 [JsonSerializable(typeof(ImmutableArray<TrustTokens>), TypeInfoPropertyName = "ImmutableArrayStorageTrustTokens")]
 [JsonSerializable(typeof(ImmutableArray<PrivateVerificationToken>), TypeInfoPropertyName = "ImmutableArrayStoragePrivateVerificationToken")]
-[JsonSerializable(typeof(ImmutableArray<RelatedWebsiteSet>), TypeInfoPropertyName = "ImmutableArrayStorageRelatedWebsiteSet")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
