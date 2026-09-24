@@ -366,6 +366,21 @@ public interface IStorage
     Task<GetPrivateVerificationTokensResult> GetPrivateVerificationTokensAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Returns the configured Private Verification Tokens issuers and their redeemer
+    /// origins.
+    /// </summary>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetPrivateVerificationTokensIssuerConfigsResult"/>.
+    /// </returns>
+    Task<GetPrivateVerificationTokensIssuerConfigsResult> GetPrivateVerificationTokensIssuerConfigsAsync(string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Removes all Private Verification Tokens issued by the provided issuerOrigin.
     /// </summary>
     /// <param name="issuerOrigin">
@@ -671,6 +686,12 @@ internal sealed class StorageDomain(CdpModule cdp) : global::Selenium.WebDriver.
         return await ExecuteCommandAsync("Storage.getPrivateVerificationTokens", @params, JsonContext.GetPrivateVerificationTokensCommandParameters, JsonContext.GetPrivateVerificationTokensResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    public async Task<GetPrivateVerificationTokensIssuerConfigsResult> GetPrivateVerificationTokensIssuerConfigsAsync(string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetPrivateVerificationTokensIssuerConfigsCommandParameters();
+        return await ExecuteCommandAsync("Storage.getPrivateVerificationTokensIssuerConfigs", @params, JsonContext.GetPrivateVerificationTokensIssuerConfigsCommandParameters, JsonContext.GetPrivateVerificationTokensIssuerConfigsResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public async Task<ClearPrivateVerificationTokensResult> ClearPrivateVerificationTokensAsync(string issuerOrigin, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ClearPrivateVerificationTokensCommandParameters(IssuerOrigin: issuerOrigin);
@@ -900,6 +921,16 @@ internal sealed record GetPrivateVerificationTokensCommandParameters() : Paramet
 /// <param name="Tokens">
 /// </param>
 public sealed record GetPrivateVerificationTokensResult(ImmutableArray<PrivateVerificationToken> Tokens) : EmptyResult;
+
+
+internal sealed record GetPrivateVerificationTokensIssuerConfigsCommandParameters() : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IStorage.GetPrivateVerificationTokensIssuerConfigsAsync"/> command.
+/// </summary>
+/// <param name="Configs">
+/// </param>
+public sealed record GetPrivateVerificationTokensIssuerConfigsResult(ImmutableArray<PrivateVerificationTokensIssuerConfig> Configs) : EmptyResult;
 
 
 internal sealed record ClearPrivateVerificationTokensCommandParameters(string IssuerOrigin) : Parameters;
@@ -1159,6 +1190,19 @@ public sealed record PrivateVerificationToken(string Id, string IssuerOrigin, lo
 }
 
 /// <summary>
+/// Configuration for a Private Verification Tokens issuer.
+/// </summary>
+/// <param name="IssuerOrigin">
+/// Origin of the token issuer.
+/// </param>
+/// <param name="RedeemerOrigins">
+/// Origins authorized to redeem tokens from this issuer.
+/// </param>
+public sealed record PrivateVerificationTokensIssuerConfig(string IssuerOrigin, ImmutableArray<string> RedeemerOrigins)
+{
+}
+
+/// <summary>
 /// </summary>
 [global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<StorageBucketsDurability>))]
 public enum StorageBucketsDurability
@@ -1246,6 +1290,8 @@ public sealed record StorageBucketInfo(StorageBucket Bucket, string Id, Network.
 [JsonSerializable(typeof(ClearTrustTokensResult), TypeInfoPropertyName = "ClearTrustTokensResult")]
 [JsonSerializable(typeof(GetPrivateVerificationTokensCommandParameters), TypeInfoPropertyName = "GetPrivateVerificationTokensCommandParameters")]
 [JsonSerializable(typeof(GetPrivateVerificationTokensResult), TypeInfoPropertyName = "GetPrivateVerificationTokensResult")]
+[JsonSerializable(typeof(GetPrivateVerificationTokensIssuerConfigsCommandParameters), TypeInfoPropertyName = "GetPrivateVerificationTokensIssuerConfigsCommandParameters")]
+[JsonSerializable(typeof(GetPrivateVerificationTokensIssuerConfigsResult), TypeInfoPropertyName = "GetPrivateVerificationTokensIssuerConfigsResult")]
 [JsonSerializable(typeof(ClearPrivateVerificationTokensCommandParameters), TypeInfoPropertyName = "ClearPrivateVerificationTokensCommandParameters")]
 [JsonSerializable(typeof(ClearPrivateVerificationTokensResult), TypeInfoPropertyName = "ClearPrivateVerificationTokensResult")]
 [JsonSerializable(typeof(DeletePrivateVerificationTokenCommandParameters), TypeInfoPropertyName = "DeletePrivateVerificationTokenCommandParameters")]
@@ -1270,6 +1316,7 @@ public sealed record StorageBucketInfo(StorageBucket Bucket, string Id, Network.
 [JsonSerializable(typeof(UsageForType), TypeInfoPropertyName = "StorageUsageForType")]
 [JsonSerializable(typeof(TrustTokens), TypeInfoPropertyName = "StorageTrustTokens")]
 [JsonSerializable(typeof(PrivateVerificationToken), TypeInfoPropertyName = "StoragePrivateVerificationToken")]
+[JsonSerializable(typeof(PrivateVerificationTokensIssuerConfig), TypeInfoPropertyName = "StoragePrivateVerificationTokensIssuerConfig")]
 [JsonSerializable(typeof(StorageBucketsDurability), TypeInfoPropertyName = "StorageStorageBucketsDurability")]
 [JsonSerializable(typeof(StorageBucket), TypeInfoPropertyName = "StorageStorageBucket")]
 [JsonSerializable(typeof(StorageBucketInfo), TypeInfoPropertyName = "StorageStorageBucketInfo")]
@@ -1278,6 +1325,7 @@ public sealed record StorageBucketInfo(StorageBucket Bucket, string Id, Network.
 [JsonSerializable(typeof(ImmutableArray<UsageForType>), TypeInfoPropertyName = "ImmutableArrayStorageUsageForType")]
 [JsonSerializable(typeof(ImmutableArray<TrustTokens>), TypeInfoPropertyName = "ImmutableArrayStorageTrustTokens")]
 [JsonSerializable(typeof(ImmutableArray<PrivateVerificationToken>), TypeInfoPropertyName = "ImmutableArrayStoragePrivateVerificationToken")]
+[JsonSerializable(typeof(ImmutableArray<PrivateVerificationTokensIssuerConfig>), TypeInfoPropertyName = "ImmutableArrayStoragePrivateVerificationTokensIssuerConfig")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]

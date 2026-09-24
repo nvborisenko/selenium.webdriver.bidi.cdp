@@ -4397,6 +4397,11 @@ public sealed record ScreencastFrameMetadata(double OffsetTop, double PageScaleF
     /// Frame swap timestamp.
     /// </summary>
     public Network.TimeSinceEpoch? Timestamp { get; init; }
+
+    /// <summary>
+    /// Frame swap timestamp as monotonic time.
+    /// </summary>
+    public Network.MonotonicTime? MonotonicTimestamp { get; init; }
 }
 
 /// <summary>
