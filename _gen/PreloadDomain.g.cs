@@ -99,6 +99,7 @@ public interface IPreload
     /// <item><description><b>Key</b></description></item>
     /// <item><description><b>PipelineId</b></description></item>
     /// <item><description><b>Status</b></description></item>
+    /// <item><description><b>EffectiveAction</b> - The action currently performed by this attempt. This differs from <b>key.action</b> after a prerender-until-script attempt is upgraded in place to a full prerender.</description></item>
     /// <item><description><b>PrerenderStatus</b></description></item>
     /// <item><description><b>DisallowedMojoInterface</b> - This is used to give users more information about the name of Mojo interface that is incompatible with prerender and has caused the cancellation of the attempt.</description></item>
     /// <item><description><b>MismatchedHeaders</b></description></item>
@@ -218,6 +219,11 @@ public sealed record PrefetchStatusUpdatedEventArgs(PreloadingAttemptKey Key, Pr
 /// </param>
 /// <param name="Status">
 /// </param>
+/// <param name="EffectiveAction">
+/// The action currently performed by this attempt. This differs from
+/// <b>key.action</b> after a prerender-until-script attempt is upgraded in place
+/// to a full prerender.
+/// </param>
 /// <param name="PrerenderStatus">
 /// </param>
 /// <param name="DisallowedMojoInterface">
@@ -226,7 +232,7 @@ public sealed record PrefetchStatusUpdatedEventArgs(PreloadingAttemptKey Key, Pr
 /// </param>
 /// <param name="MismatchedHeaders">
 /// </param>
-public sealed record PrerenderStatusUpdatedEventArgs(PreloadingAttemptKey Key, PreloadPipelineId PipelineId, PreloadingStatus Status, PrerenderFinalStatus? PrerenderStatus = null, string? DisallowedMojoInterface = null, ImmutableArray<PrerenderMismatchedHeaders>? MismatchedHeaders = null) : OpenQA.Selenium.BiDi.EventArgs;
+public sealed record PrerenderStatusUpdatedEventArgs(PreloadingAttemptKey Key, PreloadPipelineId PipelineId, PreloadingStatus Status, SpeculationAction? EffectiveAction = null, PrerenderFinalStatus? PrerenderStatus = null, string? DisallowedMojoInterface = null, ImmutableArray<PrerenderMismatchedHeaders>? MismatchedHeaders = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Send a list of sources for all preloading attempts in a document.

@@ -248,6 +248,10 @@ public interface IEmulation
     /// Viewport meta tag behavior. Default: <b>default</b>. Note: if <b>mobile</b> is <b>true</b>,
     /// the viewport meta tag is always enabled.
     /// </param>
+    /// <param name="textLayoutMode">
+    /// Text layout mode. Default: <b>default</b>. Note: if <b>mobile</b> is <b>true</b>,
+    /// mobile text layout mode (text autosizing) is always enabled.
+    /// </param>
     /// <param name="session">
     /// Optional CDP session override.
     /// </param>
@@ -257,7 +261,7 @@ public interface IEmulation
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="SetDeviceMetricsOverrideResult"/>.
     /// </returns>
-    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, ScreenOrientation? screenOrientation = null, Page.Viewport? viewport = null, DisplayFeature? displayFeature = null, DevicePosture? devicePosture = null, SetDeviceMetricsOverrideScrollbarType? scrollbarType = null, bool? screenOrientationLockEmulation = null, SetDeviceMetricsOverrideViewportMeta? viewportMeta = null, string? session = null, CancellationToken cancellationToken = default);
+    Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, ScreenOrientation? screenOrientation = null, Page.Viewport? viewport = null, DisplayFeature? displayFeature = null, DevicePosture? devicePosture = null, SetDeviceMetricsOverrideScrollbarType? scrollbarType = null, bool? screenOrientationLockEmulation = null, SetDeviceMetricsOverrideViewportMeta? viewportMeta = null, SetDeviceMetricsOverrideTextLayoutMode? textLayoutMode = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Start reporting the given posture value to the Device Posture API.
@@ -1154,9 +1158,9 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
         return await ExecuteCommandAsync("Emulation.setVirtualKeyboardGeometryOverride", @params, JsonContext.SetVirtualKeyboardGeometryOverrideCommandParameters, JsonContext.SetVirtualKeyboardGeometryOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, ScreenOrientation? screenOrientation = null, Page.Viewport? viewport = null, DisplayFeature? displayFeature = null, DevicePosture? devicePosture = null, SetDeviceMetricsOverrideScrollbarType? scrollbarType = null, bool? screenOrientationLockEmulation = null, SetDeviceMetricsOverrideViewportMeta? viewportMeta = null, string? session = null, CancellationToken cancellationToken = default)
+    public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, ScreenOrientation? screenOrientation = null, Page.Viewport? viewport = null, DisplayFeature? displayFeature = null, DevicePosture? devicePosture = null, SetDeviceMetricsOverrideScrollbarType? scrollbarType = null, bool? screenOrientationLockEmulation = null, SetDeviceMetricsOverrideViewportMeta? viewportMeta = null, SetDeviceMetricsOverrideTextLayoutMode? textLayoutMode = null, string? session = null, CancellationToken cancellationToken = default)
     {
-        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation, ViewportMeta: viewportMeta);
+        var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation, ViewportMeta: viewportMeta, TextLayoutMode: textLayoutMode);
         return await ExecuteCommandAsync("Emulation.setDeviceMetricsOverride", @params, JsonContext.SetDeviceMetricsOverrideCommandParameters, JsonContext.SetDeviceMetricsOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
@@ -1507,7 +1511,7 @@ internal sealed record SetVirtualKeyboardGeometryOverrideCommandParameters(DOM.R
 public sealed record SetVirtualKeyboardGeometryOverrideResult() : EmptyResult;
 
 
-internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, SetDeviceMetricsOverrideScrollbarType? ScrollbarType, bool? ScreenOrientationLockEmulation, SetDeviceMetricsOverrideViewportMeta? ViewportMeta) : Parameters;
+internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, SetDeviceMetricsOverrideScrollbarType? ScrollbarType, bool? ScreenOrientationLockEmulation, SetDeviceMetricsOverrideViewportMeta? ViewportMeta, SetDeviceMetricsOverrideTextLayoutMode? TextLayoutMode) : Parameters;
 
 /// <summary>
 /// Result of the <see cref="IEmulation.SetDeviceMetricsOverrideAsync"/> command.
@@ -2330,6 +2334,23 @@ public enum SetDeviceMetricsOverrideViewportMeta
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("enable")]
     Enable,
+    /// <summary>
+    /// Corresponds to the <c>"default"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("default")]
+    Default,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<SetDeviceMetricsOverrideTextLayoutMode>))]
+public enum SetDeviceMetricsOverrideTextLayoutMode
+{
+    /// <summary>
+    /// Corresponds to the <c>"mobile"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("mobile")]
+    Mobile,
     /// <summary>
     /// Corresponds to the <c>"default"</c> wire value.
     /// </summary>
