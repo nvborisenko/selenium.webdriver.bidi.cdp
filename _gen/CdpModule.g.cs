@@ -211,6 +211,14 @@ partial class CdpModule
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
     public FileSystem.IFileSystem FileSystem => _fileSystem ?? global::System.Threading.Interlocked.CompareExchange(ref _fileSystem, new FileSystem.FileSystemDomain(this), null) ?? _fileSystem;
 
+    private FindInPage.IFindInPage? _findInPage;
+
+    /// <summary>
+    /// This domain provides commands to trigger the "Find in page" feature.
+    /// </summary>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public FindInPage.IFindInPage FindInPage => _findInPage ?? global::System.Threading.Interlocked.CompareExchange(ref _findInPage, new FindInPage.FindInPageDomain(this), null) ?? _findInPage;
+
     private HeadlessExperimental.IHeadlessExperimental? _headlessExperimental;
 
     /// <summary>
