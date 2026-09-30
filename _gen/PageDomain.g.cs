@@ -3791,6 +3791,11 @@ public enum PermissionsPolicyFeature
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("publickey-credentials-get")]
     PublickeyCredentialsGet,
     /// <summary>
+    /// Corresponds to the <c>"publickey-credentials-remote-client-data-json"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("publickey-credentials-remote-client-data-json")]
+    PublickeyCredentialsRemoteClientDataJson,
+    /// <summary>
     /// Corresponds to the <c>"rewriter"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("rewriter")]

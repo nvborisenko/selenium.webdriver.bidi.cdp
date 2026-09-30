@@ -1692,7 +1692,7 @@ public sealed record Scope(ScopeType Type, Runtime.RemoteObject Object)
     public Location? EndLocation { get; init; }
 
     /// <summary>
-    /// True if the scope does not declare any variables or have a runtime context.
+    /// True if the scope does not declare any variables.
     /// Only present if true.
     /// Empty scopes are retained in the scope chain because
     /// they can be targeted via <b>evaluateOnCallFrame</b> (using <b>scopeNumber</b>) or
