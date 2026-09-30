@@ -10,11 +10,14 @@ public abstract class CdpTestFixture
     protected OpenQA.Selenium.BiDi.BrowsingContext.BrowsingContext Context { get; private set; } = null!;
     protected CdpModule Cdp { get; private set; } = null!;
 
+    [Before(Assembly)]
+    public static void SetUpLogging() => OpenQA.Selenium.Internal.Logging.Log.SetLevel(OpenQA.Selenium.Internal.Logging.LogEventLevel.Trace);
+
     [Before(Test)]
     public async Task SetUp()
     {
         var options = new ChromeOptions { UseWebSocketUrl = true };
-        options.AddArgument("--headless=new");
+        options.AddArgument("--headless");
         options.AddArgument("--no-sandbox");
         options.AddArgument("--disable-gpu");
         options.AddArgument("--disable-dev-shm-usage");

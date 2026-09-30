@@ -132,9 +132,11 @@ public class FetchTests : CdpTestFixture
     {
         await using var _ = await BlockBiDiNetworkPhasesAsync();
 
-        await Cdp.Fetch.EnableAsync(patterns: [new RequestPattern { UrlPattern = "*" }]);
+        await Cdp.Network.EnableAsync();
+        await Cdp.Fetch.EnableAsync(patterns: [new RequestPattern { UrlPattern = "*", ResourceType = Network.ResourceType.Document }]);
 
         await using var requestPausedStream = await Cdp.Fetch.RequestPaused.StreamAsync();
+        await using var requestExtraInfoStream = await Cdp.Network.RequestWillBeSentExtraInfo.StreamAsync();
 
         var navigateTask = NavigateAndWaitForLoadAsync("https://www.example.com");
 
@@ -145,10 +147,16 @@ public class FetchTests : CdpTestFixture
             requestPaused.RequestId,
             headers:
             [
-                new HeaderEntry("X-Custom-Auth", "Bearer test-token"),
-                new HeaderEntry("Accept", "text/html")
+                new HeaderEntry("X-Test-Header", "test-value")
             ]);
 
         await navigateTask;
+
+        var requestExtraInfo = await requestExtraInfoStream.ReadAllAsync()
+            .FirstAsync(e => e.RequestId == requestPaused.NetworkId)
+            .AsTask().WaitAsync(TimeSpan.FromSeconds(10));
+        var testHeader = requestExtraInfo.Headers.FirstOrDefault(header =>
+            string.Equals(header.Key, "X-Test-Header", StringComparison.OrdinalIgnoreCase)).Value;
+        await Assert.That(testHeader).IsEqualTo("test-value");
     }
 }
