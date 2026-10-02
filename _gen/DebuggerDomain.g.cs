@@ -1692,13 +1692,13 @@ public sealed record Scope(ScopeType Type, Runtime.RemoteObject Object)
     public Location? EndLocation { get; init; }
 
     /// <summary>
-    /// True if the scope does not declare any variables.
-    /// Only present if true.
+    /// Present if the scope has no variable values to show. Absent means that
+    /// the scope declares at least one variable with an available value.
     /// Empty scopes are retained in the scope chain because
     /// they can be targeted via <b>evaluateOnCallFrame</b> (using <b>scopeNumber</b>) or
     /// matched against scopes in source maps.
     /// </summary>
-    public bool? Empty { get; init; }
+    public ScopeEmptyReason? EmptyReason { get; init; }
 }
 
 /// <summary>
@@ -2022,6 +2022,23 @@ public enum ScopeType
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("wasm-expression-stack")]
     WasmExpressionStack,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<ScopeEmptyReason>))]
+public enum ScopeEmptyReason
+{
+    /// <summary>
+    /// Corresponds to the <c>"no-variables"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("no-variables")]
+    NoVariables,
+    /// <summary>
+    /// Corresponds to the <c>"all-unavailable"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("all-unavailable")]
+    AllUnavailable,
 }
 
 /// <summary>
