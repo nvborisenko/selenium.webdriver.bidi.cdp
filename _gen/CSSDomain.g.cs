@@ -155,6 +155,27 @@ public interface ICSS
     Task<ForceStartingStyleResult> ForceStartingStyleAsync(DOM.NodeId nodeId, bool forced, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Forces a position-try option for the given node.
+    /// </summary>
+    /// <param name="nodeId">
+    /// The element id for which to force the position-try option.
+    /// </param>
+    /// <param name="index">
+    /// The 1-based index of the position-try fallback option, 0 for base position (no fallback),
+    /// or omitted to clear the forced state.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="ForcePositionTryOptionResult"/>.
+    /// </returns>
+    Task<ForcePositionTryOptionResult> ForcePositionTryOptionAsync(DOM.NodeId nodeId, long? index = null, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// </summary>
     /// <param name="nodeId">
     /// Id of the node to get background colors for.
@@ -862,6 +883,12 @@ internal sealed class CSSDomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi
         return await ExecuteCommandAsync("CSS.forceStartingStyle", @params, JsonContext.ForceStartingStyleCommandParameters, JsonContext.ForceStartingStyleResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    public async Task<ForcePositionTryOptionResult> ForcePositionTryOptionAsync(DOM.NodeId nodeId, long? index = null, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new ForcePositionTryOptionCommandParameters(NodeId: nodeId, Index: index);
+        return await ExecuteCommandAsync("CSS.forcePositionTryOption", @params, JsonContext.ForcePositionTryOptionCommandParameters, JsonContext.ForcePositionTryOptionResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public async Task<GetBackgroundColorsResult> GetBackgroundColorsAsync(DOM.NodeId nodeId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetBackgroundColorsCommandParameters(NodeId: nodeId);
@@ -1126,6 +1153,14 @@ internal sealed record ForceStartingStyleCommandParameters(DOM.NodeId NodeId, bo
 /// Result of the <see cref="ICSS.ForceStartingStyleAsync"/> command.
 /// </summary>
 public sealed record ForceStartingStyleResult() : EmptyResult;
+
+
+internal sealed record ForcePositionTryOptionCommandParameters(DOM.NodeId NodeId, long? Index) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="ICSS.ForcePositionTryOptionAsync"/> command.
+/// </summary>
+public sealed record ForcePositionTryOptionResult() : EmptyResult;
 
 
 internal sealed record GetBackgroundColorsCommandParameters(DOM.NodeId NodeId) : Parameters;
@@ -2796,6 +2831,8 @@ public enum CSSAtRuleSubsection
 [JsonSerializable(typeof(ForcePseudoStateResult), TypeInfoPropertyName = "ForcePseudoStateResult")]
 [JsonSerializable(typeof(ForceStartingStyleCommandParameters), TypeInfoPropertyName = "ForceStartingStyleCommandParameters")]
 [JsonSerializable(typeof(ForceStartingStyleResult), TypeInfoPropertyName = "ForceStartingStyleResult")]
+[JsonSerializable(typeof(ForcePositionTryOptionCommandParameters), TypeInfoPropertyName = "ForcePositionTryOptionCommandParameters")]
+[JsonSerializable(typeof(ForcePositionTryOptionResult), TypeInfoPropertyName = "ForcePositionTryOptionResult")]
 [JsonSerializable(typeof(GetBackgroundColorsCommandParameters), TypeInfoPropertyName = "GetBackgroundColorsCommandParameters")]
 [JsonSerializable(typeof(GetBackgroundColorsResult), TypeInfoPropertyName = "GetBackgroundColorsResult")]
 [JsonSerializable(typeof(GetComputedStyleForNodeCommandParameters), TypeInfoPropertyName = "GetComputedStyleForNodeCommandParameters")]
