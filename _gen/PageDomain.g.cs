@@ -368,6 +368,26 @@ public interface IPage
     Task<GetAdScriptAncestryResult> GetAdScriptAncestryAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Returns the words that the frame's document added to its spell check custom
+    /// dictionary with <b>document.spellCheckCustomDictionary.addWords()</b>, sorted.
+    /// Page script cannot read the dictionary back; this lets developers inspect
+    /// it.
+    /// </summary>
+    /// <param name="frameId">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetSpellCheckCustomDictionaryResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<GetSpellCheckCustomDictionaryResult> GetSpellCheckCustomDictionaryAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Returns present frame tree structure.
     /// </summary>
     /// <param name="session">
@@ -1868,6 +1888,13 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
         return await ExecuteCommandAsync("Page.getAdScriptAncestry", @params, JsonContext.GetAdScriptAncestryCommandParameters, JsonContext.GetAdScriptAncestryResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetSpellCheckCustomDictionaryResult> GetSpellCheckCustomDictionaryAsync(FrameId frameId, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetSpellCheckCustomDictionaryCommandParameters(FrameId: frameId);
+        return await ExecuteCommandAsync("Page.getSpellCheckCustomDictionary", @params, JsonContext.GetSpellCheckCustomDictionaryCommandParameters, JsonContext.GetSpellCheckCustomDictionaryResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public async Task<GetFrameTreeResult> GetFrameTreeAsync(string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetFrameTreeCommandParameters();
@@ -2432,6 +2459,16 @@ internal sealed record GetAdScriptAncestryCommandParameters(FrameId FrameId) : P
 /// script). Only sent if frame is labelled as an ad and ids are available.
 /// </param>
 public sealed record GetAdScriptAncestryResult(Network.AdAncestry? AdScriptAncestry) : EmptyResult;
+
+
+internal sealed record GetSpellCheckCustomDictionaryCommandParameters(FrameId FrameId) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IPage.GetSpellCheckCustomDictionaryAsync"/> command.
+/// </summary>
+/// <param name="Words">
+/// </param>
+public sealed record GetSpellCheckCustomDictionaryResult(ImmutableArray<string> Words) : EmptyResult;
 
 
 internal sealed record GetFrameTreeCommandParameters() : Parameters;
@@ -6240,6 +6277,8 @@ public enum NavigatedWithinDocumentNavigationType
 [JsonSerializable(typeof(GetSiblingSubAppsResult), TypeInfoPropertyName = "GetSiblingSubAppsResult")]
 [JsonSerializable(typeof(GetAdScriptAncestryCommandParameters), TypeInfoPropertyName = "GetAdScriptAncestryCommandParameters")]
 [JsonSerializable(typeof(GetAdScriptAncestryResult), TypeInfoPropertyName = "GetAdScriptAncestryResult")]
+[JsonSerializable(typeof(GetSpellCheckCustomDictionaryCommandParameters), TypeInfoPropertyName = "GetSpellCheckCustomDictionaryCommandParameters")]
+[JsonSerializable(typeof(GetSpellCheckCustomDictionaryResult), TypeInfoPropertyName = "GetSpellCheckCustomDictionaryResult")]
 [JsonSerializable(typeof(GetFrameTreeCommandParameters), TypeInfoPropertyName = "GetFrameTreeCommandParameters")]
 [JsonSerializable(typeof(GetFrameTreeResult), TypeInfoPropertyName = "GetFrameTreeResult")]
 [JsonSerializable(typeof(GetLayoutMetricsCommandParameters), TypeInfoPropertyName = "GetLayoutMetricsCommandParameters")]
