@@ -703,6 +703,11 @@ public interface IDebugger
     /// <param name="skipList">
     /// The skipList specifies location ranges that should be skipped on step over.
     /// </param>
+    /// <param name="enterRanges">
+    /// Functions whose source range lies within one of the enterRanges are
+    /// entered as if by stepInto, even when they are called (directly or
+    /// indirectly) from a call that is stepped over.
+    /// </param>
     /// <param name="session">
     /// Optional CDP session override.
     /// </param>
@@ -712,7 +717,7 @@ public interface IDebugger
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="StepOverResult"/>.
     /// </returns>
-    Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = null, string? session = null, CancellationToken cancellationToken = default);
+    Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = null, ImmutableArray<LocationRange>? enterRanges = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Fired when breakpoint is resolved to an actual script and location.
@@ -1020,9 +1025,9 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
         return await ExecuteCommandAsync("Debugger.stepOut", @params, JsonContext.StepOutCommandParameters, JsonContext.StepOutResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = null, string? session = null, CancellationToken cancellationToken = default)
+    public async Task<StepOverResult> StepOverAsync(ImmutableArray<LocationRange>? skipList = null, ImmutableArray<LocationRange>? enterRanges = null, string? session = null, CancellationToken cancellationToken = default)
     {
-        var @params = new StepOverCommandParameters(SkipList: skipList);
+        var @params = new StepOverCommandParameters(SkipList: skipList, EnterRanges: enterRanges);
         return await ExecuteCommandAsync("Debugger.stepOver", @params, JsonContext.StepOverCommandParameters, JsonContext.StepOverResult, session, cancellationToken).ConfigureAwait(false);
     }
 
@@ -1380,7 +1385,7 @@ internal sealed record StepOutCommandParameters() : Parameters;
 public sealed record StepOutResult() : EmptyResult;
 
 
-internal sealed record StepOverCommandParameters(ImmutableArray<LocationRange>? SkipList) : Parameters;
+internal sealed record StepOverCommandParameters(ImmutableArray<LocationRange>? SkipList, ImmutableArray<LocationRange>? EnterRanges) : Parameters;
 
 /// <summary>
 /// Result of the <see cref="IDebugger.StepOverAsync"/> command.

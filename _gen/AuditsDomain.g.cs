@@ -1463,6 +1463,11 @@ public enum GenericIssueErrorType
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FormModelContextParameterMissingName")]
     FormModelContextParameterMissingName,
+    /// <summary>
+    /// Corresponds to the <c>"GeolocationPromptWithoutUserGesture"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("GeolocationPromptWithoutUserGesture")]
+    GeolocationPromptWithoutUserGesture,
 }
 
 /// <summary>
