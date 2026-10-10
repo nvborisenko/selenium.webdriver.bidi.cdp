@@ -821,6 +821,7 @@ public interface INetwork
     /// <item><description><b>RequestId</b> - Request identifier.</description></item>
     /// <item><description><b>Timestamp</b> - Timestamp.</description></item>
     /// <item><description><b>EncodedDataLength</b> - Total number of bytes received for this request.</description></item>
+    /// <item><description><b>EncodedBodyLength</b> - Size of the response body before removing content encodings. Includes cached bodies, but excludes headers and transfer framing.</description></item>
     /// </list>
     /// </remarks>
     IEventSource<LoadingFinishedEventArgs> LoadingFinished { get; }
@@ -2103,7 +2104,11 @@ public sealed record LoadingFailedEventArgs(RequestId RequestId, MonotonicTime T
 /// <param name="EncodedDataLength">
 /// Total number of bytes received for this request.
 /// </param>
-public sealed record LoadingFinishedEventArgs(RequestId RequestId, MonotonicTime Timestamp, double EncodedDataLength) : OpenQA.Selenium.BiDi.EventArgs;
+/// <param name="EncodedBodyLength">
+/// Size of the response body before removing content encodings.
+/// Includes cached bodies, but excludes headers and transfer framing.
+/// </param>
+public sealed record LoadingFinishedEventArgs(RequestId RequestId, MonotonicTime Timestamp, double EncodedDataLength, double? EncodedBodyLength = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired if request ended up loading from cache.
