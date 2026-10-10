@@ -3848,16 +3848,6 @@ public enum PermissionsPolicyFeature
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("serial")]
     Serial,
     /// <summary>
-    /// Corresponds to the <c>"shared-storage"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared-storage")]
-    SharedStorage,
-    /// <summary>
-    /// Corresponds to the <c>"shared-storage-select-url"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("shared-storage-select-url")]
-    SharedStorageSelectUrl,
-    /// <summary>
     /// Corresponds to the <c>"smart-card"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("smart-card")]
