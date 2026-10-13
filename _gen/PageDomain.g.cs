@@ -1385,6 +1385,24 @@ public interface IPage
     Task<GetAnnotatedPageContentResult> GetAnnotatedPageContentAsync(bool? includeActionableInformation = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Configures input visualization on the page.
+    /// </summary>
+    /// <param name="clicks">
+    /// Whether to enable click visualization.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SetInputVisualizationResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<SetInputVisualizationResult> SetInputVisualizationAsync(bool? clicks = null, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// 
     /// </summary>
     /// <remarks>
@@ -2206,6 +2224,13 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
         return await ExecuteCommandAsync("Page.getAnnotatedPageContent", @params, JsonContext.GetAnnotatedPageContentCommandParameters, JsonContext.GetAnnotatedPageContentResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<SetInputVisualizationResult> SetInputVisualizationAsync(bool? clicks = null, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new SetInputVisualizationCommandParameters(Clicks: clicks);
+        return await ExecuteCommandAsync("Page.setInputVisualization", @params, JsonContext.SetInputVisualizationCommandParameters, JsonContext.SetInputVisualizationResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public IEventSource<DomContentEventFiredEventArgs> DomContentEventFired => CreateCdpEventSource(PageDomainEvent.DomContentEventFired);
     public IEventSource<FileChooserOpenedEventArgs> FileChooserOpened => CreateCdpEventSource(PageDomainEvent.FileChooserOpened);
     public IEventSource<FrameAttachedEventArgs> FrameAttached => CreateCdpEventSource(PageDomainEvent.FrameAttached);
@@ -2910,6 +2935,14 @@ internal sealed record GetAnnotatedPageContentCommandParameters(bool? IncludeAct
 /// components/optimization_guide/proto/features/common_quality_data.proto (Encoded as a base64 string when passed over JSON)
 /// </param>
 public sealed record GetAnnotatedPageContentResult(string Content) : EmptyResult;
+
+
+internal sealed record SetInputVisualizationCommandParameters(bool? Clicks) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IPage.SetInputVisualizationAsync"/> command.
+/// </summary>
+public sealed record SetInputVisualizationResult() : EmptyResult;
 
 
 /// <summary>
@@ -6361,6 +6394,8 @@ public enum NavigatedWithinDocumentNavigationType
 [JsonSerializable(typeof(SetPrerenderingAllowedResult), TypeInfoPropertyName = "SetPrerenderingAllowedResult")]
 [JsonSerializable(typeof(GetAnnotatedPageContentCommandParameters), TypeInfoPropertyName = "GetAnnotatedPageContentCommandParameters")]
 [JsonSerializable(typeof(GetAnnotatedPageContentResult), TypeInfoPropertyName = "GetAnnotatedPageContentResult")]
+[JsonSerializable(typeof(SetInputVisualizationCommandParameters), TypeInfoPropertyName = "SetInputVisualizationCommandParameters")]
+[JsonSerializable(typeof(SetInputVisualizationResult), TypeInfoPropertyName = "SetInputVisualizationResult")]
 [JsonSerializable(typeof(CdpEventArgs<DomContentEventFiredEventArgs>), TypeInfoPropertyName = "DomContentEventFiredCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<FileChooserOpenedEventArgs>), TypeInfoPropertyName = "FileChooserOpenedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<FrameAttachedEventArgs>), TypeInfoPropertyName = "FrameAttachedCdpEventArgs")]
