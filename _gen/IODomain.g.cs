@@ -66,6 +66,7 @@ public interface IIO
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ResolveBlobResult"/>.
     /// </returns>
+    [global::System.Obsolete]
     Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default);
 
 }
@@ -86,6 +87,7 @@ internal sealed class IODomain(CdpModule cdp) : global::Selenium.WebDriver.BiDi.
         return await ExecuteCommandAsync("IO.read", @params, JsonContext.ReadCommandParameters, JsonContext.ReadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    [global::System.Obsolete]
     public async Task<ResolveBlobResult> ResolveBlobAsync(Runtime.RemoteObjectId objectId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new ResolveBlobCommandParameters(ObjectId: objectId);
