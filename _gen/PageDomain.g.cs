@@ -3921,6 +3921,11 @@ public enum PermissionsPolicyFeature
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("translator")]
     Translator,
     /// <summary>
+    /// Corresponds to the <c>"unbounded-element"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unbounded-element")]
+    UnboundedElement,
+    /// <summary>
     /// Corresponds to the <c>"unload"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("unload")]
