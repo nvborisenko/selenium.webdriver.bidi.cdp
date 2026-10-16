@@ -6198,6 +6198,11 @@ public enum RefreshEventDetailsRefreshResult
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InScopeRefreshNotYetNeeded")]
     InScopeRefreshNotYetNeeded,
+    /// <summary>
+    /// Corresponds to the <c>"Canceled"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Canceled")]
+    Canceled,
 }
 
 /// <summary>
