@@ -14,6 +14,7 @@ public interface IAutofill
     /// <summary>
     /// Trigger autofill on a form identified by the fieldId.
     /// If the field and related form cannot be autofilled, returns an error.
+    /// Returns once the values have been applied to the form fields.
     /// </summary>
     /// <param name="fieldId">
     /// Identifies a field that serves as an anchor for autofill.
