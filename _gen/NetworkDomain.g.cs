@@ -1129,7 +1129,8 @@ public interface INetwork
     /// Event args (<see cref="DirectUDPSocketJoinedMulticastGroupEventArgs"/>):
     /// <list type="bullet">
     /// <item><description><b>Identifier</b></description></item>
-    /// <item><description><b>IPAddress</b></description></item>
+    /// <item><description><b>IPAddress</b> - Multicast group address.</description></item>
+    /// <item><description><b>SourceAddress</b> - Source address of a source-specific multicast (SSM) membership. Absent for any-source multicast (ASM) memberships.</description></item>
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -1142,7 +1143,8 @@ public interface INetwork
     /// Event args (<see cref="DirectUDPSocketLeftMulticastGroupEventArgs"/>):
     /// <list type="bullet">
     /// <item><description><b>Identifier</b></description></item>
-    /// <item><description><b>IPAddress</b></description></item>
+    /// <item><description><b>IPAddress</b> - Multicast group address.</description></item>
+    /// <item><description><b>SourceAddress</b> - Source address of a source-specific multicast (SSM) membership. Absent for any-source multicast (ASM) memberships.</description></item>
     /// </list>
     /// </remarks>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -2437,16 +2439,26 @@ public sealed record DirectTCPSocketChunkReceivedEventArgs(RequestId Identifier,
 /// <param name="Identifier">
 /// </param>
 /// <param name="IPAddress">
+/// Multicast group address.
 /// </param>
-public sealed record DirectUDPSocketJoinedMulticastGroupEventArgs(RequestId Identifier, string IPAddress) : OpenQA.Selenium.BiDi.EventArgs;
+/// <param name="SourceAddress">
+/// Source address of a source-specific multicast (SSM) membership. Absent
+/// for any-source multicast (ASM) memberships.
+/// </param>
+public sealed record DirectUDPSocketJoinedMulticastGroupEventArgs(RequestId Identifier, string IPAddress, string? SourceAddress = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// </summary>
 /// <param name="Identifier">
 /// </param>
 /// <param name="IPAddress">
+/// Multicast group address.
 /// </param>
-public sealed record DirectUDPSocketLeftMulticastGroupEventArgs(RequestId Identifier, string IPAddress) : OpenQA.Selenium.BiDi.EventArgs;
+/// <param name="SourceAddress">
+/// Source address of a source-specific multicast (SSM) membership. Absent
+/// for any-source multicast (ASM) memberships.
+/// </param>
+public sealed record DirectUDPSocketLeftMulticastGroupEventArgs(RequestId Identifier, string IPAddress, string? SourceAddress = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Fired upon direct_socket.UDPSocket creation.
