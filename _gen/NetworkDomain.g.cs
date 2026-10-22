@@ -5743,6 +5743,11 @@ public enum DeviceBoundSessionFetchResult
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AttestationSigningError")]
     AttestationSigningError,
+    /// <summary>
+    /// Corresponds to the <c>"FederatedRegistrationRedirected"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedRegistrationRedirected")]
+    FederatedRegistrationRedirected,
 }
 
 /// <summary>
