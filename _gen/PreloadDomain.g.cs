@@ -821,6 +821,11 @@ public enum PrerenderFinalStatus
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossDocumentRestart")]
     CrossDocumentRestart,
+    /// <summary>
+    /// Corresponds to the <c>"PrefetchFailedCrossOriginSubframe"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchFailedCrossOriginSubframe")]
+    PrefetchFailedCrossOriginSubframe,
 }
 
 /// <summary>
