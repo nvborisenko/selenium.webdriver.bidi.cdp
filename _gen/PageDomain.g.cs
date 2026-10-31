@@ -1084,6 +1084,9 @@ public interface IPage
     /// <param name="frameRate">
     /// Maximum frame rate in frames per second.
     /// </param>
+    /// <param name="captureArea">
+    /// The area to record. Defaults to <b>target</b>.
+    /// </param>
     /// <param name="session">
     /// Optional CDP session override.
     /// </param>
@@ -1094,7 +1097,7 @@ public interface IPage
     /// A task representing the asynchronous operation, containing a <see cref="StartScreenRecordingResult"/>.
     /// </returns>
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = null, long? maxWidth = null, long? maxHeight = null, long? frameRate = null, string? session = null, CancellationToken cancellationToken = default);
+    Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = null, long? maxWidth = null, long? maxHeight = null, long? frameRate = null, StartScreenRecordingCaptureArea? captureArea = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Stops screencast video recording.
@@ -2109,9 +2112,9 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = null, long? maxWidth = null, long? maxHeight = null, long? frameRate = null, string? session = null, CancellationToken cancellationToken = default)
+    public async Task<StartScreenRecordingResult> StartScreenRecordingAsync(bool? audio = null, long? maxWidth = null, long? maxHeight = null, long? frameRate = null, StartScreenRecordingCaptureArea? captureArea = null, string? session = null, CancellationToken cancellationToken = default)
     {
-        var @params = new StartScreenRecordingCommandParameters(Audio: audio, MaxWidth: maxWidth, MaxHeight: maxHeight, FrameRate: frameRate);
+        var @params = new StartScreenRecordingCommandParameters(Audio: audio, MaxWidth: maxWidth, MaxHeight: maxHeight, FrameRate: frameRate, CaptureArea: captureArea);
         return await ExecuteCommandAsync("Page.startScreenRecording", @params, JsonContext.StartScreenRecordingCommandParameters, JsonContext.StartScreenRecordingResult, session, cancellationToken).ConfigureAwait(false);
     }
 
@@ -2790,7 +2793,7 @@ internal sealed record StartScreencastCommandParameters(StartScreencastFormat? F
 public sealed record StartScreencastResult() : EmptyResult;
 
 
-internal sealed record StartScreenRecordingCommandParameters(bool? Audio, long? MaxWidth, long? MaxHeight, long? FrameRate) : Parameters;
+internal sealed record StartScreenRecordingCommandParameters(bool? Audio, long? MaxWidth, long? MaxHeight, long? FrameRate, StartScreenRecordingCaptureArea? CaptureArea) : Parameters;
 
 /// <summary>
 /// Result of the <see cref="IPage.StartScreenRecordingAsync"/> command.
@@ -6069,6 +6072,23 @@ public enum StartScreencastFormat
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("png")]
     Png,
+}
+
+/// <summary>
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.JsonStringEnumConverter<StartScreenRecordingCaptureArea>))]
+public enum StartScreenRecordingCaptureArea
+{
+    /// <summary>
+    /// Corresponds to the <c>"target"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("target")]
+    Target,
+    /// <summary>
+    /// Corresponds to the <c>"browserWindow"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("browserWindow")]
+    BrowserWindow,
 }
 
 /// <summary>
