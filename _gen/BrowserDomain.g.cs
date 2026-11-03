@@ -1132,11 +1132,6 @@ public enum PermissionType
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("storageAccess")]
     StorageAccess,
     /// <summary>
-    /// Corresponds to the <c>"topLevelStorageAccess"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("topLevelStorageAccess")]
-    TopLevelStorageAccess,
-    /// <summary>
     /// Corresponds to the <c>"videoCapture"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("videoCapture")]

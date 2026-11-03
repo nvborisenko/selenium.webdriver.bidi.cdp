@@ -3489,11 +3489,6 @@ public enum PermissionsPolicyFeature
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("bluetooth")]
     Bluetooth,
     /// <summary>
-    /// Corresponds to the <c>"browsing-topics"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("browsing-topics")]
-    BrowsingTopics,
-    /// <summary>
     /// Corresponds to the <c>"camera"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("camera")]
@@ -3758,11 +3753,6 @@ public enum PermissionsPolicyFeature
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("idle-detection")]
     IdleDetection,
-    /// <summary>
-    /// Corresponds to the <c>"interest-cohort"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("interest-cohort")]
-    InterestCohort,
     /// <summary>
     /// Corresponds to the <c>"keyboard-map"</c> wire value.
     /// </summary>

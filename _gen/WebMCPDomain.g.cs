@@ -107,10 +107,11 @@ public interface IWebMCP
     /// <remarks>
     /// Event args (<see cref="ToolInvokedEventArgs"/>):
     /// <list type="bullet">
-    /// <item><description><b>ToolName</b> - Name of the tool to invoke.</description></item>
     /// <item><description><b>FrameId</b> - Frame id</description></item>
     /// <item><description><b>InvocationId</b> - Invocation identifier.</description></item>
     /// <item><description><b>Input</b> - The input parameters used for the invocation.</description></item>
+    /// <item><description><b>ToolName</b> - Name of the tool to invoke. Missing if the tool was invoked by its identifier, but could not be found (e.g., it was already unregistered), so its name could not be recovered.</description></item>
+    /// <item><description><b>ToolId</b> - Identifier of the tool to invoke. Missing if the tool was invoked by name, but could not be found, so its identifier could not be recovered.</description></item>
     /// </list>
     /// </remarks>
     IEventSource<ToolInvokedEventArgs> ToolInvoked { get; }
@@ -221,9 +222,6 @@ public sealed record ToolsRemovedEventArgs(ImmutableArray<RemovedTool> Tools) : 
 /// <summary>
 /// Event fired when a tool invocation starts.
 /// </summary>
-/// <param name="ToolName">
-/// Name of the tool to invoke.
-/// </param>
 /// <param name="FrameId">
 /// Frame id
 /// </param>
@@ -233,7 +231,15 @@ public sealed record ToolsRemovedEventArgs(ImmutableArray<RemovedTool> Tools) : 
 /// <param name="Input">
 /// The input parameters used for the invocation.
 /// </param>
-public sealed record ToolInvokedEventArgs(string ToolName, Page.FrameId FrameId, string InvocationId, string Input) : OpenQA.Selenium.BiDi.EventArgs;
+/// <param name="ToolName">
+/// Name of the tool to invoke. Missing if the tool was invoked by its identifier, but could not be found (e.g.,
+/// it was already unregistered), so its name could not be recovered.
+/// </param>
+/// <param name="ToolId">
+/// Identifier of the tool to invoke. Missing if the tool was invoked by name, but could not be found, so its
+/// identifier could not be recovered.
+/// </param>
+public sealed record ToolInvokedEventArgs(Page.FrameId FrameId, string InvocationId, string Input, string? ToolName = null, ToolId? ToolId = null) : OpenQA.Selenium.BiDi.EventArgs;
 
 /// <summary>
 /// Event fired when a tool invocation completes or fails.
@@ -311,8 +317,22 @@ public enum InvocationStatus
 }
 
 /// <summary>
+/// Unique identifier of a registered tool. A new identifier is created every time a tool is registered, so a tool that
+/// is unregistered and then registered again under the same name gets a different identifier. Clients should treat it
+/// as an opaque string.
+/// </summary>
+[global::System.Text.Json.Serialization.JsonConverter(typeof(Json.StringRemoteIdConverter<ToolId>))]
+public record ToolId : IStringRemoteId
+{
+    string IStringRemoteId.Id { get; init; } = null!;
+}
+
+/// <summary>
 /// Definition of a tool that can be invoked.
 /// </summary>
+/// <param name="ToolId">
+/// Tool identifier.
+/// </param>
 /// <param name="Name">
 /// Tool name.
 /// </param>
@@ -322,12 +342,17 @@ public enum InvocationStatus
 /// <param name="FrameId">
 /// Frame identifier associated with the tool registration.
 /// </param>
-public sealed record Tool(string Name, string Description, Page.FrameId FrameId)
+public sealed record Tool(ToolId ToolId, string Name, string Description, Page.FrameId FrameId)
 {
     /// <summary>
     /// Schema for the tool's input parameters.
     /// </summary>
     public global::System.Text.Json.JsonElement? InputSchema { get; init; }
+
+    /// <summary>
+    /// Schema for the tool's output structure.
+    /// </summary>
+    public global::System.Text.Json.JsonElement? OutputSchema { get; init; }
 
     /// <summary>
     /// Optional annotations for the tool.
@@ -348,13 +373,16 @@ public sealed record Tool(string Name, string Description, Page.FrameId FrameId)
 /// <summary>
 /// Definition of a tool that was removed.
 /// </summary>
+/// <param name="ToolId">
+/// Identifier of the removed tool.
+/// </param>
 /// <param name="Name">
 /// Tool name.
 /// </param>
 /// <param name="FrameId">
 /// Frame identifier associated with the tool registration.
 /// </param>
-public sealed record RemovedTool(string Name, Page.FrameId FrameId)
+public sealed record RemovedTool(ToolId ToolId, string Name, Page.FrameId FrameId)
 {
 }
 
@@ -372,6 +400,7 @@ public sealed record RemovedTool(string Name, Page.FrameId FrameId)
 [JsonSerializable(typeof(CdpEventArgs<ToolRespondedEventArgs>), TypeInfoPropertyName = "ToolRespondedCdpEventArgs")]
 [JsonSerializable(typeof(Annotation), TypeInfoPropertyName = "WebMCPAnnotation")]
 [JsonSerializable(typeof(InvocationStatus), TypeInfoPropertyName = "WebMCPInvocationStatus")]
+[JsonSerializable(typeof(ToolId), TypeInfoPropertyName = "WebMCPToolId")]
 [JsonSerializable(typeof(Tool), TypeInfoPropertyName = "WebMCPTool")]
 [JsonSerializable(typeof(RemovedTool), TypeInfoPropertyName = "WebMCPRemovedTool")]
 [JsonSerializable(typeof(ImmutableArray<Tool>), TypeInfoPropertyName = "ImmutableArrayWebMCPTool")]
