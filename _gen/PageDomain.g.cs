@@ -3869,6 +3869,11 @@ public enum PermissionsPolicyFeature
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("screen-wake-lock")]
     ScreenWakeLock,
     /// <summary>
+    /// Corresponds to the <c>"semantic-embedder"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("semantic-embedder")]
+    SemanticEmbedder,
+    /// <summary>
     /// Corresponds to the <c>"serial"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("serial")]
