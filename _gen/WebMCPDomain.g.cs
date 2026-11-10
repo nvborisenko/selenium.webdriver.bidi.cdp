@@ -40,16 +40,23 @@ public interface IWebMCP
     Task<DisableResult> DisableAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Invokes a registered tool.
+    /// Invokes a registered tool. Exactly one of <b>toolId</b> and <b>toolName</b> must be specified; the command fails if both or
+    /// neither are.
     /// </summary>
     /// <param name="frameId">
     /// Frame in which to invoke the tool.
     /// </param>
-    /// <param name="toolName">
-    /// Name of the tool to invoke.
-    /// </param>
     /// <param name="input">
     /// Input parameters for the tool, matching the tool's inputSchema.
+    /// </param>
+    /// <param name="toolId">
+    /// Identifier of the tool to invoke, as reported in <b>Tool.toolId</b>. Invokes exactly that tool, and fails if it is no
+    /// longer registered, even if a different tool has since been registered under the same name.
+    /// </param>
+    /// <param name="toolName">
+    /// Name of the tool to invoke. Deprecated: invokes whichever tool is registered under this name when the command
+    /// is handled, which may not be the tool the client observed if the page has since replaced it. Use <b>toolId</b>
+    /// instead.
     /// </param>
     /// <param name="session">
     /// Optional CDP session override.
@@ -60,7 +67,7 @@ public interface IWebMCP
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="InvokeToolResult"/>.
     /// </returns>
-    Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = null, CancellationToken cancellationToken = default);
+    Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, global::System.Text.Json.JsonElement input, ToolId? toolId = null, string? toolName = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cancels a pending tool invocation.
@@ -150,9 +157,9 @@ internal sealed class WebMCPDomain(CdpModule cdp) : global::Selenium.WebDriver.B
         return await ExecuteCommandAsync("WebMCP.disable", @params, JsonContext.DisableCommandParameters, JsonContext.DisableResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, string toolName, global::System.Text.Json.JsonElement input, string? session = null, CancellationToken cancellationToken = default)
+    public async Task<InvokeToolResult> InvokeToolAsync(Page.FrameId frameId, global::System.Text.Json.JsonElement input, ToolId? toolId = null, string? toolName = null, string? session = null, CancellationToken cancellationToken = default)
     {
-        var @params = new InvokeToolCommandParameters(FrameId: frameId, ToolName: toolName, Input: input);
+        var @params = new InvokeToolCommandParameters(FrameId: frameId, ToolId: toolId, ToolName: toolName, Input: input);
         return await ExecuteCommandAsync("WebMCP.invokeTool", @params, JsonContext.InvokeToolCommandParameters, JsonContext.InvokeToolResult, session, cancellationToken).ConfigureAwait(false);
     }
 
@@ -184,7 +191,7 @@ internal sealed record DisableCommandParameters() : Parameters;
 public sealed record DisableResult() : EmptyResult;
 
 
-internal sealed record InvokeToolCommandParameters(Page.FrameId FrameId, string ToolName, global::System.Text.Json.JsonElement Input) : Parameters;
+internal sealed record InvokeToolCommandParameters(Page.FrameId FrameId, ToolId? ToolId, string? ToolName, global::System.Text.Json.JsonElement Input) : Parameters;
 
 /// <summary>
 /// Result of the <see cref="IWebMCP.InvokeToolAsync"/> command.
