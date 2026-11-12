@@ -398,23 +398,6 @@ public interface IBrowser
     Task<ExecuteBrowserCommandResult> ExecuteBrowserCommandAsync(BrowserCommandId commandId, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Allows a site to use privacy sandbox features that require enrollment
-    /// without the site actually being enrolled. Only supported on page targets.
-    /// </summary>
-    /// <param name="url">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="AddPrivacySandboxEnrollmentOverrideResult"/>.
-    /// </returns>
-    Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = null, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Gets the current globally-applied privacy control status
     /// See https://www.w3.org/TR/gpc/#get-global-privacy-control
     /// </summary>
@@ -614,12 +597,6 @@ internal sealed class BrowserDomain(CdpModule cdp) : global::Selenium.WebDriver.
     {
         var @params = new ExecuteBrowserCommandCommandParameters(CommandId: commandId);
         return await ExecuteCommandAsync("Browser.executeBrowserCommand", @params, JsonContext.ExecuteBrowserCommandCommandParameters, JsonContext.ExecuteBrowserCommandResult, session, cancellationToken).ConfigureAwait(false);
-    }
-
-    public async Task<AddPrivacySandboxEnrollmentOverrideResult> AddPrivacySandboxEnrollmentOverrideAsync(string url, string? session = null, CancellationToken cancellationToken = default)
-    {
-        var @params = new AddPrivacySandboxEnrollmentOverrideCommandParameters(Url: url);
-        return await ExecuteCommandAsync("Browser.addPrivacySandboxEnrollmentOverride", @params, JsonContext.AddPrivacySandboxEnrollmentOverrideCommandParameters, JsonContext.AddPrivacySandboxEnrollmentOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
     [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
@@ -827,14 +804,6 @@ internal sealed record ExecuteBrowserCommandCommandParameters(BrowserCommandId C
 /// Result of the <see cref="IBrowser.ExecuteBrowserCommandAsync"/> command.
 /// </summary>
 public sealed record ExecuteBrowserCommandResult() : EmptyResult;
-
-
-internal sealed record AddPrivacySandboxEnrollmentOverrideCommandParameters(string Url) : Parameters;
-
-/// <summary>
-/// Result of the <see cref="IBrowser.AddPrivacySandboxEnrollmentOverrideAsync"/> command.
-/// </summary>
-public sealed record AddPrivacySandboxEnrollmentOverrideResult() : EmptyResult;
 
 
 internal sealed record GetGlobalPrivacyControlCommandParameters() : Parameters;
@@ -1372,8 +1341,6 @@ public enum DownloadProgressState
 [JsonSerializable(typeof(SetDockTileResult), TypeInfoPropertyName = "SetDockTileResult")]
 [JsonSerializable(typeof(ExecuteBrowserCommandCommandParameters), TypeInfoPropertyName = "ExecuteBrowserCommandCommandParameters")]
 [JsonSerializable(typeof(ExecuteBrowserCommandResult), TypeInfoPropertyName = "ExecuteBrowserCommandResult")]
-[JsonSerializable(typeof(AddPrivacySandboxEnrollmentOverrideCommandParameters), TypeInfoPropertyName = "AddPrivacySandboxEnrollmentOverrideCommandParameters")]
-[JsonSerializable(typeof(AddPrivacySandboxEnrollmentOverrideResult), TypeInfoPropertyName = "AddPrivacySandboxEnrollmentOverrideResult")]
 [JsonSerializable(typeof(GetGlobalPrivacyControlCommandParameters), TypeInfoPropertyName = "GetGlobalPrivacyControlCommandParameters")]
 [JsonSerializable(typeof(GetGlobalPrivacyControlResult), TypeInfoPropertyName = "GetGlobalPrivacyControlResult")]
 [JsonSerializable(typeof(SetGlobalPrivacyControlCommandParameters), TypeInfoPropertyName = "SetGlobalPrivacyControlCommandParameters")]
