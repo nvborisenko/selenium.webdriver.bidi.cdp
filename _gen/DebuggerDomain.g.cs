@@ -136,6 +136,26 @@ public interface IDebugger
     Task<GetPossibleBreakpointsResult> GetPossibleBreakpointsAsync(Location start, Location? end = null, bool? restrictToFunction = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Returns the current scope chain of the given call frame. Unlike the scope chain reported
+    /// with the <b>paused</b> event, it reflects changes made to variables since then (e.g. via
+    /// <b>evaluateOnCallFrame</b> or <b>setVariableValue</b>).
+    /// </summary>
+    /// <param name="callFrameId">
+    /// Call frame identifier to get the scope chain for.
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="GetScopeChainResult"/>.
+    /// </returns>
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    Task<GetScopeChainResult> GetScopeChainAsync(CallFrameId callFrameId, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Returns source for the script with given id.
     /// </summary>
     /// <param name="scriptId">
@@ -851,6 +871,13 @@ internal sealed class DebuggerDomain(CdpModule cdp) : global::Selenium.WebDriver
         return await ExecuteCommandAsync("Debugger.getPossibleBreakpoints", @params, JsonContext.GetPossibleBreakpointsCommandParameters, JsonContext.GetPossibleBreakpointsResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
+    public async Task<GetScopeChainResult> GetScopeChainAsync(CallFrameId callFrameId, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new GetScopeChainCommandParameters(CallFrameId: callFrameId);
+        return await ExecuteCommandAsync("Debugger.getScopeChain", @params, JsonContext.GetScopeChainCommandParameters, JsonContext.GetScopeChainResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public async Task<GetScriptSourceResult> GetScriptSourceAsync(Runtime.ScriptId scriptId, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new GetScriptSourceCommandParameters(ScriptId: scriptId);
@@ -1089,6 +1116,17 @@ internal sealed record GetPossibleBreakpointsCommandParameters(Location Start, L
 /// List of the possible breakpoint locations.
 /// </param>
 public sealed record GetPossibleBreakpointsResult(ImmutableArray<BreakLocation> Locations) : EmptyResult;
+
+
+internal sealed record GetScopeChainCommandParameters(CallFrameId CallFrameId) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IDebugger.GetScopeChainAsync"/> command.
+/// </summary>
+/// <param name="ScopeChain">
+/// Scope chain for the call frame.
+/// </param>
+public sealed record GetScopeChainResult(ImmutableArray<Scope> ScopeChain) : EmptyResult;
 
 
 internal sealed record GetScriptSourceCommandParameters(Runtime.ScriptId ScriptId) : Parameters;
@@ -2100,6 +2138,8 @@ public enum DebugSymbolsType
 [JsonSerializable(typeof(EvaluateOnCallFrameResult), TypeInfoPropertyName = "EvaluateOnCallFrameResult")]
 [JsonSerializable(typeof(GetPossibleBreakpointsCommandParameters), TypeInfoPropertyName = "GetPossibleBreakpointsCommandParameters")]
 [JsonSerializable(typeof(GetPossibleBreakpointsResult), TypeInfoPropertyName = "GetPossibleBreakpointsResult")]
+[JsonSerializable(typeof(GetScopeChainCommandParameters), TypeInfoPropertyName = "GetScopeChainCommandParameters")]
+[JsonSerializable(typeof(GetScopeChainResult), TypeInfoPropertyName = "GetScopeChainResult")]
 [JsonSerializable(typeof(GetScriptSourceCommandParameters), TypeInfoPropertyName = "GetScriptSourceCommandParameters")]
 [JsonSerializable(typeof(GetScriptSourceResult), TypeInfoPropertyName = "GetScriptSourceResult")]
 [JsonSerializable(typeof(DisassembleWasmModuleCommandParameters), TypeInfoPropertyName = "DisassembleWasmModuleCommandParameters")]
@@ -2175,6 +2215,7 @@ public enum DebugSymbolsType
 [JsonSerializable(typeof(DebugSymbols), TypeInfoPropertyName = "DebuggerDebugSymbols")]
 [JsonSerializable(typeof(ResolvedBreakpoint), TypeInfoPropertyName = "DebuggerResolvedBreakpoint")]
 [JsonSerializable(typeof(ImmutableArray<BreakLocation>), TypeInfoPropertyName = "ImmutableArrayDebuggerBreakLocation")]
+[JsonSerializable(typeof(ImmutableArray<Scope>), TypeInfoPropertyName = "ImmutableArrayDebuggerScope")]
 [JsonSerializable(typeof(ImmutableArray<CallFrame>), TypeInfoPropertyName = "ImmutableArrayDebuggerCallFrame")]
 [JsonSerializable(typeof(ImmutableArray<SearchMatch>), TypeInfoPropertyName = "ImmutableArrayDebuggerSearchMatch")]
 [JsonSerializable(typeof(ImmutableArray<ScriptPosition>), TypeInfoPropertyName = "ImmutableArrayDebuggerScriptPosition")]
@@ -2182,7 +2223,6 @@ public enum DebugSymbolsType
 [JsonSerializable(typeof(ImmutableArray<LocationRange>), TypeInfoPropertyName = "ImmutableArrayDebuggerLocationRange")]
 [JsonSerializable(typeof(ImmutableArray<Debugger.DebugSymbols>), TypeInfoPropertyName = "ImmutableArrayDebuggerDebugSymbols")]
 [JsonSerializable(typeof(ImmutableArray<ResolvedBreakpoint>), TypeInfoPropertyName = "ImmutableArrayDebuggerResolvedBreakpoint")]
-[JsonSerializable(typeof(ImmutableArray<Scope>), TypeInfoPropertyName = "ImmutableArrayDebuggerScope")]
 [JsonSourceGenerationOptions(
 PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
