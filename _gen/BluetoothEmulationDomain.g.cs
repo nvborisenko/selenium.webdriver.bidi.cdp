@@ -301,6 +301,26 @@ public interface IBluetoothEmulation
     Task<SimulateGATTDisconnectionResult> SimulateGATTDisconnectionAsync(string address, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Simulates the ATT MTU exchange procedure from Bluetooth Core Specification
+    /// Vol 3 Part F 3.4.2 establishing |mtu| for the connection to the peripheral
+    /// with |address|.
+    /// </summary>
+    /// <param name="address">
+    /// </param>
+    /// <param name="mtu">
+    /// </param>
+    /// <param name="session">
+    /// Optional CDP session override.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation, containing a <see cref="SimulateGATTMtuChangeResult"/>.
+    /// </returns>
+    Task<SimulateGATTMtuChangeResult> SimulateGATTMtuChangeAsync(string address, long mtu, string? session = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Event for when a GATT operation of |type| to the peripheral with |address|
     /// happened.
     /// </summary>
@@ -441,6 +461,12 @@ internal sealed class BluetoothEmulationDomain(CdpModule cdp) : global::Selenium
         return await ExecuteCommandAsync("BluetoothEmulation.simulateGATTDisconnection", @params, JsonContext.SimulateGATTDisconnectionCommandParameters, JsonContext.SimulateGATTDisconnectionResult, session, cancellationToken).ConfigureAwait(false);
     }
 
+    public async Task<SimulateGATTMtuChangeResult> SimulateGATTMtuChangeAsync(string address, long mtu, string? session = null, CancellationToken cancellationToken = default)
+    {
+        var @params = new SimulateGATTMtuChangeCommandParameters(Address: address, Mtu: mtu);
+        return await ExecuteCommandAsync("BluetoothEmulation.simulateGATTMtuChange", @params, JsonContext.SimulateGATTMtuChangeCommandParameters, JsonContext.SimulateGATTMtuChangeResult, session, cancellationToken).ConfigureAwait(false);
+    }
+
     public IEventSource<GattOperationReceivedEventArgs> GattOperationReceived => CreateCdpEventSource(BluetoothEmulationDomainEvent.GattOperationReceived);
     public IEventSource<CharacteristicOperationReceivedEventArgs> CharacteristicOperationReceived => CreateCdpEventSource(BluetoothEmulationDomainEvent.CharacteristicOperationReceived);
     public IEventSource<DescriptorOperationReceivedEventArgs> DescriptorOperationReceived => CreateCdpEventSource(BluetoothEmulationDomainEvent.DescriptorOperationReceived);
@@ -573,6 +599,14 @@ internal sealed record SimulateGATTDisconnectionCommandParameters(string Address
 /// Result of the <see cref="IBluetoothEmulation.SimulateGATTDisconnectionAsync"/> command.
 /// </summary>
 public sealed record SimulateGATTDisconnectionResult() : EmptyResult;
+
+
+internal sealed record SimulateGATTMtuChangeCommandParameters(string Address, long Mtu) : Parameters;
+
+/// <summary>
+/// Result of the <see cref="IBluetoothEmulation.SimulateGATTMtuChangeAsync"/> command.
+/// </summary>
+public sealed record SimulateGATTMtuChangeResult() : EmptyResult;
 
 
 /// <summary>
@@ -850,6 +884,8 @@ public sealed record CharacteristicProperties()
 [JsonSerializable(typeof(RemoveDescriptorResult), TypeInfoPropertyName = "RemoveDescriptorResult")]
 [JsonSerializable(typeof(SimulateGATTDisconnectionCommandParameters), TypeInfoPropertyName = "SimulateGATTDisconnectionCommandParameters")]
 [JsonSerializable(typeof(SimulateGATTDisconnectionResult), TypeInfoPropertyName = "SimulateGATTDisconnectionResult")]
+[JsonSerializable(typeof(SimulateGATTMtuChangeCommandParameters), TypeInfoPropertyName = "SimulateGATTMtuChangeCommandParameters")]
+[JsonSerializable(typeof(SimulateGATTMtuChangeResult), TypeInfoPropertyName = "SimulateGATTMtuChangeResult")]
 [JsonSerializable(typeof(CdpEventArgs<GattOperationReceivedEventArgs>), TypeInfoPropertyName = "GattOperationReceivedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<CharacteristicOperationReceivedEventArgs>), TypeInfoPropertyName = "CharacteristicOperationReceivedCdpEventArgs")]
 [JsonSerializable(typeof(CdpEventArgs<DescriptorOperationReceivedEventArgs>), TypeInfoPropertyName = "DescriptorOperationReceivedCdpEventArgs")]
