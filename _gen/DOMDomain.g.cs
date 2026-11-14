@@ -2889,11 +2889,6 @@ public enum PseudoType
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overscroll-area-parent")]
     OverscrollAreaParent,
     /// <summary>
-    /// Corresponds to the <c>"overscroll-backdrop"</c> wire value.
-    /// </summary>
-    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("overscroll-backdrop")]
-    OverscrollBackdrop,
-    /// <summary>
     /// Corresponds to the <c>"skeleton"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("skeleton")]
