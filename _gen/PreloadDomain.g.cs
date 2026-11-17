@@ -826,6 +826,11 @@ public enum PrerenderFinalStatus
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("PrefetchFailedCrossOriginSubframe")]
     PrefetchFailedCrossOriginSubframe,
+    /// <summary>
+    /// Corresponds to the <c>"UnexpectedMainFrameNavigation"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnexpectedMainFrameNavigation")]
+    UnexpectedMainFrameNavigation,
 }
 
 /// <summary>
