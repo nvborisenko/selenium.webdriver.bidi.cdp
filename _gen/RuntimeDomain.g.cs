@@ -1280,12 +1280,13 @@ public sealed record RemoteObject(RemoteObjectType Type)
 
     /// <summary>
     /// Remote object value in case of primitive values or JSON values (if it was requested).
+    /// Not set in <b>deep</b> serialization mode, see <b>deepSerializedValue</b>.
     /// </summary>
     public global::System.Text.Json.JsonElement? Value { get; init; }
 
     /// <summary>
     /// Primitive value which can not be JSON-stringified does not have <b>value</b>, but gets this
-    /// property.
+    /// property. Not set in <b>deep</b> serialization mode, see <b>deepSerializedValue</b>.
     /// </summary>
     public UnserializableValue? UnserializableValue { get; init; }
 
