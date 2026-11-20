@@ -5748,6 +5748,11 @@ public enum DeviceBoundSessionFetchResult
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FederatedRegistrationRedirected")]
     FederatedRegistrationRedirected,
+    /// <summary>
+    /// Corresponds to the <c>"CrossSiteRefreshSessionConfig"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("CrossSiteRefreshSessionConfig")]
+    CrossSiteRefreshSessionConfig,
 }
 
 /// <summary>
