@@ -2276,10 +2276,25 @@ public enum ElementAccessibilityIssueReason
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InteractiveContentSummaryDescendant")]
     InteractiveContentSummaryDescendant,
+    /// <summary>
+    /// Corresponds to the <c>"AnchorMenuDescendant"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AnchorMenuDescendant")]
+    AnchorMenuDescendant,
+    /// <summary>
+    /// Corresponds to the <c>"InteractiveContentMenuDescendant"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("InteractiveContentMenuDescendant")]
+    InteractiveContentMenuDescendant,
+    /// <summary>
+    /// Corresponds to the <c>"TextMenuDescendant"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("TextMenuDescendant")]
+    TextMenuDescendant,
 }
 
 /// <summary>
-/// This issue warns about errors in the select or summary element content model.
+/// This issue warns about errors in the select, summary, or menu element content model.
 /// </summary>
 /// <param name="NodeId">
 /// </param>
