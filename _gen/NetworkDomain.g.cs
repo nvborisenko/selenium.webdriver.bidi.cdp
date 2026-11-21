@@ -2816,6 +2816,11 @@ public enum ResourceType
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FedCM")]
     FedCM,
     /// <summary>
+    /// Corresponds to the <c>"EmailVerification"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerification")]
+    EmailVerification,
+    /// <summary>
     /// Corresponds to the <c>"Other"</c> wire value.
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("Other")]
@@ -6070,6 +6075,11 @@ public enum InitiatorType
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("FedCM")]
     FedCM,
+    /// <summary>
+    /// Corresponds to the <c>"EmailVerification"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("EmailVerification")]
+    EmailVerification,
     /// <summary>
     /// Corresponds to the <c>"other"</c> wire value.
     /// </summary>
