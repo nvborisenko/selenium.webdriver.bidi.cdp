@@ -642,6 +642,12 @@ public interface IPage
     /// loader id does not match the provided id. This prevents accidentally
     /// reloading an unintended target in case there's a racing navigation.
     /// </param>
+    /// <param name="checkForRepost">
+    /// If true and the page has POST data, the browser shows the form
+    /// resubmission dialog before the reload. The command returns after the
+    /// user responds to the dialog. If the user cancels the dialog, the
+    /// command returns an error. The default value is false.
+    /// </param>
     /// <param name="session">
     /// Optional CDP session override.
     /// </param>
@@ -651,7 +657,7 @@ public interface IPage
     /// <returns>
     /// A task representing the asynchronous operation, containing a <see cref="ReloadResult"/>.
     /// </returns>
-    Task<ReloadResult> ReloadAsync(bool? ignoreCache = null, string? scriptToEvaluateOnLoad = null, Network.LoaderId? loaderId = null, string? session = null, CancellationToken cancellationToken = default);
+    Task<ReloadResult> ReloadAsync(bool? ignoreCache = null, string? scriptToEvaluateOnLoad = null, Network.LoaderId? loaderId = null, bool? checkForRepost = null, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deprecated, please use removeScriptToEvaluateOnNewDocument instead.
@@ -1978,9 +1984,9 @@ internal sealed class PageDomain(CdpModule cdp) : global::Selenium.WebDriver.BiD
         return await ExecuteCommandAsync("Page.printToPDF", @params, JsonContext.PrintToPDFCommandParameters, JsonContext.PrintToPDFResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    public async Task<ReloadResult> ReloadAsync(bool? ignoreCache = null, string? scriptToEvaluateOnLoad = null, Network.LoaderId? loaderId = null, string? session = null, CancellationToken cancellationToken = default)
+    public async Task<ReloadResult> ReloadAsync(bool? ignoreCache = null, string? scriptToEvaluateOnLoad = null, Network.LoaderId? loaderId = null, bool? checkForRepost = null, string? session = null, CancellationToken cancellationToken = default)
     {
-        var @params = new ReloadCommandParameters(IgnoreCache: ignoreCache, ScriptToEvaluateOnLoad: scriptToEvaluateOnLoad, LoaderId: loaderId);
+        var @params = new ReloadCommandParameters(IgnoreCache: ignoreCache, ScriptToEvaluateOnLoad: scriptToEvaluateOnLoad, LoaderId: loaderId, CheckForRepost: checkForRepost);
         return await ExecuteCommandAsync("Page.reload", @params, JsonContext.ReloadCommandParameters, JsonContext.ReloadResult, session, cancellationToken).ConfigureAwait(false);
     }
 
@@ -2634,7 +2640,7 @@ internal sealed record PrintToPDFCommandParameters(bool? Landscape, bool? Displa
 public sealed record PrintToPDFResult(string Data, IO.StreamHandle? Stream) : EmptyResult;
 
 
-internal sealed record ReloadCommandParameters(bool? IgnoreCache, string? ScriptToEvaluateOnLoad, Network.LoaderId? LoaderId) : Parameters;
+internal sealed record ReloadCommandParameters(bool? IgnoreCache, string? ScriptToEvaluateOnLoad, Network.LoaderId? LoaderId, bool? CheckForRepost) : Parameters;
 
 /// <summary>
 /// Result of the <see cref="IPage.ReloadAsync"/> command.
