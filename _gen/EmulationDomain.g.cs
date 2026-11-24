@@ -160,28 +160,6 @@ public interface IEmulation
     Task<SetSafeAreaInsetsOverrideResult> SetSafeAreaInsetsOverrideAsync(SafeAreaInsets insets, string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Overrides virtual keyboard geometry in CSS pixels, relative to the top-level viewport. The
-    /// provided rect is used for navigator.virtualKeyboard.boundingRect, geometrychange events, and
-    /// env(keyboard-inset-*) values on the inspected frame. The override applies independently of
-    /// navigator.virtualKeyboard.overlaysContent so clients can preview overlay geometry without
-    /// mutating page state. Values are rounded to the nearest CSS pixel. Omitting the rect clears the
-    /// override.
-    /// </summary>
-    /// <param name="keyboardRect">
-    /// </param>
-    /// <param name="session">
-    /// Optional CDP session override.
-    /// </param>
-    /// <param name="cancellationToken">
-    /// A token to cancel the asynchronous operation.
-    /// </param>
-    /// <returns>
-    /// A task representing the asynchronous operation, containing a <see cref="SetVirtualKeyboardGeometryOverrideResult"/>.
-    /// </returns>
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    Task<SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideAsync(DOM.Rect? keyboardRect = null, string? session = null, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
     /// window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
     /// query results).
@@ -1151,13 +1129,6 @@ internal sealed class EmulationDomain(CdpModule cdp) : global::Selenium.WebDrive
         return await ExecuteCommandAsync("Emulation.setSafeAreaInsetsOverride", @params, JsonContext.SetSafeAreaInsetsOverrideCommandParameters, JsonContext.SetSafeAreaInsetsOverrideResult, session, cancellationToken).ConfigureAwait(false);
     }
 
-    [global::System.Diagnostics.CodeAnalysis.Experimental("BIDICDP001")]
-    public async Task<SetVirtualKeyboardGeometryOverrideResult> SetVirtualKeyboardGeometryOverrideAsync(DOM.Rect? keyboardRect = null, string? session = null, CancellationToken cancellationToken = default)
-    {
-        var @params = new SetVirtualKeyboardGeometryOverrideCommandParameters(KeyboardRect: keyboardRect);
-        return await ExecuteCommandAsync("Emulation.setVirtualKeyboardGeometryOverride", @params, JsonContext.SetVirtualKeyboardGeometryOverrideCommandParameters, JsonContext.SetVirtualKeyboardGeometryOverrideResult, session, cancellationToken).ConfigureAwait(false);
-    }
-
     public async Task<SetDeviceMetricsOverrideResult> SetDeviceMetricsOverrideAsync(long width, long height, double deviceScaleFactor, bool mobile, double? scale = null, long? screenWidth = null, long? screenHeight = null, long? positionX = null, long? positionY = null, bool? dontSetVisibleSize = null, ScreenOrientation? screenOrientation = null, Page.Viewport? viewport = null, DisplayFeature? displayFeature = null, DevicePosture? devicePosture = null, SetDeviceMetricsOverrideScrollbarType? scrollbarType = null, bool? screenOrientationLockEmulation = null, SetDeviceMetricsOverrideViewportMeta? viewportMeta = null, SetDeviceMetricsOverrideTextLayoutMode? textLayoutMode = null, string? session = null, CancellationToken cancellationToken = default)
     {
         var @params = new SetDeviceMetricsOverrideCommandParameters(Width: width, Height: height, DeviceScaleFactor: deviceScaleFactor, Mobile: mobile, Scale: scale, ScreenWidth: screenWidth, ScreenHeight: screenHeight, PositionX: positionX, PositionY: positionY, DontSetVisibleSize: dontSetVisibleSize, ScreenOrientation: screenOrientation, Viewport: viewport, DisplayFeature: displayFeature, DevicePosture: devicePosture, ScrollbarType: scrollbarType, ScreenOrientationLockEmulation: screenOrientationLockEmulation, ViewportMeta: viewportMeta, TextLayoutMode: textLayoutMode);
@@ -1501,14 +1472,6 @@ internal sealed record SetSafeAreaInsetsOverrideCommandParameters(SafeAreaInsets
 /// Result of the <see cref="IEmulation.SetSafeAreaInsetsOverrideAsync"/> command.
 /// </summary>
 public sealed record SetSafeAreaInsetsOverrideResult() : EmptyResult;
-
-
-internal sealed record SetVirtualKeyboardGeometryOverrideCommandParameters(DOM.Rect? KeyboardRect) : Parameters;
-
-/// <summary>
-/// Result of the <see cref="IEmulation.SetVirtualKeyboardGeometryOverrideAsync"/> command.
-/// </summary>
-public sealed record SetVirtualKeyboardGeometryOverrideResult() : EmptyResult;
 
 
 internal sealed record SetDeviceMetricsOverrideCommandParameters(long Width, long Height, double DeviceScaleFactor, bool Mobile, double? Scale, long? ScreenWidth, long? ScreenHeight, long? PositionX, long? PositionY, bool? DontSetVisibleSize, ScreenOrientation? ScreenOrientation, Page.Viewport? Viewport, DisplayFeature? DisplayFeature, DevicePosture? DevicePosture, SetDeviceMetricsOverrideScrollbarType? ScrollbarType, bool? ScreenOrientationLockEmulation, SetDeviceMetricsOverrideViewportMeta? ViewportMeta, SetDeviceMetricsOverrideTextLayoutMode? TextLayoutMode) : Parameters;
@@ -2528,8 +2491,6 @@ public enum DevicePostureType
 [JsonSerializable(typeof(SetDefaultBackgroundColorOverrideResult), TypeInfoPropertyName = "SetDefaultBackgroundColorOverrideResult")]
 [JsonSerializable(typeof(SetSafeAreaInsetsOverrideCommandParameters), TypeInfoPropertyName = "SetSafeAreaInsetsOverrideCommandParameters")]
 [JsonSerializable(typeof(SetSafeAreaInsetsOverrideResult), TypeInfoPropertyName = "SetSafeAreaInsetsOverrideResult")]
-[JsonSerializable(typeof(SetVirtualKeyboardGeometryOverrideCommandParameters), TypeInfoPropertyName = "SetVirtualKeyboardGeometryOverrideCommandParameters")]
-[JsonSerializable(typeof(SetVirtualKeyboardGeometryOverrideResult), TypeInfoPropertyName = "SetVirtualKeyboardGeometryOverrideResult")]
 [JsonSerializable(typeof(SetDeviceMetricsOverrideCommandParameters), TypeInfoPropertyName = "SetDeviceMetricsOverrideCommandParameters")]
 [JsonSerializable(typeof(SetDeviceMetricsOverrideResult), TypeInfoPropertyName = "SetDeviceMetricsOverrideResult")]
 [JsonSerializable(typeof(SetDevicePostureOverrideCommandParameters), TypeInfoPropertyName = "SetDevicePostureOverrideCommandParameters")]
