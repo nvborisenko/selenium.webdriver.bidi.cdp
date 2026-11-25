@@ -2672,6 +2672,19 @@ public sealed record LazyLoadImageIssueDetails(DOM.BackendNodeId NodeId, string 
 }
 
 /// <summary>
+/// Details for issues about a page that declares viewport-fit=cover, receives
+/// a non-zero top safe-area inset (e.g. a device cutout or system status bar),
+/// but does not consume env(safe-area-inset-top) anywhere in its CSS while
+/// having DOM content likely to be occluded by that inset.
+/// </summary>
+/// <param name="FrameId">
+/// The frame that triggered the issue.
+/// </param>
+public sealed record ViewportFitCoverMissingSafeAreaInsetTopIssueDetails(Page.FrameId FrameId)
+{
+}
+
+/// <summary>
 /// A unique identifier for the type of issue. Each type may use one of the
 /// optional fields in InspectorIssueDetails to convey more specific
 /// information about the kind of issue.
@@ -2834,6 +2847,11 @@ public enum InspectorIssueCode
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("WebInstallIssue")]
     WebInstallIssue,
+    /// <summary>
+    /// Corresponds to the <c>"ViewportFitCoverMissingSafeAreaInsetTopIssue"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("ViewportFitCoverMissingSafeAreaInsetTopIssue")]
+    ViewportFitCoverMissingSafeAreaInsetTopIssue,
 }
 
 /// <summary>
@@ -2967,6 +2985,10 @@ public sealed record InspectorIssueDetails()
     /// <summary>
     /// </summary>
     public WebInstallIssueDetails? WebInstallIssueDetails { get; init; }
+
+    /// <summary>
+    /// </summary>
+    public ViewportFitCoverMissingSafeAreaInsetTopIssueDetails? ViewportFitCoverMissingSafeAreaInsetTopIssueDetails { get; init; }
 }
 
 /// <summary>
@@ -3091,6 +3113,7 @@ public enum GetEncodedResponseEncoding
 [JsonSerializable(typeof(WebInstallIssueDetails), TypeInfoPropertyName = "AuditsWebInstallIssueDetails")]
 [JsonSerializable(typeof(SelectivePermissionsInterventionIssueDetails), TypeInfoPropertyName = "AuditsSelectivePermissionsInterventionIssueDetails")]
 [JsonSerializable(typeof(LazyLoadImageIssueDetails), TypeInfoPropertyName = "AuditsLazyLoadImageIssueDetails")]
+[JsonSerializable(typeof(ViewportFitCoverMissingSafeAreaInsetTopIssueDetails), TypeInfoPropertyName = "AuditsViewportFitCoverMissingSafeAreaInsetTopIssueDetails")]
 [JsonSerializable(typeof(InspectorIssueCode), TypeInfoPropertyName = "AuditsInspectorIssueCode")]
 [JsonSerializable(typeof(InspectorIssueDetails), TypeInfoPropertyName = "AuditsInspectorIssueDetails")]
 [JsonSerializable(typeof(IssueId), TypeInfoPropertyName = "AuditsIssueId")]
