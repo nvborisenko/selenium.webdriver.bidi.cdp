@@ -831,6 +831,11 @@ public enum PrerenderFinalStatus
     /// </summary>
     [global::System.Text.Json.Serialization.JsonStringEnumMemberName("UnexpectedMainFrameNavigation")]
     UnexpectedMainFrameNavigation,
+    /// <summary>
+    /// Corresponds to the <c>"AudioOutput"</c> wire value.
+    /// </summary>
+    [global::System.Text.Json.Serialization.JsonStringEnumMemberName("AudioOutput")]
+    AudioOutput,
 }
 
 /// <summary>
