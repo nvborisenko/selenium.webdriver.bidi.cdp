@@ -3291,6 +3291,12 @@ public sealed record Request(string Url, string Method, global::System.Collectio
     /// True when the resource request is ad-related.
     /// </summary>
     public bool? IsAdRelated { get; init; }
+
+    /// <summary>
+    /// The provenance of an ad resource request, if it is ad-related and
+    /// provenance is available.
+    /// </summary>
+    public AdProvenance? AdProvenance { get; init; }
 }
 
 /// <summary>
