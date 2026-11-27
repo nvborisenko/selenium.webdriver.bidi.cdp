@@ -210,15 +210,21 @@ public interface IBrowser
     Task<GetBrowserCommandLineResult> GetBrowserCommandLineAsync(string? session = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Adds or updates a mock camera in the shared video capture device list for
+    /// Adds a mock camera in the shared video capture device list for
     /// test automation. The mock camera is not scoped to a particular page or
     /// frame and is removed when the DevTools session that created it disconnects.
+    /// Returns success after the video capture service confirms registration.
+    /// Does not wait for device-list updates or devicechange events in pages.
+    /// Registration failures are reported as errors.
     /// </summary>
     /// <param name="deviceId">
     /// Required non-empty identifier for the mock camera within the current
     /// DevTools session. Different sessions can use the same identifier
     /// without replacing each other's cameras. This is not the
     /// MediaDeviceInfo.deviceId exposed to the page.
+    /// An identifier that is already registered or being registered in this
+    /// session is rejected. The existing camera or registration attempt is
+    /// left unchanged, including any active streams.
     /// </param>
     /// <param name="session">
     /// Optional CDP session override.
